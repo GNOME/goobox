@@ -23,10 +23,12 @@
 #include <config.h>
 #include <string.h>
 #include <gnome.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
 #include "goo-player-info.h"
 #include "goo-marshal.h"
 #include "glib-utils.h"
 #include "goo-stock.h"
+#include "file-utils.h"
 
 #define SPACING 0
 #define TITLE1_FORMAT "<span size='large' weight='bold'>%s</span>"
@@ -41,6 +43,7 @@
 #define UPDATE_TIMEOUT 50
 
 struct _GooPlayerInfoPrivateData {
+	GooWindow   *window;
 	GooPlayer   *player;
 	GtkWidget   *title1_label;
 	GtkWidget   *title2_label;
@@ -67,6 +70,12 @@ enum {
 
 static GtkHBoxClass *parent_class = NULL;
 static guint goo_player_info_signals[LAST_SIGNAL] = { 0 };
+
+enum { TARGET_URL };
+static GtkTargetEntry target_table[] = {
+	{ "text/uri-list", 0, TARGET_URL }
+};
+static guint n_targets = sizeof (target_table) / sizeof (target_table[0]);
 
 static void goo_player_info_class_init  (GooPlayerInfoClass *class);
 static void goo_player_info_init        (GooPlayerInfo *player);
@@ -298,6 +307,121 @@ cover_button_clicked_cb (GtkWidget     *button,
 }
 
 
+/* -- drag and drop -- */
+
+
+static char *
+get_path_from_url (char *url)
+{
+	GnomeVFSURI *uri;
+	char        *escaped;
+	char        *path;
+
+	if (url == NULL)
+		return NULL;
+
+	uri = gnome_vfs_uri_new (url);
+	escaped = gnome_vfs_uri_to_string (uri, GNOME_VFS_URI_HIDE_TOPLEVEL_METHOD);
+	path = gnome_vfs_unescape_string (escaped, NULL);
+
+	gnome_vfs_uri_unref (uri);
+	g_free (escaped);
+
+	return path;
+}
+
+
+static GList *
+get_file_list_from_dnd_data (gchar *url_list)
+{
+	GList    *list = NULL;
+	int       i;
+	char     *url_start, *url_end;
+	gboolean  dnd_valid = FALSE;
+
+	i = 0;
+	url_start = url_list;
+	while (url_list[i] != '\0')	{
+		char *url;
+
+		while ((url_list[i] != '\0')
+		       && (url_list[i] != '\r')
+		       && (url_list[i] != '\n')) i++;
+
+		url_end = url_list + i;
+		if (strncmp (url_start, "file:", 5) == 0) {
+			url_start += 5;
+			if ((url_start[0] == '/') 
+			    && (url_start[1] == '/')) url_start += 2;
+
+			dnd_valid = TRUE;
+
+			url = g_strndup (url_start, url_end - url_start);
+			list = g_list_prepend (list, get_path_from_url (url));
+			g_free (url);
+
+			while ((url_list[i] != '\0')
+			       && ((url_list[i] == '\r') 
+				   || (url_list[i] == '\n'))) i++;
+			url_start = url_list + i;
+
+		} else {
+			while ((url_list[i] != '\0')
+			       && ((url_list[i] == '\r') 
+				   || (url_list[i] == '\n'))) i++;
+			url_start = url_list + i;
+			if (url_list[i] == '\0' && !dnd_valid) {
+				path_list_free (list);
+				return NULL;
+			}
+		}
+	}
+	
+	if (!dnd_valid) {
+		path_list_free (list);
+		return NULL;
+	}
+
+	return g_list_reverse (list);
+}
+
+
+void  
+cover_button_drag_data_received  (GtkWidget          *widget,
+				  GdkDragContext     *context,
+				  gint                x,
+				  gint                y,
+				  GtkSelectionData   *data,
+				  guint               dnd_info,
+				  guint               time,
+				  gpointer            extra_data)
+{
+	GooPlayerInfo *info = extra_data;
+	GList         *list;
+	char          *cover_filename;
+
+	if (! ((data->length >= 0) && (data->format == 8))) {
+		gtk_drag_finish (context, FALSE, FALSE, time);
+		return;
+	}
+
+	gtk_drag_finish (context, TRUE, FALSE, time);
+
+	list = get_file_list_from_dnd_data ((char *)data->data);
+	if (list == NULL)
+		return;
+
+	cover_filename = list->data;
+	if (cover_filename == NULL)
+		return;
+
+	goo_window_set_cover_image (info->priv->window, cover_filename);
+
+	if (list != NULL) 
+		path_list_free (list);
+}
+
+
 static void 
 goo_player_info_init (GooPlayerInfo *info)
 {
@@ -381,6 +505,16 @@ goo_player_info_init (GooPlayerInfo *info)
 			  G_CALLBACK (cover_button_clicked_cb),
 			  info);
 
+	gtk_drag_dest_set (priv->cover_button,
+			   GTK_DEST_DEFAULT_ALL,
+			   target_table, n_targets,
+			   GDK_ACTION_COPY);
+	
+	g_signal_connect (G_OBJECT (priv->cover_button), 
+			  "drag_data_received",
+			  G_CALLBACK (cover_button_drag_data_received), 
+			  info);
+
 	priv->cover_image = gtk_image_new_from_stock (GOO_STOCK_NO_COVER, GTK_ICON_SIZE_DIALOG);
 	gtk_widget_set_size_request (priv->cover_image, COVER_SIZE, COVER_SIZE);
 	gtk_widget_show (priv->cover_image);
@@ -453,11 +587,16 @@ goo_player_info_finalize (GObject *object)
 
 
 GtkWidget *
-goo_player_info_new (GooPlayer *player)
+goo_player_info_new (GooWindow *window,
+		     GooPlayer *player)
 {
 	GooPlayerInfo *info;
 	
 	info = GOO_PLAYER_INFO (g_object_new (GOO_TYPE_PLAYER_INFO, NULL));
+
+	if (window != NULL) 
+		info->priv->window = window;
+
 	if (player != NULL) {
 		g_object_ref (player);
 		info->priv->player = player;

@@ -26,6 +26,7 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <gtk/gtkhbox.h>
+#include "goo-window.h"
 #include "goo-player.h"
 #include "song-info.h"
 
@@ -59,7 +60,8 @@ struct _GooPlayerInfoClass
 };
 
 GType            goo_player_info_get_type         (void);
-GtkWidget *      goo_player_info_new              (GooPlayer      *player);
+GtkWidget *      goo_player_info_new              (GooWindow      *window,
+						   GooPlayer      *player);
 void             goo_player_info_set_player       (GooPlayerInfo  *info,
 						   GooPlayer      *player);
 void             goo_player_info_update_state     (GooPlayerInfo  *info);

@@ -1,5 +1,11 @@
 2004-12-16  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-window.c (goo_window_construct): 
+	* src/goo-player-info.h: 
+	* src/goo-player-info.c (cover_button_drag_data_received): added
+	ability to add/change the cover image dropping an image over the
+	cover button.
+
 	* src/goo-player-cd.c: removed commented out code.
 
 	* src/goo-window.c (player_done_cb): update the statusbar too.

@@ -1936,7 +1936,7 @@ goo_window_construct (GooWindow  *window,
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	priv->info = goo_player_info_new (NULL);
+	priv->info = goo_player_info_new (window, NULL);
 	gtk_container_set_border_width (GTK_CONTAINER (priv->info), 0);
 	g_signal_connect (priv->info,
 			  "skip_to",
