@@ -8,14 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-16 18:09+0200\n"
-"PO-Revision-Date: 2004-12-16 18:07+0200\n"
-"Last-Translator: Kostas Papadimas <pkst@gnome.org>\n"
+"POT-Creation-Date: 2005-02-09 14:21+0200\n"
+"PO-Revision-Date: 2005-02-09 14:22+0200\n"
+"Last-Translator: Kostas <pkst@gmx.net>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: data/GNOME_Goobox.server.in.in.h:1
 msgid "Goobox Application"
@@ -50,86 +49,94 @@ msgid "<b>Extract</b>"
 msgstr "<b>Εξαγωγή</b>"
 
 #: data/glade/goobox.glade.h:5
+msgid "<b>FLAC</b>"
+msgstr "<b>FLAC</b>"
+
+#: data/glade/goobox.glade.h:6
 msgid "<b>File type</b>"
 msgstr "<b>Τύπος αρχείου</b>"
 
-#: data/glade/goobox.glade.h:6
-msgid "<b>Quality</b>"
-msgstr "<b>Ποιότητα</b>"
-
 #: data/glade/goobox.glade.h:7
-msgid "<small><i>Higher quality</i></small>"
-msgstr "<small><i>Υψηλότερη ποιότητα</i></small>"
+msgid "<b>MP3</b>"
+msgstr "<b>MP3</b>"
 
 #: data/glade/goobox.glade.h:8
-msgid "<small><i>Smaller size</i></small>"
-msgstr "<small><i>Μικρότερο μέγεθος</i></small>"
+msgid "<b>Ogg Vorbis</b>"
+msgstr "<b>Ogg Vorbis</b>"
 
-#: data/glade/goobox.glade.h:9 src/dlg-extract.c:241
+#: data/glade/goobox.glade.h:9
+msgid "Advanced _Options"
+msgstr "Προχωρημένες επιλογές"
+
+#: data/glade/goobox.glade.h:10 src/dlg-extract.c:239
 msgid "Choose destination folder"
 msgstr "Επιλογή φακέλου προορισμού"
 
-#: data/glade/goobox.glade.h:10
-msgid "Encoding Options"
-msgstr "Επιλογές κωδικοποίησης"
-
 #: data/glade/goobox.glade.h:11
+msgid "Encoding"
+msgstr "Κωδικοποίηση"
+
+#: data/glade/goobox.glade.h:12
 msgid "Excellent quality lossless compression"
 msgstr "Άριστη ποιότητα "
 
-#: data/glade/goobox.glade.h:12
+#: data/glade/goobox.glade.h:13
 msgid "Extract Tracks"
 msgstr "Εξαγωγή κομματιών"
 
-#: data/glade/goobox.glade.h:13
+#: data/glade/goobox.glade.h:14
 msgid "Extracting Tracks"
 msgstr "Γίνεται εξαγωγή κομματιών"
 
-#: data/glade/goobox.glade.h:14
+#: data/glade/goobox.glade.h:15
+msgid "General"
+msgstr "Γενικά"
+
+#: data/glade/goobox.glade.h:16
 msgid "Good quality lossy compression"
 msgstr "Καλή ποιότητα ·lossy·compression"
 
-#: data/glade/goobox.glade.h:15
+#: data/glade/goobox.glade.h:17
 msgid "High quality lossy compression"
 msgstr "Υψηλή ποιότητα lossy·compression"
 
-#: data/glade/goobox.glade.h:16
+#: data/glade/goobox.glade.h:18
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
-#: data/glade/goobox.glade.h:17
+#: data/glade/goobox.glade.h:19
 msgid "Raw audio"
 msgstr "Raw audio"
 
-#: data/glade/goobox.glade.h:18
+#: data/glade/goobox.glade.h:20
 msgid "_All tracks"
 msgstr "Ό_λα τα κομμάτια"
 
-#: data/glade/goobox.glade.h:19
+#: data/glade/goobox.glade.h:21
 msgid "_FLAC"
 msgstr "_FLAC"
 
-#: data/glade/goobox.glade.h:20
+#: data/glade/goobox.glade.h:22
 msgid "_MP3"
 msgstr "_MP3"
 
-#: data/glade/goobox.glade.h:21
+#: data/glade/goobox.glade.h:23
 msgid "_Ogg Vorbis"
 msgstr "_Ogg Vorbis"
 
-#: data/glade/goobox.glade.h:22 src/goo-stock.c:54
-msgid "_Reset"
-msgstr "Επανα_φορά"
+#: data/glade/goobox.glade.h:24
+msgid "_Save playlist"
+msgstr "Απο_θήκευση λίστας αναπαραγωγής"
 
-#: data/glade/goobox.glade.h:23
+#: data/glade/goobox.glade.h:25
 msgid "_Selected tracks"
 msgstr "Επιλεγ_μένα κομμάτια"
 
-#: data/glade/goobox.glade.h:24
+#: data/glade/goobox.glade.h:26
 msgid "_Wave"
 msgstr "_Wave"
 
-#: data/goobox.desktop.in.h:1 src/goo-window.c:2055 src/goo-window.c:2063
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2173 src/goo-window.c:2181
 msgid "CD Player"
 msgstr "CD Player"
 
@@ -148,15 +155,23 @@ msgstr ""
 "Πιθανές·τιμές·είναι: συστήματος, κείμενο από κάτω, κείμενο απο δίπλα, μόνο "
 "κείμενο, μόνο εικονίδια."
 
-#: src/actions.c:140
+#: src/actions.c:139
+msgid "Could not display help"
+msgstr "Αδύνατη η προβολή βοήθειας: %s"
+
+#.
+#. const char       *documenters [] = {
+#. NULL
+#. };
+#: src/actions.c:192
 msgid "translator_credits"
 msgstr "Κώστας Παπαδήμας <pkst@gnome.org>"
 
-#: src/actions.c:151 src/actions.c:166
+#: src/actions.c:203 src/actions.c:218
 msgid "Goobox"
 msgstr "Goobox"
 
-#: src/actions.c:154 src/actions.c:169 src/main.c:82
+#: src/actions.c:206 src/actions.c:221 src/main.c:114
 msgid "CD player and ripper"
 msgstr "CD player και ripper"
 
@@ -182,7 +197,7 @@ msgstr "%u, φόρτωση εικόνας: %u"
 msgid "Loading images"
 msgstr "Φόρτωση εικόνων"
 
-#: src/dlg-cover-chooser.c:330 src/goo-window.c:2658
+#: src/dlg-cover-chooser.c:330 src/goo-window.c:2782
 msgid "Could not search a cover on Internet"
 msgstr "Δεν είναι δυνατή η εύρεση ενός εξωφύλλου στο Διαδίκτυο"
 
@@ -190,7 +205,7 @@ msgstr "Δεν είναι δυνατή η εύρεση ενός εξωφύλλο
 msgid "No image found"
 msgstr "Δεν βρέθηκε εικόνα "
 
-#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:205 src/dlg-preferences.c:109
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:203 src/dlg-preferences.c:147
 #, c-format
 msgid "Could not display help: %s"
 msgstr "Αδύνατη ή προβολή βοήθειας: %s"
@@ -199,30 +214,7 @@ msgstr "Αδύνατη ή προβολή βοήθειας: %s"
 msgid "Searching images..."
 msgstr "Αναζήτηση εικόνων..."
 
-#: src/dlg-encoder-options.c:117
-#, c-format
-msgid "Nominal bitrate: %d Kbps"
-msgstr "Ονομαστικό  bitrate: %d Kbps"
-
-#: src/dlg-encoder-options.c:120
-#, c-format
-msgid "Compression level: %d"
-msgstr "Επίπεδο συμπίεσης: %d"
-
-#: src/dlg-encoder-options.c:123
-#, c-format
-msgid "Bitrate: %d Kbps"
-msgstr "Bitrate: %d Kbps"
-
-#: src/dlg-encoder-options.c:261
-msgid "Faster compression"
-msgstr "Γρηγορότερη συμπίεση"
-
-#: src/dlg-encoder-options.c:265
-msgid "Higher compression"
-msgstr "Υψηλότερη συμπίεση"
-
-#: src/dlg-extract.c:367
+#: src/dlg-extract.c:374
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -241,28 +233,60 @@ msgstr ""
 "• %s → Mp3\n"
 "• %s → Wave"
 
-#: src/dlg-extract.c:380
+#: src/dlg-extract.c:387
 msgid "No encoder available."
 msgstr "Δεν υπάρχει διαθέσιμος encoder"
 
-#: src/dlg-ripper.c:311
+#: src/dlg-preferences.c:168
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "Ονομαστικό  bitrate: %d Kbps"
+
+#: src/dlg-preferences.c:172
+#, c-format
+msgid "Compression level: %d"
+msgstr "Επίπεδο συμπίεσης: %d"
+
+#: src/dlg-preferences.c:176
+#, c-format
+msgid "Bitrate: %d Kbps"
+msgstr "Bitrate: %d Kbps"
+
+#. Set widgets data.
+#: src/dlg-preferences.c:335 src/dlg-preferences.c:343
+msgid "Smaller size"
+msgstr "Μικρότερο μέγεθος"
+
+#: src/dlg-preferences.c:339 src/dlg-preferences.c:347
+msgid "Higher quality"
+msgstr "Υψηλότερη ποιότητα"
+
+#: src/dlg-preferences.c:351
+msgid "Faster compression"
+msgstr "Γρηγορότερη συμπίεση"
+
+#: src/dlg-preferences.c:355
+msgid "Higher compression"
+msgstr "Υψηλότερη συμπίεση"
+
+#: src/dlg-ripper.c:313
 msgid "Could not display the destination folder"
 msgstr "Αδυναμία εμφ'ανισης του φάκελου προορισμού"
 
-#: src/dlg-ripper.c:338
+#: src/dlg-ripper.c:427
 msgid "Tracks extracted successfully"
 msgstr "Τα·κομμάτια·εξάχθηκαν·επιτυχώς"
 
-#: src/dlg-ripper.c:340
+#: src/dlg-ripper.c:429
 msgid "_View destination folder"
 msgstr "Προ_βολή φακέλου προορισμού"
 
-#: src/dlg-ripper.c:353
+#: src/dlg-ripper.c:442
 #, c-format
 msgid "Extracting track %d of %d: %s"
 msgstr "Εξαγωγή κομματιού ·%d·από·%d:·%s"
 
-#: src/dlg-ripper.c:388
+#: src/dlg-ripper.c:477
 msgid "Ripped with Goobox"
 msgstr "Ripped με το Goobox"
 
@@ -289,49 +313,49 @@ msgstr "Σφάλμα ανάγνωσης CD"
 msgid "The specified device is not valid"
 msgstr "Η καθορισμένη συσκευή δεν είναι έγκυρη"
 
-#: src/goo-player-cd.c:784
+#: src/goo-player-cd.c:793
 msgid "Drive not ready"
 msgstr "Η συσκευή δεν είναι έτοιμη"
 
-#: src/goo-player-cd.c:788
+#: src/goo-player-cd.c:797
 msgid "Tray open"
 msgstr "Συρτάρι ανοικτό"
 
-#: src/goo-player-cd.c:789 src/goo-player-cd.c:793
+#: src/goo-player-cd.c:798 src/goo-player-cd.c:802
 msgid "No disc"
 msgstr "Χωρίς δίσκο"
 
-#: src/goo-player-cd.c:797
+#: src/goo-player-cd.c:806
 msgid "Data CD"
 msgstr "CD Δεδομένων"
 
-#: src/goo-player-info.c:238 src/goo-player-info.c:263
-#: src/goo-player-info.c:761
+#: src/goo-player-info.c:236 src/goo-player-info.c:261
+#: src/goo-player-info.c:758
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
-#: src/goo-player-info.c:501
+#: src/goo-player-info.c:499
 msgid "Click here to choose a cover for this CD"
 msgstr "Πατήστε εδώ για να επιλέξετε ένα εξώφυλλο για το CD"
 
-#: src/goo-player-info.c:689 src/goo-window.c:1228
+#: src/goo-player-info.c:686 src/goo-window.c:1313
 msgid "Paused"
 msgstr "Σε παύση"
 
-#: src/goo-player-info.c:700
+#: src/goo-player-info.c:697
 msgid "Ejecting CD"
 msgstr "Εξαγωγή του CD"
 
-#: src/goo-player-info.c:704
+#: src/goo-player-info.c:701
 msgid "Checking CD drive"
 msgstr "Έλεγχος οδηγού CD"
 
-#: src/goo-player-info.c:708 src/goo-player-info.c:712
+#: src/goo-player-info.c:705 src/goo-player-info.c:709
 msgid "Reading CD"
 msgstr "Ανάγνωση CD"
 
-#: src/goo-player-info.c:725 src/goo-window.c:1252
+#: src/goo-player-info.c:722 src/goo-window.c:1337
 msgid "Audio CD"
 msgstr "CD ήχου"
 
@@ -339,22 +363,34 @@ msgstr "CD ήχου"
 msgid "_Extract"
 msgstr "Ε_ξαγωγή"
 
+#: src/goo-stock.c:54
+msgid "_Reset"
+msgstr "Επανα_φορά"
+
 #: src/goo-stock.c:55 src/goo-stock.c:56 src/goo-stock.c:57 src/goo-stock.c:58
 msgid "V_olume"
 msgstr "Έ_νταση"
 
-#: src/goo-volume-button.c:147
+#: src/goo-volume-button.c:147 src/goo-volume-tool-button.c:284
 #, c-format
 msgid "Volume level: %3.0f%%"
 msgstr "Επίπεδο ήχου:·%3.0f%%"
 
-#: src/goo-volume-button.c:328
+#: src/goo-volume-button.c:328 src/goo-volume-tool-button.c:494
 msgid "+"
 msgstr "+"
 
-#: src/goo-volume-button.c:344
+#: src/goo-volume-button.c:344 src/goo-volume-tool-button.c:510
 msgid "-"
 msgstr "-"
+
+#: src/goo-volume-tool-button.c:538
+msgid "Change the volume level"
+msgstr "Αλλαγή του επιπέδου έντασης"
+
+#: src/goo-volume-tool-button.c:605
+msgid "Volume"
+msgstr "Ένταση"
 
 #: src/goo-window.c:65
 msgid "Hide _tracks"
@@ -364,74 +400,78 @@ msgstr "Απόκρυψη κο_μματιών"
 msgid "Show _tracks"
 msgstr "Εμφάνιση κο_μματιών"
 
-#: src/goo-window.c:189
+#: src/goo-window.c:191
 #, c-format
 msgid "%d track"
-msgid_plural "%d tracks"
-msgstr[0] "%d κομμάτι"
+msgstr "%d·κομμάτι"
 
-#: src/goo-window.c:532
+#: src/goo-window.c:195
+#, c-format
+msgid "year %d"
+msgstr "έτος %d"
+
+#: src/goo-window.c:605
 msgid "Length"
 msgstr "Διάρκεια"
 
-#: src/goo-window.c:533
+#: src/goo-window.c:606
 msgid "Title"
 msgstr "Τίτλος"
 
-#: src/goo-window.c:534
+#: src/goo-window.c:607
 msgid "Artist"
 msgstr "Καλλιτέχνης"
 
-#: src/goo-window.c:542
+#: src/goo-window.c:615
 msgid "#"
 msgstr "#"
 
-#: src/goo-window.c:1138 src/ui.h:57
+#: src/goo-window.c:1222 src/ui.h:65
 msgid "_Pause"
 msgstr "_Παύση"
 
-#: src/goo-window.c:1139
+#: src/goo-window.c:1223
 msgid "Pause playing"
 msgstr "Παύση αναπαραγωγής"
 
-#: src/goo-window.c:1358 src/goo-window.c:1370 src/ui.h:45 src/ui.h:49
-#: src/ui.h:53
+#: src/goo-window.c:1445 src/goo-window.c:1462 src/ui.h:53 src/ui.h:57
+#: src/ui.h:61
 msgid "_Play"
 msgstr "Ανα_παραγωγή"
 
-#: src/goo-window.c:1359 src/goo-window.c:1371
+#: src/goo-window.c:1446 src/goo-window.c:1463
 msgid "Play CD"
 msgstr "Αναπαραγωγή CD"
 
-#: src/goo-window.c:2336
+#: src/goo-window.c:2460
 msgid "Could not eject the CD"
 msgstr "Αδυναμία εξαγωγής CD"
 
-#: src/goo-window.c:2348
+#: src/goo-window.c:2472
 msgid "Could not read drive"
 msgstr "Αδυναμία·ανάγνωσης από τον οδηγό"
 
-#: src/goo-window.c:2532
+#: src/goo-window.c:2656
 msgid "Could not save cover image"
 msgstr "Αδυναμία αποθήκευσης εικόνας εξωφύλλου"
 
-#: src/goo-window.c:2542
+#: src/goo-window.c:2666
 msgid "Could not load image"
 msgstr "Αδυναμία φόρτωσης εικόνας"
 
-#: src/goo-window.c:2598
+#: src/goo-window.c:2722
 msgid "Choose CD Cover Image"
 msgstr "Επιλογή εικόνας εξωφύλλου CD"
 
-#: src/goo-window.c:2617
+#: src/goo-window.c:2741
 msgid "Images"
 msgstr "Εικόνες"
 
-#: src/goo-window.c:2625
+#: src/goo-window.c:2749
 msgid "All files"
 msgstr "Όλα τα αρχεία"
 
-#: src/goo-window.c:2659
+#: src/goo-window.c:2783
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -439,19 +479,19 @@ msgstr ""
 "Θα πρέπει να εισάγετε τον καλλιτέχνη και τα ονόματα άλμπουμ για να βρείτε το "
 "εξώφυλλοτου άλμπουμ"
 
-#: src/goo-window.c:2693
+#: src/goo-window.c:2817
 msgid "_Show Window"
 msgstr "Ε+μφάνιση παραθύρου"
 
-#: src/goo-window.c:2694
+#: src/goo-window.c:2818
 msgid "Show the main window"
 msgstr "Εμφάνισητου κυρίως παραθύρου"
 
-#: src/goo-window.c:2707 src/ui.h:109
+#: src/goo-window.c:2831 src/ui.h:117
 msgid "_Hide Window"
 msgstr "Απόκρυ_ψη παραθύρου"
 
-#: src/goo-window.c:2708 src/ui.h:110
+#: src/goo-window.c:2832 src/ui.h:118
 msgid "Hide the main window"
 msgstr "Απόκρυψη του κυρίως παράθυρου"
 
@@ -471,23 +511,55 @@ msgstr "εικονοστοιχεία"
 msgid "Could not execute command"
 msgstr "Αδυναμία εκτέλεσςη εντολής"
 
-#: src/main.c:57
+#: src/main.c:65
 msgid "CD device to be used"
 msgstr "Συσκευή CD για χρήση"
 
-#: src/main.c:58
+#: src/main.c:66
 msgid "DEVICE_PATH"
 msgstr "ΔΙΑΔΡΟΜΗ_ΣΥΣΚΕΥΗΣ"
 
-#: src/main.c:60
+#: src/main.c:68
 msgid "Play the CD on startup"
 msgstr "Αναπαραγωγή του CD κατά την εκκίνηση"
 
-#: src/main.c:198
+#: src/main.c:71 src/ui.h:54
+msgid "Play/Pause"
+msgstr "Αναπαραγωγή/Παύση"
+
+#: src/main.c:74 src/ui.h:74
+msgid "Play the next track"
+msgstr "Αναπαραγωγή του επόμενου κομματιού"
+
+#: src/main.c:77 src/ui.h:78
+msgid "Play the previous track"
+msgstr "Αναπαραγωγή του προηγούμενου κομματιού"
+
+#: src/main.c:80 src/ui.h:82
+msgid "Eject the CD"
+msgstr "Εξαγωγή του CD"
+
+#: src/main.c:83
+msgid "Hide/Show the main window"
+msgstr "Απόκρυψη/εμφάνιση του κυρίως παράθυρου"
+
+#: src/main.c:86
+msgid "Volume Up"
+msgstr "Αύξηση έντασης"
+
+#: src/main.c:89
+msgid "Volume Down"
+msgstr "Μείωση έντασης"
+
+#: src/main.c:92 src/ui.h:102
+msgid "Quit the application"
+msgstr "Έξοδος από την εφαρμογή"
+
+#: src/main.c:246
 msgid "Cannot start the CD player"
 msgstr "Αδυναμία εκκίνησης του CD·player"
 
-#: src/main.c:199
+#: src/main.c:247
 msgid ""
 "In order to read CDs you have to install the cdparanoia gstreamer plugin"
 msgstr ""
@@ -527,155 +599,148 @@ msgstr "Π_ερί"
 msgid "Information about the program"
 msgstr "Πληροφορίες για το πρόγραμμα"
 
-#: src/ui.h:46
-msgid "Play/Pause"
-msgstr "Αναπαραγωγή/Παύση"
+#: src/ui.h:45
+msgid "_Contents"
+msgstr "_Περιεχόμενα"
 
-#: src/ui.h:50
+#: src/ui.h:46
+msgid "Display the manual"
+msgstr "Προβολή του εγχειριδίου"
+
+#: src/ui.h:49
+msgid "_Keyboard shortcuts"
+msgstr "Συντο_μεύσεις πληκτρολογίου"
+
+#: src/ui.h:58
 msgid "Play"
 msgstr "Αναπαραγωγή"
 
-#: src/ui.h:54
+#: src/ui.h:62
 msgid "Play this track"
 msgstr "Αναπαραγωγή αυτού του κομματιού"
 
-#: src/ui.h:58
+#: src/ui.h:66
 msgid "Pause"
 msgstr "Παύση"
 
-#: src/ui.h:61
+#: src/ui.h:69
 msgid "_Stop"
 msgstr "_Διακοπή"
 
-#: src/ui.h:62
+#: src/ui.h:70
 msgid "Stop playing"
 msgstr "Διακοπή αναπαραγωγής"
 
-#: src/ui.h:65
+#: src/ui.h:73
 msgid "_Next"
 msgstr "_Επόμενο"
 
-#: src/ui.h:66
-msgid "Play the next track"
-msgstr "Αναπαραγωγή του επόμενου κομματιού"
-
-#: src/ui.h:69
+#: src/ui.h:77
 msgid "Pre_v"
 msgstr "Προη_γ"
 
-#: src/ui.h:70
-msgid "Play the previous track"
-msgstr "Αναπαραγωγή του προηγούμενου κομματιού"
-
-#: src/ui.h:73
+#: src/ui.h:81
 msgid "_Eject"
 msgstr "Ε_ξαγωγή"
 
-#: src/ui.h:74
-msgid "Eject the CD"
-msgstr "Εξαγωγή του CD"
-
-#: src/ui.h:77
+#: src/ui.h:85
 msgid "_Reload"
 msgstr "Επανα_φόρτωση"
 
-#: src/ui.h:78
+#: src/ui.h:86
 msgid "Reload the CD"
 msgstr "Επαναφόρτωση του CD"
 
-#: src/ui.h:81
+#: src/ui.h:89
 msgid "_Preferences"
 msgstr "_Προτιμήσεις"
 
-#: src/ui.h:82
+#: src/ui.h:90
 msgid "Edit various preferences"
 msgstr "Επεξεργασία διάφορων προτιμήσεων"
 
-#: src/ui.h:85
+#: src/ui.h:93
 msgid "E_xtract Tracks"
 msgstr "Ε_ξαγωγή κομματιών"
 
-#: src/ui.h:86
+#: src/ui.h:94
 msgid "Save the tracks to disk as files"
 msgstr "Αποθήκευση των κομματιών στο δίσκο ως αρχεία"
 
-#: src/ui.h:89
+#: src/ui.h:97
 msgid "_CD Properties"
 msgstr "Ιδιότητες _CD"
 
-#: src/ui.h:90
+#: src/ui.h:98
 msgid "Edit the CD artist, album and tracks titles"
 msgstr ""
 "Επεξεργασία του καλλιτέχνη του CD, του άλμπουν και των τίτλων των κομματιών"
 
-#: src/ui.h:93
+#: src/ui.h:101
 msgid "_Quit"
 msgstr "Έ_ξοδος"
 
-#: src/ui.h:94
-msgid "Quit the application"
-msgstr "Έξοδος από την εφαρμογή"
-
-#: src/ui.h:97
+#: src/ui.h:105
 msgid "_Choose from Disk"
 msgstr "Επι_λογή από τον δίσκο"
 
-#: src/ui.h:98
+#: src/ui.h:106
 msgid "Choose a CD cover from the local disk"
 msgstr "Επιλογή ενός εξωφύλλου CD από τον τοπικό δίσκο"
 
-#: src/ui.h:101
+#: src/ui.h:109
 msgid "_Search on Internet"
 msgstr "Ανα_ζήτηση στο Διαδίκτυο"
 
-#: src/ui.h:102
+#: src/ui.h:110
 msgid "Search a CD cover on Internet"
 msgstr "Αναζήτηση ενός εξωφύλλου CD στο Διαδίκτυο"
 
-#: src/ui.h:105
+#: src/ui.h:113
 msgid "_Remove Cover"
 msgstr "Α_φαίρεση εξωφύλλου"
 
-#: src/ui.h:106
+#: src/ui.h:114
 msgid "Remove current CD cover"
 msgstr "Αφαίρεση τρέχοντος εξώφυλλου CD"
 
-#: src/ui.h:118
+#: src/ui.h:126
 msgid "_Toolbar"
 msgstr "Ερ_γαλειοθήκη"
 
-#: src/ui.h:119
+#: src/ui.h:127
 msgid "View the main toolbar"
 msgstr "Προβολή της κύριας εργαλειοθήκης"
 
-#: src/ui.h:123
+#: src/ui.h:131
 msgid "Stat_usbar"
 msgstr "_Γραμμή κατάστασης"
 
-#: src/ui.h:124
+#: src/ui.h:132
 msgid "View the statusbar"
 msgstr "Προβολή της γραμμής κατάστασης"
 
-#: src/ui.h:128
+#: src/ui.h:136
 msgid "Play _All"
 msgstr "Αναπαραγωγή ό_λων"
 
-#: src/ui.h:129
+#: src/ui.h:137
 msgid "Play all tracks"
 msgstr "Αναπαραγωγή όλων των κομματιών"
 
-#: src/ui.h:133
+#: src/ui.h:141
 msgid "_Repeat"
 msgstr "Επα_νάληψη"
 
-#: src/ui.h:134
+#: src/ui.h:142
 msgid "Restart playing when finished"
 msgstr "Επανεκκίνηση αναπαραγωγής στο τέλος"
 
-#: src/ui.h:138
+#: src/ui.h:146
 msgid "S_huffle"
 msgstr "Ανα_κάτεμα"
 
-#: src/ui.h:139
+#: src/ui.h:147
 msgid "Play tracks in a random order"
 msgstr "Αναπαραγωγή κομματιών σε τυχαία σειρά"
+
