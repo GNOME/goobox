@@ -89,8 +89,6 @@ goobox_SOURCES = 				\
 	cddb-slave-client.h			\
 	dlg-cover-chooser.c			\
 	dlg-cover-chooser.h			\
-	dlg-encoder-options.c			\
-	dlg-encoder-options.h			\
 	dlg-extract.c				\
 	dlg-extract.h				\
 	dlg-preferences.c			\

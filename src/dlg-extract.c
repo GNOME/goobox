@@ -47,7 +47,6 @@
 #include "track-info.h"
 #include "goo-player-cd.h"
 #include "dlg-ripper.h"
-#include "dlg-encoder-options.h"
 
 #define GLADE_EXTRACT_FILE "goobox.glade"
 
@@ -176,12 +175,7 @@ ok_cb (GtkWidget  *widget,
 	gtk_window_set_modal (GTK_WINDOW (data->dialog), FALSE);
 	gtk_widget_hide (data->dialog); 
 
-	if (file_format != GOO_FILE_FORMAT_WAVE)
-		dlg_encoder_options (data->dialog,
-				     GTK_WINDOW (data->window), 
-				     file_format);
-	else
-		dlg_extract__start_ripping (data->dialog);		
+	dlg_extract__start_ripping (data->dialog);		
 }
 
 
