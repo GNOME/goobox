@@ -1,3 +1,7 @@
+2005-01-30  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-player-info.c (MIN_CHARS): setted to 45
+
 2005-01-24  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	[ version 0.7.2 released ] 
