@@ -38,6 +38,7 @@ static struct {
 	{ GOO_STOCK_PAUSE,        pause_24_rgba,        NULL },
 	{ GOO_STOCK_PLAY,         play_24_rgba,         NULL },
 	{ GOO_STOCK_PREV,         prev_24_rgba,         NULL },
+	{ GOO_STOCK_RESET,        reset_24_rgba,        reset_16_rgba },
 	{ GOO_STOCK_STOP,         stop_24_rgba,         NULL },
 	{ GOO_STOCK_NO_COVER,     no_cover_48_rgba,     NULL },
 	{ GOO_STOCK_VOLUME_MAX,   volume_max_24_rgba,   volume_16_rgba },
@@ -50,6 +51,7 @@ static struct {
 
 static const GtkStockItem stock_items [] = {
 	{ GOO_STOCK_EXTRACT, N_("_Extract"), 0, 0, GETTEXT_PACKAGE },
+	{ GOO_STOCK_RESET, N_("_Reset"), 0, 0, GETTEXT_PACKAGE },
 	{ GOO_STOCK_VOLUME_MIN, N_("V_olume"), 0, 0, GETTEXT_PACKAGE },
 	{ GOO_STOCK_VOLUME_MED, N_("V_olume"), 0, 0, GETTEXT_PACKAGE },
 	{ GOO_STOCK_VOLUME_MAX, N_("V_olume"), 0, 0, GETTEXT_PACKAGE },

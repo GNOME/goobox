@@ -39,6 +39,7 @@
 #include "file-utils.h"
 #include "glib-utils.h"
 #include "goo-window.h"
+#include "goo-stock.h"
 #include "gth-image-list.h"
 #include "gnome-vfs-helpers.h"
 #include "preferences.h"
@@ -620,6 +621,8 @@ dlg_cover_chooser (GooWindow  *window,
 	/* Set widgets data. */
 
 	gtk_widget_set_sensitive (data->ok_button, FALSE);
+	gtk_button_set_use_stock (GTK_BUTTON (data->revert_button), TRUE);
+	gtk_button_set_label (GTK_BUTTON (data->revert_button), GOO_STOCK_RESET);
 
 	/* Set the signals handlers. */
 

@@ -29,6 +29,7 @@
 #define GOO_STOCK_PAUSE       "media-pause"
 #define GOO_STOCK_PLAY        "media-play"
 #define GOO_STOCK_PREV        "media-prev"
+#define GOO_STOCK_RESET       "goo-reset"
 #define GOO_STOCK_STOP        "media-stop"
 #define GOO_STOCK_NO_COVER    "goo-no-cover"
 #define GOO_STOCK_VOLUME_MAX  "volume-max"

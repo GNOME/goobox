@@ -1,5 +1,10 @@
 2004-11-07  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/dlg-cover-chooser.c (dlg_cover_chooser): 
+	* src/icons/Makefile.am (pixbufs.h): 
+
+	Added a reset stock icon.
+
 	* src/gtk-file-chooser-preview.c: 
 	* src/goo-window.c (open_update_preview_cb): 
 
