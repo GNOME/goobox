@@ -127,6 +127,8 @@ goobox_SOURCES = 				\
 	goo-window.h				\
 	goo-stock.c				\
 	goo-stock.h				\
+	gtk-file-chooser-preview.c		\
+	gtk-file-chooser-preview.h		\
 	gtk-utils.c				\
 	gtk-utils.h				\
 	main.c					\

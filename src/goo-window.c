@@ -43,6 +43,7 @@
 #include "goo-window.h"
 #include "goo-volume-button.h"
 #include "gtk-utils.h"
+#include "gtk-file-chooser-preview.h"
 #include "glib-utils.h"
 #include "gconf-utils.h"
 #include "main.h"
@@ -119,6 +120,8 @@ struct _GooWindowPrivateData {
 	guint            check_id;
 
 	GList           *url_list;
+
+	GtkWidget       *preview;
 };
 
 static int icon_size = 0;
@@ -2483,6 +2486,20 @@ goo_window_set_cover_image (GooWindow  *window,
 
 
 static void
+open_update_preview_cb (GtkFileChooser *file_sel,
+			gpointer        user_data)
+{
+	GooWindow *window = user_data;
+	char      *uri;
+
+	uri = gtk_file_chooser_get_preview_filename (file_sel);
+	debug (DEBUG_INFO, "PREVIEW: %s", uri);
+	gtk_file_chooser_preview_set_uri (GTK_FILE_CHOOSER_PREVIEW (window->priv->preview), uri);
+	g_free (uri);
+}
+
+
+static void
 open_response_cb (GtkDialog  *file_sel,
 		  int         button_number,
 		  gpointer    user_data)
@@ -2528,6 +2545,11 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 	gtk_window_set_modal (GTK_WINDOW (file_sel), TRUE);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (file_sel), TRUE);
 
+	window->priv->preview = gtk_file_chooser_preview_new ();
+	gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (file_sel), window->priv->preview);
+	gtk_file_chooser_set_use_preview_label (GTK_FILE_CHOOSER (file_sel), FALSE);
+	gtk_file_chooser_set_preview_widget_active (GTK_FILE_CHOOSER (file_sel), TRUE);
+
 	path = eel_gconf_get_path (PREF_GENERAL_COVER_PATH, "~");
 	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (file_sel), path);
 	g_free (path);
@@ -2548,6 +2570,10 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 	g_signal_connect (G_OBJECT (file_sel),
 			  "response",
 			  G_CALLBACK (open_response_cb),
+			  window);
+	g_signal_connect (G_OBJECT (file_sel),
+			  "update-preview",
+			  G_CALLBACK (open_update_preview_cb),
 			  window);
 	g_signal_connect_swapped (GTK_DIALOG (file_sel),
 				  "close",
