@@ -1,7 +1,7 @@
 Makefile
 Makefile.in
 index.html
-gthumb
-gthumb.junk
-gthumb-C.omf.out
+goobox
+*.junk
+*.out
 omf_timestamp
