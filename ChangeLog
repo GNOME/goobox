@@ -1,5 +1,7 @@
 2005-04-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	[ version 0.9.91 released ]
+
 	* src/goo-window.c (goo_window_play): do not play
 	when hibernated.
 
