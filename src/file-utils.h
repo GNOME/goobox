@@ -142,5 +142,6 @@ char *              escape_uri                   (const char *uri);
 
 GnomeVFSURI *       new_uri_from_path            (const char *path);
 
+char *              tracktitle_to_filename       (const char *trackname);
 
 #endif /* FILE_UTILS_H */

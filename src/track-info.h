@@ -52,4 +52,5 @@ void            track_info_set_title   (TrackInfo  *track,
 GList *         track_list_dup         (GList     *track_list);
 void            track_list_free        (GList     *track_list);
 
+
 #endif /* TRACK_INFO_H */

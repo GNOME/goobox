@@ -545,7 +545,7 @@ escape_str (const char *str,
 char*
 shell_escape (const char *filename)
 {
-	return escape_str (filename, "$\'`\"\\!?* ()[]&|@#:;");
+	return escape_str (filename, "$\'`\"\\!?* ()[]<>&|@#:;");
 }
 
 
@@ -1163,4 +1163,68 @@ new_uri_from_path (const char *path)
 	g_return_val_if_fail (uri != NULL, NULL);
 
 	return uri;
+}
+
+
+
+static gboolean
+valid_filename_char (char c) 
+{
+	/* "$\'`\"\\!?* ()[]<>&|@#:;" */
+	return strchr ("/\\!?*:;'`\"", c) == NULL;
+}
+
+
+/* Remove special characters from a track title in order to make it a 
+ * valid filename. */
+char*
+tracktitle_to_filename (const char *trackname)
+{
+	char       *filename, *f, *f2;
+	const char *t;
+	gboolean    add_space;
+
+	if (trackname == NULL)
+		return NULL;
+
+	filename = g_new (char, strlen (trackname) + 1);
+
+	/* Substitute invalid characters with spaces. */
+	f = filename;
+	t = trackname;
+	while (*t != 0) {
+		gboolean invalid_char = FALSE;
+
+		while ((*t != 0) && ! valid_filename_char (*t)) {
+			invalid_char = TRUE;
+			t++;
+		}
+
+		if (invalid_char)
+			*f++ = ' ';
+		
+		*f = *t;
+
+		if (*t != 0) {
+			f++;
+			t++;
+		}
+	}
+	*f = 0;
+
+	/* Remove double spaces. */
+	add_space = FALSE;
+	for (f = f2 = filename; *f != 0; f++)
+		if (*f != ' ') {
+			if (add_space) {
+				*f2++ = ' ';
+				add_space = FALSE;
+			}
+			*f2 = *f;
+			f2++;
+		} else
+			add_space = TRUE;
+	*f2 = 0;
+
+	return filename;
 }

@@ -1,3 +1,16 @@
+2005-03-14  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/file-utils.c (tracktitle_to_filename): use space instead of
+	_, and remove double spaces.
+
+2005-03-13  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/file-utils.c (tracktitle_to_filename): 
+	* src/file-utils.h (tracktitle_to_filename): 
+	* src/dlg-ripper.c (get_track_filename): 
+
+	Get a valid filename from track titles.
+	
 2005-03-04  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	[ version 0.9.90 released ] 

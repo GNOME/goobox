@@ -271,21 +271,6 @@ create_pipeline (DialogData *data)
 }
 
 
-static char *
-zero_padded (int n)
-{
-        static char  s[1024];
-        char        *t;
-
-        sprintf (s, "%2d", n);
-        for (t = s; (t != NULL) && (*t != 0); t++)
-                if (*t == ' ')
-                        *t = '0';
-
-        return s;
-}
-
-
 static char*
 get_destination_folder (DialogData *data)
 {
@@ -319,6 +304,35 @@ done_dialog_response_cb (GtkDialog  *dialog,
 	}
 
 	gtk_widget_destroy (data->dialog);
+}
+
+
+static char *
+zero_padded (int n)
+{
+        static char  s[1024];
+        char        *t;
+
+        sprintf (s, "%2d", n);
+        for (t = s; (t != NULL) && (*t != 0); t++)
+                if (*t == ' ')
+                        *t = '0';
+
+        return s;
+}
+
+
+static char *
+get_track_filename (TrackInfo  *track,
+		    const char *ext)
+{
+	char *filename, *track_filename;
+
+	filename = tracktitle_to_filename (track->title);
+	track_filename = g_strdup_printf ("%s - %s.%s", zero_padded (track->number + 1), filename, ext);
+	g_free (filename);
+
+	return track_filename;
 }
 
 
@@ -367,23 +381,17 @@ save_playlist (DialogData *data)
 		for (scan = data->tracks; scan; scan = scan->next) {
 			TrackInfo *track = scan->data;
 			char      *track_filename;
-			/*char      *track_path;*/
 
 			n++;
 
-			track_filename = g_strdup_printf ("%s - %s.%s", zero_padded (track->number + 1), track->title, data->ext);
-
-			/*
-			track_path = g_build_filename (folder, track_filename, NULL);
-			*/
-
+			track_filename = get_track_filename (track, data->ext);
+			
 			sprintf (buffer, "File%d=%s\n", n, track_filename);
 			gnome_vfs_write (handle,
 					 buffer,
 					 strlen (buffer),
 					 NULL);
 			g_free (track_filename);
-			/*g_free (track_path);*/
 
 			sprintf (buffer, "Title%d=%s - %s\n", n, data->artist, track->title);
 			gnome_vfs_write (handle,
@@ -460,7 +468,7 @@ rip_current_track (DialogData *data)
 	folder = get_destination_folder (data);
 	ensure_dir_exists (folder, DESTINATION_PERMISSIONS);
 
-	filename = g_strdup_printf ("%s - %s.%s", zero_padded (track->number + 1), track->title, data->ext);
+	filename = get_track_filename (track, data->ext);
 	g_free (data->current_file);
 	data->current_file = g_build_filename (folder, filename, NULL);
 	g_free (filename);
