@@ -33,6 +33,7 @@
 #include <libgnomeui/gnome-dialog-util.h>
 #include <libgnomeui/gnome-propertybox.h>
 #include <libgnomeui/gnome-pixmap.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
 #include <glade/glade.h>
 #include <gst/gst.h>
 #include "typedefs.h"
@@ -61,8 +62,12 @@ typedef struct {
 	GtkWidget   *dialog;
 	GtkWidget   *e_alltrack_radiobutton;
 	GtkWidget   *e_selected_radiobutton;
+#ifdef HAVE_GTK_2_5
+	GtkWidget   *e_destination_filechooserbutton;
+#else
 	GtkWidget   *e_destination_entry;
 	GtkWidget   *e_destination_button;
+#endif
 	GtkWidget   *e_ogg_radiobutton;
 	GtkWidget   *e_flac_radiobutton;
 	GtkWidget   *e_mp3_radiobutton;
@@ -156,12 +161,22 @@ ok_cb (GtkWidget  *widget,
        DialogData *data)
 {
 	const char    *destination;
+#ifdef HAVE_GTK_2_5
+	char          *unesc_destination = NULL;
+#endif
 	GooFileFormat  file_format = GOO_FILE_FORMAT_OGG;
 
 	/* save preferences */
 
+#ifdef HAVE_GTK_2_5
+	destination = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (data->e_destination_filechooserbutton));
+	unesc_destination = gnome_vfs_unescape_string (destination, "");
+	eel_gconf_set_path (PREF_EXTRACT_DESTINATION, unesc_destination);
+	g_free (unesc_destination);
+#else
 	destination = gtk_entry_get_text (GTK_ENTRY (data->e_destination_entry));
 	eel_gconf_set_path (PREF_EXTRACT_DESTINATION, destination);
+#endif
 
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_ogg_radiobutton)))
 		file_format = GOO_FILE_FORMAT_OGG;
@@ -216,6 +231,9 @@ help_cb (GtkWidget  *widget,
 }
 
 
+#ifndef HAVE_GTK_2_5
+
+
 static void
 open_response_cb (GtkDialog  *file_sel,
 		  int         button_number,
@@ -224,8 +242,12 @@ open_response_cb (GtkDialog  *file_sel,
 	DialogData *data = (DialogData*) userdata;
 
 	if (button_number == GTK_RESPONSE_ACCEPT) {
-		_gtk_entry_set_filename_text (GTK_ENTRY (data->e_destination_entry),
-					      gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_sel)));
+		char *unesc_destination = NULL;
+		
+		unesc_destination = gnome_vfs_unescape_string (gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (file_sel)), "");
+		
+		_gtk_entry_set_filename_text (GTK_ENTRY (data->e_destination_entry), unesc_destination);
+		g_free (unesc_destination);
 	}
 	gtk_widget_destroy (GTK_WIDGET (file_sel));
 }
@@ -236,7 +258,8 @@ destination_button_clicked_cb (GtkWidget  *button,
 			       DialogData *data)
 {
 	GtkWidget *file_sel;
-	
+	char      *esc_uri;
+
 	file_sel = gtk_file_chooser_dialog_new (_("Choose destination folder"),
 						GTK_WINDOW (data->dialog),
 						GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER, 
@@ -245,7 +268,9 @@ destination_button_clicked_cb (GtkWidget  *button,
 						NULL);
 	gtk_window_set_modal (GTK_WINDOW (file_sel), TRUE);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (file_sel), FALSE);
-	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (file_sel), gtk_entry_get_text (GTK_ENTRY (data->e_destination_entry)));
+	esc_uri = gnome_vfs_escape_host_and_path_string (gtk_entry_get_text (GTK_ENTRY (data->e_destination_entry)));
+	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (file_sel), esc_uri);
+	g_free (esc_uri);
 
 	g_signal_connect (G_OBJECT (file_sel),
 			  "response",
@@ -259,6 +284,9 @@ destination_button_clicked_cb (GtkWidget  *button,
 	
 	gtk_widget_show_all (GTK_WIDGET (file_sel));
 }
+
+
+#endif
 
 
 
@@ -279,6 +307,9 @@ dlg_extract (GooWindow *window)
 	GstElement       *encoder;
 	gboolean          ogg_encoder, flac_encoder, mp3_encoder, wave_encoder;
 	gboolean          find_first_available;
+#ifdef HAVE_GTK_2_5
+	char             *esc_uri = NULL;
+#endif
 
 	goo_window_stop (window);
 
@@ -306,8 +337,12 @@ dlg_extract (GooWindow *window)
 
 	data->e_alltrack_radiobutton = glade_xml_get_widget (data->gui, "e_alltrack_radiobutton");
 	data->e_selected_radiobutton = glade_xml_get_widget (data->gui, "e_selected_radiobutton");
+#ifdef HAVE_GTK_2_5
+	data->e_destination_filechooserbutton = glade_xml_get_widget (data->gui, "e_destination_filechooserbutton");
+#else
 	data->e_destination_entry = glade_xml_get_widget (data->gui, "e_destination_entry");
 	data->e_destination_button = glade_xml_get_widget (data->gui, "e_destination_button");
+#endif
 	data->e_ogg_radiobutton = glade_xml_get_widget (data->gui, "e_ogg_radiobutton");
 	data->e_flac_radiobutton = glade_xml_get_widget (data->gui, "e_flac_radiobutton");
 	data->e_mp3_radiobutton = glade_xml_get_widget (data->gui, "e_mp3_radiobutton");
@@ -341,7 +376,17 @@ dlg_extract (GooWindow *window)
 	}
 
 	path = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "~");
+
+#ifdef HAVE_GTK_2_5
+	gtk_widget_show (data->e_destination_filechooserbutton);
+	esc_uri = gnome_vfs_escape_host_and_path_string (path);
+	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (data->e_destination_filechooserbutton), esc_uri);
+	g_free (esc_uri);
+#else
+	gtk_widget_show (glade_xml_get_widget (data->gui, "e_destination_hbox"));
 	gtk_entry_set_text (GTK_ENTRY (data->e_destination_entry), path);
+#endif
+
 	g_free (path);
 
 	encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
@@ -469,14 +514,15 @@ dlg_extract (GooWindow *window)
 			  "clicked",
 			  G_CALLBACK (ok_cb),
 			  data);
+#ifndef HAVE_GTK_2_5
 	g_signal_connect (G_OBJECT (data->e_destination_button), 
 			  "clicked",
 			  G_CALLBACK (destination_button_clicked_cb),
 			  data);
-
+#endif
 	/* run dialog. */
 
 	gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
 	gtk_window_set_modal (GTK_WINDOW (data->dialog), TRUE);
-	gtk_widget_show_all (data->dialog);
+	gtk_widget_show (data->dialog);
 }

@@ -34,6 +34,7 @@
 #include <libgnomeui/gnome-propertybox.h>
 #include <libgnomeui/gnome-pixmap.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
 #include <glade/glade.h>
 #include <gst/gst.h>
 #include "typedefs.h"
@@ -306,13 +307,21 @@ done_dialog_response_cb (GtkDialog  *dialog,
 	    && eel_gconf_get_boolean (PREF_RIPPER_VIEW_DISTINATION, FALSE)) {
 		GError *error  = NULL;
 		char   *folder = get_destination_folder (data);
-		char   *url    = g_strconcat ("file://", folder, NULL);
+		char   *scheme = NULL;
+		char   *url    = NULL;
+		
+		scheme = gnome_vfs_get_uri_scheme (folder);
+		if ((scheme == NULL) || (scheme == ""))
+			url = gnome_vfs_get_uri_from_local_path (folder);
+		else
+			url = g_strdup (folder);
 
 		if (! gnome_url_show (url, &error))
 			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (data->window), _("Could not display the destination folder"), &error);
 
-		g_free (folder);
+		g_free (scheme);
 		g_free (url);
+		g_free (folder);
 	}
 
 	gtk_widget_destroy (data->dialog);
@@ -431,12 +440,13 @@ save_playlist (DialogData *data)
 static void
 rip_current_track (DialogData *data)
 {
-	TrackInfo *track;
-	char      *msg;
-	char      *filename;
-	char      *folder;
-	char      *e_title;
-	GstEvent  *event;
+	TrackInfo      *track;
+	char           *msg;
+	char           *filename;
+	char           *folder;
+	char           *e_title;
+	GstEvent       *event;
+	GnomeVFSResult  result;
 
 	if (data->current_track == NULL) {
 		GtkWidget *d;
@@ -480,7 +490,20 @@ rip_current_track (DialogData *data)
 	/* Set the filename */
 
 	folder = get_destination_folder (data);
-	ensure_dir_exists (folder, DESTINATION_PERMISSIONS);
+	
+	if ((result = ensure_dir_exists (folder, DESTINATION_PERMISSIONS)) != GNOME_VFS_OK) {
+		char *utf8_folder;
+
+		utf8_folder = g_locale_to_utf8 (folder, -1, 0, 0, 0);
+		_gtk_error_dialog_run (GTK_WINDOW (data->window),
+				       "Could not extract tracks",
+				       "Could not create folder %s\n\n%s",
+				       utf8_folder,
+				       gnome_vfs_result_to_string (result));
+		g_free (utf8_folder);
+		gtk_widget_destroy (data->dialog);
+		return;
+	}
 
 	filename = get_track_filename (track, data->ext);
 	g_free (data->current_file);

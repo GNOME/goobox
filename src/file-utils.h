@@ -25,6 +25,7 @@
 
 #include <sys/types.h>
 #include <time.h>
+#include <libgnomevfs/gnome-vfs-result.h>
 #include <libgnomevfs/gnome-vfs-file-size.h>
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>
 
@@ -60,7 +61,7 @@ gboolean            file_move                    (const gchar *from,
 
 gint                file_in_path                 (const gchar *name);
 
-gboolean            ensure_dir_exists            (const gchar *a_path,
+GnomeVFSResult      ensure_dir_exists            (const gchar *a_path,
 						  mode_t       mode);
 
 gboolean            file_is_hidden               (const gchar *name);

@@ -1,3 +1,13 @@
+2005-03-23  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* data/glade/goobox.glade: 
+	* src/dlg-ripper.c: 
+	* src/file-utils.c: 
+	* src/dlg-extract.c: 
+
+	Fixed extraction to non-local folders.  Use the filechooserbutton
+	if gtk+ >= 2.5.0 is available.
+	
 2005-03-18  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-window.c (add_columns): added ellipsize property to the

@@ -58,7 +58,7 @@ path_is_file (const gchar *path)
 	if (! path || ! *path) return FALSE; 
 
 	info = gnome_vfs_file_info_new ();
-	escaped = gnome_vfs_escape_path_string (path);
+	escaped = gnome_vfs_escape_host_and_path_string (path);
 	result = gnome_vfs_get_file_info (escaped, 
 					  info, 
 					  (GNOME_VFS_FILE_INFO_DEFAULT 
@@ -82,10 +82,11 @@ path_is_dir (const gchar *path)
 	gboolean is_dir;
 	gchar *escaped;
 
-	if (! path || ! *path) return FALSE; 
+	if (! path || ! *path) 
+		return FALSE; 
 
 	info = gnome_vfs_file_info_new ();
-	escaped = gnome_vfs_escape_path_string (path);
+	escaped = gnome_vfs_escape_host_and_path_string (path);
 	result = gnome_vfs_get_file_info (escaped, 
 					  info, 
 					  (GNOME_VFS_FILE_INFO_DEFAULT 
@@ -155,7 +156,7 @@ get_file_size (const gchar *path)
 	if (! path || ! *path) return 0; 
 
 	info = gnome_vfs_file_info_new ();
-	escaped = gnome_vfs_escape_path_string (path);
+	escaped = gnome_vfs_escape_host_and_path_string (path);
 	result = gnome_vfs_get_file_info (escaped, 
 					  info,
 					  (GNOME_VFS_FILE_INFO_DEFAULT 
@@ -182,7 +183,7 @@ get_file_mtime (const gchar *path)
 	if (! path || ! *path) return 0; 
 
 	info = gnome_vfs_file_info_new ();
-	escaped = gnome_vfs_escape_path_string (path);
+	escaped = gnome_vfs_escape_host_and_path_string (path);
 	result = gnome_vfs_get_file_info (escaped, 
 					  info, 
 					  (GNOME_VFS_FILE_INFO_DEFAULT 
@@ -209,7 +210,7 @@ get_file_ctime (const gchar *path)
 	if (! path || ! *path) return 0; 
 
 	info = gnome_vfs_file_info_new ();
-	escaped = gnome_vfs_escape_path_string (path);
+	escaped = gnome_vfs_escape_host_and_path_string (path);
 	result = gnome_vfs_get_file_info (escaped, 
 					  info, 
 					  (GNOME_VFS_FILE_INFO_DEFAULT 
@@ -244,7 +245,7 @@ file_copy (const gchar *from,
 		return FALSE;
 
 	dest_dir = remove_level_from_path (to);
-	if (! ensure_dir_exists (dest_dir, 0755)) {
+	if (ensure_dir_exists (dest_dir, 0755) != GNOME_VFS_OK) {
 		g_free (dest_dir);
 		fclose (fin);
 		return FALSE;
@@ -377,40 +378,60 @@ remove_ending_separator (const gchar *path)
 }
 
 
-gboolean 
+GnomeVFSResult
 ensure_dir_exists (const gchar *a_path,
 		   mode_t       mode)
 {
-	if (! a_path) return FALSE;
+	char *path;
+	char *p;
+	char *scheme;
 
-	if (! path_is_dir (a_path)) {
-		gchar *path = g_strdup (a_path);
-		gchar *p = path;
+	if (! a_path) 
+		return GNOME_VFS_ERROR_BAD_PARAMETERS;
+	
+	if (path_is_dir (a_path))
+		return GNOME_VFS_OK;
 
-		while (*p != '\0') {
-			p++;
-			if ((*p == '/') || (*p == '\0')) {
-				gboolean end = TRUE;
+	path = g_strdup (a_path);
+	p = path;
 
-				if (*p != '\0') {
-					*p = '\0';
-					end = FALSE;
-				}
+	scheme = gnome_vfs_get_uri_scheme (a_path);
+	if (scheme != NULL) {
+		p += strlen (scheme);
+		if (strncmp (p, "://", 3) == 0)
+			p += 3;
+	}
+	
+	while (*p != '\0') {
+		gboolean end;
 
-			if (! path_is_dir (path)) {
-					if (mkdir (path, mode) < 0) {
-						g_warning ("directory creation failed: %s.", path);
-						g_free (path);
-						return FALSE;
-					}
-				}
-				if (! end) *p = '/';
+		p++;
+		if ((*p != '/') && (*p != '\0')) 
+			continue;
+
+		end = TRUE;
+		if (*p != '\0') {
+			*p = '\0';
+			end = FALSE;
+		}
+			
+		if (! path_is_dir (path)) {
+			GnomeVFSResult result;
+			result = gnome_vfs_make_directory (path, mode);
+			if (result != GNOME_VFS_OK) {
+				g_free (path);
+				return result;
 			}
 		}
-		g_free (path);
-	}
 
-	return TRUE;
+		if (! end) 
+			*p = '/';
+	}
+	
+	g_free (scheme);
+	g_free (path);
+	
+	return GNOME_VFS_OK;
 }
 
 
@@ -837,7 +858,7 @@ get_dest_free_space (const char  *path)
 	GnomeVFSResult    result;
 	GnomeVFSFileSize  ret_val;
 
-	escaped = gnome_vfs_escape_path_string (path);
+	escaped = gnome_vfs_escape_host_and_path_string (path);
 	uri = gnome_vfs_uri_new (escaped);
 	g_free (escaped);
 
