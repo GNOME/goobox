@@ -1,3 +1,7 @@
+2004-11-20  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/dlg-encoder-options.c: use 192 Kbps instead of 196.
+
 2004-11-19  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-application.c (impl_goo_application_present): force content
