@@ -4,7 +4,10 @@
 
 2004-12-16  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
-	* src/goo-window.c (goo_window_construct): 
+	* src/goo-window.c (goo_window_construct)
+	(window_update_statusbar_list_info): fixed status bar text when
+	no metadata is available.  Tagged "year" for translation.
+
 	* src/goo-player-info.h: 
 	* src/goo-player-info.c (cover_button_drag_data_received): added
 	ability to add/change the cover image dropping an image over the

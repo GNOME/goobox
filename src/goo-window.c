@@ -179,9 +179,9 @@ window_update_statusbar_list_info (GooWindow *window)
 		const char *album;
 		char        time_text[64];
 		char       *tracks_s = NULL;
-		char       *text;
 		int         year;
-		char       *year_s;
+		char       *year_s = NULL;
+		GString    *status;
 
 		album = goo_player_cd_get_album (GOO_PLAYER_CD (priv->player));
 
@@ -190,27 +190,33 @@ window_update_statusbar_list_info (GooWindow *window)
 
 		year = goo_player_get_year (priv->player);
 		if (year > 0)
-			year_s = g_strdup_printf ("year %d", year);
+			year_s = g_strdup_printf (_("year %d"), year);
                 else
-			year_s = g_strdup ("");
+			year_s = NULL;
 		
-		if (album != NULL)
-			text = g_strconcat (album, 
-					    ", ", year_s, 
-					    ", ", tracks_s, 
-					    ", ", time_text, 
-					    NULL);
-		else
-			text = g_strconcat (year_s, 
-					    ", ", tracks_s, 
-					    ", ", time_text,
-					    NULL);
+		status = g_string_new (NULL);
 
-		gtk_statusbar_push (GTK_STATUSBAR (priv->statusbar), priv->list_info_cid, text);
+		if (album != NULL) {
+			g_string_append (status, album);
+			g_string_append (status, ", ");
+		}
 
+		if (year_s != NULL) {
+			g_string_append (status, year_s);
+			g_string_append (status, ", ");
+		}
+
+		g_string_append (status, tracks_s);
+		g_string_append (status, ", ");
+		g_string_append (status, time_text);
+
+		gtk_statusbar_push (GTK_STATUSBAR (priv->statusbar), 
+				    priv->list_info_cid, 
+				    status->str);
+
+		g_string_free (status, TRUE);
 		g_free (year_s);
 		g_free (tracks_s);
-		g_free (text);
 	}
 }
 
