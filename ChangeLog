@@ -1,3 +1,12 @@
+2004-12-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c (autoplay_cb): 
+	* src/goo-application.c (goo_application_class_init): 
+	* src/GNOME_Goobox.idl: 
+	* src/main.c (prepare_app): 
+	
+	Added --play option to automatically play after startup.
+
 2004-12-05  Adam Weinberger  <adamw@gnome.org>
 
 	* configure.in: Added en_CA to ALL_LINGUAS.

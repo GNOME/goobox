@@ -39,6 +39,7 @@
 #include "gtk-utils.h"
 
 GtkWindow *main_window = NULL;
+int        AutoPlay = FALSE;
 
 static void     prepare_app         (poptContext pctx);
 static void     initialize_data     (void);
@@ -55,6 +56,9 @@ struct poptOption options[] = {
 	{ "device", 'd', POPT_ARG_STRING, &default_device, 0,
 	  N_("CD device to be used"),
 	  N_("DEVICE_PATH") },
+	{ "play", '\0', POPT_ARG_NONE, &AutoPlay, 0,
+          N_("Play the CD on startup"),
+          0 },
 	{ NULL, '\0', 0, NULL, 0 }
 };
 
@@ -100,7 +104,9 @@ int main (int argc, char **argv)
 		app = bonobo_activation_activate_from_id ("OAFIID:GNOME_Goobox_Application", 0, NULL, &env);
 
 		GNOME_Goobox_Application_present (app, &env);
-
+                if (AutoPlay)
+                	GNOME_Goobox_Application_play (app, &env);
+                  
 		bonobo_object_release_unref (app, &env);
 		CORBA_exception_free (&env);
 

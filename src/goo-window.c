@@ -1299,6 +1299,18 @@ goo_window_update_cover (GooWindow *window)
 }
 
 
+static gboolean
+autoplay_cb (gpointer data)
+{
+	GooWindow *window = data;
+	
+	if (window->priv->songs > 0) 
+		goo_window_play (window);
+	
+	return FALSE;
+}
+
+
 static void
 player_done_cb (GooPlayer       *player,
 		GooPlayerAction  action,
@@ -1315,6 +1327,10 @@ player_done_cb (GooPlayer       *player,
 		window_update_title (window);
 		goo_window_update_list (window);
 		goo_window_update_cover (window);
+		if (AutoPlay) {
+			AutoPlay = FALSE;
+			g_idle_add (autoplay_cb, window);
+		}
 		break;
 	case GOO_PLAYER_ACTION_METADATA:
 		goo_player_info_update_state (GOO_PLAYER_INFO (priv->info));

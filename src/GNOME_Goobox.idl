@@ -6,6 +6,7 @@ module GNOME {
 		
 		interface Application : Bonobo::Unknown {
 			oneway void present ();
+			oneway void play ();
 		};
 		
 	};

@@ -74,10 +74,19 @@ impl_goo_application_present (PortableServer_Servant  _servant,
 
 
 static void
+impl_goo_application_play (PortableServer_Servant  _servant,
+			   CORBA_Environment      *ev)
+{
+	goo_window_play (GOO_WINDOW (main_window));
+}
+
+
+static void
 goo_application_class_init (GooApplicationClass *klass)
 {
         POA_GNOME_Goobox_Application__epv *epv = &klass->epv;
         epv->present = impl_goo_application_present;
+        epv->play = impl_goo_application_play;
 }
 
 

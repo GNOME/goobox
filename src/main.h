@@ -26,5 +26,6 @@
 #include <gtk/gtkwindow.h>
 
 extern GtkWindow *main_window;
+extern int AutoPlay;
 
 #endif /* MAIN_H */
