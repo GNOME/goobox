@@ -1,3 +1,8 @@
+2005-01-11  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* configure.in: added russian translation by Alexandre Prokoudine
+	(sent via e-mail)
+
 2005-01-09  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/actions.c (activate_action_about): removed the documenters.

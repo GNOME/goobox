@@ -1,0 +1,752 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Goobox 0.7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-07 17:19+0100\n"
+"PO-Revision-Date: 2005-01-11 11:30+0300\n"
+"Last-Translator: Alexandre Prokoudine <avp@lrn.ru>\n"
+"Language-Team: RUSSIAN <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+
+#: data/GNOME_Goobox.server.in.in.h:1
+msgid "Goobox Application"
+msgstr "Приложение Goobox"
+
+#: data/GNOME_Goobox.server.in.in.h:2
+msgid "Goobox Application Factory"
+msgstr ""
+
+#: data/glade/goo_cover_chooser.glade.h:1
+msgid "Choose a CD Cover"
+msgstr "Выберите обложку CD"
+
+#: data/glade/goo_cover_chooser.glade.h:2
+msgid "Found images:"
+msgstr "Найдены изображения:"
+
+#: data/glade/goobox.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: data/glade/goobox.glade.h:2
+msgid "<b>CD Drive</b>"
+msgstr "<b>Привод CD</b>"
+
+#: data/glade/goobox.glade.h:3
+msgid "<b>Destination folder</b>"
+msgstr "<b>Конечный каталог</b>"
+
+#: data/glade/goobox.glade.h:4
+msgid "<b>Extract</b>"
+msgstr "<b>Извлечь</b>"
+
+#: data/glade/goobox.glade.h:5
+msgid "<b>FLAC</b>"
+msgstr "<b>FLAC</b>"
+
+#: data/glade/goobox.glade.h:6
+msgid "<b>File type</b>"
+msgstr "<b>Тип файлов</b>"
+
+#: data/glade/goobox.glade.h:7
+msgid "<b>MP3</b>"
+msgstr "<b>MP3</b>"
+
+#: data/glade/goobox.glade.h:8
+msgid "<b>Ogg Vorbis</b>"
+msgstr "<b>Ogg Vorbis</b>"
+
+#: data/glade/goobox.glade.h:9
+msgid "Advanced _Options"
+msgstr "Advanced _Options"
+
+#: data/glade/goobox.glade.h:10
+#: src/dlg-extract.c:238
+msgid "Choose destination folder"
+msgstr "Выберите конечный каталог"
+
+#: data/glade/goobox.glade.h:11
+msgid "Encoding"
+msgstr "Кодирование"
+
+#: data/glade/goobox.glade.h:12
+msgid "Excellent quality lossless compression"
+msgstr "Сжатие без потерь, превосходный звук"
+
+#: data/glade/goobox.glade.h:13
+msgid "Extract Tracks"
+msgstr "Извлечь дорожки"
+
+#: data/glade/goobox.glade.h:14
+msgid "Extracting Tracks"
+msgstr "Идёт извлечение дорожек"
+
+#: data/glade/goobox.glade.h:15
+msgid "General"
+msgstr "Общие"
+
+#: data/glade/goobox.glade.h:16
+msgid "Good quality lossy compression"
+msgstr "Сжатие с потерями, хороший звук"
+
+#: data/glade/goobox.glade.h:17
+msgid "High quality lossy compression"
+msgstr "Сжатие с потерями, отличный звук"
+
+#: data/glade/goobox.glade.h:18
+msgid "Preferences"
+msgstr "Настройки"
+
+#: data/glade/goobox.glade.h:19
+msgid "Raw audio"
+msgstr "Raw аудио"
+
+#: data/glade/goobox.glade.h:20
+msgid "_All tracks"
+msgstr "_Все дорожки"
+
+#: data/glade/goobox.glade.h:21
+msgid "_FLAC"
+msgstr "_FLAC"
+
+#: data/glade/goobox.glade.h:22
+msgid "_MP3"
+msgstr "_MP3"
+
+#: data/glade/goobox.glade.h:23
+msgid "_Ogg Vorbis"
+msgstr "_Ogg Vorbis"
+
+#: data/glade/goobox.glade.h:24
+msgid "_Save playlist"
+msgstr "Сохранить плейлист"
+
+#: data/glade/goobox.glade.h:25
+msgid "_Selected tracks"
+msgstr "_Избранные дорожки"
+
+#: data/glade/goobox.glade.h:26
+msgid "_Wave"
+msgstr "_Wave"
+
+#: data/goobox.desktop.in.h:1
+#: src/goo-window.c:2089
+#: src/goo-window.c:2097
+msgid "CD Player"
+msgstr "Проигрыватель CD"
+
+#: data/goobox.desktop.in.h:2
+msgid "Play and extract CDs"
+msgstr "Воспроизвести и извлечь CD"
+
+#: data/goobox.schemas.in.h:1
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "Возможные варианты: ogg, flac, mp3, wave."
+
+#: data/goobox.schemas.in.h:2
+msgid "Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgstr "Возможные варианты: system, text_below, text_beside, text_only, icons_only."
+
+#. const char       *documenters [] = {
+#: src/actions.c:141
+msgid "translator_credits"
+msgstr "Александр Прокудин <avp@lrn.ru>"
+
+#: src/actions.c:152
+#: src/actions.c:167
+msgid "Goobox"
+msgstr "Goobox"
+
+#: src/actions.c:155
+#: src/actions.c:170
+#: src/main.c:114
+msgid "CD player and ripper"
+msgstr "Проигрыватель и копировщик CD"
+
+#: src/bacon-cd-selection.c:200
+msgid "Unnamed CDROM"
+msgstr "Безымянный CDROM"
+
+#: src/cd-drive.c:835
+#, c-format
+msgid "Unnamed SCSI Drive (%s)"
+msgstr "Безымянный SCSI-привод (%s)"
+
+#: src/cd-drive.c:1395
+msgid "File image"
+msgstr "Файл изображения"
+
+#: src/dlg-cover-chooser.c:271
+#, c-format
+msgid "%u, loading image: %u"
+msgstr "%u, загружается изображение: %u"
+
+#: src/dlg-cover-chooser.c:309
+msgid "Loading images"
+msgstr "Загружаются изображения"
+
+#: src/dlg-cover-chooser.c:330
+#: src/goo-window.c:2696
+msgid "Could not search a cover on Internet"
+msgstr "Не удалось найти обложку в Интернете"
+
+#: src/dlg-cover-chooser.c:338
+#: src/dlg-cover-chooser.c:422
+msgid "No image found"
+msgstr "Изображения не найдены"
+
+#: src/dlg-cover-chooser.c:482
+#: src/dlg-extract.c:202
+#: src/dlg-preferences.c:147
+#, c-format
+msgid "Could not display help: %s"
+msgstr "Не удалось отобразить справку: %s"
+
+#: src/dlg-cover-chooser.c:682
+msgid "Searching images..."
+msgstr "Идёт поиск изображений..."
+
+#: src/dlg-extract.c:365
+#, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+msgstr ""
+"Вам необходим хотя бы один из приведённых ниже модулей Gstreamer для копирования CD:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+
+#: src/dlg-extract.c:378
+msgid "No encoder available."
+msgstr "Нет доступных кодировщиков"
+
+#: src/dlg-preferences.c:168
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "Номинальная битовая частота: %d Кбит/с"
+
+#: src/dlg-preferences.c:172
+#, c-format
+msgid "Compression level: %d"
+msgstr "Уровень сжатия: %d"
+
+#: src/dlg-preferences.c:176
+#, c-format
+msgid "Bitrate: %d Kbps"
+msgstr "Битовая частота: %d Кбит/с"
+
+#. Set widgets data.
+#: src/dlg-preferences.c:335
+#: src/dlg-preferences.c:343
+msgid "Smaller size"
+msgstr "Меньший размер"
+
+#: src/dlg-preferences.c:339
+#: src/dlg-preferences.c:347
+msgid "Higher quality"
+msgstr "Лучше качество"
+
+#: src/dlg-preferences.c:351
+msgid "Faster compression"
+msgstr "Быстрее сжатие"
+
+#: src/dlg-preferences.c:355
+msgid "Higher compression"
+msgstr "Лучше сжатие"
+
+#: src/dlg-ripper.c:313
+msgid "Could not display the destination folder"
+msgstr "Не удалось отобразить конечный каталог"
+
+#: src/dlg-ripper.c:427
+msgid "Tracks extracted successfully"
+msgstr "Дорожки успешно скопированы"
+
+#: src/dlg-ripper.c:429
+msgid "_View destination folder"
+msgstr "_Открыть конечный каталог"
+
+#: src/dlg-ripper.c:442
+#, c-format
+msgid "Extracting track %d of %d: %s"
+msgstr "Копируется дорожка %d из %d: %s"
+
+#: src/dlg-ripper.c:477
+msgid "Ripped with Goobox"
+msgstr "Скопировано при помощи Goobox"
+
+#: src/eggtrayicon.c:118
+msgid "Orientation"
+msgstr "Ориентация"
+
+#: src/eggtrayicon.c:119
+msgid "The orientation of the tray."
+msgstr "Ориентация области уведомления"
+
+#: src/file-utils.c:622
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr "Терминал не найден, используется xterm (не факт, что сработает)"
+
+#: src/goo-cdrom-bsd.c:140
+#: src/goo-cdrom-linux.c:121
+#: src/goo-cdrom-solaris.c:123
+msgid "Error reading CD"
+msgstr "Ошибка чтения CD"
+
+#: src/goo-cdrom.c:323
+msgid "The specified device is not valid"
+msgstr "Указанное устройство не работает"
+
+#: src/goo-player-cd.c:784
+msgid "Drive not ready"
+msgstr "Привод не готов"
+
+#: src/goo-player-cd.c:788
+msgid "Tray open"
+msgstr "Лоток привода открыт"
+
+#: src/goo-player-cd.c:789
+#: src/goo-player-cd.c:793
+msgid "No disc"
+msgstr "Нет диска"
+
+#: src/goo-player-cd.c:797
+msgid "Data CD"
+msgstr "Это компакт-диск с данными"
+
+#: src/goo-player-info.c:236
+#: src/goo-player-info.c:261
+#: src/goo-player-info.c:758
+#, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#: src/goo-player-info.c:499
+msgid "Click here to choose a cover for this CD"
+msgstr "Щёлкните тут для выбора обложки CD"
+
+#: src/goo-player-info.c:686
+#: src/goo-window.c:1236
+msgid "Paused"
+msgstr "Приостановлено"
+
+#: src/goo-player-info.c:697
+msgid "Ejecting CD"
+msgstr "Лоток открывается"
+
+#: src/goo-player-info.c:701
+msgid "Checking CD drive"
+msgstr "Проверяется CD-привод"
+
+#: src/goo-player-info.c:705
+#: src/goo-player-info.c:709
+msgid "Reading CD"
+msgstr "Читается CD"
+
+#: src/goo-player-info.c:722
+#: src/goo-window.c:1260
+msgid "Audio CD"
+msgstr "Звуковой CD"
+
+#: src/goo-stock.c:53
+msgid "_Extract"
+msgstr "_Скопировать"
+
+#: src/goo-stock.c:54
+msgid "_Reset"
+msgstr "С_бросить"
+
+#: src/goo-stock.c:55
+#: src/goo-stock.c:56
+#: src/goo-stock.c:57
+#: src/goo-stock.c:58
+msgid "V_olume"
+msgstr "_Громкость"
+
+#: src/goo-volume-button.c:147
+#: src/goo-volume-tool-button.c:284
+#, c-format
+msgid "Volume level: %3.0f%%"
+msgstr "Уровень громкости: %3.0f%%"
+
+#: src/goo-volume-button.c:328
+#: src/goo-volume-tool-button.c:494
+msgid "+"
+msgstr "+"
+
+#: src/goo-volume-button.c:344
+#: src/goo-volume-tool-button.c:510
+msgid "-"
+msgstr "-"
+
+#: src/goo-volume-tool-button.c:538
+msgid "Change the volume level"
+msgstr "Изменить уровень громкости"
+
+#: src/goo-volume-tool-button.c:605
+msgid "Volume"
+msgstr "Громкость"
+
+#: src/goo-window.c:65
+msgid "Hide _tracks"
+msgstr "Спр_ятать дорожки"
+
+#: src/goo-window.c:66
+msgid "Show _tracks"
+msgstr "Показать д_орожки"
+
+#: src/goo-window.c:189
+#, c-format
+msgid "%d track"
+msgid_plural "%d tracks"
+msgstr[0] "%d дорожка"
+msgstr[1] "%d дорожек"
+
+#: src/goo-window.c:193
+#, c-format
+msgid "year %d"
+msgstr "год %d"
+
+#: src/goo-window.c:538
+msgid "Length"
+msgstr "Продолжительность"
+
+#: src/goo-window.c:539
+msgid "Title"
+msgstr "Название"
+
+#: src/goo-window.c:540
+msgid "Artist"
+msgstr "Исполнитель"
+
+#: src/goo-window.c:548
+msgid "#"
+msgstr "#"
+
+#: src/goo-window.c:1146
+#: src/ui.h:57
+msgid "_Pause"
+msgstr "_Приостановить"
+
+#: src/goo-window.c:1147
+msgid "Pause playing"
+msgstr "Пауза воспроизведения"
+
+#: src/goo-window.c:1366
+#: src/goo-window.c:1378
+#: src/ui.h:45
+#: src/ui.h:49
+#: src/ui.h:53
+msgid "_Play"
+msgstr "_Воспроизвести"
+
+#: src/goo-window.c:1367
+#: src/goo-window.c:1379
+msgid "Play CD"
+msgstr "Воспроизвести CD"
+
+#: src/goo-window.c:2374
+msgid "Could not eject the CD"
+msgstr "Не удалось открыть лоток с CD"
+
+#: src/goo-window.c:2386
+msgid "Could not read drive"
+msgstr "Не удалось считать CD"
+
+#: src/goo-window.c:2570
+msgid "Could not save cover image"
+msgstr "Не удалось сохранить обложку"
+
+#: src/goo-window.c:2580
+msgid "Could not load image"
+msgstr "Не удалось загрузить изображение"
+
+#: src/goo-window.c:2636
+msgid "Choose CD Cover Image"
+msgstr "Выберите обложку CD"
+
+#: src/goo-window.c:2655
+msgid "Images"
+msgstr "Избражения"
+
+#: src/goo-window.c:2663
+msgid "All files"
+msgstr "Все файлы"
+
+#: src/goo-window.c:2697
+msgid "You have to enter the artist and album names in order to find the album cover."
+msgstr "Для того, чтобы найти обложку, нужно сначала указать исполнителя и название альбома"
+
+#: src/goo-window.c:2731
+msgid "_Show Window"
+msgstr "Показать окно"
+
+#: src/goo-window.c:2732
+msgid "Show the main window"
+msgstr "Показать основное окно"
+
+#: src/goo-window.c:2745
+#: src/ui.h:109
+msgid "_Hide Window"
+msgstr "_Спрятать окно"
+
+#: src/goo-window.c:2746
+#: src/ui.h:110
+msgid "Hide the main window"
+msgstr "Спрятать основное окно"
+
+#: src/gth-image-list.c:3520
+msgid "No image"
+msgstr "Нет изображений"
+
+#: src/gtk-file-chooser-preview.c:203
+msgid "Preview"
+msgstr "Просмотр"
+
+#: src/gtk-file-chooser-preview.c:328
+msgid "pixels"
+msgstr "пикселов"
+
+#: src/gtk-utils.c:797
+msgid "Could not execute command"
+msgstr "Не удалось выполнить команду"
+
+#: src/main.c:65
+msgid "CD device to be used"
+msgstr "Используемый CD-привод"
+
+#: src/main.c:66
+msgid "DEVICE_PATH"
+msgstr ""
+
+#: src/main.c:68
+msgid "Play the CD on startup"
+msgstr "Воспроизводить CD при старте"
+
+#: src/main.c:71
+#: src/ui.h:46
+msgid "Play/Pause"
+msgstr "Воспроизвести/Приостановить"
+
+#: src/main.c:74
+#: src/ui.h:66
+msgid "Play the next track"
+msgstr "Воспроизвести следующую дорожку"
+
+#: src/main.c:77
+#: src/ui.h:70
+msgid "Play the previous track"
+msgstr "Воспроизвести предыдущую дорожку"
+
+#: src/main.c:80
+#: src/ui.h:74
+msgid "Eject the CD"
+msgstr "Извлечь CD из привода"
+
+#: src/main.c:83
+msgid "Hide/Show the main window"
+msgstr "Спрятать/Показать основное окно"
+
+#: src/main.c:86
+msgid "Volume Up"
+msgstr "Выше громкость"
+
+#: src/main.c:89
+msgid "Volume Down"
+msgstr "Ниже громкость"
+
+#: src/main.c:92
+#: src/ui.h:94
+msgid "Quit the application"
+msgstr "Выйти из приложения"
+
+#: src/main.c:246
+msgid "Cannot start the CD player"
+msgstr "Не удалось запустить CD-проигрыватель"
+
+#: src/main.c:247
+msgid "In order to read CDs you have to install the cdparanoia gstreamer plugin"
+msgstr "Для чтения дисков необходимо установить модуль cdparanoia для GStreamer"
+
+#: src/track-info.c:118
+#, c-format
+msgid "Track %u"
+msgstr "Дорожка %u"
+
+#: src/ui.h:34
+msgid "_CD"
+msgstr "_Компакт-диск"
+
+#: src/ui.h:35
+msgid "_Edit"
+msgstr "_Правка"
+
+#: src/ui.h:36
+msgid "_View"
+msgstr "_Вид"
+
+#: src/ui.h:37
+msgid "_Help"
+msgstr "_Справка"
+
+#: src/ui.h:38
+msgid "CD C_over"
+msgstr "О_бложка CD"
+
+#: src/ui.h:41
+msgid "_About"
+msgstr "_О программе..."
+
+#: src/ui.h:42
+msgid "Information about the program"
+msgstr "Информация о программе"
+
+#: src/ui.h:50
+msgid "Play"
+msgstr "Воспроизвести"
+
+#: src/ui.h:54
+msgid "Play this track"
+msgstr "Воспроизвести эту дорожку"
+
+#: src/ui.h:58
+msgid "Pause"
+msgstr "Пауза"
+
+#: src/ui.h:61
+msgid "_Stop"
+msgstr "_Остановить"
+
+#: src/ui.h:62
+msgid "Stop playing"
+msgstr "Остановить воспроизведение"
+
+#: src/ui.h:65
+msgid "_Next"
+msgstr "_Следующая"
+
+#: src/ui.h:69
+msgid "Pre_v"
+msgstr "Пр_едыдущая"
+
+#: src/ui.h:73
+msgid "_Eject"
+msgstr "_Извлечь"
+
+#: src/ui.h:77
+msgid "_Reload"
+msgstr "Переза_грузить"
+
+#: src/ui.h:78
+msgid "Reload the CD"
+msgstr "Перезагрузить этот CD"
+
+#: src/ui.h:81
+msgid "_Preferences"
+msgstr "Изменить _настройки..."
+
+#: src/ui.h:82
+msgid "Edit various preferences"
+msgstr "Изменить настройки программы"
+
+#: src/ui.h:85
+msgid "E_xtract Tracks"
+msgstr "С_копировать дорожки"
+
+#: src/ui.h:86
+msgid "Save the tracks to disk as files"
+msgstr "Сохранить дорожки как файлы на жёсткий диск"
+
+#: src/ui.h:89
+msgid "_CD Properties"
+msgstr "_Свойства CD"
+
+#: src/ui.h:90
+msgid "Edit the CD artist, album and tracks titles"
+msgstr "Изменить имя исполнителя, название альбома и дорожек"
+
+#: src/ui.h:93
+msgid "_Quit"
+msgstr "Вы_йти"
+
+#: src/ui.h:97
+msgid "_Choose from Disk"
+msgstr "_Выбрать с диска"
+
+#: src/ui.h:98
+msgid "Choose a CD cover from the local disk"
+msgstr "Выбрать обложку CD с жёсткого диска"
+
+#: src/ui.h:101
+msgid "_Search on Internet"
+msgstr "Поискать в _Интернете"
+
+#: src/ui.h:102
+msgid "Search a CD cover on Internet"
+msgstr "Поискать обложку CD в Интернете"
+
+#: src/ui.h:105
+msgid "_Remove Cover"
+msgstr "_Удалить обложку"
+
+#: src/ui.h:106
+msgid "Remove current CD cover"
+msgstr "Удалить эту обложку CD"
+
+#: src/ui.h:118
+msgid "_Toolbar"
+msgstr "_Панель"
+
+#: src/ui.h:119
+msgid "View the main toolbar"
+msgstr "Показать основную панель"
+
+#: src/ui.h:123
+msgid "Stat_usbar"
+msgstr "_Статусная строка"
+
+#: src/ui.h:124
+msgid "View the statusbar"
+msgstr "Показать статусную строку"
+
+#: src/ui.h:128
+msgid "Play _All"
+msgstr "Воспроизводить _все"
+
+#: src/ui.h:129
+msgid "Play all tracks"
+msgstr "Воспроизводить все дорожки"
+
+#: src/ui.h:133
+msgid "_Repeat"
+msgstr "_Повторять"
+
+#: src/ui.h:134
+msgid "Restart playing when finished"
+msgstr "Возобновить воспроизведения с начала по окончании"
+
+#: src/ui.h:138
+msgid "S_huffle"
+msgstr "В с_лучайном порядке"
+
+#: src/ui.h:139
+msgid "Play tracks in a random order"
+msgstr "Воспроизводить дорожки в случайном порядке"
+
