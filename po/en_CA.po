@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-20 17:43-0500\n"
-"PO-Revision-Date: 2005-01-20 01:43-0400\n"
+"POT-Creation-Date: 2005-03-01 14:43-0500\n"
+"PO-Revision-Date: 2005-03-01 01:43-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
-"Language-Team: Canadian English <adamw@FreeBSD.org>\n"
+"Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -69,7 +69,7 @@ msgstr "<b>Ogg Vorbis</b>"
 msgid "Advanced _Options"
 msgstr "Advanced _Options"
 
-#: data/glade/goobox.glade.h:10 src/dlg-extract.c:239
+#: data/glade/goobox.glade.h:10 src/dlg-extract.c:240
 msgid "Choose destination folder"
 msgstr "Choose destination folder"
 
@@ -137,7 +137,7 @@ msgstr "_Selected tracks"
 msgid "_Wave"
 msgstr "_Wave"
 
-#: data/goobox.desktop.in.h:1 src/goo-window.c:2089 src/goo-window.c:2097
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2342 src/goo-window.c:2350
 msgid "CD Player"
 msgstr "CD Player"
 
@@ -146,10 +146,36 @@ msgid "Play and extract CDs"
 msgstr "Play and extract CDs"
 
 #: data/goobox.schemas.in.h:1
+msgid ""
+"</long> <!-- <short>How to sort files</short> <long>What criteria must be "
+"used to arrange files. Possible values: number, time, title. </long> --> </"
+"locale> </schema> <schema> <key>/schemas/apps/goobox/playlist/sort_type</"
+"key> <applyto>/apps/goobox/playlist/sort_type</applyto> <owner>goobox</"
+"owner> <type>string</type> <default>ascending</default> <locale name=\"C\"> "
+"<short></short> <long></long> <!-- <short>Sort type</short> <long>Whether to "
+"sort in ascending or descending direction. Possible values: ascending, "
+"descending.</long> --> </locale> </schema> <!-- EXTRACT --> <schema> <key>/"
+"schemas/apps/goobox/dialogs/extract/destination</key> <applyto>/apps/goobox/"
+"dialogs/extract/destination</applyto> <owner>goobox</owner> <type>string</"
+"type> <default>~</default> <locale name=\"C\"> <short></short> <long>"
+msgstr ""
+"</long> <!-- <short>How to sort files</short> <long>What criteria must be "
+"used to arrange files. Possible values: number, time, title. </long> --> </"
+"locale> </schema> <schema> <key>/schemas/apps/goobox/playlist/sort_type</"
+"key> <applyto>/apps/goobox/playlist/sort_type</applyto> <owner>goobox</"
+"owner> <type>string</type> <default>ascending</default> <locale name=\"C\"> "
+"<short></short> <long></long> <!-- <short>Sort type</short> <long>Whether to "
+"sort in ascending or descending direction. Possible values: ascending, "
+"descending.</long> --> </locale> </schema> <!-- EXTRACT --> <schema> <key>/"
+"schemas/apps/goobox/dialogs/extract/destination</key> <applyto>/apps/goobox/"
+"dialogs/extract/destination</applyto> <owner>goobox</owner> <type>string</"
+"type> <default>~</default> <locale name=\"C\"> <short></short> <long>"
+
+#: data/goobox.schemas.in.h:2
 msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr "Possible values are: ogg, flac, mp3, wave."
 
-#: data/goobox.schemas.in.h:2
+#: data/goobox.schemas.in.h:3
 msgid ""
 "Possible values are: system, text_below, text_beside, text_only, icons_only."
 msgstr ""
@@ -197,7 +223,7 @@ msgstr "%u, loading image: %u"
 msgid "Loading images"
 msgstr "Loading images"
 
-#: src/dlg-cover-chooser.c:330 src/goo-window.c:2696
+#: src/dlg-cover-chooser.c:330 src/goo-window.c:2964
 msgid "Could not search a cover on Internet"
 msgstr "Could not search a cover on Internet"
 
@@ -205,7 +231,7 @@ msgstr "Could not search a cover on Internet"
 msgid "No image found"
 msgstr "No image found"
 
-#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:203 src/dlg-preferences.c:147
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:204 src/dlg-preferences.c:147
 #, c-format
 msgid "Could not display help: %s"
 msgstr "Could not display help: %s"
@@ -214,7 +240,7 @@ msgstr "Could not display help: %s"
 msgid "Searching images..."
 msgstr "Searching images..."
 
-#: src/dlg-extract.c:374
+#: src/dlg-extract.c:375
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -233,7 +259,7 @@ msgstr ""
 "• %s → Mp3\n"
 "• %s → Wave"
 
-#: src/dlg-extract.c:387
+#: src/dlg-extract.c:388
 msgid "No encoder available."
 msgstr "No encoder available."
 
@@ -269,24 +295,24 @@ msgstr "Faster compression"
 msgid "Higher compression"
 msgstr "Higher compression"
 
-#: src/dlg-ripper.c:313
+#: src/dlg-ripper.c:315
 msgid "Could not display the destination folder"
 msgstr "Could not display the destination folder"
 
-#: src/dlg-ripper.c:427
+#: src/dlg-ripper.c:430
 msgid "Tracks extracted successfully"
 msgstr "Tracks extracted successfully"
 
-#: src/dlg-ripper.c:429
+#: src/dlg-ripper.c:432
 msgid "_View destination folder"
 msgstr "_View destination folder"
 
-#: src/dlg-ripper.c:442
+#: src/dlg-ripper.c:445
 #, c-format
 msgid "Extracting track %d of %d: %s"
 msgstr "Extracting track %d of %d: %s"
 
-#: src/dlg-ripper.c:477
+#: src/dlg-ripper.c:485
 msgid "Ripped with Goobox"
 msgstr "Ripped with Goobox"
 
@@ -311,19 +337,19 @@ msgstr "Error reading CD"
 msgid "The specified device is not valid"
 msgstr "The specified device is not valid"
 
-#: src/goo-player-cd.c:784
+#: src/goo-player-cd.c:795
 msgid "Drive not ready"
 msgstr "Drive not ready"
 
-#: src/goo-player-cd.c:788
+#: src/goo-player-cd.c:799
 msgid "Tray open"
 msgstr "Tray open"
 
-#: src/goo-player-cd.c:789 src/goo-player-cd.c:793
+#: src/goo-player-cd.c:800 src/goo-player-cd.c:804
 msgid "No disc"
 msgstr "No disc"
 
-#: src/goo-player-cd.c:797
+#: src/goo-player-cd.c:808
 msgid "Data CD"
 msgstr "Data CD"
 
@@ -337,7 +363,7 @@ msgstr "%s / %s"
 msgid "Click here to choose a cover for this CD"
 msgstr "Click here to choose a cover for this CD"
 
-#: src/goo-player-info.c:686 src/goo-window.c:1236
+#: src/goo-player-info.c:686 src/goo-window.c:1419
 msgid "Paused"
 msgstr "Paused"
 
@@ -353,7 +379,7 @@ msgstr "Checking CD drive"
 msgid "Reading CD"
 msgstr "Reading CD"
 
-#: src/goo-player-info.c:722 src/goo-window.c:1260
+#: src/goo-player-info.c:722 src/goo-window.c:1443
 msgid "Audio CD"
 msgstr "Audio CD"
 
@@ -398,80 +424,80 @@ msgstr "Hide _tracks"
 msgid "Show _tracks"
 msgstr "Show _tracks"
 
-#: src/goo-window.c:189
+#: src/goo-window.c:194
 #, c-format
 msgid "%d track"
 msgid_plural "%d tracks"
 msgstr[0] "%d track"
 msgstr[1] "%d tracks"
 
-#: src/goo-window.c:193
+#: src/goo-window.c:198
 #, c-format
 msgid "year %d"
 msgstr "year %d"
 
-#: src/goo-window.c:538
+#: src/goo-window.c:634
 msgid "Length"
 msgstr "Length"
 
-#: src/goo-window.c:539
+#: src/goo-window.c:635
 msgid "Title"
 msgstr "Title"
 
-#: src/goo-window.c:540
+#: src/goo-window.c:636
 msgid "Artist"
 msgstr "Artist"
 
-#: src/goo-window.c:548
+#: src/goo-window.c:644
 msgid "#"
 msgstr "#"
 
-#: src/goo-window.c:1146 src/ui.h:65
+#: src/goo-window.c:1328 src/ui.h:65
 msgid "_Pause"
 msgstr "_Pause"
 
-#: src/goo-window.c:1147
+#: src/goo-window.c:1329
 msgid "Pause playing"
 msgstr "Pause playing"
 
-#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:53 src/ui.h:57
+#: src/goo-window.c:1551 src/goo-window.c:1568 src/ui.h:53 src/ui.h:57
 #: src/ui.h:61
 msgid "_Play"
 msgstr "_Play"
 
-#: src/goo-window.c:1367 src/goo-window.c:1379
+#: src/goo-window.c:1552 src/goo-window.c:1569
 msgid "Play CD"
 msgstr "Play CD"
 
-#: src/goo-window.c:2374
+#: src/goo-window.c:2643
 msgid "Could not eject the CD"
 msgstr "Could not eject the CD"
 
-#: src/goo-window.c:2386
+#: src/goo-window.c:2655
 msgid "Could not read drive"
 msgstr "Could not read drive"
 
-#: src/goo-window.c:2570
+#: src/goo-window.c:2838
 msgid "Could not save cover image"
 msgstr "Could not save cover image"
 
-#: src/goo-window.c:2580
+#: src/goo-window.c:2848
 msgid "Could not load image"
 msgstr "Could not load image"
 
-#: src/goo-window.c:2636
+#: src/goo-window.c:2904
 msgid "Choose CD Cover Image"
 msgstr "Choose CD Cover Image"
 
-#: src/goo-window.c:2655
+#: src/goo-window.c:2923
 msgid "Images"
 msgstr "Images"
 
-#: src/goo-window.c:2663
+#: src/goo-window.c:2931
 msgid "All files"
 msgstr "All files"
 
-#: src/goo-window.c:2697
+#: src/goo-window.c:2965
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -479,19 +505,19 @@ msgstr ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 
-#: src/goo-window.c:2731
+#: src/goo-window.c:2999
 msgid "_Show Window"
 msgstr "_Show Window"
 
-#: src/goo-window.c:2732
+#: src/goo-window.c:3000
 msgid "Show the main window"
 msgstr "Show the main window"
 
-#: src/goo-window.c:2745 src/ui.h:117
+#: src/goo-window.c:3013 src/ui.h:117
 msgid "_Hide Window"
 msgstr "_Hide Window"
 
-#: src/goo-window.c:2746 src/ui.h:118
+#: src/goo-window.c:3014 src/ui.h:118
 msgid "Hide the main window"
 msgstr "Hide the main window"
 
