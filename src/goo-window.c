@@ -1534,13 +1534,13 @@ update_ui_from_expander_state (GooWindow *window)
 			gtk_window_resize (GTK_WINDOW (window), 
 					   eel_gconf_get_integer (PREF_UI_WINDOW_WIDTH, DEFAULT_WIN_WIDTH),
 					   eel_gconf_get_integer (PREF_UI_WINDOW_HEIGHT, DEFAULT_WIN_HEIGHT));
-		/*gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (priv->statusbar), TRUE); FIXME*/
+		gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (priv->statusbar), TRUE);
 		gtk_widget_show (priv->list_view->parent);
 		gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
 	} else {
 		if (GTK_WIDGET_REALIZED (window))
 			save_window_size (window);
-		/*gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (priv->statusbar), FALSE); FIXME*/
+		gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (priv->statusbar), FALSE); 
 		gtk_expander_set_label (expander, _(SHOW_TRACK_LIST));
 		gtk_widget_hide (priv->list_view->parent);
 		gtk_window_set_resizable (GTK_WINDOW (window), FALSE);

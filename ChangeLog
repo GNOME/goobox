@@ -1,3 +1,12 @@
+2005-01-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c (update_ui_from_expander_state): hide the resize grip
+	when the track list is collapsed.
+
+2005-01-02  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/dlg-ripper.c (save_playlist): write relative paths.
+
 2005-01-03  Martin Willemoes Hansen  <mwh@sysrq.dk>
 
 	* configure.in: 

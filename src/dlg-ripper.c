@@ -365,20 +365,23 @@ save_playlist (DialogData *data)
 		for (scan = data->tracks; scan; scan = scan->next) {
 			TrackInfo *track = scan->data;
 			char      *track_filename;
-			char      *track_path;
+			/*char      *track_path;*/
 
 			n++;
 
 			track_filename = g_strdup_printf ("%s - %s.%s", zero_padded (track->number + 1), track->title, data->ext);
-			track_path = g_build_filename (folder, track_filename, NULL);
 
-			sprintf (buffer, "File%d=%s\n", n, track_path);
+			/*
+			track_path = g_build_filename (folder, track_filename, NULL);
+			*/
+
+			sprintf (buffer, "File%d=%s\n", n, track_filename);
 			gnome_vfs_write (handle,
 					 buffer,
 					 strlen (buffer),
 					 NULL);
 			g_free (track_filename);
-			g_free (track_path);
+			/*g_free (track_path);*/
 
 			sprintf (buffer, "Title%d=%s - %s\n", n, data->artist, track->title);
 			gnome_vfs_write (handle,
