@@ -415,10 +415,12 @@ list_thread (void *thread_data)
 
 	gst_pad_query (priv->source_pad, GST_QUERY_TOTAL, &(priv->track_format), &(priv->n_tracks));
 
+	debug (DEBUG_INFO, "TOTAL TRACKS: %" G_GINT64_FORMAT "\n", priv->n_tracks);
+
 	gst_pad_query (priv->source_pad, GST_QUERY_TOTAL, &(priv->sector_format), &total_sectors);
 	total_sectors += TOC_OFFSET;
 	
-	debug (DEBUG_INFO, "TOTAL SECTORS: %" G_GINT64_FORMAT "\n", total_sectors + from_sector);
+	debug (DEBUG_INFO, "TOTAL SECTORS: %" G_GINT64_FORMAT "\n", total_sectors);
 	
 	gst_pad_convert (priv->source_pad, 
 			 priv->sector_format, 

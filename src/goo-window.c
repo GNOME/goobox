@@ -69,6 +69,8 @@
 #define PLAYER_CHECK_RATE 100
 #define COVER_SIZE 80
 #define IDLE_TIMEOUT 200
+#define FALLBACK_ICON_SIZE 16
+
 
 struct _GooWindowPrivateData {
 	GtkUIManager    *ui;
@@ -302,6 +304,66 @@ window_update_sensitivity (GooWindow *window)
 }
 
 
+static GdkPixbuf *
+create_void_icon (GooWindow *window)
+{
+	GtkSettings  *settings;
+	int           width, height, icon_size;
+	GdkPixbuf    *icon;
+
+	settings = gtk_settings_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (window)));
+
+	if (gtk_icon_size_lookup_for_settings (settings, GTK_ICON_SIZE_MENU, &width, &height))
+		icon_size = MAX (width, height);
+	else
+		icon_size = FALLBACK_ICON_SIZE;
+
+	icon = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, icon_size, icon_size);
+	gdk_pixbuf_fill (icon, 0x00000000);
+
+	return icon;
+}
+
+
+static void
+set_song_icon (GooWindow  *window,
+	       int         track_number,
+	       const char *stock_id)
+{
+	GooWindowPrivateData *priv = window->priv;
+	GtkTreeIter           iter;
+
+	if (gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (priv->list_store),
+					   &iter,
+					   NULL,
+					   track_number)) {
+		GdkPixbuf *icon;
+
+		if (stock_id != NULL)
+			icon = gtk_widget_render_icon (GTK_WIDGET (window), 
+						       stock_id, 
+						       GTK_ICON_SIZE_MENU, 
+						       NULL);
+		else
+			icon = create_void_icon (window);
+		gtk_list_store_set (priv->list_store, &iter,
+				    COLUMN_ICON, icon,
+				    -1);
+		g_object_unref (icon);
+	}
+}
+
+
+static void
+set_current_song_icon (GooWindow  *window,
+		       const char *stock_id)
+{
+	if (window->priv->current_song != NULL)
+		set_song_icon (window, window->priv->current_song->number, stock_id);
+}
+
+
+
 static gboolean
 update_list_idle (gpointer callback_data)
 {
@@ -311,6 +373,7 @@ update_list_idle (gpointer callback_data)
 	GList                *file_list;
 	GList                *scan;
 	int                   i, n = FILES_TO_PROCESS_AT_ONCE;
+	GdkPixbuf            *icon;
 
 	if (priv->update_timeout_handle != 0) {
 		g_source_remove (priv->update_timeout_handle);
@@ -330,6 +393,8 @@ update_list_idle (gpointer callback_data)
 	data->file_list = scan->next;
 	scan->next = NULL;
 
+	icon = create_void_icon (window);
+
 	for (scan = file_list; scan; scan = scan->next) {
 		SongInfo    *song = scan->data;
 		GtkTreeIter  iter;
@@ -341,12 +406,15 @@ update_list_idle (gpointer callback_data)
 		gtk_list_store_set (priv->list_store, &iter,
 				    COLUMN_SONG_INFO, song,
 				    COLUMN_NUMBER, song->number + 1, /*FIXME*/
+				    COLUMN_ICON, icon,
 				    COLUMN_TIME, time_s,
 				    COLUMN_TITLE, song->title,
 				    COLUMN_ARTIST, song->artist,
 				    -1);
 		g_free (time_s);
 	}
+
+	g_object_unref (icon);
 
 	if (gtk_events_pending ())
 		gtk_main_iteration_do (TRUE);
@@ -362,7 +430,7 @@ update_list_idle (gpointer callback_data)
 void
 goo_window_update (GooWindow *window)
 {
-	goo_player_stop (window->priv->player);
+	goo_window_stop (window);
 	goo_player_update (window->priv->player);
 }
 
@@ -751,6 +819,17 @@ create_playlist (GooWindow *window,
 
 
 static void
+play_song (GooWindow *window,
+	   gint       track_number)
+{
+	GooWindowPrivateData *priv = window->priv;
+
+	set_current_song_icon (window, GOO_STOCK_PLAY);
+	goo_player_seek_song (priv->player, track_number);
+}
+
+
+static void
 play_next_song_in_playlist (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
@@ -777,10 +856,10 @@ play_next_song_in_playlist (GooWindow *window)
 	print_playlist (window);
 
 	if (next == NULL)
-		goo_player_stop (priv->player);
+		goo_window_stop (window);
 	else {
 		int pos = GPOINTER_TO_INT (next->data);
-		goo_player_seek_song (priv->player, pos);
+		play_song (window, pos);
 		priv->playlist = g_list_remove_link (priv->playlist, next);
 		g_list_free (next);
 	}
@@ -1201,6 +1280,8 @@ goo_window_set_current_song (GooWindow *window,
 	SongInfo *song;
 
 	if (priv->current_song != NULL) {
+		if (priv->current_song->number != n)
+			set_current_song_icon (window, NULL);
 		song_info_unref (priv->current_song);	
 		priv->current_song = NULL;
 	}
@@ -2266,11 +2347,11 @@ goo_window_play (GooWindow *window)
 		create_playlist (window, play_all, shuffle);
 
 		if (priv->current_song != NULL) 
-			goo_player_seek_song (priv->player, priv->current_song->number);
+			play_song (window, priv->current_song->number);
 		else if (window->priv->playlist != NULL)
 			play_next_song_in_playlist (window);
 		else
-			goo_player_seek_song (priv->player, 0);
+			play_song (window, 0);
 	} else
 		goo_player_play (priv->player);
 }
@@ -2298,6 +2379,7 @@ void
 goo_window_stop (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
+	set_current_song_icon (window, GOO_STOCK_STOP);
 	goo_player_stop (priv->player);
 }
 
@@ -2306,6 +2388,7 @@ void
 goo_window_pause (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
+	set_current_song_icon (window, GOO_STOCK_PAUSE);
 	goo_player_pause (priv->player);
 }
 

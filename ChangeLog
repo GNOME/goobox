@@ -1,3 +1,9 @@
+2005-02-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c (set_song_icon): 
+
+	Added a track status icon in the track number column.
+
 2005-02-03  Alessio Frusciante  <algol@firenze.linux.it>
 
 	* configure.in: Added "it" (Italian) to ALL_LINGUAS.
