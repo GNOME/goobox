@@ -62,8 +62,8 @@
 #define FILES_TO_PROCESS_AT_ONCE 500
 #define DEFAULT_WIN_WIDTH 200
 #define DEFAULT_WIN_HEIGHT 400
-#define HIDE_TRACK_LIST "Hide _tracks"
-#define SHOW_TRACK_LIST "Show _tracks"
+#define HIDE_TRACK_LIST N_("Hide _tracks")
+#define SHOW_TRACK_LIST N_("Show _tracks")
 #define DEFAULT_DEVICE "/dev/cdrom"
 #define DEFAULT_VOLUME 100
 #define PLAYER_CHECK_RATE 100
