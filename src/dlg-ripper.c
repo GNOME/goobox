@@ -480,6 +480,11 @@ dlg_ripper (GooWindow     *window,
 
 	/* Set widgets data. */
 
+#ifdef HAVE_GTK_2_5
+	gtk_label_set_ellipsize (GTK_LABEL (data->r_progress_label),
+				 PANGO_ELLIPSIZE_END);
+#endif
+
 	/* Set the signals handlers. */
 
 	g_signal_connect (G_OBJECT (data->dialog), 

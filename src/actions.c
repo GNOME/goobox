@@ -142,6 +142,24 @@ activate_action_about (GtkAction *action,
 		return;
 	}
 
+#ifdef HAVE_GTK_2_5
+
+	about = gtk_about_dialog_new ();
+	g_object_set (about,
+		      "name",  _("Goobox"),
+		      "version", VERSION,
+		      "copyright", "Copyright \xc2\xa9 2004 Free Software Foundation, Inc.",
+		      "comments", _("CD player and ripper"),
+		      "authors", authors,
+		      "documenters", documenters,
+		      "translator_credits", strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
+		      "website", NULL,
+		      "website_label", NULL,
+		      "license", NULL,
+		      NULL);
+
+#else
+
 	logo = gdk_pixbuf_new_from_file (PIXMAPSDIR "/goobox.png", NULL);
 	about = gnome_about_new (_("Goobox"), 
 				 VERSION,
@@ -154,6 +172,8 @@ activate_action_about (GtkAction *action,
 	if (logo != NULL)
                 g_object_unref (logo);
 
+#endif
+
 	gtk_window_set_destroy_with_parent (GTK_WINDOW (about), TRUE);
 	gtk_window_set_transient_for (GTK_WINDOW (about), 
 				      GTK_WINDOW (window));
@@ -163,7 +183,7 @@ activate_action_about (GtkAction *action,
 			  G_CALLBACK (gtk_widget_destroyed), 
 			  &about);
 
-	gtk_widget_show_all (about);
+	gtk_widget_show (about);
 }
 
 

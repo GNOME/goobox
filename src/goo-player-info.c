@@ -37,6 +37,7 @@
 #define SCALE_WIDTH 150
 #define COVER_SIZE 80
 #define MIN_WIDTH 400
+#define MIN_CHARS 25
 #define UPDATE_TIMEOUT 50
 
 struct _GooPlayerInfoPrivateData {
@@ -106,7 +107,10 @@ goo_player_info_size_request (GtkWidget      *widget,
 {	
 	if (GTK_WIDGET_CLASS (parent_class)->size_request)
 		(* GTK_WIDGET_CLASS (parent_class)->size_request) (widget, requisition);
+
+#ifndef HAVE_GTK_2_5
 	requisition->width = MAX (requisition->width, MIN_WIDTH);
+#endif
 }
 
 
@@ -327,6 +331,20 @@ goo_player_info_init (GooPlayerInfo *info)
 	priv->title3_label = gtk_label_new (NULL);
 	gtk_misc_set_alignment (GTK_MISC (priv->title3_label), 0.0, 0.5);
 	gtk_label_set_selectable (GTK_LABEL (priv->title3_label), TRUE);
+
+#ifdef HAVE_GTK_2_5
+	gtk_label_set_ellipsize (GTK_LABEL (priv->title1_label),
+				 PANGO_ELLIPSIZE_END);
+	gtk_label_set_width_chars (GTK_LABEL (priv->title2_label), MIN_CHARS);
+
+	gtk_label_set_ellipsize (GTK_LABEL (priv->title2_label),
+				 PANGO_ELLIPSIZE_END);
+	gtk_label_set_width_chars (GTK_LABEL (priv->title2_label), MIN_CHARS);
+	
+	gtk_label_set_ellipsize (GTK_LABEL (priv->title3_label),
+				 PANGO_ELLIPSIZE_END);
+	gtk_label_set_width_chars (GTK_LABEL (priv->title3_label), MIN_CHARS);
+#endif
 
 	/* Time */
 

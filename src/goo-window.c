@@ -451,6 +451,14 @@ goo_window_update_titles (GooWindow *window)
 				    COLUMN_TITLE, new_song->title,
 				    COLUMN_ARTIST, new_song->artist,
 				    -1);
+
+		/* Update the current song info. */
+		if ((priv->current_song != NULL) 
+		    && (new_song->number == priv->current_song->number)) {
+			song_info_unref (priv->current_song);
+			priv->current_song = song_info_copy (new_song);
+		}
+
 	} while (gtk_tree_model_iter_next (model, &iter));
 
 	song_list_free (song_list);
@@ -1324,9 +1332,9 @@ player_done_cb (GooPlayer       *player,
 	switch (action) {
 	case GOO_PLAYER_ACTION_LIST:
 		goo_player_info_update_state (GOO_PLAYER_INFO (priv->info));
-		window_update_title (window);
 		goo_window_update_list (window);
 		goo_window_update_cover (window);
+		window_update_title (window);
 		if (AutoPlay) {
 			AutoPlay = FALSE;
 			g_idle_add (autoplay_cb, window);
@@ -1334,8 +1342,8 @@ player_done_cb (GooPlayer       *player,
 		break;
 	case GOO_PLAYER_ACTION_METADATA:
 		goo_player_info_update_state (GOO_PLAYER_INFO (priv->info));
-		window_update_title (window);
 		goo_window_update_titles (window);
+		window_update_title (window);
 		break;
 	case GOO_PLAYER_ACTION_SEEK_SONG:
 		goo_window_set_current_song (window, goo_player_get_current_song (priv->player));

@@ -1,5 +1,16 @@
 2004-12-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* configure.in: 
+	* src/goo-player-info.c (goo_player_info_init): 
+	* src/dlg-ripper.c (dlg_ripper): 
+
+	Add ellipsizing to the labels if gtk+ version is 2.5.0 or higher.
+	
+	* src/goo-window.c (goo_window_update_titles): Update the current
+	song info here.
+
+2004-12-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
+	
 	[ version 0.6.0 released ] 
 	
 	* src/goo-window.c (autoplay_cb): 

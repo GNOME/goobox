@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
  
-AC_INIT(goobox, 0.6.0)
+AC_INIT(goobox, 0.6.1)
 AC_CONFIG_SRCDIR(src/main.c)
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
@@ -53,6 +53,17 @@ PKG_CHECK_MODULES(GOO,				\
 	gstreamer-gconf-0.8)
 AC_SUBST(GOO_CFLAGS)
 AC_SUBST(GOO_LIBS)
+
+#
+# GTK+ version
+#
+AC_MSG_CHECKING(for Gtk+ 2.5.x)
+have_gtk_2_5=no
+if pkg-config --atleast-version=2.5.0 gtk+-2.0; then
+   have_gtk_2_5="yes"
+   AC_DEFINE(HAVE_GTK_2_5, 1, [Have gtk+ 2.5.x])
+fi
+AC_MSG_RESULT($have_gtk_2_5)
 
 #
 # IDL modules
@@ -144,4 +155,5 @@ Configuration:
 
         Source code location:   ${srcdir}
         Compiler:               ${CC}
+    	Have Gtk+ 2.5.x:        ${have_gtk_2_5}
 "
