@@ -66,8 +66,10 @@ typedef struct {
 	char          *artist;
 	char          *genre;
 	GList         *tracks;
+	int            tracks_n;
 	int            total_tracks;
 	GList         *current_track;
+	int            current_track_n;
 	char          *ext;
 	GooCdrom      *cdrom;
 
@@ -78,7 +80,9 @@ typedef struct {
 	GstPad        *source_pad;
 	GstFormat      track_format, sector_format;
 	guint          update_handle;
-	double         fraction;
+	int            total_sectors;
+	int            current_track_sectors;
+	int            prev_tracks_sectors;
 	char          *current_file;
 	gboolean       ripping;
 
@@ -131,12 +135,18 @@ static gboolean
 rip_next_track (gpointer callback_data)
 {
 	DialogData *data = callback_data;
+	TrackInfo  *track;
 
 	g_free (data->current_file);
 	data->current_file = NULL;
 
 	gst_element_set_state (data->encoder, GST_STATE_NULL);
 	gst_element_set_state (data->rip_thread, GST_STATE_NULL);
+
+	track = data->current_track->data;
+	data->prev_tracks_sectors += track->sectors;
+
+	data->current_track_n++;
 	data->current_track = data->current_track->next;
 	rip_current_track (data);
 
@@ -148,7 +158,11 @@ static gboolean
 update_ui (gpointer callback_data)
 {
 	DialogData *data = callback_data;
-	gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (data->r_progress_progressbar), data->fraction);
+	double      fraction;
+
+	fraction = ((double) (data->current_track_sectors + data->prev_tracks_sectors)) / (double) data->total_sectors;
+	gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (data->r_progress_progressbar), fraction);
+
 	return FALSE;
 }
 
@@ -184,7 +198,7 @@ update_progress_cb (gpointer callback_data)
 		return FALSE;
 	
 	from_sector = track->from_sector - TOC_OFFSET;
-	data->fraction = ((double) (sector - from_sector)) / (double)track->sectors;
+	data->current_track_sectors = sector - from_sector;
 	g_idle_add (update_ui, data);
 
 	data->update_handle = g_timeout_add (UPDATE_DELAY, update_progress_cb, data);
@@ -336,7 +350,10 @@ rip_current_track (DialogData *data)
 	}
 		
 	track = data->current_track->data;
-	msg = g_strdup_printf (_("Extracting: %s"), track->title);
+	msg = g_strdup_printf (_("Extracting track %d of %d: %s"), 
+			       data->current_track_n,
+			       data->tracks_n,
+			       track->title);
 	gtk_label_set_text (GTK_LABEL (data->r_progress_label), msg);
 	g_free (msg);
 
@@ -383,6 +400,7 @@ rip_current_track (DialogData *data)
 
 	/* Start ripping. */
 
+	data->current_track_sectors = 0;
 	data->update_handle = g_timeout_add (UPDATE_DELAY, update_progress_cb, data);
 
 	gst_element_set_state (data->rip_thread, GST_STATE_PLAYING);
@@ -392,9 +410,23 @@ rip_current_track (DialogData *data)
 static void
 start_ripper (DialogData *data)
 {
-	goo_cdrom_lock_tray (data->cdrom);
+	GList *scan;
+
 	data->ripping = TRUE;
+
+	goo_cdrom_lock_tray (data->cdrom);
+
+	data->prev_tracks_sectors = 0;
+
+	data->total_sectors = 0;
+	for (scan = data->tracks; scan; scan = scan->next) {
+		TrackInfo *track = scan->data;
+		data->total_sectors += track->sectors;
+	}
+
 	create_pipeline (data);
+
+	data->current_track_n = 1;
 	data->current_track = data->tracks;
 	rip_current_track (data);
 }
@@ -434,6 +466,7 @@ dlg_ripper (GooWindow     *window,
 	data->artist = g_strdup (artist);
 	data->genre = g_strdup (genre);
 	data->tracks = track_list_dup (tracks);
+	data->tracks_n = g_list_length (data->tracks);
 	data->total_tracks = total_tracks;
 	data->update_handle = 0;
 
