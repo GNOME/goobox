@@ -1,3 +1,9 @@
+2005-01-13  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/dlg-ripper.c (create_pipeline): 
+	* src/goo-player-cd.c (create_pipeline): use device property instead of
+	location
+
 2005-01-11  Christophe Merlet  <redfox@redfoxcenter.org>
 
 	* configure.in: Added French (fr) to $ALL_LINGUAS.

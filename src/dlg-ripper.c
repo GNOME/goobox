@@ -220,7 +220,7 @@ create_pipeline (DialogData *data)
 		
 	data->source = gst_element_factory_make ("cdparanoia", "cdparanoia");
 	g_object_set (G_OBJECT (data->source), 
-		      "location", data->location,
+		      "device", data->location,
 		      NULL);
 
 	switch (data->format) {

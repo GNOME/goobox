@@ -267,7 +267,7 @@ create_pipeline (GooPlayerCD *player)
 	debug (DEBUG_INFO, "DEVICE: %s\n", goo_cdrom_get_device (priv->cdrom));
 
 	g_object_set (G_OBJECT (priv->source), 
-		      "location", goo_cdrom_get_device (priv->cdrom), 
+		      "device", goo_cdrom_get_device (priv->cdrom), 
 		      NULL);
 
 	priv->volume = gst_element_factory_make ("volume", "volume");

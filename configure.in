@@ -59,10 +59,10 @@ AC_SUBST(GOO_LIBS)
 #
 AC_MSG_CHECKING(for Gtk+ 2.5.x)
 have_gtk_2_5=no
-if pkg-config --atleast-version=2.5.0 gtk+-2.0; then
-   have_gtk_2_5="yes"
-   AC_DEFINE(HAVE_GTK_2_5, 1, [Have gtk+ 2.5.x])
-fi
+#if pkg-config --atleast-version=2.5.0 gtk+-2.0; then
+#   have_gtk_2_5="yes"
+#   AC_DEFINE(HAVE_GTK_2_5, 1, [Have gtk+ 2.5.x])
+#fi
 AC_MSG_RESULT($have_gtk_2_5)
 
 #
