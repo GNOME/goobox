@@ -1,0 +1,877 @@
+# Danish translation of Goobox.
+# Copyright (C) Paolo Bacchilega
+# This file is distributed under the same license as the goobox package.
+# Martin Willemoes Hansen <mwh@sysrq.dk>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: goobox\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-03 13:14+0100\n"
+"PO-Revision-Date: 2005-01-03 13:13+0100\n"
+"Last-Translator: Martin Willemoes Hansen <mwh@sysrq.dk>\n"
+"Language-Team: Danish <dansk@klid.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: data/GNOME_Goobox.server.in.in.h:1
+#, fuzzy
+msgid "Goobox Application"
+msgstr "Programmet Goobox"
+
+#: data/GNOME_Goobox.server.in.in.h:2
+#, fuzzy
+msgid "Goobox Application Factory"
+msgstr "Programfabrik for Goobox"
+
+#: data/glade/goo_cover_chooser.glade.h:1
+#, fuzzy
+msgid "Choose a CD Cover"
+msgstr "Vælg et cd-omslag"
+
+#: data/glade/goo_cover_chooser.glade.h:2
+#, fuzzy
+msgid "Found images:"
+msgstr "Funna billeder:"
+
+#: data/glade/goobox.glade.h:1
+#, fuzzy
+msgid "    "
+msgstr "    "
+
+#: data/glade/goobox.glade.h:2
+#, fuzzy
+msgid "<b>CD Drive</b>"
+msgstr "<b>Cd-enhed</b>"
+
+#: data/glade/goobox.glade.h:3
+#, fuzzy
+msgid "<b>Destination folder</b>"
+msgstr "<b>Målmapp</b>"
+
+#: data/glade/goobox.glade.h:4
+#, fuzzy
+msgid "<b>Extract</b>"
+msgstr "<b>Extrahera</b>"
+
+#: data/glade/goobox.glade.h:5
+msgid "<b>FLAC</b>"
+msgstr ""
+
+#: data/glade/goobox.glade.h:6
+#, fuzzy
+msgid "<b>File type</b>"
+msgstr "<b>Filtyp</b>"
+
+#: data/glade/goobox.glade.h:7
+msgid "<b>MP3</b>"
+msgstr ""
+
+#: data/glade/goobox.glade.h:8
+msgid "<b>Ogg Vorbis</b>"
+msgstr ""
+
+#: data/glade/goobox.glade.h:9
+msgid "Advanced _Options"
+msgstr ""
+
+#: data/glade/goobox.glade.h:10 src/dlg-extract.c:238
+#, fuzzy
+msgid "Choose destination folder"
+msgstr "Vælg målmapp"
+
+#: data/glade/goobox.glade.h:11
+msgid "Encoding"
+msgstr ""
+
+#: data/glade/goobox.glade.h:12
+#, fuzzy
+msgid "Excellent quality lossless compression"
+msgstr "Forlustfri komprimering med utmærkt kvalitet"
+
+#: data/glade/goobox.glade.h:13
+#, fuzzy
+msgid "Extract Tracks"
+msgstr "Extrahera spår"
+
+#: data/glade/goobox.glade.h:14
+#, fuzzy
+msgid "Extracting Tracks"
+msgstr "Extraherar spår"
+
+#: data/glade/goobox.glade.h:15
+#, fuzzy
+msgid "General"
+msgstr "Generelt"
+
+#: data/glade/goobox.glade.h:16
+#, fuzzy
+msgid "Good quality lossy compression"
+msgstr "Forlustkomprimering med god kvalitet"
+
+#: data/glade/goobox.glade.h:17
+#, fuzzy
+msgid "High quality lossy compression"
+msgstr "Forlustkomprimering med høg kvalitet"
+
+#: data/glade/goobox.glade.h:18
+#, fuzzy
+msgid "Preferences"
+msgstr "Indstillinger"
+
+#: data/glade/goobox.glade.h:19
+#, fuzzy
+msgid "Raw audio"
+msgstr "Rått lyd"
+
+#: data/glade/goobox.glade.h:20
+#, fuzzy
+msgid "_All tracks"
+msgstr "_Alle spår"
+
+#: data/glade/goobox.glade.h:21
+#, fuzzy
+msgid "_FLAC"
+msgstr "_FLAC"
+
+#: data/glade/goobox.glade.h:22
+#, fuzzy
+msgid "_MP3"
+msgstr "_MP3"
+
+#: data/glade/goobox.glade.h:23
+#, fuzzy
+msgid "_Ogg Vorbis"
+msgstr "_Ogg Vorbis"
+
+#: data/glade/goobox.glade.h:24
+msgid "_Save playlist"
+msgstr ""
+
+#: data/glade/goobox.glade.h:25
+#, fuzzy
+msgid "_Selected tracks"
+msgstr "_Markerede spår"
+
+#: data/glade/goobox.glade.h:26
+#, fuzzy
+msgid "_Wave"
+msgstr "_Våg"
+
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2089 src/goo-window.c:2097
+#, fuzzy
+msgid "CD Player"
+msgstr "Cd-spelare"
+
+#: data/goobox.desktop.in.h:2
+#, fuzzy
+msgid "Play and extract CDs"
+msgstr "Spila og extrahera cd-skivor"
+
+#: data/goobox.schemas.in.h:1
+#, fuzzy
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "Mulige værdier er: ogg, flac, mp3, wave."
+
+#: data/goobox.schemas.in.h:2
+#, fuzzy
+msgid ""
+"Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgstr ""
+"Mulige værdier er: system, text_below, text_beside, text_only, icons_only."
+
+#.
+#. const char       *documenters [] = {
+#. NULL
+#. };
+#: src/actions.c:141
+#, fuzzy
+msgid "translator_credits"
+msgstr ""
+"Christian Rose\n"
+"Sende synspunkter på oversættelsen til dansk@klid.dk"
+
+#: src/actions.c:152 src/actions.c:167
+#, fuzzy
+msgid "Goobox"
+msgstr "Goobox"
+
+#: src/actions.c:155 src/actions.c:170 src/main.c:114
+#, fuzzy
+msgid "CD player and ripper"
+msgstr "Cd-spelare og -extraherare"
+
+#: src/bacon-cd-selection.c:200
+#, fuzzy
+msgid "Unnamed CDROM"
+msgstr "Navnløs cd-rom"
+
+#: src/cd-drive.c:835
+#, fuzzy, c-format
+msgid "Unnamed SCSI Drive (%s)"
+msgstr "Navnløs SCSI-enhed (%s)"
+
+#: src/cd-drive.c:1395
+#, fuzzy
+msgid "File image"
+msgstr "Filafbild"
+
+#: src/dlg-cover-chooser.c:271
+#, fuzzy, c-format
+msgid "%u, loading image: %u"
+msgstr "%u, læser in bild: %u"
+
+#: src/dlg-cover-chooser.c:309
+#, fuzzy
+msgid "Loading images"
+msgstr "Læser in billeder"
+
+#: src/dlg-cover-chooser.c:330 src/goo-window.c:2696
+#, fuzzy
+msgid "Could not search a cover on Internet"
+msgstr "Kunne ikke søga efter et omslag på Internet"
+
+#: src/dlg-cover-chooser.c:338 src/dlg-cover-chooser.c:422
+#, fuzzy
+msgid "No image found"
+msgstr "Ingen bild hittades"
+
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:202 src/dlg-preferences.c:147
+#, fuzzy, c-format
+msgid "Could not display help: %s"
+msgstr "Kunne ikke vis hjælp: %s"
+
+#: src/dlg-cover-chooser.c:682
+#, fuzzy
+msgid "Searching images..."
+msgstr "Søger efter billeder..."
+
+#: src/dlg-extract.c:365
+#, fuzzy, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract "
+"CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+msgstr ""
+"Du behøver mindst en af følgende GStreamer-indstiksmoduler for at kunne "
+"extrahera CD-spår:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+
+#: src/dlg-extract.c:378
+#, fuzzy
+msgid "No encoder available."
+msgstr "Ingen kodare tilgængelig."
+
+#: src/dlg-preferences.c:168
+#, fuzzy, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "Nominell bithastighet: %d kbit/s"
+
+#: src/dlg-preferences.c:172
+#, fuzzy, c-format
+msgid "Compression level: %d"
+msgstr "Kompressionsniveau: %d"
+
+#: src/dlg-preferences.c:176
+#, fuzzy, c-format
+msgid "Bitrate: %d Kbps"
+msgstr "Bithastighet: %d kbit/s"
+
+#. Set widgets data.
+#: src/dlg-preferences.c:335 src/dlg-preferences.c:343
+#, fuzzy
+msgid "Smaller size"
+msgstr "Mindre størrelse"
+
+#: src/dlg-preferences.c:339 src/dlg-preferences.c:347
+#, fuzzy
+msgid "Higher quality"
+msgstr "Høgre kvalitet"
+
+#: src/dlg-preferences.c:351
+#, fuzzy
+msgid "Faster compression"
+msgstr "Snabbare komprimering"
+
+#: src/dlg-preferences.c:355
+#, fuzzy
+msgid "Higher compression"
+msgstr "Høgre komprimering"
+
+#: src/dlg-ripper.c:313
+#, fuzzy
+msgid "Could not display the destination folder"
+msgstr "Kunne ikke vis målmappen"
+
+#: src/dlg-ripper.c:424
+#, fuzzy
+msgid "Tracks extracted successfully"
+msgstr "Spåren har extraherats uden problem"
+
+#: src/dlg-ripper.c:426
+#, fuzzy
+msgid "_View destination folder"
+msgstr "_Vis målmappen"
+
+#: src/dlg-ripper.c:439
+#, fuzzy, c-format
+msgid "Extracting track %d of %d: %s"
+msgstr "Extraherar spår %d af %d: %s"
+
+#: src/dlg-ripper.c:474
+#, fuzzy
+msgid "Ripped with Goobox"
+msgstr "Rippad med Goobox"
+
+#: src/eggtrayicon.c:118
+#, fuzzy
+msgid "Orientation"
+msgstr "Orientering"
+
+#: src/eggtrayicon.c:119
+#, fuzzy
+msgid "The orientation of the tray."
+msgstr "Orienteringen på kassen."
+
+#: src/file-utils.c:622
+#, fuzzy
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr ""
+"Kan ikke finde en terminal, anvender xterm endog om den måske ikke fungerar"
+
+#: src/goo-cdrom-bsd.c:140 src/goo-cdrom-linux.c:121
+#: src/goo-cdrom-solaris.c:123
+#, fuzzy
+msgid "Error reading CD"
+msgstr "Fejl ved læsende af cd-skiva"
+
+#: src/goo-cdrom.c:323
+#, fuzzy
+msgid "The specified device is not valid"
+msgstr "Den angivna enheden er ikke gyldig"
+
+#: src/goo-player-cd.c:784
+#, fuzzy
+msgid "Drive not ready"
+msgstr "Enheden er ikke redo"
+
+#: src/goo-player-cd.c:788
+#, fuzzy
+msgid "Tray open"
+msgstr "Slæden øppen"
+
+#: src/goo-player-cd.c:789 src/goo-player-cd.c:793
+#, fuzzy
+msgid "No disc"
+msgstr "Ingen skiva"
+
+#: src/goo-player-cd.c:797
+#, fuzzy
+msgid "Data CD"
+msgstr "Data-cd"
+
+#: src/goo-player-info.c:236 src/goo-player-info.c:261
+#: src/goo-player-info.c:758
+#, fuzzy, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#: src/goo-player-info.c:499
+#, fuzzy
+msgid "Click here to choose a cover for this CD"
+msgstr "Klicka her for at vælge et omslag for denne cd"
+
+#: src/goo-player-info.c:686 src/goo-window.c:1236
+#, fuzzy
+msgid "Paused"
+msgstr "Gør paus"
+
+#: src/goo-player-info.c:697
+#, fuzzy
+msgid "Ejecting CD"
+msgstr "Matar ud cd"
+
+#: src/goo-player-info.c:701
+#, fuzzy
+msgid "Checking CD drive"
+msgstr "Kontrollerar cd-enhed"
+
+#: src/goo-player-info.c:705 src/goo-player-info.c:709
+#, fuzzy
+msgid "Reading CD"
+msgstr "Læser cd"
+
+#: src/goo-player-info.c:722 src/goo-window.c:1260
+#, fuzzy
+msgid "Audio CD"
+msgstr "Lyd-cd"
+
+#: src/goo-stock.c:53
+#, fuzzy
+msgid "_Extract"
+msgstr "_Extrahera"
+
+#: src/goo-stock.c:54
+#, fuzzy
+msgid "_Reset"
+msgstr "_Genskab"
+
+#: src/goo-stock.c:55 src/goo-stock.c:56 src/goo-stock.c:57 src/goo-stock.c:58
+#, fuzzy
+msgid "V_olume"
+msgstr "V_olym"
+
+#: src/goo-volume-button.c:147 src/goo-volume-tool-button.c:284
+#, fuzzy, c-format
+msgid "Volume level: %3.0f%%"
+msgstr "Volymniveau: %3.0f%%"
+
+#: src/goo-volume-button.c:328 src/goo-volume-tool-button.c:494
+#, fuzzy
+msgid "+"
+msgstr "+"
+
+#: src/goo-volume-button.c:344 src/goo-volume-tool-button.c:510
+#, fuzzy
+msgid "-"
+msgstr "-"
+
+#: src/goo-volume-tool-button.c:538
+#, fuzzy
+msgid "Change the volume level"
+msgstr "Ændra niveaun på volymen"
+
+#: src/goo-volume-tool-button.c:605
+#, fuzzy
+msgid "Volume"
+msgstr "Volym"
+
+#: src/goo-window.c:65
+#, fuzzy
+msgid "Hide _tracks"
+msgstr "Skjul _spår"
+
+#: src/goo-window.c:66
+#, fuzzy
+msgid "Show _tracks"
+msgstr "Vis _spår"
+
+#: src/goo-window.c:189
+#, c-format
+msgid "%d track"
+msgid_plural "%d tracks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/goo-window.c:193
+#, fuzzy, c-format
+msgid "year %d"
+msgstr "år %d"
+
+#: src/goo-window.c:538
+#, fuzzy
+msgid "Length"
+msgstr "Længd"
+
+#: src/goo-window.c:539
+#, fuzzy
+msgid "Title"
+msgstr "Titel"
+
+#: src/goo-window.c:540
+#, fuzzy
+msgid "Artist"
+msgstr "Artist"
+
+#: src/goo-window.c:548
+#, fuzzy
+msgid "#"
+msgstr "Nr"
+
+#: src/goo-window.c:1146 src/ui.h:57
+#, fuzzy
+msgid "_Pause"
+msgstr "_Paus"
+
+#: src/goo-window.c:1147
+#, fuzzy
+msgid "Pause playing"
+msgstr "Gør paus i uppspelning"
+
+#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:45 src/ui.h:49
+#: src/ui.h:53
+#, fuzzy
+msgid "_Play"
+msgstr "_Spila"
+
+#: src/goo-window.c:1367 src/goo-window.c:1379
+#, fuzzy
+msgid "Play CD"
+msgstr "Spila cd"
+
+#: src/goo-window.c:2374
+#, fuzzy
+msgid "Could not eject the CD"
+msgstr "Kunne ikke mata ud cd-skivan"
+
+#: src/goo-window.c:2386
+#, fuzzy
+msgid "Could not read drive"
+msgstr "Kunne ikke læse enhed"
+
+#: src/goo-window.c:2570
+#, fuzzy
+msgid "Could not save cover image"
+msgstr "Kunne ikke gemme omslagsbild"
+
+#: src/goo-window.c:2580
+#, fuzzy
+msgid "Could not load image"
+msgstr "Kunne ikke indlæse bild"
+
+#: src/goo-window.c:2636
+#, fuzzy
+msgid "Choose CD Cover Image"
+msgstr "Vælg en cd-omslagsbild"
+
+#: src/goo-window.c:2655
+#, fuzzy
+msgid "Images"
+msgstr "Billeder"
+
+#: src/goo-window.c:2663
+#, fuzzy
+msgid "All files"
+msgstr "Alle filer"
+
+#: src/goo-window.c:2697
+#, fuzzy
+msgid ""
+"You have to enter the artist and album names in order to find the album "
+"cover."
+msgstr ""
+"Du skal angive navnet på artisten og albumet for at kunne søga efter "
+"albumomslaget."
+
+#: src/goo-window.c:2731
+#, fuzzy
+msgid "_Show Window"
+msgstr "_Vis vindue"
+
+#: src/goo-window.c:2732
+#, fuzzy
+msgid "Show the main window"
+msgstr "Vis hovedvinduet"
+
+#: src/goo-window.c:2745 src/ui.h:109
+#, fuzzy
+msgid "_Hide Window"
+msgstr "_Skjul vindue"
+
+#: src/goo-window.c:2746 src/ui.h:110
+#, fuzzy
+msgid "Hide the main window"
+msgstr "Skjul hovedvinduet"
+
+#: src/gth-image-list.c:3520
+#, fuzzy
+msgid "No image"
+msgstr "Ingen bild"
+
+#: src/gtk-file-chooser-preview.c:203
+#, fuzzy
+msgid "Preview"
+msgstr "Forhandsgranskning"
+
+#: src/gtk-file-chooser-preview.c:328
+#, fuzzy
+msgid "pixels"
+msgstr "bildpunkter"
+
+#: src/gtk-utils.c:797
+#, fuzzy
+msgid "Could not execute command"
+msgstr "Kunne ikke køre kommando"
+
+#: src/main.c:65
+#, fuzzy
+msgid "CD device to be used"
+msgstr "Cd-enhed at anvenda"
+
+#: src/main.c:66
+#, fuzzy
+msgid "DEVICE_PATH"
+msgstr "ENHETSSØKVÆG"
+
+#: src/main.c:68
+#, fuzzy
+msgid "Play the CD on startup"
+msgstr "Spila cd-skivan ved opstart"
+
+#: src/main.c:71 src/ui.h:46
+#, fuzzy
+msgid "Play/Pause"
+msgstr "Spila/Gør paus"
+
+#: src/main.c:74 src/ui.h:66
+#, fuzzy
+msgid "Play the next track"
+msgstr "Spila næste lad"
+
+#: src/main.c:77 src/ui.h:70
+#, fuzzy
+msgid "Play the previous track"
+msgstr "Spila foregående spår"
+
+#: src/main.c:80 src/ui.h:74
+#, fuzzy
+msgid "Eject the CD"
+msgstr "Mata ud cd-skivan"
+
+#: src/main.c:83
+#, fuzzy
+msgid "Hide/Show the main window"
+msgstr "Visa/skjul hovedvinduet"
+
+#: src/main.c:86
+#, fuzzy
+msgid "Volume Up"
+msgstr "Høj volymen"
+
+#: src/main.c:89
+#, fuzzy
+msgid "Volume Down"
+msgstr "Volym ned"
+
+#: src/main.c:92 src/ui.h:94
+#, fuzzy
+msgid "Quit the application"
+msgstr "Afslutte programmet"
+
+#: src/main.c:246
+#, fuzzy
+msgid "Cannot start the CD player"
+msgstr "Kan ikke starte cd-spelaren"
+
+#: src/main.c:247
+#, fuzzy
+msgid ""
+"In order to read CDs you have to install the cdparanoia gstreamer plugin"
+msgstr ""
+"For at kunne læse cd-skivor skal du installera gstreamer-indstiksmodulet "
+"cdparanoia"
+
+#: src/track-info.c:118
+#, fuzzy, c-format
+msgid "Track %u"
+msgstr "Spår %u"
+
+#: src/ui.h:34
+#, fuzzy
+msgid "_CD"
+msgstr "_Cd"
+
+#: src/ui.h:35
+#, fuzzy
+msgid "_Edit"
+msgstr "_Redigere"
+
+#: src/ui.h:36
+#, fuzzy
+msgid "_View"
+msgstr "_Vis"
+
+#: src/ui.h:37
+#, fuzzy
+msgid "_Help"
+msgstr "_Hjælp"
+
+#: src/ui.h:38
+#, fuzzy
+msgid "CD C_over"
+msgstr "Cd-o_mslag"
+
+#: src/ui.h:41
+#, fuzzy
+msgid "_About"
+msgstr "_Om"
+
+#: src/ui.h:42
+#, fuzzy
+msgid "Information about the program"
+msgstr "Information om programmet"
+
+#: src/ui.h:50
+#, fuzzy
+msgid "Play"
+msgstr "Spila"
+
+#: src/ui.h:54
+#, fuzzy
+msgid "Play this track"
+msgstr "Spila dette spår"
+
+#: src/ui.h:58
+#, fuzzy
+msgid "Pause"
+msgstr "Paus"
+
+#: src/ui.h:61
+#, fuzzy
+msgid "_Stop"
+msgstr "_Stopp"
+
+#: src/ui.h:62
+#, fuzzy
+msgid "Stop playing"
+msgstr "Stoppa uppspelning"
+
+#: src/ui.h:65
+#, fuzzy
+msgid "_Next"
+msgstr "_Næste"
+
+#: src/ui.h:69
+#, fuzzy
+msgid "Pre_v"
+msgstr "Fore_g"
+
+#: src/ui.h:73
+#, fuzzy
+msgid "_Eject"
+msgstr "_Mata ud"
+
+#: src/ui.h:77
+#, fuzzy
+msgid "_Reload"
+msgstr "_Læs om"
+
+#: src/ui.h:78
+#, fuzzy
+msgid "Reload the CD"
+msgstr "Læs om cd-skivan"
+
+#: src/ui.h:81
+#, fuzzy
+msgid "_Preferences"
+msgstr "_Indstillinger"
+
+#: src/ui.h:82
+#, fuzzy
+msgid "Edit various preferences"
+msgstr "Redigere diverse indstillinger"
+
+#: src/ui.h:85
+#, fuzzy
+msgid "E_xtract Tracks"
+msgstr "E_xtrahera spår"
+
+#: src/ui.h:86
+#, fuzzy
+msgid "Save the tracks to disk as files"
+msgstr "Gem spåren på disk som filer"
+
+#: src/ui.h:89
+#, fuzzy
+msgid "_CD Properties"
+msgstr "_Cd-egenskaber"
+
+#: src/ui.h:90
+#, fuzzy
+msgid "Edit the CD artist, album and tracks titles"
+msgstr "Redigere titeln på cd-artisten, albumet og spåren"
+
+#: src/ui.h:93
+#, fuzzy
+msgid "_Quit"
+msgstr "_Afslutte"
+
+#: src/ui.h:97
+#, fuzzy
+msgid "_Choose from Disk"
+msgstr "_Vælg fra disk"
+
+#: src/ui.h:98
+#, fuzzy
+msgid "Choose a CD cover from the local disk"
+msgstr "Vælg et cd-omslag fra den lokale disken"
+
+#: src/ui.h:101
+#, fuzzy
+msgid "_Search on Internet"
+msgstr "_Søg på Internet"
+
+#: src/ui.h:102
+#, fuzzy
+msgid "Search a CD cover on Internet"
+msgstr "Søg et cd-omslag på Internet"
+
+#: src/ui.h:105
+#, fuzzy
+msgid "_Remove Cover"
+msgstr "_Fjern omslag"
+
+#: src/ui.h:106
+#, fuzzy
+msgid "Remove current CD cover"
+msgstr "Fjern aktuelt cd-omslag"
+
+#: src/ui.h:118
+#, fuzzy
+msgid "_Toolbar"
+msgstr "_Værktøjslinje"
+
+#: src/ui.h:119
+#, fuzzy
+msgid "View the main toolbar"
+msgstr "Vis hovedværktøjslinjen"
+
+#: src/ui.h:123
+#, fuzzy
+msgid "Stat_usbar"
+msgstr "Stat_usrad"
+
+#: src/ui.h:124
+#, fuzzy
+msgid "View the statusbar"
+msgstr "Vis statusraden"
+
+#: src/ui.h:128
+#, fuzzy
+msgid "Play _All"
+msgstr "Spila _alla"
+
+#: src/ui.h:129
+#, fuzzy
+msgid "Play all tracks"
+msgstr "Spila alle spår"
+
+#: src/ui.h:133
+#, fuzzy
+msgid "_Repeat"
+msgstr "_Upprepa"
+
+#: src/ui.h:134
+#, fuzzy
+msgid "Restart playing when finished"
+msgstr "Starte om spelning når slutford"
+
+#: src/ui.h:138
+#, fuzzy
+msgid "S_huffle"
+msgstr "_Blanda"
+
+#: src/ui.h:139
+#, fuzzy
+msgid "Play tracks in a random order"
+msgstr "Spila spår i slumpvis ordning"

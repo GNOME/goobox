@@ -16,7 +16,6 @@ src/cddb-slave-client.c
 src/cddb-slave-client.h
 src/dlg-cover-chooser.c
 src/dlg-cover-chooser.h
-src/dlg-encoder-options.c
 src/dlg-extract.c
 src/dlg-extract.h
 src/dlg-preferences.c
