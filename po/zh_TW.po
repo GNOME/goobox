@@ -1,0 +1,753 @@
+# Traditional Chinese translation of goobox.
+# Copyright (C) 2005 Free Software Fundation, Inc. 2005
+# Woodman Tuen <wmtuen@gmail.com>, 2005.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: goobox 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-02-28 20:23+0800\n"
+"PO-Revision-Date: 2005-02-28 20:24+0800\n"
+"Last-Translator: Woodman Tuen <wmtuen@gmail.com>\n"
+"Language-Team: Chinese/Traditional <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../data/GNOME_Goobox.server.in.in.h:1
+msgid "Goobox Application"
+msgstr "Goobox 應用程式"
+
+#: ../data/GNOME_Goobox.server.in.in.h:2
+msgid "Goobox Application Factory"
+msgstr "Goobox 應用程式工廠"
+
+#: ../data/glade/goo_cover_chooser.glade.h:1
+msgid "Choose a CD Cover"
+msgstr "選取光碟封面"
+
+#: ../data/glade/goo_cover_chooser.glade.h:2
+msgid "Found images:"
+msgstr "已找到圖像："
+
+#: ../data/glade/goobox.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: ../data/glade/goobox.glade.h:2
+msgid "<b>CD Drive</b>"
+msgstr "<b>光碟機</b>"
+
+#: ../data/glade/goobox.glade.h:3
+msgid "<b>Destination folder</b>"
+msgstr "<b>目的地資料夾</b>"
+
+#: ../data/glade/goobox.glade.h:4
+msgid "<b>Extract</b>"
+msgstr "<b>擷取</b>"
+
+#: ../data/glade/goobox.glade.h:5
+msgid "<b>FLAC</b>"
+msgstr "<b>FLAC</b>"
+
+#: ../data/glade/goobox.glade.h:6
+msgid "<b>File type</b>"
+msgstr "<b>檔案類型</b>"
+
+#: ../data/glade/goobox.glade.h:7
+msgid "<b>MP3</b>"
+msgstr "<b>MP3</b>"
+
+#: ../data/glade/goobox.glade.h:8
+msgid "<b>Ogg Vorbis</b>"
+msgstr "<b>Ogg Vorbis</b>"
+
+#: ../data/glade/goobox.glade.h:9
+msgid "Advanced _Options"
+msgstr "進階選項(_O)"
+
+#: ../data/glade/goobox.glade.h:10 ../src/dlg-extract.c:240
+msgid "Choose destination folder"
+msgstr "選取目的地資料夾"
+
+#: ../data/glade/goobox.glade.h:11
+msgid "Encoding"
+msgstr "編碼選項"
+
+#: ../data/glade/goobox.glade.h:12
+msgid "Excellent quality lossless compression"
+msgstr "不失真的最高品質壓縮"
+
+#: ../data/glade/goobox.glade.h:13
+msgid "Extract Tracks"
+msgstr "擷取音軌"
+
+#: ../data/glade/goobox.glade.h:14
+msgid "Extracting Tracks"
+msgstr "正在擷取音軌"
+
+#: ../data/glade/goobox.glade.h:15
+msgid "General"
+msgstr "通用選項"
+
+#: ../data/glade/goobox.glade.h:16
+msgid "Good quality lossy compression"
+msgstr "失真的優良品質壓縮"
+
+#: ../data/glade/goobox.glade.h:17
+msgid "High quality lossy compression"
+msgstr "失真的高品質壓縮"
+
+#: ../data/glade/goobox.glade.h:18
+msgid "Preferences"
+msgstr "偏好設定"
+
+#: ../data/glade/goobox.glade.h:19
+msgid "Raw audio"
+msgstr "原始音效"
+
+#: ../data/glade/goobox.glade.h:20
+msgid "_All tracks"
+msgstr "所有音軌(_A)"
+
+#: ../data/glade/goobox.glade.h:21
+msgid "_FLAC"
+msgstr "_FLAC"
+
+#: ../data/glade/goobox.glade.h:22
+msgid "_MP3"
+msgstr "_MP3"
+
+#: ../data/glade/goobox.glade.h:23
+msgid "_Ogg Vorbis"
+msgstr "_Ogg Vorbis"
+
+#: ../data/glade/goobox.glade.h:24
+msgid "_Save playlist"
+msgstr "儲存播放清單(_S)"
+
+#: ../data/glade/goobox.glade.h:25
+msgid "_Selected tracks"
+msgstr "已選取的音軌(_S)"
+
+#: ../data/glade/goobox.glade.h:26
+msgid "_Wave"
+msgstr "_Wave"
+
+#: ../data/goobox.desktop.in.h:1 ../src/goo-window.c:2173
+#: ../src/goo-window.c:2181
+msgid "CD Player"
+msgstr "光碟播放程式"
+
+#: ../data/goobox.desktop.in.h:2
+msgid "Play and extract CDs"
+msgstr "播放及擷取光碟"
+
+#: ../data/goobox.schemas.in.h:1
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "可用的數值為：ogg, flac, mp3, wave."
+
+#: ../data/goobox.schemas.in.h:2
+msgid ""
+"Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgstr "可用的數值為：system, text_below, text_beside, text_only, icons_only."
+
+#: ../src/actions.c:139
+#, fuzzy
+msgid "Could not display help"
+msgstr "無法顯示說明文件：%s"
+
+#.
+#. const char       *documenters [] = {
+#. NULL
+#. };
+#: ../src/actions.c:192
+msgid "translator_credits"
+msgstr ""
+"i18n 程式中文化計劃\n"
+"http://i18n.linux.org.tw/\n"
+"\n"
+"Woodman Tuen <wmtuen@gmail.com>, 2005"
+
+#: ../src/actions.c:203 ../src/actions.c:218
+msgid "Goobox"
+msgstr "Goobox"
+
+#: ../src/actions.c:206 ../src/actions.c:221 ../src/main.c:114
+msgid "CD player and ripper"
+msgstr "光碟播放及擷取程式"
+
+#: ../src/bacon-cd-selection.c:200
+msgid "Unnamed CDROM"
+msgstr "未命名的光碟機"
+
+#: ../src/cd-drive.c:835
+#, c-format
+msgid "Unnamed SCSI Drive (%s)"
+msgstr "未命名的 SCSI 光碟機 (%s)"
+
+#: ../src/cd-drive.c:1395
+msgid "File image"
+msgstr "檔案圖像"
+
+#: ../src/dlg-cover-chooser.c:271
+#, c-format
+msgid "%u, loading image: %u"
+msgstr "%u 個，正在載入圖像：%u"
+
+#: ../src/dlg-cover-chooser.c:309
+msgid "Loading images"
+msgstr "正在載入圖像"
+
+#: ../src/dlg-cover-chooser.c:330 ../src/goo-window.c:2782
+msgid "Could not search a cover on Internet"
+msgstr "無法在互聯網上找到光碟封面"
+
+#: ../src/dlg-cover-chooser.c:338 ../src/dlg-cover-chooser.c:422
+msgid "No image found"
+msgstr "找不到任何圖像"
+
+#: ../src/dlg-cover-chooser.c:482 ../src/dlg-extract.c:204
+#: ../src/dlg-preferences.c:147
+#, c-format
+msgid "Could not display help: %s"
+msgstr "無法顯示說明文件：%s"
+
+#: ../src/dlg-cover-chooser.c:682
+msgid "Searching images..."
+msgstr "正在尋找圖像..."
+
+#: ../src/dlg-extract.c:375
+#, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract "
+"CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+msgstr ""
+"您最少要有以下的 GStreaner 增效模組來擷取光碟上的音軌：\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+
+#: ../src/dlg-extract.c:388
+msgid "No encoder available."
+msgstr "沒有可用的編碼器。"
+
+#: ../src/dlg-preferences.c:168
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "標稱位元率：%d Kbps"
+
+#: ../src/dlg-preferences.c:172
+#, c-format
+msgid "Compression level: %d"
+msgstr "壓縮率：%d"
+
+#: ../src/dlg-preferences.c:176
+#, c-format
+msgid "Bitrate: %d Kbps"
+msgstr "位元率：%d kbps"
+
+#. Set widgets data.
+#: ../src/dlg-preferences.c:335 ../src/dlg-preferences.c:343
+msgid "Smaller size"
+msgstr "較小容量"
+
+#: ../src/dlg-preferences.c:339 ../src/dlg-preferences.c:347
+msgid "Higher quality"
+msgstr "更高品質"
+
+#: ../src/dlg-preferences.c:351
+msgid "Faster compression"
+msgstr "較快壓縮速度"
+
+#: ../src/dlg-preferences.c:355
+msgid "Higher compression"
+msgstr "較高壓縮率"
+
+#: ../src/dlg-ripper.c:315
+msgid "Could not display the destination folder"
+msgstr "無法顯示目的地資料夾"
+
+#: ../src/dlg-ripper.c:430
+msgid "Tracks extracted successfully"
+msgstr "音軌擷取完成"
+
+#: ../src/dlg-ripper.c:432
+msgid "_View destination folder"
+msgstr "顯示目的地資料夾(_V)"
+
+#: ../src/dlg-ripper.c:445
+#, c-format
+msgid "Extracting track %d of %d: %s"
+msgstr "正在擷取音軌 %d （共 %d 首）：%s"
+
+#: ../src/dlg-ripper.c:485
+msgid "Ripped with Goobox"
+msgstr "以 Goobox 擷取"
+
+#: ../src/eggtrayicon.c:118
+msgid "Orientation"
+msgstr "排列方向"
+
+#: ../src/eggtrayicon.c:119
+msgid "The orientation of the tray."
+msgstr "面板的方向。"
+
+#: ../src/file-utils.c:622
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr "無法找到終端機，請使用 xterm，雖然它可能無法工作"
+
+#: ../src/goo-cdrom-bsd.c:140 ../src/goo-cdrom-linux.c:121
+#: ../src/goo-cdrom-solaris.c:123
+msgid "Error reading CD"
+msgstr "讀取光碟發生錯誤"
+
+#: ../src/goo-cdrom.c:323
+msgid "The specified device is not valid"
+msgstr "所指定的裝置是無效的"
+
+#: ../src/goo-player-cd.c:795
+msgid "Drive not ready"
+msgstr "光碟機未準備"
+
+#: ../src/goo-player-cd.c:799
+msgid "Tray open"
+msgstr "開啟光碟匣"
+
+#: ../src/goo-player-cd.c:800 ../src/goo-player-cd.c:804
+msgid "No disc"
+msgstr "沒有光碟"
+
+#: ../src/goo-player-cd.c:808
+msgid "Data CD"
+msgstr "資料光碟"
+
+#: ../src/goo-player-info.c:236 ../src/goo-player-info.c:261
+#: ../src/goo-player-info.c:758
+#, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#: ../src/goo-player-info.c:499
+msgid "Click here to choose a cover for this CD"
+msgstr "點選這裡來選擇這光碟的封面"
+
+#: ../src/goo-player-info.c:686 ../src/goo-window.c:1313
+msgid "Paused"
+msgstr "已暫停"
+
+#: ../src/goo-player-info.c:697
+msgid "Ejecting CD"
+msgstr "正在退出光碟"
+
+#: ../src/goo-player-info.c:701
+msgid "Checking CD drive"
+msgstr "正在檢查光碟機"
+
+#: ../src/goo-player-info.c:705 ../src/goo-player-info.c:709
+msgid "Reading CD"
+msgstr "正在讀取光碟"
+
+#: ../src/goo-player-info.c:722 ../src/goo-window.c:1337
+msgid "Audio CD"
+msgstr "音樂光碟"
+
+#: ../src/goo-stock.c:53
+msgid "_Extract"
+msgstr "擷取(_E)"
+
+#: ../src/goo-stock.c:54
+msgid "_Reset"
+msgstr "重置(_R)"
+
+#: ../src/goo-stock.c:55 ../src/goo-stock.c:56 ../src/goo-stock.c:57
+#: ../src/goo-stock.c:58
+msgid "V_olume"
+msgstr "音量(_O)"
+
+#: ../src/goo-volume-button.c:147 ../src/goo-volume-tool-button.c:284
+#, c-format
+msgid "Volume level: %3.0f%%"
+msgstr "音量：%3.0f%%"
+
+#: ../src/goo-volume-button.c:328 ../src/goo-volume-tool-button.c:494
+msgid "+"
+msgstr "+"
+
+#: ../src/goo-volume-button.c:344 ../src/goo-volume-tool-button.c:510
+msgid "-"
+msgstr "-"
+
+#: ../src/goo-volume-tool-button.c:538
+msgid "Change the volume level"
+msgstr "調節音量"
+
+#: ../src/goo-volume-tool-button.c:605
+msgid "Volume"
+msgstr "音量"
+
+#: ../src/goo-window.c:65
+msgid "Hide _tracks"
+msgstr "隱藏曲目(_T)"
+
+#: ../src/goo-window.c:66
+msgid "Show _tracks"
+msgstr "顯示曲目(_T)"
+
+#: ../src/goo-window.c:191
+#, c-format
+msgid "%d track"
+msgid_plural "%d tracks"
+msgstr[0] "%d 音軌"
+
+#: ../src/goo-window.c:195
+#, c-format
+msgid "year %d"
+msgstr "%d 年"
+
+#: ../src/goo-window.c:605
+msgid "Length"
+msgstr "長度"
+
+#: ../src/goo-window.c:606
+msgid "Title"
+msgstr "標題"
+
+#: ../src/goo-window.c:607
+msgid "Artist"
+msgstr "藝人"
+
+#: ../src/goo-window.c:615
+msgid "#"
+msgstr "編號"
+
+#: ../src/goo-window.c:1222 ../src/ui.h:65
+msgid "_Pause"
+msgstr "暫停(_P)"
+
+#: ../src/goo-window.c:1223
+msgid "Pause playing"
+msgstr "暫停播放"
+
+#: ../src/goo-window.c:1445 ../src/goo-window.c:1462 ../src/ui.h:53
+#: ../src/ui.h:57 ../src/ui.h:61
+msgid "_Play"
+msgstr "播放(_P)"
+
+#: ../src/goo-window.c:1446 ../src/goo-window.c:1463
+msgid "Play CD"
+msgstr "播放光碟"
+
+#: ../src/goo-window.c:2460
+msgid "Could not eject the CD"
+msgstr "無法退出光碟"
+
+#: ../src/goo-window.c:2472
+msgid "Could not read drive"
+msgstr "無法讀取光碟機"
+
+#: ../src/goo-window.c:2656
+msgid "Could not save cover image"
+msgstr "無法儲存封面圖像"
+
+#: ../src/goo-window.c:2666
+msgid "Could not load image"
+msgstr "無法載入圖像"
+
+#: ../src/goo-window.c:2722
+msgid "Choose CD Cover Image"
+msgstr "選擇光碟封面圖像"
+
+#: ../src/goo-window.c:2741
+msgid "Images"
+msgstr "圖像"
+
+#: ../src/goo-window.c:2749
+msgid "All files"
+msgstr "所有檔案"
+
+#: ../src/goo-window.c:2783
+msgid ""
+"You have to enter the artist and album names in order to find the album "
+"cover."
+msgstr "您需要輸入藝人及專輯名稱來尋找專輯封面。"
+
+#: ../src/goo-window.c:2817
+msgid "_Show Window"
+msgstr "顯示視窗(_H)"
+
+#: ../src/goo-window.c:2818
+msgid "Show the main window"
+msgstr "顯示主視窗"
+
+#: ../src/goo-window.c:2831 ../src/ui.h:117
+msgid "_Hide Window"
+msgstr "隱藏視窗(_H)"
+
+#: ../src/goo-window.c:2832 ../src/ui.h:118
+msgid "Hide the main window"
+msgstr "隱藏主視窗"
+
+#: ../src/gth-image-list.c:3520
+msgid "No image"
+msgstr "沒有圖像"
+
+#: ../src/gtk-file-chooser-preview.c:203
+msgid "Preview"
+msgstr "預覽"
+
+#: ../src/gtk-file-chooser-preview.c:328
+msgid "pixels"
+msgstr "像素"
+
+#: ../src/gtk-utils.c:797
+msgid "Could not execute command"
+msgstr "無法執行指令"
+
+#: ../src/main.c:65
+msgid "CD device to be used"
+msgstr "使用的光碟裝置"
+
+#: ../src/main.c:66
+msgid "DEVICE_PATH"
+msgstr "DEVICE_PATH"
+
+#: ../src/main.c:68
+msgid "Play the CD on startup"
+msgstr "開啟時播放光碟"
+
+#: ../src/main.c:71 ../src/ui.h:54
+msgid "Play/Pause"
+msgstr "播放/暫停"
+
+#: ../src/main.c:74 ../src/ui.h:74
+msgid "Play the next track"
+msgstr "播放下一首曲目"
+
+#: ../src/main.c:77 ../src/ui.h:78
+msgid "Play the previous track"
+msgstr "播放上一首曲目"
+
+#: ../src/main.c:80 ../src/ui.h:82
+msgid "Eject the CD"
+msgstr "退出光碟"
+
+#: ../src/main.c:83
+msgid "Hide/Show the main window"
+msgstr "隱藏/顯示主工具列"
+
+#: ../src/main.c:86
+msgid "Volume Up"
+msgstr "調高音量"
+
+#: ../src/main.c:89
+msgid "Volume Down"
+msgstr "調低音量"
+
+#: ../src/main.c:92 ../src/ui.h:102
+msgid "Quit the application"
+msgstr "離開程式"
+
+#: ../src/main.c:246
+msgid "Cannot start the CD player"
+msgstr "無法開啟光碟播放程式"
+
+#: ../src/main.c:247
+msgid ""
+"In order to read CDs you have to install the cdparanoia gstreamer plugin"
+msgstr "要讀取光碟，您需要安裝 cdparanoia gstreamer 增效模組"
+
+#: ../src/track-info.c:118
+#, c-format
+msgid "Track %u"
+msgstr "曲目 %u"
+
+#: ../src/ui.h:34
+msgid "_CD"
+msgstr "光碟(_C)"
+
+#: ../src/ui.h:35
+msgid "_Edit"
+msgstr "編輯(_E)"
+
+#: ../src/ui.h:36
+msgid "_View"
+msgstr "顯示(_V)"
+
+#: ../src/ui.h:37
+msgid "_Help"
+msgstr "求助(_H)"
+
+#: ../src/ui.h:38
+msgid "CD C_over"
+msgstr "光碟封面(_O)"
+
+#: ../src/ui.h:41
+msgid "_About"
+msgstr "關於(_A)"
+
+#: ../src/ui.h:42
+msgid "Information about the program"
+msgstr "關於這程式的資訊"
+
+#: ../src/ui.h:45
+msgid "_Contents"
+msgstr ""
+
+#: ../src/ui.h:46
+msgid "Display the manual"
+msgstr ""
+
+#: ../src/ui.h:49
+msgid "_Keyboard shortcuts"
+msgstr ""
+
+#: ../src/ui.h:58
+msgid "Play"
+msgstr "播放"
+
+#: ../src/ui.h:62
+msgid "Play this track"
+msgstr "播放這曲目"
+
+#: ../src/ui.h:66
+msgid "Pause"
+msgstr "暫停"
+
+#: ../src/ui.h:69
+msgid "_Stop"
+msgstr "停止(_S)"
+
+#: ../src/ui.h:70
+msgid "Stop playing"
+msgstr "停止播放"
+
+#: ../src/ui.h:73
+msgid "_Next"
+msgstr "下一首(_N)"
+
+#: ../src/ui.h:77
+msgid "Pre_v"
+msgstr "上一首(_V)"
+
+#: ../src/ui.h:81
+msgid "_Eject"
+msgstr "退出(_E)"
+
+#: ../src/ui.h:85
+msgid "_Reload"
+msgstr "重新載入(_R)"
+
+#: ../src/ui.h:86
+msgid "Reload the CD"
+msgstr "重新載入光碟"
+
+#: ../src/ui.h:89
+msgid "_Preferences"
+msgstr "偏好設定(_P)"
+
+#: ../src/ui.h:90
+msgid "Edit various preferences"
+msgstr "修改多項的設定"
+
+#: ../src/ui.h:93
+msgid "E_xtract Tracks"
+msgstr "擷取音軌(_X)"
+
+#: ../src/ui.h:94
+msgid "Save the tracks to disk as files"
+msgstr "將音軌儲存為檔案"
+
+#: ../src/ui.h:97
+msgid "_CD Properties"
+msgstr "光碟屬性(_C)"
+
+#: ../src/ui.h:98
+msgid "Edit the CD artist, album and tracks titles"
+msgstr "編輯光碟的藝人、專輯及曲目標題"
+
+#: ../src/ui.h:101
+msgid "_Quit"
+msgstr "離開(_Q)"
+
+#: ../src/ui.h:105
+msgid "_Choose from Disk"
+msgstr "在磁碟中選取(_C)"
+
+#: ../src/ui.h:106
+msgid "Choose a CD cover from the local disk"
+msgstr "在本地磁碟機中選取光碟封面"
+
+#: ../src/ui.h:109
+msgid "_Search on Internet"
+msgstr "在互聯網上搜尋(_S)"
+
+#: ../src/ui.h:110
+msgid "Search a CD cover on Internet"
+msgstr "在互聯網上搜尋光碟封面"
+
+#: ../src/ui.h:113
+msgid "_Remove Cover"
+msgstr "移除封面(_R)"
+
+#: ../src/ui.h:114
+msgid "Remove current CD cover"
+msgstr "移除目前的光碟封面"
+
+#: ../src/ui.h:126
+msgid "_Toolbar"
+msgstr "工具列(_T)"
+
+#: ../src/ui.h:127
+msgid "View the main toolbar"
+msgstr "顯示主工具列"
+
+#: ../src/ui.h:131
+msgid "Stat_usbar"
+msgstr "狀態列(_U)"
+
+#: ../src/ui.h:132
+msgid "View the statusbar"
+msgstr "顯示狀態列"
+
+#: ../src/ui.h:136
+msgid "Play _All"
+msgstr "播放所有(_A)"
+
+#: ../src/ui.h:137
+msgid "Play all tracks"
+msgstr "播放所有曲目"
+
+#: ../src/ui.h:141
+msgid "_Repeat"
+msgstr "循環播放(_R)"
+
+#: ../src/ui.h:142
+msgid "Restart playing when finished"
+msgstr "結束後重新開始播放"
+
+#: ../src/ui.h:146
+msgid "S_huffle"
+msgstr "隨機播放(_H)"
+
+#: ../src/ui.h:147
+msgid "Play tracks in a random order"
+msgstr "以隨機的次序播放曲目"
+
+#~ msgid "<b>Quality</b>"
+#~ msgstr "<b>品質</b>"
+
+#~ msgid "<small><i>Higher quality</i></small>"
+#~ msgstr "<small><i>更高品質</i></small>"
+
+#~ msgid "<small><i>Smaller size</i></small>"
+#~ msgstr "<small><i>較小容量</i></small>"
