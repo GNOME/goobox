@@ -38,6 +38,7 @@
 #include "main.h"
 #include "file-utils.h"
 #include "glib-utils.h"
+#include "gtk-utils.h"
 #include "goo-window.h"
 #include "goo-stock.h"
 #include "gth-image-list.h"
@@ -325,13 +326,17 @@ search_result_saved_cb (DialogData *data,
 	int      urls = 0;
 
 	if (! success) {
-		/*FIXME*/
+		_gtk_error_dialog_run (GTK_WINDOW (data->dialog),
+				       _("Could not search a cover on Internet"),
+				       gnome_vfs_result_to_string (data->vfs_result));
 		return;
 	}
 
 	fd = open (filename, O_RDONLY);
 	if (fd == 0) {
-		/*FIXME*/
+		gth_image_list_set_no_image_text (GTH_IMAGE_LIST (data->image_list),
+						  _("No image found"));
+		
 		return;
 	}
 	
@@ -588,6 +593,7 @@ dlg_cover_chooser (GooWindow  *window,
 	GtkWidget  *scrolled_window;
 	GtkWidget  *btn_cancel;
 	GtkWidget  *btn_help;
+	GtkWidget  *image;
 
 	data = g_new0 (DialogData, 1);
 	data->window = window;
@@ -621,8 +627,13 @@ dlg_cover_chooser (GooWindow  *window,
 	/* Set widgets data. */
 
 	gtk_widget_set_sensitive (data->ok_button, FALSE);
-	gtk_button_set_use_stock (GTK_BUTTON (data->revert_button), TRUE);
-	gtk_button_set_label (GTK_BUTTON (data->revert_button), GOO_STOCK_RESET);
+
+	image = gtk_image_new_from_stock (GOO_STOCK_RESET, GTK_ICON_SIZE_BUTTON);
+	g_object_set (data->revert_button, 
+		      "use_stock", TRUE,
+		      "label", GOO_STOCK_RESET,
+		      "image", image,
+		      NULL);
 
 	/* Set the signals handlers. */
 

@@ -587,6 +587,7 @@ _gtk_error_dialog_from_gerror_run (GtkWindow        *parent,
 
 void
 _gtk_error_dialog_run (GtkWindow        *parent,
+		       const gchar      *main_message,
 		       const gchar      *format,
 		       ...)
 {
@@ -601,8 +602,8 @@ _gtk_error_dialog_run (GtkWindow        *parent,
 	d =  _gtk_message_dialog_new (parent,
 				      GTK_DIALOG_MODAL,
 				      GTK_STOCK_DIALOG_ERROR,
+				      main_message,
 				      message,
-				      NULL,
 				      GTK_STOCK_CLOSE, GTK_RESPONSE_CANCEL,
 				      NULL);
 	g_free (message);

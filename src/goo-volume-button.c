@@ -29,7 +29,7 @@
 #include "goo-marshal.h"
 #include "goo-stock.h"
 
-#define SCALE_HEIGHT 150
+#define SCALE_HEIGHT 145
 
 struct _GooVolumeButtonPrivateData {
 	GtkWidget   *popup_win;
@@ -119,22 +119,26 @@ goo_volume_button_init (GooVolumeButton *button)
 static void
 update_volume_label (GooVolumeButton *button)
 {
-	double  value = button->priv->value;
-	char   *text;
-	char   *stock_id;
+	double     value = button->priv->value;
+	char      *text;
+	char      *stock_id;
+	GtkWidget *image;
 
 	if ((value - 0.0) < 10e-3)
-		stock_id = "volume-zero";
-	else if (value < 30.0)
-		stock_id = "volume-min";
-	else if (value < 70.0)
-		stock_id = "volume-med";
+		stock_id = GOO_STOCK_VOLUME_ZERO;
+	else if (value < 25.0)
+		stock_id = GOO_STOCK_VOLUME_MIN;
+	else if (value < 75.0)
+		stock_id = GOO_STOCK_VOLUME_MED;
 	else
-		stock_id = "volume-max";
-	g_object_set (button, 
-		      "use_stock", TRUE,
-		      "label", stock_id, 
-		      NULL);
+		stock_id = GOO_STOCK_VOLUME_MAX;
+
+	image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+
+	if (image != NULL) 
+		g_object_set (button, 
+			      "image", image, 
+			      NULL);
 
 	text = g_strdup_printf ("%3.0f%%", value);
 	gtk_label_set_text (GTK_LABEL (button->priv->volume_label), text);

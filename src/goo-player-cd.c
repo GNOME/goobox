@@ -58,6 +58,7 @@ struct _GooPlayerCDPrivateData {
 	char            *artist;
 	char            *title;
 	char            *genre;
+	int              year;
 	guint            update_state_id;
 
 	guint            update_progress_id;
@@ -309,6 +310,7 @@ goo_player_cd_empty_list (GooPlayer *player)
 	goo_player_set_current_song (player, -1);
 	goo_player_set_title (player, NULL);
 	goo_player_set_subtitle (player, NULL);
+	goo_player_set_year (player, 0);
 }
 
 
@@ -880,8 +882,11 @@ cddb_slave_listener_event_cb (BonoboListener    *listener,
 	g_free (priv->genre);
 	priv->genre = cddb_slave_client_get_genre (priv->cddb_client, priv->discid);
 
+	priv->year = cddb_slave_client_get_year (priv->cddb_client, priv->discid);
+
 	goo_player_set_title (player, priv->title);
 	goo_player_set_subtitle (player, priv->artist);
+	goo_player_set_year (player, priv->year);
 
 	for (scan = priv->tracks, i = 0; scan; scan = scan->next, i++) {
 		TrackInfo *track = scan->data;

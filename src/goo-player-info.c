@@ -555,7 +555,7 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 			set_title1 (info, _("Reading CD"));
 			set_title2 (info, "");
 
-		}  else {
+		} else {
 			const char *title, *subtitle;
 
 			title = goo_player_get_title (priv->player);

@@ -68,6 +68,7 @@
 #define DEFAULT_VOLUME 100
 #define PLAYER_CHECK_RATE 100
 #define COVER_SIZE 80
+#define IDLE_TIMEOUT 200
 
 struct _GooWindowPrivateData {
 	GtkUIManager    *ui;
@@ -177,22 +178,38 @@ window_update_statusbar_list_info (GooWindow *window)
 	if (priv->songs != 0) {
 		const char *album;
 		char        time_text[64];
-		char       *info = NULL;
+		char       *tracks_s = NULL;
 		char       *text;
+		int         year;
+		char       *year_s;
 
 		album = goo_player_cd_get_album (GOO_PLAYER_CD (priv->player));
 
 		set_time_string (time_text, priv->total_time);
-		info = g_strdup_printf (ngettext ("%d track, %s", "%d tracks, %s", priv->songs), priv->songs, time_text);
+		tracks_s = g_strdup_printf (ngettext ("%d track", "%d tracks", priv->songs), priv->songs);
 
+		year = goo_player_get_year (priv->player);
+		if (year > 0)
+			year_s = g_strdup_printf ("year %d", year);
+                else
+			year_s = g_strdup ("");
+		
 		if (album != NULL)
-			text = g_strconcat (album, ", ", info, NULL);
+			text = g_strconcat (album, 
+					    ", ", year_s, 
+					    ", ", tracks_s, 
+					    ", ", time_text, 
+					    NULL);
 		else
-			text = g_strconcat (info, NULL);
+			text = g_strconcat (year_s, 
+					    ", ", tracks_s, 
+					    ", ", time_text,
+					    NULL);
 
 		gtk_statusbar_push (GTK_STATUSBAR (priv->statusbar), priv->list_info_cid, text);
 
-		g_free (info);
+		g_free (year_s);
+		g_free (tracks_s);
 		g_free (text);
 	}
 }
@@ -853,10 +870,9 @@ goo_window_unrealize (GtkWidget *widget)
 	if (playlist_visible)
 		save_window_size (window);
 
-	/*
+	/* FIXME
 	preferences_set_sort_method (window->sort_method);
 	preferences_set_sort_type (window->sort_type);
-	preferences_set_list_mode (window->list_mode);
 	*/
 
 	GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
@@ -893,8 +909,7 @@ goo_window_show (GtkWidget *widget)
 	goo_window_set_statusbar_visibility (window, view_foobar);
 
 	if (window->priv->first_timeout_handle == 0)
-		window->priv->first_timeout_handle = g_timeout_add (200, /*FIXME*/
-								    first_time_idle, window);
+		window->priv->first_timeout_handle = g_timeout_add (IDLE_TIMEOUT, first_time_idle, window);
 }
 
 
@@ -1321,8 +1336,7 @@ player_done_cb (GooPlayer       *player,
 					   "/MenuBar/CDMenu/",
 					   NULL);
 		if (action == GOO_PLAYER_ACTION_PLAY)
-			priv->next_timeout_handle = g_timeout_add (200, /*FIXME*/
-								   next_time_idle, window);
+			priv->next_timeout_handle = g_timeout_add (IDLE_TIMEOUT, next_time_idle, window);
 
 		break;
 	case GOO_PLAYER_ACTION_PAUSE:
@@ -2613,8 +2627,12 @@ goo_window_search_cover_on_internet (GooWindow *window)
 	album = goo_player_cd_get_album (GOO_PLAYER_CD (window->priv->player));
 	artist = goo_player_cd_get_artist (GOO_PLAYER_CD (window->priv->player));
 
-	if ((album == NULL) || (artist == NULL))
-		return; /*FIXME*/
+	if ((album == NULL) || (artist == NULL)) {
+		_gtk_error_dialog_run (GTK_WINDOW (window),
+				       _("Could not search a cover on Internet"),
+				       _("You have to enter the artist and album names in order to find the album cover."));
+		return;
+	}
 
 	dlg_cover_chooser (window, album, artist);
 }

@@ -35,6 +35,7 @@ struct _GooPlayerPrivateData {
 	char            *location;
 	char            *title;
 	char            *subtitle;
+	int              year;
 	gboolean         is_busy;
 };
 
@@ -263,6 +264,7 @@ goo_player_init (GooPlayer *player)
 	priv->location = NULL;
 	priv->title = NULL;
 	priv->subtitle = NULL;
+	priv->year = 0;
 	priv->is_busy = FALSE;
 }
 
@@ -426,6 +428,21 @@ goo_player_set_subtitle (GooPlayer  *player,
 	player->priv->subtitle = NULL;
 	if (value != NULL)
 		player->priv->subtitle = g_strdup (value);
+}
+
+
+int
+goo_player_get_year (GooPlayer *player)
+{
+	return player->priv->year;
+}
+
+
+void
+goo_player_set_year (GooPlayer  *player,
+		     int         value)
+{
+	player->priv->year = value;
 }
 
 

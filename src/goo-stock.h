@@ -32,10 +32,10 @@
 #define GOO_STOCK_RESET       "goo-reset"
 #define GOO_STOCK_STOP        "media-stop"
 #define GOO_STOCK_NO_COVER    "goo-no-cover"
-#define GOO_STOCK_VOLUME_MAX  "volume-max"
-#define GOO_STOCK_VOLUME_MED  "volume-med"
-#define GOO_STOCK_VOLUME_MIN  "volume-min"
-#define GOO_STOCK_VOLUME_ZERO "volume-zero"
+#define GOO_STOCK_VOLUME_MAX  "goo-volume-max"
+#define GOO_STOCK_VOLUME_MED  "goo-volume-med"
+#define GOO_STOCK_VOLUME_MIN  "goo-volume-min"
+#define GOO_STOCK_VOLUME_ZERO "goo-volume-zero"
 #define GOO_STOCK_WEB         "panel-internet"
 
 

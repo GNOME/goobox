@@ -130,6 +130,7 @@ gboolean         goo_player_set_location        (GooPlayer       *player,
 const char *     goo_player_get_location        (GooPlayer       *player);
 const char *     goo_player_get_title           (GooPlayer       *player);
 const char *     goo_player_get_subtitle        (GooPlayer       *player);
+int              goo_player_get_year            (GooPlayer       *player);
 int              goo_player_get_volume          (GooPlayer       *player);
 void             goo_player_set_volume          (GooPlayer       *player,
 						 int              vol);
@@ -148,6 +149,8 @@ void             goo_player_set_title           (GooPlayer       *player,
 						 const char      *value);
 void             goo_player_set_subtitle        (GooPlayer       *player,
 						 const char      *value);
+void             goo_player_set_year            (GooPlayer       *player,
+						 int              value);
 void             goo_player_set_volume_protected(GooPlayer       *player,
 						 int              vol);
 void             goo_player_set_is_busy         (GooPlayer       *player,
