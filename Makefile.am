@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in.
 SUBDIRS =		\
 	data		\
+	help		\
 	src		\
 	po
 
@@ -18,7 +19,10 @@ EXTRA_DIST = 			\
 	add-include-prefix	\
 	intltool-merge.in	\
 	intltool-update.in	\
-	intltool-extract.in
+	intltool-extract.in	\
+	omf.make                \
+        xmldocs.make
+
 
 DISTCLEANFILES =                        \
 	po/.intltool-merge-cache        \

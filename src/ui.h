@@ -41,6 +41,14 @@ static GtkActionEntry action_entries[] = {
 	  N_("_About"), NULL,
 	  N_("Information about the program"),
 	  G_CALLBACK (activate_action_about) },
+	{ "Contents", GTK_STOCK_HELP,
+	  N_("_Contents"), "F1",
+	  N_("Display the manual"),
+	  G_CALLBACK (activate_action_manual) },
+	{ "Shortcuts", NULL,
+	  N_("_Keyboard shortcuts"), "",
+	  " ",
+	  G_CALLBACK (activate_action_shortcuts) },
 	{ "TogglePlay", GOO_STOCK_PLAY,
 	  N_("_Play"), "space",
 	  N_("Play/Pause"),
@@ -179,6 +187,9 @@ static const gchar *ui_info =
 "      <menuitem action='ToggleVisibility'/>"
 "    </menu>"
 "    <menu action='HelpMenu'>"
+"      <menuitem action='Contents'/>"
+"      <menuitem action='Shortcuts'/>"
+"      <separator name='sep01'/>"
 "      <menuitem action='About'/>"
 "    </menu>"
 "  </menubar>"

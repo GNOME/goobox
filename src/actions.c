@@ -121,6 +121,57 @@ activate_action_reload (GtkAction *action,
 }
 
 
+
+static void
+show_help (GooWindow  *window,
+	   const char *section)
+{
+	GError *err = NULL;  
+
+        gnome_help_display ("goobox", section, &err);
+        
+        if (err != NULL) {
+                GtkWidget *dialog;
+                
+                dialog = _gtk_message_dialog_new (GTK_WINDOW (window),
+						  GTK_DIALOG_DESTROY_WITH_PARENT, 
+						  GTK_STOCK_DIALOG_ERROR,
+						  _("Could not display help"),
+						  err->message,
+						  GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
+						  NULL);
+                gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+                g_signal_connect (G_OBJECT (dialog), "response",
+                                  G_CALLBACK (gtk_widget_destroy),
+                                  NULL);
+                
+                gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+                
+                gtk_widget_show (dialog);
+                
+                g_error_free (err);
+        }
+}
+
+
+void
+activate_action_manual (GtkAction *action, 
+			gpointer   data)
+{
+	GooWindow *window = data;
+	show_help (window, NULL);
+}
+
+
+void
+activate_action_shortcuts (GtkAction *action, 
+			   gpointer   data)
+{
+	GooWindow *window = data;
+	show_help (window, "goobox-shortcuts");
+}
+
+
 void
 activate_action_about (GtkAction *action, 
 		       gpointer   data)
