@@ -147,7 +147,7 @@
 
 	      <child>
 		<widget class="GtkScrolledWindow" id="image_list_scrolledwindow">
-		  <property name="width_request">415</property>
+		  <property name="width_request">424</property>
 		  <property name="height_request">390</property>
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>

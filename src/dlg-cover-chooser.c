@@ -57,7 +57,8 @@
 #define BUFFER_SIZE 300
 #define IMG_PERM 0600
 #define DIR_PERM 0700
-#define THUMB_SIZE 110
+#define THUMB_SIZE 100
+#define THUMB_BORDER 14
 #define QUERY_RESULT "result.html"
 
 typedef struct _DialogData DialogData;
@@ -95,6 +96,14 @@ static void
 destroy_cb (GtkWidget  *widget, 
 	    DialogData *data)
 {
+	if (data->load_id != 0)
+		g_source_remove (data->load_id);
+	if (data->read_id != 0)
+		g_source_remove (data->read_id);
+	if (data->request != NULL) {
+		ne_end_request (data->request);
+		ne_request_destroy (data->request);
+	}
 	ne_session_destroy (data->session);
 
 	if (data->tmpdir != NULL) {
@@ -174,7 +183,9 @@ append_image (DialogData *data,
 	GdkPixbuf *image;
 	int        pos;
 
-	image = gdk_pixbuf_new_from_file (filename, NULL);
+	image = gdk_pixbuf_new_from_file_at_size (filename, 
+						  THUMB_SIZE,  THUMB_SIZE, 
+						  NULL);
 	if (image == NULL)
 		return;
 
@@ -275,6 +286,8 @@ read_block_cb (gpointer callback_data)
 		ne_end_request (data->request);
 
 		ne_request_destroy (data->request);
+		data->request = NULL;
+
 		close (data->fd);
 		if (data->file_saved_func != NULL)
 			(*data->file_saved_func) (data, data->dest, len);
@@ -319,6 +332,8 @@ copy_file_from_url (DialogData    *data,
 		if (ne_end_request (data->request) == NE_RETRY)
 			goto retry;
 		ne_request_destroy (data->request);
+		data->request = NULL;
+
 		return;
 	}
 
@@ -340,9 +355,9 @@ update_progress_label (DialogData *data)
 	char *text;
 
 	if (data->url < data->urls)
-		text = g_strdup_printf (_("%u, loaded: %u"), 
+		text = g_strdup_printf (_("%u, loading image: %u"), 
 					data->urls, 
-					data->url);
+					data->url + 1);
 	else
 		text = g_strdup_printf ("%u", data->urls);
 	gtk_label_set_text (GTK_LABEL (data->progress_label), text);
@@ -356,20 +371,21 @@ load_current_url (DialogData *data)
 	char *url, *dest;
 	char *filename;
 
-	if (data->current == NULL)
+	update_progress_label (data);
+
+	if (data->current == NULL) 
 		return;
 
 	url = data->current->data;
 
 	debug (DEBUG_INFO, "LOAD %s\n", url);
 
-	filename = g_strdup_printf ("%d.png", data->url++);
+	filename = g_strdup_printf ("%d.png", data->url);
 	dest = g_build_filename (data->tmpdir, filename, NULL);
 	g_free (filename);
 
-	update_progress_label (data);
-
 	copy_file_from_url (data, url, dest, image_saved_cb);
+	data->url++;
 }
 
 
@@ -482,7 +498,7 @@ start_searching (gpointer callback_data)
 			     data->album,
 			     "+",
 			     data->artist,
-			     "&imgsz=medium",
+			     /* "&imgsz=medium", FIXME*/
 			     NULL);
 	dest = g_build_filename (data->tmpdir, QUERY_RESULT, NULL);
 
@@ -529,7 +545,7 @@ dlg_cover_chooser (GooWindow  *window,
 	btn_cancel = glade_xml_get_widget (data->gui, "cc_cancelbutton");
 	btn_help = glade_xml_get_widget (data->gui, "cc_helpbutton");
 
-	data->image_list = gth_image_list_new (THUMB_SIZE);
+	data->image_list = gth_image_list_new (THUMB_SIZE + THUMB_BORDER);
 	gth_image_list_set_view_mode (GTH_IMAGE_LIST (data->image_list),
 				      GTH_VIEW_MODE_VOID);
 	gth_image_list_set_selection_mode (GTH_IMAGE_LIST (data->image_list),
