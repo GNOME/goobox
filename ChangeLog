@@ -1,7 +1,11 @@
 2004-11-07  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
-	* src/goo-window.c (open_update_preview_cb): 
 	* src/gtk-file-chooser-preview.c: 
+	* src/goo-window.c (open_update_preview_cb): 
+
+	Display the image size if available.
+	
+	* src/goo-window.c (open_update_preview_cb): 
 	* src/gtk-file-chooser-preview.c: 
 
 	Added an image preview to Cover Chooser dialog.

@@ -2492,7 +2492,7 @@ open_update_preview_cb (GtkFileChooser *file_sel,
 	GooWindow *window = user_data;
 	char      *uri;
 
-	uri = gtk_file_chooser_get_preview_filename (file_sel);
+	uri = gtk_file_chooser_get_preview_uri (file_sel);
 	debug (DEBUG_INFO, "PREVIEW: %s", uri);
 	gtk_file_chooser_preview_set_uri (GTK_FILE_CHOOSER_PREVIEW (window->priv->preview), uri);
 	g_free (uri);

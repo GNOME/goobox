@@ -201,6 +201,7 @@ gtk_file_chooser_preview_construct (GtkFileChooserPreview  *preview)
 	gtk_widget_show (button);
 
 	label = gtk_label_new_with_mnemonic (_("Preview"));
+	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_container_add (GTK_CONTAINER (button), label);
 	gtk_widget_show (label);
@@ -227,6 +228,8 @@ gtk_file_chooser_preview_construct (GtkFileChooserPreview  *preview)
 	gtk_box_pack_start (GTK_BOX (vbox2), priv->image, FALSE, FALSE, 0);
 
 	priv->image_info = gtk_label_new (NULL);
+	gtk_label_set_justify (GTK_LABEL (priv->image_info), GTK_JUSTIFY_CENTER);
+	gtk_misc_set_alignment (GTK_MISC (priv->image_info), 0.5, 0.5);
 	gtk_widget_hide (priv->image_info);
 	gtk_box_pack_start (GTK_BOX (vbox2), priv->image_info, FALSE, FALSE, 0);
 
@@ -248,21 +251,19 @@ gtk_file_chooser_preview_new (void)
 
 
 static GnomeVFSFileInfo*
-vfs_get_file_info (const gchar *path)
+vfs_get_file_info (const gchar *uri)
 {
 	GnomeVFSFileInfo *info;
 	GnomeVFSResult    result;
-	char             *escaped;
 
-	if (! path || ! *path) return 0; 
+	if (uri == NULL) 
+		return NULL; 
 
 	info = gnome_vfs_file_info_new ();
-	escaped = gnome_vfs_escape_path_string (path);
-	result = gnome_vfs_get_file_info (escaped, 
+	result = gnome_vfs_get_file_info (uri,
 					  info, 
 					  (GNOME_VFS_FILE_INFO_DEFAULT | GNOME_VFS_FILE_INFO_FOLLOW_LINKS));
-	g_free (escaped);
-
+	
 	if (result != GNOME_VFS_OK) {
 		gnome_vfs_file_info_unref (info);
 		info = NULL;
@@ -280,8 +281,6 @@ gtk_file_chooser_preview_set_uri (GtkFileChooserPreview *preview,
 	GnomeVFSFileInfo  *info;
 	GdkPixbuf         *pixbuf;
 	char              *thumb_uri;
-
-	if (uri == NULL)
 
 	g_free (priv->uri);
 	priv->uri = NULL;
@@ -302,9 +301,10 @@ gtk_file_chooser_preview_set_uri (GtkFileChooserPreview *preview,
 	thumb_uri = gnome_thumbnail_factory_lookup (priv->thumb_factory,
 						    uri,
 						    info->mtime);
-	if (thumb_uri != NULL) 
+	if (thumb_uri != NULL) {
 		pixbuf = gdk_pixbuf_new_from_file (thumb_uri, NULL);
-	else {
+
+	} else {
 		char *mime_type = gnome_vfs_get_mime_type (uri);
 
 		pixbuf = gnome_thumbnail_factory_generate_thumbnail (priv->thumb_factory, uri, mime_type);
@@ -317,10 +317,19 @@ gtk_file_chooser_preview_set_uri (GtkFileChooserPreview *preview,
 	}
 
 	if (pixbuf != NULL) {
-		char *text;
+		const char *w, *h;
+		char       *size_text, *text;
+		
+		w = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Width");
+		h = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Height");
+		size_text = gnome_vfs_format_file_size_for_display (info->size); 
+		text = g_strconcat (size_text, 
+				    ((w == NULL)?NULL:"\n"),
+				    w, " x ", h, " ", _("pixels"),
+				    NULL);
+		g_free (size_text);
 
-		text = gnome_vfs_format_file_size_for_display (info->size); 
-		gtk_label_set_text (GTK_LABEL (priv->image_info), text);
+		gtk_label_set_markup (GTK_LABEL (priv->image_info), text);
 		g_free (text);
 
 		gtk_image_set_from_pixbuf (GTK_IMAGE (priv->image), pixbuf); 
