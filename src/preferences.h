@@ -28,35 +28,31 @@
 #include "typedefs.h"
 #include "goo-window.h"
 
-#define PREF_GENERAL_DEVICE        "/apps/goobox/general/device"
-#define PREF_GENERAL_VOLUME        "/apps/goobox/general/volume"
-#define PREF_GENERAL_COVER_PATH    "/apps/goobox/general/cover_path"
+#define PREF_GENERAL_DEVICE           "/apps/goobox/general/device"
+#define PREF_GENERAL_VOLUME           "/apps/goobox/general/volume"
+#define PREF_GENERAL_COVER_PATH       "/apps/goobox/general/cover_path"
 
-#define PREF_UI_TOOLBAR            "/apps/goobox/ui/toolbar_visible"
-#define PREF_UI_STATUSBAR          "/apps/goobox/ui/statusbar_visible"
-#define PREF_UI_PLAYLIST           "/apps/goobox/ui/playlist_visible"
-#define PREF_UI_WINDOW_WIDTH       "/apps/goobox/ui/window_width"
-#define PREF_UI_WINDOW_HEIGHT      "/apps/goobox/ui/window_height"
+#define PREF_UI_TOOLBAR               "/apps/goobox/ui/toolbar_visible"
+#define PREF_UI_STATUSBAR             "/apps/goobox/ui/statusbar_visible"
+#define PREF_UI_PLAYLIST              "/apps/goobox/ui/playlist_visible"
+#define PREF_UI_WINDOW_WIDTH          "/apps/goobox/ui/window_width"
+#define PREF_UI_WINDOW_HEIGHT         "/apps/goobox/ui/window_height"
 
-#define PREF_PLAYLIST_PLAYALL      "/apps/goobox/playlist/play_all"
-#define PREF_PLAYLIST_SHUFFLE      "/apps/goobox/playlist/shuffle"
-#define PREF_PLAYLIST_REPEAT       "/apps/goobox/playlist/repeat"
+#define PREF_PLAYLIST_PLAYALL         "/apps/goobox/playlist/play_all"
+#define PREF_PLAYLIST_SHUFFLE         "/apps/goobox/playlist/shuffle"
+#define PREF_PLAYLIST_REPEAT          "/apps/goobox/playlist/repeat"
 
-#define PREF_EXTRACT_DESTINATION   "/apps/goobox/dialogs/extract/destination"
-#define PREF_EXTRACT_FILETYPE      "/apps/goobox/dialogs/extract/file_type"
+#define PREF_EXTRACT_DESTINATION      "/apps/goobox/dialogs/extract/destination"
+#define PREF_EXTRACT_FILETYPE         "/apps/goobox/dialogs/extract/file_type"
+
+#define PREF_ENCODER_OGG_QUALITY      "/apps/goobox/encoder/ogg_quality"
+#define PREF_ENCODER_FLAC_COMPRESSION "/apps/goobox/encoder/flac_compression"
+#define PREF_ENCODER_MP3_BITRATE      "/apps/goobox/encoder/mp3_bitrate"
 
 #define PREF_DESKTOP_ICON_THEME         "/desktop/gnome/file_views/icon_theme"
 #define PREF_DESKTOP_MENUS_HAVE_TEAROFF "/desktop/gnome/interface/menus_have_tearoff"
 #define PREF_DESKTOP_MENUBAR_DETACHABLE "/desktop/gnome/interface/menubar_detachable"
 #define PREF_DESKTOP_TOOLBAR_DETACHABLE "/desktop/gnome/interface/toolbar_detachable"
-
-#define HTTP_PROXY_USE_HTTP_PROXY "/system/http_proxy/use_http_proxy"
-#define HTTP_PROXY_HOST           "/system/http_proxy/host"
-#define HTTP_PROXY_PORT           "/system/http_proxy/port"
-#define HTTP_PROXY_USE_AUTH       "/system/http_proxy/use_authentication"
-#define HTTP_PROXY_USER           "/system/http_proxy/authentication_user"
-#define HTTP_PROXY_PWD            "/system/http_proxy/authentication_password"
-
 
 void                pref_util_save_window_geometry    (GtkWindow  *window,
 						       const char *dialog);

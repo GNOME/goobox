@@ -20,13 +20,14 @@
  *  Foundation, Inc., 59 Temple Street #330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef DLG_EXTRACT_H
-#define DLG_EXTRACT_H
+#ifndef DLG_ENCODER_OPTIONS_H
+#define DLG_ENCODER_OPTIONS_H
 
+#include "typedefs.h"
 #include "goo-window.h"
 
-void   dlg_extract                (GooWindow *window);
-void   dlg_extract__start_ripping (GtkWidget *dialog);
+void   dlg_encoder_options   (GtkWidget     *dialog,
+			      GtkWindow     *parent,
+			      GooFileFormat  format);
 
-
-#endif /* DLG_EXTRACT_H */
+#endif /* DLG_ENCODER_OPTIONS_H */

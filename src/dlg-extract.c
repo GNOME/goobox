@@ -47,6 +47,7 @@
 #include "track-info.h"
 #include "goo-player-cd.h"
 #include "dlg-ripper.h"
+#include "dlg-encoder-options.h"
 
 #define GLADE_EXTRACT_FILE "goobox.glade"
 
@@ -56,17 +57,17 @@ typedef struct {
 	GList       *songs;
 	GList       *selected_songs;
 
-	GladeXML  *gui;
+	GladeXML    *gui;
 
-	GtkWidget *dialog;
-	GtkWidget *e_alltrack_radiobutton;
-	GtkWidget *e_selected_radiobutton;
-	GtkWidget *e_destination_entry;
-	GtkWidget *e_destination_button;
-	GtkWidget *e_ogg_radiobutton;
-	GtkWidget *e_flac_radiobutton;
-	GtkWidget *e_mp3_radiobutton;
-	GtkWidget *e_wave_radiobutton;
+	GtkWidget   *dialog;
+	GtkWidget   *e_alltrack_radiobutton;
+	GtkWidget   *e_selected_radiobutton;
+	GtkWidget   *e_destination_entry;
+	GtkWidget   *e_destination_button;
+	GtkWidget   *e_ogg_radiobutton;
+	GtkWidget   *e_flac_radiobutton;
+	GtkWidget   *e_mp3_radiobutton;
+	GtkWidget   *e_wave_radiobutton;
 } DialogData;
 
 
@@ -94,7 +95,7 @@ get_tracks (DialogData *data,
 		return goo_player_cd_get_tracks (data->player_cd);
 
 	for (scan = data->selected_songs; scan; scan = scan->next) {
-		SongInfo *song = scan->data;
+		SongInfo  *song = scan->data;
 		TrackInfo *track = goo_player_cd_get_track (data->player_cd, song->number);
 		track_info_ref (track);
 		tracks = g_list_prepend (tracks, track);
@@ -104,14 +105,46 @@ get_tracks (DialogData *data,
 }
 
 
+void
+dlg_extract__start_ripping (GtkWidget *dialog)
+{
+	DialogData    *data;
+	char          *destination;
+	GooFileFormat  file_format;
+	GList         *tracks_to_rip;
+
+	data = g_object_get_data (G_OBJECT (dialog), "dialog_data");
+	
+	destination = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "~");
+	file_format = pref_get_file_format ();
+	tracks_to_rip = get_tracks (data, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_selected_radiobutton)));
+
+	dlg_ripper (data->window,
+		    goo_player_get_location (GOO_PLAYER (data->player_cd)),
+		    destination,
+		    file_format,
+		    goo_player_cd_get_album (data->player_cd),
+		    goo_player_cd_get_artist (data->player_cd),
+		    goo_player_cd_get_genre (data->player_cd),
+		    g_list_length (data->songs),
+		    tracks_to_rip);
+
+	track_list_free (tracks_to_rip);
+	g_free (destination);
+
+	/**/
+
+	gtk_widget_destroy (data->dialog);
+}
+
+
 /* called when the "ok" button is clicked. */
 static void
 ok_cb (GtkWidget  *widget, 
        DialogData *data)
 {
-	const char *destination;
-	GooFileFormat file_format = GOO_FILE_FORMAT_OGG;
-	GList *tracks_to_rip;
+	const char    *destination;
+	GooFileFormat  file_format = GOO_FILE_FORMAT_OGG;
 
 	/* save preferences */
 
@@ -131,25 +164,14 @@ ok_cb (GtkWidget  *widget,
 	/**/
 
 	gtk_window_set_modal (GTK_WINDOW (data->dialog), FALSE);
-	gtk_widget_hide (data->dialog);
+	gtk_widget_hide (data->dialog); 
 
-	tracks_to_rip = get_tracks (data, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_selected_radiobutton)));
-
-	dlg_ripper (data->window,
-		    goo_player_get_location (GOO_PLAYER (data->player_cd)),
-		    destination,
-		    file_format,
-		    goo_player_cd_get_album (data->player_cd),
-		    goo_player_cd_get_artist (data->player_cd),
-		    goo_player_cd_get_genre (data->player_cd),
-		    g_list_length (data->songs),
-		    tracks_to_rip);
-
-	track_list_free (tracks_to_rip);
-
-	/**/
-
-	gtk_widget_destroy (data->dialog);
+	if (file_format != GOO_FILE_FORMAT_WAVE)
+		dlg_encoder_options (data->dialog,
+				     GTK_WINDOW (data->window), 
+				     file_format);
+	else
+		dlg_extract__start_ripping (data->dialog);		
 }
 
 
@@ -190,7 +212,7 @@ open_response_cb (GtkDialog  *file_sel,
 		  int         button_number,
 		  gpointer    userdata)
 {
-	DialogData  *data = (DialogData   * )userdata;
+	DialogData *data = (DialogData*) userdata;
 
 	if (button_number == GTK_RESPONSE_ACCEPT) {
 		_gtk_entry_set_filename_text (GTK_ENTRY (data->e_destination_entry),
@@ -288,6 +310,8 @@ dlg_extract (GooWindow *window)
 	gtk_button_set_label (GTK_BUTTON (btn_ok), GOO_STOCK_EXTRACT);
 
 	/* Set widgets data. */
+
+	g_object_set_data (G_OBJECT (data->dialog), "dialog_data", data);
 
 	selected = g_list_length (data->selected_songs);
 	if (selected == 0) {

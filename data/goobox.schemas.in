@@ -193,5 +193,46 @@
 	</locale>
       </schema>
 
+      <!-- ENCODER -->
+
+      <schema>
+	<key>/schemas/apps/goobox/encoder/ogg_quality</key>
+	<applyto>/apps/goobox/encoder/ogg_quality</applyto>
+	<owner>goobox</owner>
+	<type>float</type>
+	<default>0.3</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
+	<key>/schemas/apps/goobox/encoder/flac_compression</key>
+	<applyto>/apps/goobox/encoder/flac_compression</applyto>
+	<owner>goobox</owner>
+	<type>int</type>
+	<default>5</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
+	<key>/schemas/apps/goobox/encoder/mp3_bitrate</key>
+	<applyto>/apps/goobox/encoder/mp3_bitrate</applyto>
+	<owner>goobox</owner>
+	<type>int</type>
+	<default>128</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
     </schemalist>
 </gconfschemafile>

@@ -53,6 +53,9 @@
 #define GLADE_RIPPER_FILE "goobox.glade"
 #define DESTINATION_PERMISSIONS 0755
 #define UPDATE_DELAY 400
+#define DEFAULT_OGG_QUALITY 0.3
+#define DEFAULT_FLAC_COMPRESSION 5
+#define DEFAULT_MP3_BITRATE 128
 
 typedef struct {
 	GooWindow     *window;
@@ -189,7 +192,9 @@ update_progress_cb (gpointer callback_data)
 static void
 create_pipeline (DialogData *data)
 {
-
+	float ogg_quality;
+	int   flac_compression;
+	int   mp3_bitrate;
 
 	data->rip_thread = gst_thread_new ("rip_thread");
 		
@@ -202,14 +207,26 @@ create_pipeline (DialogData *data)
 	case GOO_FILE_FORMAT_OGG:	
 		data->encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
 		data->ext = "ogg";
+		ogg_quality = eel_gconf_get_float (PREF_ENCODER_OGG_QUALITY, DEFAULT_OGG_QUALITY) + 0.05;
+		g_object_set (data->encoder,
+			      "quality", ogg_quality,
+			      NULL);
 		break;
 	case GOO_FILE_FORMAT_FLAC:
 		data->encoder = gst_element_factory_make (FLAC_ENCODER, "encoder");
 		data->ext = "flac";
+		flac_compression = eel_gconf_get_integer (PREF_ENCODER_FLAC_COMPRESSION, DEFAULT_FLAC_COMPRESSION);
+		g_object_set (data->encoder,
+			      "quality", flac_compression,
+			      NULL);
 		break;
 	case GOO_FILE_FORMAT_MP3:
 		data->encoder = gst_element_factory_make (MP3_ENCODER, "encoder");
 		data->ext = "mp3";
+		mp3_bitrate = eel_gconf_get_integer (PREF_ENCODER_MP3_BITRATE, DEFAULT_MP3_BITRATE);
+		g_object_set (data->encoder,
+			      "bitrate", mp3_bitrate,
+			      NULL);
 		break;
 	case GOO_FILE_FORMAT_WAVE:
 		data->encoder = gst_element_factory_make (WAVE_ENCODER, "encoder");
