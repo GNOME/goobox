@@ -1,0 +1,731 @@
+# Bulgarian translation of goobox.
+# Copyright (C) 2005 THE goobox'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the goobox package.
+# Rostislav Raykov <zbrox@i-space.org>, 2005.
+#
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: goobox\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-18 14:41+0200\n"
+"PO-Revision-Date: 2005-01-18 14:41+0200\n"
+"Last-Translator: Rostislav Raykov <zbrox@i-space.org>\n"
+"Language-Team: Bulgarian <dict@linux.zonebg.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: data/GNOME_Goobox.server.in.in.h:1
+msgid "Goobox Application"
+msgstr "Програмата Goobox"
+
+#: data/GNOME_Goobox.server.in.in.h:2
+msgid "Goobox Application Factory"
+msgstr "Фабрика за приложението Goobox"
+
+#: data/glade/goo_cover_chooser.glade.h:1
+msgid "Choose a CD Cover"
+msgstr "Избор на обложка"
+
+#: data/glade/goo_cover_chooser.glade.h:2
+msgid "Found images:"
+msgstr "Открити изображения:"
+
+#: data/glade/goobox.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: data/glade/goobox.glade.h:2
+msgid "<b>CD Drive</b>"
+msgstr "<b>CD устройство</b>"
+
+#: data/glade/goobox.glade.h:3
+msgid "<b>Destination folder</b>"
+msgstr "<b>Папка, в която да се записва</b>"
+
+#: data/glade/goobox.glade.h:4
+msgid "<b>Extract</b>"
+msgstr "<b>Извличане</b>"
+
+#: data/glade/goobox.glade.h:5
+msgid "<b>FLAC</b>"
+msgstr "<b>FLAC</b>"
+
+#: data/glade/goobox.glade.h:6
+msgid "<b>File type</b>"
+msgstr "<b>Тип файл</b>"
+
+#: data/glade/goobox.glade.h:7
+msgid "<b>MP3</b>"
+msgstr "<b>MP3</b>"
+
+#: data/glade/goobox.glade.h:8
+msgid "<b>Ogg Vorbis</b>"
+msgstr "<b>Ogg Vorbis</b>"
+
+#: data/glade/goobox.glade.h:9
+msgid "Advanced _Options"
+msgstr "_Допълнителни настройки"
+
+#: data/glade/goobox.glade.h:10 src/dlg-extract.c:239
+msgid "Choose destination folder"
+msgstr "Избор на папка за запис"
+
+#: data/glade/goobox.glade.h:11
+msgid "Encoding"
+msgstr "Кодиране"
+
+#: data/glade/goobox.glade.h:12
+msgid "Excellent quality lossless compression"
+msgstr "Отлично качество, компресия без загуби"
+
+#: data/glade/goobox.glade.h:13
+msgid "Extract Tracks"
+msgstr "Извличане на песни"
+
+#: data/glade/goobox.glade.h:14
+msgid "Extracting Tracks"
+msgstr "Извличане на песни"
+
+#: data/glade/goobox.glade.h:15
+msgid "General"
+msgstr "Общи"
+
+#: data/glade/goobox.glade.h:16
+msgid "Good quality lossy compression"
+msgstr "Добро качество, компресия със загуби"
+
+#: data/glade/goobox.glade.h:17
+msgid "High quality lossy compression"
+msgstr "Високо качество, компресия със загуби"
+
+#: data/glade/goobox.glade.h:18
+msgid "Preferences"
+msgstr "Настройки"
+
+#: data/glade/goobox.glade.h:19
+msgid "Raw audio"
+msgstr "Некомпресиран звук"
+
+#: data/glade/goobox.glade.h:20
+msgid "_All tracks"
+msgstr "Всички песни"
+
+#: data/glade/goobox.glade.h:21
+msgid "_FLAC"
+msgstr "_FLAC"
+
+#: data/glade/goobox.glade.h:22
+msgid "_MP3"
+msgstr "_MP3"
+
+#: data/glade/goobox.glade.h:23
+msgid "_Ogg Vorbis"
+msgstr "_Ogg Vorbis"
+
+#: data/glade/goobox.glade.h:24
+msgid "_Save playlist"
+msgstr "Запазване на плейлистaта"
+
+#: data/glade/goobox.glade.h:25
+msgid "_Selected tracks"
+msgstr "Избрани песни"
+
+#: data/glade/goobox.glade.h:26
+msgid "_Wave"
+msgstr "_Wave"
+
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2089 src/goo-window.c:2097
+msgid "CD Player"
+msgstr "Изпълнение на аудио дискове"
+
+#: data/goobox.desktop.in.h:2
+msgid "Play and extract CDs"
+msgstr "Изпълнение и извличане на песни от CD-та"
+
+#: data/goobox.schemas.in.h:1
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "Възможни стойности са: ogg, flac, mp3, wave"
+
+#: data/goobox.schemas.in.h:2
+msgid ""
+"Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgstr ""
+"Възможни стойности са: system(системни), text_below(текст отдолу), "
+"text_beside(текст отстрани), text_only(само текст), icons_only(само икони)."
+
+#.
+#. const char       *documenters [] = {
+#. NULL
+#. };
+#: src/actions.c:141
+msgid "translator_credits"
+msgstr "Ростислав \"zbrox\" Райков <zbrox@i-space.org>"
+
+#: src/actions.c:152 src/actions.c:167
+msgid "Goobox"
+msgstr "Goobox"
+
+#: src/actions.c:155 src/actions.c:170 src/main.c:114
+msgid "CD player and ripper"
+msgstr "Изпълнение и извличане на песни от аудио дискове"
+
+#: src/bacon-cd-selection.c:200
+msgid "Unnamed CDROM"
+msgstr "Неименуван CDROM"
+
+#: src/cd-drive.c:835
+#, c-format
+msgid "Unnamed SCSI Drive (%s)"
+msgstr "Неименувано SCSI устройство (%s)"
+
+#: src/cd-drive.c:1395
+msgid "File image"
+msgstr "Файл с изображение"
+
+#: src/dlg-cover-chooser.c:271
+#, c-format
+msgid "%u, loading image: %u"
+msgstr "%u, зареждане на изображение: %u"
+
+#: src/dlg-cover-chooser.c:309
+msgid "Loading images"
+msgstr "Зареждане на изображения"
+
+#: src/dlg-cover-chooser.c:330 src/goo-window.c:2696
+msgid "Could not search a cover on Internet"
+msgstr "Не може да се потърси обложка в интернет"
+
+#: src/dlg-cover-chooser.c:338 src/dlg-cover-chooser.c:422
+msgid "No image found"
+msgstr "Не е открито изображението"
+
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:203 src/dlg-preferences.c:147
+#, c-format
+msgid "Could not display help: %s"
+msgstr "Не може да се покаже помощта: %s"
+
+#: src/dlg-cover-chooser.c:682
+msgid "Searching images..."
+msgstr "Търсене на изображения..."
+
+#: src/dlg-extract.c:374
+#, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract "
+"CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+msgstr ""
+"Имате нужда от поне един от следните GStreamer плъгини, за да извличате "
+"песни от аудио дискове:\n"
+"\n"
+"* %s → Ogg Vorbis\n"
+"* %s → FLAC\n"
+"* %s → Mp3\n"
+"* %s → Wave"
+
+#: src/dlg-extract.c:387
+msgid "No encoder available."
+msgstr "Няма налична кодираща програма."
+
+#: src/dlg-preferences.c:168
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "Номинален битрейт: %d Kbps"
+
+#: src/dlg-preferences.c:172
+#, c-format
+msgid "Compression level: %d"
+msgstr "Ниво на компресия: %d"
+
+#: src/dlg-preferences.c:176
+#, c-format
+msgid "Bitrate: %d Kbps"
+msgstr "Битрейт: %d Kbps"
+
+#. Set widgets data.
+#: src/dlg-preferences.c:335 src/dlg-preferences.c:343
+msgid "Smaller size"
+msgstr "По-малък размер"
+
+#: src/dlg-preferences.c:339 src/dlg-preferences.c:347
+msgid "Higher quality"
+msgstr "По-добро качество"
+
+#: src/dlg-preferences.c:351
+msgid "Faster compression"
+msgstr "По-бърза компресия"
+
+#: src/dlg-preferences.c:355
+msgid "Higher compression"
+msgstr "По-добра компресия"
+
+#: src/dlg-ripper.c:313
+msgid "Could not display the destination folder"
+msgstr "Не може да се покаже папката за запис"
+
+#: src/dlg-ripper.c:427
+msgid "Tracks extracted successfully"
+msgstr "Песните извлечени успешно!"
+
+#: src/dlg-ripper.c:429
+msgid "_View destination folder"
+msgstr "Преглед на папката за запис"
+
+#: src/dlg-ripper.c:442
+#, c-format
+msgid "Extracting track %d of %d: %s"
+msgstr "Извличане на %d песен от общо %d: %s"
+
+#: src/dlg-ripper.c:477
+msgid "Ripped with Goobox"
+msgstr "Извлечено с Goobox"
+
+#: src/eggtrayicon.c:118
+msgid "Orientation"
+msgstr "Ориентация"
+
+#: src/eggtrayicon.c:119
+msgid "The orientation of the tray."
+msgstr "Ориентацията на тавата."
+
+#: src/file-utils.c:622
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr ""
+"Не може да се намери терминал, ще се използва xterm, дори ако не проработи"
+
+#: src/goo-cdrom-bsd.c:140 src/goo-cdrom-linux.c:121
+#: src/goo-cdrom-solaris.c:123
+msgid "Error reading CD"
+msgstr "Грешка при разчитане на диска"
+
+#: src/goo-cdrom.c:323
+msgid "The specified device is not valid"
+msgstr "Избраното устройство не е валидно"
+
+#: src/goo-player-cd.c:784
+msgid "Drive not ready"
+msgstr "Устройството не е готово"
+
+#: src/goo-player-cd.c:788
+msgid "Tray open"
+msgstr "Устройството е отворено"
+
+#: src/goo-player-cd.c:789 src/goo-player-cd.c:793
+msgid "No disc"
+msgstr "Няма диск"
+
+#: src/goo-player-cd.c:797
+msgid "Data CD"
+msgstr "Диск със данни"
+
+#: src/goo-player-info.c:236 src/goo-player-info.c:261
+#: src/goo-player-info.c:758
+#, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#: src/goo-player-info.c:499
+msgid "Click here to choose a cover for this CD"
+msgstr "Натиснете тук, за да изберете обложка за този диск"
+
+#: src/goo-player-info.c:686 src/goo-window.c:1236
+msgid "Paused"
+msgstr "Паузирано"
+
+#: src/goo-player-info.c:697
+msgid "Ejecting CD"
+msgstr "Изкарване на диска"
+
+#: src/goo-player-info.c:701
+msgid "Checking CD drive"
+msgstr "Проверяване на устройството"
+
+#: src/goo-player-info.c:705 src/goo-player-info.c:709
+msgid "Reading CD"
+msgstr "Прочитане на диска"
+
+#: src/goo-player-info.c:722 src/goo-window.c:1260
+msgid "Audio CD"
+msgstr "Аудио CD"
+
+#: src/goo-stock.c:53
+msgid "_Extract"
+msgstr "Извличане"
+
+#: src/goo-stock.c:54
+msgid "_Reset"
+msgstr "Зануляване"
+
+#: src/goo-stock.c:55 src/goo-stock.c:56 src/goo-stock.c:57 src/goo-stock.c:58
+msgid "V_olume"
+msgstr "Ниво на звука"
+
+#: src/goo-volume-button.c:147 src/goo-volume-tool-button.c:284
+#, c-format
+msgid "Volume level: %3.0f%%"
+msgstr "Ниво на силата на звука: %3.0f%%"
+
+#: src/goo-volume-button.c:328 src/goo-volume-tool-button.c:494
+msgid "+"
+msgstr "+"
+
+#: src/goo-volume-button.c:344 src/goo-volume-tool-button.c:510
+msgid "-"
+msgstr "-"
+
+#: src/goo-volume-tool-button.c:538
+msgid "Change the volume level"
+msgstr "Променяне нивото на звука"
+
+#: src/goo-volume-tool-button.c:605
+msgid "Volume"
+msgstr "Ниво на звука"
+
+#: src/goo-window.c:65
+msgid "Hide _tracks"
+msgstr "Скриване на песни"
+
+#: src/goo-window.c:66
+msgid "Show _tracks"
+msgstr "Показване на песни"
+
+#: src/goo-window.c:189
+#, c-format
+msgid "%d track"
+msgid_plural "%d tracks"
+msgstr[0] "%d песен"
+msgstr[1] "%d песни"
+
+#: src/goo-window.c:193
+#, c-format
+msgid "year %d"
+msgstr "година %d"
+
+#: src/goo-window.c:538
+msgid "Length"
+msgstr "Продължителност"
+
+#: src/goo-window.c:539
+msgid "Title"
+msgstr "Заглавие"
+
+#: src/goo-window.c:540
+msgid "Artist"
+msgstr "Изпълнител"
+
+#: src/goo-window.c:548
+msgid "#"
+msgstr "#"
+
+#: src/goo-window.c:1146 src/ui.h:57
+msgid "_Pause"
+msgstr "Пауза"
+
+#: src/goo-window.c:1147
+msgid "Pause playing"
+msgstr "Паузиране на изпълнението"
+
+#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:45 src/ui.h:49
+#: src/ui.h:53
+msgid "_Play"
+msgstr "Изпълнение"
+
+#: src/goo-window.c:1367 src/goo-window.c:1379
+msgid "Play CD"
+msgstr "Изпълнение на CD"
+
+#: src/goo-window.c:2374
+msgid "Could not eject the CD"
+msgstr "Не може да се изкара диска"
+
+#: src/goo-window.c:2386
+msgid "Could not read drive"
+msgstr "Не може да се разчете устройството"
+
+#: src/goo-window.c:2570
+msgid "Could not save cover image"
+msgstr "Не може да се запази изображението на обложката"
+
+#: src/goo-window.c:2580
+msgid "Could not load image"
+msgstr "Не може да се зареди изображението"
+
+#: src/goo-window.c:2636
+msgid "Choose CD Cover Image"
+msgstr "Избор на изображение за обложка"
+
+#: src/goo-window.c:2655
+msgid "Images"
+msgstr "Изображения"
+
+#: src/goo-window.c:2663
+msgid "All files"
+msgstr "Всички файлове"
+
+#: src/goo-window.c:2697
+msgid ""
+"You have to enter the artist and album names in order to find the album "
+"cover."
+msgstr ""
+"Трябва да въведете името на изпълнителя и албума, за да се намери обложката "
+"на албума."
+
+#: src/goo-window.c:2731
+msgid "_Show Window"
+msgstr "Показване на прозореца"
+
+#: src/goo-window.c:2732
+msgid "Show the main window"
+msgstr "Показване на главния прозорец"
+
+#: src/goo-window.c:2745 src/ui.h:109
+msgid "_Hide Window"
+msgstr "Скриване на прозореца"
+
+#: src/goo-window.c:2746 src/ui.h:110
+msgid "Hide the main window"
+msgstr "Скриване на главния прозорец"
+
+#: src/gth-image-list.c:3520
+msgid "No image"
+msgstr "Няма изображение"
+
+#: src/gtk-file-chooser-preview.c:203
+msgid "Preview"
+msgstr "Предварителен преглед"
+
+#: src/gtk-file-chooser-preview.c:328
+msgid "pixels"
+msgstr "пиксели"
+
+#: src/gtk-utils.c:797
+msgid "Could not execute command"
+msgstr "Не може да се изпълни командата"
+
+#: src/main.c:65
+msgid "CD device to be used"
+msgstr "CD устройството, което да се използва"
+
+#: src/main.c:66
+msgid "DEVICE_PATH"
+msgstr "DEVICE_PATH"
+
+#: src/main.c:68
+msgid "Play the CD on startup"
+msgstr "Изпълнение на диска при стартиране"
+
+#: src/main.c:71 src/ui.h:46
+msgid "Play/Pause"
+msgstr "Изпълнение/Пауза"
+
+#: src/main.c:74 src/ui.h:66
+msgid "Play the next track"
+msgstr "Изпълнение на следващата песен"
+
+#: src/main.c:77 src/ui.h:70
+msgid "Play the previous track"
+msgstr "Изпълнение на предишната песен"
+
+#: src/main.c:80 src/ui.h:74
+msgid "Eject the CD"
+msgstr "Изкарване на диска"
+
+#: src/main.c:83
+msgid "Hide/Show the main window"
+msgstr "Скриване/Показване на главния прозорец"
+
+#: src/main.c:86
+msgid "Volume Up"
+msgstr "Увеличаване силата на звука"
+
+#: src/main.c:89
+msgid "Volume Down"
+msgstr "Намаляване силата на звука"
+
+#: src/main.c:92 src/ui.h:94
+msgid "Quit the application"
+msgstr "Изход от програмата"
+
+#: src/main.c:246
+msgid "Cannot start the CD player"
+msgstr "Не може да се пусне изпълнението на диска"
+
+#: src/main.c:247
+msgid ""
+"In order to read CDs you have to install the cdparanoia gstreamer plugin"
+msgstr ""
+"За да можете да четете дискове, трябва да инсталирате cdparanoia gstreamer "
+"плъгина."
+
+#: src/track-info.c:118
+#, c-format
+msgid "Track %u"
+msgstr "Песен %u"
+
+#: src/ui.h:34
+msgid "_CD"
+msgstr "_CD"
+
+#: src/ui.h:35
+msgid "_Edit"
+msgstr "Редактиране"
+
+#: src/ui.h:36
+msgid "_View"
+msgstr "Преглед"
+
+#: src/ui.h:37
+msgid "_Help"
+msgstr "Помощ"
+
+#: src/ui.h:38
+msgid "CD C_over"
+msgstr "CD обложка"
+
+#: src/ui.h:41
+msgid "_About"
+msgstr "Относно"
+
+#: src/ui.h:42
+msgid "Information about the program"
+msgstr "Информация относно програмата"
+
+#: src/ui.h:50
+msgid "Play"
+msgstr "Изпълнение"
+
+#: src/ui.h:54
+msgid "Play this track"
+msgstr "Изпълнение на тази песен"
+
+#: src/ui.h:58
+msgid "Pause"
+msgstr "Пауза"
+
+#: src/ui.h:61
+msgid "_Stop"
+msgstr "Стоп"
+
+#: src/ui.h:62
+msgid "Stop playing"
+msgstr "Спиране на изпълнението"
+
+#: src/ui.h:65
+msgid "_Next"
+msgstr "Следваща"
+
+#: src/ui.h:69
+msgid "Pre_v"
+msgstr "Предишна"
+
+#: src/ui.h:73
+msgid "_Eject"
+msgstr "Изкарване"
+
+#: src/ui.h:77
+msgid "_Reload"
+msgstr "Презареждане"
+
+#: src/ui.h:78
+msgid "Reload the CD"
+msgstr "Презареждане на диска"
+
+#: src/ui.h:81
+msgid "_Preferences"
+msgstr "Настройки"
+
+#: src/ui.h:82
+msgid "Edit various preferences"
+msgstr "Редакция на различни настройки"
+
+#: src/ui.h:85
+msgid "E_xtract Tracks"
+msgstr "Извличане на песни"
+
+#: src/ui.h:86
+msgid "Save the tracks to disk as files"
+msgstr "Запазване на песните като файлове"
+
+#: src/ui.h:89
+msgid "_CD Properties"
+msgstr "CD настройки"
+
+#: src/ui.h:90
+msgid "Edit the CD artist, album and tracks titles"
+msgstr "Редакция на изпълнителя, албума и имената на песните за този диск"
+
+#: src/ui.h:93
+msgid "_Quit"
+msgstr "Изход от програмата"
+
+#: src/ui.h:97
+msgid "_Choose from Disk"
+msgstr "Избор от диска"
+
+#: src/ui.h:98
+msgid "Choose a CD cover from the local disk"
+msgstr "Избор на обложка за диска от локалния диск"
+
+#: src/ui.h:101
+msgid "_Search on Internet"
+msgstr "Търсене в интернет"
+
+#: src/ui.h:102
+msgid "Search a CD cover on Internet"
+msgstr "Търсене на обложка в интернет"
+
+#: src/ui.h:105
+msgid "_Remove Cover"
+msgstr "Премахване на обложката"
+
+#: src/ui.h:106
+msgid "Remove current CD cover"
+msgstr "Премахване на текущата обложка на диск"
+
+#: src/ui.h:118
+msgid "_Toolbar"
+msgstr "Лента с инструменти"
+
+#: src/ui.h:119
+msgid "View the main toolbar"
+msgstr "Показване на главната лента с инструменти"
+
+#: src/ui.h:123
+msgid "Stat_usbar"
+msgstr "Лента за състоянието"
+
+#: src/ui.h:124
+msgid "View the statusbar"
+msgstr "Показване на лентата за състоянието"
+
+#: src/ui.h:128
+msgid "Play _All"
+msgstr "Изпълнение на всички"
+
+#: src/ui.h:129
+msgid "Play all tracks"
+msgstr "Изпълнение на всички песни"
+
+#: src/ui.h:133
+msgid "_Repeat"
+msgstr "Повтаряне"
+
+#: src/ui.h:134
+msgid "Restart playing when finished"
+msgstr "Рестартиране на изпълнението при приключване"
+
+#: src/ui.h:138
+msgid "S_huffle"
+msgstr "В разбъркан ред"
+
+#: src/ui.h:139
+msgid "Play tracks in a random order"
+msgstr "Изпълнение на песни в разбъркан ред"
