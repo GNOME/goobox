@@ -1,3 +1,8 @@
+2005-03-18  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c (add_columns): added ellipsize property to the
+	title column.
+
 2005-03-14  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/dlg-ripper.c (get_destination_folder): use tracktitle_to_filename

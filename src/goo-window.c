@@ -681,6 +681,16 @@ add_columns (GtkTreeView *treeview)
 
 		if (i == COLUMN_ARTIST)
 			gtk_tree_view_column_set_visible (column, FALSE);
+
+		if (i == COLUMN_TITLE) {
+			GValue  value = { 0, };
+			g_value_init (&value, PANGO_TYPE_ELLIPSIZE_MODE);
+			g_value_set_enum (&value, PANGO_ELLIPSIZE_END);
+			g_object_set_property (G_OBJECT (renderer), 
+					       "ellipsize", 
+					       &value);
+			g_value_unset (&value);
+		}
 	}
 }
 
