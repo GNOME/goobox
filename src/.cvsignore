@@ -8,6 +8,7 @@ goo
 *-marshal.*
 *-skels.*
 *-stubs.*
+*-common.*
 *_stamp
 GNOME*.h
 test*

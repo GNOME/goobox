@@ -1,6 +1,6 @@
 Makefile
 Makefile.in
-GNOME_Goo.server
-GNOME_Goo.server.in
-goo.desktop
-goo.schemas
+GNOME_Goobox.server
+GNOME_Goobox.server.in
+goobox.desktop
+goobox.schemas
