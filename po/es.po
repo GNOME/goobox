@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-07 22:51+0100\n"
-"PO-Revision-Date: 2005-01-07 22:53+0100\n"
+"POT-Creation-Date: 2005-01-21 21:48+0100\n"
+"PO-Revision-Date: 2005-01-21 21:49+0100\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgstr "<b>Ogg Vorbis</b>"
 msgid "Advanced _Options"
 msgstr "_Opciones avanzadas"
 
-#: data/glade/goobox.glade.h:10 src/dlg-extract.c:238
+#: data/glade/goobox.glade.h:10 src/dlg-extract.c:239
 msgid "Choose destination folder"
 msgstr "Seleccione la carpeta de destino"
 
@@ -158,19 +158,23 @@ msgstr ""
 "Los valores posibles son: system, text_below, text_beside, text_only, "
 "icons_only."
 
+#: src/actions.c:139
+msgid "Could not display help"
+msgstr "No ha sido posible mostrar la ayuda"
+
 #.
 #. const char       *documenters [] = {
 #. NULL
 #. };
-#: src/actions.c:141
+#: src/actions.c:192
 msgid "translator_credits"
 msgstr "Enrique Matías Sánchez (Quique) <cronopios@gmail.com>"
 
-#: src/actions.c:152 src/actions.c:167
+#: src/actions.c:203 src/actions.c:218
 msgid "Goobox"
 msgstr "Goobox"
 
-#: src/actions.c:155 src/actions.c:170 src/main.c:114
+#: src/actions.c:206 src/actions.c:221 src/main.c:114
 msgid "CD player and ripper"
 msgstr "Reproducción y extractor de CD"
 
@@ -204,7 +208,7 @@ msgstr "No ha sido posible encontrar una carátula en Internet"
 msgid "No image found"
 msgstr "No se ha encontrado ninguna imagen"
 
-#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:202 src/dlg-preferences.c:147
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:203 src/dlg-preferences.c:147
 #, c-format
 msgid "Could not display help: %s"
 msgstr "No ha sido posible mostrar la ayuda: %s"
@@ -213,7 +217,7 @@ msgstr "No ha sido posible mostrar la ayuda: %s"
 msgid "Searching images..."
 msgstr "Buscando imágenes..."
 
-#: src/dlg-extract.c:365
+#: src/dlg-extract.c:374
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -232,7 +236,7 @@ msgstr ""
 "• %s → Mp3\n"
 "• %s → Wave"
 
-#: src/dlg-extract.c:378
+#: src/dlg-extract.c:387
 msgid "No encoder available."
 msgstr "No hay disponible ningún codificador."
 
@@ -427,7 +431,7 @@ msgstr "Artista"
 msgid "#"
 msgstr "#"
 
-#: src/goo-window.c:1146 src/ui.h:57
+#: src/goo-window.c:1146 src/ui.h:65
 msgid "_Pause"
 msgstr "_Pausa"
 
@@ -435,8 +439,8 @@ msgstr "_Pausa"
 msgid "Pause playing"
 msgstr "Pausar la reproducción"
 
-#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:45 src/ui.h:49
-#: src/ui.h:53
+#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:53 src/ui.h:57
+#: src/ui.h:61
 msgid "_Play"
 msgstr "_Reproducir"
 
@@ -488,11 +492,11 @@ msgstr "_Mostrar la ventana"
 msgid "Show the main window"
 msgstr "Muestra la ventana principal"
 
-#: src/goo-window.c:2745 src/ui.h:109
+#: src/goo-window.c:2745 src/ui.h:117
 msgid "_Hide Window"
 msgstr "_Ocultar la ventana"
 
-#: src/goo-window.c:2746 src/ui.h:110
+#: src/goo-window.c:2746 src/ui.h:118
 msgid "Hide the main window"
 msgstr "Oculta la ventana principal"
 
@@ -524,19 +528,19 @@ msgstr "RUTA_DEL_DISPOSITIVO"
 msgid "Play the CD on startup"
 msgstr "Reproducir el CD en el inicio"
 
-#: src/main.c:71 src/ui.h:46
+#: src/main.c:71 src/ui.h:54
 msgid "Play/Pause"
 msgstr "Reproducir/Pausa"
 
-#: src/main.c:74 src/ui.h:66
+#: src/main.c:74 src/ui.h:74
 msgid "Play the next track"
 msgstr "Reproducir la siguiente pista"
 
-#: src/main.c:77 src/ui.h:70
+#: src/main.c:77 src/ui.h:78
 msgid "Play the previous track"
 msgstr "Reproducir la pista anterior"
 
-#: src/main.c:80 src/ui.h:74
+#: src/main.c:80 src/ui.h:82
 msgid "Eject the CD"
 msgstr "Expulsar el CD"
 
@@ -552,7 +556,7 @@ msgstr "Subir volumen"
 msgid "Volume Down"
 msgstr "Bajar volumen"
 
-#: src/main.c:92 src/ui.h:94
+#: src/main.c:92 src/ui.h:102
 msgid "Quit the application"
 msgstr "Salir de la aplicación"
 
@@ -597,135 +601,147 @@ msgstr "_Acerca de"
 msgid "Information about the program"
 msgstr "Información sobre el programa"
 
-#: src/ui.h:50
+#: src/ui.h:45
+msgid "_Contents"
+msgstr "_Contenido"
+
+#: src/ui.h:46
+msgid "Display the manual"
+msgstr "Muestra el manual"
+
+#: src/ui.h:49
+msgid "_Keyboard shortcuts"
+msgstr "Combinaciones de _teclas"
+
+#: src/ui.h:58
 msgid "Play"
 msgstr "Reproducir"
 
-#: src/ui.h:54
+#: src/ui.h:62
 msgid "Play this track"
 msgstr "Reproducir esta pista"
 
-#: src/ui.h:58
+#: src/ui.h:66
 msgid "Pause"
 msgstr "Pausa"
 
-#: src/ui.h:61
+#: src/ui.h:69
 msgid "_Stop"
 msgstr "_Detener"
 
-#: src/ui.h:62
+#: src/ui.h:70
 msgid "Stop playing"
 msgstr "Detener la reproducción"
 
-#: src/ui.h:65
+#: src/ui.h:73
 msgid "_Next"
 msgstr "_Siguiente"
 
-#: src/ui.h:69
+#: src/ui.h:77
 msgid "Pre_v"
 msgstr "_Anterior"
 
-#: src/ui.h:73
+#: src/ui.h:81
 msgid "_Eject"
 msgstr "_Expulsar"
 
-#: src/ui.h:77
+#: src/ui.h:85
 msgid "_Reload"
 msgstr "_Recargar"
 
-#: src/ui.h:78
+#: src/ui.h:86
 msgid "Reload the CD"
 msgstr "Recargar el CD"
 
-#: src/ui.h:81
+#: src/ui.h:89
 msgid "_Preferences"
 msgstr "_Preferencias"
 
-#: src/ui.h:82
+#: src/ui.h:90
 msgid "Edit various preferences"
 msgstr "Editar diversas preferencias"
 
-#: src/ui.h:85
+#: src/ui.h:93
 msgid "E_xtract Tracks"
 msgstr "E_xtraer las pistas"
 
-#: src/ui.h:86
+#: src/ui.h:94
 msgid "Save the tracks to disk as files"
 msgstr "Guardar las pistas en el disco como archivos"
 
-#: src/ui.h:89
+#: src/ui.h:97
 msgid "_CD Properties"
 msgstr "Propiedades del _CD"
 
-#: src/ui.h:90
+#: src/ui.h:98
 msgid "Edit the CD artist, album and tracks titles"
 msgstr "Editar el artista, álbum y títulos de las pistas del CD"
 
-#: src/ui.h:93
+#: src/ui.h:101
 msgid "_Quit"
 msgstr "_Salir"
 
-#: src/ui.h:97
+#: src/ui.h:105
 msgid "_Choose from Disk"
 msgstr "Sele_ccionar del disco"
 
-#: src/ui.h:98
+#: src/ui.h:106
 msgid "Choose a CD cover from the local disk"
 msgstr "Seleccionar una carátula de CD del disco local"
 
-#: src/ui.h:101
+#: src/ui.h:109
 msgid "_Search on Internet"
 msgstr "_Buscar en Internet"
 
-#: src/ui.h:102
+#: src/ui.h:110
 msgid "Search a CD cover on Internet"
 msgstr "Buscar una carátula de CD en Internet"
 
-#: src/ui.h:105
+#: src/ui.h:113
 msgid "_Remove Cover"
 msgstr "Elimina_r la carátula"
 
-#: src/ui.h:106
+#: src/ui.h:114
 msgid "Remove current CD cover"
 msgstr "Eliminar la carátula de CD actual"
 
-#: src/ui.h:118
+#: src/ui.h:126
 msgid "_Toolbar"
 msgstr "Barra de _herramientas"
 
-#: src/ui.h:119
+#: src/ui.h:127
 msgid "View the main toolbar"
 msgstr "Ver la barra de herramientas principal"
 
-#: src/ui.h:123
+#: src/ui.h:131
 msgid "Stat_usbar"
 msgstr "Barra de es_tado"
 
-#: src/ui.h:124
+#: src/ui.h:132
 msgid "View the statusbar"
 msgstr "Ver la barra de estado"
 
-#: src/ui.h:128
+#: src/ui.h:136
 msgid "Play _All"
 msgstr "Reproducir _todas"
 
-#: src/ui.h:129
+#: src/ui.h:137
 msgid "Play all tracks"
 msgstr "Reproducir todas las pistas"
 
-#: src/ui.h:133
+#: src/ui.h:141
 msgid "_Repeat"
 msgstr "_Repetir"
 
-#: src/ui.h:134
+#: src/ui.h:142
 msgid "Restart playing when finished"
 msgstr "Reiniciar la reproducción al terminar"
 
-#: src/ui.h:138
+#: src/ui.h:146
 msgid "S_huffle"
 msgstr "_Aleatoria"
 
-#: src/ui.h:139
+#: src/ui.h:147
 msgid "Play tracks in a random order"
 msgstr "Reproducir las pistas aleatoriamente"
 
