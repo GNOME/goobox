@@ -551,5 +551,8 @@ void
 goo_player_info_set_cover (GooPlayerInfo  *info,
 			   GdkPixbuf      *cover)
 {
-	gtk_image_set_from_pixbuf (GTK_IMAGE (info->priv->cover_image), cover);
+	if (cover != NULL)
+		gtk_image_set_from_pixbuf (GTK_IMAGE (info->priv->cover_image), cover);
+	else
+		gtk_image_set_from_stock (GTK_IMAGE (info->priv->cover_image), GOO_STOCK_NO_COVER, GTK_ICON_SIZE_DIALOG);
 }

@@ -1,7 +1,12 @@
 2004-10-24  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
-	* data/goobox.schemas.in: 
+	* src/goo-window.c (goo_window_update_cover): 
 	* src/goo-player-info.c (goo_player_info_set_cover): 
+
+	Set "no cover" image when no image is available.
+	
+	* data/goobox.schemas.in: 
+	* src/goo-player-info.c:
 	* src/goo-window.c (goo_window_pick_cover_from_disk)
 	(open_response_cb): 
 

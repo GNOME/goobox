@@ -1238,13 +1238,15 @@ goo_window_update_cover (GooWindow *window)
 	
 	filename = get_disc_cover_filename (window);
 	if (filename == NULL)
-		return;
+		goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), NULL);
 	
 	image = gdk_pixbuf_new_from_file (filename, NULL);
 	if (image != NULL) {
 		goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), image);
 		g_object_unref (image);
-	}
+	} else
+		goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), NULL);
+
 	g_free (filename);
 }
 
