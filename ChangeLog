@@ -1,5 +1,7 @@
 2004-10-30  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	[ version 0.3.0 released ]
+
 	* src/dlg-cover_chooser.c: reorganized code.
 	
 2004-10-28  Paolo Bacchilega  <paobac@cvs.gnome.org>

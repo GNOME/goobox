@@ -63,7 +63,7 @@ GTH_HEADER_FILES =			\
 	gth-image-list.h		
 
 GTH_SOURCES = 				\
-	$(GTH_HEADER_FILE)		\
+	$(GTH_HEADER_FILES)		\
 	$(GTH_MARSHALLERS)		\
 	$(GTH_ENUMS)			\
 	gth-image-list.c		\
