@@ -1,3 +1,11 @@
+2004-10-27  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c: 
+	* data/glade/goo_cover_chooser.glade: 
+	* src/dlg-cover-chooser.c: 
+
+	Faster image loading; fixed results file parsing.
+	
 2004-10-26  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/dlg-cover-chooser.c: 

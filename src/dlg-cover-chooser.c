@@ -52,9 +52,9 @@
 #include "gconf-utils.h"
 
 #define GLADE_CHOOSER_FILE "goo_cover_chooser.glade"
-#define MAX_IMAGES 15
-#define READ_TIMEOUT 150
-#define BUFFER_SIZE 300
+#define MAX_IMAGES 20
+#define READ_TIMEOUT 20
+#define BUFFER_SIZE 612
 #define IMG_PERM 0600
 #define DIR_PERM 0700
 #define THUMB_SIZE 100
@@ -212,10 +212,8 @@ load_next_url (gpointer callback_data)
 	g_source_remove (data->load_id);
 	data->load_id = 0;
 
-	if (data->url < MAX_IMAGES) { 
-		data->current = data->current->next;
-		load_current_url (data);
-	}
+	data->current = data->current->next;
+	load_current_url (data);
 
 	return FALSE;
 }
@@ -373,7 +371,7 @@ load_current_url (DialogData *data)
 
 	update_progress_label (data);
 
-	if (data->current == NULL) 
+	if ((data->current == NULL) || (data->url >= MAX_IMAGES))
 		return;
 
 	url = data->current->data;
@@ -426,10 +424,10 @@ search_result_saved_cb (DialogData *data,
 			char       *filename,
 			int         result)
 {
-	char *prefix = "/images?q=tbn:";
-	char *url_start;
-	char  buf[BUFFER_SIZE];
-	int   fd, n;
+	int      fd, n;
+	char     buf[BUFFER_SIZE];
+	int      buf_offset = 0;
+	GString *partial_url;
 
 	if (result != 0) {
 		/*FIXME*/
@@ -442,25 +440,63 @@ search_result_saved_cb (DialogData *data,
 		return;
 	}
 	
-	while ((n = read (fd, buf, BUFFER_SIZE-1)) > 0) {
-		buf[n] = 0;
+	partial_url = NULL;
+	while ((n = read (fd, buf+buf_offset, BUFFER_SIZE-buf_offset-1)) > 0) {
+		char     *prefix = "/images?q=tbn:";
+		int       prefix_len = strlen (prefix);
+		char     *url_start;
+		gboolean  copy_tail = TRUE;
 
-		url_start = strstr (buf, prefix);
+		buf[buf_offset+n] = 0;
+
+		if (partial_url == NULL) 
+			url_start = strstr (buf, prefix);
+		else
+			url_start = buf;
+
 		while (url_start != NULL) {
 			char *url_end;
-			char *url;
-		
+			
 			url_end = strstr (url_start, " ");
 		
-			if (url_end == NULL) 
-				break;
-			
-			url = g_strndup (url_start, url_end - url_start);
-			data->url_list = g_list_prepend (data->url_list, url);
-		
-			url_start = strstr (url_end + 1, prefix);
+			if (url_end == NULL) {
+				if (partial_url == NULL)
+					partial_url = g_string_new (url_start);
+				else 
+					g_string_append (partial_url, url_start);
+				url_start = NULL;
+				copy_tail = FALSE;
+
+			} else {
+				char *url_tail = g_strndup (url_start, url_end - url_start);
+				char *url;
+				
+				if (partial_url != NULL) {
+					g_string_append (partial_url, url_tail);
+					url = partial_url->str;
+					g_string_free (partial_url, FALSE);
+					partial_url = NULL;
+				} else 
+					url = url_tail;
+					
+				data->url_list = g_list_prepend (data->url_list, url);
+				url_start = strstr (url_end + 1, prefix);
+				
+			}
 		}
+
+		if (copy_tail) {
+			prefix_len = MIN (prefix_len, buf_offset + n);
+			strncpy (buf, 
+				 buf + buf_offset + n - prefix_len, 
+				 prefix_len);
+			buf_offset = prefix_len;
+		} else 
+			buf_offset = 0;
 	}
+
+	if (partial_url != NULL)
+		g_string_free (partial_url, TRUE);
 
 	close (fd);
 	data->tmpfiles = g_list_prepend (data->tmpfiles, g_strdup (filename));

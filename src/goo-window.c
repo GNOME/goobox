@@ -272,6 +272,7 @@ window_update_sensitivity (GooWindow *window)
 	set_sensitive (window, "Extract", !error && (priv->songs > 0));
 	set_sensitive (window, "Properties", !error && (discid != NULL));
 	set_sensitive (window, "PickCoverFromDisk", !error && (discid != NULL));
+	set_sensitive (window, "RemoveCover", !error && (discid != NULL));
 #ifdef HAVE_NEON
 	set_sensitive (window, "SearchCoverFromWeb", !error && (discid != NULL));
 #else
