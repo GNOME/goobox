@@ -1627,6 +1627,7 @@ window_key_press_cb (GtkWidget   *widget,
 	}
 
 	if (new_song >= 0 && new_song <= window->priv->songs - 1) {
+		goo_window_stop (window);
 		goo_window_set_current_song (window, new_song);
 		goo_window_play (window);
 	}
@@ -2267,6 +2268,7 @@ goo_window_play_selected (GooWindow *window)
 
 	if (g_list_length (song_list) == 1) {
 		SongInfo * song = song_list->data;
+		goo_window_stop (window);
 		goo_window_set_current_song (window, song->number);
 		goo_window_play (window);
 	}

@@ -1,3 +1,11 @@
+2004-12-23  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c (window_key_press_cb): always call _stop before 
+	playing.
+
+	* src/goo-player-info.c (goo_player_info_size_request): set the min
+	width of the widget even with gtk >= 2.5.0
+
 2004-12-17  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/ui.h: 

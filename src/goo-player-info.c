@@ -38,7 +38,7 @@
 #define PLAYING_FORMAT "[ <small>%s</small> ]"
 #define SCALE_WIDTH 150
 #define COVER_SIZE 80
-#define MIN_WIDTH 400
+#define MIN_WIDTH 450
 #define MIN_CHARS 25
 #define UPDATE_TIMEOUT 50
 
@@ -53,6 +53,7 @@ struct _GooPlayerInfoPrivateData {
 	GtkWidget   *time_scale;
 	GtkWidget   *cover_image;
 	GtkWidget   *cover_button;
+	GtkWidget   *cover_sep;
 	GtkTooltips *tips;
 	char         current_time[64];
 	char         total_time[64];
@@ -116,10 +117,7 @@ goo_player_info_size_request (GtkWidget      *widget,
 {	
 	if (GTK_WIDGET_CLASS (parent_class)->size_request)
 		(* GTK_WIDGET_CLASS (parent_class)->size_request) (widget, requisition);
-
-#ifndef HAVE_GTK_2_5
 	requisition->width = MAX (requisition->width, MIN_WIDTH);
-#endif
 }
 
 
@@ -522,11 +520,10 @@ goo_player_info_init (GooPlayerInfo *info)
 
 	gtk_box_pack_start (GTK_BOX (info), priv->cover_button, FALSE, FALSE, 0);
 
-	/*FIXME
-	gtk_box_pack_start (GTK_BOX (info), 
-			    gtk_vseparator_new (),
-			    FALSE, FALSE, 0);
-	*/
+	priv->cover_sep = gtk_vseparator_new ();
+	gtk_box_pack_start (GTK_BOX (info), priv->cover_sep, FALSE, FALSE, 6);
+	gtk_widget_show (priv->cover_sep);
+	gtk_widget_set_no_show_all (priv->cover_sep, TRUE);
 
 	/**/
 
@@ -779,8 +776,11 @@ void
 goo_player_info_set_cover (GooPlayerInfo  *info,
 			   GdkPixbuf      *cover)
 {
-	if (cover != NULL)
+	if (cover != NULL) {
 		gtk_image_set_from_pixbuf (GTK_IMAGE (info->priv->cover_image), cover);
-	else
+		gtk_widget_hide (info->priv->cover_sep);
+	} else {
 		gtk_image_set_from_stock (GTK_IMAGE (info->priv->cover_image), GOO_STOCK_NO_COVER, GTK_ICON_SIZE_DIALOG);
+		gtk_widget_show (info->priv->cover_sep);
+	}
 }
