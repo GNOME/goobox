@@ -1,3 +1,7 @@
+2005-01-22  Changwoo Ryu  <cwryu@debian.org>
+
+	* configure.in: Added ko to ALL_LINGUAS.
+
 2005-01-20  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/actions.c (show_help, activate_action_manual)
