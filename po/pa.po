@@ -1,0 +1,665 @@
+# translation of pa.po to Punjabi
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Amanpreet Singh Alam <aalam@redhat.com>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pa\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-12-07 18:37+0530\n"
+"PO-Revision-Date: 2004-12-07 18:45+0530\n"
+"Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
+"Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.9.1\n"
+
+#: data/GNOME_Goobox.server.in.in.h:1
+msgid "Goobox Application"
+msgstr "ਗੂਬਾਕਸ ਕਾਰਜ"
+
+#: data/GNOME_Goobox.server.in.in.h:2
+msgid "Goobox Application Factory"
+msgstr "ਗੂਬਾਕਸ ਕਾਰਜ ਫੈਕਟਰੀ"
+
+#: data/glade/goo_cover_chooser.glade.h:1
+msgid "Choose a CD Cover"
+msgstr "ਸੀਡੀ ਢੱਕਣ ਚੁਣੋ"
+
+#: data/glade/goo_cover_chooser.glade.h:2
+msgid "Found images:"
+msgstr "ਚਿੱਤਰ ਖੋਜ:"
+
+#: data/glade/goobox.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: data/glade/goobox.glade.h:2
+msgid "<b>CD Drive</b>"
+msgstr "<b>CD ਡਰਾਇਵ</b>"
+
+#: data/glade/goobox.glade.h:3
+msgid "<b>Destination folder</b>"
+msgstr "<b>ਨਿਯਤ ਫੋਲਡਰ</b>"
+
+#: data/glade/goobox.glade.h:4
+msgid "<b>Extract</b>"
+msgstr "<b>ਖੋਲ੍ਹੋ</b>"
+
+#: data/glade/goobox.glade.h:5
+msgid "<b>File type</b>"
+msgstr "<b>ਫਾਇਲ ਕਿਸਮ</b>"
+
+#: data/glade/goobox.glade.h:6
+msgid "<b>Quality</b>"
+msgstr "<b>ਗੁਣਵੱਤਾ</b>"
+
+#: data/glade/goobox.glade.h:7
+msgid "<small><i>Higher quality</i></small>"
+msgstr "<small><i>ਉੱਤਮ ਗੁਣਵੱਤਾ</i></small>"
+
+#: data/glade/goobox.glade.h:8
+msgid "<small><i>Smaller size</i></small>"
+msgstr "<small><i>ਛੋਟਾ ਆਕਾਰ</i></small>"
+
+#: data/glade/goobox.glade.h:9 src/dlg-extract.c:241
+msgid "Choose destination folder"
+msgstr "ਟਿਕਾਣਾ ਫੋਲਡਰ ਚੁਣੋ"
+
+#: data/glade/goobox.glade.h:10
+msgid "Encoding Options"
+msgstr "ਇੰਕੋਡਿੰਗ ਚੋਣ"
+
+#: data/glade/goobox.glade.h:11
+msgid "Excellent quality lossless compression"
+msgstr ""
+
+#: data/glade/goobox.glade.h:12
+msgid "Extract Tracks"
+msgstr "ਟਰੈਕ ਖੋਲ੍ਹੋ"
+
+#: data/glade/goobox.glade.h:13
+msgid "Extracting Tracks"
+msgstr "ਟਰੈਕ ਖੋਲੇ ਜਾ ਰਹੇ ਹਨ"
+
+#: data/glade/goobox.glade.h:14
+msgid "Good quality lossy compression"
+msgstr ""
+
+#: data/glade/goobox.glade.h:15
+msgid "High quality lossy compression"
+msgstr ""
+
+#: data/glade/goobox.glade.h:16
+msgid "Preferences"
+msgstr "ਮੇਰੀ ਪਸੰਦ"
+
+#: data/glade/goobox.glade.h:17
+msgid "Raw audio"
+msgstr ""
+
+#: data/glade/goobox.glade.h:18
+msgid "_All tracks"
+msgstr "ਸਭ ਟਰੈਕ(_A)"
+
+#: data/glade/goobox.glade.h:19
+msgid "_FLAC"
+msgstr "_FLAC"
+
+#: data/glade/goobox.glade.h:20
+msgid "_MP3"
+msgstr "_MP3"
+
+#: data/glade/goobox.glade.h:21
+msgid "_Ogg Vorbis"
+msgstr "_Ogg Vorbis"
+
+#: data/glade/goobox.glade.h:22 src/goo-stock.c:54
+msgid "_Reset"
+msgstr "ਮੁੜ-ਨਿਰਧਾਰਨ(_R)"
+
+#: data/glade/goobox.glade.h:23
+msgid "_Selected tracks"
+msgstr "ਚੁਣੇ ਟਰੈਕ(_S)"
+
+#: data/glade/goobox.glade.h:24
+msgid "_Wave"
+msgstr "ਵੇਵ(_W)"
+
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2053 src/goo-window.c:2061
+msgid "CD Player"
+msgstr "CD ਪਲੇਅਰ"
+
+#: data/goobox.desktop.in.h:2
+msgid "Play and extract CDs"
+msgstr "ਸੀਡੀ ਚਲਾਉ ਤੇ ਖੋਲੋ"
+
+#: data/goobox.schemas.in.h:1
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "ਸੰਭਵ ਮੁੱਲ ਹਨ: ogg, flac, mp3, wave"
+
+#: data/goobox.schemas.in.h:2
+msgid "Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgstr ""
+
+#: src/actions.c:138
+msgid "translator_credits"
+msgstr "translator_credits"
+
+#: src/actions.c:149 src/actions.c:164
+msgid "Goobox"
+msgstr "ਗੂਬਾਕਸ"
+
+#: src/actions.c:152 src/actions.c:167 src/main.c:82
+msgid "CD player and ripper"
+msgstr ""
+
+#: src/bacon-cd-selection.c:200
+msgid "Unnamed CDROM"
+msgstr ""
+
+#: src/cd-drive.c:835
+#, c-format
+msgid "Unnamed SCSI Drive (%s)"
+msgstr ""
+
+#: src/cd-drive.c:1395
+msgid "File image"
+msgstr "ਫਾਇਲ ਪ੍ਰਤੀਬਿੰਬ"
+
+#: src/dlg-cover-chooser.c:271
+#, c-format
+msgid "%u, loading image: %u"
+msgstr ""
+
+#: src/dlg-cover-chooser.c:309
+msgid "Loading images"
+msgstr ""
+
+#: src/dlg-cover-chooser.c:330 src/goo-window.c:2656
+msgid "Could not search a cover on Internet"
+msgstr ""
+
+#: src/dlg-cover-chooser.c:338 src/dlg-cover-chooser.c:422
+msgid "No image found"
+msgstr "ਕੋਈ ਚਿੱਤਰ ਨਹੀਂ ਲੱਭਿਆ ਹੈ"
+
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:205 src/dlg-preferences.c:109
+#, c-format
+msgid "Could not display help: %s"
+msgstr ""
+
+#: src/dlg-cover-chooser.c:682
+msgid "Searching images..."
+msgstr ""
+
+#: src/dlg-encoder-options.c:117
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr ""
+
+#: src/dlg-encoder-options.c:120
+#, c-format
+msgid "Compression level: %d"
+msgstr ""
+
+#: src/dlg-encoder-options.c:123
+#, c-format
+msgid "Bitrate: %d Kbps"
+msgstr ""
+
+#: src/dlg-encoder-options.c:261
+msgid "Faster compression"
+msgstr ""
+
+#: src/dlg-encoder-options.c:265
+msgid "Higher compression"
+msgstr ""
+
+#: src/dlg-extract.c:367
+#, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract "
+"CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+msgstr ""
+
+#: src/dlg-extract.c:380
+msgid "No encoder available."
+msgstr ""
+
+#: src/dlg-ripper.c:311
+msgid "Could not display the destination folder"
+msgstr ""
+
+#: src/dlg-ripper.c:338
+msgid "Tracks extracted successfully"
+msgstr ""
+
+#: src/dlg-ripper.c:340
+msgid "_View destination folder"
+msgstr ""
+
+#: src/dlg-ripper.c:353
+#, c-format
+msgid "Extracting track %d of %d: %s"
+msgstr ""
+
+#: src/dlg-ripper.c:388
+msgid "Ripped with Goobox"
+msgstr ""
+
+#: src/eggtrayicon.c:118
+msgid "Orientation"
+msgstr ""
+
+#: src/eggtrayicon.c:119
+msgid "The orientation of the tray."
+msgstr ""
+
+#: src/file-utils.c:622
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr ""
+
+#: src/goo-cdrom-bsd.c:140 src/goo-cdrom-linux.c:121
+#: src/goo-cdrom-solaris.c:123
+msgid "Error reading CD"
+msgstr ""
+
+#: src/goo-cdrom.c:323
+msgid "The specifued device is not valid"
+msgstr ""
+
+#: src/goo-player-cd.c:784
+msgid "Drive not ready"
+msgstr ""
+
+#: src/goo-player-cd.c:788
+msgid "Tray open"
+msgstr ""
+
+#: src/goo-player-cd.c:789 src/goo-player-cd.c:793
+msgid "No disc"
+msgstr ""
+
+#: src/goo-player-cd.c:797
+msgid "Data CD"
+msgstr ""
+
+#: src/goo-player-info.c:229 src/goo-player-info.c:254
+#: src/goo-player-info.c:622
+#, c-format
+msgid "%s / %s"
+msgstr ""
+
+#: src/goo-player-info.c:377
+msgid "Click here to choose a cover for this CD"
+msgstr ""
+
+#: src/goo-player-info.c:550 src/goo-window.c:1228
+msgid "Paused"
+msgstr ""
+
+#: src/goo-player-info.c:561
+msgid "Ejecting CD"
+msgstr ""
+
+#: src/goo-player-info.c:565
+msgid "Checking CD drive"
+msgstr ""
+
+#: src/goo-player-info.c:569 src/goo-player-info.c:573
+msgid "Reading CD"
+msgstr ""
+
+#: src/goo-player-info.c:586 src/goo-window.c:1252
+msgid "Audio CD"
+msgstr ""
+
+#: src/goo-stock.c:53
+msgid "_Extract"
+msgstr ""
+
+#: src/goo-stock.c:55 src/goo-stock.c:56 src/goo-stock.c:57 src/goo-stock.c:58
+msgid "V_olume"
+msgstr ""
+
+#: src/goo-volume-button.c:147
+#, c-format
+msgid "Volume level: %3.0f%%"
+msgstr ""
+
+#: src/goo-volume-button.c:328
+msgid "+"
+msgstr ""
+
+#: src/goo-volume-button.c:344
+msgid "-"
+msgstr ""
+
+#: src/goo-window.c:65
+msgid "Hide _tracks"
+msgstr ""
+
+#: src/goo-window.c:66
+msgid "Show _tracks"
+msgstr ""
+
+#: src/goo-window.c:189
+#, c-format
+msgid "%d track"
+msgid_plural "%d tracks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/goo-window.c:532
+msgid "Length"
+msgstr ""
+
+#: src/goo-window.c:533
+msgid "Title"
+msgstr ""
+
+#: src/goo-window.c:534
+msgid "Artist"
+msgstr ""
+
+#: src/goo-window.c:542
+msgid "#"
+msgstr ""
+
+#: src/goo-window.c:1138 src/ui.h:57
+msgid "_Pause"
+msgstr ""
+
+#: src/goo-window.c:1139
+msgid "Pause playing"
+msgstr ""
+
+#: src/goo-window.c:1357 src/goo-window.c:1369 src/ui.h:45 src/ui.h:49
+#: src/ui.h:53
+msgid "_Play"
+msgstr ""
+
+#: src/goo-window.c:1358 src/goo-window.c:1370
+msgid "Play CD"
+msgstr ""
+
+#: src/goo-window.c:2334
+msgid "Could not eject the CD"
+msgstr ""
+
+#: src/goo-window.c:2346
+msgid "Could not read drive"
+msgstr ""
+
+#: src/goo-window.c:2530
+msgid "Could not save cover image"
+msgstr ""
+
+#: src/goo-window.c:2540
+msgid "Could not load image"
+msgstr ""
+
+#: src/goo-window.c:2596
+msgid "Choose CD Cover Image"
+msgstr ""
+
+#: src/goo-window.c:2615
+msgid "Images"
+msgstr ""
+
+#: src/goo-window.c:2623
+msgid "All files"
+msgstr ""
+
+#: src/goo-window.c:2657
+msgid ""
+"You have to enter the artist and album names in order to find the album "
+"cover."
+msgstr ""
+
+#: src/goo-window.c:2691
+msgid "_Show Window"
+msgstr ""
+
+#: src/goo-window.c:2692
+msgid "Show the main window"
+msgstr ""
+
+#: src/goo-window.c:2705 src/ui.h:109
+msgid "_Hide Window"
+msgstr ""
+
+#: src/goo-window.c:2706 src/ui.h:110
+msgid "Hide the main window"
+msgstr ""
+
+#: src/gth-image-list.c:3520
+msgid "No image"
+msgstr ""
+
+#: src/gtk-file-chooser-preview.c:203
+msgid "Preview"
+msgstr ""
+
+#: src/gtk-file-chooser-preview.c:328
+msgid "pixels"
+msgstr ""
+
+#: src/gtk-utils.c:797
+msgid "Could not execute command"
+msgstr ""
+
+#: src/main.c:57
+msgid "CD device to be used"
+msgstr ""
+
+#: src/main.c:58
+msgid "DEVICE_PATH"
+msgstr ""
+
+#: src/main.c:60
+msgid "Play the CD on startup"
+msgstr ""
+
+#: src/main.c:198
+msgid "Cannot start the CD player"
+msgstr ""
+
+#: src/main.c:199
+msgid "In order to read CDs you have to install the cdparanoia gstreamer plugin"
+msgstr ""
+
+#: src/track-info.c:118
+#, c-format
+msgid "Track %u"
+msgstr ""
+
+#: src/ui.h:34
+msgid "_CD"
+msgstr "_CD"
+
+#: src/ui.h:35
+msgid "_Edit"
+msgstr "ਸੋਧ(_E)"
+
+#: src/ui.h:36
+msgid "_View"
+msgstr "ਵੇਖੋ(_V)"
+
+#: src/ui.h:37
+msgid "_Help"
+msgstr "ਸਹਾਇਤਾ(_H)"
+
+#: src/ui.h:38
+msgid "CD C_over"
+msgstr ""
+
+#: src/ui.h:41
+msgid "_About"
+msgstr "ਇਸ ਬਾਰੇ(_A)"
+
+#: src/ui.h:42
+msgid "Information about the program"
+msgstr ""
+
+#: src/ui.h:46
+msgid "Play/Pause"
+msgstr ""
+
+#: src/ui.h:50
+msgid "Play"
+msgstr ""
+
+#: src/ui.h:54
+msgid "Play this track"
+msgstr ""
+
+#: src/ui.h:58
+msgid "Pause"
+msgstr ""
+
+#: src/ui.h:61
+msgid "_Stop"
+msgstr "ਰੋਕੋ(_S)"
+
+#: src/ui.h:62
+msgid "Stop playing"
+msgstr ""
+
+#: src/ui.h:65
+msgid "_Next"
+msgstr "ਅੱਗੇ(_N)"
+
+#: src/ui.h:66
+msgid "Play the next track"
+msgstr ""
+
+#: src/ui.h:69
+msgid "Pre_v"
+msgstr "ਪਿੱਛੇ(_v)"
+
+#: src/ui.h:70
+msgid "Play the previous track"
+msgstr ""
+
+#: src/ui.h:73
+msgid "_Eject"
+msgstr "ਬਾਹਰ ਕੱਢੋ(_E)"
+
+#: src/ui.h:74
+msgid "Eject the CD"
+msgstr ""
+
+#: src/ui.h:77
+msgid "_Reload"
+msgstr "ਮੁੜ-ਲੋਡ(_R)"
+
+#: src/ui.h:78
+msgid "Reload the CD"
+msgstr ""
+
+#: src/ui.h:81
+msgid "_Preferences"
+msgstr "ਮੇਰੀ ਪਸੰਦ(_P)"
+
+#: src/ui.h:82
+msgid "Edit various preferences"
+msgstr ""
+
+#: src/ui.h:85
+msgid "E_xtract Tracks"
+msgstr ""
+
+#: src/ui.h:86
+msgid "Save the tracks to disk as files"
+msgstr ""
+
+#: src/ui.h:89
+msgid "_CD Properties"
+msgstr ""
+
+#: src/ui.h:90
+msgid "Edit the CD artist, album and tracks titles"
+msgstr ""
+
+#: src/ui.h:93
+msgid "_Quit"
+msgstr "ਬਾਹਰ(_Q)"
+
+#: src/ui.h:94
+msgid "Quit the application"
+msgstr ""
+
+#: src/ui.h:97
+msgid "_Choose from Disk"
+msgstr ""
+
+#: src/ui.h:98
+msgid "Choose a CD cover from the local disk"
+msgstr ""
+
+#: src/ui.h:101
+msgid "_Search on Internet"
+msgstr ""
+
+#: src/ui.h:102
+msgid "Search a CD cover on Internet"
+msgstr ""
+
+#: src/ui.h:105
+msgid "_Remove Cover"
+msgstr ""
+
+#: src/ui.h:106
+msgid "Remove current CD cover"
+msgstr ""
+
+#: src/ui.h:118
+msgid "_Toolbar"
+msgstr "ਸੰਦਪੱਟੀ(_T)"
+
+#: src/ui.h:119
+msgid "View the main toolbar"
+msgstr ""
+
+#: src/ui.h:123
+msgid "Stat_usbar"
+msgstr "ਸਥਿਤੀ ਪੱਟੀ(_u)"
+
+#: src/ui.h:124
+msgid "View the statusbar"
+msgstr "ਸਥਿਤੀ ਪੱਟੀ ਵੇਖਾਉ"
+
+#: src/ui.h:128
+msgid "Play _All"
+msgstr "ਸਭ ਚਲਾਉ(_A)"
+
+#: src/ui.h:129
+msgid "Play all tracks"
+msgstr "ਸਭ ਟਰੈਕ ਚਲਾਉ"
+
+#: src/ui.h:133
+msgid "_Repeat"
+msgstr "ਮੁੜ-ਚਲਾਉ(_R)"
+
+#: src/ui.h:134
+msgid "Restart playing when finished"
+msgstr "ਮੁਕੰਮਲ ਹੋਣ ਉਪਰੰਤ ਮੁੜ ਚਾਲੂ ਕਰੋ"
+
+#: src/ui.h:138
+msgid "S_huffle"
+msgstr "ਰਲਵਾਂ(_h)"
+
+#: src/ui.h:139
+msgid "Play tracks in a random order"
+msgstr ""
+
