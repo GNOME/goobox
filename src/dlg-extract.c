@@ -136,6 +136,7 @@ dlg_extract__start_ripping (GtkWidget *dialog)
 		    file_format,
 		    goo_player_cd_get_album (data->player_cd),
 		    goo_player_cd_get_artist (data->player_cd),
+		    goo_player_get_year (GOO_PLAYER (data->player_cd)),
 		    goo_player_cd_get_genre (data->player_cd),
 		    g_list_length (data->songs),
 		    tracks_to_rip);

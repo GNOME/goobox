@@ -66,6 +66,7 @@ typedef struct {
 	GooFileFormat  format;
 	char          *album;
 	char          *artist;
+	int            year;
 	char          *genre;
 	GList         *tracks;
 	int            tracks_n;
@@ -472,18 +473,33 @@ rip_current_track (DialogData *data)
 
 	/* Set song tags. */
 
-	if (GST_IS_TAG_SETTER (data->encoder)) 
+	if (GST_IS_TAG_SETTER (data->encoder)) {
 		gst_tag_setter_add (GST_TAG_SETTER (data->encoder),   
 				    GST_TAG_MERGE_REPLACE_ALL,
 				    GST_TAG_TITLE, track->title,
 				    GST_TAG_ARTIST, data->artist,
 				    GST_TAG_ALBUM, data->album,
-				    GST_TAG_GENRE, data->genre,
 				    GST_TAG_TRACK_NUMBER, (guint) track->number + 1,
 				    GST_TAG_TRACK_COUNT, (guint) data->total_tracks,
 				    GST_TAG_DURATION, (guint64) track->length * GST_SECOND, 
 				    GST_TAG_COMMENT, _("Ripped with Goobox"),
+				    GST_TAG_ENCODER, PACKAGE_NAME,
+				    GST_TAG_ENCODER_VERSION, PACKAGE_VERSION,
 				    NULL);
+		if (data->genre != NULL)
+			gst_tag_setter_add (GST_TAG_SETTER (data->encoder),   
+					    GST_TAG_MERGE_APPEND,
+					    GST_TAG_GENRE, data->genre,
+					    NULL);
+		if (data->year != 0) {
+			GDate *d = g_date_new_dmy (1, 1, data->year);
+			gst_tag_setter_add (GST_TAG_SETTER (data->encoder),   
+					    GST_TAG_MERGE_APPEND,
+					    GST_TAG_DATE,  g_date_get_julian (d),
+					    NULL);
+			g_date_free (d);
+		}
+	}
 		
 	/* Seek to track. */
 
@@ -539,6 +555,7 @@ dlg_ripper (GooWindow     *window,
 	    GooFileFormat  format,
 	    const char    *album,
 	    const char    *artist,
+	    int            year,
 	    const char    *genre,
 	    int            total_tracks,
 	    GList         *tracks)
@@ -560,7 +577,9 @@ dlg_ripper (GooWindow     *window,
 	data->format = format;
 	data->album = g_strdup (album);
 	data->artist = g_strdup (artist);
-	data->genre = g_strdup (genre);
+	data->year = year;
+	if (genre != NULL)
+		data->genre = g_strdup (genre);
 	data->tracks = track_list_dup (tracks);
 	data->tracks_n = g_list_length (data->tracks);
 	data->total_tracks = total_tracks;

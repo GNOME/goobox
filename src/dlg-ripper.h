@@ -32,6 +32,7 @@ void   dlg_ripper   (GooWindow     *window,
 		     GooFileFormat  format,
 		     const char    *album,
 		     const char    *artist,
+		     int            year,
 		     const char    *genre,
 		     int            total_tracks,
 		     GList         *tracks);

@@ -1,3 +1,17 @@
+2005-02-13  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/dlg-ripper.h (dlg_ripper): 
+	* src/dlg-ripper.c: 
+	(rip_current_track, dlg_ripper): 
+	* src/dlg-extract.c (dlg_extract__start_ripping): 
+
+	Add encoder, encoder_version and year tags to the ripped tracks.
+	Added the genre tag only if a genre is available.
+	
+	* .cvsignore: ignore *.patch
+
+	* src/ui.h: Toolbar rearranged.  Removed the previous track button.
+
 2005-02-10  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-player-cd.c (create_pipeline): 
