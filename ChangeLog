@@ -1,3 +1,7 @@
+2005-04-05  Artur Flinta  <aflinta@cvs.gnome.org>
+
+	* configure.in: Added "pl" to ALL_LINGUAS.
+
 2005-04-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	[ version 0.9.91 released ]
