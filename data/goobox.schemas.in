@@ -174,12 +174,6 @@
         <locale name="C">
 	  <short></short>
 	  <long></long>
-<!--
-          <short>How to sort files</short>
-          <long>What criteria must be used to arrange files. Possible values:
-	    number, time, title.
-	  </long>
--->
         </locale>
       </schema>
 
@@ -192,11 +186,6 @@
         <locale name="C">
 	  <short></short>
 	  <long></long>
-<!--
-          <short>Sort type</short>
-          <long>Whether to sort in ascending or descending direction. Possible
-	    values: ascending, descending.</long>
--->
         </locale>
       </schema>
 

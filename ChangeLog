@@ -1,3 +1,9 @@
+2005-03-01  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* data/goobox.schemas.in: remove comments.
+
+	Fixes bug #168913: String error (I hope) in schema update.
+
 2005-03-01  Abel Cheung  <maddog@linuxhall.org>
 
 	* configure.in: Added "de" "pt_BR" "zh_TW" to ALL_LINGUAS.
