@@ -1,0 +1,721 @@
+# Dutch translation of goobox.
+# Copyright (C) 2004 The Free Software Foundation, inc.
+# This file is distributed under the same license as the goobox package.
+# Tino Meinen <a.t.meinen@chello.nl>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GNOME 2.10\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-12-26 04:33+0100\n"
+"PO-Revision-Date: 2004-12-31 01:31+0100\n"
+"Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
+"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data/GNOME_Goobox.server.in.in.h:1
+msgid "Goobox Application"
+msgstr "Goobox toepassing"
+
+#: data/GNOME_Goobox.server.in.in.h:2
+msgid "Goobox Application Factory"
+msgstr "Goobox toepassingsfabriek"
+
+#: data/glade/goo_cover_chooser.glade.h:1
+msgid "Choose a CD Cover"
+msgstr "Kies een cd-hoesje"
+
+#: data/glade/goo_cover_chooser.glade.h:2
+msgid "Found images:"
+msgstr "Gevonden afbeeldingen:"
+
+#: data/glade/goobox.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: data/glade/goobox.glade.h:2
+msgid "<b>CD Drive</b>"
+msgstr "<b>CD-apparaat</b>"
+
+#: data/glade/goobox.glade.h:3
+msgid "<b>Destination folder</b>"
+msgstr "<b>Doelmap</b>"
+
+#: data/glade/goobox.glade.h:4
+msgid "<b>Extract</b>"
+msgstr "<b>Uitpakken</b>"
+
+#: data/glade/goobox.glade.h:5
+msgid "<b>File type</b>"
+msgstr "<b>Bestandstype</b>"
+
+#: data/glade/goobox.glade.h:6
+msgid "<b>Quality</b>"
+msgstr "<b>Kwaliteit</b>"
+
+#: data/glade/goobox.glade.h:7
+msgid "<small><i>Higher quality</i></small>"
+msgstr "<small><i>Hogere kwaliteit</i></small>"
+
+#: data/glade/goobox.glade.h:8
+msgid "<small><i>Smaller size</i></small>"
+msgstr "<small><i>Kleinere afmeting</i></small>"
+
+# een doelmap kiezen/kies een doelmap
+#: data/glade/goobox.glade.h:9 src/dlg-extract.c:241
+msgid "Choose destination folder"
+msgstr "Kies een doelmap"
+
+#: data/glade/goobox.glade.h:10
+msgid "Encoding Options"
+msgstr "Coderingsopties"
+
+#: data/glade/goobox.glade.h:11
+msgid "Excellent quality lossless compression"
+msgstr "Uitstekende kwaliteit verliesloze compressie"
+
+# uitpakken/onttrekken/extraheren/rippen
+#: data/glade/goobox.glade.h:12
+msgid "Extract Tracks"
+msgstr "Nummers uitpakken"
+
+# bezig met nummers uitpakken/nummers worden uitgepakt
+#: data/glade/goobox.glade.h:13
+msgid "Extracting Tracks"
+msgstr "Nummers uitpakken, bezig"
+
+#: data/glade/goobox.glade.h:14
+msgid "Good quality lossy compression"
+msgstr "Goede kwaliteit compressie met verlies"
+
+#: data/glade/goobox.glade.h:15
+msgid "High quality lossy compression"
+msgstr "Hoge kwaliteit compressie met verlies"
+
+#: data/glade/goobox.glade.h:16
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#: data/glade/goobox.glade.h:17
+msgid "Raw audio"
+msgstr "Raw audio"
+
+#: data/glade/goobox.glade.h:18
+msgid "_All tracks"
+msgstr "_Alle nummers"
+
+#: data/glade/goobox.glade.h:19
+msgid "_FLAC"
+msgstr "_FLAC"
+
+#: data/glade/goobox.glade.h:20
+msgid "_MP3"
+msgstr "_MP3"
+
+#: data/glade/goobox.glade.h:21
+msgid "_Ogg Vorbis"
+msgstr "_Ogg Vorbis"
+
+#: data/glade/goobox.glade.h:22 src/goo-stock.c:54
+msgid "_Reset"
+msgstr "He_rstellen"
+
+#: data/glade/goobox.glade.h:23
+msgid "_Selected tracks"
+msgstr "Ge_selecteerde nummers"
+
+#: data/glade/goobox.glade.h:24
+msgid "_Wave"
+msgstr "_Wave"
+
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2089 src/goo-window.c:2097
+msgid "CD Player"
+msgstr "CD-speler"
+
+#: data/goobox.desktop.in.h:2
+msgid "Play and extract CDs"
+msgstr "CD's afspelen en uitpakken"
+
+#: data/goobox.schemas.in.h:1
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "Mogelijke waardes zijn: ogg, flac, mp3, wave."
+
+#: data/goobox.schemas.in.h:2
+msgid ""
+"Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgstr ""
+"Mogelijke waardes zijn: system, text_below, text_beside, text_only, "
+"icons_only."
+
+#: src/actions.c:140
+msgid "translator_credits"
+msgstr "Tino Meinen"
+
+#: src/actions.c:151 src/actions.c:166
+msgid "Goobox"
+msgstr "Goobox"
+
+#: src/actions.c:154 src/actions.c:169 src/main.c:114
+msgid "CD player and ripper"
+msgstr "CD-speler en ripper"
+
+#: src/bacon-cd-selection.c:200
+msgid "Unnamed CDROM"
+msgstr "Naamloze CD-rom"
+
+#: src/cd-drive.c:835
+#, c-format
+msgid "Unnamed SCSI Drive (%s)"
+msgstr "Naamloos SCSI-apparaat (%s)"
+
+# image is hier het iso-bestand?
+#: src/cd-drive.c:1395
+msgid "File image"
+msgstr "Bestands-afbeelding"
+
+#: src/dlg-cover-chooser.c:271
+#, c-format
+msgid "%u, loading image: %u"
+msgstr "%u, afbeelding laden: %u"
+
+#: src/dlg-cover-chooser.c:309
+msgid "Loading images"
+msgstr "Afbeeldingen laden"
+
+#: src/dlg-cover-chooser.c:330 src/goo-window.c:2696
+msgid "Could not search a cover on Internet"
+msgstr "Kon geen hoesje zoeken op het internet"
+
+#: src/dlg-cover-chooser.c:338 src/dlg-cover-chooser.c:422
+msgid "No image found"
+msgstr "Geef afbeeldinge gevonden"
+
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:205 src/dlg-preferences.c:109
+#, c-format
+msgid "Could not display help: %s"
+msgstr "Kon de hulp niet weergeven: %s"
+
+#: src/dlg-cover-chooser.c:682
+msgid "Searching images..."
+msgstr "Afbeeldingen zoeken..."
+
+# bitsnelheid/bitfrequentie
+#: src/dlg-encoder-options.c:117
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "Nominale bitsnelheid: %d Kbps"
+
+#: src/dlg-encoder-options.c:120
+#, c-format
+msgid "Compression level: %d"
+msgstr "Compressieniveau: %d"
+
+#: src/dlg-encoder-options.c:123
+#, c-format
+msgid "Bitrate: %d Kbps"
+msgstr "Bitsnelheid: %d Kbps"
+
+# sneller comprimeren/snellere compressie
+#: src/dlg-encoder-options.c:261
+msgid "Faster compression"
+msgstr "Snellere compressie"
+
+#: src/dlg-encoder-options.c:265
+msgid "Higher compression"
+msgstr "Grotere compressie"
+
+#: src/dlg-extract.c:367
+#, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract "
+"CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+msgstr ""
+"U heeft tenminste een van de volgende GStreamer plugins nodig om nummers van "
+"de CD te kunnen uitpakken:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+
+# aanwezig/beschikbaar
+#: src/dlg-extract.c:380
+msgid "No encoder available."
+msgstr "Geen coderingsprogramma beschikbaar."
+
+#: src/dlg-ripper.c:311
+msgid "Could not display the destination folder"
+msgstr "Kon de doelmap niet weergeven"
+
+#: src/dlg-ripper.c:338
+msgid "Tracks extracted successfully"
+msgstr "Nummers met succes uitgepakt"
+
+#: src/dlg-ripper.c:340
+msgid "_View destination folder"
+msgstr "Doelmap _weergeven"
+
+#: src/dlg-ripper.c:353
+#, c-format
+msgid "Extracting track %d of %d: %s"
+msgstr "nummer %d van %d wordt uitgepakt: %s"
+
+# met/door
+#: src/dlg-ripper.c:388
+msgid "Ripped with Goobox"
+msgstr "Geript met Goobox"
+
+#: src/eggtrayicon.c:118
+msgid "Orientation"
+msgstr "Oriëntatie"
+
+# applet/lade
+#: src/eggtrayicon.c:119
+msgid "The orientation of the tray."
+msgstr "De oriëntatie van het applet."
+
+#: src/file-utils.c:622
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr ""
+"Kan geen terminal vinden, zal xterm gebruiken, ondanks dat het mogelijk niet "
+"werkt."
+
+#: src/goo-cdrom-bsd.c:140 src/goo-cdrom-linux.c:121
+#: src/goo-cdrom-solaris.c:123
+msgid "Error reading CD"
+msgstr "Fout bij lezen van CD"
+
+#: src/goo-cdrom.c:323
+msgid "The specified device is not valid"
+msgstr "Het opgegeven apparaat is ongeldig"
+
+#: src/goo-player-cd.c:784
+msgid "Drive not ready"
+msgstr "Apparaat niet klaar"
+
+# lade geopend/lade staat open/geopende lade/ lade open
+#: src/goo-player-cd.c:788
+msgid "Tray open"
+msgstr "Lade staat open"
+
+#: src/goo-player-cd.c:789 src/goo-player-cd.c:793
+msgid "No disc"
+msgstr "Geen schijf"
+
+#: src/goo-player-cd.c:797
+msgid "Data CD"
+msgstr "Data-CD"
+
+#: src/goo-player-info.c:236 src/goo-player-info.c:261
+#: src/goo-player-info.c:758
+#, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#: src/goo-player-info.c:499
+msgid "Click here to choose a cover for this CD"
+msgstr "Hier klikken om een hoesje voor deze CD te kiezen"
+
+#: src/goo-player-info.c:686 src/goo-window.c:1236
+msgid "Paused"
+msgstr "Gepauzeerd"
+
+# bezig/ cd wordt uitgeworpen
+#: src/goo-player-info.c:697
+msgid "Ejecting CD"
+msgstr "CD uitwerpen"
+
+#: src/goo-player-info.c:701
+msgid "Checking CD drive"
+msgstr "CD-apparaat wordt onderzocht"
+
+#: src/goo-player-info.c:705 src/goo-player-info.c:709
+msgid "Reading CD"
+msgstr "CD lezen"
+
+#: src/goo-player-info.c:722 src/goo-window.c:1260
+msgid "Audio CD"
+msgstr "Audio-CD"
+
+#: src/goo-stock.c:53
+msgid "_Extract"
+msgstr "_Uitpakken"
+
+#: src/goo-stock.c:55 src/goo-stock.c:56 src/goo-stock.c:57 src/goo-stock.c:58
+msgid "V_olume"
+msgstr "_Geluidssterkte"
+
+#: src/goo-volume-button.c:147 src/goo-volume-tool-button.c:284
+#, c-format
+msgid "Volume level: %3.0f%%"
+msgstr "Geluidssterkte: %3.0f%%"
+
+#: src/goo-volume-button.c:328 src/goo-volume-tool-button.c:494
+msgid "+"
+msgstr "+"
+
+#: src/goo-volume-button.c:344 src/goo-volume-tool-button.c:510
+msgid "-"
+msgstr "-"
+
+# wijzigen/aanpassen
+#: src/goo-volume-tool-button.c:538
+msgid "Change the volume level"
+msgstr "De geluidssterkte aanpassen"
+
+#: src/goo-volume-tool-button.c:605
+msgid "Volume"
+msgstr "Geluidssterkte"
+
+#: src/goo-window.c:65
+msgid "Hide _tracks"
+msgstr "_Nummers verbergen"
+
+#: src/goo-window.c:66
+msgid "Show _tracks"
+msgstr "_Nummers tonen"
+
+#: src/goo-window.c:189
+#, c-format
+msgid "%d track"
+msgid_plural "%d tracks"
+msgstr[0] "%d nummer"
+msgstr[1] "%d nummers"
+
+#: src/goo-window.c:193
+#, c-format
+msgid "year %d"
+msgstr "jaar %d"
+
+#: src/goo-window.c:538
+msgid "Length"
+msgstr "Lengte"
+
+#: src/goo-window.c:539
+msgid "Title"
+msgstr "Titel"
+
+#: src/goo-window.c:540
+msgid "Artist"
+msgstr "Artiest"
+
+#: src/goo-window.c:548
+msgid "#"
+msgstr "#"
+
+#: src/goo-window.c:1146 src/ui.h:57
+msgid "_Pause"
+msgstr "_Pauzeren"
+
+#: src/goo-window.c:1147
+msgid "Pause playing"
+msgstr "Afspelen pauzeren"
+
+#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:45 src/ui.h:49
+#: src/ui.h:53
+msgid "_Play"
+msgstr "_Afspelen"
+
+#: src/goo-window.c:1367 src/goo-window.c:1379
+msgid "Play CD"
+msgstr "CD afspelen"
+
+#: src/goo-window.c:2374
+msgid "Could not eject the CD"
+msgstr "Kon de CD niet uitwerpen"
+
+# hmmm
+#: src/goo-window.c:2386
+msgid "Could not read drive"
+msgstr "Kon het apparaat niet lezen"
+
+#: src/goo-window.c:2570
+msgid "Could not save cover image"
+msgstr "Kon hoesafbeelding niet opslaan"
+
+#: src/goo-window.c:2580
+msgid "Could not load image"
+msgstr "Kon afbeelding niet laden"
+
+#: src/goo-window.c:2636
+msgid "Choose CD Cover Image"
+msgstr "CD-hoesje kiezen"
+
+#: src/goo-window.c:2655
+msgid "Images"
+msgstr "Afbeeldingen"
+
+#: src/goo-window.c:2663
+msgid "All files"
+msgstr "Alle bestanden"
+
+#: src/goo-window.c:2697
+msgid ""
+"You have to enter the artist and album names in order to find the album "
+"cover."
+msgstr ""
+"U moet de artiest- en albumnaam invoeren om een hoesje te kunnen zoeken."
+
+#: src/goo-window.c:2731
+msgid "_Show Window"
+msgstr "_Venster tonen"
+
+#: src/goo-window.c:2732
+msgid "Show the main window"
+msgstr "Het hoofdvenster tonen"
+
+#: src/goo-window.c:2745 src/ui.h:109
+msgid "_Hide Window"
+msgstr "Venster ver_bergen"
+
+#: src/goo-window.c:2746 src/ui.h:110
+msgid "Hide the main window"
+msgstr "Het hoofdvenster verbergen"
+
+#: src/gth-image-list.c:3520
+msgid "No image"
+msgstr "Geen afbeelding"
+
+#: src/gtk-file-chooser-preview.c:203
+msgid "Preview"
+msgstr "Voorbeeld"
+
+#: src/gtk-file-chooser-preview.c:328
+msgid "pixels"
+msgstr "beeldpunten"
+
+#: src/gtk-utils.c:797
+msgid "Could not execute command"
+msgstr "Kon de opdracht niet uitvoeren"
+
+#: src/main.c:65
+msgid "CD device to be used"
+msgstr "Te gebruiken CD-apparaat"
+
+#: src/main.c:66
+msgid "DEVICE_PATH"
+msgstr "APPARAAT_PAD"
+
+# Cd afspelen na het invoeren/bij invoeren
+#: src/main.c:68
+msgid "Play the CD on startup"
+msgstr "De CD meteen afspelen"
+
+#: src/main.c:71 src/ui.h:46
+msgid "Play/Pause"
+msgstr "Spelen/Pauzeren"
+
+#: src/main.c:74 src/ui.h:66
+msgid "Play the next track"
+msgstr "Volgende nummer"
+
+#: src/main.c:77 src/ui.h:70
+msgid "Play the previous track"
+msgstr "Vorige nummer"
+
+#: src/main.c:80 src/ui.h:74
+msgid "Eject the CD"
+msgstr "De CD uitwerpen"
+
+#: src/main.c:83
+msgid "Hide/Show the main window"
+msgstr "Het hoofdvenster tonen/verbergen"
+
+#: src/main.c:86
+msgid "Volume Up"
+msgstr "Harder"
+
+#: src/main.c:89
+msgid "Volume Down"
+msgstr "Zachter"
+
+#: src/main.c:92 src/ui.h:94
+msgid "Quit the application"
+msgstr "De toepassing afsluiten"
+
+#: src/main.c:246
+msgid "Cannot start the CD player"
+msgstr "Kan de CD-speler niet opstarten"
+
+#: src/main.c:247
+msgid ""
+"In order to read CDs you have to install the cdparanoia gstreamer plugin"
+msgstr ""
+"Om CD's te kunnen lezen moet u de gstreamer-plugin: cdparanoia installeren"
+
+#: src/track-info.c:118
+#, c-format
+msgid "Track %u"
+msgstr "Nummer %u"
+
+#: src/ui.h:34
+msgid "_CD"
+msgstr "_CD"
+
+#: src/ui.h:35
+msgid "_Edit"
+msgstr "Be_werken"
+
+#: src/ui.h:36
+msgid "_View"
+msgstr "Beel_d"
+
+#: src/ui.h:37
+msgid "_Help"
+msgstr "_Hulp"
+
+#: src/ui.h:38
+msgid "CD C_over"
+msgstr "CD-h_oes"
+
+#: src/ui.h:41
+msgid "_About"
+msgstr "In_fo"
+
+#: src/ui.h:42
+msgid "Information about the program"
+msgstr "Informatie over het programma"
+
+#: src/ui.h:50
+msgid "Play"
+msgstr "Afspelen"
+
+#: src/ui.h:54
+msgid "Play this track"
+msgstr "Dit nummer afspelen"
+
+#: src/ui.h:58
+msgid "Pause"
+msgstr "Pauzeren"
+
+#: src/ui.h:61
+msgid "_Stop"
+msgstr "_Stoppen"
+
+#: src/ui.h:62
+msgid "Stop playing"
+msgstr "Afspelen stoppen"
+
+#: src/ui.h:65
+msgid "_Next"
+msgstr "_Volgende"
+
+#: src/ui.h:69
+msgid "Pre_v"
+msgstr "V_orige"
+
+#: src/ui.h:73
+msgid "_Eject"
+msgstr "_Uitwerpen"
+
+#: src/ui.h:77
+msgid "_Reload"
+msgstr "He_rladen"
+
+#: src/ui.h:78
+msgid "Reload the CD"
+msgstr "De CD herladen"
+
+#: src/ui.h:81
+msgid "_Preferences"
+msgstr "_Voorkeuren"
+
+# verscheidene/verschillende (weggelaten)
+#: src/ui.h:82
+msgid "Edit various preferences"
+msgstr "Voorkeuren bewerken"
+
+#: src/ui.h:85
+msgid "E_xtract Tracks"
+msgstr "Nummers _uitpakken"
+
+#: src/ui.h:86
+msgid "Save the tracks to disk as files"
+msgstr "De nummers opslaan als bestanden"
+
+#: src/ui.h:89
+msgid "_CD Properties"
+msgstr "_CD eigenschappen"
+
+# nummers weggelaten
+#: src/ui.h:90
+msgid "Edit the CD artist, album and tracks titles"
+msgstr "De CD-artiest, album en titels bewerken"
+
+#: src/ui.h:93
+msgid "_Quit"
+msgstr "_Afsluiten"
+
+#: src/ui.h:97
+msgid "_Choose from Disk"
+msgstr "Van s_chijf kiezen"
+
+#: src/ui.h:98
+msgid "Choose a CD cover from the local disk"
+msgstr "Een CD-hoes kiezen van de lokale harde schijf"
+
+#: src/ui.h:101
+msgid "_Search on Internet"
+msgstr "_Zoeken op internet"
+
+#: src/ui.h:102
+msgid "Search a CD cover on Internet"
+msgstr "Een CD-hoes zoeken op het internet"
+
+#: src/ui.h:105
+msgid "_Remove Cover"
+msgstr "Hoes _verwijderen"
+
+#: src/ui.h:106
+msgid "Remove current CD cover"
+msgstr "De huidige CD-hoes verwijderen"
+
+#: src/ui.h:118
+msgid "_Toolbar"
+msgstr "_Werkbalk"
+
+#: src/ui.h:119
+msgid "View the main toolbar"
+msgstr "De hoofdwerkbalk tonen"
+
+#: src/ui.h:123
+msgid "Stat_usbar"
+msgstr "Stat_usbalk"
+
+#: src/ui.h:124
+msgid "View the statusbar"
+msgstr "De statusbalk tonen"
+
+#: src/ui.h:128
+msgid "Play _All"
+msgstr "_Alles afspelen"
+
+#: src/ui.h:129
+msgid "Play all tracks"
+msgstr "Alle nummers afspelen"
+
+#: src/ui.h:133
+msgid "_Repeat"
+msgstr "He_rhalen"
+
+#: src/ui.h:134
+msgid "Restart playing when finished"
+msgstr "Bij beëindiging opnieuw afspelen"
+
+# wat wordt hier bedoeld: random of shuffle?
+# kriskras/door elkaar/willekeurig/lukraak
+#: src/ui.h:138
+msgid "S_huffle"
+msgstr "_Door elkaar"
+
+#: src/ui.h:139
+msgid "Play tracks in a random order"
+msgstr "Nummers in willekeurige volgorde afspelen"
