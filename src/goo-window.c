@@ -3,7 +3,7 @@
 /*
  *  Goo
  *
- *  Copyright (C) 2004 Free Software Foundation, Inc.
+ *  Copyright (C) 2004, 2005 Free Software Foundation, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -303,6 +303,7 @@ window_update_sensitivity (GooWindow *window)
 
 	gtk_widget_set_sensitive (priv->list_view, !priv->hibernate && (discid != NULL));
 
+	set_sensitive (window, "Eject", !priv->hibernate);
 	set_sensitive (window, "Preferences", !priv->hibernate);
 }
 
@@ -1391,6 +1392,9 @@ goo_window_set_current_song (GooWindow *window,
 {
 	GooWindowPrivateData *priv = window->priv;
 	SongInfo *song;
+
+	if (window->priv->hibernate)
+		return;
 
 	if (priv->current_song != NULL) {
 		set_current_song_icon (window, NULL);
@@ -2518,6 +2522,9 @@ goo_window_play (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
 
+	if (window->priv->hibernate)
+		return;
+	
 	if (goo_player_get_state (priv->player) == GOO_PLAYER_STATE_PLAYING) 
 		return;
 
@@ -2564,6 +2571,10 @@ void
 goo_window_stop (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
+
+	if (window->priv->hibernate)
+		return;
+
 	goo_player_stop (priv->player);
 }
 
@@ -2572,6 +2583,10 @@ void
 goo_window_pause (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
+
+	if (window->priv->hibernate)
+		return;
+
 	goo_player_pause (priv->player);
 }
 
@@ -2580,6 +2595,7 @@ void
 goo_window_toggle_play (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
+
 	if (goo_player_get_state (priv->player) != GOO_PLAYER_STATE_PLAYING)
 		goo_window_play (window);
 	else
@@ -2592,7 +2608,7 @@ goo_window_next (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
 
-	if (priv->songs == 0)
+	if (window->priv->songs == 0)
 		return;
 
 	if (priv->current_song != NULL) {
@@ -2648,6 +2664,9 @@ goo_window_prev (GooWindow *window)
 void
 goo_window_eject (GooWindow *window)
 {
+	if (window->priv->hibernate)
+		return;
+
 	if (!goo_player_eject (window->priv->player)) {
 		GError *e = goo_player_get_error (window->priv->player);
 		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
@@ -2760,6 +2779,9 @@ goo_window_edit_cddata (GooWindow *window)
 	CORBA_Environment     ev;
 	const char           *discid;
 
+	if (window->priv->hibernate)
+		return;
+
 	discid = goo_player_cd_get_discid (GOO_PLAYER_CD (window->priv->player));
 	
 	if (discid == NULL) 
@@ -2821,6 +2843,9 @@ goo_window_set_cover_image (GooWindow  *window,
 {
 	GdkPixbuf *image;
 	GError    *error = NULL;
+
+	if (window->priv->hibernate)
+		return;
 
 	image = gdk_pixbuf_new_from_file_at_size (filename, 
 						  COVER_SIZE - 2, 
@@ -2915,6 +2940,9 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 	GtkFileFilter *filter;
 	char          *path;
 
+	if (window->priv->hibernate)
+		return;
+
 	file_sel = gtk_file_chooser_dialog_new (_("Choose CD Cover Image"),
 						GTK_WINDOW (window),
 						GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -2968,6 +2996,9 @@ goo_window_search_cover_on_internet (GooWindow *window)
 {
 	const char *album, *artist;
 
+	if (window->priv->hibernate)
+		return;
+
 	debug (DEBUG_INFO, "SEARCH ON INTERNET\n");
 
 	album = goo_player_cd_get_album (GOO_PLAYER_CD (window->priv->player));
@@ -2988,6 +3019,9 @@ void
 goo_window_remove_cover (GooWindow   *window)
 {
 	char *cover_filename;
+
+	if (window->priv->hibernate)
+		return;
 		
 	cover_filename = goo_window_get_cover_filename (window);
 	if (cover_filename == NULL)
@@ -3049,6 +3083,9 @@ goo_window_set_volume (GooWindow   *window,
 		       double       value)
 {
 	GooVolumeToolButton *volume_button;
+
+	if (window->priv->hibernate)
+		return;
 
 	volume_button = GOO_VOLUME_TOOL_BUTTON (window->priv->volume_button);
 	goo_volume_tool_button_set_volume (volume_button, value, TRUE);

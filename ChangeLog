@@ -1,6 +1,12 @@
 2005-04-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
-	* NEWS: updated.
+	* src/goo-window.c (goo_window_play): do not play
+	when hibernated.
+
+	* src/actions.c (sj_watch_func): removed debug code.
+	* src/ui.h: Do not use H as keyboard shortcut.
+
+	* NEWS: Updated.
 
 	* src/actions.c (activate_action_extract): 
 	* src/goo-window.c (goo_window_set_hibernate): new function.

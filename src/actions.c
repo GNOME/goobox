@@ -295,10 +295,8 @@ sj_watch_func (GPid     pid,
 	       gpointer data)
 {
 	GooWindow *window = data;
-
 	g_spawn_close_pid (pid);
 	goo_window_set_hibernate (window, FALSE);
-	g_print ("[FINE]\n");
 }
 
 

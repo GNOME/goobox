@@ -114,7 +114,7 @@ static GtkActionEntry action_entries[] = {
 	  N_("Remove current CD cover"),
 	  G_CALLBACK (activate_action_remove_cover) },
 	{ "ToggleVisibility", NULL,
-	  N_("_Hide Window"), "H",
+	  N_("_Hide Window"), NULL /*"H"*/,
 	  N_("Hide the main window"),
 	  G_CALLBACK (activate_action_toggle_visibility) },
 };
