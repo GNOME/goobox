@@ -1,3 +1,7 @@
+2004-12-07	Amanpreet Singh Alam<amanpreetalam@yahoo.com>
+
+	*configure.in: pa is added to ALL_LINGUAS:
+
 2004-12-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* configure.in: 
