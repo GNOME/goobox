@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
  
-AC_INIT(goobox, 0.2.0)
+AC_INIT(goobox, 0.3.0)
 AC_CONFIG_SRCDIR(src/main.c)
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
@@ -24,6 +24,7 @@ LIBBONOBO_REQUIRED=2.6.0
 GNOME_VFS_REQUIRED=2.6.0
 LIBGLADE_REQUIRED=2.4.0
 GSTREAMER_REQUIRED=0.8.0
+NEON_REQUIRED=0.24.0
 
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GTK_REQUIRED)
@@ -54,11 +55,32 @@ PKG_CHECK_MODULES(GOO,				\
 AC_SUBST(GOO_CFLAGS)
 AC_SUBST(GOO_LIBS)
 
+#
+# Checks for neon
+#
+AC_MSG_CHECKING(for neon)
+have_neon=no
+NEON_LIBS=""
+NEON_CFLAGS=""
+if pkg-config --atleast-version=$NEON_REQUIRED neon; then
+   have_neon="yes"
+   NEON_LIBS=`pkg-config --libs neon`
+   NEON_CFLAGS=`pkg-config --cflags neon`
+   AC_DEFINE(HAVE_NEON, 1, [Have neon])
+fi
+AC_MSG_RESULT($have_neon)
+AC_SUBST(NEON_LIBS)
+AC_SUBST(NEON_CFLAGS)
+
+#
+# IDL modules
+#
 IDL_MODULES="bonobo-activation-2.0 libbonobo-2.0 libbonoboui-2.0"
 IDL_INCLUDES="`$PKG_CONFIG --variable=idldir $IDL_MODULES | $srcdir/add-include-prefix`"
 AC_SUBST(IDL_INCLUDES)
 
 AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
+AC_PATH_PROG(GLIB_MKENUMS, glib-mkenums)
 
 dnl ******************************
 
@@ -106,3 +128,13 @@ src/Makefile
 src/icons/Makefile
 po/Makefile.in
 ])
+
+echo "
+
+Configuration:
+
+        Source code location:   ${srcdir}
+        Compiler:               ${CC}
+    	Have neon:              ${have_neon}
+
+"

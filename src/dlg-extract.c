@@ -161,7 +161,7 @@ help_cb (GtkWidget  *widget,
 	GError *err;
 
 	err = NULL;  
-	gnome_help_display ("goo", "extract", &err);
+	gnome_help_display ("goobox", "extract", &err);
 	
 	if (err != NULL) {
 		GtkWidget *dialog;

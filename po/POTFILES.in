@@ -1,6 +1,7 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 data/glade/goobox.glade
+data/glade/goo_cover_chooser.glade
 data/goobox.desktop.in
 data/GNOME_Goobox.server.in.in
 src/actions.c

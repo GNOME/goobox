@@ -94,13 +94,17 @@ static GtkActionEntry action_entries[] = {
 	  N_("Quit the application"),
 	  G_CALLBACK (activate_action_quit) },
 	{ "PickCoverFromDisk", GTK_STOCK_OPEN,
-	  N_("Choose from Disk"), "",
+	  N_("_Choose from Disk"), "",
 	  N_("Choose a CD cover from the local disk"),
 	  G_CALLBACK (activate_action_pick_cover_from_disk) },
 	{ "SearchCoverFromWeb", GOO_STOCK_WEB,
-	  N_("Search on Internet"), NULL,
+	  N_("_Search on Internet"), NULL,
 	  N_("Search a CD cover on Internet"),
 	  G_CALLBACK (activate_action_search_cover_on_internet) },
+	{ "RemoveCover", GTK_STOCK_REMOVE,
+	  N_("_Remove Cover"), NULL,
+	  N_("Remove current CD cover"),
+	  G_CALLBACK (activate_action_remove_cover) },
 	{ "ToggleVisibility", NULL,
 	  N_("_Hide Window"), "H",
 	  N_("Hide the main window"),
@@ -162,6 +166,8 @@ static const gchar *ui_info =
 "      <menu action='CDCoverMenu'>"
 "        <menuitem action='PickCoverFromDisk'/>"
 "        <menuitem action='SearchCoverFromWeb'/>"
+"        <separator name='sep01'/>"
+"        <menuitem action='RemoveCover'/>"
 "      </menu>"
 "      <separator name='sep02'/>"
 "      <menuitem action='Preferences'/>"
@@ -201,6 +207,8 @@ static const gchar *ui_info =
 "  <popup name='CoverPopupMenu'>"
 "    <menuitem action='PickCoverFromDisk'/>"
 "    <menuitem action='SearchCoverFromWeb'/>"
+"    <separator name='sep01'/>"
+"    <menuitem action='RemoveCover'/>"
 "  </popup>"
 "</ui>";
 

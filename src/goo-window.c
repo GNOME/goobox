@@ -26,11 +26,21 @@
 #include <gnome.h>
 #include <libbonobo.h>
 #include <libgnomeui/gnome-window-icon.h>
+#include <libgnomevfs/gnome-vfs-ops.h>
 #include <gst/gst.h>
 #include <gst/gconf/gconf.h>
 #include <gst/play/play.h>
 
+#ifdef HAVE_NEON
+#include <ne_auth.h>
+#include <ne_request.h>
+#include <ne_socket.h>
+#include <ne_session.h>
+#include <ne_uri.h>
+#endif /* HAVE_NEON*/
+
 #include "actions.h"
+#include "dlg-cover-chooser.h"
 #include "eggtrayicon.h"
 #include "file-utils.h"
 #include "goo-marshal.h"
@@ -115,6 +125,8 @@ struct _GooWindowPrivateData {
 
 	gboolean         exiting;
 	guint            check_id;
+
+	GList           *url_list;
 };
 
 static int icon_size = 0;
@@ -268,7 +280,13 @@ window_update_sensitivity (GooWindow *window)
 	set_sensitive (window, "Extract", !error && (priv->songs > 0));
 	set_sensitive (window, "Properties", !error && (discid != NULL));
 	set_sensitive (window, "PickCoverFromDisk", !error && (discid != NULL));
+#ifdef HAVE_NEON
 	set_sensitive (window, "SearchCoverFromWeb", !error && (discid != NULL));
+#else
+	set_sensitive (window, "SearchCoverFromWeb", FALSE);
+#endif /* HAVE_NEON*/
+
+
 	goo_player_info_set_sensitive (GOO_PLAYER_INFO (window->priv->info), !error && (discid != NULL));
 	set_sensitive (window, "Repeat", play_all);
 	set_sensitive (window, "Shuffle", play_all);
@@ -476,6 +494,9 @@ goo_window_finalize (GObject *object)
 
 		destroy_track_editor (priv->track_editor);
 		priv->track_editor = NULL;
+
+		path_list_free (priv->url_list);
+		priv->url_list = NULL;
 
 		g_free (window->priv);
 		window->priv = NULL;
@@ -1230,7 +1251,7 @@ get_disc_cover_filename (GooWindow *window)
 }
 
 
-static void
+void
 goo_window_update_cover (GooWindow *window)
 {
 	char      *filename;
@@ -1642,6 +1663,7 @@ goo_window_init (GooWindow *window)
 	window->priv = g_new0 (GooWindowPrivateData, 1);
 	window->priv->exiting = FALSE;
 	window->priv->check_id = 0;
+	window->priv->url_list = NULL;
 }
 
 
@@ -2417,6 +2439,55 @@ goo_window_get_player (GooWindow *window)
 }
 
 
+void
+goo_window_set_cover_image (GooWindow  *window,
+			    const char *filename)
+{
+	GdkPixbuf *image;
+	GError    *error = NULL;
+
+	image = gdk_pixbuf_new_from_file_at_size (filename, 
+						  COVER_SIZE - 2, 
+						  COVER_SIZE - 2, 
+						  &error);
+	
+	if (image != NULL) {
+		GdkPixbuf *frame;
+		char      *cover_filename;
+		
+		frame = gdk_pixbuf_new (gdk_pixbuf_get_colorspace (image),
+					gdk_pixbuf_get_has_alpha (image),
+					gdk_pixbuf_get_bits_per_sample (image),
+					gdk_pixbuf_get_width (image) + 2,
+					gdk_pixbuf_get_height (image) + 2);
+		gdk_pixbuf_fill (frame, 0x00000000);
+		gdk_pixbuf_copy_area (image, 
+				      0, 0,
+				      gdk_pixbuf_get_width (image),
+				      gdk_pixbuf_get_height (image),
+				      frame,
+				      1, 1);
+
+		cover_filename = get_disc_cover_filename (window);
+		debug (DEBUG_INFO, "SAVE IMAGE %s\n", cover_filename);
+		
+		if (! gdk_pixbuf_save (frame, cover_filename, "png", &error, NULL))
+			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
+							   _("Could not save cover image"),
+							   &error);
+		g_free (cover_filename);
+		g_object_unref (frame);
+		g_object_unref (image);
+
+		goo_window_update_cover (window);
+
+	} else 
+		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
+						   _("Could not load image"),
+						   &error);
+}
+
+
 static void
 open_response_cb (GtkDialog  *file_sel,
 		  int         button_number,
@@ -2425,8 +2496,6 @@ open_response_cb (GtkDialog  *file_sel,
 	GooWindow *window = user_data;
 	char      *folder;
 	char      *filename;
-	GdkPixbuf *image;
-	GError    *error = NULL;
 
 	if (button_number != GTK_RESPONSE_ACCEPT) {
 		gtk_widget_destroy (GTK_WIDGET (file_sel));
@@ -2442,28 +2511,8 @@ open_response_cb (GtkDialog  *file_sel,
 	/* Load the image. */
 
 	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_sel));
-	image = gdk_pixbuf_new_from_file_at_size (filename, COVER_SIZE, COVER_SIZE, &error);
+	goo_window_set_cover_image (window, filename);
 	g_free (filename);
-	
-	if (image != NULL) {
-		char *cover_filename;
-		
-		cover_filename = get_disc_cover_filename (window);
-		debug (DEBUG_INFO, "SAVE IMAGE %s\n", cover_filename);
-		
-		if (! gdk_pixbuf_save (image, cover_filename, "png", &error, NULL))
-			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
-							   _("Could not save cover image"),
-							   &error);
-		g_free (cover_filename);
-		g_object_unref (image);
-
-		goo_window_update_cover (window);
-
-	} else 
-		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
-						   _("Could not load image"),
-						   &error);
 	
 	gtk_widget_destroy (GTK_WIDGET (file_sel));
 }
@@ -2515,9 +2564,161 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 }
 
 
+#ifdef HAVE_NEON
+
+
+static int
+proxy_authentication (void       *userdata, 
+		      const char *realm, 
+		      int         attempt, 
+		      char       *username, 
+		      char       *password)
+{
+	char *user, *pwd;
+
+	user = eel_gconf_get_string (HTTP_PROXY_USER, NULL);
+	pwd = eel_gconf_get_string (HTTP_PROXY_PWD, NULL);
+
+	if ((user == NULL) || (pwd == NULL))
+		return 1;
+
+	strncpy (username, user, NE_ABUFSIZ);
+	strncpy (password, pwd, NE_ABUFSIZ);
+
+	g_free (user);
+	g_free (pwd);
+
+	return attempt;
+}
+
+
+static int
+response_accept_cb (void            *userdata, 
+		    ne_request      *req, 
+		    const ne_status *st)
+{
+	debug (DEBUG_INFO, "%d: %s\n", st->code, st->reason_phrase);
+	return (st->code == 200) ? 1 : 0;
+}
+
+
+static void
+response_block_reader_cb (void       *userdata, 
+			  const char *buf, 
+			  size_t      len)
+{
+	GooWindow *window = userdata;
+	char      *prefix = "/images?q=tbn:";
+	char      *url_start;
+
+	url_start = strstr (buf, prefix);
+	while (url_start != NULL) {
+		char *url_end;
+		char *url;
+
+		url_end = strstr (url_start, " ");
+
+		if (url_end == NULL) 
+			break;
+		
+		url = g_strndup (url_start, url_end - url_start);
+		window->priv->url_list = g_list_prepend (window->priv->url_list, url);
+		
+		url_start = strstr (url_end + 1, prefix);
+	}
+}
+
+
+#endif /* HAVE_NEON*/
+
+
 void
 goo_window_search_cover_on_internet (GooWindow *window)
 {
+#ifdef HAVE_NEON
+
+	ne_session *session;
+	ne_request *request;
+	char       *query, *e_query;
+	const char *album, *artist;
+
+	debug (DEBUG_INFO, "SEARCH ON INTERNET\n");
+
+	album = goo_player_cd_get_album (GOO_PLAYER_CD (window->priv->player));
+	artist = goo_player_cd_get_artist (GOO_PLAYER_CD (window->priv->player));
+
+	if ((album == NULL) || (artist == NULL))
+		return; /*FIXME*/
+
+	path_list_free (window->priv->url_list);
+	window->priv->url_list = NULL;
+
+	session = ne_session_create ("http", "images.google.com", 80);
+	ne_set_useragent (session, PACKAGE "/" VERSION);
+
+	if (eel_gconf_get_boolean (HTTP_PROXY_USE_HTTP_PROXY, FALSE)) {
+		char *host;
+		int   port;
+
+		host = eel_gconf_get_string (HTTP_PROXY_HOST, NULL);
+		port = eel_gconf_get_integer (HTTP_PROXY_PORT, 80);
+
+		if (host != NULL) {
+			ne_session_proxy (session, host, port);
+			g_free (host);
+		}
+	}
+
+	if (eel_gconf_get_boolean (HTTP_PROXY_USE_AUTH, FALSE)) 
+		ne_set_proxy_auth (session, proxy_authentication, window);
+
+	query = g_strconcat ("/images?q=",
+			     album,
+			     "+",
+			     artist,
+			     "&imgsz=medium",
+			     NULL);
+	e_query = ne_path_escape (query);
+
+	debug (DEBUG_INFO, "QUERY: %s\n", e_query);
+
+	request = ne_request_create (session, "GET", e_query);
+	free (e_query);
+	g_free (query);
+
+	ne_add_response_body_reader (request,
+				     response_accept_cb,
+				     response_block_reader_cb,
+				     window);
+
+	if (ne_request_dispatch (request)) 
+		debug (DEBUG_INFO, "HTTP Request failed: %s\n", ne_get_error (session));
+	
+	ne_request_destroy (request);
+	ne_session_destroy (session);
+
+	if (window->priv->url_list != NULL) {
+		window->priv->url_list = g_list_reverse (window->priv->url_list);
+		dlg_cover_chooser (window, window->priv->url_list);
+	}
+
+#endif /* HAVE_NEON*/
+}
+
+
+void
+goo_window_remove_cover (GooWindow   *window)
+{
+	char *cover_filename;
+		
+	cover_filename = get_disc_cover_filename (window);
+	if (cover_filename == NULL)
+		return;
+
+	gnome_vfs_unlink (cover_filename);
+	g_free (cover_filename);
+
+	goo_window_update_cover (window);
 }
 
 

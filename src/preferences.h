@@ -50,6 +50,14 @@
 #define PREF_DESKTOP_MENUBAR_DETACHABLE "/desktop/gnome/interface/menubar_detachable"
 #define PREF_DESKTOP_TOOLBAR_DETACHABLE "/desktop/gnome/interface/toolbar_detachable"
 
+#define HTTP_PROXY_USE_HTTP_PROXY "/system/http_proxy/use_http_proxy"
+#define HTTP_PROXY_HOST           "/system/http_proxy/host"
+#define HTTP_PROXY_PORT           "/system/http_proxy/port"
+#define HTTP_PROXY_USE_AUTH       "/system/http_proxy/use_authentication"
+#define HTTP_PROXY_USER           "/system/http_proxy/authentication_user"
+#define HTTP_PROXY_PWD            "/system/http_proxy/authentication_password"
+
+
 void                pref_util_save_window_geometry    (GtkWindow  *window,
 						       const char *dialog);
 

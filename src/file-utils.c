@@ -549,6 +549,40 @@ shell_escape (const char *filename)
 }
 
 
+char *
+escape_uri (const char *uri)
+{
+        const char *start = NULL;
+        const char *uri_no_method;
+        char       *method;
+        char       *epath, *euri;
+
+        if (uri == NULL)
+                return NULL;
+
+        start = strstr (uri, "://");
+        if (start != NULL) {
+                uri_no_method = start + strlen ("://");
+                method = g_strndup (uri, start - uri);
+        } else {
+                uri_no_method = uri;
+                method = NULL;
+        }
+
+	epath = gnome_vfs_escape_host_and_path_string (uri_no_method);
+
+        if (method != NULL) {
+                euri = g_strdup_printf ("%s://%s", method, epath);
+                g_free (epath);
+        } else
+                euri = epath;
+
+        g_free (method);
+
+        return euri;
+}
+
+
 static gchar *
 get_terminal ()
 {
@@ -964,7 +998,7 @@ get_last_field (const char *line,
 char *
 get_temp_work_dir (void)
 {
-	char temp_dir_template[] = "/tmp/fr-XXXXXX";
+	char temp_dir_template[] = "/tmp/goo-XXXXXX";
 	g_assert (mkdtemp (temp_dir_template) != NULL);
 	return g_strdup (temp_dir_template);
 }

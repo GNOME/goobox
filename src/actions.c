@@ -248,6 +248,14 @@ activate_action_pick_cover_from_disk (GtkAction *action,
 
 
 void
+activate_action_remove_cover (GtkAction *action, 
+			      gpointer   data)
+{
+	goo_window_remove_cover (GOO_WINDOW (data));
+}
+
+
+void
 activate_action_search_cover_on_internet (GtkAction *action, 
 					  gpointer   data)
 {

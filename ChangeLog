@@ -1,3 +1,29 @@
+2004-10-26  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* data/glade/goo_cover_chooser.glade:
+	* src/dlg-cover-chooser.c: 
+	* src/dlg-cover-chooser.h:
+	* src/gth-image-list.c:
+	* src/gth-image-list.h:
+	* src/gthumb-enum-types.c:
+	* src/gthumb-enum-types.h:
+	* src/gthumb-slide.c:
+	* src/gthumb-slide.h: new files.
+
+	* src/preferences.h: 
+	* src/Makefile.am: 
+	* configure.in: 
+
+	Implemented "Search Cover on Internet" command.
+	
+2004-10-25  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.h: 
+	* src/goo-window.c (goo_window_remove_cover): 
+	* src/ui.h: 
+
+	Added "Remove Cover" command
+
 2004-10-24  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-window.c (goo_window_update_cover): 
