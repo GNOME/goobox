@@ -134,9 +134,10 @@ activate_action_about (GtkAction *action,
 		"Paolo Bacchilega <paolo.bacchilega@libero.it>", 
 		NULL
 	};
-	const char       *documenters [] = {
-		NULL
-	};
+	/*
+	  const char       *documenters [] = {
+	  NULL
+	  };*/
 	const char       *translator_credits = _("translator_credits");
 
 	if (about != NULL) {
@@ -153,7 +154,7 @@ activate_action_about (GtkAction *action,
 		      "copyright", "Copyright \xc2\xa9 2004 Free Software Foundation, Inc.",
 		      "comments", _("CD player and ripper"),
 		      "authors", authors,
-		      "documenters", documenters,
+		      /*"documenters", documenters,*/
 		      "translator_credits", strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
 		      "website", NULL,
 		      "website_label", NULL,

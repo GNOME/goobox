@@ -1,5 +1,7 @@
 2004-12-26  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/actions.c (activate_action_about): removed documenters tag.
+
 	* src/dlg-extract.c: 
 	* src/dlg-encoder-options.c: 
 	* src/dlg-encoder-options.h: 
