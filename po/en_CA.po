@@ -1,0 +1,673 @@
+# Canadian English translation for goobox
+# Copyright (C) 2004 Adam Weinberger and the GNOME Foundation
+# This file is distributed under the same licence as the goobox package.
+# Adam Weinberger <adamw@gnome.org>, 2004.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: goobox\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-12-05 01:43-0500\n"
+"PO-Revision-Date: 2004-12-05 01:43-0400\n"
+"Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
+"Language-Team: Canadian English <adamw@FreeBSD.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data/GNOME_Goobox.server.in.in.h:1
+msgid "Goobox Application"
+msgstr "Goobox Application"
+
+#: data/GNOME_Goobox.server.in.in.h:2
+msgid "Goobox Application Factory"
+msgstr "Goobox Application Factory"
+
+#: data/glade/goo_cover_chooser.glade.h:1
+msgid "Choose a CD Cover"
+msgstr "Choose a CD Cover"
+
+#: data/glade/goo_cover_chooser.glade.h:2
+msgid "Found images:"
+msgstr "Found images:"
+
+#: data/glade/goobox.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: data/glade/goobox.glade.h:2
+msgid "<b>CD Drive</b>"
+msgstr "<b>CD Drive</b>"
+
+#: data/glade/goobox.glade.h:3
+msgid "<b>Destination folder</b>"
+msgstr "<b>Destination folder</b>"
+
+#: data/glade/goobox.glade.h:4
+msgid "<b>Extract</b>"
+msgstr "<b>Extract</b>"
+
+#: data/glade/goobox.glade.h:5
+msgid "<b>File type</b>"
+msgstr "<b>File type</b>"
+
+#: data/glade/goobox.glade.h:6
+msgid "<b>Quality</b>"
+msgstr "<b>Quality</b>"
+
+#: data/glade/goobox.glade.h:7
+msgid "<small><i>Higher quality</i></small>"
+msgstr "<small><i>Higher quality</i></small>"
+
+#: data/glade/goobox.glade.h:8
+msgid "<small><i>Smaller size</i></small>"
+msgstr "<small><i>Smaller size</i></small>"
+
+#: data/glade/goobox.glade.h:9 src/dlg-extract.c:241
+msgid "Choose destination folder"
+msgstr "Choose destination folder"
+
+#: data/glade/goobox.glade.h:10
+msgid "Encoding Options"
+msgstr "Encoding Options"
+
+#: data/glade/goobox.glade.h:11
+msgid "Excellent quality lossless compression"
+msgstr "Excellent quality lossless compression"
+
+#: data/glade/goobox.glade.h:12
+msgid "Extract Tracks"
+msgstr "Extract Tracks"
+
+#: data/glade/goobox.glade.h:13
+msgid "Extracting Tracks"
+msgstr "Extracting Tracks"
+
+#: data/glade/goobox.glade.h:14
+msgid "Good quality lossy compression"
+msgstr "Good quality lossy compression"
+
+#: data/glade/goobox.glade.h:15
+msgid "High quality lossy compression"
+msgstr "High quality lossy compression"
+
+#: data/glade/goobox.glade.h:16
+msgid "Preferences"
+msgstr "Preferences"
+
+#: data/glade/goobox.glade.h:17
+msgid "Raw audio"
+msgstr "Raw audio"
+
+#: data/glade/goobox.glade.h:18
+msgid "_All tracks"
+msgstr "_All tracks"
+
+#: data/glade/goobox.glade.h:19
+msgid "_FLAC"
+msgstr "_FLAC"
+
+#: data/glade/goobox.glade.h:20
+msgid "_MP3"
+msgstr "_MP3"
+
+#: data/glade/goobox.glade.h:21
+msgid "_Ogg Vorbis"
+msgstr "_Ogg Vorbis"
+
+#: data/glade/goobox.glade.h:22 src/goo-stock.c:54
+msgid "_Reset"
+msgstr "_Reset"
+
+#: data/glade/goobox.glade.h:23
+msgid "_Selected tracks"
+msgstr "_Selected tracks"
+
+#: data/glade/goobox.glade.h:24
+msgid "_Wave"
+msgstr "_Wave"
+
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2029 src/goo-window.c:2037
+msgid "CD Player"
+msgstr "CD Player"
+
+#: data/goobox.desktop.in.h:2
+msgid "Play and extract CDs"
+msgstr "Play and extract CDs"
+
+#: data/goobox.schemas.in.h:1
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "Possible values are: ogg, flac, mp3, wave."
+
+#: data/goobox.schemas.in.h:2
+msgid ""
+"Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgstr ""
+"Possible values are: system, text_below, text_beside, text_only, icons_only."
+
+#: src/actions.c:138
+msgid "translator_credits"
+msgstr "Adam Weinberger <adamw@gnome.org>"
+
+#: src/actions.c:146
+msgid "Goobox"
+msgstr "Goobox"
+
+#: src/actions.c:149 src/main.c:78
+msgid "CD player and ripper"
+msgstr "CD player and ripper"
+
+#: src/bacon-cd-selection.c:200
+msgid "Unnamed CDROM"
+msgstr "Unnamed CDROM"
+
+#: src/cd-drive.c:835
+#, c-format
+msgid "Unnamed SCSI Drive (%s)"
+msgstr "Unnamed SCSI Drive (%s)"
+
+#: src/cd-drive.c:1395
+msgid "File image"
+msgstr "File image"
+
+#: src/dlg-cover-chooser.c:271
+#, c-format
+msgid "%u, loading image: %u"
+msgstr "%u, loading image: %u"
+
+#: src/dlg-cover-chooser.c:309
+msgid "Loading images"
+msgstr "Loading images"
+
+#: src/dlg-cover-chooser.c:330 src/goo-window.c:2632
+msgid "Could not search a cover on Internet"
+msgstr "Could not search a cover on Internet"
+
+#: src/dlg-cover-chooser.c:338 src/dlg-cover-chooser.c:422
+msgid "No image found"
+msgstr "No image found"
+
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:205 src/dlg-preferences.c:109
+#, c-format
+msgid "Could not display help: %s"
+msgstr "Could not display help: %s"
+
+#: src/dlg-cover-chooser.c:682
+msgid "Searching images..."
+msgstr "Searching images..."
+
+#: src/dlg-encoder-options.c:117
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "Nominal bitrate: %d Kbps"
+
+#: src/dlg-encoder-options.c:120
+#, c-format
+msgid "Compression level: %d"
+msgstr "Compression level: %d"
+
+#: src/dlg-encoder-options.c:123
+#, c-format
+msgid "Bitrate: %d Kbps"
+msgstr "Bitrate: %d Kbps"
+
+#: src/dlg-encoder-options.c:261
+msgid "Faster compression"
+msgstr "Faster compression"
+
+#: src/dlg-encoder-options.c:265
+msgid "Higher compression"
+msgstr "Higher compression"
+
+#: src/dlg-extract.c:367
+#, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract "
+"CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+msgstr ""
+"You need at least one of the following GStreamer plugins in order to extract "
+"CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+
+#: src/dlg-extract.c:380
+msgid "No encoder available."
+msgstr "No encoder available."
+
+#: src/dlg-ripper.c:311
+msgid "Could not display the destination folder"
+msgstr "Could not display the destination folder"
+
+#: src/dlg-ripper.c:338
+msgid "Tracks extracted successfully"
+msgstr "Tracks extracted successfully"
+
+#: src/dlg-ripper.c:340
+msgid "_View destination folder"
+msgstr "_View destination folder"
+
+#: src/dlg-ripper.c:353
+#, c-format
+msgid "Extracting track %d of %d: %s"
+msgstr "Extracting track %d of %d: %s"
+
+#: src/dlg-ripper.c:388
+msgid "Ripped with Goobox"
+msgstr "Ripped with Goobox"
+
+#: src/eggtrayicon.c:118
+msgid "Orientation"
+msgstr "Orientation"
+
+#: src/eggtrayicon.c:119
+msgid "The orientation of the tray."
+msgstr "The orientation of the tray."
+
+#: src/file-utils.c:622
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr "Cannot find a terminal. Using xterm (even if it may not work)"
+
+#: src/goo-cdrom-bsd.c:140 src/goo-cdrom-linux.c:121
+#: src/goo-cdrom-solaris.c:123
+msgid "Error reading CD"
+msgstr "Error reading CD"
+
+#: src/goo-cdrom.c:323
+msgid "The specifued device is not valid"
+msgstr "The specified device is not valid"
+
+#: src/goo-player-cd.c:784
+msgid "Drive not ready"
+msgstr "Drive not ready"
+
+#: src/goo-player-cd.c:788
+msgid "Tray open"
+msgstr "Tray open"
+
+#: src/goo-player-cd.c:789 src/goo-player-cd.c:793
+msgid "No disc"
+msgstr "No disc"
+
+#: src/goo-player-cd.c:797
+msgid "Data CD"
+msgstr "Data CD"
+
+#: src/goo-player-info.c:225 src/goo-player-info.c:250
+#: src/goo-player-info.c:604
+#, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#: src/goo-player-info.c:359
+msgid "Click here to choose a cover for this CD"
+msgstr "Click here to choose a cover for this CD"
+
+#: src/goo-player-info.c:532 src/goo-window.c:1220
+msgid "Paused"
+msgstr "Paused"
+
+#: src/goo-player-info.c:543
+msgid "Ejecting CD"
+msgstr "Ejecting CD"
+
+#: src/goo-player-info.c:547
+msgid "Checking CD drive"
+msgstr "Checking CD drive"
+
+#: src/goo-player-info.c:551 src/goo-player-info.c:555
+msgid "Reading CD"
+msgstr "Reading CD"
+
+#: src/goo-player-info.c:568 src/goo-window.c:1244
+msgid "Audio CD"
+msgstr "Audio CD"
+
+#: src/goo-stock.c:53
+msgid "_Extract"
+msgstr "_Extract"
+
+#: src/goo-stock.c:55 src/goo-stock.c:56 src/goo-stock.c:57 src/goo-stock.c:58
+msgid "V_olume"
+msgstr "V_olume"
+
+#: src/goo-volume-button.c:147
+#, c-format
+msgid "Volume level: %3.0f%%"
+msgstr "Volume level: %3.0f%%"
+
+#: src/goo-volume-button.c:328
+msgid "+"
+msgstr "+"
+
+#: src/goo-volume-button.c:344
+msgid "-"
+msgstr "-"
+
+#: src/goo-window.c:65
+msgid "Hide _tracks"
+msgstr "Hide _tracks"
+
+#: src/goo-window.c:66
+msgid "Show _tracks"
+msgstr "Show _tracks"
+
+#: src/goo-window.c:189
+#, c-format
+msgid "%d track"
+msgid_plural "%d tracks"
+msgstr[0] "%d track"
+msgstr[1] "%d tracks"
+
+#: src/goo-window.c:524
+msgid "Length"
+msgstr "Length"
+
+#: src/goo-window.c:525
+msgid "Title"
+msgstr "Title"
+
+#: src/goo-window.c:526
+msgid "Artist"
+msgstr "Artist"
+
+#: src/goo-window.c:534
+msgid "#"
+msgstr "#"
+
+#: src/goo-window.c:1130 src/ui.h:57
+msgid "_Pause"
+msgstr "_Pause"
+
+#: src/goo-window.c:1131
+msgid "Pause playing"
+msgstr "Pause playing"
+
+#: src/goo-window.c:1333 src/goo-window.c:1345 src/ui.h:45 src/ui.h:49
+#: src/ui.h:53
+msgid "_Play"
+msgstr "_Play"
+
+#: src/goo-window.c:1334 src/goo-window.c:1346
+msgid "Play CD"
+msgstr "Play CD"
+
+#: src/goo-window.c:2310
+msgid "Could not eject the CD"
+msgstr "Could not eject the CD"
+
+#: src/goo-window.c:2322
+msgid "Could not read drive"
+msgstr "Could not read drive"
+
+#: src/goo-window.c:2506
+msgid "Could not save cover image"
+msgstr "Could not save cover image"
+
+#: src/goo-window.c:2516
+msgid "Could not load image"
+msgstr "Could not load image"
+
+#: src/goo-window.c:2572
+msgid "Choose CD Cover Image"
+msgstr "Choose CD Cover Image"
+
+#: src/goo-window.c:2591
+msgid "Images"
+msgstr "Images"
+
+#: src/goo-window.c:2599
+msgid "All files"
+msgstr "All files"
+
+#: src/goo-window.c:2633
+msgid ""
+"You have to enter the artist and album names in order to find the album "
+"cover."
+msgstr ""
+"You have to enter the artist and album names in order to find the album "
+"cover."
+
+#: src/goo-window.c:2667
+msgid "_Show Window"
+msgstr "_Show Window"
+
+#: src/goo-window.c:2668
+msgid "Show the main window"
+msgstr "Show the main window"
+
+#: src/goo-window.c:2681 src/ui.h:109
+msgid "_Hide Window"
+msgstr "_Hide Window"
+
+#: src/goo-window.c:2682 src/ui.h:110
+msgid "Hide the main window"
+msgstr "Hide the main window"
+
+#: src/gth-image-list.c:3520
+msgid "No image"
+msgstr "No image"
+
+#: src/gtk-file-chooser-preview.c:203
+msgid "Preview"
+msgstr "Preview"
+
+#: src/gtk-file-chooser-preview.c:328
+msgid "pixels"
+msgstr "pixels"
+
+#: src/gtk-utils.c:797
+msgid "Could not execute command"
+msgstr "Could not execute command"
+
+#: src/main.c:56
+msgid "CD device to be used"
+msgstr "CD device to be used"
+
+#: src/main.c:57
+msgid "DEVICE_PATH"
+msgstr "DEVICE_PATH"
+
+#: src/main.c:191
+msgid "Cannot start the CD player"
+msgstr "Cannot start the CD player"
+
+#: src/main.c:192
+msgid ""
+"In order to read CDs you have to install the cdparanoia gstreamer plugin"
+msgstr ""
+"In order to read CDs you have to install the cdparanoia gstreamer plugin"
+
+#: src/track-info.c:118
+#, c-format
+msgid "Track %u"
+msgstr "Track %u"
+
+#: src/ui.h:34
+msgid "_CD"
+msgstr "_CD"
+
+#: src/ui.h:35
+msgid "_Edit"
+msgstr "_Edit"
+
+#: src/ui.h:36
+msgid "_View"
+msgstr "_View"
+
+#: src/ui.h:37
+msgid "_Help"
+msgstr "_Help"
+
+#: src/ui.h:38
+msgid "CD C_over"
+msgstr "CD C_over"
+
+#: src/ui.h:41
+msgid "_About"
+msgstr "_About"
+
+#: src/ui.h:42
+msgid "Information about the program"
+msgstr "Information about the program"
+
+#: src/ui.h:46
+msgid "Play/Pause"
+msgstr "Play/Pause"
+
+#: src/ui.h:50
+msgid "Play"
+msgstr "Play"
+
+#: src/ui.h:54
+msgid "Play this track"
+msgstr "Play this track"
+
+#: src/ui.h:58
+msgid "Pause"
+msgstr "Pause"
+
+#: src/ui.h:61
+msgid "_Stop"
+msgstr "_Stop"
+
+#: src/ui.h:62
+msgid "Stop playing"
+msgstr "Stop playing"
+
+#: src/ui.h:65
+msgid "_Next"
+msgstr "_Next"
+
+#: src/ui.h:66
+msgid "Play the next track"
+msgstr "Play the next track"
+
+#: src/ui.h:69
+msgid "Pre_v"
+msgstr "Pre_v"
+
+#: src/ui.h:70
+msgid "Play the previous track"
+msgstr "Play the previous track"
+
+#: src/ui.h:73
+msgid "_Eject"
+msgstr "_Eject"
+
+#: src/ui.h:74
+msgid "Eject the CD"
+msgstr "Eject the CD"
+
+#: src/ui.h:77
+msgid "_Reload"
+msgstr "_Reload"
+
+#: src/ui.h:78
+msgid "Reload the CD"
+msgstr "Reload the CD"
+
+#: src/ui.h:81
+msgid "_Preferences"
+msgstr "_Preferences"
+
+#: src/ui.h:82
+msgid "Edit various preferences"
+msgstr "Edit various preferences"
+
+#: src/ui.h:85
+msgid "E_xtract Tracks"
+msgstr "E_xtract Tracks"
+
+#: src/ui.h:86
+msgid "Save the tracks to disk as files"
+msgstr "Save the tracks to disk as files"
+
+#: src/ui.h:89
+msgid "_CD Properties"
+msgstr "_CD Properties"
+
+#: src/ui.h:90
+msgid "Edit the CD artist, album and tracks titles"
+msgstr "Edit the CD artist, album, and track titles"
+
+#: src/ui.h:93
+msgid "_Quit"
+msgstr "_Quit"
+
+#: src/ui.h:94
+msgid "Quit the application"
+msgstr "Quit the application"
+
+#: src/ui.h:97
+msgid "_Choose from Disk"
+msgstr "_Choose from Disk"
+
+#: src/ui.h:98
+msgid "Choose a CD cover from the local disk"
+msgstr "Choose a CD cover from the local disk"
+
+#: src/ui.h:101
+msgid "_Search on Internet"
+msgstr "_Search on Internet"
+
+#: src/ui.h:102
+msgid "Search a CD cover on Internet"
+msgstr "Search a CD cover on Internet"
+
+#: src/ui.h:105
+msgid "_Remove Cover"
+msgstr "_Remove Cover"
+
+#: src/ui.h:106
+msgid "Remove current CD cover"
+msgstr "Remove current CD cover"
+
+#: src/ui.h:118
+msgid "_Toolbar"
+msgstr "_Toolbar"
+
+#: src/ui.h:119
+msgid "View the main toolbar"
+msgstr "View the main toolbar"
+
+#: src/ui.h:123
+msgid "Stat_usbar"
+msgstr "Stat_usbar"
+
+#: src/ui.h:124
+msgid "View the statusbar"
+msgstr "View the statusbar"
+
+#: src/ui.h:128
+msgid "Play _All"
+msgstr "Play _All"
+
+#: src/ui.h:129
+msgid "Play all tracks"
+msgstr "Play all tracks"
+
+#: src/ui.h:133
+msgid "_Repeat"
+msgstr "_Repeat"
+
+#: src/ui.h:134
+msgid "Restart playing when finished"
+msgstr "Restart playing when finished"
+
+#: src/ui.h:138
+msgid "S_huffle"
+msgstr "S_huffle"
+
+#: src/ui.h:139
+msgid "Play tracks in a random order"
+msgstr "Play tracks in a random order"
