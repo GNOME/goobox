@@ -1,3 +1,13 @@
+version 0.6.0
+-------------	
+	* Added total song time to the player info.
+	* Added CD year to the statubar if available.
+	* Restore the window position after clicking on the notification area 
+	  icon.
+	* Use the 192 Kbps bitrate instead of the non-standard 196 Kbps.
+	* Fixed stock icons display.
+	* Added --play option to automatically play after startup.
+
 version 0.5.0
 -------------	
 	* Added ability to choose the bitrate when encoding.

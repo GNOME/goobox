@@ -1,5 +1,7 @@
 2004-12-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	[ version 0.6.0 released ] 
+	
 	* src/goo-window.c (autoplay_cb): 
 	* src/goo-application.c (goo_application_class_init): 
 	* src/GNOME_Goobox.idl: 

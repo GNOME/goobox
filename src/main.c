@@ -103,10 +103,11 @@ int main (int argc, char **argv)
 
 		app = bonobo_activation_activate_from_id ("OAFIID:GNOME_Goobox_Application", 0, NULL, &env);
 
-		GNOME_Goobox_Application_present (app, &env);
                 if (AutoPlay)
                 	GNOME_Goobox_Application_play (app, &env);
-                  
+		else
+			GNOME_Goobox_Application_present (app, &env);
+
 		bonobo_object_release_unref (app, &env);
 		CORBA_exception_free (&env);
 
