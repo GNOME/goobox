@@ -327,12 +327,15 @@ goo_volume_button_get_volume (GooVolumeButton *button)
 
 void
 goo_volume_button_set_volume (GooVolumeButton *button,
-			      double           vol)
+			      double           vol,
+			      gboolean         notify)
 {
 	button->priv->value = vol;
 
-	g_signal_handlers_block_by_data (button->priv->volume_scale, button);
+	if (!notify)
+		g_signal_handlers_block_by_data (button->priv->volume_scale, button);
 	gtk_range_set_value (GTK_RANGE (button->priv->volume_scale), vol);
-	g_signal_handlers_unblock_by_data (button->priv->volume_scale, button);
+	if (!notify)
+		g_signal_handlers_unblock_by_data (button->priv->volume_scale, button);
 }
 

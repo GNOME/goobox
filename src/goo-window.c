@@ -1863,7 +1863,8 @@ goo_window_init (GooWindow *window)
 	goo_player_info_set_player (GOO_PLAYER_INFO (priv->info), priv->player);
 
 	goo_volume_button_set_volume (GOO_VOLUME_BUTTON (priv->volume_button), 
-				      eel_gconf_get_integer (PREF_GENERAL_VOLUME, DEFAULT_VOLUME));
+				      eel_gconf_get_integer (PREF_GENERAL_VOLUME, DEFAULT_VOLUME),
+				      TRUE);
 
 	/* Create the tray icon. */
 	

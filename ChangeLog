@@ -2,6 +2,7 @@
 
 	* src/preferences.h: 
 	* src/goo-window.c: 
+
 	* src/goo-player.c: 
 	* src/goo-player.h: 
 	* src/goo-player-cd.c: 

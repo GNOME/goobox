@@ -53,12 +53,13 @@ struct _GooVolumeButtonClass
 	void (*changed) (GooVolumeButton *player);
 };
 
-GType            goo_volume_button_get_type            (void);
-GtkWidget *      goo_volume_button_new                 (double from_value,
-							double to_value,
-							double step);
-double           goo_volume_button_get_volume          (GooVolumeButton *button);
-void             goo_volume_button_set_volume          (GooVolumeButton *button,
-							double           value);
+GType            goo_volume_button_get_type        (void);
+GtkWidget *      goo_volume_button_new             (double from_value,
+						    double to_value,
+						    double step);
+double           goo_volume_button_get_volume      (GooVolumeButton *button);
+void             goo_volume_button_set_volume      (GooVolumeButton *button,
+						    double           value,
+						    gboolean         notify);
 
 #endif /* GOO_VOLUME_BUTTON_H */
