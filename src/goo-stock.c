@@ -22,6 +22,7 @@
 
 #include <config.h>
 #include <gtk/gtk.h>
+#include <gnome.h>
 #include "goo-stock.h"
 #include "icons/pixbufs.h"
 
@@ -39,7 +40,17 @@ static struct {
 	{ GOO_STOCK_PREV,         prev_24_rgba,         NULL },
 	{ GOO_STOCK_STOP,         stop_24_rgba,         NULL },
 	{ GOO_STOCK_NO_COVER,     no_cover_48_rgba,     NULL },
+	{ GOO_STOCK_VOLUME,       volume_24_rgba,       volume_16_rgba },
 };
+
+
+static const GtkStockItem stock_items [] = {
+	{ GOO_STOCK_EXTRACT, N_("_Extract"), 0, 0, GETTEXT_PACKAGE },
+	{ GOO_STOCK_VOLUME, N_("V_olume"), 0, 0, GETTEXT_PACKAGE }
+};
+
+
+static gboolean stock_initialized = FALSE;
 
 
 void
@@ -48,8 +59,13 @@ goo_stock_init (void)
 	GtkIconFactory *factory;
 	int             i;
 
-	factory = gtk_icon_factory_new ();
+	if (stock_initialized)
+		return;
+	stock_initialized = TRUE;
 
+	gtk_stock_add_static (stock_items, G_N_ELEMENTS (stock_items));
+
+	factory = gtk_icon_factory_new ();
 	for (i = 0; i < G_N_ELEMENTS (items); i++) {
 		GtkIconSet    *set;
 		GtkIconSource *source;

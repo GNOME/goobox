@@ -31,6 +31,7 @@ struct _GooPlayerPrivateData {
 	GooPlayerAction  action;
 	GError          *error;
 	int              current_song;
+	int              volume;
 	char            *location;
 	char            *title;
 	char            *subtitle;
@@ -118,6 +119,14 @@ base_goo_player_set_location (GooPlayer  *player,
 		player->priv->location = g_strdup (location);
 
 	return TRUE;
+}
+
+
+void
+base_goo_player_set_volume (GooPlayer *player,
+			    int        vol)
+{
+	player->priv->volume = vol;
 }
 
 
@@ -227,6 +236,7 @@ goo_player_class_init (GooPlayerClass *class)
 	class->get_song_list    = base_goo_player_get_song_list;
 	class->eject            = base_goo_player_eject;
 	class->set_location     = base_goo_player_set_location;
+	class->set_volume       = base_goo_player_set_volume;
 
 	class->start          = NULL;
 	class->done           = NULL;
@@ -248,6 +258,7 @@ goo_player_init (GooPlayer *player)
 	priv->action = GOO_PLAYER_ACTION_NONE;
 	priv->error = NULL;
 	priv->current_song = 0;
+	priv->volume = 0;
 	priv->location = NULL;
 	priv->title = NULL;
 	priv->subtitle = NULL;
@@ -508,3 +519,28 @@ goo_player_set_state (GooPlayer       *player,
 			       0,
 			       NULL);
 }
+
+
+int
+goo_player_get_volume (GooPlayer *player)
+{
+	return player->priv->volume;
+}
+
+
+void
+goo_player_set_volume_protected (GooPlayer *player,
+				 int        vol)
+{
+	player->priv->volume = vol;
+}
+
+
+void
+goo_player_set_volume (GooPlayer *player,
+		       int        vol)
+{
+	player->priv->volume = vol;
+	GOO_PLAYER_GET_CLASS (G_OBJECT (player))->set_volume (player, vol);
+}
+

@@ -28,20 +28,21 @@
 #include "typedefs.h"
 #include "goo-window.h"
 
-#define PREF_GENERAL_DEVICE        "/apps/goo/general/device"
+#define PREF_GENERAL_DEVICE        "/apps/goobox/general/device"
+#define PREF_GENERAL_VOLUME        "/apps/goobox/general/volume"
 
-#define PREF_UI_TOOLBAR            "/apps/goo/ui/toolbar_visible"
-#define PREF_UI_STATUSBAR          "/apps/goo/ui/statusbar_visible"
-#define PREF_UI_PLAYLIST           "/apps/goo/ui/playlist_visible"
-#define PREF_UI_WINDOW_WIDTH       "/apps/goo/ui/window_width"
-#define PREF_UI_WINDOW_HEIGHT      "/apps/goo/ui/window_height"
+#define PREF_UI_TOOLBAR            "/apps/goobox/ui/toolbar_visible"
+#define PREF_UI_STATUSBAR          "/apps/goobox/ui/statusbar_visible"
+#define PREF_UI_PLAYLIST           "/apps/goobox/ui/playlist_visible"
+#define PREF_UI_WINDOW_WIDTH       "/apps/goobox/ui/window_width"
+#define PREF_UI_WINDOW_HEIGHT      "/apps/goobox/ui/window_height"
 
-#define PREF_PLAYLIST_PLAYALL      "/apps/goo/playlist/play_all"
-#define PREF_PLAYLIST_SHUFFLE      "/apps/goo/playlist/shuffle"
-#define PREF_PLAYLIST_REPEAT       "/apps/goo/playlist/repeat"
+#define PREF_PLAYLIST_PLAYALL      "/apps/goobox/playlist/play_all"
+#define PREF_PLAYLIST_SHUFFLE      "/apps/goobox/playlist/shuffle"
+#define PREF_PLAYLIST_REPEAT       "/apps/goobox/playlist/repeat"
 
-#define PREF_EXTRACT_DESTINATION   "/apps/goo/dialogs/extract/destination"
-#define PREF_EXTRACT_FILETYPE      "/apps/goo/dialogs/extract/file_type"
+#define PREF_EXTRACT_DESTINATION   "/apps/goobox/dialogs/extract/destination"
+#define PREF_EXTRACT_FILETYPE      "/apps/goobox/dialogs/extract/file_type"
 
 #define PREF_DESKTOP_ICON_THEME         "/desktop/gnome/file_views/icon_theme"
 #define PREF_DESKTOP_MENUS_HAVE_TEAROFF "/desktop/gnome/interface/menus_have_tearoff"

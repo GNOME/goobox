@@ -133,7 +133,7 @@ activate_action_about (GtkAction *action,
 		return;
 	}
 
-	logo = gdk_pixbuf_new_from_file (PIXMAPSDIR "/goo.png", NULL);
+	logo = gdk_pixbuf_new_from_file (PIXMAPSDIR "/goobox.png", NULL);
 	about = gnome_about_new (_("Goobox"), 
 				 VERSION,
 				 "Copyright \xc2\xa9 2004 Free Software Foundation, Inc.",

@@ -4,11 +4,24 @@
       <!-- GENERAL -->
 
       <schema>
-	<key>/schemas/apps/goo/general/device</key>
-	<applyto>/apps/goo/general/device</applyto>
-	<owner>goo</owner>
+	<key>/schemas/apps/goobox/general/device</key>
+	<applyto>/apps/goobox/general/device</applyto>
+	<owner>goobox</owner>
 	<type>string</type>
 	<default>/dev/cdrom</default>
+	<locale name="C">
+	  <short></short>
+	  <long> 
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
+	<key>/schemas/apps/goobox/general/volume</key>
+	<applyto>/apps/goobox/general/volume</applyto>
+	<owner>goobox</owner>
+	<type>int</type>
+	<default>100</default>
 	<locale name="C">
 	  <short></short>
 	  <long> 
@@ -19,9 +32,9 @@
       <!-- UI -->
 
       <schema>
-	<key>/schemas/apps/goo/ui/toolbar_style</key>
-	<applyto>/apps/goo/ui/toolbar_style</applyto>
-	<owner>goo</owner>
+	<key>/schemas/apps/goobox/ui/toolbar_style</key>
+	<applyto>/apps/goobox/ui/toolbar_style</applyto>
+	<owner>goobox</owner>
 	<type>string</type>
 	<default>system</default>
 	<locale name="C">
@@ -32,9 +45,9 @@
       </schema>
 
       <schema>
-	<key>/schemas/apps/goo/ui/window_width</key>
-	<applyto>/apps/goo/ui/window_width</applyto>
-	<owner>goo</owner>
+	<key>/schemas/apps/goobox/ui/window_width</key>
+	<applyto>/apps/goobox/ui/window_width</applyto>
+	<owner>goobox</owner>
 	<type>int</type>
 	<default>200</default>
 	<locale name="C">
@@ -45,9 +58,9 @@
       </schema>
 
       <schema>
-	<key>/schemas/apps/goo/ui/window_height</key>
-	<applyto>/apps/goo/ui/window_height</applyto>
-	<owner>goo</owner>
+	<key>/schemas/apps/goobox/ui/window_height</key>
+	<applyto>/apps/goobox/ui/window_height</applyto>
+	<owner>goobox</owner>
 	<type>int</type>
 	<default>400</default>
 	<locale name="C">
@@ -58,9 +71,9 @@
       </schema>
 
       <schema>
-	<key>/schemas/apps/goo/ui/toolbar_visible</key>
-	<applyto>/apps/goo/ui/toolbar_visible</applyto>
-	<owner>goo</owner>
+	<key>/schemas/apps/goobox/ui/toolbar_visible</key>
+	<applyto>/apps/goobox/ui/toolbar_visible</applyto>
+	<owner>goobox</owner>
 	<type>bool</type>
 	<default>true</default>
 	<locale name="C">
@@ -71,9 +84,9 @@
       </schema>
 
       <schema>
-	<key>/schemas/apps/goo/ui/statusbar_visible</key>
-	<applyto>/apps/goo/ui/statusbar_visible</applyto>
-	<owner>goo</owner>
+	<key>/schemas/apps/goobox/ui/statusbar_visible</key>
+	<applyto>/apps/goobox/ui/statusbar_visible</applyto>
+	<owner>goobox</owner>
 	<type>bool</type>
 	<default>true</default>
 	<locale name="C">
@@ -84,9 +97,9 @@
       </schema>
 
       <schema>
-	<key>/schemas/apps/goo/ui/playlist_visible</key>
-	<applyto>/apps/goo/ui/playlist_visible</applyto>
-	<owner>goo</owner>
+	<key>/schemas/apps/goobox/ui/playlist_visible</key>
+	<applyto>/apps/goobox/ui/playlist_visible</applyto>
+	<owner>goobox</owner>
 	<type>bool</type>
 	<default>true</default>
 	<locale name="C">
@@ -101,9 +114,9 @@
 
 
       <schema>
-	<key>/schemas/apps/goo/playlist/play_all</key>
-	<applyto>/apps/goo/playlist/play_all</applyto>
-	<owner>goo</owner>
+	<key>/schemas/apps/goobox/playlist/play_all</key>
+	<applyto>/apps/goobox/playlist/play_all</applyto>
+	<owner>goobox</owner>
 	<type>bool</type>
 	<default>true</default>
 	<locale name="C">
@@ -114,9 +127,9 @@
       </schema>
 
       <schema>
-	<key>/schemas/apps/goo/playlist/shuffle</key>
-	<applyto>/apps/goo/playlist/shuffle</applyto>
-	<owner>goo</owner>
+	<key>/schemas/apps/goobox/playlist/shuffle</key>
+	<applyto>/apps/goobox/playlist/shuffle</applyto>
+	<owner>goobox</owner>
 	<type>bool</type>
 	<default>false</default>
 	<locale name="C">
@@ -127,9 +140,9 @@
       </schema>
 
       <schema>
-	<key>/schemas/apps/goo/playlist/repeat</key>
-	<applyto>/apps/goo/playlist/repeat</applyto>
-	<owner>goo</owner>
+	<key>/schemas/apps/goobox/playlist/repeat</key>
+	<applyto>/apps/goobox/playlist/repeat</applyto>
+	<owner>goobox</owner>
 	<type>bool</type>
 	<default>false</default>
 	<locale name="C">
@@ -142,9 +155,9 @@
       <!-- EXTRACT -->
 
       <schema>
-	<key>/schemas/apps/goo/dialogs/extract/destination</key>
-	<applyto>/apps/goo/dialogs/extract/destination</applyto>
-	<owner>goo</owner>
+	<key>/schemas/apps/goobox/dialogs/extract/destination</key>
+	<applyto>/apps/goobox/dialogs/extract/destination</applyto>
+	<owner>goobox</owner>
 	<type>string</type>
 	<default>~</default>
 	<locale name="C">
@@ -155,9 +168,9 @@
       </schema>
 
       <schema>
-	<key>/schemas/apps/goo/dialogs/extract/file_type</key>
-	<applyto>/apps/goo/dialogs/extract/file_type</applyto>
-	<owner>goo</owner>
+	<key>/schemas/apps/goobox/dialogs/extract/file_type</key>
+	<applyto>/apps/goobox/dialogs/extract/file_type</applyto>
+	<owner>goobox</owner>
 	<type>string</type>
 	<default>ogg</default>
 	<locale name="C">

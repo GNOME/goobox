@@ -88,6 +88,8 @@ struct _GooPlayerClass
 	GList *     (*get_song_list)     (GooPlayer       *player);
 	gboolean    (*set_location)      (GooPlayer       *player,
 					  const char      *location);
+	void        (*set_volume)        (GooPlayer       *player,
+					  int              vol);
 	/*<signals>*/
 
 	void        (*start)             (GooPlayer       *player,
@@ -127,6 +129,9 @@ gboolean         goo_player_set_location        (GooPlayer       *player,
 const char *     goo_player_get_location        (GooPlayer       *player);
 const char *     goo_player_get_title           (GooPlayer       *player);
 const char *     goo_player_get_subtitle        (GooPlayer       *player);
+int              goo_player_get_volume          (GooPlayer       *player);
+void             goo_player_set_volume          (GooPlayer       *player,
+						 int              vol);
 
 /* protected */
 
@@ -141,5 +146,7 @@ void             goo_player_set_title           (GooPlayer       *player,
 						 const char      *value);
 void             goo_player_set_subtitle        (GooPlayer       *player,
 						 const char      *value);
+void             goo_player_set_volume_protected(GooPlayer       *player,
+						 int              vol);
 
 #endif /* GOO_PLAYER_H */

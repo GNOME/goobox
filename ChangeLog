@@ -1,5 +1,24 @@
 2004-10-15  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/preferences.h: 
+	* src/goo-window.c: 
+	* src/goo-player.c: 
+	* src/goo-player.h: 
+	* src/goo-player-cd.c: 
+	* src/goo-player-cd.h: 
+	* src/goo-volume-button.c: 
+	* src/goo-volume-button.h: 
+
+	Added volume control.
+	
+	* src/goo-window.c (window_update_title): if the artist is NULL
+	display the track title only.
+
+	* src/main.c (initialize_data): 
+	* src/actions.c (activate_action_about): s/goo.png/goobox.png/
+
+2004-10-15  Paolo Bacchilega  <paobac@cvs.gnome.org>
+	
 	[ version 0.1.0 released ]
 
 2004-10-14  Paolo Bacchilega  <paobac@cvs.gnome.org>

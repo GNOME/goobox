@@ -99,6 +99,8 @@ goobox_SOURCES = 				\
 	goo-player-cd.h				\
 	goo-player-info.c			\
 	goo-player-info.h			\
+	goo-volume-button.c			\
+	goo-volume-button.h			\
 	goo-window.c				\
 	goo-window.h				\
 	goo-stock.c				\

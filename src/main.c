@@ -141,7 +141,7 @@ int main (int argc, char **argv)
 static void 
 initialize_data ()
 {
-	char *icon_path = PIXMAPSDIR "/goo.png";
+	char *icon_path = PIXMAPSDIR "/goobox.png";
 
 	if (! path_is_file (icon_path))
                 g_warning ("Could not find %s", icon_path);

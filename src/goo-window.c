@@ -38,6 +38,7 @@
 #include "goo-player-cd.h"
 #include "goo-player-info.h"
 #include "goo-window.h"
+#include "goo-volume-button.h"
 #include "gtk-utils.h"
 #include "glib-utils.h"
 #include "gconf-utils.h"
@@ -59,6 +60,8 @@
 #define DEFAULT_WIN_HEIGHT 400
 #define HIDE_TRACK_LIST "Hide _tracks"
 #define SHOW_TRACK_LIST "Show _tracks"
+#define DEFAULT_DEVICE "/dev/cdrom"
+#define DEFAULT_VOLUME 100
 
 struct _GooWindowPrivateData {
 	GtkUIManager    *ui;
@@ -72,6 +75,7 @@ struct _GooWindowPrivateData {
 	GtkWidget       *tray_popup_menu;
 
 	GtkWidget       *info;
+	GtkWidget       *volume_button;
 
 	GtkWidget       *tray;
 	GtkWidget       *tray_box;
@@ -421,6 +425,12 @@ goo_window_finalize (GObject *object)
 	if (window->priv != NULL) {
 		GooWindowPrivateData *priv = window->priv;
 
+		/* Save preferences */
+		eel_gconf_set_integer (PREF_GENERAL_VOLUME, 
+				       goo_player_get_volume (priv->player));
+
+		/**/
+
 		gtk_object_destroy (GTK_OBJECT (priv->tooltips));
 		g_object_unref (priv->list_store);
 		
@@ -745,6 +755,7 @@ goo_window_class_init (GooWindowClass *class)
 
 	widget_class->realize   = goo_window_realize;
 	widget_class->unrealize = goo_window_unrealize;
+	widget_class->show      = goo_window_show;
 	widget_class->show      = goo_window_show;
 }
 
@@ -1142,9 +1153,13 @@ window_update_title (GooWindow *window)
 					 _("Paused"));
 
 	} else if (playing || (stopped && (priv->current_song != NULL))) {
-		title = g_strdup_printf ("%s - %s",
-					 priv->current_song->title,
-					 priv->current_song->artist);
+		if (priv->current_song->artist != NULL)
+			title = g_strdup_printf ("%s - %s",
+						 priv->current_song->title,
+						 priv->current_song->artist);
+		else
+			title = g_strdup_printf ("%s",
+						 priv->current_song->title);
 		
 	} else if (error) {
 		GError *error = goo_player_get_error (priv->player);
@@ -1419,6 +1434,49 @@ window_sync_ui_with_preferences (GooWindow *window)
 }
 
 
+static gboolean
+window_key_press_cb (GtkWidget   *widget, 
+		     GdkEventKey *event,
+		     gpointer     data)
+{
+	GooWindow *window = data;
+	gboolean   retval = FALSE;
+	int        new_song = -1;
+
+	if (window->priv->songs == 0)
+		return FALSE;
+
+	switch (event->keyval) {
+	case GDK_1:
+	case GDK_2:
+	case GDK_3:
+	case GDK_4:
+	case GDK_5:
+	case GDK_6:
+	case GDK_7:
+	case GDK_8:
+	case GDK_9:
+		new_song = event->keyval - GDK_1;
+		retval = TRUE;
+		break;
+	case GDK_0:
+		new_song = 10 - 1;
+		retval = TRUE;
+		break;
+	default:
+		break;
+	}
+
+	if (new_song >= 0 && new_song <= window->priv->songs - 1) {
+		goo_window_set_current_song (window, new_song);
+		goo_window_play (window);
+	}
+
+
+	return retval;
+}
+
+
 static void
 tray_object_destroyed (GooWindow *window)
 {
@@ -1498,12 +1556,23 @@ tray_icon_expose (GtkWidget      *widget,
 
 
 static void
+volume_button_changed_cb (GooVolumeButton *button,
+			  GooWindow       *window)
+{
+	int vol = (int) goo_volume_button_get_volume (button);
+	goo_player_set_volume (window->priv->player, vol);
+}
+
+
+static void
 goo_window_init (GooWindow *window)
 {
 	GooWindowPrivateData *priv;
 	GtkWidget            *menubar, *toolbar;
 	GtkWidget            *scrolled_window;
 	GtkWidget            *vbox;
+	GtkWidget            *hbox;
+	GtkWidget            *volume_vbox;
 	GtkWidget            *expander;
 	GtkTreeSelection     *selection;
 	int                   i;
@@ -1521,7 +1590,11 @@ goo_window_init (GooWindow *window)
 			  "delete_event",
 			  G_CALLBACK (window_delete_event_cb),
 			  window);
-	
+	g_signal_connect (G_OBJECT (window), 
+			  "key_press_event",
+			  G_CALLBACK (window_key_press_cb), 
+			  window);
+
 	gnome_window_icon_set_from_default (GTK_WINDOW (window));
 
 	if (icon_size == 0) {
@@ -1703,13 +1776,31 @@ goo_window_init (GooWindow *window)
 
 	vbox = gtk_vbox_new (FALSE, 6);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-	
+
+	hbox = gtk_hbox_new (FALSE, 12);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
 	priv->info = goo_player_info_new (NULL);
 	g_signal_connect (priv->info,
 			  "skip_to",
 			  G_CALLBACK (player_info_skip_to_cb), 
 			  window);
-	gtk_box_pack_start (GTK_BOX (vbox), priv->info, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), priv->info, TRUE, TRUE, 0);
+
+	/**/
+
+	volume_vbox = gtk_vbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (volume_vbox), 0);
+	gtk_box_pack_start (GTK_BOX (hbox), volume_vbox, FALSE, FALSE, 0);
+
+	priv->volume_button = goo_volume_button_new (0.0, 100.0, 10.0);
+	gtk_box_pack_start (GTK_BOX (volume_vbox), priv->volume_button, FALSE, FALSE, 0);
+
+	g_signal_connect (priv->volume_button, 
+			  "changed",
+			  G_CALLBACK (volume_button_changed_cb), 
+			  window);
 
 	/**/
 
@@ -1744,7 +1835,7 @@ goo_window_init (GooWindow *window)
 
 	/**/
 
-	device = eel_gconf_get_string (PREF_GENERAL_DEVICE, NULL);
+	device = eel_gconf_get_string (PREF_GENERAL_DEVICE, DEFAULT_DEVICE);
 	priv->player = goo_player_cd_new (device);
 	g_free (device);
 
@@ -1770,6 +1861,9 @@ goo_window_init (GooWindow *window)
 	priv->playlist = NULL;
 
 	goo_player_info_set_player (GOO_PLAYER_INFO (priv->info), priv->player);
+
+	goo_volume_button_set_volume (GOO_VOLUME_BUTTON (priv->volume_button), 
+				      eel_gconf_get_integer (PREF_GENERAL_VOLUME, DEFAULT_VOLUME));
 
 	/* Create the tray icon. */
 	

@@ -40,6 +40,7 @@
 #include "gconf-utils.h"
 #include "gtk-utils.h"
 #include "typedefs.h"
+#include "goo-stock.h"
 #include "goo-window.h"
 #include "preferences.h"
 #include "song-info.h"
@@ -281,6 +282,9 @@ dlg_extract (GooWindow *window)
 	btn_ok = glade_xml_get_widget (data->gui, "e_okbutton");
 	btn_cancel = glade_xml_get_widget (data->gui, "e_cancelbutton");
 	btn_help = glade_xml_get_widget (data->gui, "e_helpbutton");
+
+	gtk_button_set_use_stock (GTK_BUTTON (btn_ok), TRUE);
+	gtk_button_set_label (GTK_BUTTON (btn_ok), GOO_STOCK_EXTRACT);
 
 	/* Set widgets data. */
 

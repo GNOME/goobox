@@ -27,6 +27,7 @@
 #include <gst/gst.h>
 #include <gst/gconf/gconf.h>
 #include <gst/play/play.h>
+#include <gst/mixer/mixer.h>
 
 #include "goo-player-cd.h"
 #include "goo-cdrom.h"
@@ -163,6 +164,10 @@ destroy_pipeline (GooPlayerCD *player,
 		priv->play_thread = NULL;
 	}
 
+	priv->source = NULL;
+	priv->source_pad = NULL;
+	priv->volume = NULL;
+
 	if (poll)
 		add_state_polling (player);
 }
@@ -228,10 +233,12 @@ create_pipeline (GooPlayerCD *player)
 	g_object_set (G_OBJECT (priv->source), 
 		      "location", goo_cdrom_get_device (priv->cdrom), 
 		      NULL);
+
+	priv->volume = gst_element_factory_make ("volume", "volume");
 	
 	sink = gst_gconf_get_default_audio_sink ();
-	gst_bin_add_many (GST_BIN (priv->play_thread), priv->source, sink, NULL);
-	gst_element_link_many (priv->source, sink, NULL);
+	gst_bin_add_many (GST_BIN (priv->play_thread), priv->source, priv->volume, sink, NULL);
+	gst_element_link_many (priv->source, priv->volume, sink, NULL);
 
 	priv->track_format = gst_format_get_by_nick ("track");
 	priv->sector_format = gst_format_get_by_nick ("sector");
@@ -475,6 +482,7 @@ cd_player_play (GooPlayer *player)
 {
 	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
 	GooPlayerCDPrivateData *priv = player_cd->priv;
+	int vol;
 
 	if (priv->n_tracks == 0) {
 		action_done (player, GOO_PLAYER_ACTION_PLAY);
@@ -488,7 +496,10 @@ cd_player_play (GooPlayer *player)
 
 	priv->tick = 0;
 	gst_element_set_state (priv->play_thread, GST_STATE_PLAYING);
-	goo_player_set_state (GOO_PLAYER (player), GOO_PLAYER_STATE_PLAYING, TRUE);
+	goo_player_set_state (player, GOO_PLAYER_STATE_PLAYING, TRUE);
+
+	vol = goo_player_get_volume (player);
+	gst_mixer_set_volume (GST_MIXER (priv->volume), NULL, &vol);
 }
 
 
@@ -586,6 +597,16 @@ cd_player_set_location (GooPlayer  *player,
 }
 
 
+void
+cd_player_set_volume (GooPlayer  *player,
+		      int         vol)
+{
+	GooPlayerCDPrivateData *priv = GOO_PLAYER_CD (player)->priv;
+	if (priv->volume != NULL)
+		gst_mixer_set_volume (GST_MIXER (priv->volume), NULL, &vol);
+}
+
+
 static void 
 goo_player_cd_class_init (GooPlayerCDClass *class)
 {
@@ -607,6 +628,7 @@ goo_player_cd_class_init (GooPlayerCDClass *class)
 	player_class->get_song_list    = cd_player_get_song_list;
 	player_class->eject            = cd_player_eject;
 	player_class->set_location     = cd_player_set_location;
+	player_class->set_volume       = cd_player_set_volume;
 }
 
 
@@ -746,6 +768,7 @@ goo_player_cd_init (GooPlayerCD *player)
 	priv->n_tracks = 0;
 	priv->tracks = NULL;
 	goo_player_set_current_song (GOO_PLAYER (player), -1);
+	goo_player_set_volume_protected (GOO_PLAYER (player), 100);
 
 	priv->cddb_client = cddb_slave_client_new ();
 	listener = bonobo_listener_new (NULL, NULL);
