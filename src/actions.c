@@ -169,7 +169,7 @@ activate_action_about (GtkAction *action,
 				 "Copyright \xc2\xa9 2004 Free Software Foundation, Inc.",
 				 _("CD player and ripper"),
 				 authors,
-				 documenters,
+				 NULL /*documenters*/,
 				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
 				 logo);
 	if (logo != NULL)
