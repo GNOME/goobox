@@ -62,7 +62,7 @@ AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
 
 dnl ******************************
 
-ALL_LINGUAS=""
+ALL_LINGUAS="ar"
 
 GETTEXT_PACKAGE=goobox
 AC_SUBST(GETTEXT_PACKAGE)

@@ -1,3 +1,6 @@
+2004-10-16  Arafat Medini  <lumina@silverpen.de>
+
+	* configure.in: Added Arabic Locale "ar" to ALL_LINGUAS
 2004-10-15  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/preferences.h: 
