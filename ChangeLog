@@ -1,5 +1,9 @@
 2004-10-26  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-player-info.c (SPACING, goo_player_info_init): 
+
+	Remove the vertical separator, fix spacing and border width.
+
 	* data/glade/goo_cover_chooser.glade:
 	* src/dlg-cover-chooser.c: 
 	* src/dlg-cover-chooser.h:

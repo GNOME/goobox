@@ -28,7 +28,7 @@
 #include "glib-utils.h"
 #include "goo-stock.h"
 
-#define SPACING 6
+#define SPACING 0
 #define TITLE1_FORMAT "<span size='large' weight='bold'>%s</span>"
 #define TITLE2_FORMAT "%s"
 #define TITLE3_FORMAT "<i>%s</i>"
@@ -307,13 +307,16 @@ goo_player_info_init (GooPlayerInfo *info)
 
 	gtk_box_pack_start (GTK_BOX (info), priv->cover_button, FALSE, FALSE, 0);
 
+	/*FIXME
 	gtk_box_pack_start (GTK_BOX (info), 
 			    gtk_vseparator_new (),
 			    FALSE, FALSE, 0);
+	*/
 
 	/**/
 
 	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 	gtk_box_pack_start (GTK_BOX (vbox), priv->title1_label, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), priv->title2_label, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), priv->title3_label, FALSE, FALSE, 0);
