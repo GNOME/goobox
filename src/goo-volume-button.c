@@ -29,15 +29,17 @@
 #include "goo-marshal.h"
 #include "goo-stock.h"
 
-#define SCALE_HEIGHT 100
+#define SCALE_HEIGHT 150
 
 struct _GooVolumeButtonPrivateData {
-	GtkWidget *popup_win;
-	GtkWidget *volume_scale;
-	double     value;
-	double     from_value;
-	double     to_value;
-	double     step;
+	GtkWidget   *popup_win;
+	GtkWidget   *volume_scale;
+	GtkWidget   *volume_label;
+	GtkTooltips *tips;
+	double       value;
+	double       from_value;
+	double       to_value;
+	double       step;
 };
 
 enum {
@@ -115,6 +117,25 @@ goo_volume_button_init (GooVolumeButton *button)
 
 
 static void
+update_volume_label (GooVolumeButton *button)
+{
+	char *text;
+
+	text = g_strdup_printf ("%3.0f%%", button->priv->value);
+	gtk_label_set_text (GTK_LABEL (button->priv->volume_label), text);
+	g_free (text);
+
+	text = g_strdup_printf (_("Volume level: %3.0f%%"), 
+				button->priv->value);
+	gtk_tooltips_set_tip (button->priv->tips,
+			      GTK_WIDGET (button),
+			      text,
+			      NULL);
+	g_free (text);
+}
+
+
+static void
 button_toggled_cb (GtkToggleButton *toggle_button,
 		   GooVolumeButton *button)
 {
@@ -129,8 +150,12 @@ button_toggled_cb (GtkToggleButton *toggle_button,
 		gtk_window_move (GTK_WINDOW (priv->popup_win),
 				 root_x + allocation.x,
 				 root_y + allocation.y + allocation.height);
+		update_volume_label (button);
 
 		gtk_widget_show_all (priv->popup_win);
+		gtk_window_resize (GTK_WINDOW (priv->popup_win),
+				   allocation.width,
+				   SCALE_HEIGHT);
 
 		gdk_pointer_grab (priv->popup_win->window, 
 				  TRUE,
@@ -163,6 +188,7 @@ volume_scale_value_changed_cb (GtkRange        *range,
 			       GooVolumeButton *button)
 {
 	button->priv->value = gtk_range_get_value (range);
+	update_volume_label (button);
 	g_signal_emit (G_OBJECT (button), 
 		       goo_volume_button_signals[CHANGED],
 		       0,
@@ -234,6 +260,10 @@ goo_volume_button_construct (GooVolumeButton *button,
 	priv->to_value = to_value;
 	priv->step = step;
 
+	priv->tips = gtk_tooltips_new ();
+	gtk_object_ref (GTK_OBJECT (priv->tips));
+	gtk_object_sink (GTK_OBJECT (priv->tips));
+
 	priv->popup_win = gtk_window_new (GTK_WINDOW_POPUP);
 	gtk_window_set_wmclass (GTK_WINDOW (priv->popup_win), "", "goo_volume_button");
 
@@ -259,8 +289,9 @@ goo_volume_button_construct (GooVolumeButton *button,
 	gtk_range_set_inverted (GTK_RANGE (priv->volume_scale), TRUE);
 	gtk_scale_set_draw_value (GTK_SCALE (priv->volume_scale), FALSE);
 	gtk_range_set_update_policy (GTK_RANGE (priv->volume_scale), GTK_UPDATE_DELAYED);
+	gtk_range_set_increments (GTK_RANGE (priv->volume_scale), step, step);
+
 	gtk_box_pack_start (GTK_BOX (volume_vbox), priv->volume_scale, TRUE, TRUE, 0);
-	gtk_widget_set_size_request (priv->volume_scale, -1, SCALE_HEIGHT);
 
 	g_signal_connect (priv->volume_scale, 
 			  "value_changed",
@@ -269,6 +300,12 @@ goo_volume_button_construct (GooVolumeButton *button,
 
 	label = gtk_label_new (_("-"));
 	gtk_box_pack_start (GTK_BOX (volume_vbox), label, FALSE, FALSE, 0);
+
+	/* */
+
+	gtk_box_pack_start (GTK_BOX (volume_vbox), gtk_hseparator_new (), FALSE, FALSE, 0);
+	priv->volume_label = gtk_label_new (NULL);
+	gtk_box_pack_start (GTK_BOX (volume_vbox), priv->volume_label, FALSE, FALSE, 3);
 
 	/**/
 
@@ -289,7 +326,9 @@ goo_volume_button_finalize (GObject *object)
 
 	button = GOO_VOLUME_BUTTON (object);
 	if (button->priv != NULL) {
-		/*GooVolumeButtonPrivateData *priv = button->priv;*/
+		GooVolumeButtonPrivateData *priv = button->priv;
+
+		gtk_object_unref (GTK_OBJECT (priv->tips));
 
 		g_free (button->priv);
 		button->priv = NULL;

@@ -1,5 +1,9 @@
 2004-10-17  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-volume-button.c (update_volume_label): 
+
+	display the volume level in a tooltip and in the volume scale window.
+
 	* src/goo-player-cd.c (cd_player_list): 
 	* src/goo-cdrom-linux.c (open_device): 
 	* src/goo-cdrom.h: 

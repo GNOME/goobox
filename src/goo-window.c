@@ -1483,7 +1483,7 @@ tray_object_destroyed (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
 
-	g_free (priv->tray_tips);
+	gtk_object_unref (GTK_OBJECT (priv->tray_tips));
 	priv->tray_tips = NULL;
 
 	if (priv->tray_popup_menu != NULL) {
@@ -1581,7 +1581,7 @@ goo_window_construct (GooWindow  *window,
 	GtkWidget            *scrolled_window;
 	GtkWidget            *vbox;
 	GtkWidget            *hbox;
-	GtkWidget            *volume_vbox;
+	GtkWidget            *volume_box;
 	GtkWidget            *expander;
 	GtkTreeSelection     *selection;
 	int                   i;
@@ -1796,12 +1796,12 @@ goo_window_construct (GooWindow  *window,
 
 	/**/
 
-	volume_vbox = gtk_vbox_new (FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (volume_vbox), 0);
-	gtk_box_pack_start (GTK_BOX (hbox), volume_vbox, FALSE, FALSE, 0);
+	volume_box = gtk_vbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (volume_box), 0);
+	gtk_box_pack_start (GTK_BOX (hbox), volume_box, FALSE, FALSE, 0);
 
-	priv->volume_button = goo_volume_button_new (0.0, 100.0, 10.0);
-	gtk_box_pack_start (GTK_BOX (volume_vbox), priv->volume_button, FALSE, FALSE, 0);
+	priv->volume_button = goo_volume_button_new (0.0, 100.0, 5.0);
+	gtk_box_pack_start (GTK_BOX (volume_box), priv->volume_button, FALSE, FALSE, 0);
 
 	g_signal_connect (priv->volume_button, 
 			  "changed",
@@ -1826,6 +1826,7 @@ goo_window_construct (GooWindow  *window,
 	gtk_box_pack_start (GTK_BOX (vbox), 
 			    expander, 
 			    FALSE, FALSE, 0);
+
 	gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
 
 	gnome_app_set_contents (GNOME_APP (window), vbox);
@@ -1907,6 +1908,8 @@ goo_window_construct (GooWindow  *window,
 	
 	gtk_container_add (GTK_CONTAINER (priv->tray_box), priv->tray_icon);
 	priv->tray_tips = gtk_tooltips_new ();
+	gtk_object_ref (GTK_OBJECT (priv->tray_tips));
+	gtk_object_sink (GTK_OBJECT (priv->tray_tips));
 	gtk_tooltips_set_tip (GTK_TOOLTIPS (priv->tray_tips), 
 			      priv->tray_box, 
 			      _("CD Player"), 
