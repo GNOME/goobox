@@ -45,6 +45,7 @@
 #define PREF_EXTRACT_DESTINATION      "/apps/goobox/dialogs/extract/destination"
 #define PREF_EXTRACT_FILETYPE         "/apps/goobox/dialogs/extract/file_type"
 #define PREF_EXTRACT_SAVE_PLAYLIST    "/apps/goobox/dialogs/extract/save_playlist"
+#define PREF_EXTRACT_FIRST_TIME       "/apps/goobox/dialogs/extract/first_time"
 #define PREF_RIPPER_VIEW_DISTINATION  "/apps/goobox/dialogs/ripper/view_destination"
 
 #define PREF_ENCODER_OGG_QUALITY      "/apps/goobox/encoder/ogg_quality"

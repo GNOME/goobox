@@ -206,6 +206,19 @@
 	</locale>
       </schema>
 
+      <schema>
+	<key>/schemas/apps/goobox/extract/first_time</key>
+	<applyto>/apps/goobox/extract/first_time</applyto>
+	<owner>goobox</owner>
+	<type>bool</type>
+	<default>true</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
       <!-- RIPPER -->
 
       <schema>

@@ -68,6 +68,7 @@ typedef struct {
 	GtkWidget   *e_mp3_radiobutton;
 	GtkWidget   *e_wave_radiobutton;
 	GtkWidget   *e_save_playlist_checkbutton;
+	GtkWidget   *e_options_expander;
 } DialogData;
 
 
@@ -300,6 +301,8 @@ dlg_extract (GooWindow *window)
 
 	data->dialog = glade_xml_get_widget (data->gui, "extract_dialog");
 
+	data->e_options_expander = glade_xml_get_widget (data->gui, "e_options_expander");
+
 	data->e_alltrack_radiobutton = glade_xml_get_widget (data->gui, "e_alltrack_radiobutton");
 	data->e_selected_radiobutton = glade_xml_get_widget (data->gui, "e_selected_radiobutton");
 	data->e_destination_entry = glade_xml_get_widget (data->gui, "e_destination_entry");
@@ -320,6 +323,12 @@ dlg_extract (GooWindow *window)
 	/* Set widgets data. */
 
 	g_object_set_data (G_OBJECT (data->dialog), "dialog_data", data);
+
+	if (eel_gconf_get_boolean (PREF_EXTRACT_FIRST_TIME, TRUE)) {
+		eel_gconf_set_boolean (PREF_EXTRACT_FIRST_TIME, FALSE);
+		gtk_expander_set_expanded (GTK_EXPANDER (data->e_options_expander), TRUE);
+	} else
+		gtk_expander_set_expanded (GTK_EXPANDER (data->e_options_expander), FALSE);
 
 	selected = g_list_length (data->selected_songs);
 	if (selected == 0) {

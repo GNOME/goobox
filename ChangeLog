@@ -1,3 +1,10 @@
+2005-01-17  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* data/goobox.schemas.in: 
+	* src/preferences.h (PREF_EXTRACT_FIRST_TIME): 
+	* src/dlg-extract.c (dlg_extract): make the advanced options visible
+	the first time the dialog is displayed.
+	
 2005-01-13  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/dlg-ripper.c (create_pipeline): 
