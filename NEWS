@@ -1,3 +1,15 @@
+version 0.4.0
+-------------	
+	* Recognize mixed CDs as good CDs to play.
+	* Update the playlist on the fly when PlayAll or Shuffle options change.
+	* Make the track list insensitive if no CD is present.
+	* Always perform an eject when the Eject button is pressed, instead of
+	  checking whether the tray is open (which is bogus) and close the
+	  tray if it's open.
+	* Added an image preview to the 'Cover Chooser' dialog.
+	* Use gnome-vfs to search on Internet instead of using libneon.
+	* Added a Revert button to the 'Choose Cover' dialog.
+
 version 0.3.0
 -------------
 	* Added ability to associate a cover image to a CD, the image can

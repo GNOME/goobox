@@ -38,6 +38,8 @@
 #include "goo-application.h"
 #include "gtk-utils.h"
 
+GtkWindow *main_window = NULL;
+
 static void     prepare_app         (poptContext pctx);
 static void     initialize_data     (void);
 static void     release_data        (void);
@@ -45,12 +47,9 @@ static void     release_data        (void);
 static void     init_session        (char **argv);
 static gboolean session_is_restored (void);
 static gboolean load_session        (void);
+
+static char         *default_device = NULL;
 static BonoboObject *goo_application = NULL;
-
-GtkWindow *main_window = NULL;
-
-static char *default_device = NULL;
-
 
 struct poptOption options[] = {
 	{ "device", 'd', POPT_ARG_STRING, &default_device, 0,
