@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-11 16:00+0200\n"
-"PO-Revision-Date: 2004-12-11 17:31+0200\n"
+"POT-Creation-Date: 2004-12-23 18:38+0200\n"
+"PO-Revision-Date: 2004-12-23 18:40+0200\n"
 "Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -129,7 +129,7 @@ msgstr "_Pažymėtus takelius"
 msgid "_Wave"
 msgstr "_Wave"
 
-#: data/goobox.desktop.in.h:1 src/goo-window.c:2053 src/goo-window.c:2061
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2071 src/goo-window.c:2079
 msgid "CD Player"
 msgstr "CD grotuvas"
 
@@ -147,15 +147,15 @@ msgid ""
 msgstr ""
 "Galimos reikšmės yra: system, text_below, text_beside, text_only, icons_only."
 
-#: src/actions.c:138
+#: src/actions.c:140
 msgid "translator_credits"
 msgstr "Žygimantas Beručka <uid0@akl.lt>"
 
-#: src/actions.c:149 src/actions.c:164
+#: src/actions.c:151 src/actions.c:166
 msgid "Goobox"
 msgstr "Goobox"
 
-#: src/actions.c:152 src/actions.c:167 src/main.c:82
+#: src/actions.c:154 src/actions.c:169 src/main.c:114
 msgid "CD player and ripper"
 msgstr "CD grotuvas ir ekstraktorius"
 
@@ -181,7 +181,7 @@ msgstr "%u, įkeliamas paveikslėlis: %u"
 msgid "Loading images"
 msgstr "Įkeliami paveikslėliai"
 
-#: src/dlg-cover-chooser.c:330 src/goo-window.c:2656
+#: src/dlg-cover-chooser.c:330 src/goo-window.c:2677
 msgid "Could not search a cover on Internet"
 msgstr "Nepavyko surasti viršelio Internete"
 
@@ -232,7 +232,8 @@ msgid ""
 "• %s → Mp3\n"
 "• %s → Wave"
 msgstr ""
-"Muzikos rašymui iš CD Jums reikia bent vieno iš sekančių GStreamer įskiepių:\n"
+"Muzikos rašymui iš CD Jums reikia bent vieno iš sekančių GStreamer "
+"įskiepių:\n"
 "\n"
 "• %s → Ogg Vorbis\n"
 "• %s → FLAC\n"
@@ -301,33 +302,33 @@ msgstr "Nėra disko"
 msgid "Data CD"
 msgstr "Duomenų CD"
 
-#: src/goo-player-info.c:229 src/goo-player-info.c:254
-#: src/goo-player-info.c:622
+#: src/goo-player-info.c:238 src/goo-player-info.c:263
+#: src/goo-player-info.c:761
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
-#: src/goo-player-info.c:377
+#: src/goo-player-info.c:501
 msgid "Click here to choose a cover for this CD"
 msgstr "Norėdami parinkti šiam CD viršelį, spauskite čia"
 
-#: src/goo-player-info.c:550 src/goo-window.c:1228
+#: src/goo-player-info.c:689 src/goo-window.c:1236
 msgid "Paused"
 msgstr "Pauzė"
 
-#: src/goo-player-info.c:561
+#: src/goo-player-info.c:700
 msgid "Ejecting CD"
 msgstr "Išimamas CD"
 
-#: src/goo-player-info.c:565
+#: src/goo-player-info.c:704
 msgid "Checking CD drive"
 msgstr "Tikrinamas CD įrenginys"
 
-#: src/goo-player-info.c:569 src/goo-player-info.c:573
+#: src/goo-player-info.c:708 src/goo-player-info.c:712
 msgid "Reading CD"
 msgstr "Skaitomas CD"
 
-#: src/goo-player-info.c:586 src/goo-window.c:1252
+#: src/goo-player-info.c:725 src/goo-window.c:1260
 msgid "Audio CD"
 msgstr "Audio CD"
 
@@ -339,18 +340,26 @@ msgstr "_Rašyti"
 msgid "V_olume"
 msgstr "_Garsumas"
 
-#: src/goo-volume-button.c:147
+#: src/goo-volume-button.c:147 src/goo-volume-tool-button.c:284
 #, c-format
 msgid "Volume level: %3.0f%%"
 msgstr "Garsumo lygis: %3.0f%%"
 
-#: src/goo-volume-button.c:328
+#: src/goo-volume-button.c:328 src/goo-volume-tool-button.c:494
 msgid "+"
 msgstr "+"
 
-#: src/goo-volume-button.c:344
+#: src/goo-volume-button.c:344 src/goo-volume-tool-button.c:510
 msgid "-"
 msgstr "-"
+
+#: src/goo-volume-tool-button.c:538
+msgid "Change the volume level"
+msgstr "Pakeisti garsumo lygį"
+
+#: src/goo-volume-tool-button.c:605
+msgid "Volume"
+msgstr "Garsumas"
 
 #: src/goo-window.c:65
 msgid "Hide _tracks"
@@ -368,68 +377,73 @@ msgstr[0] "%d takelis"
 msgstr[1] "%d takeliai"
 msgstr[2] "%d takelių"
 
-#: src/goo-window.c:532
+#: src/goo-window.c:193
+#, c-format
+msgid "year %d"
+msgstr "%d metai"
+
+#: src/goo-window.c:538
 msgid "Length"
 msgstr "Trukmė"
 
-#: src/goo-window.c:533
+#: src/goo-window.c:539
 msgid "Title"
 msgstr "Pavadinimas"
 
-#: src/goo-window.c:534
+#: src/goo-window.c:540
 msgid "Artist"
 msgstr "Atlikėjas"
 
-#: src/goo-window.c:542
+#: src/goo-window.c:548
 msgid "#"
 msgstr "Nr."
 
-#: src/goo-window.c:1138 src/ui.h:57
+#: src/goo-window.c:1146 src/ui.h:57
 msgid "_Pause"
 msgstr "_Pauzė"
 
-#: src/goo-window.c:1139
+#: src/goo-window.c:1147
 msgid "Pause playing"
 msgstr "Sulaikyti grojimą"
 
-#: src/goo-window.c:1357 src/goo-window.c:1369 src/ui.h:45 src/ui.h:49
+#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:45 src/ui.h:49
 #: src/ui.h:53
 msgid "_Play"
 msgstr "_Groti"
 
-#: src/goo-window.c:1358 src/goo-window.c:1370
+#: src/goo-window.c:1367 src/goo-window.c:1379
 msgid "Play CD"
 msgstr "Groti CD"
 
-#: src/goo-window.c:2334
+#: src/goo-window.c:2355
 msgid "Could not eject the CD"
 msgstr "Nepavyko išimti CD"
 
-#: src/goo-window.c:2346
+#: src/goo-window.c:2367
 msgid "Could not read drive"
 msgstr "Nepavyko perskaityti disko"
 
-#: src/goo-window.c:2530
+#: src/goo-window.c:2551
 msgid "Could not save cover image"
 msgstr "Nepavyko išsaugoti viršelio paveiksliuko"
 
-#: src/goo-window.c:2540
+#: src/goo-window.c:2561
 msgid "Could not load image"
 msgstr "Nepavyko įkelti paveikslėlio"
 
-#: src/goo-window.c:2596
+#: src/goo-window.c:2617
 msgid "Choose CD Cover Image"
 msgstr "Pasirinkit CD viršelio paveiksliuką"
 
-#: src/goo-window.c:2615
+#: src/goo-window.c:2636
 msgid "Images"
 msgstr "Paveikslėliai"
 
-#: src/goo-window.c:2623
+#: src/goo-window.c:2644
 msgid "All files"
 msgstr "Visos bylos"
 
-#: src/goo-window.c:2657
+#: src/goo-window.c:2678
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -437,19 +451,19 @@ msgstr ""
 "Norint surasti albumo viršelį Jums reikia įvesti atlikėją ir albumo "
 "pavadinimą."
 
-#: src/goo-window.c:2691
+#: src/goo-window.c:2712
 msgid "_Show Window"
 msgstr "_Rodyti langą"
 
-#: src/goo-window.c:2692
+#: src/goo-window.c:2713
 msgid "Show the main window"
 msgstr "Rodyti pagrindinį langą"
 
-#: src/goo-window.c:2705 src/ui.h:109
+#: src/goo-window.c:2726 src/ui.h:109
 msgid "_Hide Window"
 msgstr "_Paslėpti langą"
 
-#: src/goo-window.c:2706 src/ui.h:110
+#: src/goo-window.c:2727 src/ui.h:110
 msgid "Hide the main window"
 msgstr "Paslėpti pagrindinį langą"
 
@@ -469,23 +483,55 @@ msgstr "taškai"
 msgid "Could not execute command"
 msgstr "Nepavyko įvykdyti komandos"
 
-#: src/main.c:57
+#: src/main.c:65
 msgid "CD device to be used"
 msgstr "Naudojamas CD įrenginys"
 
-#: src/main.c:58
+#: src/main.c:66
 msgid "DEVICE_PATH"
 msgstr "ĮRENGINIO_KELIAS"
 
-#: src/main.c:60
+#: src/main.c:68
 msgid "Play the CD on startup"
 msgstr "Paleidus programą pradėti grojimą"
 
-#: src/main.c:198
+#: src/main.c:71 src/ui.h:46
+msgid "Play/Pause"
+msgstr "Groti/pauzė"
+
+#: src/main.c:74 src/ui.h:66
+msgid "Play the next track"
+msgstr "Groti sekantį takelį"
+
+#: src/main.c:77 src/ui.h:70
+msgid "Play the previous track"
+msgstr "Groti ankstesnį takelį"
+
+#: src/main.c:80 src/ui.h:74
+msgid "Eject the CD"
+msgstr "Išimti CD"
+
+#: src/main.c:83
+msgid "Hide/Show the main window"
+msgstr "Paslėpti/rodyti pagrindinį langą"
+
+#: src/main.c:86
+msgid "Volume Up"
+msgstr "Padidinti garsumą"
+
+#: src/main.c:89
+msgid "Volume Down"
+msgstr "Sumažinti garsumą"
+
+#: src/main.c:92 src/ui.h:94
+msgid "Quit the application"
+msgstr "Uždaryti programą"
+
+#: src/main.c:246
 msgid "Cannot start the CD player"
 msgstr "Nepavyko paleisti CD grotuvo"
 
-#: src/main.c:199
+#: src/main.c:247
 msgid ""
 "In order to read CDs you have to install the cdparanoia gstreamer plugin"
 msgstr "CD skaitymui yra reikalingas cdparanoia gstreamer įskiepis"
@@ -523,10 +569,6 @@ msgstr "_Apie"
 msgid "Information about the program"
 msgstr "Informaciją apie programą"
 
-#: src/ui.h:46
-msgid "Play/Pause"
-msgstr "Groti/pauzė"
-
 #: src/ui.h:50
 msgid "Play"
 msgstr "Groti"
@@ -551,25 +593,13 @@ msgstr "Sustabdyti grojimą"
 msgid "_Next"
 msgstr "S_ekantis"
 
-#: src/ui.h:66
-msgid "Play the next track"
-msgstr "Groti sekantį takelį"
-
 #: src/ui.h:69
 msgid "Pre_v"
 msgstr "_Ankstesnis"
 
-#: src/ui.h:70
-msgid "Play the previous track"
-msgstr "Groti ankstesnį takelį"
-
 #: src/ui.h:73
 msgid "_Eject"
 msgstr "_Išimti"
-
-#: src/ui.h:74
-msgid "Eject the CD"
-msgstr "Išimti CD"
 
 #: src/ui.h:77
 msgid "_Reload"
@@ -606,10 +636,6 @@ msgstr "Keisti CD atlikėją, albumą ir takelių pavadinimus"
 #: src/ui.h:93
 msgid "_Quit"
 msgstr "_Uždaryti"
-
-#: src/ui.h:94
-msgid "Quit the application"
-msgstr "Uždaryti programą"
 
 #: src/ui.h:97
 msgid "_Choose from Disk"
