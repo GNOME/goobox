@@ -1,3 +1,10 @@
+2004-11-15  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* data/glade/goobox.glade: 
+	* src/dlg-encoder-options.c (dlg_encoder_options): 
+
+	Added a cancel button.
+	
 2004-11-13  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/gtk-utils.c (_gtk_ok_dialog_with_checkbutton_new): 

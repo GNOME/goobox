@@ -25,51 +25,28 @@
 
 #include <gtk/gtkaction.h>
 
-
 void activate_action_play (GtkAction *action, gpointer data);
-
 void activate_action_play_selected (GtkAction *action, gpointer data);
-
 void activate_action_pause (GtkAction *action, gpointer data);
-
 void activate_action_toggle_play (GtkAction *action, gpointer data);
-
 void activate_action_stop (GtkAction *action, gpointer data);
-
 void activate_action_next (GtkAction *action, gpointer data);
-
 void activate_action_prev (GtkAction *action, gpointer data);
-
 void activate_action_eject (GtkAction *action, gpointer data);
-
 void activate_action_reload (GtkAction *action, gpointer data);
-
 void activate_action_about (GtkAction *action, gpointer data);
-
 void activate_action_quit (GtkAction *action, gpointer data);
-
 void activate_action_view_toolbar (GtkAction *action, gpointer data);
-
 void activate_action_view_statusbar (GtkAction *action, gpointer data);
-
 void activate_action_play_all (GtkAction *action, gpointer data);
-
 void activate_action_repeat (GtkAction *action, gpointer data);
-
 void activate_action_shuffle (GtkAction *action, gpointer data);
-
 void activate_action_extract (GtkAction *action, gpointer data);
-
 void activate_action_preferences (GtkAction *action, gpointer data);
-
 void activate_action_edit_cddata (GtkAction *action, gpointer data);
-
 void activate_action_pick_cover_from_disk (GtkAction *action, gpointer data);
-
 void activate_action_search_cover_on_internet (GtkAction *action, gpointer data);
-
 void activate_action_remove_cover (GtkAction *action, gpointer data);
-
 void activate_action_toggle_visibility (GtkAction *action, gpointer data);
 
 #endif /* ACTIONS_H */

@@ -106,6 +106,16 @@ get_tracks (DialogData *data,
 
 
 void
+dlg_extract__close (GtkWidget *dialog)
+{
+	DialogData *data;
+
+	data = g_object_get_data (G_OBJECT (dialog), "dialog_data");
+	gtk_widget_destroy (data->dialog);
+}
+
+
+void
 dlg_extract__start_ripping (GtkWidget *dialog)
 {
 	DialogData    *data;

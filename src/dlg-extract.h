@@ -27,6 +27,6 @@
 
 void   dlg_extract                (GooWindow *window);
 void   dlg_extract__start_ripping (GtkWidget *dialog);
-
+void   dlg_extract__close         (GtkWidget *dialog);
 
 #endif /* DLG_EXTRACT_H */

@@ -42,10 +42,12 @@ typedef struct {
 	GtkWidget     *extract_dialog;
 	GooFileFormat  format;
 	int            value;
+	gboolean       rip;
 
 	GladeXML      *gui;
 
 	GtkWidget     *dialog;
+	GtkWidget     *eo_quality_label;
 	GtkWidget     *eo_scale;
 	GtkWidget     *eo_smaller_label;
 	GtkWidget     *eo_higher_label;
@@ -73,7 +75,10 @@ destroy_cb (GtkWidget  *widget,
 	    DialogData *data)
 {
 	g_object_unref (data->gui);
-	dlg_extract__start_ripping (data->extract_dialog);
+	if (data->rip)
+		dlg_extract__start_ripping (data->extract_dialog);
+	else
+		dlg_extract__close (data->extract_dialog);
 	g_free (data);
 }
 
@@ -82,6 +87,8 @@ static void
 ok_cb (GtkWidget  *widget, 
        DialogData *data)
 {
+	data->rip = TRUE;
+
 	switch (data->format) {
 	case GOO_FILE_FORMAT_OGG:
 		eel_gconf_set_float (PREF_ENCODER_OGG_QUALITY, (float) data->value / 10.0);
@@ -216,12 +223,14 @@ dlg_encoder_options (GtkWidget     *dialog,
 {
 	DialogData  *data;
 	GtkWidget   *btn_ok;
+	GtkWidget   *btn_cancel;
 	GtkWidget   *btn_reset;
 
 	data = g_new0 (DialogData, 1);
 	data->extract_dialog = dialog;
 	data->format = format;
 	data->value = -1;
+	data->rip = FALSE;
 	data->gui = glade_xml_new (GOO_GLADEDIR "/" GLADE_RIPPER_FILE, NULL, NULL);
         if (!data->gui) {
 		g_warning ("Could not find " GLADE_RIPPER_FILE "\n");
@@ -232,12 +241,14 @@ dlg_encoder_options (GtkWidget     *dialog,
 	/* Get the widgets. */
 
 	data->dialog = glade_xml_get_widget (data->gui, "encoder_options_dialog");
+	data->eo_quality_label = glade_xml_get_widget (data->gui, "eo_quality_label");
 	data->eo_scale = glade_xml_get_widget (data->gui, "eo_scale");
 	data->eo_smaller_label = glade_xml_get_widget (data->gui, "eo_smaller_label");
 	data->eo_higher_label = glade_xml_get_widget (data->gui, "eo_higher_label");
 	data->eo_info_label = glade_xml_get_widget (data->gui, "eo_info_label");
 
 	btn_ok = glade_xml_get_widget (data->gui, "eo_okbutton");
+	btn_cancel = glade_xml_get_widget (data->gui, "eo_cancelbutton");
 	btn_reset = glade_xml_get_widget (data->gui, "eo_resetbutton");
 
 	gtk_button_set_use_stock (GTK_BUTTON (btn_reset), TRUE);
@@ -254,7 +265,9 @@ dlg_encoder_options (GtkWidget     *dialog,
 		text = g_strdup_printf ("<small><i>%s</i></small>", _("Higher compression"));
 		gtk_label_set_markup (GTK_LABEL (data->eo_higher_label), text);
 		g_free (text);
-	}
+	} 
+
+	/**/
 
 	data->value = get_current_value (data);
 	gtk_range_set_value (GTK_RANGE (data->eo_scale), 
@@ -275,11 +288,14 @@ dlg_encoder_options (GtkWidget     *dialog,
 			  "clicked",
 			  G_CALLBACK (reset_cb),
 			  data);
-
 	g_signal_connect (G_OBJECT (btn_ok), 
 			  "clicked",
 			  G_CALLBACK (ok_cb),
 			  data);
+	g_signal_connect_swapped (G_OBJECT (btn_cancel), 
+				  "clicked",
+				  G_CALLBACK (gtk_widget_destroy),
+				  data->dialog);
 
 	/* run dialog. */
 

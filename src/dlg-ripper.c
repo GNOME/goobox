@@ -95,8 +95,10 @@ static void
 destroy_cb (GtkWidget  *widget, 
 	    DialogData *data)
 {
-	if (data->update_handle != 0)
+	if (data->update_handle != 0) {
 		g_source_remove (data->update_handle);
+		data->update_handle = 0;
+	}
 
 	if (data->ripping && (data->current_file != NULL))
 		gnome_vfs_unlink (data->current_file);
@@ -172,8 +174,10 @@ update_progress_cb (gpointer callback_data)
 	guint64      sector = 0;
 	gboolean     ret;
 
-	if (data->update_handle != 0)
+	if (data->update_handle != 0) {
 		g_source_remove (data->update_handle);
+		data->update_handle = 0;
+	}
 	
 	ret = gst_pad_query (data->source_pad, GST_QUERY_POSITION, &data->sector_format, &sector);
 	if (!ret)

@@ -226,7 +226,7 @@ append_image (DialogData *data,
 	int        pos;
 
 	image = gdk_pixbuf_new_from_file_at_size (filename, 
-						  THUMB_SIZE,  THUMB_SIZE, 
+						  THUMB_SIZE, THUMB_SIZE, 
 						  NULL);
 	if (image == NULL)
 		return;
