@@ -1,0 +1,721 @@
+# goobox korean translation
+# Copyright (C) 2004 goobox'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the goobox package.
+# Young-Ho Cha <ganadist@mizi.com>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: goobox 0.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-13 16:19+0900\n"
+"PO-Revision-Date: 2004-12-29 20:50+0900\n"
+"Last-Translator: Young-Ho Cha <ganadist at mizi.com>\n"
+"Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: data/GNOME_Goobox.server.in.in.h:1
+msgid "Goobox Application"
+msgstr "Goobox 프로그램"
+
+#: data/GNOME_Goobox.server.in.in.h:2
+msgid "Goobox Application Factory"
+msgstr "Goobox 프로그램 팩토리"
+
+#: data/glade/goo_cover_chooser.glade.h:1
+msgid "Choose a CD Cover"
+msgstr "CD 표지 고르기"
+
+#: data/glade/goo_cover_chooser.glade.h:2
+msgid "Found images:"
+msgstr "찾은 그림:"
+
+#: data/glade/goobox.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: data/glade/goobox.glade.h:2
+msgid "<b>CD Drive</b>"
+msgstr "<b>CD 드라이브</b>"
+
+#: data/glade/goobox.glade.h:3
+msgid "<b>Destination folder</b>"
+msgstr "<b>저장 폴더</b>"
+
+#: data/glade/goobox.glade.h:4
+msgid "<b>Extract</b>"
+msgstr "<b>가져오기</b>"
+
+#: data/glade/goobox.glade.h:5
+msgid "<b>FLAC</b>"
+msgstr "<b>FLAC</b>"
+
+#: data/glade/goobox.glade.h:6
+msgid "<b>File type</b>"
+msgstr "<b>파일 형식</b>"
+
+#: data/glade/goobox.glade.h:7
+msgid "<b>MP3</b>"
+msgstr "<b>MP3</b>"
+
+#: data/glade/goobox.glade.h:8
+msgid "<b>Ogg Vorbis</b>"
+msgstr "<b>Ogg Vorbis</b>"
+
+#: data/glade/goobox.glade.h:9
+msgid "Advanced _Options"
+msgstr "고급 옵션(_O)"
+
+#: data/glade/goobox.glade.h:10 src/dlg-extract.c:238
+msgid "Choose destination folder"
+msgstr "저장할 폴더를 선택하십시오"
+
+#: data/glade/goobox.glade.h:11
+msgid "Encoding"
+msgstr "인코딩"
+
+#: data/glade/goobox.glade.h:12
+msgid "Excellent quality lossless compression"
+msgstr "최고 음질의 비손실 압축"
+
+#: data/glade/goobox.glade.h:13
+msgid "Extract Tracks"
+msgstr "트랙 가져오기"
+
+#: data/glade/goobox.glade.h:14
+msgid "Extracting Tracks"
+msgstr "트랙 가져오는 중"
+
+#: data/glade/goobox.glade.h:15
+msgid "General"
+msgstr "일반"
+
+#: data/glade/goobox.glade.h:16
+msgid "Good quality lossy compression"
+msgstr "좋은 음질의 손실 압축"
+
+#: data/glade/goobox.glade.h:17
+msgid "High quality lossy compression"
+msgstr "고음질의 손실 압축"
+
+#: data/glade/goobox.glade.h:18
+msgid "Preferences"
+msgstr "기본 설정"
+
+#: data/glade/goobox.glade.h:19
+msgid "Raw audio"
+msgstr "날 오디오"
+
+#: data/glade/goobox.glade.h:20
+msgid "_All tracks"
+msgstr "모든 트랙(_A)"
+
+#: data/glade/goobox.glade.h:21
+msgid "_FLAC"
+msgstr "_FLAC"
+
+#: data/glade/goobox.glade.h:22
+msgid "_MP3"
+msgstr "_MP3"
+
+#: data/glade/goobox.glade.h:23
+msgid "_Ogg Vorbis"
+msgstr "_Ogg Vorbis"
+
+#: data/glade/goobox.glade.h:24
+msgid "_Save playlist"
+msgstr "연주목록 저장(_S)"
+
+#: data/glade/goobox.glade.h:25
+msgid "_Selected tracks"
+msgstr "선택한 트랙(_S)"
+
+#: data/glade/goobox.glade.h:26
+msgid "_Wave"
+msgstr "Wave(_W)"
+
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2089 src/goo-window.c:2097
+msgid "CD Player"
+msgstr "CD 연주기"
+
+#: data/goobox.desktop.in.h:2
+msgid "Play and extract CDs"
+msgstr "CD를 연주하고 파일로 저장합니다"
+
+#: data/goobox.schemas.in.h:1
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "쓸 수 있는 값: ogg, flac, mp3, wave."
+
+#: data/goobox.schemas.in.h:2
+msgid ""
+"Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgstr "쓸 수 있는 값: system, text_below, text_beside, text_only, icons_only."
+
+#.
+#. const char       *documenters [] = {
+#. NULL
+#. };
+#: src/actions.c:141
+msgid "translator_credits"
+msgstr "차영호<ganadist at mizi dot com>, 2004"
+
+#: src/actions.c:152 src/actions.c:167
+msgid "Goobox"
+msgstr "Goobox"
+
+#: src/actions.c:155 src/actions.c:170 src/main.c:114
+msgid "CD player and ripper"
+msgstr "CD 연주기및 추출기"
+
+#: src/bacon-cd-selection.c:200
+msgid "Unnamed CDROM"
+msgstr "이름 없는 CDROM"
+
+#: src/cd-drive.c:835
+#, c-format
+msgid "Unnamed SCSI Drive (%s)"
+msgstr "이름 없는 SCSI 드라이브 (%s)"
+
+#: src/cd-drive.c:1395
+msgid "File image"
+msgstr "파일 이미지"
+
+#: src/dlg-cover-chooser.c:271
+#, c-format
+msgid "%u, loading image: %u"
+msgstr "%u, 그림 읽는 중: %u"
+
+#: src/dlg-cover-chooser.c:309
+msgid "Loading images"
+msgstr "그림 읽는 중"
+
+#: src/dlg-cover-chooser.c:330 src/goo-window.c:2696
+msgid "Could not search a cover on Internet"
+msgstr "인터넷에서 표지를 찾을 수 없습니다"
+
+#: src/dlg-cover-chooser.c:338 src/dlg-cover-chooser.c:422
+msgid "No image found"
+msgstr "그림을 찾을 수 없습니다"
+
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:202 src/dlg-preferences.c:147
+#, c-format
+msgid "Could not display help: %s"
+msgstr "도움말을 보여줄 수 없습니다: %s"
+
+#: src/dlg-cover-chooser.c:682
+msgid "Searching images..."
+msgstr "그림 찾는 중..."
+
+#: src/dlg-extract.c:365
+#, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract "
+"CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+msgstr ""
+"CD 트랙을 가져오려면 다음중 적어도 하나의 GStreamer 플러그인이 필요합니다:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+
+#: src/dlg-extract.c:378
+msgid "No encoder available."
+msgstr "쓸 수 있는 인코더가 없습니다."
+
+#: src/dlg-preferences.c:168
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "명시적인 비트율: %d Kbps"
+
+#: src/dlg-preferences.c:172
+#, c-format
+msgid "Compression level: %d"
+msgstr "압축 수준: %d"
+
+#: src/dlg-preferences.c:176
+#, c-format
+msgid "Bitrate: %d Kbps"
+msgstr "비트율: %d Kbps"
+
+#. Set widgets data.
+#: src/dlg-preferences.c:335 src/dlg-preferences.c:343
+msgid "Smaller size"
+msgstr "더 작은 크기"
+
+#: src/dlg-preferences.c:339 src/dlg-preferences.c:347
+msgid "Higher quality"
+msgstr "더 높은 음질"
+
+#: src/dlg-preferences.c:351
+msgid "Faster compression"
+msgstr "더 빠른 압축"
+
+#: src/dlg-preferences.c:355
+msgid "Higher compression"
+msgstr "더 높은 압축"
+
+#: src/dlg-ripper.c:313
+msgid "Could not display the destination folder"
+msgstr "저장할 폴더를 보여줄 수 없습니다"
+
+#: src/dlg-ripper.c:427
+msgid "Tracks extracted successfully"
+msgstr "트랙을 성공적으로 가져왔습니다"
+
+#: src/dlg-ripper.c:429
+msgid "_View destination folder"
+msgstr "저장할 폴더 보기(_V)"
+
+#: src/dlg-ripper.c:442
+#, c-format
+msgid "Extracting track %d of %d: %s"
+msgstr "%2d개 중 %1d번째 트랙을 가져오는 중: %s"
+
+#: src/dlg-ripper.c:477
+msgid "Ripped with Goobox"
+msgstr "Goobox로 뽑았습니다"
+
+#: src/eggtrayicon.c:118
+msgid "Orientation"
+msgstr "방향"
+
+#: src/eggtrayicon.c:119
+msgid "The orientation of the tray."
+msgstr "트레이의 방향."
+
+#: src/file-utils.c:622
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr "터미널을 찾을 수 없습니다, xterm을 쓰도록 합니다"
+
+#: src/goo-cdrom-bsd.c:140 src/goo-cdrom-linux.c:121
+#: src/goo-cdrom-solaris.c:123
+msgid "Error reading CD"
+msgstr "CD를 읽는 중 오류"
+
+#: src/goo-cdrom.c:323
+msgid "The specified device is not valid"
+msgstr "지정한 장치가 올바르지 않음"
+
+#: src/goo-player-cd.c:784
+msgid "Drive not ready"
+msgstr "드라이브가 준비되지 않음"
+
+#: src/goo-player-cd.c:788
+msgid "Tray open"
+msgstr "트레이 열기"
+
+#: src/goo-player-cd.c:789 src/goo-player-cd.c:793
+msgid "No disc"
+msgstr "디스크 없음"
+
+#: src/goo-player-cd.c:797
+msgid "Data CD"
+msgstr "데이터 CD"
+
+#: src/goo-player-info.c:236 src/goo-player-info.c:261
+#: src/goo-player-info.c:758
+#, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#: src/goo-player-info.c:499
+msgid "Click here to choose a cover for this CD"
+msgstr "이 CD의 표지를 선택하려면 여기를 누르십시오"
+
+#: src/goo-player-info.c:686 src/goo-window.c:1236
+msgid "Paused"
+msgstr "멈춤"
+
+#: src/goo-player-info.c:697
+msgid "Ejecting CD"
+msgstr "CD를 꺼내는 중"
+
+#: src/goo-player-info.c:701
+msgid "Checking CD drive"
+msgstr "CD드라이브를 확인 중"
+
+#: src/goo-player-info.c:705 src/goo-player-info.c:709
+msgid "Reading CD"
+msgstr "CD를 읽는 중"
+
+#: src/goo-player-info.c:722 src/goo-window.c:1260
+msgid "Audio CD"
+msgstr "음악 CD"
+
+#: src/goo-stock.c:53
+msgid "_Extract"
+msgstr "가져오기(_E)"
+
+#: src/goo-stock.c:54
+msgid "_Reset"
+msgstr "초기화(_R)"
+
+#: src/goo-stock.c:55 src/goo-stock.c:56 src/goo-stock.c:57 src/goo-stock.c:58
+msgid "V_olume"
+msgstr "소리크기(_O)"
+
+#: src/goo-volume-button.c:147 src/goo-volume-tool-button.c:284
+#, c-format
+msgid "Volume level: %3.0f%%"
+msgstr "소리 크기: %3.0f%%"
+
+#: src/goo-volume-button.c:328 src/goo-volume-tool-button.c:494
+msgid "+"
+msgstr "+"
+
+#: src/goo-volume-button.c:344 src/goo-volume-tool-button.c:510
+msgid "-"
+msgstr "-"
+
+#: src/goo-volume-tool-button.c:538
+msgid "Change the volume level"
+msgstr "소리크기를 바꿉니다"
+
+#: src/goo-volume-tool-button.c:605
+msgid "Volume"
+msgstr "소리크기"
+
+#: src/goo-window.c:65
+msgid "Hide _tracks"
+msgstr "트랙 숨기기(_T)"
+
+#: src/goo-window.c:66
+msgid "Show _tracks"
+msgstr "트랙 보이기(_T)"
+
+#: src/goo-window.c:189
+#, c-format
+msgid "%d track"
+msgid_plural "%d tracks"
+msgstr[0] "%d번째 트랙"
+msgstr[1] "%d번째 트랙"
+
+#: src/goo-window.c:193
+#, c-format
+msgid "year %d"
+msgstr "%d년"
+
+#: src/goo-window.c:538
+msgid "Length"
+msgstr "길이"
+
+#: src/goo-window.c:539
+msgid "Title"
+msgstr "제목"
+
+#: src/goo-window.c:540
+msgid "Artist"
+msgstr "가수"
+
+#: src/goo-window.c:548
+msgid "#"
+msgstr "#"
+
+#: src/goo-window.c:1146 src/ui.h:57
+msgid "_Pause"
+msgstr "멈춤(_P)"
+
+#: src/goo-window.c:1147
+msgid "Pause playing"
+msgstr "연주 멈춤"
+
+#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:45 src/ui.h:49
+#: src/ui.h:53
+msgid "_Play"
+msgstr "연주(_P)"
+
+#: src/goo-window.c:1367 src/goo-window.c:1379
+msgid "Play CD"
+msgstr "CD 연주"
+
+#: src/goo-window.c:2374
+msgid "Could not eject the CD"
+msgstr "CD를 꺼낼 수 없습니다"
+
+#: src/goo-window.c:2386
+msgid "Could not read drive"
+msgstr "드라이브를 읽을 수 없습니다"
+
+#: src/goo-window.c:2570
+msgid "Could not save cover image"
+msgstr "표지 그림을 저장할 수 없습니다"
+
+#: src/goo-window.c:2580
+msgid "Could not load image"
+msgstr "그림을 읽을 수 없습니다"
+
+#: src/goo-window.c:2636
+msgid "Choose CD Cover Image"
+msgstr "CD 표지 그림을 선택하십시오"
+
+#: src/goo-window.c:2655
+msgid "Images"
+msgstr "그림"
+
+#: src/goo-window.c:2663
+msgid "All files"
+msgstr "모든 파일"
+
+#: src/goo-window.c:2697
+msgid ""
+"You have to enter the artist and album names in order to find the album "
+"cover."
+msgstr "앨범 표지를 찾으려면 가수와 앨범 이름을 입력하십시오."
+
+#: src/goo-window.c:2731
+msgid "_Show Window"
+msgstr "창 보이기(_S)"
+
+#: src/goo-window.c:2732
+msgid "Show the main window"
+msgstr "프로그램의 창을 보입니다"
+
+#: src/goo-window.c:2745 src/ui.h:109
+msgid "_Hide Window"
+msgstr "창 숨기기(_H)"
+
+#: src/goo-window.c:2746 src/ui.h:110
+msgid "Hide the main window"
+msgstr "프로그램의 창을 숨깁니다"
+
+#: src/gth-image-list.c:3520
+msgid "No image"
+msgstr "그림 없음"
+
+#: src/gtk-file-chooser-preview.c:203
+msgid "Preview"
+msgstr "미리보기"
+
+#: src/gtk-file-chooser-preview.c:328
+msgid "pixels"
+msgstr "픽셀"
+
+#: src/gtk-utils.c:797
+msgid "Could not execute command"
+msgstr "명령을 실행할 수 없습니다"
+
+#: src/main.c:65
+msgid "CD device to be used"
+msgstr "사용할 CD 장치"
+
+#: src/main.c:66
+msgid "DEVICE_PATH"
+msgstr "DEVICE_PATH"
+
+#: src/main.c:68
+msgid "Play the CD on startup"
+msgstr "시작할 때 CD를 연주합니다"
+
+#: src/main.c:71 src/ui.h:46
+msgid "Play/Pause"
+msgstr "연주/멈춤"
+
+#: src/main.c:74 src/ui.h:66
+msgid "Play the next track"
+msgstr "다음 트랙을 연주합니다"
+
+#: src/main.c:77 src/ui.h:70
+msgid "Play the previous track"
+msgstr "이전 트랙을 연주합니다"
+
+#: src/main.c:80 src/ui.h:74
+msgid "Eject the CD"
+msgstr "CD를 꺼냅니다"
+
+#: src/main.c:83
+msgid "Hide/Show the main window"
+msgstr "창을 보이거나 숨깁니다"
+
+#: src/main.c:86
+msgid "Volume Up"
+msgstr "소리크기를 키웁니다"
+
+#: src/main.c:89
+msgid "Volume Down"
+msgstr "소리크기를 내립니다"
+
+#: src/main.c:92 src/ui.h:94
+msgid "Quit the application"
+msgstr "프로그램을 마칩니다"
+
+#: src/main.c:246
+msgid "Cannot start the CD player"
+msgstr "CD 연주기를 시작할 수 없습니다"
+
+#: src/main.c:247
+msgid ""
+"In order to read CDs you have to install the cdparanoia gstreamer plugin"
+msgstr "CD를 읽으려면 cdparanoia gstreamer 플러그인이 설치되어 있어야 합니다"
+
+#: src/track-info.c:118
+#, c-format
+msgid "Track %u"
+msgstr "트랙 %u"
+
+#: src/ui.h:34
+msgid "_CD"
+msgstr "CD(_C)"
+
+#: src/ui.h:35
+msgid "_Edit"
+msgstr "편집(_E)"
+
+#: src/ui.h:36
+msgid "_View"
+msgstr "보기(_V)"
+
+#: src/ui.h:37
+msgid "_Help"
+msgstr "도움말(_H)"
+
+#: src/ui.h:38
+msgid "CD C_over"
+msgstr "CD 표지(_O)"
+
+#: src/ui.h:41
+msgid "_About"
+msgstr "정보(_A)"
+
+#: src/ui.h:42
+msgid "Information about the program"
+msgstr "프로그램의 정보를 봅니다"
+
+#: src/ui.h:50
+msgid "Play"
+msgstr "연주"
+
+#: src/ui.h:54
+msgid "Play this track"
+msgstr "이 트랙을 연주합니다"
+
+#: src/ui.h:58
+msgid "Pause"
+msgstr "멈춤"
+
+#: src/ui.h:61
+msgid "_Stop"
+msgstr "그만두기(_S)"
+
+#: src/ui.h:62
+msgid "Stop playing"
+msgstr "연주를 그만둡니다"
+
+#: src/ui.h:65
+msgid "_Next"
+msgstr "다음(_N)"
+
+#: src/ui.h:69
+msgid "Pre_v"
+msgstr "이전(_V)"
+
+#: src/ui.h:73
+msgid "_Eject"
+msgstr "꺼내기(_E)"
+
+#: src/ui.h:77
+msgid "_Reload"
+msgstr "다시 읽기(_R)"
+
+#: src/ui.h:78
+msgid "Reload the CD"
+msgstr "CD를 다시 읽습니다"
+
+#: src/ui.h:81
+msgid "_Preferences"
+msgstr "기본 설정(_P)"
+
+#: src/ui.h:82
+msgid "Edit various preferences"
+msgstr "여러가지 설정을 고칩니다"
+
+#: src/ui.h:85
+msgid "E_xtract Tracks"
+msgstr "트랙 뽑아내기(_X)"
+
+#: src/ui.h:86
+msgid "Save the tracks to disk as files"
+msgstr "트랙을 파일로 저장합니다"
+
+#: src/ui.h:89
+msgid "_CD Properties"
+msgstr "CD 등록정보(_C)"
+
+#: src/ui.h:90
+msgid "Edit the CD artist, album and tracks titles"
+msgstr "CD의 가수, 앨범 및 트랙 제목을 고칩니다"
+
+#: src/ui.h:93
+msgid "_Quit"
+msgstr "끝내기(_Q)"
+
+#: src/ui.h:97
+msgid "_Choose from Disk"
+msgstr "디스크에서 선택(_C)"
+
+#: src/ui.h:98
+msgid "Choose a CD cover from the local disk"
+msgstr "로컬 디스크에서 CD표지를 고릅니다"
+
+#: src/ui.h:101
+msgid "_Search on Internet"
+msgstr "인터넷에서 찾기(_S)"
+
+#: src/ui.h:102
+msgid "Search a CD cover on Internet"
+msgstr "인터넷에서 CD표지를 찾습니다"
+
+#: src/ui.h:105
+msgid "_Remove Cover"
+msgstr "표지 지우기(_R)"
+
+#: src/ui.h:106
+msgid "Remove current CD cover"
+msgstr "현재 CD표지를 지웁니다"
+
+#: src/ui.h:118
+msgid "_Toolbar"
+msgstr "도구 모음(_T)"
+
+#: src/ui.h:119
+msgid "View the main toolbar"
+msgstr "도구 모음을 보입니다"
+
+#: src/ui.h:123
+msgid "Stat_usbar"
+msgstr "상태 표시줄(_U)"
+
+#: src/ui.h:124
+msgid "View the statusbar"
+msgstr "상태 표시줄을 보입니다"
+
+#: src/ui.h:128
+msgid "Play _All"
+msgstr "모두 연주(_A)"
+
+#: src/ui.h:129
+msgid "Play all tracks"
+msgstr "모든 트랙을 연주합니다"
+
+#: src/ui.h:133
+msgid "_Repeat"
+msgstr "반복(_R)"
+
+#: src/ui.h:134
+msgid "Restart playing when finished"
+msgstr "연주가 끝나면 다시 연주합니다"
+
+#: src/ui.h:138
+msgid "S_huffle"
+msgstr "임의연주(_H)"
+
+#: src/ui.h:139
+msgid "Play tracks in a random order"
+msgstr "트랙을 아무 순서대로 연주합니다"
