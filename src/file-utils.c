@@ -1140,3 +1140,27 @@ file_list__get_prev_field (const char *line,
 
 	return g_strndup (f_start + 1, f_end - f_start);
 }
+
+
+GnomeVFSURI *
+new_uri_from_path (const char *path)
+{
+	char        *escaped;
+	char        *uri_txt;
+	GnomeVFSURI *uri;
+
+	escaped = escape_uri (path);
+	if (escaped[0] == '/')
+		uri_txt = g_strconcat ("file://", escaped, NULL);
+	else
+		uri_txt = g_strdup (escaped);
+
+	uri = gnome_vfs_uri_new (uri_txt);
+
+	g_free (uri_txt);
+	g_free (escaped);
+
+	g_return_val_if_fail (uri != NULL, NULL);
+
+	return uri;
+}

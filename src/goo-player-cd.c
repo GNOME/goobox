@@ -758,6 +758,7 @@ cdrom_state_changed_cb (GooCdrom  *cdrom,
 	case GOO_CDROM_STATE_TRAY_OPEN:
 		state = "TRAY_OPEN";
 		message = _("Tray open");
+		message = _("No disc");
 		break;
 	case GOO_CDROM_STATE_NO_DISC:
 		state = "NO_DISC";

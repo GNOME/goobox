@@ -138,4 +138,9 @@ char*               file_list__get_prev_field    (const char *line,
 						  int         start_from,
 						  int         field_n);
 
+char *              escape_uri                   (const char *uri);
+
+GnomeVFSURI *       new_uri_from_path            (const char *path);
+
+
 #endif /* FILE_UTILS_H */

@@ -68,11 +68,12 @@ void        goo_window_set_location              (GooWindow   *window,
 						  const char  *location);
 GList      *goo_window_get_song_list             (GooWindow   *window,
 						  gboolean     selection);
+GooPlayer  *goo_window_get_player                (GooWindow   *window);
 void        goo_window_edit_cddata               (GooWindow   *window);
 void        goo_window_update_cover              (GooWindow   *window);
 void        goo_window_set_cover_image           (GooWindow   *window,
 						  const char  *filename);
-GooPlayer  *goo_window_get_player                (GooWindow   *window);
+char *      goo_window_get_cover_filename        (GooWindow   *window);
 void        goo_window_pick_cover_from_disk      (GooWindow   *window);
 void        goo_window_search_cover_on_internet  (GooWindow   *window);
 void        goo_window_remove_cover              (GooWindow   *window);

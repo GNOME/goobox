@@ -24,7 +24,6 @@ LIBBONOBO_REQUIRED=2.6.0
 GNOME_VFS_REQUIRED=2.6.0
 LIBGLADE_REQUIRED=2.4.0
 GSTREAMER_REQUIRED=0.8.0
-NEON_REQUIRED=0.24.0
 
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GTK_REQUIRED)
@@ -54,23 +53,6 @@ PKG_CHECK_MODULES(GOO,				\
 	gstreamer-gconf-0.8)
 AC_SUBST(GOO_CFLAGS)
 AC_SUBST(GOO_LIBS)
-
-#
-# Checks for neon
-#
-AC_MSG_CHECKING(for neon)
-have_neon=no
-NEON_LIBS=""
-NEON_CFLAGS=""
-if pkg-config --atleast-version=$NEON_REQUIRED neon; then
-   have_neon="yes"
-   NEON_LIBS=`pkg-config --libs neon`
-   NEON_CFLAGS=`pkg-config --cflags neon`
-   AC_DEFINE(HAVE_NEON, 1, [Have neon])
-fi
-AC_MSG_RESULT($have_neon)
-AC_SUBST(NEON_LIBS)
-AC_SUBST(NEON_CFLAGS)
 
 #
 # IDL modules
@@ -135,6 +117,5 @@ Configuration:
 
         Source code location:   ${srcdir}
         Compiler:               ${CC}
-    	Have neon:              ${have_neon}
 
 "

@@ -23,23 +23,16 @@
 
 #include <config.h>
 
-#ifdef HAVE_NEON
-
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#include <ne_auth.h>
-#include <ne_request.h>
-#include <ne_socket.h>
-#include <ne_session.h>
-#include <ne_uri.h>
-
 #include <gtk/gtk.h>
 #include <libgnome/libgnome.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
+#include <libgnomevfs/gnome-vfs-async-ops.h>
 #include <glade/glade.h>
 #include "typedefs.h"
 #include "main.h"
@@ -50,6 +43,7 @@
 #include "gnome-vfs-helpers.h"
 #include "preferences.h"
 #include "gconf-utils.h"
+#include "gnome-vfs-helpers.h"
 
 #define GLADE_CHOOSER_FILE "goo_cover_chooser.glade"
 #define MAX_IMAGES 20
@@ -60,34 +54,36 @@
 #define THUMB_SIZE 100
 #define THUMB_BORDER 14
 #define QUERY_RESULT "result.html"
+#define ORIGINAL_COVER "original_cover.png"
 
 typedef struct _DialogData DialogData;
 
-typedef void (*FileSavedFunc) (DialogData *data, char *filename, int result);
+typedef void (*FileSavedFunc) (DialogData *data, const char *filename, gboolean success);
 
 struct _DialogData {
-	GooWindow     *window;
-	char          *artist, *album;
-	GList         *url_list;
-	GList         *current;
-	guint          load_id, urls, url;
-	char          *tmpdir;
-	GList         *tmpfiles;
-	int            fd;
-	guint          read_id;
+	GooWindow           *window;
+	char                *artist;
+	char                *album;
+	GList               *url_list;
+	GList               *current;
+	guint                load_id, urls, url;
+	char                *tmpdir;
+	GList               *tmpfiles;
+	char                *cover_backup;
 
-	ne_session    *session;
-	ne_request    *request;
+	FileSavedFunc        file_saved_func;
+	char                *dest;
 
-	FileSavedFunc  file_saved_func;
-	char          *dest;
+	GnomeVFSAsyncHandle *vfs_handle;
+	GnomeVFSResult       vfs_result;
 
-	GladeXML      *gui;
+	GladeXML            *gui;
 
-	GtkWidget     *dialog;
-	GtkWidget     *image_list;
-	GtkWidget     *progress_label;
-	GtkWidget     *ok_button;
+	GtkWidget           *dialog;
+	GtkWidget           *image_list;
+	GtkWidget           *progress_label;
+	GtkWidget           *ok_button;
+	GtkWidget           *revert_button;
 };
 
 
@@ -96,15 +92,11 @@ static void
 destroy_cb (GtkWidget  *widget, 
 	    DialogData *data)
 {
+	if (data->vfs_handle != NULL)
+		gnome_vfs_async_cancel (data->vfs_handle);
+
 	if (data->load_id != 0)
 		g_source_remove (data->load_id);
-	if (data->read_id != 0)
-		g_source_remove (data->read_id);
-	if (data->request != NULL) {
-		ne_end_request (data->request);
-		ne_request_destroy (data->request);
-	}
-	ne_session_destroy (data->session);
 
 	if (data->tmpdir != NULL) {
 		g_list_foreach (data->tmpfiles, (GFunc) gnome_vfs_unlink, NULL);
@@ -113,8 +105,8 @@ destroy_cb (GtkWidget  *widget,
 		gnome_vfs_remove_directory (data->tmpdir);
 		g_free (data->tmpdir);
 	}
-	g_free (data->dest);
 
+	g_free (data->dest);
 	g_free (data->album);
 	g_free (data->artist);
 	path_list_free (data->url_list);
@@ -126,61 +118,32 @@ destroy_cb (GtkWidget  *widget,
 /* -- copy_file_from_url() -- */
 
 
-static gboolean
-read_block_cb (gpointer callback_data)
+static int
+copy_progress_update_cb (GnomeVFSAsyncHandle      *handle,
+			 GnomeVFSXferProgressInfo *info,
+			 gpointer                  callback_data)
 {
 	DialogData *data = callback_data;
-	size_t      len;
-	char        buf[BUFFER_SIZE];
 
-	g_source_remove (data->read_id);
-	data->read_id = 0;
+	if (info->status != GNOME_VFS_XFER_PROGRESS_STATUS_OK) {
+		data->vfs_result = info->status;
+		return FALSE;
 
-	len = ne_read_response_block (data->request, buf, sizeof (buf));
-	if (len > 0) {
-		write (data->fd, buf, len);
-		data->read_id = g_timeout_add (READ_TIMEOUT,
-					       read_block_cb,
-					       data);
-	} else {
-		if (len < 0)
-			debug (DEBUG_INFO, "HTTP Request failed: %s\n", ne_get_error (data->session));
-		ne_end_request (data->request);
+	} else if (info->phase == GNOME_VFS_XFER_PHASE_OPENTARGET) {
+		debug (DEBUG_INFO, "OPEN TARGET: %s\n", info->target_name);
+		data->tmpfiles = g_list_prepend (data->tmpfiles, g_strdup (info->target_name));
 
-		ne_request_destroy (data->request);
-		data->request = NULL;
+	} else if (info->phase == GNOME_VFS_XFER_PHASE_CLOSETARGET) {
+		debug (DEBUG_INFO, "CLOSE TARGET: %s\n", info->target_name);
 
-		close (data->fd);
+	} else if (info->phase == GNOME_VFS_XFER_PHASE_COMPLETED) {
+		debug (DEBUG_INFO, "COMPLETED");
+	
 		if (data->file_saved_func != NULL)
-			(*data->file_saved_func) (data, data->dest, len);
+			(*data->file_saved_func) (data, data->dest, (data->vfs_result == GNOME_VFS_OK));
 	}
 
-	return FALSE;
-}
-
-
-static int
-proxy_authentication (void       *userdata, 
-		      const char *realm, 
-		      int         attempt, 
-		      char       *username, 
-		      char       *password)
-{
-	char *user, *pwd;
-
-	user = eel_gconf_get_string (HTTP_PROXY_USER, NULL);
-	pwd = eel_gconf_get_string (HTTP_PROXY_PWD, NULL);
-
-	if ((user == NULL) || (pwd == NULL))
-		return 1;
-
-	strncpy (username, user, NE_ABUFSIZ);
-	strncpy (password, pwd, NE_ABUFSIZ);
-
-	g_free (user);
-	g_free (pwd);
-
-	return attempt;
+	return TRUE;
 }
 
 
@@ -190,49 +153,49 @@ copy_file_from_url (DialogData    *data,
 		    const char    *dest,
 		    FileSavedFunc  file_saved_func)
 {
-	char *e_query;
-
-	if (eel_gconf_get_boolean (HTTP_PROXY_USE_HTTP_PROXY, FALSE)) {
-		char *host;
-		int   port;
-
-		host = eel_gconf_get_string (HTTP_PROXY_HOST, NULL);
-		port = eel_gconf_get_integer (HTTP_PROXY_PORT, 80);
-
-		if (host != NULL) {
-			ne_session_proxy (data->session, host, port);
-			g_free (host);
-		}
-	}
-
-	if (eel_gconf_get_boolean (HTTP_PROXY_USE_AUTH, FALSE)) 
-		ne_set_proxy_auth (data->session, proxy_authentication, data);
-
-	e_query = ne_path_escape (src);
-	debug (DEBUG_INFO, "QUERY: %s\n", e_query);
-	data->request = ne_request_create (data->session, "GET", e_query);
-	free (e_query);
-
- retry:
-	if (ne_begin_request (data->request) != NE_OK) {
-		debug (DEBUG_INFO, "HTTP Request failed: %s\n", ne_get_error (data->session));
-		if (ne_end_request (data->request) == NE_RETRY)
-			goto retry;
-		ne_request_destroy (data->request);
-		data->request = NULL;
-
-		return;
-	}
+	GList                     *src_uri_list, *dest_uri_list;
+	GnomeVFSXferOptions        xfer_options;
+	GnomeVFSXferErrorMode      xfer_error_mode;
+	GnomeVFSXferOverwriteMode  overwrite_mode;
+	GnomeVFSResult             result;
 
 	data->file_saved_func = file_saved_func;
 	g_free (data->dest);
 	data->dest = g_strdup (dest);
 
-	data->fd = open (data->dest, O_WRONLY | O_CREAT | O_TRUNC, IMG_PERM);
+	src_uri_list = g_list_prepend (NULL, new_uri_from_path (src));
+	dest_uri_list = g_list_prepend (NULL, new_uri_from_path (dest));
 
-	data->read_id = g_timeout_add (READ_TIMEOUT,
-				       read_block_cb,
-				       data);
+	xfer_options    = GNOME_VFS_XFER_DEFAULT;
+	xfer_error_mode = GNOME_VFS_XFER_ERROR_MODE_ABORT;
+	overwrite_mode  = GNOME_VFS_XFER_OVERWRITE_MODE_REPLACE;
+
+	data->vfs_result = GNOME_VFS_OK;
+
+	result = gnome_vfs_async_xfer (&data->vfs_handle,
+				       src_uri_list,
+				       dest_uri_list,
+				       xfer_options,
+				       xfer_error_mode,
+				       overwrite_mode,
+				       GNOME_VFS_PRIORITY_DEFAULT,
+				       copy_progress_update_cb,
+				       data,
+				       NULL,
+				       NULL);
+
+	g_list_foreach (src_uri_list, (GFunc) gnome_vfs_uri_unref, NULL);
+	g_list_free (src_uri_list);
+
+	g_list_foreach (dest_uri_list, (GFunc) gnome_vfs_uri_unref, NULL);
+	g_list_free (dest_uri_list);
+
+	/**/
+
+	if (result != GNOME_VFS_OK) {
+		if (file_saved_func != NULL)
+			(*file_saved_func) (data, dest, FALSE);
+	}
 }
 
 
@@ -281,10 +244,10 @@ append_image (DialogData *data,
 
 static void
 image_saved_cb (DialogData *data,
-		char       *filename,
-		int         result)
+		const char *filename,
+		gboolean    success)
 {
-	if (result == 0) {
+	if (success) {
 		char *tmpfile = g_strdup (filename);
 
 		debug (DEBUG_INFO, "LOAD IMAGE: %s\n", tmpfile);
@@ -350,15 +313,17 @@ start_loading_images (DialogData *data)
 
 static void
 search_result_saved_cb (DialogData *data,
-			char       *filename,
-			int         result)
+			const char *filename,
+			gboolean    success)
 {
 	int      fd, n;
 	char     buf[BUFFER_SIZE];
 	int      buf_offset = 0;
 	GString *partial_url;
+	gboolean done = FALSE;
+	int      urls = 0;
 
-	if (result != 0) {
+	if (! success) {
 		/*FIXME*/
 		return;
 	}
@@ -399,20 +364,34 @@ search_result_saved_cb (DialogData *data,
 			} else {
 				char *url_tail = g_strndup (url_start, url_end - url_start);
 				char *url;
+				char *complete_url;
 				
 				if (partial_url != NULL) {
 					g_string_append (partial_url, url_tail);
+					g_free (url_tail);
 					url = partial_url->str;
 					g_string_free (partial_url, FALSE);
 					partial_url = NULL;
 				} else 
 					url = url_tail;
 					
-				data->url_list = g_list_prepend (data->url_list, url);
-				url_start = strstr (url_end + 1, prefix);
+				complete_url = g_strconcat ("http://images.google.com", url, NULL);
+				g_free (url);
+
+				data->url_list = g_list_prepend (data->url_list, complete_url);
+				urls++;
 				
+				if (urls >= MAX_IMAGES) {
+					done = TRUE;
+					break;
+				}
+
+				url_start = strstr (url_end + 1, prefix);
 			}
 		}
+
+		if (done)
+			break;
 
 		if (copy_tail) {
 			prefix_len = MIN (prefix_len, buf_offset + n);
@@ -433,13 +412,13 @@ search_result_saved_cb (DialogData *data,
 	/**/
 
 	if (data->url_list == NULL) {
-		gth_image_list_set_no_image_text (GTH_IMAGE_LIST (data->image_list), _("No image found"));
-
+		gth_image_list_set_no_image_text (GTH_IMAGE_LIST (data->image_list),
+						  _("No image found"));
 		return;
 	}
 
 	data->url_list = g_list_reverse (data->url_list);
-	data->urls = MIN (g_list_length (data->url_list), MAX_IMAGES);
+	data->urls = urls;
 	data->url = 0;
 
 	start_loading_images (data);
@@ -456,10 +435,8 @@ start_searching (gpointer callback_data)
 	g_source_remove (data->load_id);
 	data->load_id = 0;
 
-	data->session = ne_session_create ("http", "images.google.com", 80);
-	ne_set_useragent (data->session, PACKAGE "/" VERSION);
-
-	query = g_strconcat ("/images?q=",
+	query = g_strconcat ("http://images.google.com",
+			     "/images?q=",
 			     data->album,
 			     "+",
 			     data->artist,
@@ -487,7 +464,7 @@ help_cb (GtkWidget  *widget,
 	GError *err;
 
 	err = NULL;  
-	gnome_help_display ("goobox", "choose_cover", &err);
+	gnome_help_display ("goobox", "search_cover_on_internet", &err);
 	
 	if (err != NULL) {
 		GtkWidget *dialog;
@@ -509,6 +486,21 @@ help_cb (GtkWidget  *widget,
 		
 		g_error_free (err);
 	}
+}
+
+
+static void
+revert_cb (GtkWidget  *widget, 
+	   DialogData *data)
+{
+	char *original_cover;
+
+	if (data->cover_backup == NULL) 
+		return;
+
+	original_cover = goo_window_get_cover_filename (data->window);
+	gnome_vfs_x_copy_uri_simple (data->cover_backup, original_cover);
+	goo_window_update_cover (data->window);
 }
 
 
@@ -556,6 +548,36 @@ image_list_item_activated_cb (GthImageList *list,
 
 
 
+static void
+backup_cover_image (DialogData   *data)
+{
+	GnomeVFSURI *uri;
+	char        *original_cover;
+	char        *cover_backup;
+
+	original_cover = goo_window_get_cover_filename (data->window);
+	if (original_cover == NULL) {	
+		gtk_widget_set_sensitive (data->revert_button, FALSE);
+		return;
+	}
+
+	uri = new_uri_from_path (original_cover);
+	if (uri == NULL) {
+		gtk_widget_set_sensitive (data->revert_button, FALSE);
+		return;
+	}
+	gtk_widget_set_sensitive (data->revert_button, gnome_vfs_uri_exists (uri));
+	gnome_vfs_uri_unref (uri);
+
+	cover_backup = g_build_filename (data->tmpdir, ORIGINAL_COVER, NULL);
+	gnome_vfs_x_copy_uri_simple (original_cover, cover_backup);
+	g_free (original_cover);
+
+	data->tmpfiles = g_list_prepend (data->tmpfiles, cover_backup);
+	data->cover_backup = cover_backup;
+}
+
+
 void
 dlg_cover_chooser (GooWindow  *window,
 		   const char *album,
@@ -584,6 +606,7 @@ dlg_cover_chooser (GooWindow  *window,
 	scrolled_window = glade_xml_get_widget (data->gui, "image_list_scrolledwindow");
 	data->progress_label = glade_xml_get_widget (data->gui, "progress_label");
 	data->ok_button = glade_xml_get_widget (data->gui, "cc_okbutton");
+	data->revert_button = glade_xml_get_widget (data->gui, "cc_revertbutton");
 	btn_cancel = glade_xml_get_widget (data->gui, "cc_cancelbutton");
 	btn_help = glade_xml_get_widget (data->gui, "cc_helpbutton");
 
@@ -616,6 +639,10 @@ dlg_cover_chooser (GooWindow  *window,
 			  "clicked",
 			  G_CALLBACK (ok_cb),
 			  data);
+	g_signal_connect (G_OBJECT (data->revert_button), 
+			  "clicked",
+			  G_CALLBACK (revert_cb),
+			  data);
 	g_signal_connect (G_OBJECT (data->image_list), 
 			  "selection_changed",
 			  G_CALLBACK (image_list_selection_changed_cb),
@@ -635,12 +662,10 @@ dlg_cover_chooser (GooWindow  *window,
 
 	data->tmpdir = g_strdup (get_temp_work_dir ());
 	ensure_dir_exists (data->tmpdir, DIR_PERM);
+	backup_cover_image (data);
 
 	gth_image_list_set_no_image_text (GTH_IMAGE_LIST (data->image_list),
 					  _("Searching images..."));
 
 	data->load_id = g_idle_add (start_searching, data);
 }
-
-
-#endif /* HAVE_NEON*/

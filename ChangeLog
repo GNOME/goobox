@@ -1,3 +1,12 @@
+2004-11-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* README: 
+	* configure.in: Removed the libneon dependency.
+
+	* src/dlg-cover-chooser.c: 
+
+	Use gnome-vfs to search on Internet. Added a Revert button.
+
 2004-10-30  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	[ version 0.3.0 released ]

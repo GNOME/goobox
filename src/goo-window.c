@@ -273,12 +273,7 @@ window_update_sensitivity (GooWindow *window)
 	set_sensitive (window, "Properties", !error && (discid != NULL));
 	set_sensitive (window, "PickCoverFromDisk", !error && (discid != NULL));
 	set_sensitive (window, "RemoveCover", !error && (discid != NULL));
-#ifdef HAVE_NEON
 	set_sensitive (window, "SearchCoverFromWeb", !error && (discid != NULL));
-#else
-	set_sensitive (window, "SearchCoverFromWeb", FALSE);
-#endif /* HAVE_NEON*/
-
 
 	goo_player_info_set_sensitive (GOO_PLAYER_INFO (window->priv->info), !error && (discid != NULL));
 	set_sensitive (window, "Repeat", play_all);
@@ -1226,8 +1221,8 @@ window_update_title (GooWindow *window)
 }
 
 
-static char *
-get_disc_cover_filename (GooWindow *window)
+char *
+goo_window_get_cover_filename (GooWindow *window)
 {
 	GooPlayerCD *player_cd = GOO_PLAYER_CD (window->priv->player);
 	char        *discid;
@@ -1250,10 +1245,12 @@ goo_window_update_cover (GooWindow *window)
 	char      *filename;
 	GdkPixbuf *image;
 	
-	filename = get_disc_cover_filename (window);
-	if (filename == NULL)
+	filename = goo_window_get_cover_filename (window);
+	if (filename == NULL) {
 		goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), NULL);
-	
+		return;
+	}
+
 	image = gdk_pixbuf_new_from_file (filename, NULL);
 	if (image != NULL) {
 		goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), image);
@@ -2465,7 +2462,7 @@ goo_window_set_cover_image (GooWindow  *window,
 				      frame,
 				      1, 1);
 
-		cover_filename = get_disc_cover_filename (window);
+		cover_filename = goo_window_get_cover_filename (window);
 		debug (DEBUG_INFO, "SAVE IMAGE %s\n", cover_filename);
 		
 		if (! gdk_pixbuf_save (frame, cover_filename, "png", &error, NULL))
@@ -2564,7 +2561,6 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 void
 goo_window_search_cover_on_internet (GooWindow *window)
 {
-#ifdef HAVE_NEON
 	const char *album, *artist;
 
 	debug (DEBUG_INFO, "SEARCH ON INTERNET\n");
@@ -2576,8 +2572,6 @@ goo_window_search_cover_on_internet (GooWindow *window)
 		return; /*FIXME*/
 
 	dlg_cover_chooser (window, album, artist);
-
-#endif /* HAVE_NEON*/
 }
 
 
@@ -2586,7 +2580,7 @@ goo_window_remove_cover (GooWindow   *window)
 {
 	char *cover_filename;
 		
-	cover_filename = get_disc_cover_filename (window);
+	cover_filename = goo_window_get_cover_filename (window);
 	if (cover_filename == NULL)
 		return;
 

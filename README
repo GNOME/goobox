@@ -26,10 +26,6 @@
     cdparanoia: used to play CDs
     vorbisenc, flacenc, lame, wavenc: at least one of this to rip CDs.
 
-  Optional dependencies:
-
-    libneon 0.24.x: to search cover images with Google.
-
 * Install
 
   ./configure 

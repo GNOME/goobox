@@ -38,10 +38,6 @@
 #include "goo-application.h"
 #include "gtk-utils.h"
 
-#ifdef HAVE_NEON
-#include <ne_socket.h>
-#endif /* HAVE_NEON*/
-
 static void     prepare_app         (poptContext pctx);
 static void     initialize_data     (void);
 static void     release_data        (void);
@@ -126,10 +122,6 @@ int main (int argc, char **argv)
 	
 	gst_init (NULL, NULL);
 	/*gst_use_threads (TRUE);*/
-
-#ifdef HAVE_NEON
-	ne_sock_init ();
-#endif /* HAVE_NEON*/
 
 	goo_stock_init ();
 	init_session (argv);
