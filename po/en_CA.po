@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-17 20:29-0500\n"
-"PO-Revision-Date: 2004-12-17 01:43-0400\n"
+"POT-Creation-Date: 2005-01-03 18:45-0500\n"
+"PO-Revision-Date: 2005-01-03 01:43-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,86 +50,94 @@ msgid "<b>Extract</b>"
 msgstr "<b>Extract</b>"
 
 #: data/glade/goobox.glade.h:5
+msgid "<b>FLAC</b>"
+msgstr "<b>FLAC</b>"
+
+#: data/glade/goobox.glade.h:6
 msgid "<b>File type</b>"
 msgstr "<b>File type</b>"
 
-#: data/glade/goobox.glade.h:6
-msgid "<b>Quality</b>"
-msgstr "<b>Quality</b>"
-
 #: data/glade/goobox.glade.h:7
-msgid "<small><i>Higher quality</i></small>"
-msgstr "<small><i>Higher quality</i></small>"
+msgid "<b>MP3</b>"
+msgstr "<b>MP3</b>"
 
 #: data/glade/goobox.glade.h:8
-msgid "<small><i>Smaller size</i></small>"
-msgstr "<small><i>Smaller size</i></small>"
+msgid "<b>Ogg Vorbis</b>"
+msgstr "<b>Ogg Vorbis</b>"
 
-#: data/glade/goobox.glade.h:9 src/dlg-extract.c:241
+#: data/glade/goobox.glade.h:9
+msgid "Advanced _Options"
+msgstr "Advanced _Options"
+
+#: data/glade/goobox.glade.h:10 src/dlg-extract.c:238
 msgid "Choose destination folder"
 msgstr "Choose destination folder"
 
-#: data/glade/goobox.glade.h:10
-msgid "Encoding Options"
-msgstr "Encoding Options"
-
 #: data/glade/goobox.glade.h:11
+msgid "Encoding"
+msgstr "Encoding"
+
+#: data/glade/goobox.glade.h:12
 msgid "Excellent quality lossless compression"
 msgstr "Excellent quality lossless compression"
 
-#: data/glade/goobox.glade.h:12
+#: data/glade/goobox.glade.h:13
 msgid "Extract Tracks"
 msgstr "Extract Tracks"
 
-#: data/glade/goobox.glade.h:13
+#: data/glade/goobox.glade.h:14
 msgid "Extracting Tracks"
 msgstr "Extracting Tracks"
 
-#: data/glade/goobox.glade.h:14
+#: data/glade/goobox.glade.h:15
+msgid "General"
+msgstr "General"
+
+#: data/glade/goobox.glade.h:16
 msgid "Good quality lossy compression"
 msgstr "Good quality lossy compression"
 
-#: data/glade/goobox.glade.h:15
+#: data/glade/goobox.glade.h:17
 msgid "High quality lossy compression"
 msgstr "High quality lossy compression"
 
-#: data/glade/goobox.glade.h:16
+#: data/glade/goobox.glade.h:18
 msgid "Preferences"
 msgstr "Preferences"
 
-#: data/glade/goobox.glade.h:17
+#: data/glade/goobox.glade.h:19
 msgid "Raw audio"
 msgstr "Raw audio"
 
-#: data/glade/goobox.glade.h:18
+#: data/glade/goobox.glade.h:20
 msgid "_All tracks"
 msgstr "_All tracks"
 
-#: data/glade/goobox.glade.h:19
+#: data/glade/goobox.glade.h:21
 msgid "_FLAC"
 msgstr "_FLAC"
 
-#: data/glade/goobox.glade.h:20
+#: data/glade/goobox.glade.h:22
 msgid "_MP3"
 msgstr "_MP3"
 
-#: data/glade/goobox.glade.h:21
+#: data/glade/goobox.glade.h:23
 msgid "_Ogg Vorbis"
 msgstr "_Ogg Vorbis"
 
-#: data/glade/goobox.glade.h:22 src/goo-stock.c:54
-msgid "_Reset"
-msgstr "_Reset"
+#: data/glade/goobox.glade.h:24
+msgid "_Save playlist"
+msgstr "_Save playlist"
 
-#: data/glade/goobox.glade.h:23
+#: data/glade/goobox.glade.h:25
 msgid "_Selected tracks"
 msgstr "_Selected tracks"
 
-#: data/glade/goobox.glade.h:24
+#: data/glade/goobox.glade.h:26
 msgid "_Wave"
 msgstr "_Wave"
 
-#: data/goobox.desktop.in.h:1 src/goo-window.c:2071 src/goo-window.c:2079
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2089 src/goo-window.c:2097
 msgid "CD Player"
 msgstr "CD Player"
 
@@ -147,15 +155,19 @@ msgid ""
 msgstr ""
 "Possible values are: system, text_below, text_beside, text_only, icons_only."
 
-#: src/actions.c:140
+#.
+#. const char       *documenters [] = {
+#. NULL
+#. };
+#: src/actions.c:141
 msgid "translator_credits"
 msgstr "Adam Weinberger <adamw@gnome.org>"
 
-#: src/actions.c:151 src/actions.c:166
+#: src/actions.c:152 src/actions.c:167
 msgid "Goobox"
 msgstr "Goobox"
 
-#: src/actions.c:154 src/actions.c:169 src/main.c:114
+#: src/actions.c:155 src/actions.c:170 src/main.c:114
 msgid "CD player and ripper"
 msgstr "CD player and ripper"
 
@@ -181,7 +193,7 @@ msgstr "%u, loading image: %u"
 msgid "Loading images"
 msgstr "Loading images"
 
-#: src/dlg-cover-chooser.c:330 src/goo-window.c:2677
+#: src/dlg-cover-chooser.c:330 src/goo-window.c:2696
 msgid "Could not search a cover on Internet"
 msgstr "Could not search a cover on Internet"
 
@@ -189,7 +201,7 @@ msgstr "Could not search a cover on Internet"
 msgid "No image found"
 msgstr "No image found"
 
-#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:205 src/dlg-preferences.c:109
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:202 src/dlg-preferences.c:147
 #, c-format
 msgid "Could not display help: %s"
 msgstr "Could not display help: %s"
@@ -198,30 +210,7 @@ msgstr "Could not display help: %s"
 msgid "Searching images..."
 msgstr "Searching images..."
 
-#: src/dlg-encoder-options.c:117
-#, c-format
-msgid "Nominal bitrate: %d Kbps"
-msgstr "Nominal bitrate: %d Kbps"
-
-#: src/dlg-encoder-options.c:120
-#, c-format
-msgid "Compression level: %d"
-msgstr "Compression level: %d"
-
-#: src/dlg-encoder-options.c:123
-#, c-format
-msgid "Bitrate: %d Kbps"
-msgstr "Bitrate: %d Kbps"
-
-#: src/dlg-encoder-options.c:261
-msgid "Faster compression"
-msgstr "Faster compression"
-
-#: src/dlg-encoder-options.c:265
-msgid "Higher compression"
-msgstr "Higher compression"
-
-#: src/dlg-extract.c:367
+#: src/dlg-extract.c:365
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -240,28 +229,60 @@ msgstr ""
 "• %s → Mp3\n"
 "• %s → Wave"
 
-#: src/dlg-extract.c:380
+#: src/dlg-extract.c:378
 msgid "No encoder available."
 msgstr "No encoder available."
 
-#: src/dlg-ripper.c:311
+#: src/dlg-preferences.c:168
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "Nominal bitrate: %d Kbps"
+
+#: src/dlg-preferences.c:172
+#, c-format
+msgid "Compression level: %d"
+msgstr "Compression level: %d"
+
+#: src/dlg-preferences.c:176
+#, c-format
+msgid "Bitrate: %d Kbps"
+msgstr "Bitrate: %d Kbps"
+
+#. Set widgets data.
+#: src/dlg-preferences.c:335 src/dlg-preferences.c:343
+msgid "Smaller size"
+msgstr "Smaller size"
+
+#: src/dlg-preferences.c:339 src/dlg-preferences.c:347
+msgid "Higher quality"
+msgstr "Higher quality"
+
+#: src/dlg-preferences.c:351
+msgid "Faster compression"
+msgstr "Faster compression"
+
+#: src/dlg-preferences.c:355
+msgid "Higher compression"
+msgstr "Higher compression"
+
+#: src/dlg-ripper.c:313
 msgid "Could not display the destination folder"
 msgstr "Could not display the destination folder"
 
-#: src/dlg-ripper.c:338
+#: src/dlg-ripper.c:424
 msgid "Tracks extracted successfully"
 msgstr "Tracks extracted successfully"
 
-#: src/dlg-ripper.c:340
+#: src/dlg-ripper.c:426
 msgid "_View destination folder"
 msgstr "_View destination folder"
 
-#: src/dlg-ripper.c:353
+#: src/dlg-ripper.c:439
 #, c-format
 msgid "Extracting track %d of %d: %s"
 msgstr "Extracting track %d of %d: %s"
 
-#: src/dlg-ripper.c:388
+#: src/dlg-ripper.c:474
 msgid "Ripped with Goobox"
 msgstr "Ripped with Goobox"
 
@@ -302,39 +323,43 @@ msgstr "No disc"
 msgid "Data CD"
 msgstr "Data CD"
 
-#: src/goo-player-info.c:238 src/goo-player-info.c:263
-#: src/goo-player-info.c:761
+#: src/goo-player-info.c:236 src/goo-player-info.c:261
+#: src/goo-player-info.c:758
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
-#: src/goo-player-info.c:501
+#: src/goo-player-info.c:499
 msgid "Click here to choose a cover for this CD"
 msgstr "Click here to choose a cover for this CD"
 
-#: src/goo-player-info.c:689 src/goo-window.c:1236
+#: src/goo-player-info.c:686 src/goo-window.c:1236
 msgid "Paused"
 msgstr "Paused"
 
-#: src/goo-player-info.c:700
+#: src/goo-player-info.c:697
 msgid "Ejecting CD"
 msgstr "Ejecting CD"
 
-#: src/goo-player-info.c:704
+#: src/goo-player-info.c:701
 msgid "Checking CD drive"
 msgstr "Checking CD drive"
 
-#: src/goo-player-info.c:708 src/goo-player-info.c:712
+#: src/goo-player-info.c:705 src/goo-player-info.c:709
 msgid "Reading CD"
 msgstr "Reading CD"
 
-#: src/goo-player-info.c:725 src/goo-window.c:1260
+#: src/goo-player-info.c:722 src/goo-window.c:1260
 msgid "Audio CD"
 msgstr "Audio CD"
 
 #: src/goo-stock.c:53
 msgid "_Extract"
 msgstr "_Extract"
+
+#: src/goo-stock.c:54
+msgid "_Reset"
+msgstr "_Reset"
 
 #: src/goo-stock.c:55 src/goo-stock.c:56 src/goo-stock.c:57 src/goo-stock.c:58
 msgid "V_olume"
@@ -414,35 +439,35 @@ msgstr "_Play"
 msgid "Play CD"
 msgstr "Play CD"
 
-#: src/goo-window.c:2355
+#: src/goo-window.c:2374
 msgid "Could not eject the CD"
 msgstr "Could not eject the CD"
 
-#: src/goo-window.c:2367
+#: src/goo-window.c:2386
 msgid "Could not read drive"
 msgstr "Could not read drive"
 
-#: src/goo-window.c:2551
+#: src/goo-window.c:2570
 msgid "Could not save cover image"
 msgstr "Could not save cover image"
 
-#: src/goo-window.c:2561
+#: src/goo-window.c:2580
 msgid "Could not load image"
 msgstr "Could not load image"
 
-#: src/goo-window.c:2617
+#: src/goo-window.c:2636
 msgid "Choose CD Cover Image"
 msgstr "Choose CD Cover Image"
 
-#: src/goo-window.c:2636
+#: src/goo-window.c:2655
 msgid "Images"
 msgstr "Images"
 
-#: src/goo-window.c:2644
+#: src/goo-window.c:2663
 msgid "All files"
 msgstr "All files"
 
-#: src/goo-window.c:2678
+#: src/goo-window.c:2697
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -450,19 +475,19 @@ msgstr ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 
-#: src/goo-window.c:2712
+#: src/goo-window.c:2731
 msgid "_Show Window"
 msgstr "_Show Window"
 
-#: src/goo-window.c:2713
+#: src/goo-window.c:2732
 msgid "Show the main window"
 msgstr "Show the main window"
 
-#: src/goo-window.c:2726 src/ui.h:109
+#: src/goo-window.c:2745 src/ui.h:109
 msgid "_Hide Window"
 msgstr "_Hide Window"
 
-#: src/goo-window.c:2727 src/ui.h:110
+#: src/goo-window.c:2746 src/ui.h:110
 msgid "Hide the main window"
 msgstr "Hide the main window"
 
