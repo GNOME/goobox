@@ -1,3 +1,11 @@
+2004-10-17  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-player-cd.c (cd_player_list): 
+	* src/goo-cdrom-linux.c (open_device): 
+	* src/goo-cdrom.h: 
+
+	Handle device access errors.
+	
 2004-10-16  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/ui.h: fixed command comment.

@@ -39,6 +39,7 @@ typedef struct _GooCdromPrivateData GooCdromPrivateData;
 
 typedef enum {
 	GOO_CDROM_STATE_UNKNOWN,
+	GOO_CDROM_STATE_ERROR,
 	GOO_CDROM_STATE_DRIVE_NOT_READY,
 	GOO_CDROM_STATE_TRAY_OPEN,
 	GOO_CDROM_STATE_NO_DISC,

@@ -86,6 +86,22 @@ goo_cdrom_linux_get_device (GooCdrom *cdrom)
 }
 
 
+static int
+open_device (GooCdrom *cdrom)
+{
+	const char *device;
+	int         fd = -1;
+
+	device = goo_cdrom_linux_get_device (cdrom);
+	if ((fd = open (device, O_RDONLY | O_NONBLOCK)) < 0) {
+		goo_cdrom_set_error_from_errno (cdrom);
+		goo_cdrom_set_state (cdrom, GOO_CDROM_STATE_ERROR);
+	}
+
+	return fd;
+}
+
+
 static gboolean
 goo_cdrom_linux_eject (GooCdrom *cdrom)
 {
@@ -94,7 +110,7 @@ goo_cdrom_linux_eject (GooCdrom *cdrom)
 
 	debug (DEBUG_INFO, "EJECT\n");
 
-	fd = open (goo_cdrom_linux_get_device (cdrom), O_RDONLY | O_NONBLOCK);
+	fd = open_device (cdrom);
 	if (fd >= 0) {
 		if (ioctl (fd, CDROMEJECT, 0) >= 0) 
 			result = TRUE;
@@ -169,7 +185,7 @@ goo_cdrom_linux_close_tray (GooCdrom *cdrom)
 
 	debug (DEBUG_INFO, "CLOSE TRAY\n");
 
-	fd = open (goo_cdrom_linux_get_device (cdrom), O_RDONLY | O_NONBLOCK);
+	fd = open_device (cdrom);
 	if (fd >= 0) {
 		GooCdromState new_state = -1;
 
@@ -200,7 +216,7 @@ lock_tray (GooCdrom *cdrom,
 	else
 		debug (DEBUG_INFO, "UNLOCK TRAY\n");
 
-	fd = open (goo_cdrom_linux_get_device (cdrom), O_RDONLY | O_NONBLOCK);
+	fd = open_device (cdrom);
 	if (fd >= 0) {
 		GooCdromState new_state = -1;
 
@@ -247,15 +263,14 @@ goo_cdrom_linux_update_state (GooCdrom *cdrom)
 	int      fd;
 	gboolean result = FALSE;
 
-	fd = open (goo_cdrom_linux_get_device (cdrom), O_RDONLY | O_NONBLOCK);
+	fd = open_device (cdrom);
 	if (fd >= 0) {
 		GooCdromState new_state = update_state_from_fd (cdrom, fd);
 		result = (new_state != -1);
 		close (fd);
 		if (result)
 			goo_cdrom_set_state (cdrom, new_state);
-	} else 
-		goo_cdrom_set_error_from_errno (cdrom);
+	} 
 
 	return result;
 }

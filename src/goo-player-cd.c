@@ -636,6 +636,7 @@ static void
 cdrom_state_changed_cb (GooCdrom  *cdrom,
 			GooPlayer *player)
 {
+	GooPlayerCDPrivateData *priv = GOO_PLAYER_CD (player)->priv;
 	GooCdromState  cdrom_state = goo_cdrom_get_state (cdrom);
 	char          *state;
 	char          *message = "";
@@ -644,6 +645,9 @@ cdrom_state_changed_cb (GooCdrom  *cdrom,
 		return;
 
 	switch (cdrom_state) {
+	case GOO_CDROM_STATE_ERROR:
+		state = "ERROR";
+		break;
 	case GOO_CDROM_STATE_UNKNOWN:
 		state = "UNKNOWN";
 		break;
@@ -678,6 +682,13 @@ cdrom_state_changed_cb (GooCdrom  *cdrom,
 	else if (cdrom_state == GOO_CDROM_STATE_OK) {
 		goo_player_set_state (player, GOO_PLAYER_STATE_STOPPED, TRUE);
 		goo_player_list (player);
+
+	} else if (cdrom_state == GOO_CDROM_STATE_ERROR) {
+		GError *error = goo_cdrom_get_error (priv->cdrom);
+		goo_player_set_error (player, error);
+		goo_player_set_state (player, GOO_PLAYER_STATE_ERROR, TRUE);
+		goo_player_cd_empty_list (player);
+		action_done (player, GOO_PLAYER_ACTION_LIST);
 
 	} else {
 		goo_player_set_error (player, g_error_new (GOO_CDROM_ERROR, 0, "%s", message));
