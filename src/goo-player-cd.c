@@ -937,9 +937,6 @@ goo_player_cd_finalize (GObject *object)
 
 		g_mutex_free (priv->yes_or_no);
 
-		if (goo_player_get_state (player) != GOO_PLAYER_STATE_STOPPED)
-			goo_player_stop (player);
-
 		remove_state_polling (player_cd);
 		destroy_pipeline (player_cd, FALSE);
 

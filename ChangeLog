@@ -1,6 +1,7 @@
 2004-10-22  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-player-cd.c: Read CD tracks list asynchronously.
+	(goo_player_cd_finalize): remove goo_player_stop 
 
 2004-10-19  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
