@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNOME 2.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-05 20:23+0100\n"
-"PO-Revision-Date: 2005-01-05 22:49+0100\n"
+"POT-Creation-Date: 2005-01-30 22:00+0100\n"
+"PO-Revision-Date: 2005-01-31 00:16+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +69,7 @@ msgid "Advanced _Options"
 msgstr "Geavanceerde _opties"
 
 # een doelmap kiezen/kies een doelmap
-#: data/glade/goobox.glade.h:10 src/dlg-extract.c:238
+#: data/glade/goobox.glade.h:10 src/dlg-extract.c:239
 msgid "Choose destination folder"
 msgstr "Kies een doelmap"
 
@@ -159,19 +159,23 @@ msgstr ""
 "Mogelijke waardes zijn: system, text_below, text_beside, text_only, "
 "icons_only."
 
+#: src/actions.c:139
+msgid "Could not display help"
+msgstr "Kon de hulp niet weergeven"
+
 #.
 #. const char       *documenters [] = {
 #. NULL
 #. };
-#: src/actions.c:141
+#: src/actions.c:192
 msgid "translator_credits"
 msgstr "Tino Meinen"
 
-#: src/actions.c:152 src/actions.c:167
+#: src/actions.c:203 src/actions.c:218
 msgid "Goobox"
 msgstr "Goobox"
 
-#: src/actions.c:155 src/actions.c:170 src/main.c:114
+#: src/actions.c:206 src/actions.c:221 src/main.c:114
 msgid "CD player and ripper"
 msgstr "CD-speler en ripper"
 
@@ -206,7 +210,7 @@ msgstr "Kon geen hoesje zoeken op het internet"
 msgid "No image found"
 msgstr "Geef afbeeldinge gevonden"
 
-#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:202 src/dlg-preferences.c:147
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:203 src/dlg-preferences.c:147
 #, c-format
 msgid "Could not display help: %s"
 msgstr "Kon de hulp niet weergeven: %s"
@@ -215,7 +219,7 @@ msgstr "Kon de hulp niet weergeven: %s"
 msgid "Searching images..."
 msgstr "Afbeeldingen zoeken..."
 
-#: src/dlg-extract.c:365
+#: src/dlg-extract.c:374
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -235,7 +239,7 @@ msgstr ""
 "• %s → Wave"
 
 # aanwezig/beschikbaar
-#: src/dlg-extract.c:378
+#: src/dlg-extract.c:387
 msgid "No encoder available."
 msgstr "Geen coderingsprogramma beschikbaar."
 
@@ -282,21 +286,21 @@ msgstr "Grotere compressie"
 msgid "Could not display the destination folder"
 msgstr "Kon de doelmap niet weergeven"
 
-#: src/dlg-ripper.c:424
+#: src/dlg-ripper.c:427
 msgid "Tracks extracted successfully"
 msgstr "Nummers met succes uitgepakt"
 
-#: src/dlg-ripper.c:426
+#: src/dlg-ripper.c:429
 msgid "_View destination folder"
 msgstr "Doelmap _weergeven"
 
-#: src/dlg-ripper.c:439
+#: src/dlg-ripper.c:442
 #, c-format
 msgid "Extracting track %d of %d: %s"
 msgstr "nummer %d van %d wordt uitgepakt: %s"
 
 # met/door
-#: src/dlg-ripper.c:474
+#: src/dlg-ripper.c:477
 msgid "Ripped with Goobox"
 msgstr "Geript met Goobox"
 
@@ -324,20 +328,20 @@ msgstr "Fout bij lezen van CD"
 msgid "The specified device is not valid"
 msgstr "Het opgegeven apparaat is ongeldig"
 
-#: src/goo-player-cd.c:784
+#: src/goo-player-cd.c:791
 msgid "Drive not ready"
 msgstr "Apparaat niet klaar"
 
 # lade geopend/lade staat open/geopende lade/ lade open
-#: src/goo-player-cd.c:788
+#: src/goo-player-cd.c:795
 msgid "Tray open"
 msgstr "Lade staat open"
 
-#: src/goo-player-cd.c:789 src/goo-player-cd.c:793
+#: src/goo-player-cd.c:796 src/goo-player-cd.c:800
 msgid "No disc"
 msgstr "Geen schijf"
 
-#: src/goo-player-cd.c:797
+#: src/goo-player-cd.c:804
 msgid "Data CD"
 msgstr "Data-CD"
 
@@ -442,7 +446,7 @@ msgstr "Artiest"
 msgid "#"
 msgstr "#"
 
-#: src/goo-window.c:1146 src/ui.h:57
+#: src/goo-window.c:1146 src/ui.h:65
 msgid "_Pause"
 msgstr "_Pauzeren"
 
@@ -450,8 +454,8 @@ msgstr "_Pauzeren"
 msgid "Pause playing"
 msgstr "Afspelen pauzeren"
 
-#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:45 src/ui.h:49
-#: src/ui.h:53
+#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:53 src/ui.h:57
+#: src/ui.h:61
 msgid "_Play"
 msgstr "_Afspelen"
 
@@ -503,11 +507,11 @@ msgstr "_Venster tonen"
 msgid "Show the main window"
 msgstr "Het hoofdvenster tonen"
 
-#: src/goo-window.c:2745 src/ui.h:109
+#: src/goo-window.c:2745 src/ui.h:117
 msgid "_Hide Window"
 msgstr "Venster ver_bergen"
 
-#: src/goo-window.c:2746 src/ui.h:110
+#: src/goo-window.c:2746 src/ui.h:118
 msgid "Hide the main window"
 msgstr "Het hoofdvenster verbergen"
 
@@ -540,19 +544,19 @@ msgstr "APPARAAT_PAD"
 msgid "Play the CD on startup"
 msgstr "De CD meteen afspelen"
 
-#: src/main.c:71 src/ui.h:46
+#: src/main.c:71 src/ui.h:54
 msgid "Play/Pause"
 msgstr "Spelen/Pauzeren"
 
-#: src/main.c:74 src/ui.h:66
+#: src/main.c:74 src/ui.h:74
 msgid "Play the next track"
 msgstr "Volgende nummer"
 
-#: src/main.c:77 src/ui.h:70
+#: src/main.c:77 src/ui.h:78
 msgid "Play the previous track"
 msgstr "Vorige nummer"
 
-#: src/main.c:80 src/ui.h:74
+#: src/main.c:80 src/ui.h:82
 msgid "Eject the CD"
 msgstr "De CD uitwerpen"
 
@@ -568,7 +572,7 @@ msgstr "Harder"
 msgid "Volume Down"
 msgstr "Zachter"
 
-#: src/main.c:92 src/ui.h:94
+#: src/main.c:92 src/ui.h:102
 msgid "Quit the application"
 msgstr "De toepassing afsluiten"
 
@@ -615,138 +619,150 @@ msgstr "In_fo"
 msgid "Information about the program"
 msgstr "Informatie over het programma"
 
-#: src/ui.h:50
+#: src/ui.h:45
+msgid "_Contents"
+msgstr "_Inhoud"
+
+#: src/ui.h:46
+msgid "Display the manual"
+msgstr "De handleiding weergeven"
+
+#: src/ui.h:49
+msgid "_Keyboard shortcuts"
+msgstr "_Sneltoetsen"
+
+#: src/ui.h:58
 msgid "Play"
 msgstr "Afspelen"
 
-#: src/ui.h:54
+#: src/ui.h:62
 msgid "Play this track"
 msgstr "Dit nummer afspelen"
 
-#: src/ui.h:58
+#: src/ui.h:66
 msgid "Pause"
 msgstr "Pauzeren"
 
-#: src/ui.h:61
+#: src/ui.h:69
 msgid "_Stop"
 msgstr "_Stoppen"
 
-#: src/ui.h:62
+#: src/ui.h:70
 msgid "Stop playing"
 msgstr "Afspelen stoppen"
 
-#: src/ui.h:65
+#: src/ui.h:73
 msgid "_Next"
 msgstr "_Volgende"
 
-#: src/ui.h:69
+#: src/ui.h:77
 msgid "Pre_v"
 msgstr "V_orige"
 
-#: src/ui.h:73
+#: src/ui.h:81
 msgid "_Eject"
 msgstr "_Uitwerpen"
 
-#: src/ui.h:77
+#: src/ui.h:85
 msgid "_Reload"
 msgstr "He_rladen"
 
-#: src/ui.h:78
+#: src/ui.h:86
 msgid "Reload the CD"
 msgstr "De CD herladen"
 
-#: src/ui.h:81
+#: src/ui.h:89
 msgid "_Preferences"
 msgstr "_Voorkeuren"
 
 # verscheidene/verschillende (weggelaten)
-#: src/ui.h:82
+#: src/ui.h:90
 msgid "Edit various preferences"
 msgstr "Voorkeuren bewerken"
 
-#: src/ui.h:85
+#: src/ui.h:93
 msgid "E_xtract Tracks"
 msgstr "Nummers _uitpakken"
 
-#: src/ui.h:86
+#: src/ui.h:94
 msgid "Save the tracks to disk as files"
 msgstr "De nummers opslaan als bestanden"
 
-#: src/ui.h:89
+#: src/ui.h:97
 msgid "_CD Properties"
 msgstr "_CD eigenschappen"
 
 # nummers weggelaten
-#: src/ui.h:90
+#: src/ui.h:98
 msgid "Edit the CD artist, album and tracks titles"
 msgstr "De CD-artiest, album en titels bewerken"
 
-#: src/ui.h:93
+#: src/ui.h:101
 msgid "_Quit"
 msgstr "_Afsluiten"
 
-#: src/ui.h:97
+#: src/ui.h:105
 msgid "_Choose from Disk"
 msgstr "Van s_chijf kiezen"
 
-#: src/ui.h:98
+#: src/ui.h:106
 msgid "Choose a CD cover from the local disk"
 msgstr "Een CD-hoes kiezen van de lokale harde schijf"
 
-#: src/ui.h:101
+#: src/ui.h:109
 msgid "_Search on Internet"
 msgstr "_Zoeken op internet"
 
-#: src/ui.h:102
+#: src/ui.h:110
 msgid "Search a CD cover on Internet"
 msgstr "Een CD-hoes zoeken op het internet"
 
-#: src/ui.h:105
+#: src/ui.h:113
 msgid "_Remove Cover"
 msgstr "Hoes _verwijderen"
 
-#: src/ui.h:106
+#: src/ui.h:114
 msgid "Remove current CD cover"
 msgstr "De huidige CD-hoes verwijderen"
 
-#: src/ui.h:118
+#: src/ui.h:126
 msgid "_Toolbar"
 msgstr "_Werkbalk"
 
-#: src/ui.h:119
+#: src/ui.h:127
 msgid "View the main toolbar"
 msgstr "De hoofdwerkbalk tonen"
 
-#: src/ui.h:123
+#: src/ui.h:131
 msgid "Stat_usbar"
 msgstr "Stat_usbalk"
 
-#: src/ui.h:124
+#: src/ui.h:132
 msgid "View the statusbar"
 msgstr "De statusbalk tonen"
 
-#: src/ui.h:128
+#: src/ui.h:136
 msgid "Play _All"
 msgstr "_Alles afspelen"
 
-#: src/ui.h:129
+#: src/ui.h:137
 msgid "Play all tracks"
 msgstr "Alle nummers afspelen"
 
-#: src/ui.h:133
+#: src/ui.h:141
 msgid "_Repeat"
 msgstr "He_rhalen"
 
-#: src/ui.h:134
+#: src/ui.h:142
 msgid "Restart playing when finished"
 msgstr "Bij beëindiging opnieuw afspelen"
 
 # wat wordt hier bedoeld: random of shuffle?
 # kriskras/door elkaar/willekeurig/lukraak
-#: src/ui.h:138
+#: src/ui.h:146
 msgid "S_huffle"
 msgstr "_Door elkaar"
 
-#: src/ui.h:139
+#: src/ui.h:147
 msgid "Play tracks in a random order"
 msgstr "Nummers in willekeurige volgorde afspelen"
