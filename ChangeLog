@@ -1,5 +1,7 @@
 2004-11-16  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/dlg-ripper.c (rip_current_track): Added mnemonic.
+
 	* src/goo-player-cd.c (player_eos_cb, player_done_cb)
 	(update_progress_cb, create_pipeline, destroy_pipeline)
 	(cd_player_seek_song): 

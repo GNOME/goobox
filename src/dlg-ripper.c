@@ -337,7 +337,7 @@ rip_current_track (DialogData *data)
 							 GTK_DIALOG_MODAL,
 							 _("Tracks extracted successfully"),
 							 GTK_STOCK_OK,
-							 _("View destination folder"),
+							 _("_View destination folder"),
 							 PREF_RIPPER_VIEW_DISTINATION);
 							    
 		g_signal_connect (G_OBJECT (d), "response",

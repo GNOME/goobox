@@ -407,7 +407,7 @@ _gtk_yesno_dialog_with_checkbutton_new (GtkWindow        *parent,
 	image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
 	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
 
-	label = gtk_label_new (message);	
+	label = gtk_label_new (message);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtk_label_set_selectable (GTK_LABEL (label), TRUE);
 	
@@ -485,6 +485,7 @@ _gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
 	GtkWidget *button;
 	GtkWidget *check_button;
 	char      *stock_id = GTK_STOCK_DIALOG_INFO;
+	char      *escaped_message, *markup_text;
 
 	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
 	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
@@ -499,7 +500,14 @@ _gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
 	image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
 	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
 
-	label = gtk_label_new (message);	
+	escaped_message = g_markup_escape_text (message, -1);
+	markup_text = g_strdup_printf ("<span weight=\"bold\" size=\"larger\">%s</span>", escaped_message);
+
+	label = gtk_label_new ("");	
+	gtk_label_set_markup (GTK_LABEL (label), markup_text);
+	g_free (markup_text);
+	g_free (escaped_message);
+
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtk_label_set_selectable (GTK_LABEL (label), TRUE);
 	
