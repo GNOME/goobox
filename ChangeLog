@@ -1,5 +1,11 @@
 2004-11-19  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-application.c (impl_goo_application_present): force content
+	update.
+
+	* src/goo-player-info.c (goo_player_info_set_time): use "%s / %s" 
+	instead of "%s of %s" as time string format.
+
 	* src/goo-window.c (goo_window_toggle_visibility): restore the window
 	position after showing the window clicking on the notification area 
 	icon.

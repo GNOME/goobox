@@ -24,6 +24,7 @@
 #include <string.h>
 #include <bonobo/bonobo-generic-factory.h>
 #include "goo-application.h"
+#include "goo-window.h"
 #include "main.h"
 
 
@@ -63,7 +64,12 @@ static void
 impl_goo_application_present (PortableServer_Servant  _servant,
 			      CORBA_Environment      *ev)
 {
-	gtk_window_present (main_window);
+	if (GTK_WIDGET_VISIBLE (main_window))
+		gtk_window_present (main_window);
+	else
+		goo_window_toggle_visibility (GOO_WINDOW (main_window));
+
+	goo_window_update (GOO_WINDOW (main_window));
 }
 
 

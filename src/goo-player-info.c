@@ -222,7 +222,7 @@ time_scale_value_changed_cb (GtkRange      *range,
 		current_time = priv->song_length * (new_value / 100.0);
 
 		set_time_string (priv->current_time, current_time);
-		sprintf (priv->time, _("%s of %s"), priv->total_time, priv->current_time);
+		sprintf (priv->time, _("%s / %s"), priv->total_time, priv->current_time);
 		set_time (info, priv->time);
 
 		return;
@@ -247,7 +247,7 @@ update_time_label_cb (gpointer data)
 	
 	current_time = priv->song_length * new_value;
 	set_time_string (priv->current_time, current_time);
-	sprintf (priv->time, _("%s of %s"), priv->current_time, priv->total_time);
+	sprintf (priv->time, _("%s / %s"), priv->current_time, priv->total_time);
 	set_time (info, priv->time);
 
 	priv->update_id = g_timeout_add (UPDATE_TIMEOUT,
@@ -601,7 +601,7 @@ goo_player_info_set_time (GooPlayerInfo  *info,
 		return;
 
 	set_time_string (priv->current_time, current_time);
-	sprintf (priv->time, _("%s of %s"), priv->current_time, priv->total_time);
+	sprintf (priv->time, _("%s / %s"), priv->current_time, priv->total_time);
 	set_time (info, priv->time);
 
 	g_signal_handlers_block_by_data (priv->time_scale, info);
