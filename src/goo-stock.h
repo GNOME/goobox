@@ -32,6 +32,7 @@
 #define GOO_STOCK_STOP       "goo-stop"
 #define GOO_STOCK_NO_COVER   "goo-no-cover"
 #define GOO_STOCK_VOLUME     "goo-volume"
+#define GOO_STOCK_WEB        "goo-web"
 
 
 void goo_stock_init (void);

@@ -9,7 +9,9 @@ IMAGES=					\
 	prev-24.png			\
 	stop-24.png			\
 	volume-16.png			\
-	volume-24.png
+	volume-24.png			\
+	web-16.png			\
+	web-24.png
 
 noinst_DATA = pixbufs.h
 CLEANFILES = $(noinst_DATA)
@@ -26,5 +28,7 @@ pixbufs.h: $(IMAGES)
 	gdk-pixbuf-csource --raw --build-list stop_24_rgba $(srcdir)/stop-24.png >> $(srcdir)/pixbufs.h
 	gdk-pixbuf-csource --raw --build-list volume_16_rgba $(srcdir)/volume-16.png >> $(srcdir)/pixbufs.h
 	gdk-pixbuf-csource --raw --build-list volume_24_rgba $(srcdir)/volume-24.png >> $(srcdir)/pixbufs.h
+	gdk-pixbuf-csource --raw --build-list web_16_rgba $(srcdir)/web-16.png >> $(srcdir)/pixbufs.h
+	gdk-pixbuf-csource --raw --build-list web_24_rgba $(srcdir)/web-24.png >> $(srcdir)/pixbufs.h
 
 EXTRA_DIST = $(IMAGES) pixbufs.h

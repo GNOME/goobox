@@ -41,6 +41,7 @@ static struct {
 	{ GOO_STOCK_STOP,         stop_24_rgba,         NULL },
 	{ GOO_STOCK_NO_COVER,     no_cover_48_rgba,     NULL },
 	{ GOO_STOCK_VOLUME,       volume_24_rgba,       volume_16_rgba },
+	{ GOO_STOCK_WEB,          web_24_rgba,          web_16_rgba },
 };
 
 

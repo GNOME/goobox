@@ -1,3 +1,7 @@
+2004-10-22  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-player-cd.c: Read CD tracks list asynchronously.
+
 2004-10-19  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	[ version 0.2.0 released ]

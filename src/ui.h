@@ -35,6 +35,7 @@ static GtkActionEntry action_entries[] = {
 	{ "EditMenu", NULL, N_("_Edit") },
 	{ "ViewMenu", NULL, N_("_View") },
 	{ "HelpMenu", NULL, N_("_Help") },
+	{ "CDCoverMenu", NULL, N_("CD C_over") },
 
 	{ "About", GNOME_STOCK_ABOUT,
 	  N_("_About"), NULL,
@@ -58,23 +59,23 @@ static GtkActionEntry action_entries[] = {
 	  G_CALLBACK (activate_action_pause) },
 	{ "Stop", GOO_STOCK_STOP,
 	  N_("_Stop"), "Escape",
-	  N_("Stop"),
+	  N_("Stop playing"),
 	  G_CALLBACK (activate_action_stop) },
 	{ "Next", GOO_STOCK_NEXT,
 	  N_("_Next"), "N",
-	  N_("Play next track"),
+	  N_("Play the next track"),
 	  G_CALLBACK (activate_action_next) },
 	{ "Prev", GOO_STOCK_PREV,
 	  N_("Pre_v"), "P",
-	  N_("Play previous track"),
+	  N_("Play the previous track"),
 	  G_CALLBACK (activate_action_prev) },
 	{ "Eject", GOO_STOCK_EJECT,
 	  N_("_Eject"), NULL,
-	  N_("Eject CD"),
+	  N_("Eject the CD"),
 	  G_CALLBACK (activate_action_eject) },
 	{ "Reload", GTK_STOCK_REFRESH,
 	  N_("_Reload"), "<control>R",
-	  N_("Reload CD"),
+	  N_("Reload the CD"),
 	  G_CALLBACK (activate_action_reload) },
 	{ "Preferences", GTK_STOCK_PREFERENCES,
 	  N_("_Preferences"), NULL,
@@ -82,16 +83,24 @@ static GtkActionEntry action_entries[] = {
 	  G_CALLBACK (activate_action_preferences) },
 	{ "Extract", GOO_STOCK_EXTRACT,
 	  N_("E_xtract Tracks"), NULL,
-	  N_("Save tracks to disk as files"),
+	  N_("Save the tracks to disk as files"),
 	  G_CALLBACK (activate_action_extract) },
 	{ "Properties", GTK_STOCK_PROPERTIES,
 	  N_("_CD Properties"), NULL,
-	  N_("Edit CD artist, album and tracks titles"),
+	  N_("Edit the CD artist, album and tracks titles"),
 	  G_CALLBACK (activate_action_edit_cddata) },
 	{ "Quit", GTK_STOCK_QUIT,
 	  N_("_Quit"), NULL,
 	  N_("Quit the application"),
 	  G_CALLBACK (activate_action_quit) },
+	{ "PickCoverFromDisk", GTK_STOCK_OPEN,
+	  N_("Choose from Disk"), "",
+	  N_("Choose a CD cover from the local disk"),
+	  G_CALLBACK (activate_action_pick_cover_from_disk) },
+	{ "SearchCoverFromWeb", GOO_STOCK_WEB,
+	  N_("Search on Internet"), NULL,
+	  N_("Search a CD cover on Internet"),
+	  G_CALLBACK (activate_action_search_cover_on_internet) },
 };
 static guint n_action_entries = G_N_ELEMENTS (action_entries);
 
@@ -141,11 +150,15 @@ static const gchar *ui_info =
 "      <menuitem action='Quit'/>"
 "    </menu>"
 "    <menu action='EditMenu'>"
-"      <menuitem action='Properties'/>"
-"      <separator name='sep01'/>"
 "      <menuitem action='PlayAll'/>"
 "      <menuitem action='Repeat'/>"
 "      <menuitem action='Shuffle'/>"
+"      <separator name='sep01'/>"
+"      <menuitem action='Properties'/>"
+"      <menu action='CDCoverMenu'>"
+"        <menuitem action='PickCoverFromDisk'/>"
+"        <menuitem action='SearchCoverFromWeb'/>"
+"      </menu>"
 "      <separator name='sep02'/>"
 "      <menuitem action='Preferences'/>"
 "    </menu>"
@@ -177,6 +190,10 @@ static const gchar *ui_info =
 "    <menuitem action='Eject'/>"
 "    <separator name='sep01'/>"
 "    <menuitem action='About'/>"
+"  </popup>"
+"  <popup name='CoverPopupMenu'>"
+"    <menuitem action='PickCoverFromDisk'/>"
+"    <menuitem action='SearchCoverFromWeb'/>"
 "  </popup>"
 "</ui>";
 

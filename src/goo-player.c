@@ -35,6 +35,7 @@ struct _GooPlayerPrivateData {
 	char            *location;
 	char            *title;
 	char            *subtitle;
+	gboolean         is_busy;
 };
 
 enum {
@@ -262,6 +263,7 @@ goo_player_init (GooPlayer *player)
 	priv->location = NULL;
 	priv->title = NULL;
 	priv->subtitle = NULL;
+	priv->is_busy = FALSE;
 }
 
 
@@ -325,7 +327,7 @@ void
 goo_player_list (GooPlayer *player)
 {
 	player->priv->action = GOO_PLAYER_ACTION_LIST;
-	player->priv->state = GOO_PLAYER_STATE_SEEKING;
+	player->priv->state = GOO_PLAYER_STATE_LISTING;
 	notify_action_start (player);
 	GOO_PLAYER_GET_CLASS (G_OBJECT (player))->list (player);
 }
@@ -544,3 +546,17 @@ goo_player_set_volume (GooPlayer *player,
 	GOO_PLAYER_GET_CLASS (G_OBJECT (player))->set_volume (player, vol);
 }
 
+
+gboolean
+goo_player_get_is_busy (GooPlayer *player)
+{
+	return player->priv->is_busy;
+}
+
+
+void
+goo_player_set_is_busy (GooPlayer *player,
+			gboolean   is_busy)
+{
+	player->priv->is_busy = is_busy;
+}

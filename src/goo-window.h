@@ -50,6 +50,7 @@ struct _GooWindowClass
 
 GType       goo_window_get_type                  (void);
 GtkWindow * goo_window_new                       (const char  *location);
+void        goo_window_close                     (GooWindow   *window);
 void        goo_window_set_toolbar_visibility    (GooWindow   *window,
 						  gboolean     visible);
 void        goo_window_set_statusbar_visibility  (GooWindow   *window,
@@ -69,5 +70,7 @@ GList      *goo_window_get_song_list             (GooWindow   *window,
 						  gboolean     selection);
 void        goo_window_edit_cddata               (GooWindow   *window);
 GooPlayer  *goo_window_get_player                (GooWindow   *window);
+void        goo_window_pick_cover_from_disk      (GooWindow   *window);
+void        goo_window_search_cover_on_internet  (GooWindow   *window);
 
 #endif /* GOO_WINDOW_H */

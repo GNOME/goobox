@@ -57,6 +57,7 @@ typedef enum {
 	GOO_PLAYER_STATE_PLAYING,
 	GOO_PLAYER_STATE_PAUSED,
 	GOO_PLAYER_STATE_SEEKING,
+	GOO_PLAYER_STATE_LISTING,
 	GOO_PLAYER_STATE_UPDATING,
 	GOO_PLAYER_STATE_EJECTING
 } GooPlayerState;
@@ -132,6 +133,7 @@ const char *     goo_player_get_subtitle        (GooPlayer       *player);
 int              goo_player_get_volume          (GooPlayer       *player);
 void             goo_player_set_volume          (GooPlayer       *player,
 						 int              vol);
+gboolean         goo_player_get_is_busy         (GooPlayer       *player);
 
 /* protected */
 
@@ -148,5 +150,7 @@ void             goo_player_set_subtitle        (GooPlayer       *player,
 						 const char      *value);
 void             goo_player_set_volume_protected(GooPlayer       *player,
 						 int              vol);
+void             goo_player_set_is_busy         (GooPlayer       *player,
+						 gboolean         value);
 
 #endif /* GOO_PLAYER_H */

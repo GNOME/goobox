@@ -171,8 +171,7 @@ void
 activate_action_quit (GtkAction *action, 
 		      gpointer   data)
 {
-	gtk_widget_destroy (GTK_WIDGET (main_window));
-	bonobo_main_quit ();
+	goo_window_close (GOO_WINDOW (data));
 }
 
 
@@ -237,4 +236,20 @@ activate_action_edit_cddata (GtkAction *action,
 			     gpointer   data)
 {
 	goo_window_edit_cddata (GOO_WINDOW (data));
+}
+
+
+void
+activate_action_pick_cover_from_disk (GtkAction *action, 
+				      gpointer   data)
+{
+	goo_window_pick_cover_from_disk (GOO_WINDOW (data));
+}
+
+
+void
+activate_action_search_cover_on_internet (GtkAction *action, 
+					  gpointer   data)
+{
+	goo_window_search_cover_on_internet (GOO_WINDOW (data));
 }

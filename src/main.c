@@ -111,12 +111,10 @@ int main (int argc, char **argv)
 		exit (0);
 	}
 
-	/*
 	if (! g_thread_supported ()) {
 		g_thread_init (NULL);
 		gdk_threads_init ();
 	}
-	*/
 
 	if (! gnome_vfs_init ()) 
                 g_error ("Cannot initialize the Virtual File System.");

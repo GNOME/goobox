@@ -62,6 +62,7 @@
 #define SHOW_TRACK_LIST "Show _tracks"
 #define DEFAULT_DEVICE "/dev/cdrom"
 #define DEFAULT_VOLUME 100
+#define PLAYER_CHECK_RATE 100
 
 struct _GooWindowPrivateData {
 	GtkUIManager    *ui;
@@ -73,6 +74,7 @@ struct _GooWindowPrivateData {
 	GtkWidget       *statusbar;
 	GtkWidget       *file_popup_menu;
 	GtkWidget       *tray_popup_menu;
+	GtkWidget       *cover_popup_menu;
 
 	GtkWidget       *info;
 	GtkWidget       *volume_button;
@@ -108,11 +110,15 @@ struct _GooWindowPrivateData {
 	double           fraction;
 
 	GNOME_Media_CDDBTrackEditor track_editor;
+
+	gboolean         exiting;
+	guint            check_id;
 };
 
 
 static int icon_size = 0;
 static GnomeAppClass *parent_class = NULL;
+static GList *window_list = NULL;
 
 
 enum {
@@ -260,7 +266,9 @@ window_update_sensitivity (GooWindow *window)
 
 	set_sensitive (window, "Extract", !error && stopped && (priv->songs > 0));
 	set_sensitive (window, "Properties", !error && (discid != NULL));
-
+	set_sensitive (window, "PickCoverFromDisk", !error && (discid != NULL));
+	set_sensitive (window, "SearchCoverFromWeb", !error && (discid != NULL));
+	goo_player_info_set_sensitive (GOO_PLAYER_INFO (window->priv->info), !error && (discid != NULL));
 	set_sensitive (window, "Repeat", play_all);
 	set_sensitive (window, "Shuffle", play_all);
 }
@@ -451,6 +459,11 @@ goo_window_finalize (GObject *object)
 		if (priv->file_popup_menu != NULL) {
 			gtk_widget_destroy (priv->file_popup_menu);
 			priv->file_popup_menu = NULL;
+		}
+
+		if (priv->cover_popup_menu != NULL) {
+			gtk_widget_destroy (priv->cover_popup_menu);
+			priv->cover_popup_menu = NULL;
 		}
 
 		song_list_free (priv->song_list);
@@ -905,6 +918,9 @@ get_action_name (GooPlayerAction action)
 	case GOO_PLAYER_ACTION_UPDATE:
 		name = "UPDATE";
 		break;
+	case GOO_PLAYER_ACTION_METADATA:
+		name = "METADATA";
+		break;
 	default:
 		name = "WHAT?";
 		break;
@@ -1335,9 +1351,9 @@ file_button_press_cb (GtkWidget      *widget,
 		      GdkEventButton *event,
 		      gpointer        data)
 {
-	GooWindow        *window = data;
+	GooWindow             *window = data;
 	GooWindowPrivateData  *priv = window->priv;
-	GtkTreeSelection *selection;
+	GtkTreeSelection      *selection;
 
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (priv->list_view));
 	if (selection == NULL)
@@ -1431,6 +1447,20 @@ player_info_skip_to_cb (GooPlayerInfo *info,
 {
 	debug (DEBUG_INFO, "[Window] skip to %d\n", seconds);
 	goo_player_skip_to (window->priv->player, (guint) seconds);
+}
+
+
+static void
+player_info_cover_clicked_cb (GooPlayerInfo *info,
+			      GooWindow     *window)
+{
+	debug (DEBUG_INFO, "[Window] cover clicked\n");
+
+	gtk_menu_popup (GTK_MENU (window->priv->cover_popup_menu),
+			NULL, NULL, NULL, 
+			window, 
+			3,
+			GDK_CURRENT_TIME);
 }
 
 
@@ -1579,6 +1609,8 @@ static void
 goo_window_init (GooWindow *window)
 {
 	window->priv = g_new0 (GooWindowPrivateData, 1);
+	window->priv->exiting = FALSE;
+	window->priv->check_id = 0;
 }
 
 
@@ -1777,6 +1809,7 @@ goo_window_construct (GooWindow  *window,
 	/*gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS); FIXME */
 
 	priv->file_popup_menu = gtk_ui_manager_get_widget (ui, "/ListPopupMenu");
+	priv->cover_popup_menu = gtk_ui_manager_get_widget (ui, "/CoverPopupMenu");
 
 	/* Create the statusbar. */
 
@@ -1801,6 +1834,10 @@ goo_window_construct (GooWindow  *window,
 	g_signal_connect (priv->info,
 			  "skip_to",
 			  G_CALLBACK (player_info_skip_to_cb), 
+			  window);
+	g_signal_connect (priv->info,
+			  "cover_clicked",
+			  G_CALLBACK (player_info_cover_clicked_cb), 
 			  window);
 	gtk_box_pack_start (GTK_BOX (hbox), priv->info, TRUE, TRUE, 0);
 
@@ -1997,7 +2034,57 @@ goo_window_new (const char *location)
 	window = (GooWindow*) g_object_new (GOO_TYPE_WINDOW, NULL);
 	goo_window_construct (window, location);
 
+	window_list = g_list_prepend (window_list, window);
+
 	return (GtkWindow*) window;
+}
+
+
+static void
+goo_window_destroy (GooWindow *window)
+{
+	window_list = g_list_remove (window_list, window);
+	gtk_widget_destroy (GTK_WIDGET (window));
+	if (window_list == NULL)
+		bonobo_main_quit ();
+}
+
+
+static gboolean
+check_player_state_cb (gpointer data)
+{
+	GooWindow *window = data;
+ 	GooWindowPrivateData *priv = window->priv;
+
+	g_source_remove (priv->check_id);
+
+	if (!goo_player_get_is_busy (priv->player)) 
+		goo_window_destroy (window);
+	else
+		priv->check_id = g_timeout_add (PLAYER_CHECK_RATE, 
+						check_player_state_cb, 
+						window);
+	return FALSE;
+}
+
+
+void
+goo_window_close (GooWindow *window)
+{
+ 	GooWindowPrivateData *priv = window->priv;
+
+	priv->exiting = TRUE;
+	if (!goo_player_get_is_busy (priv->player)) 
+		goo_window_destroy (window);
+	else {
+		gtk_widget_set_sensitive (GTK_WIDGET (window), FALSE);
+
+		if (priv->check_id != 0)
+			g_source_remove (priv->check_id);
+		priv->check_id = g_timeout_add (PLAYER_CHECK_RATE, 
+						check_player_state_cb, 
+						window);
+	}
 }
 
 
@@ -2305,4 +2392,70 @@ GooPlayer *
 goo_window_get_player (GooWindow *window)
 {
 	return window->priv->player;
+}
+
+
+static void
+open_response_cb (GtkDialog  *file_sel,
+		  int         button_number,
+		  gpointer    userdata)
+{
+	/*GooPlayerInfo *info = userdata;*/
+
+	if (button_number == GTK_RESPONSE_ACCEPT) {
+		/* FIXME 
+		_gtk_entry_set_filename_text (GTK_ENTRY (data->e_destination_entry),
+					      gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_sel)));
+		*/
+	}
+	gtk_widget_destroy (GTK_WIDGET (file_sel));
+}
+
+
+void
+goo_window_pick_cover_from_disk (GooWindow *window)
+{
+	GtkWidget     *file_sel;
+	GtkFileFilter *filter;
+
+	file_sel = gtk_file_chooser_dialog_new (_("Choose CD Cover Image"),
+						GTK_WINDOW (window),
+						GTK_FILE_CHOOSER_ACTION_OPEN,
+						GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, 
+						GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+						NULL);
+	gtk_window_set_modal (GTK_WINDOW (file_sel), TRUE);
+	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (file_sel), TRUE);
+	/*gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (file_sel), gtk_entry_get_text (GTK_ENTRY (data->e_destination_entry)));*/
+
+	filter = gtk_file_filter_new ();
+	gtk_file_filter_set_name (filter, _("Images"));
+	gtk_file_filter_add_mime_type (filter, "image/jpeg");
+	gtk_file_filter_add_mime_type (filter, "image/png");
+	gtk_file_filter_add_mime_type (filter, "image/gif");
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (file_sel), filter);
+	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (file_sel), filter);
+
+	filter = gtk_file_filter_new ();
+	gtk_file_filter_set_name (filter, _("All files"));
+	gtk_file_filter_add_pattern (filter, "*");
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (file_sel), filter);
+
+	g_signal_connect (G_OBJECT (file_sel),
+			  "response",
+			  G_CALLBACK (open_response_cb),
+			  window);
+	
+	g_signal_connect_swapped (GTK_DIALOG (file_sel),
+				  "close",
+				  G_CALLBACK (gtk_widget_destroy),
+				  GTK_WIDGET (file_sel));
+	
+	gtk_widget_show_all (GTK_WIDGET (file_sel));
+}
+
+
+void
+goo_window_search_cover_on_internet (GooWindow *window)
+{
 }

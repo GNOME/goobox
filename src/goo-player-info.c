@@ -39,22 +39,25 @@
 #define MIN_WIDTH 400
 
 struct _GooPlayerInfoPrivateData {
-	GooPlayer *player;
-	GtkWidget *title1_label;
-	GtkWidget *title2_label;
-	GtkWidget *title3_label;
-	GtkWidget *time_label;
-	GtkWidget *playing_label;
-	GtkWidget *time_scale;
-	GtkWidget *image;
-	char       current_time[64];
-	char       total_time[64];
-	char       time[64];
-	gint64     song_length;
-	gboolean   update_slider;
+	GooPlayer   *player;
+	GtkWidget   *title1_label;
+	GtkWidget   *title2_label;
+	GtkWidget   *title3_label;
+	GtkWidget   *time_label;
+	GtkWidget   *playing_label;
+	GtkWidget   *time_scale;
+	GtkWidget   *cover_image;
+	GtkWidget   *cover_button;
+	GtkTooltips *tips;
+	char         current_time[64];
+	char         total_time[64];
+	char         time[64];
+	gint64       song_length;
+	gboolean     update_slider;
 };
 
 enum {
+	COVER_CLICKED,
 	SKIP_TO,
         LAST_SIGNAL
 };
@@ -113,6 +116,15 @@ goo_player_info_class_init (GooPlayerInfoClass *class)
 
         parent_class = g_type_class_peek_parent (class);
 
+	goo_player_info_signals[COVER_CLICKED] =
+                g_signal_new ("cover_clicked",
+			      G_TYPE_FROM_CLASS (class),
+			      G_SIGNAL_RUN_LAST,
+			      G_STRUCT_OFFSET (GooPlayerInfoClass, cover_clicked),
+			      NULL, NULL,
+			      goo_marshal_VOID__VOID,
+			      G_TYPE_NONE, 
+			      0);
 	goo_player_info_signals[SKIP_TO] =
                 g_signal_new ("skip_to",
 			      G_TYPE_FROM_CLASS (class),
@@ -212,6 +224,14 @@ time_scale_leave_notify_cb (GtkRange         *range,
 }
 
 
+static void
+cover_button_clicked_cb (GtkWidget     *button,
+			 GooPlayerInfo *info)
+{
+	g_signal_emit (info, goo_player_info_signals[COVER_CLICKED], 0);
+}
+
+
 static void 
 goo_player_info_init (GooPlayerInfo *info)
 {
@@ -227,6 +247,10 @@ goo_player_info_init (GooPlayerInfo *info)
 
 	GTK_BOX (info)->spacing = SPACING;
 	GTK_BOX (info)->homogeneous = FALSE;
+
+	priv->tips = gtk_tooltips_new ();
+	gtk_object_ref (GTK_OBJECT (priv->tips));
+	gtk_object_sink (GTK_OBJECT (priv->tips));
 
 	/* Title and Artist */
 
@@ -246,7 +270,6 @@ goo_player_info_init (GooPlayerInfo *info)
 	time_box = gtk_hbox_new (FALSE, 6);
 
 	priv->time_label = gtk_label_new (NULL);
-	/*gtk_misc_set_alignment (GTK_MISC (priv->time_label), 0.0, 0.5);*/
 	gtk_widget_set_no_show_all (priv->time_label, TRUE);
 
 	priv->time_scale = gtk_hscale_new_with_range (0.0, 1.0, 0.01);
@@ -257,7 +280,6 @@ goo_player_info_init (GooPlayerInfo *info)
 	gtk_widget_set_no_show_all (priv->time_scale, TRUE);
 
 	priv->playing_label = gtk_label_new (NULL);
-	/*gtk_misc_set_alignment (GTK_MISC (priv->playing_label), 0.0, 0.0);*/
 	gtk_widget_set_no_show_all (priv->playing_label, TRUE);
 
 	gtk_box_pack_start (GTK_BOX (time_box), priv->time_label, FALSE, FALSE, 0);
@@ -266,14 +288,28 @@ goo_player_info_init (GooPlayerInfo *info)
 
 	/* Image */
 
-	priv->image = gtk_image_new_from_stock (GOO_STOCK_NO_COVER, GTK_ICON_SIZE_DIALOG);
-	gtk_widget_set_size_request (priv->image, COVER_SIZE, COVER_SIZE);
-	gtk_widget_show (priv->image);
-	gtk_box_pack_start (GTK_BOX (info), priv->image, FALSE, FALSE, 0);
+	priv->cover_button = gtk_button_new ();
+	gtk_button_set_relief (GTK_BUTTON (priv->cover_button),
+			       GTK_RELIEF_NONE);
+	gtk_tooltips_set_tip (priv->tips,
+			      GTK_WIDGET (priv->cover_button),
+			      _("Click here to choose a cover for this CD"),
+			      NULL);
+	g_signal_connect (G_OBJECT (priv->cover_button),
+			  "clicked",
+			  G_CALLBACK (cover_button_clicked_cb),
+			  info);
+
+	priv->cover_image = gtk_image_new_from_stock (GOO_STOCK_NO_COVER, GTK_ICON_SIZE_DIALOG);
+	gtk_widget_set_size_request (priv->cover_image, COVER_SIZE, COVER_SIZE);
+	gtk_widget_show (priv->cover_image);
+	gtk_container_add (GTK_CONTAINER (priv->cover_button), priv->cover_image);
+
+	gtk_box_pack_start (GTK_BOX (info), priv->cover_button, FALSE, FALSE, 0);
 
 	gtk_box_pack_start (GTK_BOX (info), 
 			    gtk_vseparator_new (),
-			    FALSE, FALSE, 6);
+			    FALSE, FALSE, 0);
 
 	/**/
 
@@ -319,6 +355,7 @@ goo_player_info_finalize (GObject *object)
 	if (info->priv != NULL) {
 		if (info->priv->player != NULL)
 			g_object_unref (info->priv->player);
+		gtk_object_unref (GTK_OBJECT (info->priv->tips));
 		g_free (info->priv);
 		info->priv = NULL;
 	}
@@ -443,7 +480,11 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 		} else if (state == GOO_PLAYER_STATE_SEEKING) {
 			set_title1 (info, _("Reading CD"));
 			set_title2 (info, "");
-			
+
+		} else if (state == GOO_PLAYER_STATE_LISTING) {
+			set_title1 (info, _("Getting tracks list"));
+			set_title2 (info, "");
+
 		}  else {
 			const char *title, *subtitle;
 
@@ -495,4 +536,12 @@ goo_player_info_set_time (GooPlayerInfo  *info,
 		gtk_range_set_value (GTK_RANGE (priv->time_scale), (double) current_time / priv->song_length);
 		g_signal_handlers_unblock_by_data (priv->time_scale, info);
 	}
+}
+
+
+void
+goo_player_info_set_sensitive (GooPlayerInfo  *info,
+			       gboolean        value)
+{
+	gtk_widget_set_sensitive (info->priv->cover_button, value);
 }

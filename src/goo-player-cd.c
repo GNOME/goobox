@@ -40,6 +40,7 @@
 #define TOC_OFFSET 150
 #define SECTORS_PER_SEC 75
 #define POLL_TIMEOUT 1000
+#define REFRESH_RATE 5
 
 struct _GooPlayerCDPrivateData {
 	GooCdrom     *cdrom;
@@ -58,6 +59,11 @@ struct _GooPlayerCDPrivateData {
 	char         *title;
 	char         *genre;
 	guint         update_state_id;
+
+	GThread      *thread;
+	GMutex       *yes_or_no;
+	guint         check_id;
+	gboolean      exiting;
 
 	CDDBSlaveClient *cddb_client;
 };
@@ -286,27 +292,85 @@ cd_player_update (GooPlayer *player)
 }
 
 
-static void
-cd_player_list (GooPlayer *player)
+static int
+check_thread (gpointer data)
 {
+	GooPlayer              *player = data;
+	GooPlayerCD            *player_cd = GOO_PLAYER_CD (player);
+	GooPlayerCDPrivateData *priv = player_cd->priv;
+	GString                *offsets;
+	GList                  *scan;
+	gboolean                done, exiting;
+
+	/* Remove check. */
+
+        g_source_remove (priv->check_id);
+        priv->check_id = 0;
+	
+	/**/
+
+	g_mutex_lock (priv->yes_or_no);
+	done = priv->thread == NULL;
+	exiting = priv->exiting;
+        g_mutex_unlock (priv->yes_or_no);
+
+	if (exiting) {
+		goo_player_set_is_busy (player, FALSE);
+		destroy_pipeline (player_cd, TRUE);
+		return FALSE;
+	}
+
+	if (!done) {
+		priv->check_id = g_timeout_add (REFRESH_RATE, 
+						check_thread, 
+						player);
+		return FALSE;
+	}
+
+	/**/
+
+	goo_player_set_is_busy (player, FALSE);
+	gst_element_set_state (priv->play_thread, GST_STATE_NULL);
+	goo_player_set_state (player, GOO_PLAYER_STATE_STOPPED, TRUE);
+	action_done (player, GOO_PLAYER_ACTION_LIST);
+	destroy_pipeline (player_cd, TRUE);
+
+	/**/
+
+	offsets = g_string_new (NULL);
+	
+	for (scan = priv->tracks; scan; scan = scan->next) {
+		TrackInfo *track = scan->data;
+		char      *offset;
+		offset = g_strdup_printf ("%" G_GINT64_FORMAT " ", track->from_sector);
+		g_string_append (offsets, offset);
+		g_free (offset);
+	}
+
+	cddb_slave_client_query (priv->cddb_client, 
+				 priv->discid, 
+				 priv->n_tracks, 
+				 offsets->str, 
+				 priv->total_time / GST_SECOND,
+				 PACKAGE,
+				 VERSION);
+
+	g_string_free (offsets, TRUE);
+
+	return FALSE;
+}
+
+
+static void * 
+list_thread (void *thread_data)
+{
+	GooPlayer              *player = thread_data;
 	GooPlayerCD            *player_cd = GOO_PLAYER_CD (player);
 	GooPlayerCDPrivateData *priv = player_cd->priv;
 	GstFormat               time_format = GST_FORMAT_TIME;
 	gint                    i;
 	gint64                  from_sector = 0, total_sectors;
-	GString                *offsets;
-	GList                  *scan;
 
-	goo_player_cd_empty_list (player);
-
-	if (goo_cdrom_get_state (priv->cdrom) != GOO_CDROM_STATE_OK) {
-		debug (DEBUG_INFO, "NOT OK\n");
-		goo_player_set_state (player, GOO_PLAYER_STATE_ERROR, TRUE);
-		action_done (player, GOO_PLAYER_ACTION_LIST);
-		return;
-	}
-
-	create_pipeline (player_cd);
 	gst_element_set_state (priv->play_thread, GST_STATE_PAUSED);
 
 	/**/
@@ -354,32 +418,54 @@ cd_player_list (GooPlayer *player)
 	g_object_get (priv->source, "discid", &(priv->discid), NULL);
 	debug (DEBUG_INFO, "DISC ID: %s\n", priv->discid);
 
-	gst_element_set_state (priv->play_thread, GST_STATE_NULL);
-	goo_player_set_state (player, GOO_PLAYER_STATE_STOPPED, TRUE);
-	action_done (player, GOO_PLAYER_ACTION_LIST);
-	destroy_pipeline (player_cd, TRUE);
+	g_mutex_lock (priv->yes_or_no);
+	priv->thread = NULL;
+	g_mutex_unlock (priv->yes_or_no);
 
-	/**/
+	g_thread_exit (NULL);
 
-	offsets = g_string_new (NULL);
-	
-	for (scan = priv->tracks; scan; scan = scan->next) {
-		TrackInfo *track = scan->data;
-		char      *offset;
-		offset = g_strdup_printf ("%" G_GINT64_FORMAT " ", track->from_sector);
-		g_string_append (offsets, offset);
-		g_free (offset);
+	return NULL;
+}
+
+
+static gboolean
+cd_listing (GooPlayer *player)
+{
+	GooPlayerCD            *player_cd = GOO_PLAYER_CD (player);
+	GooPlayerCDPrivateData *priv = player_cd->priv;
+	gboolean                listing;
+
+	g_mutex_lock (priv->yes_or_no);
+	listing = (priv->thread != NULL);
+	g_mutex_unlock (priv->yes_or_no);
+
+	return listing;
+}
+
+
+static void
+cd_player_list (GooPlayer *player)
+{
+	GooPlayerCD            *player_cd = GOO_PLAYER_CD (player);
+	GooPlayerCDPrivateData *priv = player_cd->priv;
+
+	if (cd_listing (player))
+		return;
+
+	goo_player_cd_empty_list (player);
+
+	if (goo_cdrom_get_state (priv->cdrom) != GOO_CDROM_STATE_OK) {
+		debug (DEBUG_INFO, "NOT OK\n");
+		goo_player_set_state (player, GOO_PLAYER_STATE_ERROR, TRUE);
+		action_done (player, GOO_PLAYER_ACTION_LIST);
+		return;
 	}
 
-	cddb_slave_client_query (priv->cddb_client, 
-				 priv->discid, 
-				 priv->n_tracks, 
-				 offsets->str, 
-				 priv->total_time / GST_SECOND,
-				 PACKAGE,
-				 VERSION);
+	goo_player_set_is_busy (player, TRUE);
+	create_pipeline (player_cd);
+	priv->thread  = g_thread_create (list_thread, player, FALSE, NULL);
 
-	g_string_free (offsets, TRUE);
+	priv->check_id = g_timeout_add (REFRESH_RATE, check_thread, player);
 }
 
 
@@ -391,6 +477,9 @@ cd_player_seek_song (GooPlayer *player,
 	GooPlayerCDPrivateData *priv = player_cd->priv;
 	GstEvent    *event;
 	int          track_n;
+
+	if (cd_listing (player))
+		return;
 
 	if (priv->n_tracks == 0) {
 		action_done (player, GOO_PLAYER_ACTION_SEEK_SONG);
@@ -462,6 +551,9 @@ cd_player_skip_to (GooPlayer *player,
 	gint64       from_sector, to_sector, sectors;
 	GstEvent    *event;
 
+	if (cd_listing (player))
+		return;
+
 	if (priv->play_thread == NULL)
 		return;
 
@@ -483,6 +575,9 @@ cd_player_play (GooPlayer *player)
 	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
 	GooPlayerCDPrivateData *priv = player_cd->priv;
 	int vol;
+
+	if (cd_listing (player))
+		return;
 
 	if (priv->n_tracks == 0) {
 		action_done (player, GOO_PLAYER_ACTION_PLAY);
@@ -509,6 +604,9 @@ cd_player_pause (GooPlayer *player)
 	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
 	GooPlayerCDPrivateData *priv = player_cd->priv;
 
+	if (cd_listing (player))
+		return;
+
 	if (priv->play_thread == NULL)
 		return;
 
@@ -523,6 +621,9 @@ cd_player_stop (GooPlayer *player)
 {
 	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
 	GooPlayerCDPrivateData *priv = player_cd->priv;
+
+	if (cd_listing (player))
+		return;
 
 	if (priv->play_thread == NULL)
 		return;
@@ -541,6 +642,9 @@ cd_player_get_song_list (GooPlayer *player)
 	GooPlayerCDPrivateData *priv = player_cd->priv;
 	GList *list = NULL, *scan;
 
+	if (cd_listing (player))
+		return NULL;
+
 	for (scan = priv->tracks; scan; scan = scan->next) {
 		TrackInfo *track = scan->data;
 		list = g_list_prepend (list, create_song_info (player_cd, track));
@@ -557,6 +661,9 @@ cd_player_eject (GooPlayer *player)
 	GooPlayerCDPrivateData *priv = player_cd->priv;
 	gboolean      result;
 	GooCdromState cdrom_state;
+
+	if (cd_listing (player))
+		return FALSE;
 
 	destroy_pipeline (player_cd, TRUE);
 
@@ -581,6 +688,9 @@ cd_player_set_location (GooPlayer  *player,
 {
 	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
 
+	if (cd_listing (player))
+		return FALSE;
+
 	debug (DEBUG_INFO, "LOCATION: %s\n", location);
 
 	destroy_pipeline (player_cd, FALSE);
@@ -602,6 +712,10 @@ cd_player_set_volume (GooPlayer  *player,
 		      int         vol)
 {
 	GooPlayerCDPrivateData *priv = GOO_PLAYER_CD (player)->priv;
+
+	if (cd_listing (player))
+		return;
+
 	if (priv->volume != NULL)
 		gst_mixer_set_volume (GST_MIXER (priv->volume), NULL, &vol);
 }
@@ -775,6 +889,10 @@ goo_player_cd_init (GooPlayerCD *player)
 	player->priv = g_new0 (GooPlayerCDPrivateData, 1);
 	priv = player->priv;
 
+	priv->yes_or_no = g_mutex_new ();
+	priv->check_id = 0;
+	priv->exiting = FALSE,
+
 	priv->discid = NULL;
 	priv->n_tracks = 0;
 	priv->tracks = NULL;
@@ -802,9 +920,22 @@ goo_player_cd_finalize (GObject *object)
   
 	player_cd = GOO_PLAYER_CD (object);
 	player = GOO_PLAYER (object);
+	
+	g_mutex_lock (player_cd->priv->yes_or_no);
+	player_cd->priv->exiting = TRUE;
+        g_mutex_unlock (player_cd->priv->yes_or_no);
 
-	if (player_cd->priv != NULL) {
+ 	if (player_cd->priv != NULL) {
 		GooPlayerCDPrivateData *priv = player_cd->priv;
+		
+		if (priv->check_id != 0) {
+			g_source_remove (priv->check_id);
+			priv->check_id = 0;
+		}
+
+		destroy_pipeline (player_cd, FALSE);
+
+		g_mutex_free (priv->yes_or_no);
 
 		if (goo_player_get_state (player) != GOO_PLAYER_STATE_STOPPED)
 			goo_player_stop (player);

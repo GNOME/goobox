@@ -52,6 +52,7 @@ struct _GooPlayerInfoClass
 
 	/*<signals>*/
 
+        void        (*cover_clicked)    (GooPlayerInfo   *info);
         void        (*skip_to)          (GooPlayerInfo   *info,
 					 int              seconds);
 
@@ -66,5 +67,7 @@ void             goo_player_info_set_total_time   (GooPlayerInfo  *info,
 						   gint64          current_time);
 void             goo_player_info_set_time         (GooPlayerInfo  *info,
 						   gint64          current_time);
+void             goo_player_info_set_sensitive    (GooPlayerInfo  *info,
+						   gboolean        value);
 
 #endif /* GOO_PLAYER_INFO_H */

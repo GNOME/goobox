@@ -64,5 +64,9 @@ void activate_action_preferences (GtkAction *action, gpointer data);
 
 void activate_action_edit_cddata (GtkAction *action, gpointer data);
 
+void activate_action_pick_cover_from_disk (GtkAction *action, gpointer data);
+
+void activate_action_search_cover_on_internet (GtkAction *action, gpointer data);
+
 
 #endif /* ACTIONS_H */
