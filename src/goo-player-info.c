@@ -37,6 +37,7 @@
 #define SCALE_WIDTH 150
 #define COVER_SIZE 80
 #define MIN_WIDTH 400
+#define UPDATE_TIMEOUT 50
 
 struct _GooPlayerInfoPrivateData {
 	GooPlayer   *player;
@@ -53,7 +54,8 @@ struct _GooPlayerInfoPrivateData {
 	char         total_time[64];
 	char         time[64];
 	gint64       song_length;
-	gboolean     update_slider;
+	gboolean     dragging;
+	guint        update_id;
 };
 
 enum {
@@ -202,25 +204,75 @@ time_scale_value_changed_cb (GtkRange      *range,
 {
 	double new_value = gtk_range_get_value (range);
 	int    seconds = (int) (new_value * info->priv->song_length);
+
+	if (info->priv->dragging) {
+		GooPlayerInfoPrivateData *priv = info->priv;
+		gint64 current_time;
+
+		current_time = priv->song_length * (new_value / 100.0);
+
+		set_time_string (priv->current_time, current_time);
+		sprintf (priv->time, "%s", priv->current_time);
+		set_time (info, priv->time);
+
+		return;
+	}
+
 	g_signal_emit (info, goo_player_info_signals[SKIP_TO], 0, seconds);
 }
 
 
-static void
-time_scale_enter_notify_cb (GtkRange         *range,
-			    GdkEventCrossing *event,
-			    GooPlayerInfo    *info)
+static gboolean
+update_time_label_cb (gpointer data)
 {
-	info->priv->update_slider = FALSE;
+	GooPlayerInfo *info = data;
+	GooPlayerInfoPrivateData *priv = info->priv;
+	double new_value = gtk_range_get_value (GTK_RANGE (priv->time_scale));
+	gint64 current_time;
+
+	if (priv->update_id != 0) {
+		g_source_remove (priv->update_id);
+		priv->update_id = 0;
+	}
+	
+	current_time = priv->song_length * new_value;
+	set_time_string (priv->current_time, current_time);
+	sprintf (priv->time, "%s", priv->current_time);
+	set_time (info, priv->time);
+
+	priv->update_id = g_timeout_add (UPDATE_TIMEOUT,
+					 update_time_label_cb,
+					 data);
+
+	return FALSE;
 }
 
 
-static void
-time_scale_leave_notify_cb (GtkRange         *range,
-			    GdkEventCrossing *event,
+static gboolean
+time_scale_button_press_cb (GtkRange         *range,
+			    GdkEventButton   *event,
 			    GooPlayerInfo    *info)
 {
-	info->priv->update_slider = TRUE;
+	info->priv->dragging = TRUE;
+	info->priv->update_id = g_timeout_add (UPDATE_TIMEOUT,
+					       update_time_label_cb,
+					       info);
+	return FALSE;
+}
+
+
+static gboolean
+time_scale_button_release_cb (GtkRange         *range,
+			      GdkEventButton   *event,
+			      GooPlayerInfo    *info)
+{
+	if (info->priv->update_id != 0) {
+		g_source_remove (info->priv->update_id);
+		info->priv->update_id = 0;
+	}
+
+	info->priv->dragging = FALSE;
+	return FALSE;
 }
 
 
@@ -241,9 +293,10 @@ goo_player_info_init (GooPlayerInfo *info)
 	info->priv = g_new0 (GooPlayerInfoPrivateData, 1);
 	priv = info->priv;
 
-	priv->update_slider = TRUE;
+	priv->dragging = FALSE;
 	priv->current_time[0] = '\0';
 	priv->total_time[0] = '\0';
+	priv->update_id = 0;
 
 	GTK_BOX (info)->spacing = SPACING;
 	GTK_BOX (info)->homogeneous = FALSE;
@@ -336,12 +389,12 @@ goo_player_info_init (GooPlayerInfo *info)
 			  G_CALLBACK (time_scale_value_changed_cb), 
 			  info);
 	g_signal_connect (priv->time_scale, 
-			  "enter-notify-event",
-			  G_CALLBACK (time_scale_enter_notify_cb), 
+			  "button-press-event",
+			  G_CALLBACK (time_scale_button_press_cb), 
 			  info);
 	g_signal_connect (priv->time_scale, 
-			  "leave-notify-event",
-			  G_CALLBACK (time_scale_leave_notify_cb), 
+			  "button_release_event",
+			  G_CALLBACK (time_scale_button_release_cb), 
 			  info);
 }
 
@@ -356,6 +409,10 @@ goo_player_info_finalize (GObject *object)
   
 	info = GOO_PLAYER_INFO (object);
 	if (info->priv != NULL) {
+		if (info->priv->update_id != 0) {
+			g_source_remove (info->priv->update_id);
+			info->priv->update_id = 0;
+		}
 		if (info->priv->player != NULL)
 			g_object_unref (info->priv->player);
 		gtk_object_unref (GTK_OBJECT (info->priv->tips));
@@ -530,15 +587,16 @@ goo_player_info_set_time (GooPlayerInfo  *info,
 {
 	GooPlayerInfoPrivateData *priv = info->priv;
 
+	if (priv->dragging) 
+		return;
+
 	set_time_string (priv->current_time, current_time);
 	sprintf (priv->time, "%s", priv->current_time);
 	set_time (info, priv->time);
 
-	if (priv->update_slider) {
-		g_signal_handlers_block_by_data (priv->time_scale, info);
-		gtk_range_set_value (GTK_RANGE (priv->time_scale), (double) current_time / priv->song_length);
-		g_signal_handlers_unblock_by_data (priv->time_scale, info);
-	}
+	g_signal_handlers_block_by_data (priv->time_scale, info);
+	gtk_range_set_value (GTK_RANGE (priv->time_scale), (double) current_time / priv->song_length);
+	g_signal_handlers_unblock_by_data (priv->time_scale, info);
 }
 
 

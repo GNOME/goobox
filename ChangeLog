@@ -1,3 +1,14 @@
+2004-10-28  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-player-info.c (update_time_label_cb)
+	(time_scale_button_press_cb, time_scale_button_release_cb): 
+
+	Update the time label during a time scale dragging.
+
+	* src/goo-volume-button.c (button_scroll_event_cb): 
+
+	Change volume on scroll up and scroll down.
+
 2004-10-27  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-stock.h: use standard names when appropriate.

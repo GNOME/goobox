@@ -1581,6 +1581,8 @@ tray_object_destroyed (GooWindow *window)
 		gtk_widget_destroy (priv->file_popup_menu);
 		priv->file_popup_menu = NULL;
 	}
+
+	priv->tray = NULL;
 }
 
 

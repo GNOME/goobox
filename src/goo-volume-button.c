@@ -258,6 +258,30 @@ popup_win_event_cb (GtkWidget       *widget,
 }
 
 
+static gboolean
+button_scroll_event_cb (GtkWidget       *widget,
+			GdkEventScroll  *event,
+			GooVolumeButton *button)
+{
+	GooVolumeButtonPrivateData *priv = button->priv;
+	double direction = 1.0;
+
+	if (event->direction == GDK_SCROLL_UP) 
+		direction = 1.0;
+	else if (event->direction == GDK_SCROLL_DOWN) 
+		direction = -1.0;
+	else
+		return FALSE;
+
+	goo_volume_button_set_volume (button, 
+				      priv->value + (direction * priv->step),
+				      TRUE);
+
+	return TRUE;
+
+}
+
+
 static void 
 goo_volume_button_construct (GooVolumeButton *button,
 			     double           from_value,
@@ -324,10 +348,15 @@ goo_volume_button_construct (GooVolumeButton *button,
 
 	/**/
 
-	g_signal_connect (button, 
+	g_signal_connect (G_OBJECT (button),
 			  "toggled",
 			  G_CALLBACK (button_toggled_cb), 
 			  button);
+	g_signal_connect (G_OBJECT (button),
+			  "scroll_event",
+			  G_CALLBACK (button_scroll_event_cb), 
+			  button);
+
 }
 
 
@@ -384,6 +413,7 @@ goo_volume_button_set_volume (GooVolumeButton *button,
 			      double           vol,
 			      gboolean         notify)
 {
+	vol = CLAMP (vol, 0.0, 100.0);
 	button->priv->value = vol;
 
 	g_signal_handlers_block_by_data (button->priv->volume_scale, button);

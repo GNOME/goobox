@@ -1,3 +1,12 @@
+version 0.3.0
+-------------
+	* Added ability to associate a cover image to a CD, the image can
+	  be picked from the local disk or searched over Internet with 
+	  Google.
+	* Use standard stock icons when appropriate.
+	* Added ability to hide the main window leaving only the tray icon.
+	* Read CD tracks list asynchronously.
+
 version 0.2.0
 -------------
 	* Added the volume control.
