@@ -93,7 +93,7 @@ AC_SUBST(SYSTEM_LIBS)
 
 dnl ******************************
 
-ALL_LINGUAS="ar"
+ALL_LINGUAS="ar ja"
 
 GETTEXT_PACKAGE=goobox
 AC_SUBST(GETTEXT_PACKAGE)

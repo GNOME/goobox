@@ -1,3 +1,7 @@
+2004-11-17  Takeshi AIHANA <aihana@gnome.gr.jp>
+
+	* configure.in: Added 'ja' (Japanese) to ALL_LINGUAS.
+
 2004-11-17  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	[ version 0.5.0 released ] 
