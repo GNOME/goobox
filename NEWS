@@ -1,3 +1,7 @@
+version 0.7.1
+-------------	
+	* Fixed compilation with gtk+ 2.4.x
+
 version 0.7.0
 -------------	
 	* Moved encoding options to the preferences dialog.
