@@ -1,3 +1,10 @@
+2005-01-06  Martin Willemoes Hansen  <mwh@sysrq.dk>
+
+	* src/gth-image-list.c: Added /* and */ to remove
+	the warning: mismatched quotes at line 61 
+	in ../src/gth-image-list.c, which intltool-update -m
+	generates when run in po/
+
 2005-01-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-window.c (update_ui_from_expander_state): hide the resize grip

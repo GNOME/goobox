@@ -57,8 +57,8 @@
 #define LAYOUT_TIMEOUT 20
 
 #define COMMENT_MAX_LINES 5        /* max number of lines to display. */
-#define ETC " [..]"                /* string to append when the comment 
-				    * doesn't fit. */
+#define ETC " [..]"                /* string to append when the comment */
+				   /* doesn't fit. */
 
 #define COLOR_WHITE 0x00ffffff
 #define CHECK_SIZE 50
