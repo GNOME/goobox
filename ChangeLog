@@ -1,3 +1,7 @@
+2004-10-30  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/dlg-cover_chooser.c: reorganized code.
+	
 2004-10-28  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-player-info.c (update_time_label_cb)

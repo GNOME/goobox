@@ -2043,7 +2043,7 @@ goo_window_construct (GooWindow  *window,
 GType
 goo_window_get_type ()
 {
-        static guint type = 0;
+        static GType type = 0;
 
         if (! type) {
                 GTypeInfo type_info = {

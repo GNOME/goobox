@@ -123,143 +123,7 @@ destroy_cb (GtkWidget  *widget,
 }
 
 
-/* called when the "ok" button is clicked. */
-static void
-ok_cb (GtkWidget  *widget, 
-       DialogData *data)
-{
-	GthImageList *list = GTH_IMAGE_LIST (data->image_list);
-	GList        *selection;
-
-	selection =  gth_image_list_get_selection (list);
-	if (selection != NULL) {
-		char *src = selection->data;
-
-		debug (DEBUG_INFO, "SET COVER: %s\n", src);
-
-		goo_window_set_cover_image (data->window, src);
-		g_list_free (selection);
-	}
-}
-
-
-/* called when the "help" button is clicked. */
-static void
-help_cb (GtkWidget  *widget, 
-	 DialogData *data)
-{
-	GError *err;
-
-	err = NULL;  
-	gnome_help_display ("goobox", "choose_cover", &err);
-	
-	if (err != NULL) {
-		GtkWidget *dialog;
-		
-		dialog = gtk_message_dialog_new (GTK_WINDOW (data->dialog),
-						 0,
-						 GTK_MESSAGE_ERROR,
-						 GTK_BUTTONS_CLOSE,
-						 _("Could not display help: %s"),
-						 err->message);
-		
-		g_signal_connect (G_OBJECT (dialog), "response",
-				  G_CALLBACK (gtk_widget_destroy),
-				  NULL);
-		
-		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-		
-		gtk_widget_show (dialog);
-		
-		g_error_free (err);
-	}
-}
-
-
-static void
-append_image (DialogData *data,
-	      const char *filename)
-{
-	GdkPixbuf *image;
-	int        pos;
-
-	image = gdk_pixbuf_new_from_file_at_size (filename, 
-						  THUMB_SIZE,  THUMB_SIZE, 
-						  NULL);
-	if (image == NULL)
-		return;
-
-	pos = gth_image_list_append (GTH_IMAGE_LIST (data->image_list),
-				     image,
-				     filename,
-				     NULL);
-	gth_image_list_set_image_data_full (GTH_IMAGE_LIST (data->image_list),
-					    pos,
-					    g_strdup (filename),
-					    g_free);
-	g_object_unref (image);
-}
-
-
-static void load_current_url (DialogData *data);
-
-
-static gboolean
-load_next_url (gpointer callback_data)
-{
-	DialogData *data = callback_data;
-
-	g_source_remove (data->load_id);
-	data->load_id = 0;
-
-	data->current = data->current->next;
-	load_current_url (data);
-
-	return FALSE;
-}
-
-
-static void
-image_saved_cb (DialogData *data,
-		char       *filename,
-		int         result)
-{
-	if (result == 0) {
-		char *tmpfile = g_strdup (filename);
-
-		debug (DEBUG_INFO, "LOAD IMAGE: %s\n", tmpfile);
-
-		data->tmpfiles = g_list_prepend (data->tmpfiles, tmpfile);
-		append_image (data, tmpfile);
-	}
-
-	data->load_id = g_idle_add (load_next_url, data);
-}
-
-
-static int
-proxy_authentication (void       *userdata, 
-		      const char *realm, 
-		      int         attempt, 
-		      char       *username, 
-		      char       *password)
-{
-	char *user, *pwd;
-
-	user = eel_gconf_get_string (HTTP_PROXY_USER, NULL);
-	pwd = eel_gconf_get_string (HTTP_PROXY_PWD, NULL);
-
-	if ((user == NULL) || (pwd == NULL))
-		return 1;
-
-	strncpy (username, user, NE_ABUFSIZ);
-	strncpy (password, pwd, NE_ABUFSIZ);
-
-	g_free (user);
-	g_free (pwd);
-
-	return attempt;
-}
+/* -- copy_file_from_url() -- */
 
 
 static gboolean
@@ -292,6 +156,31 @@ read_block_cb (gpointer callback_data)
 	}
 
 	return FALSE;
+}
+
+
+static int
+proxy_authentication (void       *userdata, 
+		      const char *realm, 
+		      int         attempt, 
+		      char       *username, 
+		      char       *password)
+{
+	char *user, *pwd;
+
+	user = eel_gconf_get_string (HTTP_PROXY_USER, NULL);
+	pwd = eel_gconf_get_string (HTTP_PROXY_PWD, NULL);
+
+	if ((user == NULL) || (pwd == NULL))
+		return 1;
+
+	strncpy (username, user, NE_ABUFSIZ);
+	strncpy (password, pwd, NE_ABUFSIZ);
+
+	g_free (user);
+	g_free (pwd);
+
+	return attempt;
 }
 
 
@@ -347,6 +236,67 @@ copy_file_from_url (DialogData    *data,
 }
 
 
+static void load_current_url (DialogData *data);
+
+
+static gboolean
+load_next_url (gpointer callback_data)
+{
+	DialogData *data = callback_data;
+
+	g_source_remove (data->load_id);
+	data->load_id = 0;
+
+	data->current = data->current->next;
+	load_current_url (data);
+
+	return FALSE;
+}
+
+
+static void
+append_image (DialogData *data,
+	      const char *filename)
+{
+	GdkPixbuf *image;
+	int        pos;
+
+	image = gdk_pixbuf_new_from_file_at_size (filename, 
+						  THUMB_SIZE,  THUMB_SIZE, 
+						  NULL);
+	if (image == NULL)
+		return;
+
+	pos = gth_image_list_append (GTH_IMAGE_LIST (data->image_list),
+				     image,
+				     filename,
+				     NULL);
+	gth_image_list_set_image_data_full (GTH_IMAGE_LIST (data->image_list),
+					    pos,
+					    g_strdup (filename),
+					    g_free);
+	g_object_unref (image);
+}
+
+
+static void
+image_saved_cb (DialogData *data,
+		char       *filename,
+		int         result)
+{
+	if (result == 0) {
+		char *tmpfile = g_strdup (filename);
+
+		debug (DEBUG_INFO, "LOAD IMAGE: %s\n", tmpfile);
+
+		data->tmpfiles = g_list_prepend (data->tmpfiles, tmpfile);
+		append_image (data, tmpfile);
+	}
+
+	data->load_id = g_idle_add (load_next_url, data);
+}
+
+
 static void
 update_progress_label (DialogData *data)
 {
@@ -399,27 +349,6 @@ start_loading_images (DialogData *data)
 
 
 static void
-image_list_selection_changed_cb (GthImageList *list,
-				 DialogData   *data)
-{
-	GList *selection;
-
-	selection = gth_image_list_get_selection (list);
-	gtk_widget_set_sensitive (data->ok_button, selection != NULL);
-	g_list_free (selection);
-}
-
-
-static void
-image_list_item_activated_cb (GthImageList *list,
-			      int           pos,
-			      DialogData   *data)
-{
-	ok_cb (NULL, data);
-}
-
-
-static void
 search_result_saved_cb (DialogData *data,
 			char       *filename,
 			int         result)
@@ -442,10 +371,10 @@ search_result_saved_cb (DialogData *data,
 	
 	partial_url = NULL;
 	while ((n = read (fd, buf+buf_offset, BUFFER_SIZE-buf_offset-1)) > 0) {
-		char     *prefix = "/images?q=tbn:";
-		int       prefix_len = strlen (prefix);
-		char     *url_start;
-		gboolean  copy_tail = TRUE;
+		const char *prefix = "/images?q=tbn:";
+		int         prefix_len = strlen (prefix);
+		char       *url_start;
+		gboolean    copy_tail = TRUE;
 
 		buf[buf_offset+n] = 0;
 
@@ -544,6 +473,83 @@ start_searching (gpointer callback_data)
 	g_free (query);
 
 	return FALSE;
+}
+
+
+/* callbacks */
+
+
+/* called when the "help" button is clicked. */
+static void
+help_cb (GtkWidget  *widget, 
+	 DialogData *data)
+{
+	GError *err;
+
+	err = NULL;  
+	gnome_help_display ("goobox", "choose_cover", &err);
+	
+	if (err != NULL) {
+		GtkWidget *dialog;
+		
+		dialog = gtk_message_dialog_new (GTK_WINDOW (data->dialog),
+						 0,
+						 GTK_MESSAGE_ERROR,
+						 GTK_BUTTONS_CLOSE,
+						 _("Could not display help: %s"),
+						 err->message);
+		
+		g_signal_connect (G_OBJECT (dialog), "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  NULL);
+		
+		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+		
+		gtk_widget_show (dialog);
+		
+		g_error_free (err);
+	}
+}
+
+
+/* called when the "ok" button is clicked. */
+static void
+ok_cb (GtkWidget  *widget, 
+       DialogData *data)
+{
+	GthImageList *list = GTH_IMAGE_LIST (data->image_list);
+	GList        *selection;
+
+	selection =  gth_image_list_get_selection (list);
+	if (selection != NULL) {
+		char *src = selection->data;
+
+		debug (DEBUG_INFO, "SET COVER: %s\n", src);
+
+		goo_window_set_cover_image (data->window, src);
+		g_list_free (selection);
+	}
+}
+
+
+static void
+image_list_selection_changed_cb (GthImageList *list,
+				 DialogData   *data)
+{
+	GList *selection;
+
+	selection = gth_image_list_get_selection (list);
+	gtk_widget_set_sensitive (data->ok_button, selection != NULL);
+	g_list_free (selection);
+}
+
+
+static void
+image_list_item_activated_cb (GthImageList *list,
+			      int           pos,
+			      DialogData   *data)
+{
+	ok_cb (NULL, data);
 }
 
 
