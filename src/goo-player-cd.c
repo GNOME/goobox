@@ -43,27 +43,27 @@
 #define REFRESH_RATE 5
 
 struct _GooPlayerCDPrivateData {
-	GooCdrom     *cdrom;
-	GstElement   *play_thread;
-	GstElement   *source;
-	GstPad       *source_pad;
-	GstElement   *volume;
-	gint64        total_time;
-	gint64        n_tracks;
-	GstFormat     track_format, sector_format;
-	GList        *tracks;
-	TrackInfo    *current_track;
-	int           tick;
-	char         *discid;
-	char         *artist;
-	char         *title;
-	char         *genre;
-	guint         update_state_id;
+	GooCdrom        *cdrom;
+	GstElement      *play_thread;
+	GstElement      *source;
+	GstPad          *source_pad;
+	GstElement      *volume;
+	gint64           total_time;
+	gint64           n_tracks;
+	GstFormat        track_format, sector_format;
+	GList           *tracks;
+	TrackInfo       *current_track;
+	int              tick;
+	char            *discid;
+	char            *artist;
+	char            *title;
+	char            *genre;
+	guint            update_state_id;
 
-	GThread      *thread;
-	GMutex       *yes_or_no;
-	guint         check_id;
-	gboolean      exiting;
+	GThread         *thread;
+	GMutex          *yes_or_no;
+	guint            check_id;
+	gboolean         exiting;
 
 	CDDBSlaveClient *cddb_client;
 };
@@ -104,7 +104,8 @@ goo_player_cd_get_type ()
 
 
 static void
-action_done (GooPlayer *player, GooPlayerAction action)
+action_done (GooPlayer       *player, 
+	     GooPlayerAction  action)
 {
 	g_signal_emit_by_name (G_OBJECT (player), "done", action, NULL);
 }
@@ -428,28 +429,13 @@ list_thread (void *thread_data)
 }
 
 
-static gboolean
-cd_listing (GooPlayer *player)
-{
-	GooPlayerCD            *player_cd = GOO_PLAYER_CD (player);
-	GooPlayerCDPrivateData *priv = player_cd->priv;
-	gboolean                listing;
-
-	g_mutex_lock (priv->yes_or_no);
-	listing = (priv->thread != NULL);
-	g_mutex_unlock (priv->yes_or_no);
-
-	return listing;
-}
-
-
 static void
 cd_player_list (GooPlayer *player)
 {
 	GooPlayerCD            *player_cd = GOO_PLAYER_CD (player);
 	GooPlayerCDPrivateData *priv = player_cd->priv;
 
-	if (cd_listing (player))
+	if (goo_player_get_is_busy (player))
 		return;
 
 	goo_player_cd_empty_list (player);
@@ -478,7 +464,7 @@ cd_player_seek_song (GooPlayer *player,
 	GstEvent    *event;
 	int          track_n;
 
-	if (cd_listing (player))
+	if (goo_player_get_is_busy (player))
 		return;
 
 	if (priv->n_tracks == 0) {
@@ -551,7 +537,7 @@ cd_player_skip_to (GooPlayer *player,
 	gint64       from_sector, to_sector, sectors;
 	GstEvent    *event;
 
-	if (cd_listing (player))
+	if (goo_player_get_is_busy (player))
 		return;
 
 	if (priv->play_thread == NULL)
@@ -576,7 +562,7 @@ cd_player_play (GooPlayer *player)
 	GooPlayerCDPrivateData *priv = player_cd->priv;
 	int vol;
 
-	if (cd_listing (player))
+	if (goo_player_get_is_busy (player))
 		return;
 
 	if (priv->n_tracks == 0) {
@@ -604,7 +590,7 @@ cd_player_pause (GooPlayer *player)
 	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
 	GooPlayerCDPrivateData *priv = player_cd->priv;
 
-	if (cd_listing (player))
+	if (goo_player_get_is_busy (player))
 		return;
 
 	if (priv->play_thread == NULL)
@@ -622,7 +608,7 @@ cd_player_stop (GooPlayer *player)
 	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
 	GooPlayerCDPrivateData *priv = player_cd->priv;
 
-	if (cd_listing (player))
+	if (goo_player_get_is_busy (player))
 		return;
 
 	if (priv->play_thread == NULL)
@@ -642,7 +628,7 @@ cd_player_get_song_list (GooPlayer *player)
 	GooPlayerCDPrivateData *priv = player_cd->priv;
 	GList *list = NULL, *scan;
 
-	if (cd_listing (player))
+	if (goo_player_get_is_busy (player))
 		return NULL;
 
 	for (scan = priv->tracks; scan; scan = scan->next) {
@@ -662,7 +648,7 @@ cd_player_eject (GooPlayer *player)
 	gboolean      result;
 	GooCdromState cdrom_state;
 
-	if (cd_listing (player))
+	if (goo_player_get_is_busy (player))
 		return FALSE;
 
 	destroy_pipeline (player_cd, TRUE);
@@ -688,8 +674,8 @@ cd_player_set_location (GooPlayer  *player,
 {
 	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
 
-	if (cd_listing (player))
-		return FALSE;
+	if (goo_player_get_is_busy (player))
+		return TRUE;
 
 	debug (DEBUG_INFO, "LOCATION: %s\n", location);
 
@@ -713,7 +699,7 @@ cd_player_set_volume (GooPlayer  *player,
 {
 	GooPlayerCDPrivateData *priv = GOO_PLAYER_CD (player)->priv;
 
-	if (cd_listing (player))
+	if (goo_player_get_is_busy (player))
 		return;
 
 	if (priv->volume != NULL)
@@ -981,7 +967,11 @@ goo_player_cd_new (const char *location)
 const char *
 goo_player_cd_get_discid (GooPlayerCD *player)
 {
-	return player->priv->discid;
+	/*
+	if (goo_player_get_is_busy (GOO_PLAYER (player)))
+		return NULL;
+		else*/
+		return player->priv->discid;
 }
 
 
@@ -990,6 +980,11 @@ goo_player_cd_get_track (GooPlayerCD *player,
 			 guint        n)
 {
 	GList *scan;
+
+	/*
+	if (goo_player_get_is_busy (GOO_PLAYER (player)))
+		return NULL;
+	*/
 
 	for (scan = player->priv->tracks; scan; scan = scan->next) {
 		TrackInfo *track = scan->data;
@@ -1004,26 +999,42 @@ goo_player_cd_get_track (GooPlayerCD *player,
 GList *
 goo_player_cd_get_tracks (GooPlayerCD *player)
 {
-	return track_list_dup (player->priv->tracks);
+	/*
+	if (goo_player_get_is_busy (GOO_PLAYER (player)))
+		return NULL;
+		else*/
+		return track_list_dup (player->priv->tracks);
 }
 
 
 const char *
 goo_player_cd_get_artist (GooPlayerCD *player)
 {
-	return player->priv->artist;
+	/*
+	if (goo_player_get_is_busy (GOO_PLAYER (player)))
+		return NULL;
+		else*/
+		return player->priv->artist;
 }
 
 
 const char *
-goo_player_cd_get_album  (GooPlayerCD *player)
+goo_player_cd_get_album (GooPlayerCD *player)
 {
-	return player->priv->title;
+	/*
+	if (goo_player_get_is_busy (GOO_PLAYER (player)))
+		return NULL;
+		else*/
+		return player->priv->title;
 }
 
 
 const char *
-goo_player_cd_get_genre  (GooPlayerCD *player)
+goo_player_cd_get_genre (GooPlayerCD *player)
 {
-	return player->priv->genre;
+	/*
+	if (goo_player_get_is_busy (GOO_PLAYER (player)))
+		return NULL;
+		else*/
+		return player->priv->genre;
 }

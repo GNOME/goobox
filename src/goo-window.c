@@ -33,6 +33,7 @@
 #include "actions.h"
 #include "eggtrayicon.h"
 #include "file-utils.h"
+#include "goo-marshal.h"
 #include "goo-stock.h"
 #include "goo-player.h"
 #include "goo-player-cd.h"
@@ -63,6 +64,7 @@
 #define DEFAULT_DEVICE "/dev/cdrom"
 #define DEFAULT_VOLUME 100
 #define PLAYER_CHECK_RATE 100
+#define COVER_SIZE 80
 
 struct _GooWindowPrivateData {
 	GtkUIManager    *ui;
@@ -114,7 +116,6 @@ struct _GooWindowPrivateData {
 	gboolean         exiting;
 	guint            check_id;
 };
-
 
 static int icon_size = 0;
 static GnomeAppClass *parent_class = NULL;
@@ -264,7 +265,7 @@ window_update_sensitivity (GooWindow *window)
 	set_sensitive (window, "Next", !error);
 	set_sensitive (window, "Prev", !error);
 
-	set_sensitive (window, "Extract", !error && stopped && (priv->songs > 0));
+	set_sensitive (window, "Extract", !error && (priv->songs > 0));
 	set_sensitive (window, "Properties", !error && (discid != NULL));
 	set_sensitive (window, "PickCoverFromDisk", !error && (discid != NULL));
 	set_sensitive (window, "SearchCoverFromWeb", !error && (discid != NULL));
@@ -774,7 +775,7 @@ goo_window_class_init (GooWindowClass *class)
 	parent_class = g_type_class_peek_parent (class);
 	widget_class = (GtkWidgetClass*) class;
 	gobject_class = (GObjectClass*) class;
-		
+
 	gobject_class->finalize = goo_window_finalize;
 
 	widget_class->realize   = goo_window_realize;
@@ -1211,6 +1212,43 @@ window_update_title (GooWindow *window)
 }
 
 
+static char *
+get_disc_cover_filename (GooWindow *window)
+{
+	GooPlayerCD *player_cd = GOO_PLAYER_CD (window->priv->player);
+	char        *discid;
+	char        *filename;
+	
+	discid = g_strconcat (goo_player_cd_get_discid (player_cd), ".png", NULL);;
+	if (discid == NULL)
+		return NULL;
+
+	filename = g_build_filename (g_get_home_dir (), ".cddbslave", discid, NULL);
+	g_free (discid);
+
+	return filename;
+}
+
+
+static void
+goo_window_update_cover (GooWindow *window)
+{
+	char      *filename;
+	GdkPixbuf *image;
+	
+	filename = get_disc_cover_filename (window);
+	if (filename == NULL)
+		return;
+	
+	image = gdk_pixbuf_new_from_file (filename, NULL);
+	if (image != NULL) {
+		goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), image);
+		g_object_unref (image);
+	}
+	g_free (filename);
+}
+
+
 static void
 player_done_cb (GooPlayer       *player,
 		GooPlayerAction  action,
@@ -1226,6 +1264,7 @@ player_done_cb (GooPlayer       *player,
 		goo_player_info_update_state (GOO_PLAYER_INFO (priv->info));
 		window_update_title (window);
 		goo_window_update_list (window);
+		goo_window_update_cover (window);
 		break;
 	case GOO_PLAYER_ACTION_METADATA:
 		goo_player_info_update_state (GOO_PLAYER_INFO (priv->info));
@@ -1337,7 +1376,6 @@ selection_changed_cb (GtkTreeSelection *selection,
 		      gpointer          user_data)
 {
 	GooWindow *window = user_data;
-	/*window_update_statusbar_list_info (window);FIXME*/
 	window_update_sensitivity (window);
 	window_update_title (window);
 }
@@ -1797,7 +1835,7 @@ goo_window_construct (GooWindow  *window,
 			       | (eel_gconf_get_boolean (PREF_DESKTOP_TOOLBAR_DETACHABLE, TRUE) ? BONOBO_DOCK_ITEM_BEH_NORMAL : BONOBO_DOCK_ITEM_BEH_LOCKED)),
 			      BONOBO_DOCK_TOP,
 			      2, 1, 0);
-	/*gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS); FIXME */
+	/*gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS); FIXME*/
 
 	priv->file_popup_menu = gtk_ui_manager_get_widget (ui, "/ListPopupMenu");
 	priv->cover_popup_menu = gtk_ui_manager_get_widget (ui, "/CoverPopupMenu");
@@ -1854,12 +1892,6 @@ goo_window_construct (GooWindow  *window,
 			  "notify::expanded",
 			  G_CALLBACK (list_expander_expanded_cb), 
 			  window);
-
-	/*
-	label = gtk_label_new_with_mnemonic ();
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_label_set_mnemonic_widget (GTK_LABEL (label), priv->list_view);
-	*/
 
 	gtk_box_pack_start (GTK_BOX (vbox), 
 			    expander, 
@@ -2335,13 +2367,6 @@ goo_window_edit_cddata (GooWindow *window)
 	
 	CORBA_exception_init (&ev);
 
-	/*
-	if (priv->track_editor != CORBA_OBJECT_NIL) {
-		destroy_track_editor (priv->track_editor);
-		priv->track_editor = CORBA_OBJECT_NIL;
-	}
-	*/
-
 	if (priv->track_editor == CORBA_OBJECT_NIL) {
 		priv->track_editor = bonobo_activation_activate_from_id (CDDBSLAVE_TRACK_EDITOR_IID, 0, NULL, &ev);
 		if (BONOBO_EX (&ev)) {
@@ -2393,16 +2418,51 @@ goo_window_get_player (GooWindow *window)
 static void
 open_response_cb (GtkDialog  *file_sel,
 		  int         button_number,
-		  gpointer    userdata)
+		  gpointer    user_data)
 {
-	/*GooPlayerInfo *info = userdata;*/
+	GooWindow *window = user_data;
+	char      *folder;
+	char      *filename;
+	GdkPixbuf *image;
+	GError    *error = NULL;
 
-	if (button_number == GTK_RESPONSE_ACCEPT) {
-		/* FIXME 
-		_gtk_entry_set_filename_text (GTK_ENTRY (data->e_destination_entry),
-					      gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_sel)));
-		*/
+	if (button_number != GTK_RESPONSE_ACCEPT) {
+		gtk_widget_destroy (GTK_WIDGET (file_sel));
+		return;
 	}
+
+	/* Save the folder */
+
+	folder = gtk_file_chooser_get_current_folder (GTK_FILE_CHOOSER (file_sel));
+	eel_gconf_set_path (PREF_GENERAL_COVER_PATH, folder);
+	g_free (folder);
+	
+	/* Load the image. */
+
+	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_sel));
+	image = gdk_pixbuf_new_from_file_at_size (filename, COVER_SIZE, COVER_SIZE, &error);
+	g_free (filename);
+	
+	if (image != NULL) {
+		char *cover_filename;
+		
+		cover_filename = get_disc_cover_filename (window);
+		debug (DEBUG_INFO, "SAVE IMAGE %s\n", cover_filename);
+		
+		if (! gdk_pixbuf_save (image, cover_filename, "png", &error, NULL))
+			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
+							   _("Could not save cover image"),
+							   &error);
+		g_free (cover_filename);
+		g_object_unref (image);
+
+		goo_window_update_cover (window);
+
+	} else 
+		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
+						   _("Could not load image"),
+						   &error);
+	
 	gtk_widget_destroy (GTK_WIDGET (file_sel));
 }
 
@@ -2412,6 +2472,7 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 {
 	GtkWidget     *file_sel;
 	GtkFileFilter *filter;
+	char          *path;
 
 	file_sel = gtk_file_chooser_dialog_new (_("Choose CD Cover Image"),
 						GTK_WINDOW (window),
@@ -2421,7 +2482,10 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 						NULL);
 	gtk_window_set_modal (GTK_WINDOW (file_sel), TRUE);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (file_sel), TRUE);
-	/*gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (file_sel), gtk_entry_get_text (GTK_ENTRY (data->e_destination_entry)));*/
+
+	path = eel_gconf_get_path (PREF_GENERAL_COVER_PATH, "~");
+	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (file_sel), path);
+	g_free (path);
 
 	filter = gtk_file_filter_new ();
 	gtk_file_filter_set_name (filter, _("Images"));
@@ -2440,7 +2504,6 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 			  "response",
 			  G_CALLBACK (open_response_cb),
 			  window);
-	
 	g_signal_connect_swapped (GTK_DIALOG (file_sel),
 				  "close",
 				  G_CALLBACK (gtk_widget_destroy),

@@ -29,6 +29,19 @@
 	</locale>
       </schema>
 
+      <schema>
+	<key>/schemas/apps/goobox/general/cover_path</key>
+	<applyto>/apps/goobox/general/cover_path</applyto>
+	<owner>goobox</owner>
+	<type>string</type>
+	<default>~</default>
+	<locale name="C">
+	  <short></short>
+	  <long> 
+	  </long>
+	</locale>
+      </schema>
+
       <!-- UI -->
 
       <schema>

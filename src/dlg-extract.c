@@ -250,6 +250,8 @@ dlg_extract (GooWindow *window)
 	gboolean          ogg_encoder, flac_encoder, mp3_encoder, wave_encoder;
 	gboolean          find_first_available;
 
+	goo_window_stop (window);
+
 	data = g_new0 (DialogData, 1);
 	data->window = window;
 	data->gui = glade_xml_new (GOO_GLADEDIR "/" GLADE_EXTRACT_FILE, NULL, NULL);

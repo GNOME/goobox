@@ -482,7 +482,7 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 			set_title2 (info, "");
 
 		} else if (state == GOO_PLAYER_STATE_LISTING) {
-			set_title1 (info, _("Getting tracks list"));
+			set_title1 (info, _("Reading CD"));
 			set_title2 (info, "");
 
 		}  else {
@@ -544,4 +544,12 @@ goo_player_info_set_sensitive (GooPlayerInfo  *info,
 			       gboolean        value)
 {
 	gtk_widget_set_sensitive (info->priv->cover_button, value);
+}
+
+
+void
+goo_player_info_set_cover (GooPlayerInfo  *info,
+			   GdkPixbuf      *cover)
+{
+	gtk_image_set_from_pixbuf (GTK_IMAGE (info->priv->cover_image), cover);
 }

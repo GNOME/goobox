@@ -69,5 +69,7 @@ void             goo_player_info_set_time         (GooPlayerInfo  *info,
 						   gint64          current_time);
 void             goo_player_info_set_sensitive    (GooPlayerInfo  *info,
 						   gboolean        value);
+void             goo_player_info_set_cover        (GooPlayerInfo  *info,
+						   GdkPixbuf      *cover);
 
 #endif /* GOO_PLAYER_INFO_H */

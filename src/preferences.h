@@ -30,6 +30,7 @@
 
 #define PREF_GENERAL_DEVICE        "/apps/goobox/general/device"
 #define PREF_GENERAL_VOLUME        "/apps/goobox/general/volume"
+#define PREF_GENERAL_COVER_PATH    "/apps/goobox/general/cover_path"
 
 #define PREF_UI_TOOLBAR            "/apps/goobox/ui/toolbar_visible"
 #define PREF_UI_STATUSBAR          "/apps/goobox/ui/statusbar_visible"

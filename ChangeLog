@@ -1,3 +1,22 @@
+2004-10-24  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* data/goobox.schemas.in: 
+	* src/goo-player-info.c (goo_player_info_set_cover): 
+	* src/goo-window.c (goo_window_pick_cover_from_disk)
+	(open_response_cb): 
+
+	"Choose Cover Image from Disk" implemented.
+	
+2004-10-23  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/dlg-extract.c (dlg_extract): 
+	* src/goo-window.c (window_update_sensitivity): 
+
+	Allow to extract while playing.
+
+	* src/dlg-ripper.c (rip_current_track): removed tick, it is not used 
+	anymore.
+
 2004-10-22  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-window.c (goo_window_toggle_visibility): new function.

@@ -112,8 +112,8 @@ static int
 update_state_from_fd (GooCdrom *cdrom,
 		      int       fd)
 {
-	int                   state;
-	GooCdromState         cdrom_state;
+	int           state;
+	GooCdromState cdrom_state;
 
 	state = ioctl (fd, CDROM_DISC_STATUS, 0);
 	if (state < 0) {

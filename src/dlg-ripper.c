@@ -74,7 +74,6 @@ typedef struct {
 	GstElement    *sink;
 	GstPad        *source_pad;
 	GstFormat      track_format, sector_format;
-	int            tick;
 	guint          update_handle;
 	double         fraction;
 	char          *current_file;
@@ -316,7 +315,6 @@ rip_current_track (DialogData *data)
 
 	data->update_handle = g_timeout_add (UPDATE_DELAY, update_progress_cb, data);
 
-	data->tick = 0;
 	gst_element_set_state (data->rip_thread, GST_STATE_PLAYING);
 }
 
