@@ -31,7 +31,7 @@
 #include "goo-window.h"
 
 
-#define DIALOG_PREFIX "/apps/goo/dialogs/"
+#define DIALOG_PREFIX "/apps/goobox/dialogs/"
 
 
 typedef struct {

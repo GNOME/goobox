@@ -208,7 +208,7 @@ destination_button_clicked_cb (GtkWidget  *button,
 	GtkWidget *file_sel;
 	
 	file_sel = gtk_file_chooser_dialog_new (_("Choose destination folder"),
-						NULL,
+						GTK_WINDOW (data->dialog),
 						GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER, 
 						GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, 
 						GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
@@ -264,7 +264,7 @@ dlg_extract (GooWindow *window)
 	data->player_cd = GOO_PLAYER_CD (goo_window_get_player (window));
 	g_object_ref (data->player_cd);
 
-	eel_gconf_preload_cache ("/apps/goo/dialogs/extract", GCONF_CLIENT_PRELOAD_ONELEVEL);
+	eel_gconf_preload_cache ("/apps/goobox/dialogs/extract", GCONF_CLIENT_PRELOAD_ONELEVEL);
 
 	/* Get the widgets. */
 

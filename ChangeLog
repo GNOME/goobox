@@ -1,5 +1,11 @@
 2004-10-16  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/dlg-extract.c (destination_button_clicked_cb): set the extract 
+	dialog as parent of the file chooser dialog.
+
+	* src/preferences.c (DIALOG_PREFIX): 
+	* src/main.c (initialize_data): s/goo/goobox/
+
 	* src/actions.h: 
 	* src/actions.c (activate_action_play_selected): 
 	* src/goo-window.c (goo_window_play_selected): 

@@ -148,7 +148,7 @@ initialize_data ()
 	else
 		gnome_window_icon_set_default_from_file (icon_path);
 
-	eel_gconf_monitor_add ("/apps/goo");
+	eel_gconf_monitor_add ("/apps/goobox");
 }
 
 

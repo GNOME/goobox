@@ -153,7 +153,7 @@ dlg_preferences (GooWindow *window)
                 return;
         }
 
-	eel_gconf_preload_cache ("/apps/goo/general", GCONF_CLIENT_PRELOAD_ONELEVEL);
+	eel_gconf_preload_cache ("/apps/goobox/general", GCONF_CLIENT_PRELOAD_ONELEVEL);
 
 	goo_window_set_location (data->window, NULL);
 
