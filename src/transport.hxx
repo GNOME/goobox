@@ -69,7 +69,7 @@ public:
 
 class Scsi_Command {
 private:
-    int fd,autoclose;
+    long fd,autoclose;
     char *filename;
     struct cdrom_generic_command cgc;
     union {
@@ -84,7 +84,7 @@ private:
 public:
     Scsi_Command()	{ fd=-1, autoclose=1; filename=NULL; }
     Scsi_Command(int f)	{ fd=f,  autoclose=0; filename=NULL; }
-    Scsi_Command(void*f){ fd=(int)f, autoclose=0; filename=NULL; }
+    Scsi_Command(void*f){ fd=(long)f, autoclose=0; filename=NULL; }
     ~Scsi_Command()	{ if (fd>=0 && autoclose) close(fd),fd=-1;
 			  if (filename) free(filename),filename=NULL;
 			}

@@ -52,10 +52,12 @@
 #define TOC_OFFSET 150
 #define GLADE_RIPPER_FILE "goobox.glade"
 #define DESTINATION_PERMISSIONS 0755
+#define PLS_PERMISSIONS 0644
 #define UPDATE_DELAY 400
 #define DEFAULT_OGG_QUALITY 0.3
 #define DEFAULT_FLAC_COMPRESSION 5
 #define DEFAULT_MP3_BITRATE 128
+#define BUFFER_SIZE 1024
 
 typedef struct {
 	GooWindow     *window;
@@ -319,6 +321,87 @@ done_dialog_response_cb (GtkDialog  *dialog,
 
 
 static void
+save_playlist (DialogData *data)
+{
+	char           *folder;
+	char           *filename;
+	GnomeVFSResult  result;
+	GnomeVFSHandle *handle;
+
+	folder = get_destination_folder (data);
+	filename = g_strconcat ("file://", folder, "/", data->album, ".pls", NULL);
+
+	gnome_vfs_unlink (filename);
+
+	result = gnome_vfs_create (&handle,
+				   filename,
+				   GNOME_VFS_OPEN_WRITE,
+				   TRUE,
+				   PLS_PERMISSIONS);
+
+	if (result == GNOME_VFS_OK) {
+		GList *scan;
+		char   buffer[BUFFER_SIZE];
+		int    n = 0;
+
+		strcpy (buffer, "[playlist]\n");
+		gnome_vfs_write (handle,
+				 buffer,
+				 strlen (buffer),
+				 NULL);
+
+		sprintf (buffer, "NumberOfEntries=%d\n", data->tracks_n);
+		gnome_vfs_write (handle,
+				 buffer,
+				 strlen (buffer),
+				 NULL);
+
+		strcpy (buffer, "Version=2\n");
+		gnome_vfs_write (handle,
+				 buffer,
+				 strlen (buffer),
+				 NULL);
+		
+		for (scan = data->tracks; scan; scan = scan->next) {
+			TrackInfo *track = scan->data;
+			char      *track_filename;
+			char      *track_path;
+
+			n++;
+
+			track_filename = g_strdup_printf ("%s - %s.%s", zero_padded (track->number + 1), track->title, data->ext);
+			track_path = g_build_filename (folder, track_filename, NULL);
+
+			sprintf (buffer, "File%d=%s\n", n, track_path);
+			gnome_vfs_write (handle,
+					 buffer,
+					 strlen (buffer),
+					 NULL);
+			g_free (track_filename);
+			g_free (track_path);
+
+			sprintf (buffer, "Title%d=%s - %s\n", n, data->artist, track->title);
+			gnome_vfs_write (handle,
+					 buffer,
+					 strlen (buffer),
+					 NULL);
+
+			sprintf (buffer, "Length%d=%d\n", n, track->min * 60 + track->sec);
+			gnome_vfs_write (handle,
+					 buffer,
+					 strlen (buffer),
+					 NULL);
+		}
+
+		gnome_vfs_close (handle);
+	}
+
+	g_free (filename);
+	g_free (folder);
+}
+
+
+static void
 rip_current_track (DialogData *data)
 {
 	TrackInfo *track;
@@ -329,6 +412,9 @@ rip_current_track (DialogData *data)
 
 	if (data->current_track == NULL) {
 		GtkWidget *d;
+
+		if (eel_gconf_get_boolean (PREF_EXTRACT_SAVE_PLAYLIST, TRUE))
+			save_playlist (data);
 
 		data->ripping = FALSE;
 		gtk_widget_hide (data->dialog);

@@ -67,6 +67,7 @@ typedef struct {
 	GtkWidget   *e_flac_radiobutton;
 	GtkWidget   *e_mp3_radiobutton;
 	GtkWidget   *e_wave_radiobutton;
+	GtkWidget   *e_save_playlist_checkbutton;
 } DialogData;
 
 
@@ -169,6 +170,8 @@ ok_cb (GtkWidget  *widget,
 	else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_wave_radiobutton)))
 		file_format = GOO_FILE_FORMAT_WAVE;
 	pref_set_file_format (file_format);
+
+	eel_gconf_set_boolean (PREF_EXTRACT_SAVE_PLAYLIST, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_save_playlist_checkbutton)));
 
 	/**/
 
@@ -305,6 +308,7 @@ dlg_extract (GooWindow *window)
 	data->e_flac_radiobutton = glade_xml_get_widget (data->gui, "e_flac_radiobutton");
 	data->e_mp3_radiobutton = glade_xml_get_widget (data->gui, "e_mp3_radiobutton");
 	data->e_wave_radiobutton = glade_xml_get_widget (data->gui, "e_wave_radiobutton");
+	data->e_save_playlist_checkbutton = glade_xml_get_widget (data->gui, "e_save_playlist_checkbutton");
 
 	btn_ok = glade_xml_get_widget (data->gui, "e_okbutton");
 	btn_cancel = glade_xml_get_widget (data->gui, "e_cancelbutton");
@@ -434,6 +438,8 @@ dlg_extract (GooWindow *window)
 		break;
 	}
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (filetype_btn), TRUE);
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->e_save_playlist_checkbutton), eel_gconf_get_boolean (PREF_EXTRACT_SAVE_PLAYLIST, TRUE));
 
 	/* Set the signals handlers. */
 

@@ -1,5 +1,13 @@
 2004-12-26  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/preferences.h: 
+	* src/dlg-extract.c (dlg_extract): 
+	* src/dlg-ripper.c (save_playlist): 
+
+	Added ability to save the playlist.
+	
+	* src/transport.hxx: fixed debian bug #286887
+
 	* src/actions.c (activate_action_about): removed documenters tag.
 
 	* src/dlg-extract.c: 

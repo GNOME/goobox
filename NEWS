@@ -1,3 +1,18 @@
+version 0.7.0
+-------------	
+	* Moved encoding options to the preferences dialog.
+	* Moved the volume button on the toolbar.
+	* Added ability to control the player with the command line arguments,
+	  use 'goobox --help' for a complete list of all the available commands.
+	* Add ellipsizing to the album and artist labels if gtk+ version is 
+          2.5.0 or higher.
+	* Added ability to add/change the cover image dropping an image over the
+	  cover button.
+	* Fixed status bar text when no metadata is available.
+	* Other minor UI enhancements.
+	* Display play, pause and stop command labels on the toolbar when the 
+	  user uses the 'text beside icons' toolbar style.
+
 version 0.6.0
 -------------	
 	* Added total song time to the player info.

@@ -193,6 +193,19 @@
 	</locale>
       </schema>
 
+      <schema>
+	<key>/schemas/apps/goobox/dialogs/extract/save_playlist</key>
+	<applyto>/apps/goobox/dialogs/extract/save_playlist</applyto>
+	<owner>goobox</owner>
+	<type>bool</type>
+	<default>true</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
       <!-- RIPPER -->
 
       <schema>
