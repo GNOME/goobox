@@ -28,7 +28,10 @@
 #include <gnome.h>
 #include "goo-marshal.h"
 #include "goo-cdrom.h"
+#include "goo-cdrom-bsd.h"
 #include "goo-cdrom-linux.h"
+#include "goo-cdrom-solaris.h"
+
 
 struct _GooCdromPrivateData {
 	char          *device;
@@ -255,7 +258,13 @@ goo_cdrom_error_quark (void)
 GooCdrom *
 goo_cdrom_new (const char *device)
 {
+#if defined(HAVE_BSD)
+	return goo_cdrom_bsd_new (device);
+#elif defined(HAVE_LINUX)
 	return goo_cdrom_linux_new (device);
+#elif defined(HAVE_SOLARIS)
+	return goo_cdrom_solaris_new (device);
+#endif
 }
 
 

@@ -20,9 +20,11 @@
  *  Foundation, Inc., 59 Temple Street #330, Boston, MA 02111-1307, USA.
  */
 
+/* FIXME: this is only a template, Solaris support lacks at the moment. */
+
 #include <config.h>
 
-#ifdef HAVE_LINUX
+#ifdef HAVE_SOLARIS
 
 #include <string.h>
 #include <sys/ioctl.h>
@@ -30,37 +32,37 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <linux/cdrom.h>
+#include <solaris/cdrom.h>
 #include <gnome.h>
 #include "goo-cdrom.h"
-#include "goo-cdrom-linux.h"
+#include "goo-cdrom-solaris.h"
 #include "glib-utils.h"
 
 static GooCdromClass *parent_class = NULL;
 
-static void goo_cdrom_linux_class_init  (GooCdromLinuxClass *class);
+static void goo_cdrom_solaris_class_init  (GooCdromSolarisClass *class);
 
 
 GType
-goo_cdrom_linux_get_type ()
+goo_cdrom_solaris_get_type ()
 {
         static GType type = 0;
 
         if (! type) {
                 GTypeInfo type_info = {
-			sizeof (GooCdromLinuxClass),
+			sizeof (GooCdromSolarisClass),
 			NULL,
 			NULL,
-			(GClassInitFunc) goo_cdrom_linux_class_init,
+			(GClassInitFunc) goo_cdrom_solaris_class_init,
 			NULL,
 			NULL,
-			sizeof (GooCdromLinux),
+			sizeof (GooCdromSolaris),
 			0,
 			(GInstanceInitFunc) NULL
 		};
 
 		type = g_type_register_static (GOO_TYPE_CDROM,
-					       "GooCdromLinux",
+					       "GooCdromSolaris",
 					       &type_info,
 					       0);
 	}
@@ -86,7 +88,7 @@ open_device (GooCdrom *cdrom)
 
 
 static gboolean
-goo_cdrom_linux_eject (GooCdrom *cdrom)
+goo_cdrom_solaris_eject (GooCdrom *cdrom)
 {
 	int      fd;
 	gboolean result = FALSE;
@@ -159,7 +161,7 @@ update_state_from_fd (GooCdrom *cdrom,
 
 
 static gboolean
-goo_cdrom_linux_close_tray (GooCdrom *cdrom)
+goo_cdrom_solaris_close_tray (GooCdrom *cdrom)
 {
 	int      fd;
 	gboolean result = FALSE;
@@ -217,21 +219,21 @@ lock_tray (GooCdrom *cdrom,
 
 
 static gboolean
-goo_cdrom_linux_lock_tray (GooCdrom *cdrom)
+goo_cdrom_solaris_lock_tray (GooCdrom *cdrom)
 {
 	return lock_tray (cdrom, TRUE);
 }
 
 
 static gboolean
-goo_cdrom_linux_unlock_tray (GooCdrom *cdrom)
+goo_cdrom_solaris_unlock_tray (GooCdrom *cdrom)
 {
 	return lock_tray (cdrom, FALSE);
 }
 
 
 static gboolean
-goo_cdrom_linux_is_cdrom_device (GooCdrom   *cdrom,
+goo_cdrom_solaris_is_cdrom_device (GooCdrom   *cdrom,
 				 const char *device)
 {
 	return TRUE; /*FIXME*/
@@ -239,7 +241,7 @@ goo_cdrom_linux_is_cdrom_device (GooCdrom   *cdrom,
 
 
 static gboolean
-goo_cdrom_linux_update_state (GooCdrom *cdrom)
+goo_cdrom_solaris_update_state (GooCdrom *cdrom)
 {
 	int      fd;
 	gboolean result = FALSE;
@@ -258,27 +260,27 @@ goo_cdrom_linux_update_state (GooCdrom *cdrom)
 
 
 static void 
-goo_cdrom_linux_class_init (GooCdromLinuxClass *class)
+goo_cdrom_solaris_class_init (GooCdromSolarisClass *class)
 {
         GooCdromClass *cdrom_class = GOO_CDROM_CLASS (class);
 
         parent_class = g_type_class_peek_parent (class);
 
-	cdrom_class->eject            = goo_cdrom_linux_eject;
-	cdrom_class->close_tray       = goo_cdrom_linux_close_tray;
-	cdrom_class->lock_tray        = goo_cdrom_linux_lock_tray;
-	cdrom_class->unlock_tray      = goo_cdrom_linux_unlock_tray;
-	cdrom_class->update_state     = goo_cdrom_linux_update_state;
-	cdrom_class->is_cdrom_device  = goo_cdrom_linux_is_cdrom_device;
+	cdrom_class->eject            = goo_cdrom_solaris_eject;
+	cdrom_class->close_tray       = goo_cdrom_solaris_close_tray;
+	cdrom_class->lock_tray        = goo_cdrom_solaris_lock_tray;
+	cdrom_class->unlock_tray      = goo_cdrom_solaris_unlock_tray;
+	cdrom_class->update_state     = goo_cdrom_solaris_update_state;
+	cdrom_class->is_cdrom_device  = goo_cdrom_solaris_is_cdrom_device;
 }
 
 
 GooCdrom *
-goo_cdrom_linux_new (const char *device)
+goo_cdrom_solaris_new (const char *device)
 {
 	GooCdrom *cdrom;
 
-	cdrom = GOO_CDROM (g_object_new (GOO_TYPE_CDROM_LINUX, 
+	cdrom = GOO_CDROM (g_object_new (GOO_TYPE_CDROM_SOLARIS, 
 					 "default_device", DEFAULT_DEVICE,
 					 NULL));
 	goo_cdrom_construct (cdrom, device);
@@ -286,5 +288,4 @@ goo_cdrom_linux_new (const char *device)
 	return cdrom;
 }
 
-
-#endif /* HAVE_LINUX */
+#endif  /* HAVE_SOLARIS */

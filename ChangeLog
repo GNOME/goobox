@@ -1,5 +1,27 @@
 2004-11-07  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* configure.in:
+	* src/goo-cdrom-solaris.c: 
+	* src/goo-cdrom-solaris.h: 
+	* src/goo-cdrom-bsd.c: 
+	* src/goo-cdrom-solaris.h: 
+
+	Added templates for bsd/solaris support, now it's only a matter of
+	writing the code :)
+
+	* src/goo-cdrom-linux.c (update_state_from_fd): recognize mixed CDs
+	as good CDs to play.
+
+	* src/goo-window.c (pref_playlist_playall_changed)
+	(pref_playlist_shuffle_changed): update the playlist on the fly when
+	PlayAll or Shuffle options change.
+
+	* src/goo-player-cd.c (cd_player_eject): do not trust the drive state,
+	always perform an eject.
+
+	* src/goo-window.c (window_update_sensitivity): make the track list
+	insensitive if no cd is present.
+
 	* src/dlg-cover-chooser.c (dlg_cover_chooser): 
 	* src/icons/Makefile.am (pixbufs.h): 
 

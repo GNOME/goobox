@@ -654,10 +654,7 @@ cd_player_eject (GooPlayer *player)
 	destroy_pipeline (player_cd, TRUE);
 
 	cdrom_state = goo_cdrom_get_state (priv->cdrom);
-	if (cdrom_state == GOO_CDROM_STATE_TRAY_OPEN)
-		result = goo_cdrom_close_tray (priv->cdrom);
-	else
-		result = goo_cdrom_eject (priv->cdrom);
+	result = goo_cdrom_eject (priv->cdrom);
 
 	if (!result)
 		goo_player_set_error (player, goo_cdrom_get_error (priv->cdrom));

@@ -66,6 +66,32 @@ AC_PATH_PROG(GLIB_MKENUMS, glib-mkenums)
 
 dnl ******************************
 
+host=`uname -s`
+
+case "$host" in
+*FreeBSD*)
+	DEFAULT_DEVICE="/dev/acd0c"
+	AC_DEFINE(HAVE_BSD, 1, [Define to 1 if this is a BSD system])
+	;;
+*NetBSD*)
+	DEFAULT_DEVICE="/dev/rcd0d"
+	AC_DEFINE(HAVE_BSD, 1, [Define to 1 if this is a BSD system])
+	;;
+*Linux*)
+	DEFAULT_DEVICE="/dev/cdrom"
+	AC_DEFINE(HAVE_LINUX, 1, [Define to 1 if this is a Linux system])
+	;;
+*SunOS*)
+	DEFAULT_DEVICE="/vol/dev/aliases/cdrom0"
+	AC_DEFINE(HAVE_SOLARIS, 1, [Define to 1 if this is a Solaris system])
+	;;
+esac
+
+AC_DEFINE_UNQUOTED(DEFAULT_DEVICE, "$DEFAULT_DEVICE", [Default CD device])
+
+
+dnl ******************************
+
 ALL_LINGUAS="ar"
 
 GETTEXT_PACKAGE=goobox

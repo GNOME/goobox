@@ -20,47 +20,51 @@
  *  Foundation, Inc., 59 Temple Street #330, Boston, MA 02111-1307, USA.
  */
 
+/* FIXME: this is only a template, BSD support lacks at the moment. */
+
 #include <config.h>
 
-#ifdef HAVE_LINUX
+#ifdef HAVE_BSD
 
 #include <string.h>
-#include <sys/ioctl.h>
-#include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/ioctl.h>
 #include <fcntl.h>
-#include <unistd.h>
-#include <linux/cdrom.h>
+#ifdef HAVE_SYS_CDIO_H
+# include <sys/cdio.h>
+#endif
+#include <errno.h>
+
 #include <gnome.h>
 #include "goo-cdrom.h"
-#include "goo-cdrom-linux.h"
+#include "goo-cdrom-bsd.h"
 #include "glib-utils.h"
 
 static GooCdromClass *parent_class = NULL;
 
-static void goo_cdrom_linux_class_init  (GooCdromLinuxClass *class);
+static void goo_cdrom_bsd_class_init  (GooCdromBsdClass *class);
 
 
 GType
-goo_cdrom_linux_get_type ()
+goo_cdrom_bsd_get_type ()
 {
         static GType type = 0;
 
         if (! type) {
                 GTypeInfo type_info = {
-			sizeof (GooCdromLinuxClass),
+			sizeof (GooCdromBsdClass),
 			NULL,
 			NULL,
-			(GClassInitFunc) goo_cdrom_linux_class_init,
+			(GClassInitFunc) goo_cdrom_bsd_class_init,
 			NULL,
 			NULL,
-			sizeof (GooCdromLinux),
+			sizeof (GooCdromBsd),
 			0,
 			(GInstanceInitFunc) NULL
 		};
 
 		type = g_type_register_static (GOO_TYPE_CDROM,
-					       "GooCdromLinux",
+					       "GooCdromBsd",
 					       &type_info,
 					       0);
 	}
@@ -86,7 +90,7 @@ open_device (GooCdrom *cdrom)
 
 
 static gboolean
-goo_cdrom_linux_eject (GooCdrom *cdrom)
+goo_cdrom_bsd_eject (GooCdrom *cdrom)
 {
 	int      fd;
 	gboolean result = FALSE;
@@ -95,7 +99,7 @@ goo_cdrom_linux_eject (GooCdrom *cdrom)
 
 	fd = open_device (cdrom);
 	if (fd >= 0) {
-		if (ioctl (fd, CDROMEJECT, 0) >= 0) 
+		if (ioctl (fd, CDIOCEJECT, 0) >= 0) 
 			result = TRUE;
 		else 
 			goo_cdrom_set_error_from_errno (cdrom);
@@ -146,7 +150,6 @@ update_state_from_fd (GooCdrom *cdrom,
 		break;
 
 	case CDS_AUDIO:
-	case CDS_MIXED:
 		cdrom_state = GOO_CDROM_STATE_OK;
 		break;
 	default:
@@ -159,7 +162,7 @@ update_state_from_fd (GooCdrom *cdrom,
 
 
 static gboolean
-goo_cdrom_linux_close_tray (GooCdrom *cdrom)
+goo_cdrom_bsd_close_tray (GooCdrom *cdrom)
 {
 	int      fd;
 	gboolean result = FALSE;
@@ -170,7 +173,7 @@ goo_cdrom_linux_close_tray (GooCdrom *cdrom)
 	if (fd >= 0) {
 		GooCdromState new_state = -1;
 
-		if (ioctl (fd, CDROMCLOSETRAY, 0) >= 0) {
+		if (ioctl (fd, CDIOCCLOSE, 0) >= 0) {
 			new_state = update_state_from_fd (cdrom, fd);
 			result = (new_state != -1);
 		} else 
@@ -201,7 +204,7 @@ lock_tray (GooCdrom *cdrom,
 	if (fd >= 0) {
 		GooCdromState new_state = -1;
 
-		if (ioctl (fd, CDROM_LOCKDOOR, lock) >= 0) {
+		if (ioctl (fd, CDROM_LOCKDOOR, lock) >= 0) { /*FIXME*/
 			new_state = update_state_from_fd (cdrom, fd);
 			result = (new_state != -1);
 		} else 
@@ -217,29 +220,29 @@ lock_tray (GooCdrom *cdrom,
 
 
 static gboolean
-goo_cdrom_linux_lock_tray (GooCdrom *cdrom)
+goo_cdrom_bsd_lock_tray (GooCdrom *cdrom)
 {
 	return lock_tray (cdrom, TRUE);
 }
 
 
 static gboolean
-goo_cdrom_linux_unlock_tray (GooCdrom *cdrom)
+goo_cdrom_bsd_unlock_tray (GooCdrom *cdrom)
 {
 	return lock_tray (cdrom, FALSE);
 }
 
 
 static gboolean
-goo_cdrom_linux_is_cdrom_device (GooCdrom   *cdrom,
-				 const char *device)
+goo_cdrom_bsd_is_cdrom_device (GooCdrom   *cdrom,
+			       const char *device)
 {
-	return TRUE; /*FIXME*/
+	return TRUE;
 }
 
 
 static gboolean
-goo_cdrom_linux_update_state (GooCdrom *cdrom)
+goo_cdrom_bsd_update_state (GooCdrom *cdrom)
 {
 	int      fd;
 	gboolean result = FALSE;
@@ -258,27 +261,27 @@ goo_cdrom_linux_update_state (GooCdrom *cdrom)
 
 
 static void 
-goo_cdrom_linux_class_init (GooCdromLinuxClass *class)
+goo_cdrom_bsd_class_init (GooCdromBsdClass *class)
 {
         GooCdromClass *cdrom_class = GOO_CDROM_CLASS (class);
 
         parent_class = g_type_class_peek_parent (class);
 
-	cdrom_class->eject            = goo_cdrom_linux_eject;
-	cdrom_class->close_tray       = goo_cdrom_linux_close_tray;
-	cdrom_class->lock_tray        = goo_cdrom_linux_lock_tray;
-	cdrom_class->unlock_tray      = goo_cdrom_linux_unlock_tray;
-	cdrom_class->update_state     = goo_cdrom_linux_update_state;
-	cdrom_class->is_cdrom_device  = goo_cdrom_linux_is_cdrom_device;
+	cdrom_class->eject            = goo_cdrom_bsd_eject;
+	cdrom_class->close_tray       = goo_cdrom_bsd_close_tray;
+	cdrom_class->lock_tray        = goo_cdrom_bsd_lock_tray;
+	cdrom_class->unlock_tray      = goo_cdrom_bsd_unlock_tray;
+	cdrom_class->update_state     = goo_cdrom_bsd_update_state;
+	cdrom_class->is_cdrom_device  = goo_cdrom_bsd_is_cdrom_device;
 }
 
 
 GooCdrom *
-goo_cdrom_linux_new (const char *device)
+goo_cdrom_bsd_new (const char *device)
 {
 	GooCdrom *cdrom;
 
-	cdrom = GOO_CDROM (g_object_new (GOO_TYPE_CDROM_LINUX, 
+	cdrom = GOO_CDROM (g_object_new (GOO_TYPE_CDROM_BSD, 
 					 "default_device", DEFAULT_DEVICE,
 					 NULL));
 	goo_cdrom_construct (cdrom, device);
@@ -286,5 +289,4 @@ goo_cdrom_linux_new (const char *device)
 	return cdrom;
 }
 
-
-#endif /* HAVE_LINUX */
+#endif /* HAVE_BSD */

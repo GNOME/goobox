@@ -83,6 +83,7 @@ goobox_SOURCES = 				\
 	$(GTH_SOURCES)				\
 	$(gnome_media_cddbslave2_idl_sources)	\
 	$(gnome_goobox_idl_sources)		\
+	$(CDROM_DEVICE_SOURCES)			\
 	actions.c				\
 	actions.h				\
 	cddb-slave-client.c			\
@@ -111,8 +112,12 @@ goobox_SOURCES = 				\
 	goo-application.h			\
 	goo-cdrom.c				\
 	goo-cdrom.h				\
+	goo-cdrom-bsd.c				\
+	goo-cdrom-bsd.h				\
 	goo-cdrom-linux.c			\
 	goo-cdrom-linux.h			\
+	goo-cdrom-solaris.c			\
+	goo-cdrom-solaris.h			\
 	goo-error.c				\
 	goo-error.h				\
 	goo-player.c				\

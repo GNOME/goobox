@@ -278,9 +278,11 @@ window_update_sensitivity (GooWindow *window)
 	set_sensitive (window, "RemoveCover", !error && (discid != NULL));
 	set_sensitive (window, "SearchCoverFromWeb", !error && (discid != NULL));
 
-	goo_player_info_set_sensitive (GOO_PLAYER_INFO (window->priv->info), !error && (discid != NULL));
+	goo_player_info_set_sensitive (GOO_PLAYER_INFO (priv->info), !error && (discid != NULL));
 	set_sensitive (window, "Repeat", play_all);
 	set_sensitive (window, "Shuffle", play_all);
+
+	gtk_widget_set_sensitive (priv->list_view, discid != NULL);
 }
 
 
@@ -650,17 +652,129 @@ pref_view_playlist_changed (GConfClient *client,
 
 
 static void
+print_playlist (GooWindow *window)
+{
+	GList *scan;
+
+	debug (DEBUG_INFO, "PLAYLIST: ");
+	for (scan = window->priv->playlist; scan; scan = scan->next) 
+		debug (DEBUG_INFO, "%d, ", GPOINTER_TO_INT (scan->data));
+	debug (DEBUG_INFO, "\n");
+}
+
+
+static void
+create_playlist (GooWindow *window,
+		 gboolean   play_all,
+		 gboolean   shuffle)
+{
+	GooWindowPrivateData *priv = window->priv;
+	GList *playlist;
+	int    pos = 0, i, n;
+
+	debug (DEBUG_INFO, "PLAY ALL: %d\n", play_all);
+	debug (DEBUG_INFO, "SHUFFLE: %d\n", shuffle);
+
+	if (priv->playlist != NULL)
+		g_list_free (priv->playlist);
+	priv->playlist = NULL;
+
+	if (!play_all) 
+		return;
+
+	playlist = NULL;
+
+	if (priv->current_song != NULL)
+		pos = priv->current_song->number;
+	n = g_list_length (priv->song_list);
+
+	for (i = 0; i < n; i++, pos = (pos + 1) % n) {
+		if ((priv->current_song != NULL) 
+		    && (priv->current_song->number == pos))
+			continue;
+		playlist = g_list_prepend (playlist, GINT_TO_POINTER (pos));
+	}
+
+	playlist = g_list_reverse (playlist);
+
+	if (shuffle) {
+		GRand *grand = g_rand_new ();
+		GList *random_list = NULL;
+		int    len = g_list_length (playlist);
+
+		while (playlist != NULL) {
+			GList *item;
+
+			pos = g_rand_int_range (grand, 0, len--);
+			item = g_list_nth (playlist, pos);
+			playlist = g_list_remove_link (playlist, item);
+			random_list = g_list_concat (random_list, item);
+		}
+		g_rand_free (grand);
+
+		playlist = random_list;
+	} 
+
+	priv->playlist = playlist;
+}
+
+
+static void
+play_next_song_in_playlist (GooWindow *window)
+{
+	GooWindowPrivateData *priv = window->priv;
+	gboolean  play_all;
+	gboolean  shuffle;
+	gboolean  repeat;
+	GList    *next = NULL;
+
+	play_all = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
+	shuffle  = eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE);
+	repeat = eel_gconf_get_boolean (PREF_PLAYLIST_REPEAT, FALSE);
+
+	next = priv->playlist;
+
+	if ((next == NULL) && repeat) {
+		if (priv->current_song != NULL) {
+			song_info_unref (priv->current_song);
+			priv->current_song = NULL;
+		}
+		create_playlist (window, play_all, shuffle);
+		next = priv->playlist;
+	}
+	
+	print_playlist (window);
+
+	if (next == NULL)
+		goo_player_stop (priv->player);
+	else {
+		int pos = GPOINTER_TO_INT (next->data);
+		goo_player_seek_song (priv->player, pos);
+		priv->playlist = g_list_remove_link (priv->playlist, next);
+		g_list_free (next);
+	}
+}
+
+
+static void
 pref_playlist_playall_changed (GConfClient *client,
 			       guint        cnxn_id,
 			       GConfEntry  *entry,
 			       gpointer     user_data)
 {
 	GooWindow *window = user_data;
+	gboolean   play_all;
+	gboolean   shuffle;
 
 	g_return_if_fail (window != NULL);
 
-	set_active (window, "PlayAll", eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE));
+	play_all = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
+	shuffle = eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE);
+	create_playlist (window, play_all, shuffle);
+
 	window_update_sensitivity (window);
+
+	set_active (window, "PlayAll", play_all);
 }
 
 
@@ -685,10 +799,16 @@ pref_playlist_shuffle_changed (GConfClient *client,
 			       gpointer     user_data)
 {
 	GooWindow *window = user_data;
+	gboolean   play_all;
+	gboolean   shuffle;
 
 	g_return_if_fail (window != NULL);
 
-	set_active (window, "Shuffle", eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE));
+	play_all = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
+	shuffle = eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE);
+	create_playlist (window, play_all, shuffle);
+
+	set_active (window, "Shuffle", shuffle);
 }
 
 
@@ -1024,111 +1144,6 @@ goo_window_select_current_song (GooWindow *window)
 	path = gtk_tree_path_new_from_indices (pos, -1);
 	gtk_tree_selection_select_path (selection, path);
 	gtk_tree_path_free (path);
-}
-
-
-static void
-print_playlist (GooWindow *window)
-{
-	GList *scan;
-
-	debug (DEBUG_INFO, "PLAYLIST: ");
-	for (scan = window->priv->playlist; scan; scan = scan->next) 
-		debug (DEBUG_INFO, "%d, ", GPOINTER_TO_INT (scan->data));
-	debug (DEBUG_INFO, "\n");
-}
-
-
-static void
-create_playlist (GooWindow *window,
-		 gboolean   play_all,
-		 gboolean   shuffle)
-{
-	GooWindowPrivateData *priv = window->priv;
-	GList *playlist;
-	int    pos = 0, i, n;
-
-	debug (DEBUG_INFO, "PLAY ALL: %d\n", play_all);
-	debug (DEBUG_INFO, "SHUFFLE: %d\n", shuffle);
-
-	if (priv->playlist != NULL)
-		g_list_free (priv->playlist);
-	priv->playlist = NULL;
-
-	if (!play_all) 
-		return;
-
-	playlist = NULL;
-
-	if (priv->current_song != NULL)
-		pos = priv->current_song->number;
-	n = g_list_length (priv->song_list);
-
-	for (i = 0; i < n; i++, pos = (pos + 1) % n) {
-		if ((priv->current_song != NULL) 
-		    && (priv->current_song->number == pos))
-			continue;
-		playlist = g_list_prepend (playlist, GINT_TO_POINTER (pos));
-	}
-
-	playlist = g_list_reverse (playlist);
-
-	if (shuffle) {
-		GRand *grand = g_rand_new ();
-		GList *random_list = NULL;
-		int    len = g_list_length (playlist);
-
-		while (playlist != NULL) {
-			GList *item;
-
-			pos = g_rand_int_range (grand, 0, len--);
-			item = g_list_nth (playlist, pos);
-			playlist = g_list_remove_link (playlist, item);
-			random_list = g_list_concat (random_list, item);
-		}
-		g_rand_free (grand);
-
-		playlist = random_list;
-	} 
-
-	priv->playlist = playlist;
-}
-
-
-static void
-play_next_song_in_playlist (GooWindow *window)
-{
-	GooWindowPrivateData *priv = window->priv;
-	gboolean  play_all;
-	gboolean  shuffle;
-	gboolean  repeat;
-	GList    *next = NULL;
-
-	play_all = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
-	shuffle  = eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE);
-	repeat = eel_gconf_get_boolean (PREF_PLAYLIST_REPEAT, FALSE);
-
-	next = priv->playlist;
-
-	if ((next == NULL) && repeat) {
-		if (priv->current_song != NULL) {
-			song_info_unref (priv->current_song);
-			priv->current_song = NULL;
-		}
-		create_playlist (window, play_all, shuffle);
-		next = priv->playlist;
-	}
-	
-	print_playlist (window);
-
-	if (next == NULL)
-		goo_player_stop (priv->player);
-	else {
-		int pos = GPOINTER_TO_INT (next->data);
-		goo_player_seek_song (priv->player, pos);
-		priv->playlist = g_list_remove_link (priv->playlist, next);
-		g_list_free (next);
-	}
 }
 
 
