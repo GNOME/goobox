@@ -1,14 +1,14 @@
 # goobox ja.po.
-# Copyright (C) 2004 Free Software Foundation, Inc.
+# Copyright (C) 2004,2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the 'goobox' package.
-# Takeshi AIHANA <aihana@gnome.gr.jp>, 2004.
+# Takeshi AIHANA <aihana@gnome.gr.jp>, 2004,2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox v0.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-07 16:27+0900\n"
-"PO-Revision-Date: 2004-12-07 16:26+0900\n"
+"POT-Creation-Date: 2005-01-08 20:43+0900\n"
+"PO-Revision-Date: 2005-01-08 20:34+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -49,86 +49,94 @@ msgid "<b>Extract</b>"
 msgstr "<b>切り出し</b>"
 
 #: data/glade/goobox.glade.h:5
+msgid "<b>FLAC</b>"
+msgstr "<b>FLAC</b>"
+
+#: data/glade/goobox.glade.h:6
 msgid "<b>File type</b>"
 msgstr "<b>ファイルの種類</b>"
 
-#: data/glade/goobox.glade.h:6
-msgid "<b>Quality</b>"
-msgstr "<b>品質</b>"
-
 #: data/glade/goobox.glade.h:7
-msgid "<small><i>Higher quality</i></small>"
-msgstr "<small><i>高品質</i></small>"
+msgid "<b>MP3</b>"
+msgstr "<b>MP3</b>"
 
 #: data/glade/goobox.glade.h:8
-msgid "<small><i>Smaller size</i></small>"
-msgstr "<small><i>低品質</i></small>"
+msgid "<b>Ogg Vorbis</b>"
+msgstr "<b>Ogg Vorbis</b>"
 
-#: data/glade/goobox.glade.h:9 src/dlg-extract.c:241
+#: data/glade/goobox.glade.h:9
+msgid "Advanced _Options"
+msgstr "拡張オプション(_O)"
+
+#: data/glade/goobox.glade.h:10 src/dlg-extract.c:238
 msgid "Choose destination folder"
 msgstr "ファイルを格納するフォルダの選択"
 
-#: data/glade/goobox.glade.h:10
-msgid "Encoding Options"
-msgstr "エンコーディングのオプション"
-
 #: data/glade/goobox.glade.h:11
+msgid "Encoding"
+msgstr "エンコーディング"
+
+#: data/glade/goobox.glade.h:12
 msgid "Excellent quality lossless compression"
 msgstr "圧縮ロスがなく、素晴らしい音質です"
 
-#: data/glade/goobox.glade.h:12
+#: data/glade/goobox.glade.h:13
 msgid "Extract Tracks"
 msgstr "CD トラックの切り出し"
 
-#: data/glade/goobox.glade.h:13
+#: data/glade/goobox.glade.h:14
 msgid "Extracting Tracks"
 msgstr "CD トラックの切り出し中"
 
-#: data/glade/goobox.glade.h:14
+#: data/glade/goobox.glade.h:15
+msgid "General"
+msgstr "全般"
+
+#: data/glade/goobox.glade.h:16
 msgid "Good quality lossy compression"
 msgstr "やや圧縮ロスがありますが、音質は良好です"
 
-#: data/glade/goobox.glade.h:15
+#: data/glade/goobox.glade.h:17
 msgid "High quality lossy compression"
 msgstr "やや圧縮ロスがありますが、高音質です"
 
-#: data/glade/goobox.glade.h:16
+#: data/glade/goobox.glade.h:18
 msgid "Preferences"
 msgstr "設定"
 
-#: data/glade/goobox.glade.h:17
+#: data/glade/goobox.glade.h:19
 msgid "Raw audio"
 msgstr "生のオーディオです"
 
-#: data/glade/goobox.glade.h:18
+#: data/glade/goobox.glade.h:20
 msgid "_All tracks"
 msgstr "全てのトラック(_A)"
 
-#: data/glade/goobox.glade.h:19
+#: data/glade/goobox.glade.h:21
 msgid "_FLAC"
 msgstr "FLAC(_F)"
 
-#: data/glade/goobox.glade.h:20
+#: data/glade/goobox.glade.h:22
 msgid "_MP3"
 msgstr "MP3(_M)"
 
-#: data/glade/goobox.glade.h:21
+#: data/glade/goobox.glade.h:23
 msgid "_Ogg Vorbis"
 msgstr "Ogg Vorbis(_O)"
 
-#: data/glade/goobox.glade.h:22 src/goo-stock.c:54
-msgid "_Reset"
-msgstr "リセット(_R)"
+#: data/glade/goobox.glade.h:24
+msgid "_Save playlist"
+msgstr "演奏一覧の保存(_S)"
 
-#: data/glade/goobox.glade.h:23
+#: data/glade/goobox.glade.h:25
 msgid "_Selected tracks"
 msgstr "指定したトラック(_S)"
 
-#: data/glade/goobox.glade.h:24
+#: data/glade/goobox.glade.h:26
 msgid "_Wave"
 msgstr "Wave(_W)"
 
-#: data/goobox.desktop.in.h:1 src/goo-window.c:2053 src/goo-window.c:2061
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2089 src/goo-window.c:2097
 msgid "CD Player"
 msgstr "CD プレイヤー"
 
@@ -145,17 +153,21 @@ msgid ""
 "Possible values are: system, text_below, text_beside, text_only, icons_only."
 msgstr "設定可能な値: system、text_below、text_beside、text_only、icons_only"
 
-#: src/actions.c:138
+#.
+#. const char       *documenters [] = {
+#. NULL
+#. };
+#: src/actions.c:141
 msgid "translator_credits"
 msgstr ""
 "相花 毅 <aihana@gnome.gr.jp>\n"
 "日本GNOMEユーザー会 <http://www.gnome.gr.jp>"
 
-#: src/actions.c:149 src/actions.c:164
+#: src/actions.c:152 src/actions.c:167
 msgid "Goobox"
 msgstr "Goobox"
 
-#: src/actions.c:152 src/actions.c:167 src/main.c:82
+#: src/actions.c:155 src/actions.c:170 src/main.c:114
 msgid "CD player and ripper"
 msgstr "CD を演奏したり切り出したりします"
 
@@ -181,7 +193,7 @@ msgstr "%u (ジャケットの読み込み中: %u)"
 msgid "Loading images"
 msgstr "ジャケットの読み込み中"
 
-#: src/dlg-cover-chooser.c:330 src/goo-window.c:2656
+#: src/dlg-cover-chooser.c:330 src/goo-window.c:2696
 msgid "Could not search a cover on Internet"
 msgstr "インターネットから CD ジャケットを検索できませんでした"
 
@@ -189,7 +201,7 @@ msgstr "インターネットから CD ジャケットを検索できません�
 msgid "No image found"
 msgstr "見つかりませんでした"
 
-#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:205 src/dlg-preferences.c:109
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:202 src/dlg-preferences.c:147
 #, c-format
 msgid "Could not display help: %s"
 msgstr "ヘルプを表示できませんでした: %s"
@@ -198,30 +210,7 @@ msgstr "ヘルプを表示できませんでした: %s"
 msgid "Searching images..."
 msgstr "ジャケット画像の検索中..."
 
-#: src/dlg-encoder-options.c:117
-#, c-format
-msgid "Nominal bitrate: %d Kbps"
-msgstr "公称ビットレート: %d Kビット/秒"
-
-#: src/dlg-encoder-options.c:120
-#, c-format
-msgid "Compression level: %d"
-msgstr "圧縮レベル: %d"
-
-#: src/dlg-encoder-options.c:123
-#, c-format
-msgid "Bitrate: %d Kbps"
-msgstr "ビットレート: %d Kビット/秒"
-
-#: src/dlg-encoder-options.c:261
-msgid "Faster compression"
-msgstr "高速な圧縮"
-
-#: src/dlg-encoder-options.c:265
-msgid "Higher compression"
-msgstr "高圧縮"
-
-#: src/dlg-extract.c:367
+#: src/dlg-extract.c:365
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -240,28 +229,60 @@ msgstr ""
 "• %s → Mp3\n"
 "• %s → Wave"
 
-#: src/dlg-extract.c:380
+#: src/dlg-extract.c:378
 msgid "No encoder available."
 msgstr "利用可能なエンコーダがありません"
 
-#: src/dlg-ripper.c:311
+#: src/dlg-preferences.c:168
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "公称ビットレート: %d Kビット/秒"
+
+#: src/dlg-preferences.c:172
+#, c-format
+msgid "Compression level: %d"
+msgstr "圧縮レベル: %d"
+
+#: src/dlg-preferences.c:176
+#, c-format
+msgid "Bitrate: %d Kbps"
+msgstr "ビットレート: %d Kビット/秒"
+
+#. Set widgets data.
+#: src/dlg-preferences.c:335 src/dlg-preferences.c:343
+msgid "Smaller size"
+msgstr "サイズを小さく"
+
+#: src/dlg-preferences.c:339 src/dlg-preferences.c:347
+msgid "Higher quality"
+msgstr "高品質"
+
+#: src/dlg-preferences.c:351
+msgid "Faster compression"
+msgstr "高速な圧縮"
+
+#: src/dlg-preferences.c:355
+msgid "Higher compression"
+msgstr "高圧縮"
+
+#: src/dlg-ripper.c:313
 msgid "Could not display the destination folder"
 msgstr "切り出し先のフォルダを表示できませんでした"
 
-#: src/dlg-ripper.c:338
+#: src/dlg-ripper.c:427
 msgid "Tracks extracted successfully"
 msgstr "トラックの切り出しが完了しました"
 
-#: src/dlg-ripper.c:340
+#: src/dlg-ripper.c:429
 msgid "_View destination folder"
 msgstr "切り出し先のフォルダの表示(_V)"
 
-#: src/dlg-ripper.c:353
+#: src/dlg-ripper.c:442
 #, c-format
 msgid "Extracting track %d of %d: %s"
 msgstr "トラック (%d / %d) の切り出し中: %s"
 
-#: src/dlg-ripper.c:388
+#: src/dlg-ripper.c:477
 msgid "Ripped with Goobox"
 msgstr "Goobox で切り出す"
 
@@ -284,7 +305,7 @@ msgid "Error reading CD"
 msgstr "CD を読み込む際にエラー"
 
 #: src/goo-cdrom.c:323
-msgid "The specifued device is not valid"
+msgid "The specified device is not valid"
 msgstr "指定したデバイスが間違っています"
 
 #: src/goo-player-cd.c:784
@@ -303,33 +324,33 @@ msgstr "ディスクなし"
 msgid "Data CD"
 msgstr "データ CD"
 
-#: src/goo-player-info.c:229 src/goo-player-info.c:254
-#: src/goo-player-info.c:622
+#: src/goo-player-info.c:236 src/goo-player-info.c:261
+#: src/goo-player-info.c:758
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
-#: src/goo-player-info.c:377
+#: src/goo-player-info.c:499
 msgid "Click here to choose a cover for this CD"
 msgstr "ここをクリックすると、この CD のジャケットを変更できます"
 
-#: src/goo-player-info.c:550 src/goo-window.c:1228
+#: src/goo-player-info.c:686 src/goo-window.c:1236
 msgid "Paused"
 msgstr "停止中"
 
-#: src/goo-player-info.c:561
+#: src/goo-player-info.c:697
 msgid "Ejecting CD"
 msgstr "CD の取り出し中"
 
-#: src/goo-player-info.c:565
+#: src/goo-player-info.c:701
 msgid "Checking CD drive"
 msgstr "CD ドライブのチェック中"
 
-#: src/goo-player-info.c:569 src/goo-player-info.c:573
+#: src/goo-player-info.c:705 src/goo-player-info.c:709
 msgid "Reading CD"
 msgstr "CD の読み込み中"
 
-#: src/goo-player-info.c:586 src/goo-window.c:1252
+#: src/goo-player-info.c:722 src/goo-window.c:1260
 msgid "Audio CD"
 msgstr "音楽 CD"
 
@@ -337,22 +358,34 @@ msgstr "音楽 CD"
 msgid "_Extract"
 msgstr "切り出し(_E)"
 
+#: src/goo-stock.c:54
+msgid "_Reset"
+msgstr "リセット(_R)"
+
 #: src/goo-stock.c:55 src/goo-stock.c:56 src/goo-stock.c:57 src/goo-stock.c:58
 msgid "V_olume"
 msgstr "音量(_O)"
 
-#: src/goo-volume-button.c:147
+#: src/goo-volume-button.c:147 src/goo-volume-tool-button.c:284
 #, c-format
 msgid "Volume level: %3.0f%%"
 msgstr "音量レベル: %3.0f%%"
 
-#: src/goo-volume-button.c:328
+#: src/goo-volume-button.c:328 src/goo-volume-tool-button.c:494
 msgid "+"
 msgstr "上げる"
 
-#: src/goo-volume-button.c:344
+#: src/goo-volume-button.c:344 src/goo-volume-tool-button.c:510
 msgid "-"
 msgstr "下げる"
+
+#: src/goo-volume-tool-button.c:538
+msgid "Change the volume level"
+msgstr "音量レベルを変更します"
+
+#: src/goo-volume-tool-button.c:605
+msgid "Volume"
+msgstr "音量"
 
 #: src/goo-window.c:65
 msgid "Hide _tracks"
@@ -369,87 +402,92 @@ msgid_plural "%d tracks"
 msgstr[0] "トラック数 %d"
 msgstr[1] "トラック数 %d"
 
-#: src/goo-window.c:532
+#: src/goo-window.c:193
+#, c-format
+msgid "year %d"
+msgstr "制作年 %d"
+
+#: src/goo-window.c:538
 msgid "Length"
 msgstr "演奏時間"
 
-#: src/goo-window.c:533
+#: src/goo-window.c:539
 msgid "Title"
 msgstr "題名"
 
-#: src/goo-window.c:534
+#: src/goo-window.c:540
 msgid "Artist"
 msgstr "アーティスト"
 
-#: src/goo-window.c:542
+#: src/goo-window.c:548
 msgid "#"
 msgstr "#"
 
-#: src/goo-window.c:1138 src/ui.h:57
+#: src/goo-window.c:1146 src/ui.h:57
 msgid "_Pause"
 msgstr "一時停止(_P)"
 
-#: src/goo-window.c:1139
+#: src/goo-window.c:1147
 msgid "Pause playing"
 msgstr "演奏を一時停止します"
 
-#: src/goo-window.c:1357 src/goo-window.c:1369 src/ui.h:45 src/ui.h:49
+#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:45 src/ui.h:49
 #: src/ui.h:53
 msgid "_Play"
 msgstr "演奏(_P)"
 
-#: src/goo-window.c:1358 src/goo-window.c:1370
+#: src/goo-window.c:1367 src/goo-window.c:1379
 msgid "Play CD"
 msgstr "CD を演奏します"
 
-#: src/goo-window.c:2334
+#: src/goo-window.c:2374
 msgid "Could not eject the CD"
 msgstr "CD を取り出せませんでした"
 
-#: src/goo-window.c:2346
+#: src/goo-window.c:2386
 msgid "Could not read drive"
 msgstr "ドライブを読み込めませんでした"
 
-#: src/goo-window.c:2530
+#: src/goo-window.c:2570
 msgid "Could not save cover image"
 msgstr "ジャケットの画像を保存できませんでした"
 
-#: src/goo-window.c:2540
+#: src/goo-window.c:2580
 msgid "Could not load image"
 msgstr "ジャケットの画像を読み込めませんでした"
 
-#: src/goo-window.c:2596
+#: src/goo-window.c:2636
 msgid "Choose CD Cover Image"
 msgstr "CD ジャケットの画像の選択"
 
-#: src/goo-window.c:2615
+#: src/goo-window.c:2655
 msgid "Images"
 msgstr "画像"
 
-#: src/goo-window.c:2623
+#: src/goo-window.c:2663
 msgid "All files"
 msgstr "全てのファイル"
 
-#: src/goo-window.c:2657
+#: src/goo-window.c:2697
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 msgstr ""
 "アルバムのジャケットを検索するにはアーティストとアルバム名を入力して下さい。"
 
-#: src/goo-window.c:2691
+#: src/goo-window.c:2731
 msgid "_Show Window"
 msgstr "ウィンドウの表示(_S)"
 
-#: src/goo-window.c:2692
+#: src/goo-window.c:2732
 msgid "Show the main window"
 msgstr "メイン・ウィンドウを表示します"
 
-#: src/goo-window.c:2705 src/ui.h:109
+#: src/goo-window.c:2745 src/ui.h:109
 msgid "_Hide Window"
 msgstr "ウィンドウを隠す(_H)"
 
-#: src/goo-window.c:2706 src/ui.h:110
+#: src/goo-window.c:2746 src/ui.h:110
 msgid "Hide the main window"
 msgstr "メイン・ウィンドウを隠します"
 
@@ -469,23 +507,55 @@ msgstr "ピクセル"
 msgid "Could not execute command"
 msgstr "コマンドを実行できませんでした"
 
-#: src/main.c:57
+#: src/main.c:65
 msgid "CD device to be used"
 msgstr "使用する CD-ROM ドライブを指定する"
 
-#: src/main.c:58
+#: src/main.c:66
 msgid "DEVICE_PATH"
 msgstr "DEVICE_PATH"
 
-#: src/main.c:60
+#: src/main.c:68
 msgid "Play the CD on startup"
 msgstr "起動したら CD を演奏する"
 
-#: src/main.c:198
+#: src/main.c:71 src/ui.h:46
+msgid "Play/Pause"
+msgstr "CD を演奏したり、演奏を一時停止します"
+
+#: src/main.c:74 src/ui.h:66
+msgid "Play the next track"
+msgstr "次のトラックを演奏します"
+
+#: src/main.c:77 src/ui.h:70
+msgid "Play the previous track"
+msgstr "前のトラックを演奏します"
+
+#: src/main.c:80 src/ui.h:74
+msgid "Eject the CD"
+msgstr "CD を取り出します"
+
+#: src/main.c:83
+msgid "Hide/Show the main window"
+msgstr "メイン・ウィンドウの ON/OFF を切り替える"
+
+#: src/main.c:86
+msgid "Volume Up"
+msgstr "音量レベルを上げる"
+
+#: src/main.c:89
+msgid "Volume Down"
+msgstr "音量レベルを下げる"
+
+#: src/main.c:92 src/ui.h:94
+msgid "Quit the application"
+msgstr "アプリケーションを終了します"
+
+#: src/main.c:246
 msgid "Cannot start the CD player"
 msgstr "CD プレイヤーを起動できません"
 
-#: src/main.c:199
+#: src/main.c:247
 msgid ""
 "In order to read CDs you have to install the cdparanoia gstreamer plugin"
 msgstr ""
@@ -525,10 +595,6 @@ msgstr "情報(_A)"
 msgid "Information about the program"
 msgstr "'goobox' の情報を表示します"
 
-#: src/ui.h:46
-msgid "Play/Pause"
-msgstr "CD を演奏したり、演奏を一時停止します"
-
 #: src/ui.h:50
 msgid "Play"
 msgstr "演奏します"
@@ -553,25 +619,13 @@ msgstr "演奏を停止します"
 msgid "_Next"
 msgstr "次へ(_N)"
 
-#: src/ui.h:66
-msgid "Play the next track"
-msgstr "次のトラックを演奏します"
-
 #: src/ui.h:69
 msgid "Pre_v"
 msgstr "前へ(_V)"
 
-#: src/ui.h:70
-msgid "Play the previous track"
-msgstr "前のトラックを演奏します"
-
 #: src/ui.h:73
 msgid "_Eject"
 msgstr "取り出し(_E)"
-
-#: src/ui.h:74
-msgid "Eject the CD"
-msgstr "CD を取り出します"
 
 #: src/ui.h:77
 msgid "_Reload"
@@ -608,10 +662,6 @@ msgstr "CD のアーティスト、アルバム名、トラックのタイトル
 #: src/ui.h:93
 msgid "_Quit"
 msgstr "終了(_Q)"
-
-#: src/ui.h:94
-msgid "Quit the application"
-msgstr "アプリケーションを終了します"
 
 #: src/ui.h:97
 msgid "_Choose from Disk"
