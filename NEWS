@@ -1,3 +1,11 @@
+version 0.9.90
+-------------	
+	* Added multimedia keys support.
+	* Added a track status icon in the track number column.
+	* Allow the ripper to write to non-local destinations.
+	* Add encoder, encoder_version and year tags to the ripped tracks.
+	* Save and restore the track list sort method and order.
+
 version 0.7.2
 -------------	
 	* Extract dialog: Added extraction folder to the advanced options, 
