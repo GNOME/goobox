@@ -37,6 +37,13 @@
 #include "main.h"
 #include "goo-application.h"
 #include "gtk-utils.h"
+#include "glib-utils.h"
+
+#ifdef HAVE_MMKEYS
+#include <X11/Xlib.h>
+#include <X11/XF86keysym.h>
+#include <gdk/gdkx.h>
+#endif /* HAVE_MMKEYS */
 
 GtkWindow *main_window = NULL;
 int        AutoPlay = FALSE;
@@ -56,6 +63,7 @@ static void     release_data        (void);
 static void     init_session        (char **argv);
 static gboolean session_is_restored (void);
 static gboolean load_session        (void);
+static void     init_mmkeys         (void);
 
 static char         *default_device = NULL;
 static BonoboObject *goo_application = NULL;
@@ -262,6 +270,10 @@ prepare_app (poptContext pctx)
 	gtk_widget_show (GTK_WIDGET (main_window));
 
 	goo_application = goo_application_new (gdk_screen_get_default ());
+
+#ifdef HAVE_MMKEYS
+	init_mmkeys ();
+#endif /* HAVE_MMKEYS */
 }
 
 
@@ -387,3 +399,141 @@ load_session (void)
 
 	return TRUE;
 }
+
+
+/* From rhythmbox/shell/rb-shell-player.c
+ *
+ *  Copyright (C) 2002, 2003 Jorn Baayen <jorn@nl.linux.org>
+ *  Copyright (C) 2002,2003 Colin Walters <walters@debian.org>
+ *
+ *  Modified by Paolo Bacchilega for Goobox
+ *
+ *  Copyright (C) 2005 Paolo Bacchilega <paobac@cvs.gnome.org>
+ */
+
+#ifdef HAVE_MMKEYS
+
+static void
+grab_mmkey (int        key_code, 
+	    GdkWindow *root)
+{
+	gdk_error_trap_push ();
+
+	XGrabKey (GDK_DISPLAY (), key_code,
+		  0,
+		  GDK_WINDOW_XID (root), True,
+		  GrabModeAsync, GrabModeAsync);
+	XGrabKey (GDK_DISPLAY (), key_code,
+		  Mod2Mask,
+		  GDK_WINDOW_XID (root), True,
+		  GrabModeAsync, GrabModeAsync);
+	XGrabKey (GDK_DISPLAY (), key_code,
+		  Mod5Mask,
+		  GDK_WINDOW_XID (root), True,
+		  GrabModeAsync, GrabModeAsync);
+	XGrabKey (GDK_DISPLAY (), key_code,
+		  LockMask,
+		  GDK_WINDOW_XID (root), True,
+		  GrabModeAsync, GrabModeAsync);
+	XGrabKey (GDK_DISPLAY (), key_code,
+		  Mod2Mask | Mod5Mask,
+		  GDK_WINDOW_XID (root), True,
+		  GrabModeAsync, GrabModeAsync);
+	XGrabKey (GDK_DISPLAY (), key_code,
+		  Mod2Mask | LockMask,
+		  GDK_WINDOW_XID (root), True,
+		  GrabModeAsync, GrabModeAsync);
+	XGrabKey (GDK_DISPLAY (), key_code,
+		  Mod5Mask | LockMask,
+		  GDK_WINDOW_XID (root), True,
+		  GrabModeAsync, GrabModeAsync);
+	XGrabKey (GDK_DISPLAY (), key_code,
+		  Mod2Mask | Mod5Mask | LockMask,
+		  GDK_WINDOW_XID (root), True,
+		  GrabModeAsync, GrabModeAsync);
+	
+	gdk_flush ();
+        if (gdk_error_trap_pop ()) 
+		debug (DEBUG_INFO, "Error grabbing key");
+}
+
+
+static GdkFilterReturn
+filter_mmkeys (GdkXEvent *xevent, 
+	       GdkEvent  *event, 
+	       gpointer   data)
+{
+	XEvent    *xev;
+	XKeyEvent *key;
+
+	xev = (XEvent *) xevent;
+	if (xev->type != KeyPress) 
+		return GDK_FILTER_CONTINUE;
+
+	key = (XKeyEvent *) xevent;
+
+	if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPlay) == key->keycode) {	
+		goo_window_toggle_play (GOO_WINDOW (main_window));
+		return GDK_FILTER_REMOVE;
+
+	} else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPause) == key->keycode) {	
+		goo_window_pause (GOO_WINDOW (main_window));
+		return GDK_FILTER_REMOVE;
+
+	} else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioStop) == key->keycode) {
+		goo_window_stop (GOO_WINDOW (main_window));
+		return GDK_FILTER_REMOVE;		
+
+	} else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPrev) == key->keycode) {
+		goo_window_prev (GOO_WINDOW (main_window));
+		return GDK_FILTER_REMOVE;		
+
+	} else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioNext) == key->keycode) {
+		goo_window_next (GOO_WINDOW (main_window));
+		return GDK_FILTER_REMOVE;
+
+	} else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_Eject) == key->keycode) {
+		goo_window_eject (GOO_WINDOW (main_window));
+		return GDK_FILTER_REMOVE;
+
+	} else {
+		return GDK_FILTER_CONTINUE;
+	}
+}
+
+
+static void
+init_mmkeys (void)
+{
+	gint        keycodes[] = {0, 0, 0, 0, 0, 0};
+	GdkDisplay *display;
+	GdkScreen  *screen;
+	GdkWindow  *root;
+	guint       i, j;
+
+	keycodes[0] = XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPlay);
+	keycodes[1] = XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioStop);
+	keycodes[2] = XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPrev);
+	keycodes[3] = XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioNext);
+	keycodes[4] = XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPause);
+	keycodes[5] = XKeysymToKeycode (GDK_DISPLAY (), XF86XK_Eject);
+
+	display = gdk_display_get_default ();
+
+	for (i = 0; i < gdk_display_get_n_screens (display); i++) {
+		screen = gdk_display_get_screen (display, i);
+
+		if (screen != NULL) {
+			root = gdk_screen_get_root_window (screen);
+
+			for (j = 0; j < G_N_ELEMENTS (keycodes) ; j++) {
+				if (keycodes[j] != 0)
+					grab_mmkey (keycodes[j], root);
+			}
+
+			gdk_window_add_filter (root, filter_mmkeys, NULL);
+		}
+	}
+}
+
+#endif /* HAVE_MMKEYS */
