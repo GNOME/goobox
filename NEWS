@@ -1,3 +1,10 @@
-version 0.0.1
+version 0.2.0
+-------------
+	* Added the volume control.
+	* Added a "play selected track" command in the context menu.
+	* Added a --device command line argument.
+	* Session support.
+	
+version 0.1.0
 -------------
 	* First public version.

@@ -1,5 +1,7 @@
 2004-10-19  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	[ version 0.2.0 released ]
+
 	* src/goo-cdrom-linux.h: 
 	* src/goo-cdrom-linux.c: 
 	* src/goo-cdrom.h: 
