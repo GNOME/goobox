@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-03 16:26+0100\n"
-"PO-Revision-Date: 2005-01-03 16:25+0100\n"
+"POT-Creation-Date: 2005-01-31 12:07+0100\n"
+"PO-Revision-Date: 2005-01-31 12:07+0100\n"
 "Last-Translator: Martin Willemoes Hansen <mwh@sysrq.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -70,7 +70,7 @@ msgstr "<b>Ogg Vorbis</b>"
 msgid "Advanced _Options"
 msgstr "Avancerede indstillinger"
 
-#: data/glade/goobox.glade.h:10 src/dlg-extract.c:238
+#: data/glade/goobox.glade.h:10 src/dlg-extract.c:239
 msgid "Choose destination folder"
 msgstr "Vælg målmappen"
 
@@ -156,11 +156,15 @@ msgid ""
 msgstr ""
 "Mulige værdier er: system, text_below, text_beside, text_only, icons_only."
 
+#: src/actions.c:139
+msgid "Could not display help"
+msgstr "Kunne ikke vise hjælp"
+
 #.
 #. const char       *documenters [] = {
 #. NULL
 #. };
-#: src/actions.c:141
+#: src/actions.c:192
 msgid "translator_credits"
 msgstr ""
 "Martin Willemoes Hansen\n"
@@ -168,11 +172,11 @@ msgstr ""
 "Dansk-gruppen <dansk@klid.dk>\n"
 "Mere info: http://www.klid.dk/dansk/"
 
-#: src/actions.c:152 src/actions.c:167
+#: src/actions.c:203 src/actions.c:218
 msgid "Goobox"
 msgstr "Goobox"
 
-#: src/actions.c:155 src/actions.c:170 src/main.c:114
+#: src/actions.c:206 src/actions.c:221 src/main.c:114
 msgid "CD player and ripper"
 msgstr "Cd-afspiller og -udtrækker"
 
@@ -206,7 +210,7 @@ msgstr "Kunne ikke søge efter et omslag på internettet"
 msgid "No image found"
 msgstr "Intet billede fundet"
 
-#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:202 src/dlg-preferences.c:147
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:203 src/dlg-preferences.c:147
 #, c-format
 msgid "Could not display help: %s"
 msgstr "Kunne ikke vise hjælp: %s"
@@ -215,7 +219,7 @@ msgstr "Kunne ikke vise hjælp: %s"
 msgid "Searching images..."
 msgstr "Søger efter billeder..."
 
-#: src/dlg-extract.c:365
+#: src/dlg-extract.c:374
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -234,7 +238,7 @@ msgstr ""
 "• %s → Mp3\n"
 "• %s → Wave"
 
-#: src/dlg-extract.c:378
+#: src/dlg-extract.c:387
 msgid "No encoder available."
 msgstr "Ingen koder tilgængelig."
 
@@ -274,20 +278,20 @@ msgstr "Højere komprimering"
 msgid "Could not display the destination folder"
 msgstr "Kunne ikke vise målmappen"
 
-#: src/dlg-ripper.c:424
+#: src/dlg-ripper.c:427
 msgid "Tracks extracted successfully"
 msgstr "Sporene er udtrukket uden problemer"
 
-#: src/dlg-ripper.c:426
+#: src/dlg-ripper.c:429
 msgid "_View destination folder"
 msgstr "_Vis målmappen"
 
-#: src/dlg-ripper.c:439
+#: src/dlg-ripper.c:442
 #, c-format
 msgid "Extracting track %d of %d: %s"
 msgstr "Udtrækker spor %d af %d: %s"
 
-#: src/dlg-ripper.c:474
+#: src/dlg-ripper.c:477
 msgid "Ripped with Goobox"
 msgstr "Rippet med Goobox"
 
@@ -313,19 +317,19 @@ msgstr "Fejl ved aflæsning af cd"
 msgid "The specified device is not valid"
 msgstr "Den angivne enhed er ugyldig"
 
-#: src/goo-player-cd.c:784
+#: src/goo-player-cd.c:791
 msgid "Drive not ready"
 msgstr "Drevet er ikke klar"
 
-#: src/goo-player-cd.c:788
+#: src/goo-player-cd.c:795
 msgid "Tray open"
 msgstr "Drevet er åbent"
 
-#: src/goo-player-cd.c:789 src/goo-player-cd.c:793
+#: src/goo-player-cd.c:796 src/goo-player-cd.c:800
 msgid "No disc"
 msgstr "Ingen skive"
 
-#: src/goo-player-cd.c:797
+#: src/goo-player-cd.c:804
 msgid "Data CD"
 msgstr "Data-cd"
 
@@ -428,7 +432,7 @@ msgstr "Kunstner"
 msgid "#"
 msgstr "Nr"
 
-#: src/goo-window.c:1146 src/ui.h:57
+#: src/goo-window.c:1146 src/ui.h:65
 msgid "_Pause"
 msgstr "_Pause"
 
@@ -436,8 +440,8 @@ msgstr "_Pause"
 msgid "Pause playing"
 msgstr "Sæt afspilning på pause"
 
-#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:45 src/ui.h:49
-#: src/ui.h:53
+#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:53 src/ui.h:57
+#: src/ui.h:61
 msgid "_Play"
 msgstr "_Afspil"
 
@@ -489,11 +493,11 @@ msgstr "_Vis vindue"
 msgid "Show the main window"
 msgstr "Vis hovedvinduet"
 
-#: src/goo-window.c:2745 src/ui.h:109
+#: src/goo-window.c:2745 src/ui.h:117
 msgid "_Hide Window"
 msgstr "_Skjul vindue"
 
-#: src/goo-window.c:2746 src/ui.h:110
+#: src/goo-window.c:2746 src/ui.h:118
 msgid "Hide the main window"
 msgstr "Skjul hovedvinduet"
 
@@ -525,19 +529,19 @@ msgstr "ENHEDS_STI"
 msgid "Play the CD on startup"
 msgstr "Afspil cd'en ved opstart"
 
-#: src/main.c:71 src/ui.h:46
+#: src/main.c:71 src/ui.h:54
 msgid "Play/Pause"
 msgstr "Afspil/Pause"
 
-#: src/main.c:74 src/ui.h:66
+#: src/main.c:74 src/ui.h:74
 msgid "Play the next track"
 msgstr "Afspil næste spor"
 
-#: src/main.c:77 src/ui.h:70
+#: src/main.c:77 src/ui.h:78
 msgid "Play the previous track"
 msgstr "Afspil foregående spor"
 
-#: src/main.c:80 src/ui.h:74
+#: src/main.c:80 src/ui.h:82
 msgid "Eject the CD"
 msgstr "Skub cd'en ud"
 
@@ -553,7 +557,7 @@ msgstr "Forøg lydstyrken"
 msgid "Volume Down"
 msgstr "Dæmp lydstyrken"
 
-#: src/main.c:92 src/ui.h:94
+#: src/main.c:92 src/ui.h:102
 msgid "Quit the application"
 msgstr "Afslut programmet"
 
@@ -601,134 +605,146 @@ msgstr "_Om"
 msgid "Information about the program"
 msgstr "Information om programmet"
 
-#: src/ui.h:50
+#: src/ui.h:45
+msgid "_Contents"
+msgstr "_Indhold"
+
+#: src/ui.h:46
+msgid "Display the manual"
+msgstr "Vis manualen"
+
+#: src/ui.h:49
+msgid "_Keyboard shortcuts"
+msgstr "_Tastaturgenveje"
+
+#: src/ui.h:58
 msgid "Play"
 msgstr "Afspil"
 
-#: src/ui.h:54
+#: src/ui.h:62
 msgid "Play this track"
 msgstr "Afspil dette spor"
 
-#: src/ui.h:58
+#: src/ui.h:66
 msgid "Pause"
 msgstr "Pause"
 
-#: src/ui.h:61
+#: src/ui.h:69
 msgid "_Stop"
 msgstr "_Stop"
 
-#: src/ui.h:62
+#: src/ui.h:70
 msgid "Stop playing"
 msgstr "Stop afspilning"
 
-#: src/ui.h:65
+#: src/ui.h:73
 msgid "_Next"
 msgstr "_Næste"
 
-#: src/ui.h:69
+#: src/ui.h:77
 msgid "Pre_v"
 msgstr "Fore_g"
 
-#: src/ui.h:73
+#: src/ui.h:81
 msgid "_Eject"
 msgstr "_Skub ud"
 
-#: src/ui.h:77
+#: src/ui.h:85
 msgid "_Reload"
 msgstr "_Genindlæs"
 
-#: src/ui.h:78
+#: src/ui.h:86
 msgid "Reload the CD"
 msgstr "Genindlæs cd'en"
 
-#: src/ui.h:81
+#: src/ui.h:89
 msgid "_Preferences"
 msgstr "_Indstillinger"
 
-#: src/ui.h:82
+#: src/ui.h:90
 msgid "Edit various preferences"
 msgstr "Redigér diverse indstillinger"
 
-#: src/ui.h:85
+#: src/ui.h:93
 msgid "E_xtract Tracks"
 msgstr "U_dtræk spor"
 
-#: src/ui.h:86
+#: src/ui.h:94
 msgid "Save the tracks to disk as files"
 msgstr "Gem sporene på disken som filer"
 
-#: src/ui.h:89
+#: src/ui.h:97
 msgid "_CD Properties"
 msgstr "_Cd-egenskaber"
 
-#: src/ui.h:90
+#: src/ui.h:98
 msgid "Edit the CD artist, album and tracks titles"
 msgstr "Redigér titelen på cd-kunstneren, -albumet og -sporene"
 
-#: src/ui.h:93
+#: src/ui.h:101
 msgid "_Quit"
 msgstr "_Afslut"
 
-#: src/ui.h:97
+#: src/ui.h:105
 msgid "_Choose from Disk"
 msgstr "_Vælg fra disk"
 
-#: src/ui.h:98
+#: src/ui.h:106
 msgid "Choose a CD cover from the local disk"
 msgstr "Vælg et cd-omslag fra den lokale disk"
 
-#: src/ui.h:101
+#: src/ui.h:109
 msgid "_Search on Internet"
 msgstr "_Søg på internettet"
 
-#: src/ui.h:102
+#: src/ui.h:110
 msgid "Search a CD cover on Internet"
 msgstr "Søg i et cd-omslag på internettet"
 
-#: src/ui.h:105
+#: src/ui.h:113
 msgid "_Remove Cover"
 msgstr "_Fjern omslag"
 
-#: src/ui.h:106
+#: src/ui.h:114
 msgid "Remove current CD cover"
 msgstr "Fjern aktuelt cd-omslag"
 
-#: src/ui.h:118
+#: src/ui.h:126
 msgid "_Toolbar"
 msgstr "_Værktøjslinje"
 
-#: src/ui.h:119
+#: src/ui.h:127
 msgid "View the main toolbar"
 msgstr "Vis hovedværktøjslinjen"
 
-#: src/ui.h:123
+#: src/ui.h:131
 msgid "Stat_usbar"
 msgstr "Stat_uslinje"
 
-#: src/ui.h:124
+#: src/ui.h:132
 msgid "View the statusbar"
 msgstr "Vis statuslinjen"
 
-#: src/ui.h:128
+#: src/ui.h:136
 msgid "Play _All"
 msgstr "Afspil _alle"
 
-#: src/ui.h:129
+#: src/ui.h:137
 msgid "Play all tracks"
 msgstr "Afspil alle spor"
 
-#: src/ui.h:133
+#: src/ui.h:141
 msgid "_Repeat"
 msgstr "_Gentag"
 
-#: src/ui.h:134
+#: src/ui.h:142
 msgid "Restart playing when finished"
 msgstr "Genstart afspilning ved afslutning"
 
-#: src/ui.h:138
+#: src/ui.h:146
 msgid "S_huffle"
 msgstr "_Bland"
 
-#: src/ui.h:139
+#: src/ui.h:147
 msgid "Play tracks in a random order"
 msgstr "Afspil sporene i tilfældig rækkefølge"
