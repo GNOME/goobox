@@ -1,5 +1,12 @@
 2004-12-17  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/ui.h: 
+	* src/goo-volume-tool-button.c: 
+	* src/goo-volume-tool-button.h:
+	* src/goo-window.c: 
+
+	Moved the volume button on the toolbar.
+
 	* src/main.c (main): 
 	* src/goo-window.h: 
 	* src/GNOME_Goobox.idl: 

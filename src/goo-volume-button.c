@@ -165,7 +165,7 @@ button_toggled_cb (GtkToggleButton *toggle_button,
 		GtkAllocation  allocation = widget->allocation;
 		int            root_x, root_y;
 
-		gdk_window_get_position (widget->window, &root_x, &root_y);
+		gdk_window_get_origin (widget->window, &root_x, &root_y);
 		gtk_window_move (GTK_WINDOW (priv->popup_win),
 				 root_x + allocation.x,
 				 root_y + allocation.y + allocation.height);
@@ -331,7 +331,7 @@ goo_volume_button_construct (GooVolumeButton *button,
 	priv->volume_scale = gtk_vscale_new_with_range (from_value, to_value, step);
 	gtk_range_set_inverted (GTK_RANGE (priv->volume_scale), TRUE);
 	gtk_scale_set_draw_value (GTK_SCALE (priv->volume_scale), FALSE);
-	gtk_range_set_update_policy (GTK_RANGE (priv->volume_scale), GTK_UPDATE_DELAYED);
+	/*gtk_range_set_update_policy (GTK_RANGE (priv->volume_scale), GTK_UPDATE_DELAYED);*/
 	gtk_range_set_increments (GTK_RANGE (priv->volume_scale), step, step);
 
 	gtk_box_pack_start (GTK_BOX (volume_vbox), priv->volume_scale, TRUE, TRUE, 0);
@@ -360,7 +360,6 @@ goo_volume_button_construct (GooVolumeButton *button,
 			  "scroll_event",
 			  G_CALLBACK (button_scroll_event_cb), 
 			  button);
-
 }
 
 

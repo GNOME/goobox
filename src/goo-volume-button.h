@@ -50,7 +50,7 @@ struct _GooVolumeButtonClass
 
 	/*<signals>*/
 
-	void (*changed) (GooVolumeButton *player);
+	void (*changed) (GooVolumeButton *button);
 };
 
 GType            goo_volume_button_get_type        (void);

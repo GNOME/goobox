@@ -129,6 +129,8 @@ goobox_SOURCES = 				\
 	goo-player-info.h			\
 	goo-volume-button.c			\
 	goo-volume-button.h			\
+	goo-volume-tool-button.c		\
+	goo-volume-tool-button.h		\
 	goo-window.c				\
 	goo-window.h				\
 	goo-stock.c				\

@@ -41,7 +41,7 @@
 #include "goo-player-cd.h"
 #include "goo-player-info.h"
 #include "goo-window.h"
-#include "goo-volume-button.h"
+#include "goo-volume-tool-button.h"
 #include "gtk-utils.h"
 #include "gtk-file-chooser-preview.h"
 #include "glib-utils.h"
@@ -1708,10 +1708,10 @@ tray_icon_expose (GtkWidget      *widget,
 
 
 static void
-volume_button_changed_cb (GooVolumeButton *button,
-			  GooWindow       *window)
+volume_button_changed_cb (GooVolumeToolButton *button,
+			  GooWindow           *window)
 {
-	int vol = (int) goo_volume_button_get_volume (button);
+	int vol = (int) goo_volume_tool_button_get_volume (button);
 	goo_player_set_volume (window->priv->player, vol);
 }
 
@@ -1735,7 +1735,6 @@ goo_window_construct (GooWindow  *window,
 	GtkWidget            *scrolled_window;
 	GtkWidget            *vbox;
 	GtkWidget            *hbox;
-	GtkWidget            *volume_box;
 	GtkWidget            *expander;
 	GtkTreeSelection     *selection;
 	int                   i;
@@ -1909,7 +1908,7 @@ goo_window_construct (GooWindow  *window,
 			      1, 1, 0);
 
 	priv->toolbar = toolbar = gtk_ui_manager_get_widget (ui, "/ToolBar");
-	gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), TRUE);
+	gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), FALSE);
 	gnome_app_add_docked (GNOME_APP (window),
 			      toolbar,
 			      "ToolBar",
@@ -1922,6 +1921,28 @@ goo_window_construct (GooWindow  *window,
 
 	priv->file_popup_menu = gtk_ui_manager_get_widget (ui, "/ListPopupMenu");
 	priv->cover_popup_menu = gtk_ui_manager_get_widget (ui, "/CoverPopupMenu");
+
+	/* Add the volume button to the toolbar. */
+	
+	{
+		GtkToolItem *sep = gtk_separator_tool_item_new ();
+		
+		gtk_widget_show (GTK_WIDGET (sep));
+		gtk_toolbar_insert (GTK_TOOLBAR (priv->toolbar), 
+				    GTK_TOOL_ITEM (sep),
+				    -1);
+	}
+
+	priv->volume_button = (GtkWidget*) goo_volume_tool_button_new (0.0, 100.0, 5.0);
+	g_signal_connect (priv->volume_button, 
+			  "changed",
+			  G_CALLBACK (volume_button_changed_cb), 
+			  window);
+	gtk_widget_show (GTK_WIDGET (priv->volume_button));
+	gtk_tool_item_set_is_important (GTK_TOOL_ITEM (priv->volume_button), FALSE); /*FIXME*/
+	gtk_toolbar_insert (GTK_TOOLBAR (priv->toolbar), 
+			    GTK_TOOL_ITEM (priv->volume_button), 
+			    -1);
 
 	/* Create the statusbar. */
 
@@ -1953,20 +1974,6 @@ goo_window_construct (GooWindow  *window,
 			  G_CALLBACK (player_info_cover_clicked_cb), 
 			  window);
 	gtk_box_pack_start (GTK_BOX (hbox), priv->info, TRUE, TRUE, 0);
-
-	/**/
-
-	volume_box = gtk_vbox_new (FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (volume_box), 0);
-	gtk_box_pack_start (GTK_BOX (hbox), volume_box, FALSE, FALSE, 0);
-
-	priv->volume_button = goo_volume_button_new (0.0, 100.0, 5.0);
-	gtk_box_pack_start (GTK_BOX (volume_box), priv->volume_button, FALSE, FALSE, 0);
-
-	g_signal_connect (priv->volume_button, 
-			  "changed",
-			  G_CALLBACK (volume_button_changed_cb), 
-			  window);
 
 	/**/
 
@@ -2026,9 +2033,9 @@ goo_window_construct (GooWindow  *window,
 
 	goo_player_info_set_player (GOO_PLAYER_INFO (priv->info), priv->player);
 
-	goo_volume_button_set_volume (GOO_VOLUME_BUTTON (priv->volume_button), 
-				      eel_gconf_get_integer (PREF_GENERAL_VOLUME, DEFAULT_VOLUME),
-				      TRUE);
+	goo_volume_tool_button_set_volume (GOO_VOLUME_TOOL_BUTTON (priv->volume_button), 
+					   eel_gconf_get_integer (PREF_GENERAL_VOLUME, DEFAULT_VOLUME),
+					   TRUE);
 
 	/* Create the tray icon. */
 	
@@ -2726,10 +2733,10 @@ goo_window_toggle_visibility (GooWindow *window)
 double
 goo_window_get_volume (GooWindow   *window)
 {
-	GooVolumeButton *volume_button;
+	GooVolumeToolButton *volume_button;
 
-	volume_button = GOO_VOLUME_BUTTON (window->priv->volume_button);
-	return goo_volume_button_get_volume (volume_button);
+	volume_button = GOO_VOLUME_TOOL_BUTTON (window->priv->volume_button);
+	return goo_volume_tool_button_get_volume (volume_button);
 }
 
 
@@ -2737,9 +2744,9 @@ void
 goo_window_set_volume (GooWindow   *window,
 		       double       value)
 {
-	GooVolumeButton *volume_button;
+	GooVolumeToolButton *volume_button;
 
-	volume_button = GOO_VOLUME_BUTTON (window->priv->volume_button);
-	goo_volume_button_set_volume (volume_button, value, TRUE);
+	volume_button = GOO_VOLUME_TOOL_BUTTON (window->priv->volume_button);
+	goo_volume_tool_button_set_volume (volume_button, value, TRUE);
 }
 
