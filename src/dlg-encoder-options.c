@@ -33,6 +33,7 @@
 #include "preferences.h"
 #include "main.h"
 #include "gconf-utils.h"
+#include "goo-stock.h"
 
 #define GLADE_RIPPER_FILE "goobox.glade"
 
@@ -237,6 +238,9 @@ dlg_encoder_options (GtkWidget     *dialog,
 
 	btn_ok = glade_xml_get_widget (data->gui, "eo_okbutton");
 	btn_reset = glade_xml_get_widget (data->gui, "eo_resetbutton");
+
+	gtk_button_set_use_stock (GTK_BUTTON (btn_reset), TRUE);
+	gtk_button_set_label (GTK_BUTTON (btn_reset), GOO_STOCK_RESET);
 
 	/* Set widgets data. */
 

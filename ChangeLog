@@ -1,5 +1,11 @@
 2004-11-12  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/dlg-encoder-options.c (dlg_encoder_options): use the stock
+	icon for the Reset button.
+
+	* src/dlg-extract.c (dlg_extract): Activate "selected" even if
+	only one track is selected.
+
 	* data/goobox.schemas.in: 
 	* src/preferences.h: 
 	* src/dlg-ripper.c: 

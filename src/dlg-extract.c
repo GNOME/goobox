@@ -319,10 +319,7 @@ dlg_extract (GooWindow *window)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->e_alltrack_radiobutton), TRUE);
 	} else {
 		gtk_widget_set_sensitive (data->e_selected_radiobutton, TRUE);
-		if (selected > 1)
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->e_selected_radiobutton), TRUE);
-		else
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->e_alltrack_radiobutton), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->e_selected_radiobutton), TRUE);
 	}
 
 	path = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "~");
