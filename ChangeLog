@@ -1,5 +1,11 @@
 2004-10-16  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-window.c (goo_window_get_type): 
+	* src/main.c (prepare_app): 
+
+	Added a --device command line argument.
+	Added session support.
+
 	* src/dlg-extract.c (destination_button_clicked_cb): set the extract 
 	dialog as parent of the file chooser dialog.
 

@@ -49,7 +49,7 @@ struct _GooWindowClass
 };
 
 GType       goo_window_get_type                  (void);
-GtkWindow * goo_window_new                       (void);
+GtkWindow * goo_window_new                       (const char  *location);
 void        goo_window_set_toolbar_visibility    (GooWindow   *window,
 						  gboolean     visible);
 void        goo_window_set_statusbar_visibility  (GooWindow   *window,

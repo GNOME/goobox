@@ -1568,7 +1568,15 @@ volume_button_changed_cb (GooVolumeButton *button,
 static void
 goo_window_init (GooWindow *window)
 {
-	GooWindowPrivateData *priv;
+	window->priv = g_new0 (GooWindowPrivateData, 1);
+}
+
+
+static void
+goo_window_construct (GooWindow  *window,
+		      const char *location)
+{
+	GooWindowPrivateData *priv = window->priv;
 	GtkWidget            *menubar, *toolbar;
 	GtkWidget            *scrolled_window;
 	GtkWidget            *vbox;
@@ -1581,9 +1589,6 @@ goo_window_init (GooWindow *window)
 	GtkUIManager         *ui;
 	GError               *error = NULL;		
 	char                 *device;
-
-	window->priv = g_new0 (GooWindowPrivateData, 1);
-	priv = window->priv;
 
 	priv->track_editor = CORBA_OBJECT_NIL;
 	
@@ -1836,7 +1841,10 @@ goo_window_init (GooWindow *window)
 
 	/**/
 
-	device = eel_gconf_get_string (PREF_GENERAL_DEVICE, DEFAULT_DEVICE);
+	if (location != NULL)
+		device = g_strdup (location);
+	else
+		device = eel_gconf_get_string (PREF_GENERAL_DEVICE, DEFAULT_DEVICE);
 	priv->player = goo_player_cd_new (device);
 	g_free (device);
 
@@ -1969,9 +1977,14 @@ goo_window_get_type ()
 
 
 GtkWindow * 
-goo_window_new (void)
+goo_window_new (const char *location)
 {
-	return GTK_WINDOW (g_object_new (GOO_TYPE_WINDOW, NULL));
+	GooWindow *window;
+
+	window = (GooWindow*) g_object_new (GOO_TYPE_WINDOW, NULL);
+	goo_window_construct (window, location);
+
+	return (GtkWindow*) window;
 }
 
 

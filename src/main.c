@@ -50,8 +50,13 @@ static BonoboObject *goo_application = NULL;
 
 GtkWindow *main_window = NULL;
 
+static char *default_device = NULL;
+
 
 struct poptOption options[] = {
+	{ "device", 'd', POPT_ARG_STRING, &default_device, 0,
+	  N_("CD device to be used"),
+	  N_("DEVICE_PATH") },
 	{ NULL, '\0', 0, NULL, 0 }
 };
 
@@ -199,15 +204,13 @@ prepare_app (poptContext pctx)
 		return;
 	}
 
-	goo_application = goo_application_new (gdk_screen_get_default ());
-
-	if (session_is_restored ()) {
+	if (session_is_restored ()) 
 		load_session ();
-		return;
-	}
-
-	main_window = goo_window_new ();
+	else 
+		main_window = goo_window_new (default_device);
 	gtk_widget_show (GTK_WIDGET (main_window));
+
+	goo_application = goo_application_new (gdk_screen_get_default ());
 }
 
 
@@ -224,6 +227,15 @@ static const char *program_argv0 = NULL;
 static void
 save_session (GnomeClient *client)
 {
+	const char  *prefix;
+
+	prefix = gnome_client_get_config_prefix (client);
+	gnome_config_push_prefix (prefix);
+
+	gnome_config_set_string ("Session/location", goo_player_get_location (goo_window_get_player (GOO_WINDOW (main_window))));
+
+	gnome_config_pop_prefix ();
+	gnome_config_sync ();
 }
 
 
@@ -312,5 +324,15 @@ session_is_restored (void)
 gboolean
 load_session (void)
 {
+	char *location;
+
+	gnome_config_push_prefix (gnome_client_get_config_prefix (master_client));
+
+	location = gnome_config_get_string ("Session/location");
+	main_window = goo_window_new (location);
+	g_free (location);
+
+	gnome_config_pop_prefix ();
+
 	return TRUE;
 }
