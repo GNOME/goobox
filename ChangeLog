@@ -1,3 +1,7 @@
+2005-02-13  David Lodge <dave@cirt.ent>
+
+	* configure.in: Added "en_GB" (English (British)) to ALL_LINGUAS.
+
 2005-02-13  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/dlg-ripper.h (dlg_ripper): 
