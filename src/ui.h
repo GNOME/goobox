@@ -119,7 +119,7 @@ static GtkToggleActionEntry action_toggle_entries[] = {
 	  FALSE },
 	{ "Shuffle", NULL,
 	  N_("S_huffle"), NULL,
-	  N_("Shuffle tracks before playing"),
+	  N_("Play tracks in a random order"),
 	  G_CALLBACK (activate_action_shuffle),
 	  FALSE },
 };

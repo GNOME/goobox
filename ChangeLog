@@ -1,5 +1,7 @@
 2004-10-16  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/ui.h: fixed command comment.
+
 	* src/goo-window.c (goo_window_get_type): 
 	* src/main.c (prepare_app): 
 
