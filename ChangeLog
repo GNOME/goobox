@@ -1,3 +1,7 @@
+2005-02-03  Alessio Frusciante  <algol@firenze.linux.it>
+
+	* configure.in: Added "it" (Italian) to ALL_LINGUAS.
+
 2005-01-30  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-player-info.c (MIN_CHARS): setted to 45
