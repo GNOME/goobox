@@ -1,14 +1,14 @@
 # Dutch translation of goobox.
 # Copyright (C) 2004 The Free Software Foundation, inc.
 # This file is distributed under the same license as the goobox package.
-# Tino Meinen <a.t.meinen@chello.nl>, 2004.
+# Tino Meinen <a.t.meinen@chello.nl>, 2004, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GNOME 2.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-26 04:33+0100\n"
-"PO-Revision-Date: 2004-12-31 01:31+0100\n"
+"POT-Creation-Date: 2005-01-05 20:23+0100\n"
+"PO-Revision-Date: 2005-01-05 22:49+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -49,85 +49,94 @@ msgid "<b>Extract</b>"
 msgstr "<b>Uitpakken</b>"
 
 #: data/glade/goobox.glade.h:5
+msgid "<b>FLAC</b>"
+msgstr "<b>FLAC</b>"
+
+#: data/glade/goobox.glade.h:6
 msgid "<b>File type</b>"
 msgstr "<b>Bestandstype</b>"
 
-#: data/glade/goobox.glade.h:6
-msgid "<b>Quality</b>"
-msgstr "<b>Kwaliteit</b>"
-
 #: data/glade/goobox.glade.h:7
-msgid "<small><i>Higher quality</i></small>"
-msgstr "<small><i>Hogere kwaliteit</i></small>"
+msgid "<b>MP3</b>"
+msgstr "<b>MP3</b>"
 
 #: data/glade/goobox.glade.h:8
-msgid "<small><i>Smaller size</i></small>"
-msgstr "<small><i>Kleinere afmeting</i></small>"
+msgid "<b>Ogg Vorbis</b>"
+msgstr "<b>Ogg Vorbis</b>"
+
+#: data/glade/goobox.glade.h:9
+msgid "Advanced _Options"
+msgstr "Geavanceerde _opties"
 
 # een doelmap kiezen/kies een doelmap
-#: data/glade/goobox.glade.h:9 src/dlg-extract.c:241
+#: data/glade/goobox.glade.h:10 src/dlg-extract.c:238
 msgid "Choose destination folder"
 msgstr "Kies een doelmap"
 
-#: data/glade/goobox.glade.h:10
-msgid "Encoding Options"
-msgstr "Coderingsopties"
-
 #: data/glade/goobox.glade.h:11
+msgid "Encoding"
+msgstr "Codering"
+
+#: data/glade/goobox.glade.h:12
 msgid "Excellent quality lossless compression"
 msgstr "Uitstekende kwaliteit verliesloze compressie"
 
 # uitpakken/onttrekken/extraheren/rippen
-#: data/glade/goobox.glade.h:12
+#: data/glade/goobox.glade.h:13
 msgid "Extract Tracks"
 msgstr "Nummers uitpakken"
 
 # bezig met nummers uitpakken/nummers worden uitgepakt
-#: data/glade/goobox.glade.h:13
+#: data/glade/goobox.glade.h:14
 msgid "Extracting Tracks"
 msgstr "Nummers uitpakken, bezig"
 
-#: data/glade/goobox.glade.h:14
+#: data/glade/goobox.glade.h:15
+msgid "General"
+msgstr "Algemeen"
+
+#: data/glade/goobox.glade.h:16
 msgid "Good quality lossy compression"
 msgstr "Goede kwaliteit compressie met verlies"
 
-#: data/glade/goobox.glade.h:15
+# hoge/grote
+#: data/glade/goobox.glade.h:17
 msgid "High quality lossy compression"
 msgstr "Hoge kwaliteit compressie met verlies"
 
-#: data/glade/goobox.glade.h:16
+#: data/glade/goobox.glade.h:18
 msgid "Preferences"
 msgstr "Voorkeuren"
 
-#: data/glade/goobox.glade.h:17
+#: data/glade/goobox.glade.h:19
 msgid "Raw audio"
 msgstr "Raw audio"
 
-#: data/glade/goobox.glade.h:18
+#: data/glade/goobox.glade.h:20
 msgid "_All tracks"
 msgstr "_Alle nummers"
 
-#: data/glade/goobox.glade.h:19
+#: data/glade/goobox.glade.h:21
 msgid "_FLAC"
 msgstr "_FLAC"
 
-#: data/glade/goobox.glade.h:20
+#: data/glade/goobox.glade.h:22
 msgid "_MP3"
 msgstr "_MP3"
 
-#: data/glade/goobox.glade.h:21
+#: data/glade/goobox.glade.h:23
 msgid "_Ogg Vorbis"
 msgstr "_Ogg Vorbis"
 
-#: data/glade/goobox.glade.h:22 src/goo-stock.c:54
-msgid "_Reset"
-msgstr "He_rstellen"
+#: data/glade/goobox.glade.h:24
+msgid "_Save playlist"
+msgstr "Speellijst op_slaan"
 
-#: data/glade/goobox.glade.h:23
+#: data/glade/goobox.glade.h:25
 msgid "_Selected tracks"
 msgstr "Ge_selecteerde nummers"
 
-#: data/glade/goobox.glade.h:24
+#: data/glade/goobox.glade.h:26
 msgid "_Wave"
 msgstr "_Wave"
 
@@ -150,15 +159,19 @@ msgstr ""
 "Mogelijke waardes zijn: system, text_below, text_beside, text_only, "
 "icons_only."
 
-#: src/actions.c:140
+#.
+#. const char       *documenters [] = {
+#. NULL
+#. };
+#: src/actions.c:141
 msgid "translator_credits"
 msgstr "Tino Meinen"
 
-#: src/actions.c:151 src/actions.c:166
+#: src/actions.c:152 src/actions.c:167
 msgid "Goobox"
 msgstr "Goobox"
 
-#: src/actions.c:154 src/actions.c:169 src/main.c:114
+#: src/actions.c:155 src/actions.c:170 src/main.c:114
 msgid "CD player and ripper"
 msgstr "CD-speler en ripper"
 
@@ -193,7 +206,7 @@ msgstr "Kon geen hoesje zoeken op het internet"
 msgid "No image found"
 msgstr "Geef afbeeldinge gevonden"
 
-#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:205 src/dlg-preferences.c:109
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:202 src/dlg-preferences.c:147
 #, c-format
 msgid "Could not display help: %s"
 msgstr "Kon de hulp niet weergeven: %s"
@@ -202,32 +215,7 @@ msgstr "Kon de hulp niet weergeven: %s"
 msgid "Searching images..."
 msgstr "Afbeeldingen zoeken..."
 
-# bitsnelheid/bitfrequentie
-#: src/dlg-encoder-options.c:117
-#, c-format
-msgid "Nominal bitrate: %d Kbps"
-msgstr "Nominale bitsnelheid: %d Kbps"
-
-#: src/dlg-encoder-options.c:120
-#, c-format
-msgid "Compression level: %d"
-msgstr "Compressieniveau: %d"
-
-#: src/dlg-encoder-options.c:123
-#, c-format
-msgid "Bitrate: %d Kbps"
-msgstr "Bitsnelheid: %d Kbps"
-
-# sneller comprimeren/snellere compressie
-#: src/dlg-encoder-options.c:261
-msgid "Faster compression"
-msgstr "Snellere compressie"
-
-#: src/dlg-encoder-options.c:265
-msgid "Higher compression"
-msgstr "Grotere compressie"
-
-#: src/dlg-extract.c:367
+#: src/dlg-extract.c:365
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -247,29 +235,68 @@ msgstr ""
 "• %s → Wave"
 
 # aanwezig/beschikbaar
-#: src/dlg-extract.c:380
+#: src/dlg-extract.c:378
 msgid "No encoder available."
 msgstr "Geen coderingsprogramma beschikbaar."
 
-#: src/dlg-ripper.c:311
+# bitsnelheid/bitfrequentie
+#: src/dlg-preferences.c:168
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "Nominale bitsnelheid: %d Kbps"
+
+#: src/dlg-preferences.c:172
+#, c-format
+msgid "Compression level: %d"
+msgstr "Compressieniveau: %d"
+
+#: src/dlg-preferences.c:176
+#, c-format
+msgid "Bitrate: %d Kbps"
+msgstr "Bitsnelheid: %d Kbps"
+
+# Kleinere bestanden/Kleinere bestandsgrootte
+#. Set widgets data.
+#: src/dlg-preferences.c:335 src/dlg-preferences.c:343
+msgid "Smaller size"
+msgstr "Kleinere bestanden"
+
+# hogere/betere
+# kan volgens mij alletwee. Google geeft: 
+# hogere kwaliteit: 279.000
+# betere kwaliteit: 392.000
+#: src/dlg-preferences.c:339 src/dlg-preferences.c:347
+msgid "Higher quality"
+msgstr "Betere kwaliteit"
+
+# sneller comprimeren/snellere compressie
+#: src/dlg-preferences.c:351
+msgid "Faster compression"
+msgstr "Snellere compressie"
+
+#: src/dlg-preferences.c:355
+msgid "Higher compression"
+msgstr "Grotere compressie"
+
+#: src/dlg-ripper.c:313
 msgid "Could not display the destination folder"
 msgstr "Kon de doelmap niet weergeven"
 
-#: src/dlg-ripper.c:338
+#: src/dlg-ripper.c:424
 msgid "Tracks extracted successfully"
 msgstr "Nummers met succes uitgepakt"
 
-#: src/dlg-ripper.c:340
+#: src/dlg-ripper.c:426
 msgid "_View destination folder"
 msgstr "Doelmap _weergeven"
 
-#: src/dlg-ripper.c:353
+#: src/dlg-ripper.c:439
 #, c-format
 msgid "Extracting track %d of %d: %s"
 msgstr "nummer %d van %d wordt uitgepakt: %s"
 
 # met/door
-#: src/dlg-ripper.c:388
+#: src/dlg-ripper.c:474
 msgid "Ripped with Goobox"
 msgstr "Geript met Goobox"
 
@@ -348,6 +375,10 @@ msgstr "Audio-CD"
 #: src/goo-stock.c:53
 msgid "_Extract"
 msgstr "_Uitpakken"
+
+#: src/goo-stock.c:54
+msgid "_Reset"
+msgstr "He_rstellen"
 
 #: src/goo-stock.c:55 src/goo-stock.c:56 src/goo-stock.c:57 src/goo-stock.c:58
 msgid "V_olume"
