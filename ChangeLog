@@ -1,3 +1,8 @@
+2004-12-07  Tommi Vainikainen  <thv@iki.fi>
+
+	* configure.in (SYSTEM_LIBS): Added fi to ALL_LINGUAS.
+	* src/goo-cdrom.c (goo_cdrom_set_device): Fixed typo ("specifued")
+
 2004-12-07	Amanpreet Singh Alam<amanpreetalam@yahoo.com>
 
 	*configure.in: pa is added to ALL_LINGUAS:

@@ -320,7 +320,7 @@ goo_cdrom_set_device (GooCdrom   *cdrom,
 	GooCdromPrivateData *priv = cdrom->priv;
 
 	if (! goo_cdrom_is_cdrom_device (cdrom, device)) {
-		goo_cdrom_set_error_from_string (cdrom, _("The specifued device is not valid"));
+		goo_cdrom_set_error_from_string (cdrom, _("The specified device is not valid"));
 		goo_cdrom_set_state (cdrom, GOO_CDROM_STATE_ERROR);
 		return FALSE;
 	}
