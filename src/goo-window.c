@@ -2226,6 +2226,9 @@ goo_window_play (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
 
+	if (goo_player_get_state (priv->player) == GOO_PLAYER_STATE_PLAYING) 
+		return;
+
 	if (goo_player_get_state (priv->player) != GOO_PLAYER_STATE_PAUSED) {
 		gboolean  play_all;
 		gboolean  shuffle;
@@ -2718,3 +2721,25 @@ goo_window_toggle_visibility (GooWindow *window)
 					   NULL);
 	}
 }
+
+
+double
+goo_window_get_volume (GooWindow   *window)
+{
+	GooVolumeButton *volume_button;
+
+	volume_button = GOO_VOLUME_BUTTON (window->priv->volume_button);
+	return goo_volume_button_get_volume (volume_button);
+}
+
+
+void
+goo_window_set_volume (GooWindow   *window,
+		       double       value)
+{
+	GooVolumeButton *volume_button;
+
+	volume_button = GOO_VOLUME_BUTTON (window->priv->volume_button);
+	goo_volume_button_set_volume (volume_button, value, TRUE);
+}
+

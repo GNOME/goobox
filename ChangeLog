@@ -1,3 +1,14 @@
+2004-12-17  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/main.c (main): 
+	* src/goo-window.h: 
+	* src/GNOME_Goobox.idl: 
+	* src/goo-application.c: 
+	* src/goo-window.c (goo_window_get_volume)
+	(goo_window_set_volume): 
+
+	Added ability to control the player with the command line arguments.
+	
 2004-12-16  Kostas Papadimas <pkst@gnome.org>
 
 	* configure.in: Added Greek (el) to ALL_LINGUAS.

@@ -2,13 +2,21 @@
 
 module GNOME {
 	
-	module Goobox {
+  module Goobox {
 		
-		interface Application : Bonobo::Unknown {
-			oneway void present ();
-			oneway void play ();
-		};
-		
-	};
-	
+    interface Application : Bonobo::Unknown {
+      oneway void present ();
+      oneway void play ();
+      oneway void play_pause ();
+      oneway void next ();
+      oneway void prev ();
+      oneway void eject ();
+      oneway void hide_show ();
+      oneway void volume_up();
+      oneway void volume_down();
+      oneway void quit ();
+    };
+    
+  };
+  
 };

@@ -27,6 +27,8 @@
 #include "goo-window.h"
 #include "main.h"
 
+#define VOLUME_STEP 25
+
 
 static BonoboObject *
 goo_application_factory (BonoboGenericFactory *this_factory,
@@ -82,11 +84,91 @@ impl_goo_application_play (PortableServer_Servant  _servant,
 
 
 static void
+impl_goo_application_play_pause (PortableServer_Servant  _servant,
+				 CORBA_Environment      *ev)
+{
+	goo_window_toggle_play (GOO_WINDOW (main_window));
+}
+
+
+static void
+impl_goo_application_next (PortableServer_Servant  _servant,
+			   CORBA_Environment      *ev)
+{
+	goo_window_next (GOO_WINDOW (main_window));
+}
+
+
+static void
+impl_goo_application_prev (PortableServer_Servant  _servant,
+			   CORBA_Environment      *ev)
+{
+	goo_window_prev (GOO_WINDOW (main_window));
+}
+
+
+static void
+impl_goo_application_eject (PortableServer_Servant  _servant,
+			    CORBA_Environment      *ev)
+{
+	goo_window_eject (GOO_WINDOW (main_window));
+}
+
+
+static void
+impl_goo_application_hide_show (PortableServer_Servant  _servant,
+				CORBA_Environment      *ev)
+{
+	goo_window_toggle_visibility (GOO_WINDOW (main_window));
+}
+
+
+static void
+impl_goo_application_volume_up (PortableServer_Servant  _servant,
+				CORBA_Environment      *ev)
+{
+	GooWindow *window = GOO_WINDOW (main_window);
+	int        volume;
+
+	volume = goo_window_get_volume (window);
+	goo_window_set_volume (window, volume + VOLUME_STEP);
+}
+
+
+static void
+impl_goo_application_volume_down (PortableServer_Servant  _servant,
+				  CORBA_Environment      *ev)
+{
+	GooWindow *window = GOO_WINDOW (main_window);
+	int        volume;
+
+	volume = goo_window_get_volume (window);
+	goo_window_set_volume (window, volume - VOLUME_STEP);
+}
+
+
+static void
+impl_goo_application_quit (PortableServer_Servant  _servant,
+			   CORBA_Environment      *ev)
+{
+	goo_window_close (GOO_WINDOW (main_window));
+}
+
+
+static void
 goo_application_class_init (GooApplicationClass *klass)
 {
         POA_GNOME_Goobox_Application__epv *epv = &klass->epv;
-        epv->present = impl_goo_application_present;
-        epv->play = impl_goo_application_play;
+        epv->present     = impl_goo_application_present;
+        epv->play        = impl_goo_application_play;
+        epv->play_pause  = impl_goo_application_play_pause;
+        epv->next        = impl_goo_application_next;
+        epv->prev        = impl_goo_application_prev;
+        epv->eject       = impl_goo_application_eject;
+        epv->hide_show   = impl_goo_application_hide_show;
+        epv->volume_up   = impl_goo_application_volume_up;
+        epv->volume_down = impl_goo_application_volume_down;
+        epv->quit        = impl_goo_application_quit;
 }
 
 

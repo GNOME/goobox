@@ -78,5 +78,7 @@ void        goo_window_pick_cover_from_disk      (GooWindow   *window);
 void        goo_window_search_cover_on_internet  (GooWindow   *window);
 void        goo_window_remove_cover              (GooWindow   *window);
 void        goo_window_toggle_visibility         (GooWindow   *window);
-
+double      goo_window_get_volume                (GooWindow   *window);
+void        goo_window_set_volume                (GooWindow   *window,
+						  double       value);
 #endif /* GOO_WINDOW_H */

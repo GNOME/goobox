@@ -40,6 +40,14 @@
 
 GtkWindow *main_window = NULL;
 int        AutoPlay = FALSE;
+int        PlayPause = FALSE;
+int        Next = FALSE;
+int        Prev = FALSE;
+int        Eject = FALSE;
+int        HideShow = FALSE;
+int        VolumeUp = FALSE;
+int        VolumeDown = FALSE;
+int        Quit = FALSE;
 
 static void     prepare_app         (poptContext pctx);
 static void     initialize_data     (void);
@@ -58,6 +66,30 @@ struct poptOption options[] = {
 	  N_("DEVICE_PATH") },
 	{ "play", '\0', POPT_ARG_NONE, &AutoPlay, 0,
           N_("Play the CD on startup"),
+          0 },
+	{ "play-pause", '\0', POPT_ARG_NONE, &PlayPause, 0,
+          N_("Play/Pause"),
+          0 },
+	{ "next", '\0', POPT_ARG_NONE, &Next, 0,
+          N_("Play the next track"),
+          0 },
+	{ "previous", '\0', POPT_ARG_NONE, &Prev, 0,
+          N_("Play the previous track"),
+          0 },
+	{ "eject", '\0', POPT_ARG_NONE, &Eject, 0,
+          N_("Eject the CD"),
+          0 },
+	{ "hide-show", '\0', POPT_ARG_NONE, &HideShow, 0,
+          N_("Hide/Show the main window"),
+          0 },
+	{ "volume-up", '\0', POPT_ARG_NONE, &VolumeUp, 0,
+          N_("Volume Up"),
+          0 },
+	{ "volume-down", '\0', POPT_ARG_NONE, &VolumeDown, 0,
+          N_("Volume Down"),
+          0 },
+	{ "quit", '\0', POPT_ARG_NONE, &Quit, 0,
+          N_("Quit the application"),
           0 },
 	{ NULL, '\0', 0, NULL, 0 }
 };
@@ -105,6 +137,22 @@ int main (int argc, char **argv)
 
                 if (AutoPlay)
                 	GNOME_Goobox_Application_play (app, &env);
+		else if (PlayPause)
+                	GNOME_Goobox_Application_play_pause (app, &env);
+		else if (Next)
+                	GNOME_Goobox_Application_next (app, &env);
+		else if (Prev)
+                	GNOME_Goobox_Application_prev (app, &env);
+		else if (Eject)
+                	GNOME_Goobox_Application_eject (app, &env);
+		else if (HideShow)
+                	GNOME_Goobox_Application_hide_show (app, &env);
+		else if (VolumeUp)
+                	GNOME_Goobox_Application_volume_up (app, &env);
+		else if (VolumeDown)
+                	GNOME_Goobox_Application_volume_down (app, &env);
+		else if (Quit)
+                	GNOME_Goobox_Application_quit (app, &env);
 		else
 			GNOME_Goobox_Application_present (app, &env);
 
