@@ -79,6 +79,9 @@ struct _GooWindowPrivateData {
 	GtkWidget       *toolbar;
 	GtkWidget       *list_expander;
 
+	WindowSortMethod sort_method;
+	GtkSortType      sort_type;
+
 	GtkWidget       *statusbar;
 	GtkWidget       *file_popup_menu;
 	GtkWidget       *tray_popup_menu;
@@ -1040,10 +1043,8 @@ goo_window_unrealize (GtkWidget *widget)
 	if (playlist_visible)
 		save_window_size (window);
 
-	/* FIXME
-	preferences_set_sort_method (window->sort_method);
-	preferences_set_sort_type (window->sort_type);
-	*/
+	preferences_set_sort_method (priv->sort_method);
+	preferences_set_sort_type (priv->sort_type);
 
 	GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
@@ -1713,13 +1714,53 @@ file_button_press_cb (GtkWidget      *widget,
 }
 
 
+static int
+get_column_from_sort_method (WindowSortMethod sort_method)
+{
+	switch (sort_method) {
+	case WINDOW_SORT_BY_NUMBER: return COLUMN_NUMBER;
+	case WINDOW_SORT_BY_TIME: return COLUMN_TIME;
+	case WINDOW_SORT_BY_TITLE: return COLUMN_TITLE;
+	default: 
+		break;
+	}
+
+	return COLUMN_NUMBER;
+}
+
+
+static int
+get_sort_method_from_column (int column_id)
+{
+	switch (column_id) {
+	case COLUMN_NUMBER: return WINDOW_SORT_BY_NUMBER;
+	case COLUMN_TIME: return WINDOW_SORT_BY_TIME;
+	case COLUMN_TITLE: return WINDOW_SORT_BY_TITLE;
+	default: 
+		break;
+	}
+
+	return WINDOW_SORT_BY_NUMBER;
+}
+
+
 static void
 sort_column_changed_cb (GtkTreeSortable *sortable,
 			gpointer         user_data)
 {
 	GooWindow *window = user_data;
 	GooWindowPrivateData  *priv = window->priv;
+	GtkSortType    order;
+	int            column_id;
 	GooPlayerState state;
+
+	if (! gtk_tree_sortable_get_sort_column_id (sortable, 
+						    &column_id, 
+						    &order))
+		return;
+
+	priv->sort_method = get_sort_method_from_column (column_id);
+	priv->sort_type = order;
 
 	state = goo_player_get_state (priv->player);
 
@@ -2013,12 +2054,11 @@ goo_window_construct (GooWindow  *window,
 					 COLUMN_TIME, time_column_sort_func,
 					 NULL, NULL);
 
-	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (priv->list_store), COLUMN_NUMBER, GTK_SORT_ASCENDING);
+	priv->sort_method = preferences_get_sort_method ();
+	priv->sort_type = preferences_get_sort_type ();
 
-	/*
-	gtk_tree_sortable_set_default_sort_func (GTK_TREE_SORTABLE (window->list_store), default_sort_func,  NULL, NULL);
-	*/
-
+	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (priv->list_store), get_column_from_sort_method (priv->sort_method), priv->sort_type);
+	
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (priv->list_view));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 

@@ -41,6 +41,8 @@
 #define PREF_PLAYLIST_PLAYALL         "/apps/goobox/playlist/play_all"
 #define PREF_PLAYLIST_SHUFFLE         "/apps/goobox/playlist/shuffle"
 #define PREF_PLAYLIST_REPEAT          "/apps/goobox/playlist/repeat"
+#define PREF_PLAYLIST_SORT_METHOD     "/apps/goobox/playlist/sort_method"
+#define PREF_PLAYLIST_SORT_TYPE       "/apps/goobox/playlist/sort_type"
 
 #define PREF_EXTRACT_DESTINATION      "/apps/goobox/dialogs/extract/destination"
 #define PREF_EXTRACT_FILETYPE         "/apps/goobox/dialogs/extract/file_type"
@@ -65,5 +67,13 @@ void                pref_util_restore_window_geometry (GtkWindow  *window,
 
 GooFileFormat       pref_get_file_format              (void);
 void                pref_set_file_format              (GooFileFormat value);
+
+
+WindowSortMethod    preferences_get_sort_method       (void);
+void                preferences_set_sort_method       (WindowSortMethod i_value);
+
+GtkSortType         preferences_get_sort_type         (void);
+void                preferences_set_sort_type         (GtkSortType i_value);
+
 
 #endif /* PREFERENCES_H */

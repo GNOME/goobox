@@ -1,5 +1,13 @@
 2005-02-28  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/typedefs.h: 
+	* data/goobox.schemas.in: 
+	* src/preferences.c: 
+	* src/preferences.h:	
+	* src/goo-window.c:  
+
+	Save and restore the sort method and order.
+
 	* src/goo-window.c: 
 
 	Fixed sorting by title.  Use the current sorting order to create the 

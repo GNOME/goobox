@@ -153,6 +153,21 @@ static EnumStringTable file_format_table [] = {
 };
 
 
+static EnumStringTable sort_method_table [] = {
+	{ WINDOW_SORT_BY_NUMBER, "number" },
+	{ WINDOW_SORT_BY_TIME, "time" },
+        { WINDOW_SORT_BY_TITLE, "title" },
+	{ 0, NULL }
+};
+
+
+static EnumStringTable sort_type_table [] = {
+	{ GTK_SORT_ASCENDING, "ascending" },
+	{ GTK_SORT_DESCENDING, "descending" },
+	{ 0, NULL }
+};
+
+
 #define GET_SET_FUNC(func_name, pref_name, type)			\
 type									\
 pref_get_##func_name (void)						\
@@ -180,3 +195,54 @@ pref_set_##func_name (type i_value)					\
 
 
 GET_SET_FUNC(file_format, PREF_EXTRACT_FILETYPE, GooFileFormat)
+
+
+/* -------------- */
+
+
+WindowSortMethod
+preferences_get_sort_method (void)
+{
+	char *s_value;
+	int   i_value;
+
+	s_value = eel_gconf_get_string (PREF_PLAYLIST_SORT_METHOD, "name");
+	i_value = get_enum_from_string (sort_method_table, s_value);
+	g_free (s_value);
+
+	return (WindowSortMethod) i_value;
+}
+
+
+void
+preferences_set_sort_method (WindowSortMethod i_value)
+{
+	char *s_value;
+
+	s_value = get_string_from_enum (sort_method_table, i_value);
+	eel_gconf_set_string (PREF_PLAYLIST_SORT_METHOD, s_value);
+}
+
+
+GtkSortType
+preferences_get_sort_type (void)
+{
+	char *s_value;
+	int   i_value;
+
+	s_value = eel_gconf_get_string (PREF_PLAYLIST_SORT_TYPE, "ascending");
+	i_value = get_enum_from_string (sort_type_table, s_value);
+	g_free (s_value);
+
+	return (GtkSortType) i_value;
+}
+
+
+void
+preferences_set_sort_type (GtkSortType i_value)
+{
+	char *s_value;
+
+	s_value = get_string_from_enum (sort_type_table, i_value);
+	eel_gconf_set_string (PREF_PLAYLIST_SORT_TYPE, s_value);
+}

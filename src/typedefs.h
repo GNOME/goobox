@@ -35,5 +35,13 @@ typedef enum {
 	GOO_FILE_FORMAT_WAVE
 } GooFileFormat;
 
+
+typedef enum {
+	WINDOW_SORT_BY_NUMBER = 0,
+	WINDOW_SORT_BY_TIME = 1,
+	WINDOW_SORT_BY_TITLE = 2
+} WindowSortMethod;
+
+
 #endif /* TYPEDEFS_H */
 
