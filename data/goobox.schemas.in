@@ -1,0 +1,171 @@
+<gconfschemafile>
+    <schemalist>
+
+      <!-- GENERAL -->
+
+      <schema>
+	<key>/schemas/apps/goo/general/device</key>
+	<applyto>/apps/goo/general/device</applyto>
+	<owner>goo</owner>
+	<type>string</type>
+	<default>/dev/cdrom</default>
+	<locale name="C">
+	  <short></short>
+	  <long> 
+	  </long>
+	</locale>
+      </schema>
+
+      <!-- UI -->
+
+      <schema>
+	<key>/schemas/apps/goo/ui/toolbar_style</key>
+	<applyto>/apps/goo/ui/toolbar_style</applyto>
+	<owner>goo</owner>
+	<type>string</type>
+	<default>system</default>
+	<locale name="C">
+	  <short></short>
+	  <long> Possible values are: system, text_below, text_beside, text_only, icons_only.
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
+	<key>/schemas/apps/goo/ui/window_width</key>
+	<applyto>/apps/goo/ui/window_width</applyto>
+	<owner>goo</owner>
+	<type>int</type>
+	<default>200</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
+	<key>/schemas/apps/goo/ui/window_height</key>
+	<applyto>/apps/goo/ui/window_height</applyto>
+	<owner>goo</owner>
+	<type>int</type>
+	<default>400</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
+	<key>/schemas/apps/goo/ui/toolbar_visible</key>
+	<applyto>/apps/goo/ui/toolbar_visible</applyto>
+	<owner>goo</owner>
+	<type>bool</type>
+	<default>true</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
+	<key>/schemas/apps/goo/ui/statusbar_visible</key>
+	<applyto>/apps/goo/ui/statusbar_visible</applyto>
+	<owner>goo</owner>
+	<type>bool</type>
+	<default>true</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
+	<key>/schemas/apps/goo/ui/playlist_visible</key>
+	<applyto>/apps/goo/ui/playlist_visible</applyto>
+	<owner>goo</owner>
+	<type>bool</type>
+	<default>true</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
+
+      <!-- PLAYLIST -->
+
+
+      <schema>
+	<key>/schemas/apps/goo/playlist/play_all</key>
+	<applyto>/apps/goo/playlist/play_all</applyto>
+	<owner>goo</owner>
+	<type>bool</type>
+	<default>true</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
+	<key>/schemas/apps/goo/playlist/shuffle</key>
+	<applyto>/apps/goo/playlist/shuffle</applyto>
+	<owner>goo</owner>
+	<type>bool</type>
+	<default>false</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
+	<key>/schemas/apps/goo/playlist/repeat</key>
+	<applyto>/apps/goo/playlist/repeat</applyto>
+	<owner>goo</owner>
+	<type>bool</type>
+	<default>false</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
+      <!-- EXTRACT -->
+
+      <schema>
+	<key>/schemas/apps/goo/dialogs/extract/destination</key>
+	<applyto>/apps/goo/dialogs/extract/destination</applyto>
+	<owner>goo</owner>
+	<type>string</type>
+	<default>~</default>
+	<locale name="C">
+	  <short></short>
+	  <long> 
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
+	<key>/schemas/apps/goo/dialogs/extract/file_type</key>
+	<applyto>/apps/goo/dialogs/extract/file_type</applyto>
+	<owner>goo</owner>
+	<type>string</type>
+	<default>ogg</default>
+	<locale name="C">
+	  <short></short>
+	  <long> Possible values are: ogg, flac, mp3, wave.
+	  </long>
+	</locale>
+      </schema>
+
+    </schemalist>
+</gconfschemafile>

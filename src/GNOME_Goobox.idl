@@ -1,0 +1,13 @@
+#include <Bonobo.idl>
+
+module GNOME {
+	
+	module Goobox {
+		
+		interface Application : Bonobo::Unknown {
+			oneway void present ();
+		};
+		
+	};
+	
+};

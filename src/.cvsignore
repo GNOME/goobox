@@ -1,0 +1,13 @@
+.deps
+.libs
+*.glade2p
+*.bak
+Makefile
+Makefile.in
+goo
+*-marshal.*
+*-skels.*
+*-stubs.*
+*_stamp
+GNOME*.h
+test*

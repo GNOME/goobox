@@ -1,0 +1,108 @@
+dnl Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.52)
+ 
+AC_INIT(goobox, 0.0.1)
+AC_CONFIG_SRCDIR(src/main.c)
+AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
+AM_CONFIG_HEADER(config.h)
+
+AM_PROG_LIBTOOL
+
+dnl ==========================================================================
+dnl
+dnl If you add a version number here, you *must* add an AC_SUBST line for
+dnl it too, or it will never make it into the spec file!
+dnl
+dnl ==========================================================================
+
+GLIB_REQUIRED=2.4.0
+GTK_REQUIRED=2.4.0
+LIBGNOME_REQUIRED=2.6.0
+LIBGNOMEUI_REQUIRED=2.6.0
+LIBBONOBO_REQUIRED=2.6.0
+GNOME_VFS_REQUIRED=2.6.0
+LIBGLADE_REQUIRED=2.4.0
+GSTREAMER_REQUIRED=0.8.0
+
+AC_SUBST(GLIB_REQUIRED)
+AC_SUBST(GTK_REQUIRED)
+AC_SUBST(LIBGNOME_REQUIRED)
+AC_SUBST(LIBGNOMEUI_REQUIRED)
+AC_SUBST(GNOME_VFS_REQUIRED)
+AC_SUBST(LIBGLADE_REQUIRED)
+AC_SUBST(GSTREAMER_REQUIRED)
+
+dnl ===========================================================================
+
+AM_PATH_ORBIT2
+
+PKG_CHECK_MODULES(GOO,				\
+	glib-2.0 >= $GLIB_REQUIRED		\
+	gthread-2.0				\
+	gtk+-2.0 >= $GTK_REQUIRED		\
+	libgnome-2.0 >= $LIBGNOME_REQUIRED	\
+	libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED	\
+	libbonobo-2.0 >= $LIBBONOBO_REQUIRED	\
+	gnome-vfs-2.0 >= $GNOME_VFS_REQUIRED	\
+	gnome-vfs-module-2.0			\
+	libglade-2.0 >= $LIBGLADE_REQUIRED	\
+	gstreamer-0.8 >= $GSTREAMER_REQUIRED	\
+	gstreamer-libs-0.8			\
+	gstreamer-play-0.8			\
+	gstreamer-gconf-0.8)
+AC_SUBST(GOO_CFLAGS)
+AC_SUBST(GOO_LIBS)
+
+IDL_MODULES="bonobo-activation-2.0 libbonobo-2.0 libbonoboui-2.0"
+IDL_INCLUDES="`$PKG_CONFIG --variable=idldir $IDL_MODULES | $srcdir/add-include-prefix`"
+AC_SUBST(IDL_INCLUDES)
+
+AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
+
+dnl ******************************
+
+ALL_LINGUAS=""
+
+GETTEXT_PACKAGE=goobox
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [GetText Package])
+
+AM_GLIB_GNU_GETTEXT
+AC_PROG_INTLTOOL
+
+if test "x${prefix}" = "xNONE"; then
+  AC_DEFINE_UNQUOTED(LOCALEDIR, "${ac_default_prefix}/${DATADIRNAME}/locale", [Locale dir])
+else
+  AC_DEFINE_UNQUOTED(LOCALEDIR, "${prefix}/${DATADIRNAME}/locale", [Locale dir])
+fi
+
+dnl ******************************
+
+AC_ARG_ENABLE(deprecations,AC_HELP_STRING([--enable-deprecations],[warn about deprecated usages]))
+
+AM_CONDITIONAL(ENABLE_DEPRECATIONS, test "x$enable_deprecations" = xyes)
+
+dnl ******************************
+
+AC_ARG_ENABLE(schemas-install,AC_HELP_STRING([--disable-schemas-install],
+					     [Disable installation of the gconf schemas]))
+
+AM_CONDITIONAL(SCHEMAS_INSTALL, test x$enable_schemas_install != xno)
+
+AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
+if test x"$GCONFTOOL" = xno; then
+	AC_MSG_ERROR([gconftool-2 executable not found in your path - should be installed with GConf])
+fi
+AM_GCONF_SOURCE_2
+
+dnl ******************************
+
+AC_OUTPUT([
+Makefile
+data/Makefile
+data/glade/Makefile
+src/Makefile
+src/icons/Makefile
+po/Makefile.in
+])
