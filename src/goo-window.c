@@ -122,6 +122,8 @@ struct _GooWindowPrivateData {
 	GList           *url_list;
 
 	GtkWidget       *preview;
+
+	int              pos_x, pos_y;
 };
 
 static int icon_size = 0;
@@ -2638,6 +2640,9 @@ void
 goo_window_toggle_visibility (GooWindow *window)
 {
 	if (GTK_WIDGET_VISIBLE (window)) {
+		gtk_window_get_position (GTK_WINDOW (window),
+					 &window->priv->pos_x,
+					 &window->priv->pos_y);
 		gtk_widget_hide (GTK_WIDGET (window));
 		set_action_label_and_icon (window,
 					   "ToggleVisibility", 
@@ -2649,7 +2654,10 @@ goo_window_toggle_visibility (GooWindow *window)
 					   NULL);
 
 	} else {
-		gtk_widget_show (GTK_WIDGET (window));
+		gtk_window_move (GTK_WINDOW (window),
+				 window->priv->pos_x,
+				 window->priv->pos_y);
+		gtk_window_present (GTK_WINDOW (window));
 		set_action_label_and_icon (window,
 					   "ToggleVisibility", 
 					   _("_Hide Window"), 

@@ -1,3 +1,9 @@
+2004-11-19  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c (goo_window_toggle_visibility): restore the window
+	position after showing the window clicking on the notification area 
+	icon.
+
 2004-11-18  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-window.c: 
