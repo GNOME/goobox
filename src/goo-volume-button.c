@@ -371,10 +371,15 @@ goo_volume_button_set_volume (GooVolumeButton *button,
 {
 	button->priv->value = vol;
 
-	if (!notify)
-		g_signal_handlers_block_by_data (button->priv->volume_scale, button);
+	g_signal_handlers_block_by_data (button->priv->volume_scale, button);
 	gtk_range_set_value (GTK_RANGE (button->priv->volume_scale), vol);
-	if (!notify)
-		g_signal_handlers_unblock_by_data (button->priv->volume_scale, button);
+	g_signal_handlers_unblock_by_data (button->priv->volume_scale, button);
+
+	update_volume_label (button);
+	if (notify) 
+		g_signal_emit (G_OBJECT (button), 
+			       goo_volume_button_signals[CHANGED],
+			       0,
+			       NULL);
 }
 

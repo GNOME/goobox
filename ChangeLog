@@ -1,5 +1,9 @@
 2004-10-18  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-volume-button.c (goo_volume_button_set_volume): 
+
+	always emit the changed signal.
+
 	* src/goo-window.c (window_update_statusbar_list_info): add the
 	album title in the statusbar if available.
 

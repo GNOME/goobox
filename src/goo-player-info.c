@@ -246,7 +246,7 @@ goo_player_info_init (GooPlayerInfo *info)
 	time_box = gtk_hbox_new (FALSE, 6);
 
 	priv->time_label = gtk_label_new (NULL);
-	gtk_misc_set_alignment (GTK_MISC (priv->time_label), 0.0, 0.0);
+	/*gtk_misc_set_alignment (GTK_MISC (priv->time_label), 0.0, 0.5);*/
 	gtk_widget_set_no_show_all (priv->time_label, TRUE);
 
 	priv->time_scale = gtk_hscale_new_with_range (0.0, 1.0, 0.01);
@@ -257,7 +257,7 @@ goo_player_info_init (GooPlayerInfo *info)
 	gtk_widget_set_no_show_all (priv->time_scale, TRUE);
 
 	priv->playing_label = gtk_label_new (NULL);
-	gtk_misc_set_alignment (GTK_MISC (priv->playing_label), 0.0, 0.0);
+	/*gtk_misc_set_alignment (GTK_MISC (priv->playing_label), 0.0, 0.0);*/
 	gtk_widget_set_no_show_all (priv->playing_label, TRUE);
 
 	gtk_box_pack_start (GTK_BOX (time_box), priv->time_label, FALSE, FALSE, 0);
