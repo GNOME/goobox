@@ -1,3 +1,8 @@
+2004-12-25  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c (goo_window_construct): set play, pause and stop
+	as 'important' commands.
+
 2004-12-23  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-window.c (window_key_press_cb): always call _stop before 

@@ -1921,7 +1921,24 @@ goo_window_construct (GooWindow  *window,
 			       | (eel_gconf_get_boolean (PREF_DESKTOP_TOOLBAR_DETACHABLE, TRUE) ? BONOBO_DOCK_ITEM_BEH_NORMAL : BONOBO_DOCK_ITEM_BEH_LOCKED)),
 			      BONOBO_DOCK_TOP,
 			      2, 1, 0);
-	/*gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS); FIXME*/
+
+	{
+		GtkAction *action;
+
+		action = gtk_ui_manager_get_action (ui, "/ToolBar/Play");
+		g_object_set (action, "is_important", TRUE, NULL);
+		g_object_unref (action);
+
+		action = gtk_ui_manager_get_action (ui, "/ToolBar/Pause");
+		g_object_set (action, "is_important", TRUE, NULL);
+		g_object_unref (action);
+
+
+		action = gtk_ui_manager_get_action (ui, "/ToolBar/Stop");
+		g_object_set (action, "is_important", TRUE, NULL);
+		g_object_unref (action);
+	}
+
 
 	priv->file_popup_menu = gtk_ui_manager_get_widget (ui, "/ListPopupMenu");
 	priv->cover_popup_menu = gtk_ui_manager_get_widget (ui, "/CoverPopupMenu");
