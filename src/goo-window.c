@@ -363,7 +363,6 @@ set_current_song_icon (GooWindow  *window,
 }
 
 
-
 static gboolean
 update_list_idle (gpointer callback_data)
 {
@@ -823,8 +822,6 @@ play_song (GooWindow *window,
 	   gint       track_number)
 {
 	GooWindowPrivateData *priv = window->priv;
-
-	set_current_song_icon (window, GOO_STOCK_PLAY);
 	goo_player_seek_song (priv->player, track_number);
 }
 
@@ -1423,6 +1420,7 @@ player_done_cb (GooPlayer       *player,
 		goo_window_update_list (window);
 		goo_window_update_cover (window);
 		window_update_title (window);
+		set_current_song_icon (window, NULL);
 		if (AutoPlay) {
 			AutoPlay = FALSE;
 			g_idle_add (autoplay_cb, window);
@@ -1437,6 +1435,7 @@ player_done_cb (GooPlayer       *player,
 	case GOO_PLAYER_ACTION_SEEK_SONG:
 		goo_window_set_current_song (window, goo_player_get_current_song (priv->player));
 		goo_window_select_current_song (window);
+		set_current_song_icon (window, GOO_STOCK_PLAY);
 		break;
 	case GOO_PLAYER_ACTION_PLAY:
 	case GOO_PLAYER_ACTION_STOP:
@@ -1448,11 +1447,16 @@ player_done_cb (GooPlayer       *player,
 					   GOO_STOCK_PLAY,
 					   "/MenuBar/CDMenu/",
 					   NULL);
-		if (action == GOO_PLAYER_ACTION_PLAY)
+		if (action == GOO_PLAYER_ACTION_PLAY) {
+			set_current_song_icon (window, GOO_STOCK_PLAY);
 			priv->next_timeout_handle = g_timeout_add (IDLE_TIMEOUT, next_time_idle, window);
+		} else if (action == GOO_PLAYER_ACTION_STOP) {
+			set_current_song_icon (window, GOO_STOCK_STOP);
+		}
 
 		break;
 	case GOO_PLAYER_ACTION_PAUSE:
+		set_current_song_icon (window, GOO_STOCK_PAUSE);
 		set_action_label_and_icon (window,
 					   "TogglePlay", 
 					   _("_Play"), 
@@ -2352,9 +2356,9 @@ goo_window_play (GooWindow *window)
 		else
 			play_song (window, 0);
 	} else {
-	        set_current_song_icon (window, GOO_STOCK_PLAY);
+		set_current_song_icon (window, GOO_STOCK_PLAY);
 		goo_player_play (priv->player);
-        }
+	}
 }
 
 
@@ -2380,7 +2384,6 @@ void
 goo_window_stop (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
-	set_current_song_icon (window, GOO_STOCK_STOP);
 	goo_player_stop (priv->player);
 }
 
@@ -2389,7 +2392,6 @@ void
 goo_window_pause (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
-	set_current_song_icon (window, GOO_STOCK_PAUSE);
 	goo_player_pause (priv->player);
 }
 

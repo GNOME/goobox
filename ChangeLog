@@ -1,5 +1,8 @@
 2005-02-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-window.c (player_done_cb): set song status after
+	receiving the 'done' signal.
+
 	* src/goo-stock.h (GOO_STOCK_RESET): restore old stock 
 	names.
 
