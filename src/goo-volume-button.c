@@ -119,9 +119,24 @@ goo_volume_button_init (GooVolumeButton *button)
 static void
 update_volume_label (GooVolumeButton *button)
 {
-	char *text;
+	double  value = button->priv->value;
+	char   *text;
+	char   *stock_id;
 
-	text = g_strdup_printf ("%3.0f%%", button->priv->value);
+	if ((value - 0.0) < 10e-3)
+		stock_id = "volume-zero";
+	else if (value < 30.0)
+		stock_id = "volume-min";
+	else if (value < 70.0)
+		stock_id = "volume-med";
+	else
+		stock_id = "volume-max";
+	g_object_set (button, 
+		      "use_stock", TRUE,
+		      "label", stock_id, 
+		      NULL);
+
+	text = g_strdup_printf ("%3.0f%%", value);
 	gtk_label_set_text (GTK_LABEL (button->priv->volume_label), text);
 	g_free (text);
 
@@ -346,7 +361,7 @@ goo_volume_button_new (double from_value,
 	GtkWidget *widget;
 
 	widget = (GtkWidget*) g_object_new (GOO_TYPE_VOLUME_BUTTON, 
-					    "label", GOO_STOCK_VOLUME,
+					    "label", GOO_STOCK_VOLUME_MAX,
 					    "use_stock", TRUE,
 					    "use_underline", TRUE,
 					    "relief", GTK_RELIEF_NONE,

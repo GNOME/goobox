@@ -1,5 +1,7 @@
 2004-10-27  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-stock.h: use standard names when appropriate.
+
 	* src/goo-window.c: 
 	* data/glade/goo_cover_chooser.glade: 
 	* src/dlg-cover-chooser.c: 

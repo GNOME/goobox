@@ -23,16 +23,19 @@
 #ifndef GOO_STOCK_H
 #define GOO_STOCK_H
 
-#define GOO_STOCK_EJECT      "goo-eject"
-#define GOO_STOCK_EXTRACT    "goo-extract"
-#define GOO_STOCK_NEXT       "goo-next"
-#define GOO_STOCK_PAUSE      "goo-pause"
-#define GOO_STOCK_PLAY       "goo-play"
-#define GOO_STOCK_PREV       "goo-prev"
-#define GOO_STOCK_STOP       "goo-stop"
-#define GOO_STOCK_NO_COVER   "goo-no-cover"
-#define GOO_STOCK_VOLUME     "goo-volume"
-#define GOO_STOCK_WEB        "goo-web"
+#define GOO_STOCK_EJECT       "media-eject"
+#define GOO_STOCK_EXTRACT     "gtk-cdrom"
+#define GOO_STOCK_NEXT        "media-next"
+#define GOO_STOCK_PAUSE       "media-pause"
+#define GOO_STOCK_PLAY        "media-play"
+#define GOO_STOCK_PREV        "media-prev"
+#define GOO_STOCK_STOP        "media-stop"
+#define GOO_STOCK_NO_COVER    "goo-no-cover"
+#define GOO_STOCK_VOLUME_MAX  "volume-max"
+#define GOO_STOCK_VOLUME_MED  "volume-med"
+#define GOO_STOCK_VOLUME_MIN  "volume-min"
+#define GOO_STOCK_VOLUME_ZERO "volume-zero"
+#define GOO_STOCK_WEB         "panel-internet"
 
 
 void goo_stock_init (void);

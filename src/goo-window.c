@@ -2169,8 +2169,10 @@ goo_window_play (GooWindow *window)
 
 		if (priv->current_song != NULL) 
 			goo_player_seek_song (priv->player, priv->current_song->number);
-		else
+		else if (window->priv->playlist != NULL)
 			play_next_song_in_playlist (window);
+		else
+			goo_player_seek_song (priv->player, 0);
 	} else
 		goo_player_play (priv->player);
 }

@@ -40,14 +40,20 @@ static struct {
 	{ GOO_STOCK_PREV,         prev_24_rgba,         NULL },
 	{ GOO_STOCK_STOP,         stop_24_rgba,         NULL },
 	{ GOO_STOCK_NO_COVER,     no_cover_48_rgba,     NULL },
-	{ GOO_STOCK_VOLUME,       volume_24_rgba,       volume_16_rgba },
+	{ GOO_STOCK_VOLUME_MAX,   volume_max_24_rgba,   volume_16_rgba },
+	{ GOO_STOCK_VOLUME_MED,   volume_med_24_rgba,   volume_16_rgba },
+	{ GOO_STOCK_VOLUME_MIN,   volume_min_24_rgba,   volume_16_rgba },
+	{ GOO_STOCK_VOLUME_ZERO,  volume_zero_24_rgba,  volume_16_rgba },
 	{ GOO_STOCK_WEB,          web_24_rgba,          web_16_rgba },
 };
 
 
 static const GtkStockItem stock_items [] = {
 	{ GOO_STOCK_EXTRACT, N_("_Extract"), 0, 0, GETTEXT_PACKAGE },
-	{ GOO_STOCK_VOLUME, N_("V_olume"), 0, 0, GETTEXT_PACKAGE }
+	{ GOO_STOCK_VOLUME_MIN, N_("V_olume"), 0, 0, GETTEXT_PACKAGE },
+	{ GOO_STOCK_VOLUME_MED, N_("V_olume"), 0, 0, GETTEXT_PACKAGE },
+	{ GOO_STOCK_VOLUME_MAX, N_("V_olume"), 0, 0, GETTEXT_PACKAGE },
+	{ GOO_STOCK_VOLUME_ZERO, N_("V_olume"), 0, 0, GETTEXT_PACKAGE }
 };
 
 
@@ -98,6 +104,8 @@ goo_stock_init (void)
 		gtk_icon_source_set_pixbuf (source, pixbuf);
 
 		gtk_icon_source_set_size_wildcarded (source, FALSE);
+		gtk_icon_source_set_state_wildcarded (source, TRUE);
+		gtk_icon_source_set_direction_wildcarded (source, TRUE);
 		gtk_icon_source_set_size (source, GTK_ICON_SIZE_LARGE_TOOLBAR);
 		gtk_icon_set_add_source (set, source);
 
