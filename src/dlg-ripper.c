@@ -391,8 +391,7 @@ rip_current_track (DialogData *data)
 	/* Seek to track. */
 
 	gst_element_set_state (data->rip_thread, GST_STATE_PAUSED);
-	event = gst_event_new_segment_seek (data->track_format | GST_SEEK_METHOD_SET | GST_SEEK_FLAG_FLUSH, 
-					    track->number, track->number + 1);
+	event = gst_event_new_segment_seek (data->track_format | GST_SEEK_METHOD_SET | GST_SEEK_FLAG_FLUSH, track->number, track->number + 1);
 	if (!gst_pad_send_event (data->source_pad, event)) {
 		g_warning ("seek failed");
 		return;

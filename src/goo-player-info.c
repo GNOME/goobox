@@ -141,7 +141,7 @@ goo_player_info_class_init (GooPlayerInfoClass *class)
 	gobject_class = G_OBJECT_CLASS (class);
         gobject_class->finalize = goo_player_info_finalize;
 
-	widget_class = (GtkWidgetClass*) class;
+	widget_class = GTK_WIDGET_CLASS (class);
 	widget_class->size_request = goo_player_info_size_request;
 }
 

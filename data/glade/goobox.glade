@@ -862,7 +862,7 @@
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
-	      <property name="label">_Reset</property>
+	      <property name="label" translatable="yes">_Reset</property>
 	      <property name="use_underline">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
@@ -901,7 +901,7 @@
 	  <child>
 	    <widget class="GtkLabel" id="eo_quality_label">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes" context="yes">&lt;b&gt;Quality&lt;/b&gt;</property>
+	      <property name="label" translatable="yes">&lt;b&gt;Quality&lt;/b&gt;</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">True</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -1007,7 +1007,7 @@
 			  <child>
 			    <widget class="GtkLabel" id="eo_smaller_label">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes" context="yes">&lt;small&gt;&lt;i&gt;Smaller size&lt;/i&gt;&lt;/small&gt;</property>
+			      <property name="label" translatable="yes">&lt;small&gt;&lt;i&gt;Smaller size&lt;/i&gt;&lt;/small&gt;</property>
 			      <property name="use_underline">False</property>
 			      <property name="use_markup">True</property>
 			      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -1028,7 +1028,7 @@
 			  <child>
 			    <widget class="GtkLabel" id="eo_higher_label">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes" context="yes">&lt;small&gt;&lt;i&gt;Higher quality&lt;/i&gt;&lt;/small&gt;</property>
+			      <property name="label" translatable="yes">&lt;small&gt;&lt;i&gt;Higher quality&lt;/i&gt;&lt;/small&gt;</property>
 			      <property name="use_underline">False</property>
 			      <property name="use_markup">True</property>
 			      <property name="justify">GTK_JUSTIFY_LEFT</property>

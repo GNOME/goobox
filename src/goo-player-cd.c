@@ -41,6 +41,7 @@
 #define SECTORS_PER_SEC 75
 #define POLL_TIMEOUT 1000
 #define REFRESH_RATE 5
+#define PROGRESS_DELAY 400
 
 struct _GooPlayerCDPrivateData {
 	GooCdrom        *cdrom;
@@ -53,12 +54,13 @@ struct _GooPlayerCDPrivateData {
 	GstFormat        track_format, sector_format;
 	GList           *tracks;
 	TrackInfo       *current_track;
-	int              tick;
 	char            *discid;
 	char            *artist;
 	char            *title;
 	char            *genre;
 	guint            update_state_id;
+
+	guint            update_progress_id;
 
 	GThread         *thread;
 	GMutex          *yes_or_no;
@@ -171,6 +173,11 @@ destroy_pipeline (GooPlayerCD *player,
 		priv->play_thread = NULL;
 	}
 
+	if (priv->update_progress_id != 0) {
+		g_source_remove (priv->update_progress_id);
+		priv->update_progress_id = 0;
+	}
+
 	priv->source = NULL;
 	priv->source_pad = NULL;
 	priv->volume = NULL;
@@ -179,40 +186,62 @@ destroy_pipeline (GooPlayerCD *player,
 		add_state_polling (player);
 }
 
-		      
+
 static gboolean
-play_thread_iterate_cd (GstBin   *bin, 
-			gpointer  data)
+player_done_cb (gpointer callback_data)
+{
+	GooPlayer *player = GOO_PLAYER (callback_data);
+	action_done (player, GOO_PLAYER_ACTION_PLAY);
+	return FALSE;
+}
+
+
+static void
+player_eos_cb (GstBin   *bin, 
+	       gpointer  data)
 {
 	GooPlayerCD *player_cd = data;
-	GooPlayer   *player = GOO_PLAYER (player_cd);
 	GooPlayerCDPrivateData *priv = player_cd->priv;
-	gint64       to_sector = priv->current_track->to_sector - TOC_OFFSET;
-	guint64      sector = 0;
-	gboolean     ret;
 
-	ret = gst_pad_query (priv->source_pad, GST_QUERY_POSITION, &priv->sector_format, &sector);
-
-	if (!ret || (sector >= to_sector)) {
-		gst_element_set_state (priv->play_thread, GST_STATE_PAUSED);
-		action_done (GOO_PLAYER (player), GOO_PLAYER_ACTION_PLAY);
-		return FALSE;
-
-	} else if (priv->tick == 0) {
-		gint64 from_sector;
-		double fraction;
-
-		from_sector = priv->current_track->from_sector - TOC_OFFSET;
-		fraction = ((double) (sector - from_sector)) / (double) priv->current_track->sectors;
-		g_signal_emit_by_name (G_OBJECT (player), 
-				       "progress", 
-				       fraction,
-				       NULL);
+	if (priv->update_progress_id != 0) {
+		g_source_remove (priv->update_progress_id);
+		priv->update_progress_id = 0;
 	}
 
-	priv->tick = (priv->tick + 1) % 32; /* FIXME */
+	g_idle_add (player_done_cb, data);
+}
 
-	return TRUE;
+
+static gboolean
+update_progress_cb (gpointer callback_data)
+{
+	GooPlayerCD *player_cd = callback_data;
+	GooPlayer   *player = GOO_PLAYER (player_cd);
+	GooPlayerCDPrivateData *priv = player_cd->priv;
+	gboolean     ret;
+	guint64      sector = 0;
+	gint64       from_sector;
+	double       fraction;
+
+	if (priv->update_progress_id != 0) {
+		g_source_remove (priv->update_progress_id);
+		priv->update_progress_id = 0;
+	}
+	
+	ret = gst_pad_query (priv->source_pad, GST_QUERY_POSITION, &priv->sector_format, &sector);
+	if (!ret)
+		return FALSE;
+
+	from_sector = priv->current_track->from_sector - TOC_OFFSET;
+	fraction = ((double) (sector - from_sector)) / (double) priv->current_track->sectors;
+	g_signal_emit_by_name (G_OBJECT (player), 
+			       "progress", 
+			       fraction,
+			       NULL);
+
+	priv->update_progress_id = g_timeout_add (PROGRESS_DELAY, update_progress_cb, callback_data);
+
+	return FALSE;
 }
 
 
@@ -250,9 +279,9 @@ create_pipeline (GooPlayerCD *player)
 	priv->sector_format = gst_format_get_by_nick ("sector");
 	priv->source_pad = gst_element_get_pad (priv->source, "src");
 	
-	g_signal_connect (priv->play_thread, 
-			  "iterate",
-			  G_CALLBACK (play_thread_iterate_cd), 
+	g_signal_connect (priv->source,
+			  "eos", 
+			  G_CALLBACK (player_eos_cb), 
 			  player);
 }
 
@@ -487,7 +516,7 @@ cd_player_seek_song (GooPlayer *player,
 
 	g_return_if_fail (priv->current_track != NULL);
 
-	event = gst_event_new_seek (priv->track_format | GST_SEEK_METHOD_SET | GST_SEEK_FLAG_FLUSH, track_n);
+	event = gst_event_new_segment_seek (priv->track_format | GST_SEEK_METHOD_SET | GST_SEEK_FLAG_FLUSH, track_n, track_n + 1);
 	if (!gst_pad_send_event (priv->source_pad, event))
 		g_warning ("seek failed");
 
@@ -574,12 +603,13 @@ cd_player_play (GooPlayer *player)
 		   || (goo_player_get_state (player) == GOO_PLAYER_STATE_SEEKING))))
 		create_pipeline (player_cd);
 
-	priv->tick = 0;
+	vol = goo_player_get_volume (player);
+	gst_mixer_set_volume (GST_MIXER (priv->volume), NULL, &vol);
+
 	gst_element_set_state (priv->play_thread, GST_STATE_PLAYING);
 	goo_player_set_state (player, GOO_PLAYER_STATE_PLAYING, TRUE);
 
-	vol = goo_player_get_volume (player);
-	gst_mixer_set_volume (GST_MIXER (priv->volume), NULL, &vol);
+	priv->update_progress_id = g_timeout_add (PROGRESS_DELAY, update_progress_cb, player);
 }
 
 
@@ -881,6 +911,8 @@ goo_player_cd_init (GooPlayerCD *player)
 	priv->tracks = NULL;
 	goo_player_set_current_song (GOO_PLAYER (player), -1);
 	goo_player_set_volume_protected (GOO_PLAYER (player), 100);
+
+	priv->update_progress_id = 0;
 
 	priv->cddb_client = cddb_slave_client_new ();
 	listener = bonobo_listener_new (NULL, NULL);

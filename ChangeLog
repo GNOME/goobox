@@ -1,5 +1,13 @@
 2004-11-16  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-player-cd.c (player_eos_cb, player_done_cb)
+	(update_progress_cb, create_pipeline, destroy_pipeline)
+	(cd_player_seek_song): 
+
+	Use new_segment_seek instead of new_seek event.  Update the playing
+	progress with a timeout and check the end of the track with the eos
+	event.
+
 	* src/dlg-ripper.c: 
 
 	The progress bar now shows the global ripping process progress.
