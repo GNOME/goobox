@@ -151,8 +151,13 @@ set_label (GtkWidget     *label,
 	   const char    *format,
 	   const char    *text)
 {
+	char *e_text;
 	char *markup;
-	markup = g_strdup_printf (format, text);
+
+	e_text = g_markup_escape_text (text, -1);
+	markup = g_strdup_printf (format, e_text);
+	g_free (e_text);
+	
 	gtk_label_set_markup (GTK_LABEL (label), markup);
 	g_free (markup);
 }

@@ -1,3 +1,24 @@
+2004-11-11  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-cdrom-bsd.c: 
+	* src/cd-drive.c: 
+	* configure.in: 
+
+	Added FreeBSD support.  
+	Patch by Alexander Nedotsukov <bland AT FreeBSD DOT org>
+	
+2004-11-10  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/dlg-preferences.c (help_cb): 
+	* src/dlg-extract.c (help_cb): set the error dialog modal.
+
+	* src/goo-player-info.c (set_label): escape text before using it
+	in a label with warkup on.
+
+2004-11-09  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c (add_columns): set autosizing on.
+
 2004-11-09  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	[ version 0.4.0 released ] 

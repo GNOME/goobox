@@ -103,7 +103,7 @@ help_cb (GtkWidget  *widget,
 		GtkWidget *dialog;
 		
 		dialog = gtk_message_dialog_new (GTK_WINDOW (data->dialog),
-						 0,
+						 GTK_DIALOG_MODAL,
 						 GTK_MESSAGE_ERROR,
 						 GTK_BUTTONS_CLOSE,
 						 _("Could not display help: %s"),

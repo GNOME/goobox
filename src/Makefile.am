@@ -83,7 +83,6 @@ goobox_SOURCES = 				\
 	$(GTH_SOURCES)				\
 	$(gnome_media_cddbslave2_idl_sources)	\
 	$(gnome_goobox_idl_sources)		\
-	$(CDROM_DEVICE_SOURCES)			\
 	actions.c				\
 	actions.h				\
 	cddb-slave-client.c			\
@@ -185,7 +184,8 @@ gthumb-enum-types.c: $(GTH_HEADER_FILES) $(GLIB_MKENUMS) $(srcdir)/gthumb-enum-t
 	&& rm -f xgen-getc
 
 goobox_LDADD = 					\
-	$(GOO_LIBS) 
+	$(GOO_LIBS) 				\
+	$(SYSTEM_LIBS)
 
 EXTRA_DIST = 					\
 	goo-marshal.list 			\

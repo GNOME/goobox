@@ -167,7 +167,7 @@ help_cb (GtkWidget  *widget,
 		GtkWidget *dialog;
 		
 		dialog = gtk_message_dialog_new (GTK_WINDOW (data->dialog),
-						 0,
+						 GTK_DIALOG_MODAL,
 						 GTK_MESSAGE_ERROR,
 						 GTK_BUTTONS_CLOSE,
 						 _("Could not display help: %s"),
@@ -178,7 +178,6 @@ help_cb (GtkWidget  *widget,
 				  NULL);
 		
 		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-		
 		gtk_widget_show (dialog);
 		
 		g_error_free (err);

@@ -528,9 +528,8 @@ add_columns (GtkTreeView *treeview)
                                              "pixbuf", COLUMN_ICON,
                                              NULL);
 
-	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 	gtk_tree_view_column_set_resizable (column, TRUE);
-	gtk_tree_view_column_set_fixed_width (column, 40); /* FIXME */
 
 	gtk_tree_view_column_set_sort_column_id (column, COLUMN_NUMBER);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
@@ -546,7 +545,6 @@ add_columns (GtkTreeView *treeview)
 
 		gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 		gtk_tree_view_column_set_resizable (column, TRUE);
-		gtk_tree_view_column_set_min_width (column, 50); /* FIXME */
 
 		gtk_tree_view_column_set_sort_column_id (column, i);
 

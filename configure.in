@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
  
-AC_INIT(goobox, 0.4.0)
+AC_INIT(goobox, 0.5.0)
 AC_CONFIG_SRCDIR(src/main.c)
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
@@ -66,12 +66,13 @@ AC_PATH_PROG(GLIB_MKENUMS, glib-mkenums)
 
 dnl ******************************
 
+SYSTEM_LIBS=""
 host=`uname -s`
-
 case "$host" in
 *FreeBSD*)
 	DEFAULT_DEVICE="/dev/acd0c"
 	AC_DEFINE(HAVE_BSD, 1, [Define to 1 if this is a BSD system])
+	SYSTEM_LIBS="-lcam"
 	;;
 *NetBSD*)
 	DEFAULT_DEVICE="/dev/rcd0d"
@@ -88,7 +89,7 @@ case "$host" in
 esac
 
 AC_DEFINE_UNQUOTED(DEFAULT_DEVICE, "$DEFAULT_DEVICE", [Default CD device])
-
+AC_SUBST(SYSTEM_LIBS)
 
 dnl ******************************
 
