@@ -93,6 +93,7 @@ typedef struct {
 	GtkWidget     *dialog;
 	GtkWidget     *r_progress_progressbar;
 	GtkWidget     *r_progress_label;
+	GtkWidget     *r_track_label;
 } DialogData;
 
 
@@ -258,7 +259,7 @@ create_pipeline (DialogData *data)
 			  G_CALLBACK (encoder_eos_cb), 
 			  data);
 
-	data->sink = gst_element_factory_make ("filesink", "filesink");
+	data->sink = gst_element_factory_make ("gnomevfssink", "filesink");
 
 	gst_bin_add_many (GST_BIN (data->rip_thread), data->source, data->encoder, data->sink, NULL);
 	gst_element_link_many (data->source, data->encoder, data->sink, NULL);
@@ -411,6 +412,7 @@ rip_current_track (DialogData *data)
 	char      *msg;
 	char      *filename;
 	char      *folder;
+	char      *e_title;
 	GstEvent  *event;
 
 	if (data->current_track == NULL) {
@@ -442,8 +444,14 @@ rip_current_track (DialogData *data)
 	msg = g_strdup_printf (_("Extracting track %d of %d: %s"), 
 			       data->current_track_n,
 			       data->tracks_n,
-			       track->title);
+			       "");
 	gtk_label_set_text (GTK_LABEL (data->r_progress_label), msg);
+	g_free (msg);
+
+	e_title = g_markup_escape_text (track->title, -1);
+	msg = g_strconcat ("<b>", e_title, "</b>", NULL);
+	gtk_label_set_markup (GTK_LABEL (data->r_track_label), msg);
+	g_free (e_title);
 	g_free (msg);
 
 	/* Set the filename */
@@ -565,12 +573,15 @@ dlg_ripper (GooWindow     *window,
 	data->dialog = glade_xml_get_widget (data->gui, "ripper_dialog");
 	data->r_progress_progressbar = glade_xml_get_widget (data->gui, "r_progress_progressbar");
 	data->r_progress_label = glade_xml_get_widget (data->gui, "r_progress_label");
+	data->r_track_label = glade_xml_get_widget (data->gui, "r_track_label");
 	btn_cancel = glade_xml_get_widget (data->gui, "r_cancelbutton");
 
 	/* Set widgets data. */
 
 #ifdef HAVE_GTK_2_5
 	gtk_label_set_ellipsize (GTK_LABEL (data->r_progress_label),
+				 PANGO_ELLIPSIZE_END);
+	gtk_label_set_ellipsize (GTK_LABEL (data->r_track_label),
 				 PANGO_ELLIPSIZE_END);
 #endif
 

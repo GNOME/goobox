@@ -272,10 +272,12 @@ create_pipeline (GooPlayerCD *player)
 	priv->volume = gst_element_factory_make ("volume", "volume");
 
 	queue = gst_element_factory_make ("queue", "queue");
+	/* FIXME
 	g_object_set (G_OBJECT (queue), 
 		      "max-size-bytes", QUEUE_SIZE,
 		      NULL);
-	
+	*/
+
 	sink = gst_gconf_get_default_audio_sink ();
 	audio_thread = gst_thread_new ("a_decoder_thread");
 

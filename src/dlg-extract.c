@@ -243,7 +243,7 @@ destination_button_clicked_cb (GtkWidget  *button,
 						GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 						NULL);
 	gtk_window_set_modal (GTK_WINDOW (file_sel), TRUE);
-	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (file_sel), TRUE);
+	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (file_sel), FALSE);
 	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (file_sel), gtk_entry_get_text (GTK_ENTRY (data->e_destination_entry)));
 
 	g_signal_connect (G_OBJECT (file_sel),
