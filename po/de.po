@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-07 14:30+0100\n"
-"PO-Revision-Date: 2004-12-07 15:09+0100\n"
+"POT-Creation-Date: 2004-12-18 15:10+0100\n"
+"PO-Revision-Date: 2004-12-18 15:12+0100\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -130,7 +130,7 @@ msgstr "Au_sgewählte Titel"
 msgid "_Wave"
 msgstr "_Wave"
 
-#: data/goobox.desktop.in.h:1 src/goo-window.c:2053 src/goo-window.c:2061
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2071 src/goo-window.c:2079
 msgid "CD Player"
 msgstr "CD-Player"
 
@@ -148,15 +148,15 @@ msgid ""
 msgstr ""
 "Mögliche Werte sind: system, text_below, text_beside, text_only, icons_only."
 
-#: src/actions.c:138
+#: src/actions.c:140
 msgid "translator_credits"
 msgstr "Hendrik Brandt <heb@gnome-de.org>"
 
-#: src/actions.c:149 src/actions.c:164
+#: src/actions.c:151 src/actions.c:166
 msgid "Goobox"
 msgstr "Goobox"
 
-#: src/actions.c:152 src/actions.c:167 src/main.c:82
+#: src/actions.c:154 src/actions.c:169 src/main.c:114
 msgid "CD player and ripper"
 msgstr "CD-Player und Extraktor"
 
@@ -171,7 +171,7 @@ msgstr "Namenloses SCSI-Laufwerk (%s)"
 
 #: src/cd-drive.c:1395
 msgid "File image"
-msgstr ""
+msgstr "Bild ablegen"
 
 #: src/dlg-cover-chooser.c:271
 #, c-format
@@ -182,7 +182,7 @@ msgstr "%u, Bild wird geladen: %u"
 msgid "Loading images"
 msgstr "Bilder werden geladen"
 
-#: src/dlg-cover-chooser.c:330 src/goo-window.c:2656
+#: src/dlg-cover-chooser.c:330 src/goo-window.c:2677
 msgid "Could not search a cover on Internet"
 msgstr "Es konnte nicht nach einem Cover-Bild im Internet gesucht werden"
 
@@ -276,8 +276,9 @@ msgstr "Die Ausrichtung des Benachrichtigungsfeldes."
 
 #: src/file-utils.c:622
 msgid "Cannot find a terminal, using xterm, even if it may not work"
-msgstr "Es wurde kein Terminal gefunden, deshalb wird xterm verwendet, auch wenn dies "
-"eventuell nicht funktioniert"
+msgstr ""
+"Es wurde kein Terminal gefunden, deshalb wird xterm verwendet, auch wenn "
+"dies eventuell nicht funktioniert"
 
 #: src/goo-cdrom-bsd.c:140 src/goo-cdrom-linux.c:121
 #: src/goo-cdrom-solaris.c:123
@@ -285,8 +286,8 @@ msgid "Error reading CD"
 msgstr "Fehler beim Lesen der CD"
 
 #: src/goo-cdrom.c:323
-msgid "The specifued device is not valid"
-msgstr "Das angegebene Laufwerk ist ungültig"
+msgid "The specified device is not valid"
+msgstr "Das angegebene Gerät ist ungültig"
 
 #: src/goo-player-cd.c:784
 msgid "Drive not ready"
@@ -304,33 +305,33 @@ msgstr "Kein Medium"
 msgid "Data CD"
 msgstr "Daten-CD"
 
-#: src/goo-player-info.c:229 src/goo-player-info.c:254
-#: src/goo-player-info.c:622
+#: src/goo-player-info.c:238 src/goo-player-info.c:263
+#: src/goo-player-info.c:761
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
-#: src/goo-player-info.c:377
+#: src/goo-player-info.c:501
 msgid "Click here to choose a cover for this CD"
 msgstr "Klicken Sie hier, um ein Cover-Bild für diese CD auszuwählen"
 
-#: src/goo-player-info.c:550 src/goo-window.c:1228
+#: src/goo-player-info.c:689 src/goo-window.c:1236
 msgid "Paused"
 msgstr "Unterbrochen"
 
-#: src/goo-player-info.c:561
+#: src/goo-player-info.c:700
 msgid "Ejecting CD"
 msgstr "CD wird ausgeworfen"
 
-#: src/goo-player-info.c:565
+#: src/goo-player-info.c:704
 msgid "Checking CD drive"
 msgstr "CD-Laufwerk wird überprüft"
 
-#: src/goo-player-info.c:569 src/goo-player-info.c:573
+#: src/goo-player-info.c:708 src/goo-player-info.c:712
 msgid "Reading CD"
 msgstr "CD wird gelesen"
 
-#: src/goo-player-info.c:586 src/goo-window.c:1252
+#: src/goo-player-info.c:725 src/goo-window.c:1260
 msgid "Audio CD"
 msgstr "Audio-CD"
 
@@ -342,18 +343,26 @@ msgstr "A_uslesen"
 msgid "V_olume"
 msgstr "_Lautstärke"
 
-#: src/goo-volume-button.c:147
+#: src/goo-volume-button.c:147 src/goo-volume-tool-button.c:284
 #, c-format
 msgid "Volume level: %3.0f%%"
 msgstr "Lautstärke: %3.0f%%"
 
-#: src/goo-volume-button.c:328
+#: src/goo-volume-button.c:328 src/goo-volume-tool-button.c:494
 msgid "+"
 msgstr "+"
 
-#: src/goo-volume-button.c:344
+#: src/goo-volume-button.c:344 src/goo-volume-tool-button.c:510
 msgid "-"
 msgstr "-"
+
+#: src/goo-volume-tool-button.c:538
+msgid "Change the volume level"
+msgstr "Die Lautstärke ändern"
+
+#: src/goo-volume-tool-button.c:605
+msgid "Volume"
+msgstr "Lautstärke"
 
 #: src/goo-window.c:65
 msgid "Hide _tracks"
@@ -370,88 +379,93 @@ msgid_plural "%d tracks"
 msgstr[0] "%d Titel"
 msgstr[1] "%d Titel"
 
-#: src/goo-window.c:532
+#: src/goo-window.c:193
+#, c-format
+msgid "year %d"
+msgstr "Jahr %d"
+
+#: src/goo-window.c:538
 msgid "Length"
 msgstr "Länge"
 
-#: src/goo-window.c:533
+#: src/goo-window.c:539
 msgid "Title"
 msgstr "Titel"
 
-#: src/goo-window.c:534
+#: src/goo-window.c:540
 msgid "Artist"
 msgstr "Künstler"
 
-#: src/goo-window.c:542
+#: src/goo-window.c:548
 msgid "#"
 msgstr "Nr. "
 
-#: src/goo-window.c:1138 src/ui.h:57
+#: src/goo-window.c:1146 src/ui.h:57
 msgid "_Pause"
 msgstr "_Pause"
 
-#: src/goo-window.c:1139
+#: src/goo-window.c:1147
 msgid "Pause playing"
 msgstr "Wiedergabe anhalten"
 
-#: src/goo-window.c:1357 src/goo-window.c:1369 src/ui.h:45 src/ui.h:49
+#: src/goo-window.c:1366 src/goo-window.c:1378 src/ui.h:45 src/ui.h:49
 #: src/ui.h:53
 msgid "_Play"
 msgstr "_Wiedergabe"
 
-#: src/goo-window.c:1358 src/goo-window.c:1370
+#: src/goo-window.c:1367 src/goo-window.c:1379
 msgid "Play CD"
 msgstr "CD abspielen"
 
-#: src/goo-window.c:2334
+#: src/goo-window.c:2355
 msgid "Could not eject the CD"
 msgstr "CD konnte nicht ausgeworfen werden"
 
-#: src/goo-window.c:2346
+#: src/goo-window.c:2367
 msgid "Could not read drive"
 msgstr "Laufwerk konnte nicht gelesen werden"
 
-#: src/goo-window.c:2530
+#: src/goo-window.c:2551
 msgid "Could not save cover image"
 msgstr "Cover-Bild konnte nicht gespeichert werden"
 
-#: src/goo-window.c:2540
+#: src/goo-window.c:2561
 msgid "Could not load image"
 msgstr "Cover-Bild konnte nicht geladen werden"
 
-#: src/goo-window.c:2596
+#: src/goo-window.c:2617
 msgid "Choose CD Cover Image"
 msgstr "CD-Cover-Bild auswählen"
 
-#: src/goo-window.c:2615
+#: src/goo-window.c:2636
 msgid "Images"
 msgstr "Bilder"
 
-#: src/goo-window.c:2623
+#: src/goo-window.c:2644
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: src/goo-window.c:2657
+#: src/goo-window.c:2678
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 msgstr ""
-"Bitte geben Sie die Namen des Künstlers und des Albums an, um nach dem "
-"Album-Cover-Bild zu suchen."
+"Bitte geben Sie die Namen des Künstlers und des Albums an, um nach dem Album-"
+"Cover-Bild zu suchen."
 
-#: src/goo-window.c:2691
+#: src/goo-window.c:2712
 msgid "_Show Window"
 msgstr "Fenster an_zeigen"
 
-#: src/goo-window.c:2692
+#: src/goo-window.c:2713
 msgid "Show the main window"
 msgstr "Das Hauptfenster anzeigen"
 
-#: src/goo-window.c:2705 src/ui.h:109
+#: src/goo-window.c:2726 src/ui.h:109
 msgid "_Hide Window"
 msgstr "Fenster aus_blenden"
 
-#: src/goo-window.c:2706 src/ui.h:110
+#: src/goo-window.c:2727 src/ui.h:110
 msgid "Hide the main window"
 msgstr "Das Hauptfenster ausblenden"
 
@@ -471,26 +485,60 @@ msgstr "Pixel"
 msgid "Could not execute command"
 msgstr "Befehl konnte nicht ausgeführt werden"
 
-#: src/main.c:57
+#: src/main.c:65
 msgid "CD device to be used"
 msgstr "Zu verwendentes CD-Laufwerk"
 
-#: src/main.c:58
+#: src/main.c:66
 msgid "DEVICE_PATH"
 msgstr "DEVICE_PATH"
 
-#: src/main.c:60
+#: src/main.c:68
 msgid "Play the CD on startup"
 msgstr "CD beim Programmstart wiedergeben"
 
-#: src/main.c:198
+#: src/main.c:71 src/ui.h:46
+msgid "Play/Pause"
+msgstr "Wiedergabe/Pause"
+
+#: src/main.c:74 src/ui.h:66
+msgid "Play the next track"
+msgstr "Den nächsten Titel abspielen"
+
+#: src/main.c:77 src/ui.h:70
+msgid "Play the previous track"
+msgstr "Den vorhergehenden Titel abspielen"
+
+#: src/main.c:80 src/ui.h:74
+msgid "Eject the CD"
+msgstr "Die CD auswerfen"
+
+#: src/main.c:83
+msgid "Hide/Show the main window"
+msgstr "Das Hauptfenster ein- oder ausblenden"
+
+#: src/main.c:86
+msgid "Volume Up"
+msgstr "Lauter"
+
+#: src/main.c:89
+msgid "Volume Down"
+msgstr "Leiser"
+
+#: src/main.c:92 src/ui.h:94
+msgid "Quit the application"
+msgstr "Die Anwendung verlassen"
+
+#: src/main.c:246
 msgid "Cannot start the CD player"
 msgstr "CD-Player konnte nicht gestartet werden"
 
-#: src/main.c:199
+#: src/main.c:247
 msgid ""
 "In order to read CDs you have to install the cdparanoia gstreamer plugin"
-msgstr "Um CDs auszulesen, müssen Sie das cdparanoia-Plugin für GStreamer installieren"
+msgstr ""
+"Um CDs auszulesen, müssen Sie das cdparanoia-Plugin für GStreamer "
+"installieren"
 
 #: src/track-info.c:118
 #, c-format
@@ -525,10 +573,6 @@ msgstr "_Info"
 msgid "Information about the program"
 msgstr "Information über dieses Programm"
 
-#: src/ui.h:46
-msgid "Play/Pause"
-msgstr "Wiedergabe/Pause"
-
 #: src/ui.h:50
 msgid "Play"
 msgstr "Wiedergabe"
@@ -553,25 +597,13 @@ msgstr "Wiedergabe abbrechen"
 msgid "_Next"
 msgstr "_Nächster"
 
-#: src/ui.h:66
-msgid "Play the next track"
-msgstr "Den nächsten Titel abspielen"
-
 #: src/ui.h:69
 msgid "Pre_v"
 msgstr "Vorheriger"
 
-#: src/ui.h:70
-msgid "Play the previous track"
-msgstr "Den vorhergehenden Titel abspielen"
-
 #: src/ui.h:73
 msgid "_Eject"
 msgstr "_Auswerfen"
-
-#: src/ui.h:74
-msgid "Eject the CD"
-msgstr "Die CD auswerfen"
 
 #: src/ui.h:77
 msgid "_Reload"
@@ -603,15 +635,12 @@ msgstr "_CD-Informationen"
 
 #: src/ui.h:90
 msgid "Edit the CD artist, album and tracks titles"
-msgstr "Bearbeiten Sie hier den Künstler, den Albumnamen und die Titelnamen der CD"
+msgstr ""
+"Bearbeiten Sie hier den Künstler, den Albumnamen und die Titelnamen der CD"
 
 #: src/ui.h:93
 msgid "_Quit"
 msgstr "_Beenden"
-
-#: src/ui.h:94
-msgid "Quit the application"
-msgstr "Die Anwendung verlassen"
 
 #: src/ui.h:97
 msgid "_Choose from Disk"
