@@ -18,7 +18,7 @@ msgstr ""
 
 #: data/GNOME_Goobox.server.in.in.h:1
 msgid "Goobox Application"
-msgstr "Εφαρμογή Goobox·"
+msgstr "Εφαρμογή Goobox "
 
 #: data/GNOME_Goobox.server.in.in.h:2
 msgid "Goobox Application Factory"
@@ -94,11 +94,11 @@ msgstr "Γενικά"
 
 #: data/glade/goobox.glade.h:16
 msgid "Good quality lossy compression"
-msgstr "Καλή ποιότητα ·lossy·compression"
+msgstr "Καλή ποιότητα  lossy compression"
 
 #: data/glade/goobox.glade.h:17
 msgid "High quality lossy compression"
-msgstr "Υψηλή ποιότητα lossy·compression"
+msgstr "Υψηλή ποιότητα lossy compression"
 
 #: data/glade/goobox.glade.h:18
 msgid "Preferences"
@@ -152,7 +152,7 @@ msgstr "Πιθανές τιμές είναι: ogg, flac, mp3, wave."
 msgid ""
 "Possible values are: system, text_below, text_beside, text_only, icons_only."
 msgstr ""
-"Πιθανές·τιμές·είναι: συστήματος, κείμενο από κάτω, κείμενο απο δίπλα, μόνο "
+"Πιθανές τιμές είναι: συστήματος, κείμενο από κάτω, κείμενο απο δίπλα, μόνο "
 "κείμενο, μόνο εικονίδια."
 
 #: src/actions.c:139
@@ -275,7 +275,7 @@ msgstr "Αδυναμία εμφ'ανισης του φάκελου προορι�
 
 #: src/dlg-ripper.c:427
 msgid "Tracks extracted successfully"
-msgstr "Τα·κομμάτια·εξάχθηκαν·επιτυχώς"
+msgstr "Τα κομμάτια εξάχθηκαν επιτυχώς"
 
 #: src/dlg-ripper.c:429
 msgid "_View destination folder"
@@ -284,7 +284,7 @@ msgstr "Προ_βολή φακέλου προορισμού"
 #: src/dlg-ripper.c:442
 #, c-format
 msgid "Extracting track %d of %d: %s"
-msgstr "Εξαγωγή κομματιού ·%d·από·%d:·%s"
+msgstr "Εξαγωγή κομματιού  %d από %d: %s"
 
 #: src/dlg-ripper.c:477
 msgid "Ripped with Goobox"
@@ -374,7 +374,7 @@ msgstr "Έ_νταση"
 #: src/goo-volume-button.c:147 src/goo-volume-tool-button.c:284
 #, c-format
 msgid "Volume level: %3.0f%%"
-msgstr "Επίπεδο ήχου:·%3.0f%%"
+msgstr "Επίπεδο ήχου: %3.0f%%"
 
 #: src/goo-volume-button.c:328 src/goo-volume-tool-button.c:494
 msgid "+"
@@ -403,7 +403,7 @@ msgstr "Εμφάνιση κο_μματιών"
 #: src/goo-window.c:191
 #, c-format
 msgid "%d track"
-msgstr "%d·κομμάτι"
+msgstr "%d κομμάτι"
 
 #: src/goo-window.c:195
 #, c-format
@@ -449,7 +449,7 @@ msgstr "Αδυναμία εξαγωγής CD"
 
 #: src/goo-window.c:2472
 msgid "Could not read drive"
-msgstr "Αδυναμία·ανάγνωσης από τον οδηγό"
+msgstr "Αδυναμία ανάγνωσης από τον οδηγό"
 
 #: src/goo-window.c:2656
 msgid "Could not save cover image"
@@ -557,14 +557,14 @@ msgstr "Έξοδος από την εφαρμογή"
 
 #: src/main.c:246
 msgid "Cannot start the CD player"
-msgstr "Αδυναμία εκκίνησης του CD·player"
+msgstr "Αδυναμία εκκίνησης του CD player"
 
 #: src/main.c:247
 msgid ""
 "In order to read CDs you have to install the cdparanoia gstreamer plugin"
 msgstr ""
 "Για να μπορείτε να διαβάζετε CD θα πρέπει να εγκαταστήσετε την πρόσθετη "
-"λειτουργία cdparanoia·του gstreamer"
+"λειτουργία cdparanoia του gstreamer"
 
 #: src/track-info.c:118
 #, c-format
