@@ -8,14 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-26 04:33+0100\n"
-"PO-Revision-Date: 2005-01-02 15:55+0100\n"
+"POT-Creation-Date: 2005-01-06 12:22+0100\n"
+"PO-Revision-Date: 2005-01-06 20:42+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: data/GNOME_Goobox.server.in.in.h:1
 msgid "Goobox Application"
@@ -50,82 +51,90 @@ msgid "<b>Extract</b>"
 msgstr "<b>Extrahovat</b>"
 
 #: data/glade/goobox.glade.h:5
+msgid "<b>FLAC</b>"
+msgstr "<b>FLAC</b>"
+
+#: data/glade/goobox.glade.h:6
 msgid "<b>File type</b>"
 msgstr "<b>Typ souboru</b>"
 
-#: data/glade/goobox.glade.h:6
-msgid "<b>Quality</b>"
-msgstr "<b>Kvalita</b>"
-
 #: data/glade/goobox.glade.h:7
-msgid "<small><i>Higher quality</i></small>"
-msgstr "<small><i>Vyšší kvalita</i></small>"
+msgid "<b>MP3</b>"
+msgstr "<b>MP3</b>"
 
 #: data/glade/goobox.glade.h:8
-msgid "<small><i>Smaller size</i></small>"
-msgstr "<small><i>Menší velikost</i></small>"
+msgid "<b>Ogg Vorbis</b>"
+msgstr "<b>Ogg Vorbis</b>"
 
-#: data/glade/goobox.glade.h:9 src/dlg-extract.c:241
+#: data/glade/goobox.glade.h:9
+msgid "Advanced _Options"
+msgstr "_Pokročilé možnosti"
+
+#: data/glade/goobox.glade.h:10 src/dlg-extract.c:238
 msgid "Choose destination folder"
 msgstr "Zvolte cílový adresář"
 
-#: data/glade/goobox.glade.h:10
-msgid "Encoding Options"
-msgstr "Možnosti kódování"
-
 #: data/glade/goobox.glade.h:11
+msgid "Encoding"
+msgstr "Kódování"
+
+#: data/glade/goobox.glade.h:12
 msgid "Excellent quality lossless compression"
 msgstr "Bezztrátová komprese s výbornou kvalitou"
 
-#: data/glade/goobox.glade.h:12
+#: data/glade/goobox.glade.h:13
 msgid "Extract Tracks"
 msgstr "Extrahovat stopy"
 
-#: data/glade/goobox.glade.h:13
+#: data/glade/goobox.glade.h:14
 msgid "Extracting Tracks"
 msgstr "Extrahuji stopy"
 
-#: data/glade/goobox.glade.h:14
+#: data/glade/goobox.glade.h:15
+msgid "General"
+msgstr "Obecné"
+
+#: data/glade/goobox.glade.h:16
 msgid "Good quality lossy compression"
 msgstr "Ztrátová komprese s dobrou kvalitou"
 
-#: data/glade/goobox.glade.h:15
+#: data/glade/goobox.glade.h:17
 msgid "High quality lossy compression"
 msgstr "Ztrátová komprese s vysokou kvalitou"
 
-#: data/glade/goobox.glade.h:16
+#: data/glade/goobox.glade.h:18
 msgid "Preferences"
 msgstr "Nastavení"
 
-#: data/glade/goobox.glade.h:17
+#: data/glade/goobox.glade.h:19
 msgid "Raw audio"
 msgstr "Nezpracovaný zvuk"
 
-#: data/glade/goobox.glade.h:18
+#: data/glade/goobox.glade.h:20
 msgid "_All tracks"
 msgstr "_Všechny stopy"
 
-#: data/glade/goobox.glade.h:19
+#: data/glade/goobox.glade.h:21
 msgid "_FLAC"
 msgstr "_FLAC"
 
-#: data/glade/goobox.glade.h:20
+#: data/glade/goobox.glade.h:22
 msgid "_MP3"
 msgstr "_MP3"
 
-#: data/glade/goobox.glade.h:21
+#: data/glade/goobox.glade.h:23
 msgid "_Ogg Vorbis"
 msgstr "_Ogg Vorbis"
 
-#: data/glade/goobox.glade.h:22 src/goo-stock.c:54
-msgid "_Reset"
-msgstr "_Vynulovat"
+#: data/glade/goobox.glade.h:24
+msgid "_Save playlist"
+msgstr "_Uložit seznam skladeb"
 
-#: data/glade/goobox.glade.h:23
+#: data/glade/goobox.glade.h:25
 msgid "_Selected tracks"
 msgstr "_Zvolené stopy"
 
-#: data/glade/goobox.glade.h:24
+#: data/glade/goobox.glade.h:26
 msgid "_Wave"
 msgstr "_Vlna"
 
@@ -144,17 +153,22 @@ msgstr "Možné hodnoty jsou: ogg, flac, mp3, wave."
 #: data/goobox.schemas.in.h:2
 msgid ""
 "Possible values are: system, text_below, text_beside, text_only, icons_only."
-msgstr "Možné hodnoty jsou: system, text_below, text_beside, text_only, icons_only."
+msgstr ""
+"Možné hodnoty jsou: system, text_below, text_beside, text_only, icons_only."
 
-#: src/actions.c:140
+#.
+#. const char       *documenters [] = {
+#. NULL
+#. };
+#: src/actions.c:141
 msgid "translator_credits"
 msgstr "Miloslav Trmač <mitr@volny.cz>"
 
-#: src/actions.c:151 src/actions.c:166
+#: src/actions.c:152 src/actions.c:167
 msgid "Goobox"
 msgstr "Goobox"
 
-#: src/actions.c:154 src/actions.c:169 src/main.c:114
+#: src/actions.c:155 src/actions.c:170 src/main.c:114
 msgid "CD player and ripper"
 msgstr "Přehrávač a ripper CD"
 
@@ -188,7 +202,7 @@ msgstr "Nemohu hledat obal na Internetu"
 msgid "No image found"
 msgstr "Nenalezen žádný obrázek"
 
-#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:205 src/dlg-preferences.c:109
+#: src/dlg-cover-chooser.c:482 src/dlg-extract.c:202 src/dlg-preferences.c:147
 #, c-format
 msgid "Could not display help: %s"
 msgstr "Nemohu zobrazit nápovědu: %s"
@@ -197,30 +211,7 @@ msgstr "Nemohu zobrazit nápovědu: %s"
 msgid "Searching images..."
 msgstr "Hledám obrázky..."
 
-#: src/dlg-encoder-options.c:117
-#, c-format
-msgid "Nominal bitrate: %d Kbps"
-msgstr "Nominální: %d Kb/s"
-
-#: src/dlg-encoder-options.c:120
-#, c-format
-msgid "Compression level: %d"
-msgstr "Úroveň komprese: %d"
-
-#: src/dlg-encoder-options.c:123
-#, c-format
-msgid "Bitrate: %d Kbps"
-msgstr "Bitrate: %d Kb/s"
-
-#: src/dlg-encoder-options.c:261
-msgid "Faster compression"
-msgstr "Rychlejší komprese"
-
-#: src/dlg-encoder-options.c:265
-msgid "Higher compression"
-msgstr "Lepší komprese"
-
-#: src/dlg-extract.c:367
+#: src/dlg-extract.c:365
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -231,35 +222,68 @@ msgid ""
 "• %s → Mp3\n"
 "• %s → Wave"
 msgstr ""
-"Pro extrakci stop CD potřebujete alespoň jeden z následujících zásuvných modulů GStreamer:\n"
+"Pro extrakci stop CD potřebujete alespoň jeden z následujících zásuvných "
+"modulů GStreamer:\n"
 "\n"
 "• %s → Ogg Vorbis\n"
 "• %s → FLAC\n"
 "• %s → Mp3\n"
 "• %s → Wave"
 
-#: src/dlg-extract.c:380
+#: src/dlg-extract.c:378
 msgid "No encoder available."
 msgstr "Není k dispozici kodér."
 
-#: src/dlg-ripper.c:311
+#: src/dlg-preferences.c:168
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "Nominální: %d Kb/s"
+
+#: src/dlg-preferences.c:172
+#, c-format
+msgid "Compression level: %d"
+msgstr "Úroveň komprese: %d"
+
+#: src/dlg-preferences.c:176
+#, c-format
+msgid "Bitrate: %d Kbps"
+msgstr "Bitrate: %d Kb/s"
+
+#. Set widgets data.
+#: src/dlg-preferences.c:335 src/dlg-preferences.c:343
+msgid "Smaller size"
+msgstr "Menší velikost"
+
+#: src/dlg-preferences.c:339 src/dlg-preferences.c:347
+msgid "Higher quality"
+msgstr "Vyšší kvalita"
+
+#: src/dlg-preferences.c:351
+msgid "Faster compression"
+msgstr "Rychlejší komprese"
+
+#: src/dlg-preferences.c:355
+msgid "Higher compression"
+msgstr "Lepší komprese"
+
+#: src/dlg-ripper.c:313
 msgid "Could not display the destination folder"
 msgstr "Nemohu zobrazit cílový adresář"
 
-#: src/dlg-ripper.c:338
+#: src/dlg-ripper.c:427
 msgid "Tracks extracted successfully"
 msgstr "Stopy úspěšně extrahovány"
 
-#: src/dlg-ripper.c:340
+#: src/dlg-ripper.c:429
 msgid "_View destination folder"
 msgstr "_Zobrazit cílový adresář"
 
-#: src/dlg-ripper.c:353
+#: src/dlg-ripper.c:442
 #, c-format
 msgid "Extracting track %d of %d: %s"
 msgstr "Extrahuji stopu %d z %d: %s"
 
-#: src/dlg-ripper.c:388
+#: src/dlg-ripper.c:477
 msgid "Ripped with Goobox"
 msgstr "Rippováno pomocí Goobox"
 
@@ -333,6 +357,10 @@ msgstr "Zvukové CD"
 #: src/goo-stock.c:53
 msgid "_Extract"
 msgstr "_Extrahovat"
+
+#: src/goo-stock.c:54
+msgid "_Reset"
+msgstr "_Vynulovat"
 
 #: src/goo-stock.c:55 src/goo-stock.c:56 src/goo-stock.c:57 src/goo-stock.c:58
 msgid "V_olume"
@@ -696,3 +724,12 @@ msgstr "_Zamíchat"
 #: src/ui.h:139
 msgid "Play tracks in a random order"
 msgstr "Přehrávat stopy v náhodném pořadí"
+
+#~ msgid "<b>Quality</b>"
+#~ msgstr "<b>Kvalita</b>"
+
+#~ msgid "<small><i>Higher quality</i></small>"
+#~ msgstr "<small><i>Vyšší kvalita</i></small>"
+
+#~ msgid "<small><i>Smaller size</i></small>"
+#~ msgstr "<small><i>Menší velikost</i></small>"
