@@ -34,6 +34,7 @@
 #include "main.h"
 #include "gconf-utils.h"
 #include "goo-stock.h"
+#include "dlg-extract.h"
 
 #define GLADE_RIPPER_FILE "goobox.glade"
 

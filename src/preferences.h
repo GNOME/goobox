@@ -44,6 +44,7 @@
 
 #define PREF_EXTRACT_DESTINATION      "/apps/goobox/dialogs/extract/destination"
 #define PREF_EXTRACT_FILETYPE         "/apps/goobox/dialogs/extract/file_type"
+#define PREF_RIPPER_VIEW_DISTINATION  "/apps/goobox/dialogs/ripper/view_destination"
 
 #define PREF_ENCODER_OGG_QUALITY      "/apps/goobox/encoder/ogg_quality"
 #define PREF_ENCODER_FLAC_COMPRESSION "/apps/goobox/encoder/flac_compression"

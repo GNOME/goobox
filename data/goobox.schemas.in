@@ -193,6 +193,21 @@
 	</locale>
       </schema>
 
+      <!-- RIPPER -->
+
+      <schema>
+	<key>/schemas/apps/goobox/dialogs/ripper/view_destination</key>
+	<applyto>/apps/goobox/dialogs/ripper/view_destination</applyto>
+	<owner>goobox</owner>
+	<type>bool</type>
+	<default>false</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
       <!-- ENCODER -->
 
       <schema>

@@ -192,19 +192,18 @@ play_thread_iterate_cd (GstBin   *bin,
 	gboolean     ret;
 
 	ret = gst_pad_query (priv->source_pad, GST_QUERY_POSITION, &priv->sector_format, &sector);
-	if (!ret)
-		return FALSE;
 
-	if (sector >= to_sector) {
+	if (!ret || (sector >= to_sector)) {
 		gst_element_set_state (priv->play_thread, GST_STATE_PAUSED);
 		action_done (GOO_PLAYER (player), GOO_PLAYER_ACTION_PLAY);
 		return FALSE;
 
 	} else if (priv->tick == 0) {
-		gint64 from_sector = priv->current_track->from_sector - TOC_OFFSET;
+		gint64 from_sector;
 		double fraction;
 
-		fraction = ((double) (sector - from_sector)) / (double)priv->current_track->sectors;
+		from_sector = priv->current_track->from_sector - TOC_OFFSET;
+		fraction = ((double) (sector - from_sector)) / (double) priv->current_track->sectors;
 		g_signal_emit_by_name (G_OBJECT (player), 
 				       "progress", 
 				       fraction,

@@ -1,3 +1,11 @@
+2004-11-13  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/gtk-utils.c (_gtk_ok_dialog_with_checkbutton_new): 
+	* src/dlg-ripper.c (done_dialog_response_cb): 
+
+	Added an 'Extraction finished' dialog from which the user
+	can decide whether to view the destination folder.
+
 2004-11-12  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/dlg-encoder-options.c (dlg_encoder_options): use the stock
@@ -30,7 +38,7 @@
 	* src/dlg-extract.c (help_cb): set the error dialog modal.
 
 	* src/goo-player-info.c (set_label): escape text before using it
-	in a label with warkup on.
+	in a label with markup.
 
 2004-11-09  Paolo Bacchilega  <paobac@cvs.gnome.org>
 

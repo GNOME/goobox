@@ -461,6 +461,94 @@ _gtk_yesno_dialog_with_checkbutton_new (GtkWindow        *parent,
 }
 
 
+static void
+ok__check_button_toggled_cb (GtkToggleButton *button,
+				const char      *gconf_key)
+{
+	eel_gconf_set_boolean (gconf_key, 
+			       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)));
+}
+
+
+GtkWidget*
+_gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
+				     GtkDialogFlags    flags,
+				     const char       *message,
+				     const char       *ok_button_text,
+				     const char       *check_button_label,
+				     const char       *gconf_key)
+{
+	GtkWidget *d;
+	GtkWidget *label;
+	GtkWidget *image;
+	GtkWidget *hbox;
+	GtkWidget *button;
+	GtkWidget *check_button;
+	char      *stock_id = GTK_STOCK_DIALOG_INFO;
+
+	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
+	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
+
+	gtk_dialog_set_has_separator (GTK_DIALOG (d), FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (d), 6);
+	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (d)->vbox), 6);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (d)->vbox), 8);
+
+	/* Add label and image */
+
+	image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
+	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+
+	label = gtk_label_new (message);	
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_label_set_selectable (GTK_LABEL (label), TRUE);
+	
+	hbox = gtk_hbox_new (FALSE, 12);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+	
+	gtk_box_pack_start (GTK_BOX (hbox), image,
+			    FALSE, FALSE, 0);
+	
+	gtk_box_pack_start (GTK_BOX (hbox), label,
+			    TRUE, TRUE, 0);
+	
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (d)->vbox),
+			    hbox,
+			    FALSE, FALSE, 0);
+
+	/* Add checkbutton */
+
+	check_button = gtk_check_button_new_with_mnemonic (check_button_label);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (d)->vbox),
+			    check_button,
+			    FALSE, FALSE, 0);
+	gtk_widget_show (check_button);
+
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
+				     eel_gconf_get_boolean (gconf_key, FALSE));
+	
+	gtk_widget_show_all (hbox);
+
+	/* Add buttons */
+
+	button = create_button (GTK_STOCK_CANCEL, ok_button_text);
+	gtk_dialog_add_action_widget (GTK_DIALOG (d), 
+				      button, 
+				      GTK_RESPONSE_OK);
+	
+	/**/
+
+	gtk_dialog_set_default_response (GTK_DIALOG (d), GTK_RESPONSE_YES);
+
+	g_signal_connect (G_OBJECT (check_button),
+			  "toggled", 
+			  G_CALLBACK (ok__check_button_toggled_cb), 
+			  (gpointer) gconf_key);
+	
+	return d;
+}
+
+
 void
 _gtk_error_dialog_from_gerror_run (GtkWindow        *parent,
 				   const char       *main_message,

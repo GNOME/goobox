@@ -264,6 +264,42 @@ zero_padded (int n)
 }
 
 
+static char*
+get_destination_folder (DialogData *data)
+{
+	return g_build_filename (data->destination,
+				 data->artist,
+				 data->album,
+				 NULL);
+}
+
+
+static void
+done_dialog_response_cb (GtkDialog  *dialog,
+			 int         button_number,
+			 gpointer    userdata)
+{
+	DialogData *data = (DialogData*) userdata;
+
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+	
+	if ((button_number == GTK_RESPONSE_OK)
+	    && eel_gconf_get_boolean (PREF_RIPPER_VIEW_DISTINATION, FALSE)) {
+		GError *error  = NULL;
+		char   *folder = get_destination_folder (data);
+		char   *url    = g_strconcat ("file://", folder, NULL);
+
+		if (! gnome_url_show (url, &error))
+			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (data->window), _("Could not display the destination folder"), &error);
+
+		g_free (folder);
+		g_free (url);
+	}
+
+	gtk_widget_destroy (data->dialog);
+}
+
+
 static void
 rip_current_track (DialogData *data)
 {
@@ -274,8 +310,24 @@ rip_current_track (DialogData *data)
 	GstEvent  *event;
 
 	if (data->current_track == NULL) {
+		GtkWidget *d;
+
 		data->ripping = FALSE;
-		gtk_widget_destroy (data->dialog);
+		gtk_widget_hide (data->dialog);
+
+		d = _gtk_ok_dialog_with_checkbutton_new (GTK_WINDOW (data->window),
+							 GTK_DIALOG_MODAL,
+							 _("Tracks extracted successfully"),
+							 GTK_STOCK_OK,
+							 _("View destination folder"),
+							 PREF_RIPPER_VIEW_DISTINATION);
+							    
+		g_signal_connect (G_OBJECT (d), "response",
+				  G_CALLBACK (done_dialog_response_cb),
+				  data);
+		gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
+		gtk_widget_show (d);
+
 		return;
 	}
 		
@@ -286,13 +338,10 @@ rip_current_track (DialogData *data)
 
 	/* Set the filename */
 
-	filename = g_strdup_printf ("%s - %s.%s", zero_padded (track->number + 1), track->title, data->ext);
-	folder = g_build_filename (data->destination,
-				   data->artist,
-				   data->album,
-				   NULL);
+	folder = get_destination_folder (data);
 	ensure_dir_exists (folder, DESTINATION_PERMISSIONS);
 
+	filename = g_strdup_printf ("%s - %s.%s", zero_padded (track->number + 1), track->title, data->ext);
 	g_free (data->current_file);
 	data->current_file = g_build_filename (folder, filename, NULL);
 	g_free (filename);
