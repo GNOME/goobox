@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *  File-Roller
+ *  Goo
  *
  *  Copyright (C) 2001, 2003 Free Software Foundation, Inc.
  *
@@ -984,7 +984,7 @@ get_temp_work_dir_name (void)
 		g_free (result);
 		result = g_strdup_printf ("%s%s.%d.%d",
 					  g_get_tmp_dir (),
-					  "/file-roller",
+					  "/goobox",
 					  getpid (),
 					  count++);
 	} while (path_is_file (result) && (try++ < MAX_TRIES));

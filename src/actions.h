@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *  File-Roller
+ *  Goo
  *
  *  Copyright (C) 2004 Free Software Foundation, Inc.
  *

@@ -35,14 +35,9 @@
 
 #define DEFAULT_DEVICE "/dev/cdrom"
 
-struct _GooCdromLinuxPrivateData {
-};
-
 static GooCdromClass *parent_class = NULL;
 
 static void goo_cdrom_linux_class_init  (GooCdromLinuxClass *class);
-static void goo_cdrom_linux_init        (GooCdromLinux *cdrom);
-static void goo_cdrom_linux_finalize    (GObject *object);
 
 
 GType
@@ -60,7 +55,7 @@ goo_cdrom_linux_get_type ()
 			NULL,
 			sizeof (GooCdromLinux),
 			0,
-			(GInstanceInitFunc) goo_cdrom_linux_init
+			(GInstanceInitFunc) NULL
 		};
 
 		type = g_type_register_static (GOO_TYPE_CDROM,
@@ -73,26 +68,13 @@ goo_cdrom_linux_get_type ()
 }
 
 
-const char *
-goo_cdrom_linux_get_device (GooCdrom *cdrom)
-{
-	const char *device;
-
-	device = GOO_CDROM_CLASS (parent_class)->get_device (cdrom);
-	if (device == NULL)
-		device = DEFAULT_DEVICE;
-
-	return device;
-}
-
-
 static int
 open_device (GooCdrom *cdrom)
 {
 	const char *device;
 	int         fd = -1;
 
-	device = goo_cdrom_linux_get_device (cdrom);
+	device = goo_cdrom_get_device (cdrom);
 	if ((fd = open (device, O_RDONLY | O_NONBLOCK)) < 0) {
 		goo_cdrom_set_error_from_errno (cdrom);
 		goo_cdrom_set_state (cdrom, GOO_CDROM_STATE_ERROR);
@@ -135,10 +117,7 @@ update_state_from_fd (GooCdrom *cdrom,
 
 	state = ioctl (fd, CDROM_DISC_STATUS, 0);
 	if (state < 0) {
-		goo_cdrom_set_error (cdrom, 
-				     g_error_new (GOO_CDROM_ERROR,
-						  0, "%s",
-						  _("Error reading CD")));
+		goo_cdrom_set_error_from_string (cdrom, _("Error reading CD"));
 		return -1;
 	}
 	
@@ -279,51 +258,16 @@ goo_cdrom_linux_update_state (GooCdrom *cdrom)
 static void 
 goo_cdrom_linux_class_init (GooCdromLinuxClass *class)
 {
-        GObjectClass  *gobject_class = G_OBJECT_CLASS (class);
         GooCdromClass *cdrom_class = GOO_CDROM_CLASS (class);
 
         parent_class = g_type_class_peek_parent (class);
 
-        gobject_class->finalize = goo_cdrom_linux_finalize;
-
 	cdrom_class->eject            = goo_cdrom_linux_eject;
 	cdrom_class->close_tray       = goo_cdrom_linux_close_tray;
 	cdrom_class->lock_tray        = goo_cdrom_linux_lock_tray;
-	cdrom_class->unlock_tray        = goo_cdrom_linux_unlock_tray;
+	cdrom_class->unlock_tray      = goo_cdrom_linux_unlock_tray;
 	cdrom_class->update_state     = goo_cdrom_linux_update_state;
 	cdrom_class->is_cdrom_device  = goo_cdrom_linux_is_cdrom_device;
-	cdrom_class->get_device       = goo_cdrom_linux_get_device;
-}
-
-
-static void 
-goo_cdrom_linux_init (GooCdromLinux *cdrom)
-{
-	/*GooCdromPrivateData *priv;*/
-
-	cdrom->priv = g_new0 (GooCdromLinuxPrivateData, 1);
-
-	/*priv = cdrom->priv;
-	priv->device = NULL;*/
-}
-
-
-static void 
-goo_cdrom_linux_finalize (GObject *object)
-{
-        GooCdromLinux *cdrom_linux;
-
-        g_return_if_fail (object != NULL);
-        g_return_if_fail (GOO_IS_CDROM_LINUX (object));
-
-	cdrom_linux = GOO_CDROM_LINUX (object);
-	if (cdrom_linux->priv != NULL) {
-		/*GooCdromPrivateData *priv = cdrom_linux->priv;*/
-		g_free (cdrom_linux->priv);
-		cdrom_linux->priv = NULL;
-	}
-
-	G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 
@@ -332,7 +276,9 @@ goo_cdrom_linux_new (const char *device)
 {
 	GooCdrom *cdrom;
 
-	cdrom = GOO_CDROM (g_object_new (GOO_TYPE_CDROM_LINUX, NULL));
+	cdrom = GOO_CDROM (g_object_new (GOO_TYPE_CDROM_LINUX, 
+					 "default_device", DEFAULT_DEVICE,
+					 NULL));
 	goo_cdrom_construct (cdrom, device);
 
 	return cdrom;

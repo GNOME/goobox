@@ -35,12 +35,10 @@
 
 typedef struct _GooCdromLinux            GooCdromLinux;
 typedef struct _GooCdromLinuxClass       GooCdromLinuxClass;
-typedef struct _GooCdromLinuxPrivateData GooCdromLinuxPrivateData;
 
 struct _GooCdromLinux
 {
 	GooCdrom __parent;
-	GooCdromLinuxPrivateData *priv;
 };
 
 struct _GooCdromLinuxClass

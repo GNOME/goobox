@@ -1,3 +1,12 @@
+2004-10-19  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-cdrom-linux.h: 
+	* src/goo-cdrom-linux.c: 
+	* src/goo-cdrom.h: 
+	* src/goo-cdrom.c: 
+
+	Remove set_device and get_device as virtual functions.
+
 2004-10-18  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-volume-button.c (goo_volume_button_set_volume): 

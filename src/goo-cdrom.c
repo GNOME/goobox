@@ -25,12 +25,14 @@
 #include <glib.h>
 #include <errno.h>
 
+#include <gnome.h>
 #include "goo-marshal.h"
 #include "goo-cdrom.h"
 #include "goo-cdrom-linux.h"
 
 struct _GooCdromPrivateData {
 	char          *device;
+	char          *default_device;
 	GError        *error;
 	GooCdromState  state;
 };
@@ -38,6 +40,11 @@ struct _GooCdromPrivateData {
 enum {
 	STATE_CHANGED,
         LAST_SIGNAL
+};
+
+enum {
+	PROP_0,
+	PROP_DEFAULT_DEVICE
 };
 
 static GObjectClass *parent_class = NULL;
@@ -113,28 +120,48 @@ base_goo_cdrom_is_cdrom_device (GooCdrom   *cdrom,
 
 
 static gboolean
-base_goo_cdrom_set_device (GooCdrom   *cdrom,
-			   const char *device)
-{
-	g_free (cdrom->priv->device);
-	cdrom->priv->device = NULL;
-	if (device != NULL)
-		cdrom->priv->device = g_strdup (device);
-	return TRUE;
-}
-
-
-static const char *
-base_goo_cdrom_get_device (GooCdrom   *cdrom)
-{
-	return cdrom->priv->device;
-}
-
-
-static gboolean
 base_goo_cdrom_update_state (GooCdrom *cdrom)
 {
 	return TRUE;
+}
+
+
+static void
+goo_cdrom_set_property (GObject      *object, 
+			guint         property_id,
+			const GValue *value, 
+			GParamSpec   *pspec)
+{
+	GooCdrom *cdrom = GOO_CDROM (object);
+	GooCdromPrivateData *priv = cdrom->priv;
+
+	switch (property_id) {
+	case PROP_DEFAULT_DEVICE:
+		g_free (priv->default_device);
+		priv->default_device = g_strdup (g_value_get_string (value));
+		break;
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+	}
+}
+
+
+static void
+goo_cdrom_get_property (GObject    *object, 
+			guint       property_id,
+			GValue     *value, 
+			GParamSpec *pspec)
+{
+	GooCdrom *cdrom = GOO_CDROM (object);
+	GooCdromPrivateData *priv = cdrom->priv;
+
+	switch (property_id) { 
+	case PROP_DEFAULT_DEVICE:
+		g_value_set_string (value, priv->default_device);
+		break;
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+	}
 }
 
 
@@ -156,6 +183,13 @@ goo_cdrom_class_init (GooCdromClass *class)
 			      0);
 
         gobject_class->finalize = goo_cdrom_finalize;
+	gobject_class->set_property = goo_cdrom_set_property;
+	gobject_class->get_property = goo_cdrom_get_property;
+
+	g_object_class_install_property (gobject_class, PROP_DEFAULT_DEVICE,
+			g_param_spec_string ("default_device", 
+					     NULL, NULL,
+					     NULL, G_PARAM_READWRITE));
 
 	class->eject            = base_goo_cdrom_eject;
 	class->close_tray       = base_goo_cdrom_close_tray;
@@ -163,8 +197,6 @@ goo_cdrom_class_init (GooCdromClass *class)
 	class->unlock_tray      = base_goo_cdrom_unlock_tray;
 	class->update_state     = base_goo_cdrom_update_state;
 	class->is_cdrom_device  = base_goo_cdrom_is_cdrom_device;
-	class->set_device       = base_goo_cdrom_set_device;
-	class->get_device       = base_goo_cdrom_get_device;
 
 	class->state_changed = NULL;
 }
@@ -180,6 +212,7 @@ goo_cdrom_init (GooCdrom *cdrom)
 
 	priv->error = NULL;
 	priv->device = NULL;
+	priv->default_device = NULL;
 	priv->state = GOO_CDROM_STATE_UNKNOWN;
 }
 
@@ -199,6 +232,7 @@ goo_cdrom_finalize (GObject *object)
 		if (priv->error != NULL) 
 			g_error_free (priv->error);
 		g_free (priv->device);
+		g_free (priv->default_device);
 
 		g_free (cdrom->priv);
 		cdrom->priv = NULL;
@@ -274,24 +308,35 @@ gboolean
 goo_cdrom_set_device (GooCdrom   *cdrom,
 		      const char *device)
 {
-	gboolean result;
-	result = GOO_CDROM_GET_CLASS (G_OBJECT (cdrom))->set_device (cdrom, device);
+	GooCdromPrivateData *priv = cdrom->priv;
 
-	if (result) {
-		g_free (cdrom->priv->device);
-		cdrom->priv->device = g_strdup (device);
+	if (! goo_cdrom_is_cdrom_device (cdrom, device)) {
+		goo_cdrom_set_error_from_string (cdrom, _("The specifued device is not valid"));
+		goo_cdrom_set_state (cdrom, GOO_CDROM_STATE_ERROR);
+		return FALSE;
 	}
-	
+
+	g_free (priv->device);
+	priv->device = NULL;
+
+	if (device != NULL)
+		priv->device = g_strdup (device);
+
 	cdrom->priv->state = GOO_CDROM_STATE_UNKNOWN;
 
-	return result;
+	return TRUE;
 }
 
 
 const char *
 goo_cdrom_get_device (GooCdrom *cdrom)
 {
-	return GOO_CDROM_GET_CLASS (G_OBJECT (cdrom))->get_device (cdrom);
+	GooCdromPrivateData *priv = cdrom->priv;
+	
+	if (priv->device == NULL)
+		return priv->default_device;
+	else
+		return priv->device;
 }
 
 
@@ -339,6 +384,16 @@ goo_cdrom_set_error (GooCdrom *cdrom,
 		cdrom->priv->error = NULL;
 	}
 	cdrom->priv->error = error;
+}
+
+
+void
+goo_cdrom_set_error_from_string (GooCdrom   *cdrom,
+				 const char *value)
+{
+	GError *error;
+	error = g_error_new (GOO_CDROM_ERROR, 0, "%s", value);
+	goo_cdrom_set_error (cdrom, error);
 }
 
 

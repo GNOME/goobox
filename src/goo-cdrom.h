@@ -66,9 +66,6 @@ struct _GooCdromClass
 	gboolean      (*update_state)      (GooCdrom       *cdrom);
 	gboolean      (*is_cdrom_device)   (GooCdrom       *cdrom,
 					    const char     *device);
-	gboolean      (*set_device)        (GooCdrom       *cdrom,
-					    const char     *device);
-	const char *  (*get_device)        (GooCdrom       *cdrom);
 
 	/*<signals>*/
 
@@ -101,6 +98,9 @@ void             goo_cdrom_set_state            (GooCdrom        *cdrom,
 						 GooCdromState    state);
 void             goo_cdrom_set_error            (GooCdrom        *cdrom,
 						 GError          *error);
+void             goo_cdrom_set_error_from_string(GooCdrom        *cdrom,
+						 const char      *value);
 void             goo_cdrom_set_error_from_errno (GooCdrom        *cdrom);
+
 
 #endif /* GOO_CDROM_H */
