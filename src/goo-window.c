@@ -168,15 +168,25 @@ window_update_statusbar_list_info (GooWindow *window)
 	}
 
 	if (tot_songs != 0) {
-		char  time_text[64];
-		char *info = NULL;
+		const char *album;
+		char        time_text[64];
+		char       *info = NULL;
+		char       *text;
+
+		album = goo_player_cd_get_album (GOO_PLAYER_CD (priv->player));
 
 		set_time_string (time_text, tot_time);
 		info = g_strdup_printf (ngettext ("%d track, %s", "%d tracks, %s", tot_songs), tot_songs, time_text);
 
-		gtk_statusbar_push (GTK_STATUSBAR (priv->statusbar), priv->list_info_cid, info);
+		if (album != NULL)
+			text = g_strconcat (album, ", ", info, NULL);
+		else
+			text = g_strconcat (info, NULL);
+
+		gtk_statusbar_push (GTK_STATUSBAR (priv->statusbar), priv->list_info_cid, text);
 
 		g_free (info);
+		g_free (text);
 	}
 }
 

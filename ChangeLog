@@ -1,3 +1,8 @@
+2004-10-18  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c (window_update_statusbar_list_info): add the
+	album title in the statusbar if available.
+
 2004-10-17  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-volume-button.c (update_volume_label): 
