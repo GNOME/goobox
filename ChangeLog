@@ -1,3 +1,14 @@
+2005-01-24  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	[ version 0.7.2 released ] 
+	
+	* NEWS: updated for 0.7.2
+
+2005-01-23  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-player-cd.c (create_pipeline): Added a queue in the
+	playing pipeline.
+	
 2005-01-22  Changwoo Ryu  <cwryu@debian.org>
 
 	* configure.in: Added ko to ALL_LINGUAS.

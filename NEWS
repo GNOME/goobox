@@ -1,3 +1,12 @@
+version 0.7.2
+-------------	
+	* Extract dialog: Added extraction folder to the advanced options, 
+          and make the advanced options visible the first time the dialog is 
+          displayed.
+	* Added queue in the playing pipeline to cope with slow computers.
+	* Added manual support.  Written a simple manual with a small 
+	  introduction and the keyword shortcuts reference.
+
 version 0.7.1
 -------------	
 	* Fixed compilation with gtk+ 2.4.x

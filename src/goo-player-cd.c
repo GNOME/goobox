@@ -42,6 +42,7 @@
 #define POLL_TIMEOUT 1000
 #define REFRESH_RATE 5
 #define PROGRESS_DELAY 400
+#define QUEUE_SIZE 16384U /*131072U*/
 
 struct _GooPlayerCDPrivateData {
 	GooCdrom        *cdrom;
@@ -250,7 +251,7 @@ static void
 create_pipeline (GooPlayerCD *player)
 {
 	GooPlayerCDPrivateData *priv = player->priv;
-	GstElement *sink;
+	GstElement *sink, *queue, *audio_thread;
 
 	destroy_pipeline (player, FALSE);
 	remove_state_polling (player);
@@ -263,18 +264,24 @@ create_pipeline (GooPlayerCD *player)
 	/*g_object_set (G_OBJECT (priv->source), 
 		      "paranoia-mode", 0, 
 		      NULL); FIXME*/
-
 	debug (DEBUG_INFO, "DEVICE: %s\n", goo_cdrom_get_device (priv->cdrom));
-
 	g_object_set (G_OBJECT (priv->source), 
 		      "device", goo_cdrom_get_device (priv->cdrom), 
 		      NULL);
 
 	priv->volume = gst_element_factory_make ("volume", "volume");
+
+	queue = gst_element_factory_make ("queue", "queue");
+	g_object_set (G_OBJECT (queue), 
+		      "max-size-bytes", QUEUE_SIZE,
+		      NULL);
 	
 	sink = gst_gconf_get_default_audio_sink ();
-	gst_bin_add_many (GST_BIN (priv->play_thread), priv->source, priv->volume, sink, NULL);
-	gst_element_link_many (priv->source, priv->volume, sink, NULL);
+	audio_thread = gst_thread_new ("a_decoder_thread");
+
+	gst_bin_add_many (GST_BIN (audio_thread), sink, NULL);
+	gst_bin_add_many (GST_BIN (priv->play_thread), priv->source, priv->volume, queue, audio_thread, NULL);
+	gst_element_link_many (priv->source, priv->volume, queue, sink, NULL);
 
 	priv->track_format = gst_format_get_by_nick ("track");
 	priv->sector_format = gst_format_get_by_nick ("sector");
