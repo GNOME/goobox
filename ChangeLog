@@ -4,6 +4,9 @@
 	* src/goo-window.h: 
 	* src/GNOME_Goobox.idl: 
 	* src/goo-application.c: 
+	(impl_goo_application_present): do not update the state if the player
+	is playing.
+
 	* src/goo-window.c (goo_window_get_volume)
 	(goo_window_set_volume): 
 

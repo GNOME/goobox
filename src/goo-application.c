@@ -66,12 +66,16 @@ static void
 impl_goo_application_present (PortableServer_Servant  _servant,
 			      CORBA_Environment      *ev)
 {
+	GooPlayer *player;
+
 	if (GTK_WIDGET_VISIBLE (main_window))
 		gtk_window_present (main_window);
 	else
 		goo_window_toggle_visibility (GOO_WINDOW (main_window));
 
-	goo_window_update (GOO_WINDOW (main_window));
+	player = goo_window_get_player (GOO_WINDOW (main_window));
+	if (goo_player_get_state (player) != GOO_PLAYER_STATE_PLAYING) 
+		goo_window_update (GOO_WINDOW (main_window));
 }
 
 
