@@ -1,3 +1,7 @@
+2005-01-19  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Add «nb» and «no» to ALL_LINGUAS.
+
 2005-01-18  Alexander Shopov  <ash@contact.bg>
 
 	* configure.in (ALL_LINGUAS): Added "bg" (Bulgarian)
