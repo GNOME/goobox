@@ -33,7 +33,7 @@
 #define TITLE2_FORMAT "%s"
 #define TITLE3_FORMAT "<i>%s</i>"
 #define TIME_FORMAT "%s"
-#define PLAYING_FORMAT "%s"
+#define PLAYING_FORMAT "[ <small>%s</small> ]"
 #define SCALE_WIDTH 150
 #define COVER_SIZE 80
 #define MIN_WIDTH 400
@@ -154,6 +154,11 @@ set_label (GtkWidget     *label,
 	char *e_text;
 	char *markup;
 
+	if ((text == NULL) || (*text == '\0')) {
+		gtk_label_set_text (GTK_LABEL (label), "");
+		return;
+	}
+
 	e_text = g_markup_escape_text (text, -1);
 	markup = g_strdup_printf (format, e_text);
 	g_free (e_text);
@@ -217,7 +222,7 @@ time_scale_value_changed_cb (GtkRange      *range,
 		current_time = priv->song_length * (new_value / 100.0);
 
 		set_time_string (priv->current_time, current_time);
-		sprintf (priv->time, "%s", priv->current_time);
+		sprintf (priv->time, _("%s of %s"), priv->total_time, priv->current_time);
 		set_time (info, priv->time);
 
 		return;
@@ -242,7 +247,7 @@ update_time_label_cb (gpointer data)
 	
 	current_time = priv->song_length * new_value;
 	set_time_string (priv->current_time, current_time);
-	sprintf (priv->time, "%s", priv->current_time);
+	sprintf (priv->time, _("%s of %s"), priv->current_time, priv->total_time);
 	set_time (info, priv->time);
 
 	priv->update_id = g_timeout_add (UPDATE_TIMEOUT,
@@ -323,12 +328,9 @@ goo_player_info_init (GooPlayerInfo *info)
 	gtk_misc_set_alignment (GTK_MISC (priv->title3_label), 0.0, 0.5);
 	gtk_label_set_selectable (GTK_LABEL (priv->title3_label), TRUE);
 
-	/* time */
+	/* Time */
 
 	time_box = gtk_hbox_new (FALSE, 6);
-
-	priv->time_label = gtk_label_new (NULL);
-	gtk_widget_set_no_show_all (priv->time_label, TRUE);
 
 	priv->time_scale = gtk_hscale_new_with_range (0.0, 1.0, 0.01);
 	gtk_range_set_increments (GTK_RANGE (priv->time_scale), 0.01, 0.1);
@@ -337,11 +339,14 @@ goo_player_info_init (GooPlayerInfo *info)
 	gtk_range_set_update_policy (GTK_RANGE (priv->time_scale), GTK_UPDATE_DISCONTINUOUS);
 	gtk_widget_set_no_show_all (priv->time_scale, TRUE);
 
+	priv->time_label = gtk_label_new (NULL);
+	gtk_widget_set_no_show_all (priv->time_label, TRUE);
+
 	priv->playing_label = gtk_label_new (NULL);
 	gtk_widget_set_no_show_all (priv->playing_label, TRUE);
 
-	gtk_box_pack_start (GTK_BOX (time_box), priv->time_label, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (time_box), priv->time_scale, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (time_box), priv->time_label, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (time_box), priv->playing_label, FALSE, FALSE, 0);
 
 	/* Image */
@@ -596,7 +601,7 @@ goo_player_info_set_time (GooPlayerInfo  *info,
 		return;
 
 	set_time_string (priv->current_time, current_time);
-	sprintf (priv->time, "%s", priv->current_time);
+	sprintf (priv->time, _("%s of %s"), priv->current_time, priv->total_time);
 	set_time (info, priv->time);
 
 	g_signal_handlers_block_by_data (priv->time_scale, info);

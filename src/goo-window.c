@@ -108,7 +108,7 @@ struct _GooWindowPrivateData {
 
 	GooPlayer       *player;
 	GList           *song_list;                 /* SongInfo list. */
-	int              songs;
+	int              songs, total_time;
 	SongInfo        *current_song;
 	GList           *playlist;                  /* int list. */
 
@@ -166,22 +166,13 @@ static void
 window_update_statusbar_list_info (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
-	GList *scan;
-	int    tot_songs = 0, tot_time = 0;
 
 	if (window == NULL)
 		return;
 
 	gtk_statusbar_pop (GTK_STATUSBAR (priv->statusbar), priv->list_info_cid);
 
-	for (scan = priv->song_list; scan; scan = scan->next) {
-		SongInfo *song = scan->data;
-		tot_songs++;
-		tot_time += song->time;
-		goo_player_info_set_total_time (GOO_PLAYER_INFO (priv->info), tot_time);
-	}
-
-	if (tot_songs != 0) {
+	if (priv->songs != 0) {
 		const char *album;
 		char        time_text[64];
 		char       *info = NULL;
@@ -189,8 +180,8 @@ window_update_statusbar_list_info (GooWindow *window)
 
 		album = goo_player_cd_get_album (GOO_PLAYER_CD (priv->player));
 
-		set_time_string (time_text, tot_time);
-		info = g_strdup_printf (ngettext ("%d track, %s", "%d tracks, %s", tot_songs), tot_songs, time_text);
+		set_time_string (time_text, priv->total_time);
+		info = g_strdup_printf (ngettext ("%d track, %s", "%d tracks, %s", priv->songs), priv->songs, time_text);
 
 		if (album != NULL)
 			text = g_strconcat (album, ", ", info, NULL);
@@ -356,6 +347,7 @@ goo_window_update_list (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
 	UpdateData *udata;
+	GList      *scan;
 
 	if (GTK_WIDGET_REALIZED (priv->list_view))
 		gtk_tree_view_scroll_to_point (GTK_TREE_VIEW (priv->list_view), 0, 0);
@@ -374,7 +366,15 @@ goo_window_update_list (GooWindow *window)
 	/**/
 
 	priv->song_list = goo_player_get_song_list (priv->player);
-	priv->songs = g_list_length (priv->song_list);
+	priv->songs = 0;
+	priv->total_time = 0;
+	for (scan = priv->song_list; scan; scan = scan->next) {
+		SongInfo *song = scan->data;
+		priv->songs++;
+		priv->total_time += song->time;
+	}
+
+	goo_player_info_set_total_time (GOO_PLAYER_INFO (priv->info), priv->total_time);
 	
 	/**/
 
@@ -1108,8 +1108,6 @@ player_start_cb (GooPlayer       *player,
 
 	switch (action) {
 	case GOO_PLAYER_ACTION_PLAY:
-		goo_player_info_set_time (GOO_PLAYER_INFO (priv->info), 0);
-
 		set_action_label_and_icon (window,
 					   "TogglePlay", 
 					   _("_Pause"), 
@@ -1167,11 +1165,17 @@ goo_window_set_current_song (GooWindow *window,
 			     int        n)
 {
 	GooWindowPrivateData *priv = window->priv;
+	SongInfo *song;
+
 	if (priv->current_song != NULL) {
 		song_info_unref (priv->current_song);	
 		priv->current_song = NULL;
 	}
+
 	priv->current_song = goo_player_get_song (priv->player, n);
+
+	song = (SongInfo*) priv->current_song;
+	goo_player_info_set_total_time (GOO_PLAYER_INFO (priv->info), song->time);
 }
 
 
