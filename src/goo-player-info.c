@@ -39,7 +39,7 @@
 #define SCALE_WIDTH 150
 #define COVER_SIZE 80
 #define MIN_WIDTH 440
-#define MIN_CHARS 42
+#define MIN_CHARS 33
 #define UPDATE_TIMEOUT 50
 
 struct _GooPlayerInfoPrivateData {

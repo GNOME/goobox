@@ -4,11 +4,12 @@ version 0.7.0
 	* Moved the volume button on the toolbar.
 	* Added ability to save the playlist of the extracted tracks.
 	* Added ability to control the player with the command line arguments,
-	  use 'goobox --help' for a complete list of all the available commands.
+	  use 'goobox --help' for a complete list of all the available 
+	  commands.
 	* Added ellipsizing to the album and artist labels if gtk+ version is 
           2.5.0 or higher.
-	* Added ability to add/change the cover image dropping an image over the
-	  cover button.
+	* Added ability to add/change the cover image dropping an image over 
+	  the cover button.
 	* Fixed statusbar text when no metadata is available.
 	* Other minor UI enhancements.
 	* Display play, pause and stop command labels on the toolbar when the 
