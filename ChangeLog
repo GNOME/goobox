@@ -1,3 +1,10 @@
+2005-02-28  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c: 
+
+	Fixed sorting by title.  Use the current sorting order to create the 
+	playlist.  Next and Prev commands use the sorting order.
+
 2005-02-13  David Lodge <dave@cirt.ent>
 
 	* configure.in: Added "en_GB" (English (British)) to ALL_LINGUAS.

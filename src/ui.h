@@ -183,8 +183,6 @@ static const gchar *ui_info =
 "    <menu action='ViewMenu'>"
 "      <menuitem action='ViewToolbar'/>"
 "      <menuitem action='ViewStatusbar'/>"
-"      <separator name='sep01'/>"
-"      <menuitem action='ToggleVisibility'/>"
 "    </menu>"
 "    <menu action='HelpMenu'>"
 "      <menuitem action='Contents'/>"
