@@ -1001,11 +1001,7 @@ goo_player_cd_new (const char *location)
 const char *
 goo_player_cd_get_discid (GooPlayerCD *player)
 {
-	/*
-	if (goo_player_get_is_busy (GOO_PLAYER (player)))
-		return NULL;
-		else*/
-		return player->priv->discid;
+	return player->priv->discid;
 }
 
 
@@ -1014,11 +1010,6 @@ goo_player_cd_get_track (GooPlayerCD *player,
 			 guint        n)
 {
 	GList *scan;
-
-	/*
-	if (goo_player_get_is_busy (GOO_PLAYER (player)))
-		return NULL;
-	*/
 
 	for (scan = player->priv->tracks; scan; scan = scan->next) {
 		TrackInfo *track = scan->data;
@@ -1033,42 +1024,26 @@ goo_player_cd_get_track (GooPlayerCD *player,
 GList *
 goo_player_cd_get_tracks (GooPlayerCD *player)
 {
-	/*
-	if (goo_player_get_is_busy (GOO_PLAYER (player)))
-		return NULL;
-		else*/
-		return track_list_dup (player->priv->tracks);
+	return track_list_dup (player->priv->tracks);
 }
 
 
 const char *
 goo_player_cd_get_artist (GooPlayerCD *player)
 {
-	/*
-	if (goo_player_get_is_busy (GOO_PLAYER (player)))
-		return NULL;
-		else*/
-		return player->priv->artist;
+	return player->priv->artist;
 }
 
 
 const char *
 goo_player_cd_get_album (GooPlayerCD *player)
 {
-	/*
-	if (goo_player_get_is_busy (GOO_PLAYER (player)))
-		return NULL;
-		else*/
-		return player->priv->title;
+	return player->priv->title;
 }
 
 
 const char *
 goo_player_cd_get_genre (GooPlayerCD *player)
 {
-	/*
-	if (goo_player_get_is_busy (GOO_PLAYER (player)))
-		return NULL;
-		else*/
-		return player->priv->genre;
+	return player->priv->genre;
 }

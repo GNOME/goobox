@@ -1344,6 +1344,7 @@ player_done_cb (GooPlayer       *player,
 		goo_player_info_update_state (GOO_PLAYER_INFO (priv->info));
 		goo_window_update_titles (window);
 		window_update_title (window);
+		window_update_statusbar_list_info (window);
 		break;
 	case GOO_PLAYER_ACTION_SEEK_SONG:
 		goo_window_set_current_song (window, goo_player_get_current_song (priv->player));
@@ -1928,14 +1929,15 @@ goo_window_construct (GooWindow  *window,
 
 	/**/
 
-	vbox = gtk_vbox_new (FALSE, 6);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
 
-	hbox = gtk_hbox_new (FALSE, 12);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
+	hbox = gtk_hbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
 	priv->info = goo_player_info_new (NULL);
+	gtk_container_set_border_width (GTK_CONTAINER (priv->info), 0);
 	g_signal_connect (priv->info,
 			  "skip_to",
 			  G_CALLBACK (player_info_skip_to_cb), 
@@ -1971,7 +1973,7 @@ goo_window_construct (GooWindow  *window,
 
 	gtk_box_pack_start (GTK_BOX (vbox), 
 			    expander, 
-			    FALSE, FALSE, 0);
+			    FALSE, FALSE, 6);
 
 	gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
 

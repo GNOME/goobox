@@ -1,3 +1,13 @@
+2004-12-16  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-player-cd.c: removed commented out code.
+
+	* src/goo-window.c (player_done_cb): update the statusbar too.
+
+2004-12-14  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c (goo_window_construct): set border width to 0.
+
 2004-12-14  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
 	* configure.in: Added Spanish (es) translation to ALL_LINGUAS.
@@ -15,9 +25,9 @@
 	* configure.in (SYSTEM_LIBS): Added fi to ALL_LINGUAS.
 	* src/goo-cdrom.c (goo_cdrom_set_device): Fixed typo ("specifued")
 
-2004-12-07	Amanpreet Singh Alam<amanpreetalam@yahoo.com>
+2004-12-07  Amanpreet Singh Alam  <amanpreetalam@yahoo.com>
 
-	*configure.in: pa is added to ALL_LINGUAS:
+	* configure.in: pa is added to ALL_LINGUAS:
 
 2004-12-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
 

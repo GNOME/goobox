@@ -127,7 +127,9 @@ activate_action_about (GtkAction *action,
 {
 	GooWindow        *window = data;
 	static GtkWidget *about = NULL;
+#ifndef HAVE_GTK_2_5
 	GdkPixbuf        *logo;
+#endif
 	const char       *authors[] = {
 		"Paolo Bacchilega <paolo.bacchilega@libero.it>", 
 		NULL
