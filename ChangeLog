@@ -1,5 +1,8 @@
 2005-03-14  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/dlg-ripper.c (get_destination_folder): use tracktitle_to_filename
+	here too.
+
 	* src/file-utils.c (tracktitle_to_filename): use space instead of
 	_, and remove double spaces.
 

@@ -274,10 +274,22 @@ create_pipeline (DialogData *data)
 static char*
 get_destination_folder (DialogData *data)
 {
-	return g_build_filename (data->destination,
-				 data->artist,
-				 data->album,
-				 NULL);
+	char *artist_filename;
+	char *album_filename;
+	char *result;
+
+	artist_filename = tracktitle_to_filename (data->artist);
+	album_filename = tracktitle_to_filename (data->album);
+	
+	result = g_build_filename (data->destination,
+				   artist_filename,
+				   album_filename,
+				   NULL);
+
+	g_free (artist_filename);
+	g_free (album_filename);
+
+	return result;
 }
 
 
@@ -340,12 +352,14 @@ static void
 save_playlist (DialogData *data)
 {
 	char           *folder;
-	char           *filename;
+	char           *filename, *album_filename;
 	GnomeVFSResult  result;
 	GnomeVFSHandle *handle;
 
 	folder = get_destination_folder (data);
-	filename = g_strconcat ("file://", folder, "/", data->album, ".pls", NULL);
+	album_filename = tracktitle_to_filename (data->album);
+	filename = g_strconcat ("file://", folder, "/", album_filename, ".pls", NULL);
+	g_free (album_filename);
 
 	gnome_vfs_unlink (filename);
 
