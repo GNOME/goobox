@@ -72,5 +72,6 @@ void        goo_window_edit_cddata               (GooWindow   *window);
 GooPlayer  *goo_window_get_player                (GooWindow   *window);
 void        goo_window_pick_cover_from_disk      (GooWindow   *window);
 void        goo_window_search_cover_on_internet  (GooWindow   *window);
+void        goo_window_toggle_visibility         (GooWindow   *window);
 
 #endif /* GOO_WINDOW_H */

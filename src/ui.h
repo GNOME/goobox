@@ -70,7 +70,7 @@ static GtkActionEntry action_entries[] = {
 	  N_("Play the previous track"),
 	  G_CALLBACK (activate_action_prev) },
 	{ "Eject", GOO_STOCK_EJECT,
-	  N_("_Eject"), NULL,
+	  N_("_Eject"), "J",
 	  N_("Eject the CD"),
 	  G_CALLBACK (activate_action_eject) },
 	{ "Reload", GTK_STOCK_REFRESH,
@@ -82,7 +82,7 @@ static GtkActionEntry action_entries[] = {
 	  N_("Edit various preferences"),
 	  G_CALLBACK (activate_action_preferences) },
 	{ "Extract", GOO_STOCK_EXTRACT,
-	  N_("E_xtract Tracks"), NULL,
+	  N_("E_xtract Tracks"), "E",
 	  N_("Save the tracks to disk as files"),
 	  G_CALLBACK (activate_action_extract) },
 	{ "Properties", GTK_STOCK_PROPERTIES,
@@ -101,6 +101,10 @@ static GtkActionEntry action_entries[] = {
 	  N_("Search on Internet"), NULL,
 	  N_("Search a CD cover on Internet"),
 	  G_CALLBACK (activate_action_search_cover_on_internet) },
+	{ "ToggleVisibility", NULL,
+	  N_("_Hide Window"), "H",
+	  N_("Hide the main window"),
+	  G_CALLBACK (activate_action_toggle_visibility) },
 };
 static guint n_action_entries = G_N_ELEMENTS (action_entries);
 
@@ -165,6 +169,8 @@ static const gchar *ui_info =
 "    <menu action='ViewMenu'>"
 "      <menuitem action='ViewToolbar'/>"
 "      <menuitem action='ViewStatusbar'/>"
+"      <separator name='sep01'/>"
+"      <menuitem action='ToggleVisibility'/>"
 "    </menu>"
 "    <menu action='HelpMenu'>"
 "      <menuitem action='About'/>"
@@ -187,9 +193,10 @@ static const gchar *ui_info =
 "  <popup name='TrayPopupMenu'>"
 "    <menuitem action='TogglePlay'/>"
 "    <menuitem action='Stop'/>"
+"    <menuitem action='Next'/>"
 "    <menuitem action='Eject'/>"
 "    <separator name='sep01'/>"
-"    <menuitem action='About'/>"
+"    <menuitem action='ToggleVisibility'/>"
 "  </popup>"
 "  <popup name='CoverPopupMenu'>"
 "    <menuitem action='PickCoverFromDisk'/>"

@@ -935,41 +935,32 @@ set_action_label_and_icon (GooWindow  *window,
 			   const char *action_name,
 			   const char *label,
 			   const char *tooltip,
-			   const char *stock_id)
+			   const char *stock_id,
+			   const char *action_prefix,
+			   ...)
 {
 	GooWindowPrivateData *priv = window->priv;
-	GtkAction *action;
-	char      *path;
+	va_list args;
 
-	path = g_strconcat ("/MenuBar/CDMenu/", action_name);
-	action = gtk_ui_manager_get_action (priv->ui, path);
-	if (action != NULL)
-		g_object_set (G_OBJECT (action), 
-			      "label", label, 
-			      "tooltip", tooltip, 
-			      "stock_id", stock_id, 
-			      NULL);
-	g_free (path);
+	va_start (args, action_prefix);
 
-	path = g_strconcat ("/ToolBar/", action_name);
-	action = gtk_ui_manager_get_action (priv->ui, path);
-	if (action != NULL)
-		g_object_set (G_OBJECT (action), 
-			      "label", label, 
-			      "tooltip", tooltip, 
-			      "stock_id", stock_id, 
-			      NULL);
-	g_free (path);
+	while (action_prefix != NULL) {
+		char      *path = g_strconcat (action_prefix, action_name, NULL);
+		GtkAction *action = gtk_ui_manager_get_action (priv->ui, path);
+		if (action != NULL)
+			g_object_set (G_OBJECT (action), 
+				      "label", label, 
+				      "tooltip", tooltip, 
+				      "stock_id", stock_id, 
+				      NULL);
+		g_free (path);
 
-	path = g_strconcat ("/ListPopupMenu/", action_name);
-	action = gtk_ui_manager_get_action (priv->ui, path);
-	if (action != NULL)
-		g_object_set (G_OBJECT (action), 
-			      "label", label, 
-			      "tooltip", tooltip, 
-			      "stock_id", stock_id, 
-			      NULL);
-	g_free (path);
+		action_prefix = va_arg (args, char*);
+	}
+
+	va_end (args);
+
+	gtk_ui_manager_ensure_update (window->priv->ui);
 }
 
 
@@ -992,7 +983,9 @@ player_start_cb (GooPlayer       *player,
 					   "TogglePlay", 
 					   _("_Pause"), 
 					   _("Pause playing"),
-					   GOO_STOCK_PAUSE);
+					   GOO_STOCK_PAUSE,
+					   "/MenuBar/CDMenu/",
+					   NULL);
 		break;
 	default:
 		break;
@@ -1100,7 +1093,7 @@ play_next_song_in_playlist (GooWindow *window)
 
 	play_all = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
 	shuffle  = eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE);
-	repeat   = eel_gconf_get_boolean (PREF_PLAYLIST_REPEAT, FALSE);
+	repeat = eel_gconf_get_boolean (PREF_PLAYLIST_REPEAT, FALSE);
 
 	next = priv->playlist;
 
@@ -1250,7 +1243,9 @@ player_done_cb (GooPlayer       *player,
 					   "TogglePlay", 
 					   _("_Play"), 
 					   _("Play CD"),
-					   GOO_STOCK_PLAY);
+					   GOO_STOCK_PLAY,
+					   "/MenuBar/CDMenu/",
+					   NULL);
 		if (action == GOO_PLAYER_ACTION_PLAY)
 			priv->next_timeout_handle = g_timeout_add (200, /*FIXME*/
 								   next_time_idle, window);
@@ -1261,7 +1256,9 @@ player_done_cb (GooPlayer       *player,
 					   "TogglePlay", 
 					   _("_Play"), 
 					   _("Play CD"),
-					   GOO_STOCK_PLAY);
+					   GOO_STOCK_PLAY,
+					   "/MenuBar/CDMenu/",
+					   NULL);
 		break;
 	case GOO_PLAYER_ACTION_EJECT:
 		goo_player_update (priv->player);
@@ -1541,10 +1538,7 @@ tray_icon_clicked (GtkWidget      *widget,
 	if (event->button == 3) 
 		return FALSE;
 
-	if (GTK_WIDGET_VISIBLE (window)) 
-		gtk_widget_hide (GTK_WIDGET (window));
-	else 
-		gtk_widget_show (GTK_WIDGET (window));
+	goo_window_toggle_visibility (window);
 
 	return TRUE;
 }
@@ -1559,10 +1553,7 @@ tray_icon_pressed (GtkWidget   *widget,
 	    || (event->keyval == GDK_KP_Space) 
 	    || (event->keyval == GDK_Return)
 	    || (event->keyval == GDK_KP_Enter)) {
-		if (GTK_WIDGET_VISIBLE (window)) 
-			gtk_widget_hide (GTK_WIDGET (window));
-		else 
-			gtk_widget_show (GTK_WIDGET (window));
+		goo_window_toggle_visibility (window);
 		return TRUE;
 	} else 
 		return FALSE;
@@ -2130,7 +2121,7 @@ goo_window_play (GooWindow *window)
 		if (priv->current_song != NULL) 
 			goo_player_seek_song (priv->player, priv->current_song->number);
 		else
-			play_next_song_in_playlist (window);			
+			play_next_song_in_playlist (window);
 	} else
 		goo_player_play (priv->player);
 }
@@ -2184,19 +2175,23 @@ void
 goo_window_next (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
-	int n;
 
 	if (priv->songs == 0)
 		return;
 
-	if (priv->current_song != NULL)
-		n = MIN (priv->current_song->number + 1, priv->songs - 1);
-	else
-		n = 0;
-
-	goo_window_stop (window);
-	goo_window_set_current_song (window, n);
-	goo_window_play (window);
+	if (priv->current_song != NULL) {
+		if (window->priv->playlist == NULL) {
+			int n = MIN (priv->current_song->number + 1, priv->songs - 1);
+			goo_window_stop (window);
+			goo_window_set_current_song (window, n);
+			goo_window_play (window);
+		} else
+			play_next_song_in_playlist (window);
+	} else {
+		goo_window_stop (window);
+		goo_window_set_current_song (window, 0);
+		goo_window_play (window);
+	}
 }
 
 
@@ -2458,4 +2453,32 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 void
 goo_window_search_cover_on_internet (GooWindow *window)
 {
+}
+
+
+void
+goo_window_toggle_visibility (GooWindow *window)
+{
+	if (GTK_WIDGET_VISIBLE (window)) {
+		gtk_widget_hide (GTK_WIDGET (window));
+		set_action_label_and_icon (window,
+					   "ToggleVisibility", 
+					   _("_Show Window"), 
+					   _("Show the main window"),
+					   NULL,
+					   "/MenuBar/View/",
+					   "/TrayPopupMenu/",
+					   NULL);
+
+	} else {
+		gtk_widget_show (GTK_WIDGET (window));
+		set_action_label_and_icon (window,
+					   "ToggleVisibility", 
+					   _("_Hide Window"), 
+					   _("Hide the main window"),
+					   NULL,
+					   "/MenuBar/View/",
+					   "/TrayPopupMenu/",
+					   NULL);
+	}
 }

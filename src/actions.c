@@ -253,3 +253,11 @@ activate_action_search_cover_on_internet (GtkAction *action,
 {
 	goo_window_search_cover_on_internet (GOO_WINDOW (data));
 }
+
+
+void
+activate_action_toggle_visibility (GtkAction *action, 
+				   gpointer   data)
+{
+	goo_window_toggle_visibility (GOO_WINDOW (data));
+}
