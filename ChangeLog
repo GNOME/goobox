@@ -4,6 +4,8 @@
 	* src/goo-volume-tool-button.c: 
 	* src/goo-volume-tool-button.h:
 	* src/goo-window.c: 
+	(goo_window_show): let the application start in hidden mode.
+	(row_activated_cb): stop current song before playing the next one.
 
 	Moved the volume button on the toolbar.
 

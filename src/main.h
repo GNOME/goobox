@@ -27,5 +27,6 @@
 
 extern GtkWindow *main_window;
 extern int AutoPlay;
+extern int HideShow;
 
 #endif /* MAIN_H */

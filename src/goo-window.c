@@ -912,7 +912,10 @@ goo_window_show (GtkWidget *widget)
 	GooWindow *window = GOO_WINDOW (widget);
 	gboolean   view_foobar;
 
-	GTK_WIDGET_CLASS (parent_class)->show (widget);
+	if (! HideShow) 
+		GTK_WIDGET_CLASS (parent_class)->show (widget);
+	else
+		HideShow = FALSE;
 
 	view_foobar = eel_gconf_get_boolean (PREF_UI_TOOLBAR, TRUE);
 	set_active (window, "ViewToolbar", view_foobar);
@@ -941,7 +944,6 @@ goo_window_class_init (GooWindowClass *class)
 
 	widget_class->realize   = goo_window_realize;
 	widget_class->unrealize = goo_window_unrealize;
-	widget_class->show      = goo_window_show;
 	widget_class->show      = goo_window_show;
 }
 
@@ -1446,6 +1448,7 @@ row_activated_cb (GtkTreeView       *tree_view,
 			    COLUMN_SONG_INFO, &song,
 			    -1);
 
+	goo_window_stop (window);
 	goo_window_set_current_song (window, song->number);
 	goo_window_play (window);
 }
