@@ -48,6 +48,10 @@ static GtkActionEntry action_entries[] = {
 	  N_("_Play"), NULL,
 	  N_("Play"),
 	  G_CALLBACK (activate_action_play) },
+	{ "PlaySelected", GOO_STOCK_PLAY,
+	  N_("_Play"), NULL,
+	  N_("Play this track"),
+	  G_CALLBACK (activate_action_play_selected) },
 	{ "Pause", GOO_STOCK_PAUSE,
 	  N_("_Pause"), NULL,
 	  N_("Pause"),
@@ -164,6 +168,7 @@ static const gchar *ui_info =
 "    <toolitem action='Eject'/>"
 "  </toolbar>"
 "  <popup name='ListPopupMenu'>"
+"    <menuitem action='PlaySelected'/>"
 "    <menuitem action='Extract'/>"
 "  </popup>"
 "  <popup name='TrayPopupMenu'>"

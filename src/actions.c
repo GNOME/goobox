@@ -50,6 +50,15 @@ activate_action_play (GtkAction *action,
 
 
 void
+activate_action_play_selected (GtkAction *action, 
+			       gpointer   data)
+{
+	GooWindow *window = data;
+	goo_window_play_selected (window);
+}
+
+
+void
 activate_action_pause (GtkAction *action,
 		       gpointer   data)
 {

@@ -56,6 +56,7 @@ void        goo_window_set_statusbar_visibility  (GooWindow   *window,
 						  gboolean     visible);
 void        goo_window_update                    (GooWindow   *window);
 void        goo_window_play                      (GooWindow   *window);
+void        goo_window_play_selected             (GooWindow   *window);
 void        goo_window_toggle_play               (GooWindow   *window);
 void        goo_window_stop                      (GooWindow   *window);
 void        goo_window_pause                     (GooWindow   *window);

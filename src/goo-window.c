@@ -241,6 +241,7 @@ window_update_sensitivity (GooWindow *window)
 	discid            = goo_player_cd_get_discid (GOO_PLAYER_CD (window->priv->player));
 
 	set_sensitive (window, "Play", !error && !playing);
+	set_sensitive (window, "PlaySelected", !error && one_file_selected);
 	set_sensitive (window, "Pause", !error && playing);
 	set_sensitive (window, "Stop", !error && (playing || paused));
 	set_sensitive (window, "TogglePlay", !error);
@@ -2019,6 +2020,23 @@ goo_window_play (GooWindow *window)
 			play_next_song_in_playlist (window);			
 	} else
 		goo_player_play (priv->player);
+}
+
+
+void
+goo_window_play_selected (GooWindow *window)
+{
+	GList *song_list;
+
+	song_list = goo_window_get_song_list (window, TRUE);
+
+	if (g_list_length (song_list) == 1) {
+		SongInfo * song = song_list->data;
+		goo_window_set_current_song (window, song->number);
+		goo_window_play (window);
+	}
+
+	song_list_free (song_list);
 }
 
 

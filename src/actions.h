@@ -28,6 +28,8 @@
 
 void activate_action_play (GtkAction *action, gpointer data);
 
+void activate_action_play_selected (GtkAction *action, gpointer data);
+
 void activate_action_pause (GtkAction *action, gpointer data);
 
 void activate_action_toggle_play (GtkAction *action, gpointer data);

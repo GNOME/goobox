@@ -1,6 +1,16 @@
+2004-10-16  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/actions.h: 
+	* src/actions.c (activate_action_play_selected): 
+	* src/goo-window.c (goo_window_play_selected): 
+	* src/ui.h: 
+
+	Added a "play selected track" command in the context menu.
+
 2004-10-16  Arafat Medini  <lumina@silverpen.de>
 
 	* configure.in: Added Arabic Locale "ar" to ALL_LINGUAS
+
 2004-10-15  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/preferences.h: 
