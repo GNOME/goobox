@@ -1,3 +1,7 @@
+2005-03-01  Abel Cheung  <maddog@linuxhall.org>
+
+	* configure.in: Added "de" "pt_BR" "zh_TW" to ALL_LINGUAS.
+
 2005-02-28  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/typedefs.h: 
