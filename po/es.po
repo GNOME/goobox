@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-01-21 21:48+0100\n"
-"PO-Revision-Date: 2005-01-21 21:49+0100\n"
+"PO-Revision-Date: 2005-02-05 16:53+0100\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -138,7 +138,7 @@ msgstr "Pistas _seleccionadas"
 
 #: data/glade/goobox.glade.h:26
 msgid "_Wave"
-msgstr "_Wave"
+msgstr "_Onda"
 
 #: data/goobox.desktop.in.h:1 src/goo-window.c:2089 src/goo-window.c:2097
 msgid "CD Player"
@@ -168,7 +168,9 @@ msgstr "No ha sido posible mostrar la ayuda"
 #. };
 #: src/actions.c:192
 msgid "translator_credits"
-msgstr "Enrique Matías Sánchez (Quique) <cronopios@gmail.com>"
+msgstr ""
+"Enrique Matías Sánchez (Quique) <cronopios@gmail.com>\n"
+"Francisco Javier F. Serrador <serrador@cvs.gnome.org>"
 
 #: src/actions.c:203 src/actions.c:218
 msgid "Goobox"
