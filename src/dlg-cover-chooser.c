@@ -20,7 +20,11 @@
  *  Foundation, Inc., 59 Temple Street #330, Boston, MA 02111-1307, USA.
  */
 
+
 #include <config.h>
+
+#ifdef HAVE_NEON
+
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -48,24 +52,42 @@
 #include "gconf-utils.h"
 
 #define GLADE_CHOOSER_FILE "goo_cover_chooser.glade"
-#define MAX_IMAGES 10
+#define MAX_IMAGES 15
+#define READ_TIMEOUT 150
+#define BUFFER_SIZE 300
+#define IMG_PERM 0600
+#define DIR_PERM 0700
+#define THUMB_SIZE 110
+#define QUERY_RESULT "result.html"
 
-typedef struct {
-	GooWindow   *window;
-	GList       *urls;
-	GList       *current;
-	guint        load_id, url;
-	char        *tmpdir;
-	GList       *tmpfiles;
-	int          fd;
+typedef struct _DialogData DialogData;
 
-	ne_session  *session;
+typedef void (*FileSavedFunc) (DialogData *data, char *filename, int result);
 
-	GladeXML    *gui;
+struct _DialogData {
+	GooWindow     *window;
+	char          *artist, *album;
+	GList         *url_list;
+	GList         *current;
+	guint          load_id, urls, url;
+	char          *tmpdir;
+	GList         *tmpfiles;
+	int            fd;
+	guint          read_id;
 
-	GtkWidget   *dialog;
-	GtkWidget   *image_list;
-} DialogData;
+	ne_session    *session;
+	ne_request    *request;
+
+	FileSavedFunc  file_saved_func;
+	char          *dest;
+
+	GladeXML      *gui;
+
+	GtkWidget     *dialog;
+	GtkWidget     *image_list;
+	GtkWidget     *progress_label;
+	GtkWidget     *ok_button;
+};
 
 
 /* called when the main dialog is closed. */
@@ -79,11 +101,14 @@ destroy_cb (GtkWidget  *widget,
 		g_list_foreach (data->tmpfiles, (GFunc) gnome_vfs_unlink, NULL);
 		path_list_free (data->tmpfiles);
 
-		gnome_vfs_unlink (data->tmpdir);
+		gnome_vfs_remove_directory (data->tmpdir);
 		g_free (data->tmpdir);
 	}
+	g_free (data->dest);
 
-	path_list_free (data->urls);
+	g_free (data->album);
+	g_free (data->artist);
+	path_list_free (data->url_list);
 	g_object_unref (data->gui);
 	g_free (data);
 }
@@ -100,13 +125,12 @@ ok_cb (GtkWidget  *widget,
 	selection =  gth_image_list_get_selection (list);
 	if (selection != NULL) {
 		char *src = selection->data;
+
+		debug (DEBUG_INFO, "SET COVER: %s\n", src);
+
 		goo_window_set_cover_image (data->window, src);
 		g_list_free (selection);
 	}
-
-	/**/
-
-	gtk_widget_destroy (data->dialog);
 }
 
 
@@ -158,9 +182,10 @@ append_image (DialogData *data,
 				     image,
 				     filename,
 				     NULL);
-	gth_image_list_set_image_data (GTH_IMAGE_LIST (data->image_list),
-				       pos,
-				       (char*)filename);
+	gth_image_list_set_image_data_full (GTH_IMAGE_LIST (data->image_list),
+					    pos,
+					    g_strdup (filename),
+					    g_free);
 	g_object_unref (image);
 }
 
@@ -186,22 +211,21 @@ load_next_url (gpointer callback_data)
 
 
 static void
-image_loaded_cb (gpointer   callback_data,
-		 char      *filename,
-		 int        result)
+image_saved_cb (DialogData *data,
+		char       *filename,
+		int         result)
 {
-	DialogData *data = callback_data;
-
 	if (result == 0) {
-		data->tmpfiles = g_list_prepend (data->tmpfiles, filename);
-		append_image (data, filename);
+		char *tmpfile = g_strdup (filename);
+
+		debug (DEBUG_INFO, "LOAD IMAGE: %s\n", tmpfile);
+
+		data->tmpfiles = g_list_prepend (data->tmpfiles, tmpfile);
+		append_image (data, tmpfile);
 	}
 
 	data->load_id = g_idle_add (load_next_url, data);
 }
-
-
-typedef void (*FileSavedFunc) (gpointer callback_data, char *filename, int result);
 
 
 static int
@@ -229,35 +253,44 @@ proxy_authentication (void       *userdata,
 }
 
 
-static int
-response_accept_cb (void            *userdata, 
-		    ne_request      *req, 
-		    const ne_status *st)
+static gboolean
+read_block_cb (gpointer callback_data)
 {
-	debug (DEBUG_INFO, "%d: %s\n", st->code, st->reason_phrase);
-	return (st->code == 200) ? 1 : 0;
+	DialogData *data = callback_data;
+	size_t      len;
+	char        buf[BUFFER_SIZE];
+
+	g_source_remove (data->read_id);
+	data->read_id = 0;
+
+	len = ne_read_response_block (data->request, buf, sizeof (buf));
+	if (len > 0) {
+		write (data->fd, buf, len);
+		data->read_id = g_timeout_add (READ_TIMEOUT,
+					       read_block_cb,
+					       data);
+	} else {
+		if (len < 0)
+			debug (DEBUG_INFO, "HTTP Request failed: %s\n", ne_get_error (data->session));
+		ne_end_request (data->request);
+
+		ne_request_destroy (data->request);
+		close (data->fd);
+		if (data->file_saved_func != NULL)
+			(*data->file_saved_func) (data, data->dest, len);
+	}
+
+	return FALSE;
 }
 
 
 static void
-response_block_reader_cb (void       *userdata, 
-			  const char *buf, 
-			  size_t      len)
+copy_file_from_url (DialogData    *data,
+		    const char    *src,
+		    const char    *dest,
+		    FileSavedFunc  file_saved_func)
 {
-	DialogData *data = userdata;
-	write (data->fd, buf, len);
-}
-
-
-static void
-copy_file_from_url (const char    *src,
-		    char          *dest,
-		    FileSavedFunc  file_saved_func,
-		    gpointer       extra_data)
-{
-	DialogData *data = extra_data;
-	ne_request *request;
-	char       *e_query;
+	char *e_query;
 
 	if (eel_gconf_get_boolean (HTTP_PROXY_USE_HTTP_PROXY, FALSE)) {
 		char *host;
@@ -277,22 +310,43 @@ copy_file_from_url (const char    *src,
 
 	e_query = ne_path_escape (src);
 	debug (DEBUG_INFO, "QUERY: %s\n", e_query);
-	request = ne_request_create (data->session, "GET", e_query);
+	data->request = ne_request_create (data->session, "GET", e_query);
 	free (e_query);
 
-	ne_add_response_body_reader (request,
-				     response_accept_cb,
-				     response_block_reader_cb,
-				     data);
-
-	if (ne_request_dispatch (request)) 
+ retry:
+	if (ne_begin_request (data->request) != NE_OK) {
 		debug (DEBUG_INFO, "HTTP Request failed: %s\n", ne_get_error (data->session));
-	
-	ne_request_destroy (request);
+		if (ne_end_request (data->request) == NE_RETRY)
+			goto retry;
+		ne_request_destroy (data->request);
+		return;
+	}
 
-	close (data->fd);
+	data->file_saved_func = file_saved_func;
+	g_free (data->dest);
+	data->dest = g_strdup (dest);
 
-	(*file_saved_func) (extra_data, dest, 0);
+	data->fd = open (data->dest, O_WRONLY | O_CREAT | O_TRUNC, IMG_PERM);
+
+	data->read_id = g_timeout_add (READ_TIMEOUT,
+				       read_block_cb,
+				       data);
+}
+
+
+static void
+update_progress_label (DialogData *data)
+{
+	char *text;
+
+	if (data->url < data->urls)
+		text = g_strdup_printf (_("%u, loaded: %u"), 
+					data->urls, 
+					data->url);
+	else
+		text = g_strdup_printf ("%u", data->urls);
+	gtk_label_set_text (GTK_LABEL (data->progress_label), text);
+	g_free (text);
 }
 
 
@@ -313,23 +367,131 @@ load_current_url (DialogData *data)
 	dest = g_build_filename (data->tmpdir, filename, NULL);
 	g_free (filename);
 
-	data->fd = open (dest, O_WRONLY | O_CREAT | O_TRUNC, 0600); /*FIXME*/
+	update_progress_label (data);
 
-	copy_file_from_url (url, dest, image_loaded_cb, data);
+	copy_file_from_url (data, url, dest, image_saved_cb);
 }
 
 
 static void
-start_loading (DialogData *data)
+start_loading_images (DialogData *data)
 {
+	gth_image_list_set_no_image_text (GTH_IMAGE_LIST (data->image_list),
+					  _("Loading images"));
+
+	data->current = data->url_list;
+	load_current_url (data);
+}
+
+
+static void
+image_list_selection_changed_cb (GthImageList *list,
+				 DialogData   *data)
+{
+	GList *selection;
+
+	selection = gth_image_list_get_selection (list);
+	gtk_widget_set_sensitive (data->ok_button, selection != NULL);
+	g_list_free (selection);
+}
+
+
+static void
+image_list_item_activated_cb (GthImageList *list,
+			      int           pos,
+			      DialogData   *data)
+{
+	ok_cb (NULL, data);
+}
+
+
+static void
+search_result_saved_cb (DialogData *data,
+			char       *filename,
+			int         result)
+{
+	char *prefix = "/images?q=tbn:";
+	char *url_start;
+	char  buf[BUFFER_SIZE];
+	int   fd, n;
+
+	if (result != 0) {
+		/*FIXME*/
+		return;
+	}
+
+	fd = open (filename, O_RDONLY);
+	if (fd == 0) {
+		/*FIXME*/
+		return;
+	}
+	
+	while ((n = read (fd, buf, BUFFER_SIZE-1)) > 0) {
+		buf[n] = 0;
+
+		url_start = strstr (buf, prefix);
+		while (url_start != NULL) {
+			char *url_end;
+			char *url;
+		
+			url_end = strstr (url_start, " ");
+		
+			if (url_end == NULL) 
+				break;
+			
+			url = g_strndup (url_start, url_end - url_start);
+			data->url_list = g_list_prepend (data->url_list, url);
+		
+			url_start = strstr (url_end + 1, prefix);
+		}
+	}
+
+	close (fd);
+	data->tmpfiles = g_list_prepend (data->tmpfiles, g_strdup (filename));
+
+	/**/
+
+	if (data->url_list == NULL) {
+		gth_image_list_set_no_image_text (GTH_IMAGE_LIST (data->image_list), _("No image found"));
+
+		return;
+	}
+
+	data->url_list = g_list_reverse (data->url_list);
+	data->urls = MIN (g_list_length (data->url_list), MAX_IMAGES);
+	data->url = 0;
+
+	start_loading_images (data);
+}
+
+
+static gboolean
+start_searching (gpointer callback_data)
+{
+	DialogData *data = callback_data;
+	char       *query;
+	char       *dest;
+
+	g_source_remove (data->load_id);
+	data->load_id = 0;
+
 	data->session = ne_session_create ("http", "images.google.com", 80);
 	ne_set_useragent (data->session, PACKAGE "/" VERSION);
 
-	data->tmpdir = g_strdup (get_temp_work_dir ());
-	ensure_dir_exists (data->tmpdir, 0755); /*FIXME*/
+	query = g_strconcat ("/images?q=",
+			     data->album,
+			     "+",
+			     data->artist,
+			     "&imgsz=medium",
+			     NULL);
+	dest = g_build_filename (data->tmpdir, QUERY_RESULT, NULL);
 
-	data->current = data->urls;
-	load_current_url (data);
+	copy_file_from_url (data, query, dest, search_result_saved_cb);
+
+	g_free (dest);
+	g_free (query);
+
+	return FALSE;
 }
 
 
@@ -337,12 +499,12 @@ start_loading (DialogData *data)
 
 
 void
-dlg_cover_chooser (GooWindow *window,
-		   GList     *url_list)
+dlg_cover_chooser (GooWindow  *window,
+		   const char *album,
+		   const char *artist)
 {
 	DialogData *data;
 	GtkWidget  *scrolled_window;
-	GtkWidget  *btn_ok;
 	GtkWidget  *btn_cancel;
 	GtkWidget  *btn_help;
 
@@ -355,19 +517,19 @@ dlg_cover_chooser (GooWindow *window,
                 return;
         }
 
-	data->urls = path_list_dup (url_list);
-	data->url = 0;
+	data->album = g_strdup (album);
+	data->artist = g_strdup (artist);
 
 	/* Get the widgets. */
 
 	data->dialog = glade_xml_get_widget (data->gui, "cover_chooser_dialog");
 	scrolled_window = glade_xml_get_widget (data->gui, "image_list_scrolledwindow");
-
-	btn_ok = glade_xml_get_widget (data->gui, "cc_okbutton");
+	data->progress_label = glade_xml_get_widget (data->gui, "progress_label");
+	data->ok_button = glade_xml_get_widget (data->gui, "cc_okbutton");
 	btn_cancel = glade_xml_get_widget (data->gui, "cc_cancelbutton");
 	btn_help = glade_xml_get_widget (data->gui, "cc_helpbutton");
 
-	data->image_list = gth_image_list_new (110); /*FIXME*/
+	data->image_list = gth_image_list_new (THUMB_SIZE);
 	gth_image_list_set_view_mode (GTH_IMAGE_LIST (data->image_list),
 				      GTH_VIEW_MODE_VOID);
 	gth_image_list_set_selection_mode (GTH_IMAGE_LIST (data->image_list),
@@ -375,6 +537,8 @@ dlg_cover_chooser (GooWindow *window,
 	gtk_container_add (GTK_CONTAINER (scrolled_window), data->image_list);
 
 	/* Set widgets data. */
+
+	gtk_widget_set_sensitive (data->ok_button, FALSE);
 
 	/* Set the signals handlers. */
 
@@ -390,9 +554,17 @@ dlg_cover_chooser (GooWindow *window,
 			  "clicked",
 			  G_CALLBACK (help_cb),
 			  data);
-	g_signal_connect (G_OBJECT (btn_ok), 
+	g_signal_connect (G_OBJECT (data->ok_button), 
 			  "clicked",
 			  G_CALLBACK (ok_cb),
+			  data);
+	g_signal_connect (G_OBJECT (data->image_list), 
+			  "selection_changed",
+			  G_CALLBACK (image_list_selection_changed_cb),
+			  data);
+	g_signal_connect (G_OBJECT (data->image_list), 
+			  "item_activated",
+			  G_CALLBACK (image_list_item_activated_cb),
 			  data);
 
 	/* run dialog. */
@@ -401,5 +573,16 @@ dlg_cover_chooser (GooWindow *window,
 	gtk_window_set_modal (GTK_WINDOW (data->dialog), TRUE);
 	gtk_widget_show_all (data->dialog);
 
-	start_loading (data);
+	/**/
+
+	data->tmpdir = g_strdup (get_temp_work_dir ());
+	ensure_dir_exists (data->tmpdir, DIR_PERM);
+
+	gth_image_list_set_no_image_text (GTH_IMAGE_LIST (data->image_list),
+					  _("Searching images..."));
+
+	data->load_id = g_idle_add (start_searching, data);
 }
+
+
+#endif /* HAVE_NEON*/

@@ -1951,6 +1951,17 @@ gth_image_list_key_press (GtkWidget   *widget,
 	    GTK_WIDGET_CLASS (parent_class)->key_press_event (widget, event))
 		return TRUE;
 
+	if (! image_list->priv->multi_selecting_with_keyboard
+	    && ! (event->state & GDK_SHIFT_MASK)
+	    && ! (event->state & GDK_CONTROL_MASK)
+	    && (event->keyval == GDK_Return)) {
+		int pos = gth_image_list_get_cursor (image_list);
+		if (pos != -1) {
+			gth_image_list_image_activated (image_list, pos);
+			return TRUE;
+		}
+	}
+
 	return FALSE;
 }
 
@@ -2151,6 +2162,9 @@ real_select_all (GthImageList *image_list)
 	GList               *scan;
 	int                  i;
 
+	if (priv->selection_mode == GTK_SELECTION_SINGLE)
+		return;
+
 	g_return_if_fail (GTH_IS_IMAGE_LIST (image_list));
 
 	for (scan = priv->image_list, i = 0; scan; scan = scan->next, i++) {
@@ -2166,6 +2180,10 @@ void
 gth_image_list_select_all (GthImageList *image_list)
 {
 	g_return_if_fail (GTH_IS_IMAGE_LIST (image_list));
+
+	if (image_list->priv->selection_mode == GTK_SELECTION_SINGLE)
+		return;
+
 	real_select_all (image_list);
 	emit_selection_changed (image_list);
 }
@@ -2359,12 +2377,55 @@ selection_multiple_button_press (GthImageList   *image_list,
 
 
 static void
+do_select_single (GthImageList     *image_list, 
+		  GthImageListItem *item,
+		  int               pos, 
+		  GdkEvent         *event)
+{
+	gboolean range, additive;
+
+	range    = (event->button.state & GDK_SHIFT_MASK) != 0;
+	additive = (event->button.state & GDK_CONTROL_MASK) != 0;
+
+	if (! additive && ! range) {
+
+		if (item->selected) {
+			/* postpone selection to handle dragging. */
+			image_list->priv->select_pending = TRUE;
+			image_list->priv->select_pending_pos = pos;
+			image_list->priv->select_pending_item = item;
+
+		} else {
+			real_unselect_all (image_list, NULL);
+			real_select__emit (image_list, TRUE, pos);
+			image_list->priv->last_selected_pos = pos;
+			image_list->priv->last_selected_item = item;
+		}
+
+	} else if (range) {
+		real_unselect_all (image_list, item);
+		real_select__emit (image_list, TRUE, pos);
+
+	} else if (additive) {
+		real_unselect_all (image_list, item);
+		real_select__emit (image_list, ! item->selected, pos);
+		image_list->priv->last_selected_pos = pos;
+		image_list->priv->last_selected_item = item;
+	} 
+
+	gth_image_list_set_cursor (image_list, pos);
+}
+
+
+static void
 selection_single_button_press (GthImageList   *image_list, 
 			       GdkEventButton *event,
 			       int             pos)
 {
-	gth_image_list_select_image (image_list, pos);
-	gth_image_list_set_cursor (image_list, pos);
+	GthImageListItem *item;
+
+	item = g_list_nth (image_list->priv->image_list, pos)->data;
+	do_select_single (image_list, item, pos, (GdkEvent*) event);
 }
 
 
@@ -2418,15 +2479,16 @@ gth_image_list_button_press (GtkWidget      *widget,
 		return TRUE;
 	}
 
-	if ((priv->selection_mode == GTK_SELECTION_MULTIPLE)
-	    && (pos == -1)
-	    && (event->button == 1)) {
+	if ((pos == -1) && (event->button == 1)) {
 		gboolean additive;
 
 		additive = (event->state & GDK_CONTROL_MASK) != 0;
 
 		if (! additive)
 			gth_image_list_unselect_all (image_list);
+
+		if (priv->selection_mode == GTK_SELECTION_SINGLE)
+			return FALSE;
 
 		if (priv->selecting)
 			return FALSE;
@@ -2766,6 +2828,9 @@ select_range_with_keyboard (GthImageList *image_list,
 	int                  min_y, max_y;
 	int                  begin_idx, end_idx, i;
 	GList               *begin, *end;
+	
+	if (image_list->priv->selection_mode == GTK_SELECTION_SINGLE)
+		return;
 
 	link = g_list_nth (priv->image_list, priv->old_focused_item);
 	item1 = link->data;

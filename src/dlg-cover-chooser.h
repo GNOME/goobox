@@ -25,7 +25,8 @@
 
 #include "goo-window.h"
 
-void   dlg_cover_chooser   (GooWindow *window,
-			    GList     *url_list);
+void   dlg_cover_chooser (GooWindow  *window,
+			  const char *album,
+			  const char *artist);
 
 #endif /* DLG_COVER_CHOOSER_H */
