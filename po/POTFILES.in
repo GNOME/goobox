@@ -55,6 +55,8 @@ src/goo-stock.c
 src/goo-stock.h
 src/goo-volume-button.c
 src/goo-volume-button.h
+src/goo-volume-tool-button.c
+src/goo-volume-tool-button.h
 src/goo-window.c
 src/goo-window.h
 src/gth-image-list.c

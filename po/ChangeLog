@@ -1,3 +1,7 @@
+2004-12-17  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* POTFILES.in: added src/goo-volume-tool-button.[ch] files.
+
 2004-12-16  Kostas Papadimas <pkst@gnome.org>
 
 	* el.po: Added Greek translation.
