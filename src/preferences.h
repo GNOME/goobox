@@ -31,6 +31,7 @@
 #define PREF_GENERAL_DEVICE           "/apps/goobox/general/device"
 #define PREF_GENERAL_VOLUME           "/apps/goobox/general/volume"
 #define PREF_GENERAL_COVER_PATH       "/apps/goobox/general/cover_path"
+#define PREF_GENERAL_USE_SJ           "/apps/goobox/general/use_sound_juicer"
 
 #define PREF_UI_TOOLBAR               "/apps/goobox/ui/toolbar_visible"
 #define PREF_UI_STATUSBAR             "/apps/goobox/ui/statusbar_visible"
@@ -75,5 +76,6 @@ void                preferences_set_sort_method       (WindowSortMethod i_value)
 GtkSortType         preferences_get_sort_type         (void);
 void                preferences_set_sort_type         (GtkSortType i_value);
 
+gboolean            preferences_get_use_sound_juicer  (void);
 
 #endif /* PREFERENCES_H */

@@ -289,11 +289,71 @@ activate_action_shuffle (GtkAction *action,
 }
 
 
+static void
+sj_watch_func (GPid     pid,
+	       gint     status,
+	       gpointer data)
+{
+	GooWindow *window = data;
+
+	g_spawn_close_pid (pid);
+	goo_window_set_hibernate (window, FALSE);
+	g_print ("[FINE]\n");
+}
+
+
+static gboolean
+exec_sj (const char  *command_line,
+	 GError     **error,
+	 gpointer     data)
+{
+	gboolean   retval;
+	gchar    **argv = NULL;
+	GPid       child_pid;
+
+	g_return_val_if_fail (command_line != NULL, FALSE);
+	
+	if (!g_shell_parse_argv (command_line,
+				 NULL, &argv,
+				 error))
+		return FALSE;
+
+	retval = g_spawn_async (NULL,
+				argv,
+				NULL,
+				G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
+				NULL,
+				NULL,
+				&child_pid,
+				error);
+	g_strfreev (argv);
+
+	g_child_watch_add (child_pid,
+			   sj_watch_func,
+			   data);
+
+	return retval;
+}
+
+
 void
 activate_action_extract (GtkAction *action, 
 			 gpointer   data)
 {
-	dlg_extract (GOO_WINDOW (data));
+	GooWindow *window = data;
+
+	if (preferences_get_use_sound_juicer ()) {
+		GError *error = NULL;
+
+		goo_window_set_hibernate (window, TRUE);		
+
+		if (! exec_sj ("sound-juicer", &error, data))
+			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
+							   _("Could not execute command"), 
+							   &error);
+
+	} else
+		dlg_extract (window);
 }
 
 

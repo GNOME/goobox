@@ -332,6 +332,22 @@ dlg_preferences (GooWindow *window)
 
 	/* Set widgets data. */
 
+	if (preferences_get_use_sound_juicer ()) {
+		GtkWidget *notebook;
+		GtkWidget *encoder_page;
+		GtkWidget *vbox;
+
+		notebook = glade_xml_get_widget (data->gui, "p_notebook");
+		gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
+		gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
+
+		encoder_page = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 1);
+		gtk_widget_hide (encoder_page);
+
+		vbox = glade_xml_get_widget (data->gui, "general_vbox");
+		gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
+	}
+
 	text = g_strdup_printf ("<small><i>%s</i></small>", _("Smaller size"));
 	gtk_label_set_markup (GTK_LABEL (data->p_ogg_smaller_label), text);
 	g_free (text);
@@ -372,6 +388,7 @@ dlg_preferences (GooWindow *window)
 	/**/
 
 	data->drive_selector = bacon_cd_selection_new ();
+	gtk_widget_show (data->drive_selector);
 	gtk_box_pack_start (GTK_BOX (box), data->drive_selector, TRUE, TRUE, 0);
 	
 	device = eel_gconf_get_string (PREF_GENERAL_DEVICE, bacon_cd_selection_get_default_device (BACON_CD_SELECTION (data->drive_selector)));
@@ -420,5 +437,5 @@ dlg_preferences (GooWindow *window)
 
 	gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
 	gtk_window_set_modal (GTK_WINDOW (data->dialog), TRUE);
-	gtk_widget_show_all (data->dialog);
+	gtk_widget_show (data->dialog);
 }

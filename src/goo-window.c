@@ -124,12 +124,10 @@ struct _GooWindowPrivateData {
 
 	gboolean         exiting;
 	guint            check_id;
-
 	GList           *url_list;
-
 	GtkWidget       *preview;
-
 	int              pos_x, pos_y;
+	gboolean         hibernate;
 };
 
 static int icon_size = 0;
@@ -278,7 +276,7 @@ window_update_sensitivity (GooWindow *window)
 	sel_not_null      = n_selected > 0;
 	one_file_selected = n_selected == 1;
 	state             = goo_player_get_state (priv->player);
-	error             = state == GOO_PLAYER_STATE_ERROR;
+	error             = (state == GOO_PLAYER_STATE_ERROR) || priv->hibernate;
 	playing           = state == GOO_PLAYER_STATE_PLAYING;
 	paused            = state == GOO_PLAYER_STATE_PAUSED;
 	stopped           = state == GOO_PLAYER_STATE_STOPPED;
@@ -303,7 +301,9 @@ window_update_sensitivity (GooWindow *window)
 	set_sensitive (window, "Repeat", play_all);
 	set_sensitive (window, "Shuffle", play_all);
 
-	gtk_widget_set_sensitive (priv->list_view, discid != NULL);
+	gtk_widget_set_sensitive (priv->list_view, !priv->hibernate && (discid != NULL));
+
+	set_sensitive (window, "Preferences", !priv->hibernate);
 }
 
 
@@ -1991,6 +1991,7 @@ goo_window_init (GooWindow *window)
 	window->priv->exiting = FALSE;
 	window->priv->check_id = 0;
 	window->priv->url_list = NULL;
+	window->priv->hibernate = FALSE;
 }
 
 
@@ -2664,6 +2665,9 @@ goo_window_set_location (GooWindow   *window,
 		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
 						   _("Could not read drive"), &e);
 	}
+
+	if (device_path == NULL)
+		window_update_sensitivity (window);
 }
 
 
@@ -3050,3 +3054,23 @@ goo_window_set_volume (GooWindow   *window,
 	goo_volume_tool_button_set_volume (volume_button, value, TRUE);
 }
 
+
+void
+goo_window_set_hibernate (GooWindow   *window,
+			  gboolean     hibernate)
+{
+	window->priv->hibernate = hibernate;
+
+	if (hibernate) {
+		goo_window_set_location (window, NULL);
+		
+	} else {
+		char *device;
+
+		device = eel_gconf_get_string (PREF_GENERAL_DEVICE, NULL);
+		goo_window_set_location (window, device);
+		g_free (device);
+		
+		goo_window_update (window);
+	}
+}

@@ -1,5 +1,15 @@
+version 0.9.91
+--------------
+	* Added goobox/general/use_sound_juicer gconf preference to use 
+	  Sound Juicer to extract tracks instead of the internal ripper.
+	* Fixed extraction to non-local folders.
+	* Use the filechooserbutton if gtk+ >= 2.5.0 is available.	
+	* Add ellipses to the track names if names do not fit in the
+	  track list.
+	* Get a valid filename from the track title when extracting.
+
 version 0.9.90
--------------	
+--------------	
 	* Added multimedia keys support.
 	* Added a track status icon in the track number column.
 	* Allow the ripper to write to non-local destinations.

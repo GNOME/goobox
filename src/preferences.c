@@ -32,6 +32,7 @@
 
 
 #define DIALOG_PREFIX "/apps/goobox/dialogs/"
+#define SOUND_JUICER_EXE "sound-juicer"
 
 
 typedef struct {
@@ -245,4 +246,11 @@ preferences_set_sort_type (GtkSortType i_value)
 
 	s_value = get_string_from_enum (sort_type_table, i_value);
 	eel_gconf_set_string (PREF_PLAYLIST_SORT_TYPE, s_value);
+}
+
+
+gboolean
+preferences_get_use_sound_juicer (void)
+{
+	return eel_gconf_get_boolean (PREF_GENERAL_USE_SJ, FALSE) && is_program_in_path (SOUND_JUICER_EXE);
 }

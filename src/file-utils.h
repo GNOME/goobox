@@ -145,4 +145,6 @@ GnomeVFSURI *       new_uri_from_path            (const char *path);
 
 char *              tracktitle_to_filename       (const char *trackname);
 
+gboolean            is_program_in_path           (const char *program_name);
+
 #endif /* FILE_UTILS_H */

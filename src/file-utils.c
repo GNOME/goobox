@@ -1249,3 +1249,19 @@ tracktitle_to_filename (const char *trackname)
 
 	return filename;
 }
+
+
+gboolean
+is_program_in_path (const char *program_name)
+{
+	char *str;
+        int   result = FALSE;
+	
+        str = g_find_program_in_path (program_name);
+        if (str != NULL) {
+                g_free (str);
+                result = TRUE;
+        }
+	
+        return result;
+}
