@@ -1,6 +1,10 @@
 2005-02-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
-	* src/goo-window.c (set_song_icon): 
+	* src/goo-stock.h (GOO_STOCK_RESET): restore old stock 
+	names.
+
+	* src/goo-window.c (set_song_icon, goo_window_play): restore
+	play icon here.
 
 	Added a track status icon in the track number column.
 

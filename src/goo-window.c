@@ -1280,8 +1280,7 @@ goo_window_set_current_song (GooWindow *window,
 	SongInfo *song;
 
 	if (priv->current_song != NULL) {
-		if (priv->current_song->number != n)
-			set_current_song_icon (window, NULL);
+		set_current_song_icon (window, NULL);
 		song_info_unref (priv->current_song);	
 		priv->current_song = NULL;
 	}
@@ -2352,8 +2351,10 @@ goo_window_play (GooWindow *window)
 			play_next_song_in_playlist (window);
 		else
 			play_song (window, 0);
-	} else
+	} else {
+	        set_current_song_icon (window, GOO_STOCK_PLAY);
 		goo_player_play (priv->player);
+        }
 }
 
 
