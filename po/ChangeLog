@@ -1,6 +1,11 @@
+2005-07-02  Alexander Shopov  <ash@contact.bg>
+
+	* bg.po: Updated Bulgarian translation by
+	Rostislav Raykov <zbrox@i-space.org>
+
 2005-06-26  Hendrik Brandt  <heb@gnome-de.org>
 
-        * de.po: Updated German translation.
+	* de.po: Updated German translation.
 
 2005-06-20  Nickolay V. Shmyrev <nshmyrev@yandex.ru>
 
@@ -25,7 +30,7 @@
 
 2005-04-01  Steve Murphy  <murf@e-tools.com>
 
-        * rw.po: Added Kinyarwanda translation.
+	* rw.po: Added Kinyarwanda translation.
 
 2005-03-06  Christian Rose  <menthos@menthos.com>
 
