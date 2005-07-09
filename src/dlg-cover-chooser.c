@@ -72,6 +72,7 @@ struct _DialogData {
 	char                *tmpdir;
 	GList               *tmpfiles;
 	char                *cover_backup;
+	int                  max_images;
 
 	FileSavedFunc        file_saved_func;
 	char                *dest;
@@ -112,7 +113,8 @@ destroy_cb (GtkWidget  *widget,
 	g_free (data->album);
 	g_free (data->artist);
 	path_list_free (data->url_list);
-	g_object_unref (data->gui);
+	if (data->gui != NULL)
+		g_object_unref (data->gui);
 	g_free (data);
 }
 
@@ -286,7 +288,7 @@ load_current_url (DialogData *data)
 
 	update_progress_label (data);
 
-	if ((data->current == NULL) || (data->url >= MAX_IMAGES))
+	if ((data->current == NULL) || (data->url >= data->max_images))
 		return;
 
 	url = data->current->data;
@@ -313,32 +315,20 @@ start_loading_images (DialogData *data)
 }
 
 
-static void
-search_result_saved_cb (DialogData *data,
-			const char *filename,
-			gboolean    success)
+static gboolean
+make_file_list_from_search_result (DialogData *data,
+				   const char *filename)
 {
-	int      fd, n;
-	char     buf[BUFFER_SIZE];
-	int      buf_offset = 0;
-	GString *partial_url;
-	gboolean done = FALSE;
-	int      urls = 0;
-
-	if (! success) {
-		_gtk_error_dialog_run (GTK_WINDOW (data->dialog),
-				       _("Could not search a cover on Internet"),
-				       gnome_vfs_result_to_string (data->vfs_result));
-		return;
-	}
+	int       fd, n;
+	char      buf[BUFFER_SIZE];
+	int       buf_offset = 0;
+	GString  *partial_url;
+	gboolean  done = FALSE;
+	int       urls = 0;
 
 	fd = open (filename, O_RDONLY);
-	if (fd == 0) {
-		gth_image_list_set_no_image_text (GTH_IMAGE_LIST (data->image_list),
-						  _("No image found"));
-		
-		return;
-	}
+	if (fd == 0) 
+		return FALSE;
 	
 	partial_url = NULL;
 	while ((n = read (fd, buf+buf_offset, BUFFER_SIZE-buf_offset-1)) > 0) {
@@ -387,7 +377,7 @@ search_result_saved_cb (DialogData *data,
 				data->url_list = g_list_prepend (data->url_list, complete_url);
 				urls++;
 				
-				if (urls >= MAX_IMAGES) {
+				if (urls >= data->max_images) {
 					done = TRUE;
 					break;
 				}
@@ -415,19 +405,46 @@ search_result_saved_cb (DialogData *data,
 	close (fd);
 	data->tmpfiles = g_list_prepend (data->tmpfiles, g_strdup (filename));
 
-	/**/
+	data->url_list = g_list_reverse (data->url_list);
+	data->urls = urls;
+	data->url = 0;
 
-	if (data->url_list == NULL) {
+	return (data->url_list != NULL);
+}
+
+
+static void
+search_result_saved_cb (DialogData *data,
+			const char *filename,
+			gboolean    success)
+{
+	if (! success) {
+		_gtk_error_dialog_run (GTK_WINDOW (data->dialog),
+				       _("Could not search a cover on Internet"),
+				       gnome_vfs_result_to_string (data->vfs_result));
+		return;
+	}
+
+	if (! make_file_list_from_search_result (data, filename)) {
 		gth_image_list_set_no_image_text (GTH_IMAGE_LIST (data->image_list),
 						  _("No image found"));
 		return;
 	}
 
-	data->url_list = g_list_reverse (data->url_list);
-	data->urls = urls;
-	data->url = 0;
-
 	start_loading_images (data);
+}
+
+
+static char*
+get_query (DialogData *data)
+{
+	return g_strconcat ("http://images.google.com",
+			    "/images?q=",
+			    data->album,
+			    "+",
+			    data->artist,
+			    /* "&imgsz=medium", FIXME*/
+			    NULL);
 }
 
 
@@ -441,15 +458,8 @@ start_searching (gpointer callback_data)
 	g_source_remove (data->load_id);
 	data->load_id = 0;
 
-	query = g_strconcat ("http://images.google.com",
-			     "/images?q=",
-			     data->album,
-			     "+",
-			     data->artist,
-			     /* "&imgsz=medium", FIXME*/
-			     NULL);
+	query = get_query (data);
 	dest = g_build_filename (data->tmpdir, QUERY_RESULT, NULL);
-
 	copy_file_from_url (data, query, dest, search_result_saved_cb);
 
 	g_free (dest);
@@ -524,7 +534,9 @@ ok_cb (GtkWidget  *widget,
 
 		debug (DEBUG_INFO, "SET COVER: %s\n", src);
 
-		goo_window_set_cover_image (data->window, src);
+		if (goo_window_get_current_cd_autofetch (data->window))
+			goo_window_set_cover_image (data->window, src);
+
 		g_list_free (selection);
 	}
 }
@@ -606,6 +618,7 @@ dlg_cover_chooser (GooWindow  *window,
 
 	data->album = g_strdup (album);
 	data->artist = g_strdup (artist);
+	data->max_images = MAX_IMAGES;
 
 	/* Get the widgets. */
 
@@ -682,4 +695,89 @@ dlg_cover_chooser (GooWindow  *window,
 					  _("Searching images..."));
 
 	data->load_id = g_idle_add (start_searching, data);
+}
+
+
+
+
+
+static void
+auto_fetch__image_saved_cb (DialogData *data,
+			    const char *filename,
+			    gboolean    success)
+{
+	if (success) {
+		char *tmpfile = g_strdup (filename);
+		debug (DEBUG_INFO, "LOAD IMAGE: %s\n", tmpfile);
+		data->tmpfiles = g_list_prepend (data->tmpfiles, tmpfile);
+
+		goo_window_set_cover_image (data->window, filename);
+	}
+
+	destroy_cb (NULL, data);
+}
+
+
+static void
+auto_fetch__search_result_saved_cb (DialogData *data,
+				    const char *filename,
+				    gboolean    success)
+{
+	if (! success || ! make_file_list_from_search_result (data, filename))
+		return;
+
+	if (data->url_list != NULL) {
+		char *filename, *url, *dest;
+
+		url = (char*) data->url_list->data;
+
+		filename = g_strdup_printf ("%d.png", data->url);
+		dest = g_build_filename (data->tmpdir, filename, NULL);
+		g_free (filename);
+
+		copy_file_from_url (data, url, dest, auto_fetch__image_saved_cb);
+
+	} else
+		destroy_cb (NULL, data);
+}
+
+
+static gboolean
+auto_fetch__start_searching (gpointer callback_data)
+{
+	DialogData *data = callback_data;
+	char       *query;
+	char       *dest;
+
+	g_source_remove (data->load_id);
+	data->load_id = 0;
+
+	query = get_query (data);
+	dest = g_build_filename (data->tmpdir, QUERY_RESULT, NULL);
+	copy_file_from_url (data, query, dest, auto_fetch__search_result_saved_cb);
+
+	g_free (dest);
+	g_free (query);
+
+	return FALSE;
+}
+
+
+void
+fetch_cover_image (GooWindow  *window,
+		   const char *album,
+		   const char *artist)
+{
+	DialogData *data;
+	
+	data = g_new0 (DialogData, 1);
+	data->window = window;
+	data->album = g_strdup (album);
+	data->artist = g_strdup (artist);
+	data->max_images = 1;
+
+	data->tmpdir = g_strdup (get_temp_work_dir ());
+	ensure_dir_exists (data->tmpdir, DIR_PERM);
+
+	data->load_id = g_idle_add (auto_fetch__start_searching, data);
 }

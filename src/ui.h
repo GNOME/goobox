@@ -196,6 +196,7 @@ static const gchar *ui_info =
 "    <toolitem action='Pause'/>"
 "    <toolitem action='Stop'/>"
 "    <toolitem action='Next'/>"
+"    <separator name='sep01'/>"
 "    <toolitem action='Eject'/>"
 "  </toolbar>"
 "  <popup name='ListPopupMenu'>"

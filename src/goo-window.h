@@ -83,5 +83,8 @@ void        goo_window_set_volume                (GooWindow   *window,
 						  double       value);
 void        goo_window_set_hibernate             (GooWindow   *window,
 						  gboolean     hibernate);
+void        goo_window_set_current_cd_autofetch  (GooWindow   *window,
+						  gboolean     autofetch);
+gboolean    goo_window_get_current_cd_autofetch  (GooWindow   *window);
 
 #endif /* GOO_WINDOW_H */

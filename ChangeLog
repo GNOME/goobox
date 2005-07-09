@@ -1,3 +1,14 @@
+2005-07-09  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/dlg-cover-chooser.h (fetch_cover_image): 
+	* src/dlg-cover-chooser.c (fetch_cover_image): new function.
+	* src/goo-window.h: 
+	* src/goo-window.c (goo_window_set_current_cd_autofetch)
+	(goo_window_get_current_cd_autofetch): new functions.
+
+	Automatically fetch the cover image on Internet the first time a CD is
+	inserted.
+
 2005-05-16  Iñaki Larrañaga  <dooteo@euskalgnu.org>
 
 	* configure.in: Added "eu" (Basque) to ALL_LINGUAS.

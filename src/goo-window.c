@@ -70,6 +70,7 @@
 #define COVER_SIZE 80
 #define IDLE_TIMEOUT 200
 #define FALLBACK_ICON_SIZE 16
+#define CONFIG_KEY_AUTOFETCH_GROUP "AutoFetch"
 
 
 struct _GooWindowPrivateData {
@@ -1418,7 +1419,7 @@ window_update_title (GooWindow *window)
 	gboolean       playing;
 	gboolean       paused;
 	gboolean       stopped;
-	char          *title = NULL;
+	GString       *title;
 
 	state   = goo_player_get_state (priv->player);
 	error   = state == GOO_PLAYER_STATE_ERROR;
@@ -1426,48 +1427,52 @@ window_update_title (GooWindow *window)
 	paused  = state == GOO_PLAYER_STATE_PAUSED;
 	stopped = state == GOO_PLAYER_STATE_STOPPED;
 
-	if (paused) {
-		title = g_strdup_printf ("%s - %s (%s)",
-					 priv->current_song->title,
-					 priv->current_song->artist,
-					 _("Paused"));
+	title = g_string_new ("");
 
-	} else if (playing || (stopped && (priv->current_song != NULL))) {
-		if (priv->current_song->artist != NULL)
-			title = g_strdup_printf ("%s - %s",
-						 priv->current_song->title,
-						 priv->current_song->artist);
-		else
-			title = g_strdup_printf ("%s",
-						 priv->current_song->title);
-		
+	if (priv->current_song != NULL) {
+		g_string_append (title, priv->current_song->title);
+		if (priv->current_song->artist != NULL) {
+			g_string_append (title, " - ");
+			g_string_append (title, priv->current_song->artist);
+		}
+		g_string_append_printf (title, 
+					" (%d/%d)",
+					priv->current_song->number + 1,
+					priv->songs);
+		if (paused)
+			g_string_append_printf (title, 
+						" (%s)",
+						_("Paused"));
+
 	} else if (error) {
 		GError *error = goo_player_get_error (priv->player);
-		title = g_strdup (error->message);
+		g_string_append (title, g_strdup (error->message));
 		g_error_free (error);
-	} 
 
-	if (title == NULL) {
+	} else {
 		const char *p_title, *p_subtitle;
 
 		p_title = goo_player_get_title (priv->player);
 		p_subtitle = goo_player_get_subtitle (priv->player);
 		
 		if ((p_title == NULL) || (p_subtitle == NULL)) 
-			title = g_strdup (_("Audio CD"));
-		else 
-			title = g_strconcat (p_title, " - ", p_subtitle, "", NULL);
+			g_string_append (title, _("Audio CD"));
+		else {
+			g_string_append (title, p_title);
+			g_string_append (title, " - ");
+			g_string_append (title, p_subtitle);
+		}
 	}
 
-	gtk_window_set_title (GTK_WINDOW (window), title);
+	gtk_window_set_title (GTK_WINDOW (window), title->str);
 
 	if (priv->tray_tips != NULL)
 		gtk_tooltips_set_tip (GTK_TOOLTIPS (priv->tray_tips), 
 				      priv->tray_box, 
-				      title,
+				      title->str,
 				      NULL);
 
-	g_free (title);
+	g_string_free (title, TRUE);
 }
 
 
@@ -1512,6 +1517,158 @@ goo_window_update_cover (GooWindow *window)
 }
 
 
+static char*
+get_config_filename (void)
+{
+	char *config_dirname;
+	char *config_filename;
+
+	config_dirname = g_build_filename (g_get_home_dir (),
+					   ".gnome2",
+					   "goobox.d",
+					   NULL);
+	ensure_dir_exists (config_dirname, 0700);
+	config_filename = g_build_filename (config_dirname,
+					    "config",
+					    NULL);
+	g_free (config_dirname);
+
+	return config_filename;
+}
+
+
+static void
+save_config_file (GKeyFile *kv_file,
+		  char     *config_filename)
+{
+	GnomeVFSURI    *uri;
+	GnomeVFSHandle *handle;
+	GnomeVFSResult  result;
+	GError         *error = NULL;
+	char           *buffer;
+	gsize           buffer_size;
+
+	uri = new_uri_from_path (config_filename);
+	result = gnome_vfs_create_uri (&handle, 
+				       uri,
+				       GNOME_VFS_OPEN_WRITE,
+				       FALSE,
+				       0600);
+	gnome_vfs_uri_unref (uri);
+
+	if (result != GNOME_VFS_OK)
+		return;
+
+	buffer = g_key_file_to_data (kv_file,
+				     &buffer_size,
+				     &error);
+	if (error == NULL) 
+		gnome_vfs_write (handle,
+				 buffer,
+				 buffer_size,
+				 NULL);
+	else
+		g_error_free (error);
+
+	gnome_vfs_close (handle);
+}
+
+
+void
+goo_window_set_current_cd_autofetch (GooWindow *window,
+				     gboolean   autofetch)
+{
+	GKeyFile   *kv_file;
+	char       *config_filename;
+	const char *discid;
+
+	kv_file = g_key_file_new ();
+
+	config_filename = get_config_filename ();
+	g_key_file_load_from_file (kv_file, 
+				   config_filename, 
+				   G_KEY_FILE_NONE,
+				   NULL);
+	discid = goo_player_cd_get_discid (GOO_PLAYER_CD (window->priv->player));
+	g_key_file_set_boolean (kv_file,
+				CONFIG_KEY_AUTOFETCH_GROUP,
+				discid,
+				autofetch);
+
+	save_config_file (kv_file, config_filename);
+
+	g_free (config_filename);
+	g_key_file_free (kv_file);
+}
+
+
+gboolean
+goo_window_get_current_cd_autofetch (GooWindow *window)
+{
+	GKeyFile   *kv_file;
+	char       *config_filename;
+	const char *discid;
+	gboolean    value = FALSE;
+	GError     *error = NULL;
+
+	kv_file = g_key_file_new ();
+
+	config_filename = get_config_filename ();
+	g_key_file_load_from_file (kv_file, 
+				   config_filename, 
+				   G_KEY_FILE_NONE,
+				   NULL);
+	discid = goo_player_cd_get_discid (GOO_PLAYER_CD (window->priv->player));
+
+	value = g_key_file_get_boolean (kv_file,
+					CONFIG_KEY_AUTOFETCH_GROUP,
+					discid,
+					&error);
+	if (error != NULL) {
+		value = TRUE;
+		g_error_free (error);
+	}
+
+	g_free (config_filename);
+	g_key_file_free (kv_file);
+
+	return value;
+}
+
+
+static void
+auto_fetch_cover_image (GooWindow *window)
+{
+	char        *filename;
+	GnomeVFSURI *uri;
+	gboolean     cover_exists;
+	const char  *album, *artist;
+
+	if (window->priv->hibernate)
+		return;
+
+	if (!goo_window_get_current_cd_autofetch (window))
+		return;
+	goo_window_set_current_cd_autofetch (window, FALSE);
+
+	filename = goo_window_get_cover_filename (window);
+	if (filename == NULL)
+		return;
+	uri = new_uri_from_path (filename);
+	cover_exists = gnome_vfs_uri_exists (uri);
+	gnome_vfs_uri_unref (uri);
+	g_free (filename);
+	if (cover_exists)
+		return;
+
+	album = goo_player_cd_get_album (GOO_PLAYER_CD (window->priv->player));
+	artist = goo_player_cd_get_artist (GOO_PLAYER_CD (window->priv->player));
+	if ((album == NULL) || (artist == NULL))
+		return;
+	fetch_cover_image (window, album, artist);
+}
+
+
 static gboolean
 autoplay_cb (gpointer data)
 {
@@ -1551,6 +1708,7 @@ player_done_cb (GooPlayer       *player,
 		goo_window_update_titles (window);
 		window_update_title (window);
 		window_update_statusbar_list_info (window);
+		auto_fetch_cover_image (window);
 		break;
 	case GOO_PLAYER_ACTION_SEEK_SONG:
 		goo_window_set_current_song (window, goo_player_get_current_song (priv->player));
@@ -2181,6 +2339,7 @@ goo_window_construct (GooWindow  *window,
 
 	priv->toolbar = toolbar = gtk_ui_manager_get_widget (ui, "/ToolBar");
 	gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), FALSE);
+
 	gnome_app_add_docked (GNOME_APP (window),
 			      toolbar,
 			      "ToolBar",
@@ -2197,14 +2356,16 @@ goo_window_construct (GooWindow  *window,
 		g_object_set (action, "is_important", TRUE, NULL);
 		g_object_unref (action);
 
+		
 		action = gtk_ui_manager_get_action (ui, "/ToolBar/Pause");
 		g_object_set (action, "is_important", TRUE, NULL);
 		g_object_unref (action);
 
-
+		/*
 		action = gtk_ui_manager_get_action (ui, "/ToolBar/Stop");
 		g_object_set (action, "is_important", TRUE, NULL);
 		g_object_unref (action);
+		*/
 	}
 
 
@@ -2847,11 +3008,12 @@ goo_window_set_cover_image (GooWindow  *window,
 	if (window->priv->hibernate)
 		return;
 
+	goo_window_set_current_cd_autofetch (window, FALSE);
+
 	image = gdk_pixbuf_new_from_file_at_size (filename, 
 						  COVER_SIZE - 2, 
 						  COVER_SIZE - 2, 
 						  &error);
-	
 	if (image != NULL) {
 		GdkPixbuf *frame;
 		char      *cover_filename;
@@ -2943,6 +3105,8 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 	if (window->priv->hibernate)
 		return;
 
+	goo_window_set_current_cd_autofetch (window, FALSE);
+
 	file_sel = gtk_file_chooser_dialog_new (_("Choose CD Cover Image"),
 						GTK_WINDOW (window),
 						GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -2999,6 +3163,8 @@ goo_window_search_cover_on_internet (GooWindow *window)
 	if (window->priv->hibernate)
 		return;
 
+	goo_window_set_current_cd_autofetch (window, FALSE);
+
 	debug (DEBUG_INFO, "SEARCH ON INTERNET\n");
 
 	album = goo_player_cd_get_album (GOO_PLAYER_CD (window->priv->player));
@@ -3022,6 +3188,8 @@ goo_window_remove_cover (GooWindow   *window)
 
 	if (window->priv->hibernate)
 		return;
+
+	goo_window_set_current_cd_autofetch (window, FALSE);
 		
 	cover_filename = goo_window_get_cover_filename (window);
 	if (cover_filename == NULL)

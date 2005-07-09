@@ -1,3 +1,8 @@
+version 0.9.92
+--------------
+	* Automatically fetch the cover image on Internet the first time a CD is
+	  inserted.
+
 version 0.9.91
 --------------
 	* Added goobox/general/use_sound_juicer gconf preference to use 
