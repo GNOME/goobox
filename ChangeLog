@@ -1,7 +1,11 @@
 2005-07-09  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/dlg-cover-chooser.c (ok_cb): do not check autofetch status
+	when not in autofetching mode.
+	
 	* src/dlg-cover-chooser.h (fetch_cover_image): 
 	* src/dlg-cover-chooser.c (fetch_cover_image): new function.
+
 	* src/goo-window.h: 
 	* src/goo-window.c (goo_window_set_current_cd_autofetch)
 	(goo_window_get_current_cd_autofetch): new functions.

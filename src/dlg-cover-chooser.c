@@ -73,6 +73,7 @@ struct _DialogData {
 	GList               *tmpfiles;
 	char                *cover_backup;
 	int                  max_images;
+	gboolean             autofetching;
 
 	FileSavedFunc        file_saved_func;
 	char                *dest;
@@ -534,7 +535,8 @@ ok_cb (GtkWidget  *widget,
 
 		debug (DEBUG_INFO, "SET COVER: %s\n", src);
 
-		if (goo_window_get_current_cd_autofetch (data->window))
+		if (! data->autofetching 
+		    || goo_window_get_current_cd_autofetch (data->window))
 			goo_window_set_cover_image (data->window, src);
 
 		g_list_free (selection);
@@ -775,6 +777,7 @@ fetch_cover_image (GooWindow  *window,
 	data->album = g_strdup (album);
 	data->artist = g_strdup (artist);
 	data->max_images = 1;
+	data->autofetching = TRUE;
 
 	data->tmpdir = g_strdup (get_temp_work_dir ());
 	ensure_dir_exists (data->tmpdir, DIR_PERM);
