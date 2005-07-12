@@ -1,9 +1,12 @@
 2005-07-12  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/dlg-ripper.c (time_pretty_print): use 00:00 for negative
+	values.
+	
 	* src/dlg-preferences.c: 
 	* src/preferences.h (PREF_ENCODER_MP3_QUALITY): 
 	* src/dlg-ripper.c (create_pipeline): 
-	
+
 	Use a generic quality parameter for mp3 encoding, this way we can 
 	specify a vbr mode if available, or use the bitrate otherwise.
 

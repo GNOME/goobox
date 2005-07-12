@@ -184,6 +184,9 @@ time_pretty_print (double s)
 	char *r, *rr;
 	int   i;
 	
+	if (s < 0.0)
+		return g_strdup ("00:00");
+
 	i = (int) (floor (s + 0.5));
 	r = g_strdup_printf ("%2d:%2d", i / 60, i % 60);
 	for (rr = r; *rr != 0; rr++)
