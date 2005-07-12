@@ -1436,12 +1436,12 @@ window_update_title (GooWindow *window)
 			g_string_append (title, priv->current_song->artist);
 		}
 		g_string_append_printf (title, 
-					" (%d/%d)",
+					"  [%d/%d]",
 					priv->current_song->number + 1,
 					priv->songs);
 		if (paused)
 			g_string_append_printf (title, 
-						" (%s)",
+						" [%s]",
 						_("Paused"));
 
 	} else if (error) {

@@ -1,7 +1,9 @@
 version 0.9.92
 --------------
-	* Automatically fetch the cover image on Internet the first time a CD is
-	  inserted.
+	* Automatically fetch the cover image on Internet for CDs the user
+	  never setted the cover before.
+	* Display elapsed time and estimated remaining time in the ripping
+	  progress dialog.
 
 version 0.9.91
 --------------

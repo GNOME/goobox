@@ -26,6 +26,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <math.h>
 
 #include <gtk/gtk.h>
 #include <libgnome/libgnome.h>
@@ -57,7 +58,7 @@
 #define UPDATE_DELAY 400
 #define DEFAULT_OGG_QUALITY 0.3
 #define DEFAULT_FLAC_COMPRESSION 5
-#define DEFAULT_MP3_BITRATE 128
+#define DEFAULT_MP3_QUALITY 4
 #define BUFFER_SIZE 1024
 
 typedef struct {
@@ -89,6 +90,7 @@ typedef struct {
 	int            prev_tracks_sectors;
 	char          *current_file;
 	gboolean       ripping;
+	GTimer        *timer;
 
 	GladeXML      *gui;
 
@@ -97,6 +99,20 @@ typedef struct {
 	GtkWidget     *r_progress_label;
 	GtkWidget     *r_track_label;
 } DialogData;
+
+
+/* From lame.h */
+typedef enum vbr_mode_e {
+  vbr_off=0,
+  vbr_mt,               /* obsolete, same as vbr_mtrh */
+  vbr_rh,
+  vbr_abr,
+  vbr_mtrh,
+  vbr_max_indicator,    /* Don't use this! It's used for sanity checks.       */  
+  vbr_default=vbr_rh    /* change this to change the default VBR mode of LAME */
+} vbr_mode;
+
+static int mp3_bitrate[] = { 320, 256, 224, 192, 160, 128, 112, 96, 80, 64 };
 
 
 /* called when the main dialog is closed. */
@@ -116,6 +132,9 @@ destroy_cb (GtkWidget  *widget,
 		gst_element_set_state (data->rip_thread, GST_STATE_NULL);
 		gst_object_unref (GST_OBJECT (data->rip_thread));
 	}
+
+	if (data->timer != NULL)
+		g_timer_destroy (data->timer);
 
 	goo_cdrom_unlock_tray (data->cdrom);
 	g_object_unref (data->cdrom);
@@ -159,14 +178,42 @@ rip_next_track (gpointer callback_data)
 }
 
 
+static char *
+time_pretty_print (double s)
+{
+	char *r, *rr;
+	int   i;
+	
+	i = (int) (floor (s + 0.5));
+	r = g_strdup_printf ("%2d:%2d", i / 60, i % 60);
+	for (rr = r; *rr != 0; rr++)
+		if (*rr == ' ')
+			*rr = '0';
+
+	return r;
+}
+
+
 static gboolean
 update_ui (gpointer callback_data)
 {
 	DialogData *data = callback_data;
 	double      fraction;
+	double      e, r;
+	char       *elapsed, *s_e, *s_r;
 
 	fraction = ((double) (data->current_track_sectors + data->prev_tracks_sectors)) / (double) data->total_sectors;
 	gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (data->r_progress_progressbar), fraction);
+
+	e = g_timer_elapsed (data->timer, NULL);
+	r = (e / fraction) - e;
+	s_e = time_pretty_print (e);
+	s_r = time_pretty_print (r);
+	elapsed = g_strdup_printf (_("Elapsed: %s / Remaining: %s"), s_e, s_r);
+	gtk_progress_bar_set_text  (GTK_PROGRESS_BAR (data->r_progress_progressbar), elapsed);
+	g_free (s_e);
+	g_free (s_r);
+	g_free (elapsed);
 
 	return FALSE;
 }
@@ -215,9 +262,10 @@ update_progress_cb (gpointer callback_data)
 static void
 create_pipeline (DialogData *data)
 {
-	float ogg_quality;
-	int   flac_compression;
-	int   mp3_bitrate;
+	float       ogg_quality;
+	int         flac_compression;
+	int         mp3_quality;
+	GParamSpec *pspec;
 
 	data->rip_thread = gst_thread_new ("rip_thread");
 		
@@ -235,6 +283,7 @@ create_pipeline (DialogData *data)
 			      "quality", ogg_quality,
 			      NULL);
 		break;
+
 	case GOO_FILE_FORMAT_FLAC:
 		data->encoder = gst_element_factory_make (FLAC_ENCODER, "encoder");
 		data->ext = "flac";
@@ -243,14 +292,24 @@ create_pipeline (DialogData *data)
 			      "quality", flac_compression,
 			      NULL);
 		break;
+
 	case GOO_FILE_FORMAT_MP3:
 		data->encoder = gst_element_factory_make (MP3_ENCODER, "encoder");
 		data->ext = "mp3";
-		mp3_bitrate = eel_gconf_get_integer (PREF_ENCODER_MP3_BITRATE, DEFAULT_MP3_BITRATE);
-		g_object_set (data->encoder,
-			      "bitrate", mp3_bitrate,
-			      NULL);
+		mp3_quality = eel_gconf_get_integer (PREF_ENCODER_MP3_QUALITY, DEFAULT_MP3_QUALITY);
+		pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (data->encoder), "vbr_quality");
+		if (pspec != NULL) {
+			g_object_set (data->encoder,
+				      "vbr", vbr_mtrh,
+				      "vbr_quality", mp3_quality,
+				      NULL);
+			g_param_spec_unref (pspec);
+		} else 
+			g_object_set (data->encoder,
+				      "bitrate", mp3_bitrate[mp3_quality],
+				      NULL);
 		break;
+
 	case GOO_FILE_FORMAT_WAVE:
 		data->encoder = gst_element_factory_make (WAVE_ENCODER, "encoder");
 		data->ext = "wav";
@@ -520,7 +579,7 @@ rip_current_track (DialogData *data)
 
 	if (GST_IS_TAG_SETTER (data->encoder)) {
 		gst_tag_setter_add (GST_TAG_SETTER (data->encoder),   
-				    GST_TAG_MERGE_REPLACE_ALL,
+				    GST_TAG_MERGE_APPEND,
 				    GST_TAG_TITLE, track->title,
 				    GST_TAG_ARTIST, data->artist,
 				    GST_TAG_ALBUM, data->album,
@@ -574,17 +633,17 @@ start_ripper (DialogData *data)
 	goo_cdrom_lock_tray (data->cdrom);
 
 	data->prev_tracks_sectors = 0;
-
 	data->total_sectors = 0;
 	for (scan = data->tracks; scan; scan = scan->next) {
 		TrackInfo *track = scan->data;
 		data->total_sectors += track->sectors;
 	}
-
 	create_pipeline (data);
-
 	data->current_track_n = 1;
 	data->current_track = data->tracks;
+
+	g_timer_start (data->timer);
+
 	rip_current_track (data);
 }
 
@@ -629,7 +688,7 @@ dlg_ripper (GooWindow     *window,
 	data->tracks_n = g_list_length (data->tracks);
 	data->total_tracks = total_tracks;
 	data->update_handle = 0;
-
+	data->timer = g_timer_new ();
 	data->cdrom = goo_cdrom_new (location);
 
 	/* Get the widgets. */

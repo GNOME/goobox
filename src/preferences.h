@@ -53,7 +53,7 @@
 
 #define PREF_ENCODER_OGG_QUALITY      "/apps/goobox/encoder/ogg_quality"
 #define PREF_ENCODER_FLAC_COMPRESSION "/apps/goobox/encoder/flac_compression"
-#define PREF_ENCODER_MP3_BITRATE      "/apps/goobox/encoder/mp3_bitrate"
+#define PREF_ENCODER_MP3_QUALITY      "/apps/goobox/encoder/mp3_quality"
 
 #define PREF_DESKTOP_ICON_THEME         "/desktop/gnome/file_views/icon_theme"
 #define PREF_DESKTOP_MENUS_HAVE_TEAROFF "/desktop/gnome/interface/menus_have_tearoff"

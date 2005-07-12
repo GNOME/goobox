@@ -1,4 +1,21 @@
+2005-07-12  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/dlg-preferences.c: 
+	* src/preferences.h (PREF_ENCODER_MP3_QUALITY): 
+	* src/dlg-ripper.c (create_pipeline): 
+	
+	Use a generic quality parameter for mp3 encoding, this way we can 
+	specify a vbr mode if available, or use the bitrate otherwise.
+
+	* src/goo-window.c (window_update_title): added the track number
+	to the title.
+
 2005-07-09  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* data/glade/goobox.glade: 
+	* src/dlg-ripper.c (update_ui): added elapsed and estimated remaining
+	time.
+	(time_pretty_print): round seconds to the nearest integer.
 
 	* src/dlg-cover-chooser.c (ok_cb): do not check autofetch status
 	when not in autofetching mode.

@@ -300,11 +300,11 @@
       </schema>
 
       <schema>
-	<key>/schemas/apps/goobox/encoder/mp3_bitrate</key>
-	<applyto>/apps/goobox/encoder/mp3_bitrate</applyto>
+	<key>/schemas/apps/goobox/encoder/mp3_quality</key>
+	<applyto>/apps/goobox/encoder/mp3_quality</applyto>
 	<owner>goobox</owner>
 	<type>int</type>
-	<default>128</default>
+	<default>4</default>
 	<locale name="C">
 	  <short></short>
 	  <long>

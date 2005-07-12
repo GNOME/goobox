@@ -45,17 +45,16 @@
 #define GLADE_PREF_FILE "goobox.glade"
 
 static int ogg_rate[] = { 64, 80, 96, 112, 128, 160, 192, 224, 256, 320 };
-static int mp3_rate[] = { 64, 80, 96, 112, 128, 160, 192, 224, 256, 320 };
+static int mp3_quality[] = { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
 static int flac_compression[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
 #define N_VALUES 10
 #define OGG_DEFAULT_VALUE 4
-#define MP3_DEFAULT_VALUE 4
+#define MP3_DEFAULT_VALUE 5
 #define FLAC_DEFAULT_VALUE 5
-#define DEFAULT_VALUE 4
 #define DEFAULT_OGG_QUALITY 0.3
 #define DEFAULT_FLAC_COMPRESSION 5
-#define DEFAULT_MP3_BITRATE 128
+#define DEFAULT_MP3_QUALITY 4
 
 typedef struct {
 	GooWindow *window;
@@ -94,7 +93,7 @@ apply_cb (GtkWidget  *widget,
 
 	eel_gconf_set_float (PREF_ENCODER_OGG_QUALITY, (float) data->ogg_value / 10.0);
 	eel_gconf_set_integer (PREF_ENCODER_FLAC_COMPRESSION, flac_compression[data->flac_value]);
-	eel_gconf_set_integer (PREF_ENCODER_MP3_BITRATE, mp3_rate[data->mp3_value]);
+	eel_gconf_set_integer (PREF_ENCODER_MP3_QUALITY, mp3_quality[data->mp3_value]);
 
 	/**/
 
@@ -173,9 +172,16 @@ update_info (DialogData *data)
 	gtk_label_set_text (GTK_LABEL (data->p_flac_quality_label), text);
 	g_free (text);
 
-	text = g_strdup_printf (_("Bitrate: %d Kbps"), mp3_rate[data->mp3_value]);
+	text = g_strdup_printf (_("Quality: %d"), data->mp3_value);
 	gtk_label_set_text (GTK_LABEL (data->p_mp3_quality_label), text);
 	g_free (text);
+}
+
+
+static double
+scale_value (double v)
+{
+	return v * 10.0 + 9.0;
 }
 
 
@@ -184,13 +190,13 @@ reset_cb (GtkWidget  *widget,
 	  DialogData *data)
 {
 	data->ogg_value = OGG_DEFAULT_VALUE;
-	gtk_range_set_value (GTK_RANGE (data->p_ogg_scale), data->ogg_value * 10.0);
+	gtk_range_set_value (GTK_RANGE (data->p_ogg_scale), scale_value (data->ogg_value));
 
 	data->flac_value = FLAC_DEFAULT_VALUE;
-	gtk_range_set_value (GTK_RANGE (data->p_flac_scale), data->flac_value * 10.0);
+	gtk_range_set_value (GTK_RANGE (data->p_flac_scale), scale_value (data->flac_value));
 
 	data->mp3_value = MP3_DEFAULT_VALUE;
-	gtk_range_set_value (GTK_RANGE (data->p_mp3_scale), data->mp3_value * 10.0);
+	gtk_range_set_value (GTK_RANGE (data->p_mp3_scale), scale_value (data->mp3_value));
 
 	update_info (data);
 }
@@ -212,7 +218,7 @@ scale_value_changed_cb (GtkRange   *range,
 	double value = gtk_range_get_value (range);
 	int    i_value;
 
-	i_value = (int) ((value / 10.0) + 0.5);
+	i_value = (int) ((value / 10.0));
 
 	if (range == (GtkRange*) data->p_ogg_scale) {
 		if (data->ogg_value == i_value)
@@ -238,13 +244,13 @@ scale_value_changed_cb (GtkRange   *range,
 
 
 static int 
-find_index (int a[], int v)
+find_index (int a[], int v, int default_value)
 {
 	int i;
 	for (i = 0; i < N_VALUES; i++)
 		if (a[i] == v)
 			return i;
-	return DEFAULT_VALUE;
+	return default_value;
 }
 
 
@@ -252,8 +258,8 @@ static int
 get_current_value (DialogData    *data,
 		   GooFileFormat  format)
 {
-	int index = DEFAULT_VALUE;
-	int value;
+	int   index = 0;
+	int   value;
 
 	switch (format) {
 	case GOO_FILE_FORMAT_OGG:
@@ -262,12 +268,12 @@ get_current_value (DialogData    *data,
 
 	case GOO_FILE_FORMAT_FLAC:
 		value = eel_gconf_get_integer (PREF_ENCODER_FLAC_COMPRESSION, DEFAULT_FLAC_COMPRESSION);
-		index = find_index (flac_compression, value);
+		index = find_index (flac_compression, value, FLAC_DEFAULT_VALUE);
 		break;
 
 	case GOO_FILE_FORMAT_MP3:
-		value = eel_gconf_get_integer (PREF_ENCODER_MP3_BITRATE, DEFAULT_MP3_BITRATE);
-		index = find_index (mp3_rate, value);
+		value = eel_gconf_get_integer (PREF_ENCODER_MP3_QUALITY, DEFAULT_MP3_QUALITY);
+		index = find_index (mp3_quality, value, MP3_DEFAULT_VALUE);
 		break;
 
 	default:
@@ -375,13 +381,13 @@ dlg_preferences (GooWindow *window)
 	/**/
 
 	data->ogg_value = get_current_value (data, GOO_FILE_FORMAT_OGG);
-	gtk_range_set_value (GTK_RANGE (data->p_ogg_scale), data->ogg_value * 10.0);
+	gtk_range_set_value (GTK_RANGE (data->p_ogg_scale), scale_value (data->ogg_value));
 
 	data->flac_value = get_current_value (data, GOO_FILE_FORMAT_FLAC);
-	gtk_range_set_value (GTK_RANGE (data->p_flac_scale), data->flac_value * 10.0);
+	gtk_range_set_value (GTK_RANGE (data->p_flac_scale), scale_value (data->flac_value));
 
 	data->mp3_value = get_current_value (data, GOO_FILE_FORMAT_MP3);
-	gtk_range_set_value (GTK_RANGE (data->p_mp3_scale), data->mp3_value * 10.0);
+	gtk_range_set_value (GTK_RANGE (data->p_mp3_scale), scale_value (data->mp3_value));
 
 	update_info (data);
 
