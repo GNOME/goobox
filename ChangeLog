@@ -1,3 +1,7 @@
+2005-07-19  Pawan Chitrakar  <pawan@nplinux.org>
+
+	* configure.in: Added ne in ALL_LINGUAS
+
 2005-07-12  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/dlg-ripper.c (time_pretty_print): use 00:00 for negative
