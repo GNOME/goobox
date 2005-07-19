@@ -4,6 +4,10 @@ version 0.9.92
 	  never setted the cover before.
 	* Display elapsed time and estimated remaining time in the ripping
 	  progress dialog.
+        * Display the track number and the total number of tracks in the
+          titlebar.
+        * Use the vbr mode when creating mp3s if available.
+	* Removed the Stop button from the toolbar.
 
 version 0.9.91
 --------------
