@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-02 19:14+0300\n"
-"PO-Revision-Date: 2005-06-21 12:39+0300\n"
+"POT-Creation-Date: 2005-08-01 20:53+0300\n"
+"PO-Revision-Date: 2005-08-01 20:52+0300\n"
 "Last-Translator: Rostislav Raykov <zbrox@i-space.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -128,7 +128,7 @@ msgstr "_Ogg Vorbis"
 
 #: ../data/glade/goobox.glade.h:24
 msgid "_Save playlist"
-msgstr "Запазване на плейлистaта"
+msgstr "Запазване на _списъка с песни"
 
 #: ../data/glade/goobox.glade.h:25
 msgid "_Selected tracks"
@@ -138,8 +138,8 @@ msgstr "Избрани песни"
 msgid "_Wave"
 msgstr "_Wave"
 
-#: ../data/goobox.desktop.in.h:1 ../src/goo-window.c:2357
-#: ../src/goo-window.c:2365
+#: ../data/goobox.desktop.in.h:1 ../src/goo-window.c:2518
+#: ../src/goo-window.c:2526
 msgid "CD Player"
 msgstr "Слушане на аудио дискове"
 
@@ -200,30 +200,30 @@ msgstr "Неименувано SCSI устройство (%s)"
 msgid "File image"
 msgstr "Файл с изображение"
 
-#: ../src/dlg-cover-chooser.c:271
+#: ../src/dlg-cover-chooser.c:274
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, зареждане на изображение: %u"
 
-#: ../src/dlg-cover-chooser.c:309
+#: ../src/dlg-cover-chooser.c:312
 msgid "Loading images"
 msgstr "Зареждане на изображения"
 
-#: ../src/dlg-cover-chooser.c:330 ../src/goo-window.c:3009
+#: ../src/dlg-cover-chooser.c:424 ../src/goo-window.c:3175
 msgid "Could not search a cover on Internet"
 msgstr "Не може да се потърси обложка в интернет"
 
-#: ../src/dlg-cover-chooser.c:338 ../src/dlg-cover-chooser.c:422
+#: ../src/dlg-cover-chooser.c:431
 msgid "No image found"
 msgstr "Не е открито изображението"
 
-#: ../src/dlg-cover-chooser.c:482 ../src/dlg-extract.c:219
-#: ../src/dlg-preferences.c:147
+#: ../src/dlg-cover-chooser.c:493 ../src/dlg-extract.c:219
+#: ../src/dlg-preferences.c:146
 #, c-format
 msgid "Could not display help: %s"
 msgstr "Не може да се покаже помощта: %s"
 
-#: ../src/dlg-cover-chooser.c:682
+#: ../src/dlg-cover-chooser.c:697
 msgid "Searching images..."
 msgstr "Търсене на изображения..."
 
@@ -250,55 +250,60 @@ msgstr ""
 msgid "No encoder available."
 msgstr "Няма налична кодираща програма."
 
-#: ../src/dlg-preferences.c:168
+#: ../src/dlg-preferences.c:167
 #, c-format
 msgid "Nominal bitrate: %d Kbps"
 msgstr "Номинален битрейт: %d Kbps"
 
-#: ../src/dlg-preferences.c:172
+#: ../src/dlg-preferences.c:171
 #, c-format
 msgid "Compression level: %d"
 msgstr "Ниво на компресия: %d"
 
-#: ../src/dlg-preferences.c:176
+#: ../src/dlg-preferences.c:175
 #, c-format
-msgid "Bitrate: %d Kbps"
-msgstr "Битрейт: %d Kbps"
+msgid "Quality: %d"
+msgstr "Качество: %d"
 
-#: ../src/dlg-preferences.c:351 ../src/dlg-preferences.c:359
+#: ../src/dlg-preferences.c:357 ../src/dlg-preferences.c:365
 msgid "Smaller size"
 msgstr "По-малък размер"
 
-#: ../src/dlg-preferences.c:355 ../src/dlg-preferences.c:363
+#: ../src/dlg-preferences.c:361 ../src/dlg-preferences.c:369
 msgid "Higher quality"
 msgstr "По-добро качество"
 
-#: ../src/dlg-preferences.c:367
+#: ../src/dlg-preferences.c:373
 msgid "Faster compression"
 msgstr "По-бърза компресия"
 
-#: ../src/dlg-preferences.c:371
+#: ../src/dlg-preferences.c:377
 msgid "Higher compression"
 msgstr "По-добра компресия"
 
-#: ../src/dlg-ripper.c:320
+#: ../src/dlg-ripper.c:215
+#, c-format
+msgid "Elapsed: %s / Remaining: %s"
+msgstr "Изминало: %s / Оставащо: %s"
+
+#: ../src/dlg-ripper.c:382
 msgid "Could not display the destination folder"
 msgstr "Не може да се покаже папката за запис"
 
-#: ../src/dlg-ripper.c:462
+#: ../src/dlg-ripper.c:524
 msgid "Tracks extracted successfully"
 msgstr "Песните извлечени успешно!"
 
-#: ../src/dlg-ripper.c:464
+#: ../src/dlg-ripper.c:526
 msgid "_View destination folder"
 msgstr "Преглед на папката за запис"
 
-#: ../src/dlg-ripper.c:477
+#: ../src/dlg-ripper.c:539
 #, c-format
 msgid "Extracting track %d of %d: %s"
 msgstr "Извличане на %d песен от общо %d: %s"
 
-#: ../src/dlg-ripper.c:530
+#: ../src/dlg-ripper.c:592
 msgid "Ripped with Goobox"
 msgstr "Извлечено с Goobox"
 
@@ -350,7 +355,7 @@ msgstr "%s / %s"
 msgid "Click here to choose a cover for this CD"
 msgstr "Натиснете тук, за да изберете обложка за този диск"
 
-#: ../src/goo-player-info.c:686 ../src/goo-window.c:1433
+#: ../src/goo-player-info.c:686 ../src/goo-window.c:1445
 msgid "Paused"
 msgstr "Паузирано"
 
@@ -366,7 +371,7 @@ msgstr "Проверяване на устройството"
 msgid "Reading CD"
 msgstr "Прочитане на диска"
 
-#: ../src/goo-player-info.c:722 ../src/goo-window.c:1457
+#: ../src/goo-player-info.c:722 ../src/goo-window.c:1459
 msgid "Audio CD"
 msgstr "Аудио CD"
 
@@ -412,80 +417,80 @@ msgstr "_Скриване на песните"
 msgid "Show _tracks"
 msgstr "_Показване на песните"
 
-#: ../src/goo-window.c:192
+#: ../src/goo-window.c:193
 #, c-format
 msgid "%d track"
 msgid_plural "%d tracks"
 msgstr[0] "%d песен"
 msgstr[1] "%d песни"
 
-#: ../src/goo-window.c:196
+#: ../src/goo-window.c:197
 #, c-format
 msgid "year %d"
 msgstr "година %d"
 
-#: ../src/goo-window.c:635
+#: ../src/goo-window.c:636
 msgid "Length"
 msgstr "Продължителност"
 
-#: ../src/goo-window.c:636
+#: ../src/goo-window.c:637
 msgid "Title"
 msgstr "Заглавие"
 
-#: ../src/goo-window.c:637
+#: ../src/goo-window.c:638
 msgid "Artist"
 msgstr "Изпълнител"
 
-#: ../src/goo-window.c:645
+#: ../src/goo-window.c:646
 msgid "#"
 msgstr "#"
 
-#: ../src/goo-window.c:1339 ../src/ui.h:65
+#: ../src/goo-window.c:1340 ../src/ui.h:65
 msgid "_Pause"
 msgstr "Пауза"
 
-#: ../src/goo-window.c:1340
+#: ../src/goo-window.c:1341
 msgid "Pause playing"
 msgstr "Паузиране на изпълнението"
 
-#: ../src/goo-window.c:1565 ../src/goo-window.c:1582 ../src/ui.h:53
+#: ../src/goo-window.c:1723 ../src/goo-window.c:1740 ../src/ui.h:53
 #: ../src/ui.h:57 ../src/ui.h:61
 msgid "_Play"
 msgstr "_Слушане"
 
-#: ../src/goo-window.c:1566 ../src/goo-window.c:1583
+#: ../src/goo-window.c:1724 ../src/goo-window.c:1741
 msgid "Play CD"
 msgstr "Слушане на CD"
 
-#: ../src/goo-window.c:2673
+#: ../src/goo-window.c:2834
 msgid "Could not eject the CD"
 msgstr "Не може да се изкара диска"
 
-#: ../src/goo-window.c:2685
+#: ../src/goo-window.c:2846
 msgid "Could not read drive"
 msgstr "Не може да се разчете устройството"
 
-#: ../src/goo-window.c:2877
+#: ../src/goo-window.c:3039
 msgid "Could not save cover image"
 msgstr "Не може да се запази изображението на обложката"
 
-#: ../src/goo-window.c:2887
+#: ../src/goo-window.c:3049
 msgid "Could not load image"
 msgstr "Не може да се зареди изображението"
 
-#: ../src/goo-window.c:2946
+#: ../src/goo-window.c:3110
 msgid "Choose CD Cover Image"
 msgstr "Избор на изображение за обложка"
 
-#: ../src/goo-window.c:2965
+#: ../src/goo-window.c:3129
 msgid "Images"
 msgstr "Изображения"
 
-#: ../src/goo-window.c:2973
+#: ../src/goo-window.c:3137
 msgid "All files"
 msgstr "Всички файлове"
 
-#: ../src/goo-window.c:3010
+#: ../src/goo-window.c:3176
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -493,20 +498,20 @@ msgstr ""
 "Трябва да въведете името на изпълнителя и албума, за да се намери обложката "
 "на албума."
 
-#: ../src/goo-window.c:3047
+#: ../src/goo-window.c:3215
 msgid "_Show Window"
 msgstr "Показване на прозореца"
 
-#: ../src/goo-window.c:3048
+#: ../src/goo-window.c:3216
 msgid "Show the main window"
 msgstr "Показване на главния прозорец"
 
-#: ../src/goo-window.c:3061 ../src/ui.h:117
+#: ../src/goo-window.c:3229 ../src/ui.h:117
 msgid "_Hide Window"
 msgstr "Скриване на прозореца"
 
 #. "H"
-#: ../src/goo-window.c:3062 ../src/ui.h:118
+#: ../src/goo-window.c:3230 ../src/ui.h:118
 msgid "Hide the main window"
 msgstr "Скриване на главния прозорец"
 
