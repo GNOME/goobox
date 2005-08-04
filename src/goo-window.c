@@ -115,7 +115,8 @@ struct _GooWindowPrivateData {
 
 	GooPlayer       *player;
 	GList           *song_list;                 /* SongInfo list. */
-	int              songs, total_time;
+	int              songs;
+        gint64           total_time;
 	SongInfo        *current_song;
 	GList           *playlist;                  /* int list. */
 

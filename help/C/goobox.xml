@@ -16,6 +16,10 @@
 
   <articleinfo>
     <title>&goobox; Manual V&manual-version;</title>
+    <abstract role="description">
+      <para>User manual for Goobox the CD player.</para>
+    </abstract>
+
     <copyright>
       <year>2005</year>
       <holder>Paolo Bacchilega</holder>
@@ -40,7 +44,7 @@
     &legal; 
 
     <authorgroup>
-      <author>
+      <author role="maintainer">
         <firstname>Paolo</firstname>
 	<surname>Bacchilega</surname>
 	<affiliation>
@@ -52,9 +56,18 @@
     <!-- do not put authorname in the header except in copyright - use
          section "authors" below -->
 
+    <revhistory>
+      <revision>
+	<revnumber>1.0</revnumber>
+        <date>2005-01-20</date>
+        <revdescription>
+        <para>First version, program version 0.7.1</para>
+	</revdescription>
+      </revision>
+    </revhistory>
     <!-- this is version of manual, not application --> 
     <releaseinfo>
-      This is manual describes version &goobox-version; of &goobox;
+      This is manual describes version &goobox-version; of Goobox
     </releaseinfo>
   </articleinfo>
 
@@ -89,9 +102,9 @@
       <table id="goobox-TBL-keyword-shortcuts" frame="topbot">
       <title>Keyboard shortcuts</title>
       <tgroup cols="3" colsep="1" rowsep="1">
-      	<colspec colanme="COLSPEC0" colwidth="50*"/>
-	<colspec colanme="COLSPEC1" colwidth="50*"/>
-	<colspec colanme="COLSPEC2" colwidth="50*"/>
+      	<colspec colname="COLSPEC0" colwidth="50*"/>
+	<colspec colname="COLSPEC1" colwidth="50*"/>
+	<colspec colname="COLSPEC2" colwidth="50*"/>
 	<thead>
 	  <row valign="top" rowsep="1">
 	    <entry colname="COLSPEC0">
@@ -258,7 +271,7 @@
 	      </para>
 	    </entry>
             <entry>
-	      <para>Open the <gui>Extract</gui> dialog</para>
+	      <para>Open the <interface>Extract</interface> dialog</para>
 	    </entry>
 	  </row>
 	</tbody>

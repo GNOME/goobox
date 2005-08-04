@@ -1,0 +1,5 @@
+2005-08-01  Tommi Vainikainen  <thv@iki.fi>
+
+	* Makefile.am, C/Makefile.am, C/goobox-C.omf, goobox.omf.in,
+	C/goobox.xml, .cvsignore: Migrated to gnome-doc-utils.
+

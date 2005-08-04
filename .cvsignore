@@ -1,5 +1,6 @@
 *.tar.gz
 *.patch
+*.omf
 ABOUT-NLS
 Compile.sh
 FEATURES
@@ -31,3 +32,4 @@ stamp-h.in
 stamp-h
 stamp-h1
 stamp.h
+gnome-doc-utils.make

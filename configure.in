@@ -4,10 +4,13 @@ AC_PREREQ(2.52)
  
 AC_INIT(goobox, 0.9.92)
 AC_CONFIG_SRCDIR(src/main.c)
+AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
 
 AM_PROG_LIBTOOL
+
+GNOME_DOC_INIT
 
 dnl ==========================================================================
 dnl
@@ -179,7 +182,6 @@ Makefile
 data/Makefile
 data/glade/Makefile
 help/Makefile
-help/C/Makefile
 src/Makefile
 src/icons/Makefile
 po/Makefile.in

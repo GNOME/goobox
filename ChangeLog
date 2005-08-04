@@ -1,3 +1,15 @@
+2005-08-02  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* configure.in: 
+	* Makefile.am: 
+
+	Fixes bug # 312261: Gnome-doc-utils migration patch.
+	Patch by Tommi Vainikainen.
+
+2005-07-20  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c: use gint64 for total_time
+
 2005-07-19  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	[ version 0.9.92 released ]

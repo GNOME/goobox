@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+<omf>
+  <resource>
+    <subject category="GNOME|Applications|Sound and Video"/>
+    <type>
+      user's guide
+    </type>
+    <relation seriesid="a74bdcf6-6ada-11d9-8e57-805df068c349"/>
+    <rights type="GNU FDL" license.version="1.1" holder="Paolo Bacchilega"/>
+  </resource>
+</omf>
