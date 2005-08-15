@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-20 02:08+0400\n"
-"PO-Revision-Date: 2005-06-20 02:17+0400\n"
+"POT-Creation-Date: 2005-08-14 16:36+0400\n"
+"PO-Revision-Date: 2005-08-14 16:40+0400\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
-"X-Generator: KBabel 1.10\n"
+"X-Generator: KBabel 1.10.2\n"
 
 #: ../data/GNOME_Goobox.server.in.in.h:1
 msgid "Goobox Application"
@@ -139,8 +139,8 @@ msgstr "_Избранные дорожки"
 msgid "_Wave"
 msgstr "_Wave"
 
-#: ../data/goobox.desktop.in.h:1 ../src/goo-window.c:2357
-#: ../src/goo-window.c:2365
+#: ../data/goobox.desktop.in.h:1 ../src/goo-window.c:2518
+#: ../src/goo-window.c:2526
 msgid "CD Player"
 msgstr "Проигрыватель CD"
 
@@ -193,30 +193,30 @@ msgstr "Безымянный SCSI-привод (%s)"
 msgid "File image"
 msgstr "Файл изображения"
 
-#: ../src/dlg-cover-chooser.c:271
+#: ../src/dlg-cover-chooser.c:274
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, загружается изображение: %u"
 
-#: ../src/dlg-cover-chooser.c:309
+#: ../src/dlg-cover-chooser.c:312
 msgid "Loading images"
 msgstr "Загружаются изображения"
 
-#: ../src/dlg-cover-chooser.c:330 ../src/goo-window.c:3009
+#: ../src/dlg-cover-chooser.c:424 ../src/goo-window.c:3175
 msgid "Could not search a cover on Internet"
 msgstr "Не удалось найти обложку в Интернете"
 
-#: ../src/dlg-cover-chooser.c:338 ../src/dlg-cover-chooser.c:422
+#: ../src/dlg-cover-chooser.c:431
 msgid "No image found"
 msgstr "Изображения не найдены"
 
-#: ../src/dlg-cover-chooser.c:482 ../src/dlg-extract.c:219
-#: ../src/dlg-preferences.c:147
+#: ../src/dlg-cover-chooser.c:493 ../src/dlg-extract.c:219
+#: ../src/dlg-preferences.c:146
 #, c-format
 msgid "Could not display help: %s"
 msgstr "Не удалось отобразить справку: %s"
 
-#: ../src/dlg-cover-chooser.c:682
+#: ../src/dlg-cover-chooser.c:697
 msgid "Searching images..."
 msgstr "Идёт поиск изображений..."
 
@@ -243,55 +243,60 @@ msgstr ""
 msgid "No encoder available."
 msgstr "Нет доступных кодировщиков"
 
-#: ../src/dlg-preferences.c:168
+#: ../src/dlg-preferences.c:167
 #, c-format
 msgid "Nominal bitrate: %d Kbps"
 msgstr "Номинальная битовая частота: %d Кбит/с"
 
-#: ../src/dlg-preferences.c:172
+#: ../src/dlg-preferences.c:171
 #, c-format
 msgid "Compression level: %d"
 msgstr "Уровень сжатия: %d"
 
-#: ../src/dlg-preferences.c:176
+#: ../src/dlg-preferences.c:175
 #, c-format
-msgid "Bitrate: %d Kbps"
-msgstr "Битовая частота: %d Кбит/с"
+msgid "Quality: %d"
+msgstr "Качество: %d"
 
-#: ../src/dlg-preferences.c:351 ../src/dlg-preferences.c:359
+#: ../src/dlg-preferences.c:357 ../src/dlg-preferences.c:365
 msgid "Smaller size"
 msgstr "Меньший размер"
 
-#: ../src/dlg-preferences.c:355 ../src/dlg-preferences.c:363
+#: ../src/dlg-preferences.c:361 ../src/dlg-preferences.c:369
 msgid "Higher quality"
 msgstr "Лучше качество"
 
-#: ../src/dlg-preferences.c:367
+#: ../src/dlg-preferences.c:373
 msgid "Faster compression"
 msgstr "Быстрее сжатие"
 
-#: ../src/dlg-preferences.c:371
+#: ../src/dlg-preferences.c:377
 msgid "Higher compression"
 msgstr "Лучше сжатие"
 
-#: ../src/dlg-ripper.c:320
+#: ../src/dlg-ripper.c:215
+#, c-format
+msgid "Elapsed: %s / Remaining: %s"
+msgstr "Уже длится: %s / Осталось: %s"
+
+#: ../src/dlg-ripper.c:382
 msgid "Could not display the destination folder"
 msgstr "Не удалось отобразить конечный каталог"
 
-#: ../src/dlg-ripper.c:462
+#: ../src/dlg-ripper.c:524
 msgid "Tracks extracted successfully"
 msgstr "Дорожки успешно скопированы"
 
-#: ../src/dlg-ripper.c:464
+#: ../src/dlg-ripper.c:526
 msgid "_View destination folder"
 msgstr "_Открыть конечный каталог"
 
-#: ../src/dlg-ripper.c:477
+#: ../src/dlg-ripper.c:539
 #, c-format
 msgid "Extracting track %d of %d: %s"
 msgstr "Копируется дорожка %d из %d: %s"
 
-#: ../src/dlg-ripper.c:530
+#: ../src/dlg-ripper.c:592
 msgid "Ripped with Goobox"
 msgstr "Скопировано при помощи Goobox"
 
@@ -342,7 +347,7 @@ msgstr "%s / %s"
 msgid "Click here to choose a cover for this CD"
 msgstr "Щёлкните тут для выбора обложки CD"
 
-#: ../src/goo-player-info.c:686 ../src/goo-window.c:1433
+#: ../src/goo-player-info.c:686 ../src/goo-window.c:1445
 msgid "Paused"
 msgstr "Приостановлено"
 
@@ -358,7 +363,7 @@ msgstr "Проверяется CD-привод"
 msgid "Reading CD"
 msgstr "Читается CD"
 
-#: ../src/goo-player-info.c:722 ../src/goo-window.c:1457
+#: ../src/goo-player-info.c:722 ../src/goo-window.c:1459
 msgid "Audio CD"
 msgstr "Звуковой CD"
 
@@ -404,80 +409,81 @@ msgstr "Спр_ятать дорожки"
 msgid "Show _tracks"
 msgstr "Показать д_орожки"
 
-#: ../src/goo-window.c:192
+#: ../src/goo-window.c:193
 #, c-format
 msgid "%d track"
 msgid_plural "%d tracks"
 msgstr[0] "%d дорожка"
-msgstr[1] "%d дорожек"
+msgstr[1] "%d дорожки"
+msgstr[2] "%d дорожек"
 
-#: ../src/goo-window.c:196
+#: ../src/goo-window.c:197
 #, c-format
 msgid "year %d"
 msgstr "год %d"
 
-#: ../src/goo-window.c:635
+#: ../src/goo-window.c:636
 msgid "Length"
 msgstr "Продолжительность"
 
-#: ../src/goo-window.c:636
+#: ../src/goo-window.c:637
 msgid "Title"
 msgstr "Название"
 
-#: ../src/goo-window.c:637
+#: ../src/goo-window.c:638
 msgid "Artist"
 msgstr "Исполнитель"
 
-#: ../src/goo-window.c:645
+#: ../src/goo-window.c:646
 msgid "#"
 msgstr "#"
 
-#: ../src/goo-window.c:1339 ../src/ui.h:65
+#: ../src/goo-window.c:1340 ../src/ui.h:65
 msgid "_Pause"
 msgstr "_Приостановить"
 
-#: ../src/goo-window.c:1340
+#: ../src/goo-window.c:1341
 msgid "Pause playing"
 msgstr "Пауза воспроизведения"
 
-#: ../src/goo-window.c:1565 ../src/goo-window.c:1582 ../src/ui.h:53
+#: ../src/goo-window.c:1723 ../src/goo-window.c:1740 ../src/ui.h:53
 #: ../src/ui.h:57 ../src/ui.h:61
 msgid "_Play"
 msgstr "_Воспроизвести"
 
-#: ../src/goo-window.c:1566 ../src/goo-window.c:1583
+#: ../src/goo-window.c:1724 ../src/goo-window.c:1741
 msgid "Play CD"
 msgstr "Воспроизвести CD"
 
-#: ../src/goo-window.c:2673
+#: ../src/goo-window.c:2834
 msgid "Could not eject the CD"
 msgstr "Не удалось открыть лоток с CD"
 
-#: ../src/goo-window.c:2685
+#: ../src/goo-window.c:2846
 msgid "Could not read drive"
 msgstr "Не удалось считать CD"
 
-#: ../src/goo-window.c:2877
+#: ../src/goo-window.c:3039
 msgid "Could not save cover image"
 msgstr "Не удалось сохранить обложку"
 
-#: ../src/goo-window.c:2887
+#: ../src/goo-window.c:3049
 msgid "Could not load image"
 msgstr "Не удалось загрузить изображение"
 
-#: ../src/goo-window.c:2946
+#: ../src/goo-window.c:3110
 msgid "Choose CD Cover Image"
 msgstr "Выберите обложку CD"
 
-#: ../src/goo-window.c:2965
+#: ../src/goo-window.c:3129
 msgid "Images"
 msgstr "Избражения"
 
-#: ../src/goo-window.c:2973
+#: ../src/goo-window.c:3137
 msgid "All files"
 msgstr "Все файлы"
 
-#: ../src/goo-window.c:3010
+#: ../src/goo-window.c:3176
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -485,20 +491,20 @@ msgstr ""
 "Для того, чтобы найти обложку, нужно сначала указать исполнителя и название "
 "альбома"
 
-#: ../src/goo-window.c:3047
+#: ../src/goo-window.c:3215
 msgid "_Show Window"
-msgstr "Показать окно"
+msgstr "Показать _окно"
 
-#: ../src/goo-window.c:3048
+#: ../src/goo-window.c:3216
 msgid "Show the main window"
 msgstr "Показать основное окно"
 
-#: ../src/goo-window.c:3061 ../src/ui.h:117
+#: ../src/goo-window.c:3229 ../src/ui.h:117
 msgid "_Hide Window"
 msgstr "_Спрятать окно"
 
 #. "H"
-#: ../src/goo-window.c:3062 ../src/ui.h:118
+#: ../src/goo-window.c:3230 ../src/ui.h:118
 msgid "Hide the main window"
 msgstr "Спрятать основное окно"
 
