@@ -1,3 +1,16 @@
+2005-08-28  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c (window_update_statusbar_list_info): changed
+	status info.
+
+	* src/dlg-extract.c (dlg_extract): 
+	* configure.in: require libglade 2.5.0 for GtkFileChooserButton.  Fixes
+	debian bug #319713.
+	
+	* src/dlg-ripper.c (rip_current_track): use GST_TAG_MERGE_REPLACE
+	instead of GST_TAG_MERGE_APPEND.  Patch by Helge Kreutzmann.  Fixes 
+	debian bug #319719.
+
 2005-08-04  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* configure.in: removed m4 macro directory.
@@ -7,7 +20,7 @@
 	* configure.in: 
 	* Makefile.am: 
 
-	Fixes bug # 312261: Gnome-doc-utils migration patch.
+	Fixes bug #312261: Gnome-doc-utils migration patch.
 	Patch by Tommi Vainikainen.
 
 2005-07-20  Paolo Bacchilega  <paobac@cvs.gnome.org>

@@ -62,7 +62,7 @@ typedef struct {
 	GtkWidget   *dialog;
 	GtkWidget   *e_alltrack_radiobutton;
 	GtkWidget   *e_selected_radiobutton;
-#ifdef HAVE_GTK_2_5
+#ifdef USE_LIBGLADE_2_5
 	GtkWidget   *e_destination_filechooserbutton;
 #else
 	GtkWidget   *e_destination_entry;
@@ -161,14 +161,14 @@ ok_cb (GtkWidget  *widget,
        DialogData *data)
 {
 	const char    *destination;
-#ifdef HAVE_GTK_2_5
+#ifdef USE_LIBGLADE_2_5
 	char          *unesc_destination = NULL;
 #endif
 	GooFileFormat  file_format = GOO_FILE_FORMAT_OGG;
 
 	/* save preferences */
 
-#ifdef HAVE_GTK_2_5
+#ifdef USE_LIBGLADE_2_5
 	destination = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (data->e_destination_filechooserbutton));
 	unesc_destination = gnome_vfs_unescape_string (destination, "");
 	eel_gconf_set_path (PREF_EXTRACT_DESTINATION, unesc_destination);
@@ -231,7 +231,7 @@ help_cb (GtkWidget  *widget,
 }
 
 
-#ifndef HAVE_GTK_2_5
+#ifndef USE_LIBGLADE_2_5
 
 
 static void
@@ -307,7 +307,7 @@ dlg_extract (GooWindow *window)
 	GstElement       *encoder;
 	gboolean          ogg_encoder, flac_encoder, mp3_encoder, wave_encoder;
 	gboolean          find_first_available;
-#ifdef HAVE_GTK_2_5
+#ifdef USE_LIBGLADE_2_5
 	char             *esc_uri = NULL;
 #endif
 
@@ -337,7 +337,7 @@ dlg_extract (GooWindow *window)
 
 	data->e_alltrack_radiobutton = glade_xml_get_widget (data->gui, "e_alltrack_radiobutton");
 	data->e_selected_radiobutton = glade_xml_get_widget (data->gui, "e_selected_radiobutton");
-#ifdef HAVE_GTK_2_5
+#ifdef USE_LIBGLADE_2_5
 	data->e_destination_filechooserbutton = glade_xml_get_widget (data->gui, "e_destination_filechooserbutton");
 #else
 	data->e_destination_entry = glade_xml_get_widget (data->gui, "e_destination_entry");
@@ -377,7 +377,7 @@ dlg_extract (GooWindow *window)
 
 	path = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "~");
 
-#ifdef HAVE_GTK_2_5
+#ifdef USE_LIBGLADE_2_5
 	gtk_widget_show (data->e_destination_filechooserbutton);
 	esc_uri = gnome_vfs_escape_host_and_path_string (path);
 	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (data->e_destination_filechooserbutton), esc_uri);
@@ -514,7 +514,7 @@ dlg_extract (GooWindow *window)
 			  "clicked",
 			  G_CALLBACK (ok_cb),
 			  data);
-#ifndef HAVE_GTK_2_5
+#ifndef USE_LIBGLADE_2_5
 	g_signal_connect (G_OBJECT (data->e_destination_button), 
 			  "clicked",
 			  G_CALLBACK (destination_button_clicked_cb),

@@ -68,6 +68,17 @@ fi
 AC_MSG_RESULT($have_gtk_2_5)
 
 dnl
+dnl LibGlade version
+dnl
+AC_MSG_CHECKING(for libglade 2.5.x)
+use_libglade_2_5=no
+if pkg-config --atleast-version=2.5.0 libglade-2.0 && test x"$have_gtk_2_5" = "xyes"; then
+   use_libglade_2_5="yes"
+   AC_DEFINE(USE_LIBGLADE_2_5, 1, [Use libglade 2.5.x])
+fi
+AC_MSG_RESULT($use_libglade_2_5)
+
+dnl
 dnl IDL modules
 dnl
 IDL_MODULES="bonobo-activation-2.0 libbonobo-2.0 libbonoboui-2.0"
@@ -193,5 +204,6 @@ Configuration:
         Source code location:   ${srcdir}
         Compiler:               ${CC}
     	Have Gtk+ 2.5.x:        ${have_gtk_2_5}
+    	Use LibGlade 2.5.x:     ${use_libglade_2_5}
 	Enable multimedia keys: ${use_mmkeys}
 "

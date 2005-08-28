@@ -195,25 +195,26 @@ window_update_statusbar_list_info (GooWindow *window)
 
 		year = goo_player_get_year (priv->player);
 		if (year > 0)
-			year_s = g_strdup_printf (_("year %d"), year);
+			/*year_s = g_strdup_printf (_("year %d"), year);*/
+			year_s = g_strdup_printf ("(%d)", year);
                 else
 			year_s = NULL;
 		
 		status = g_string_new (NULL);
 
-		if (album != NULL) {
-			g_string_append (status, album);
-			g_string_append (status, ", ");
-		}
-
-		if (year_s != NULL) {
-			g_string_append (status, year_s);
-			g_string_append (status, ", ");
-		}
-
 		g_string_append (status, tracks_s);
 		g_string_append (status, ", ");
 		g_string_append (status, time_text);
+
+		if (album != NULL) {
+			g_string_append (status, ", ");
+			g_string_append (status, album);
+		}
+		
+		if (year_s != NULL) {
+			g_string_append (status, " ");
+			g_string_append (status, year_s);
+		}
 
 		gtk_statusbar_push (GTK_STATUSBAR (priv->statusbar), 
 				    priv->list_info_cid, 

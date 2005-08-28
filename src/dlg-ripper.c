@@ -582,7 +582,7 @@ rip_current_track (DialogData *data)
 
 	if (GST_IS_TAG_SETTER (data->encoder)) {
 		gst_tag_setter_add (GST_TAG_SETTER (data->encoder),   
-				    GST_TAG_MERGE_APPEND,
+				    GST_TAG_MERGE_REPLACE,
 				    GST_TAG_TITLE, track->title,
 				    GST_TAG_ARTIST, data->artist,
 				    GST_TAG_ALBUM, data->album,
@@ -595,13 +595,13 @@ rip_current_track (DialogData *data)
 				    NULL);
 		if (data->genre != NULL)
 			gst_tag_setter_add (GST_TAG_SETTER (data->encoder),   
-					    GST_TAG_MERGE_APPEND,
+					    GST_TAG_MERGE_REPLACE,
 					    GST_TAG_GENRE, data->genre,
 					    NULL);
 		if (data->year != 0) {
 			GDate *d = g_date_new_dmy (1, 1, data->year);
 			gst_tag_setter_add (GST_TAG_SETTER (data->encoder),   
-					    GST_TAG_MERGE_APPEND,
+					    GST_TAG_MERGE_REPLACE,
 					    GST_TAG_DATE,  g_date_get_julian (d),
 					    NULL);
 			g_date_free (d);
