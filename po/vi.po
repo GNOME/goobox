@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: goobox Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-08-26 04:29+0000\n"
-"PO-Revision-Date: 2005-09-04 22:00+0930\n"
+"PO-Revision-Date: 2005-09-16 17:04+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgstr "<b>Ổ đĩa CD</b>"
 
 #: ../data/glade/goobox.glade.h:3
 msgid "<b>Destination folder</b>"
-msgstr "<b>Danh mục đích</b>"
+msgstr "<b>thư mục đích</b>"
 
 #: ../data/glade/goobox.glade.h:4
 msgid "<b>Extract</b>"
@@ -70,7 +70,7 @@ msgstr "Tùy chọn _cấp cao"
 
 #: ../data/glade/goobox.glade.h:10 ../src/dlg-extract.c:263
 msgid "Choose destination folder"
-msgstr "Hãy chọn danh mục đích."
+msgstr "Hãy chọn thư mục đích."
 
 #: ../data/glade/goobox.glade.h:11
 msgid "Encoding"
@@ -283,7 +283,7 @@ msgstr "Đã qua: %s / Còn lại: %s"
 
 #: ../src/dlg-ripper.c:382
 msgid "Could not display the destination folder"
-msgstr "Không thể hiển thị danh mục đích"
+msgstr "Không thể hiển thị thư mục đích"
 
 #: ../src/dlg-ripper.c:524
 msgid "Tracks extracted successfully"
@@ -291,7 +291,7 @@ msgstr "Trích xong các rãnh"
 
 #: ../src/dlg-ripper.c:526
 msgid "_View destination folder"
-msgstr "_Xem danh mục đích"
+msgstr "_Xem thư mục đích"
 
 #: ../src/dlg-ripper.c:539
 #, c-format
