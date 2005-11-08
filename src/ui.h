@@ -107,7 +107,7 @@ static GtkActionEntry action_entries[] = {
 	  G_CALLBACK (activate_action_pick_cover_from_disk) },
 	{ "SearchCoverFromWeb", GOO_STOCK_WEB,
 	  N_("_Search on Internet"), NULL,
-	  N_("Search a CD cover on Internet"),
+	  N_("Search for a CD cover on Internet"),
 	  G_CALLBACK (activate_action_search_cover_on_internet) },
 	{ "RemoveCover", GTK_STOCK_REMOVE,
 	  N_("_Remove Cover"), NULL,

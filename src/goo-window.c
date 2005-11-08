@@ -3174,7 +3174,7 @@ goo_window_search_cover_on_internet (GooWindow *window)
 
 	if ((album == NULL) || (artist == NULL)) {
 		_gtk_error_dialog_run (GTK_WINDOW (window),
-				       _("Could not search a cover on Internet"),
+				       _("Could not search for a cover on Internet"),
 				       _("You have to enter the artist and album names in order to find the album cover."));
 		return;
 	}

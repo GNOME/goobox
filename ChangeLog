@@ -1,9 +1,17 @@
 2005-11-08  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/ui.h: 
+	* src/goo-window.c (goo_window_search_cover_on_internet): 
+	* src/dlg-cover-chooser.c (search_result_saved_cb): 
+
+	Fixed bug #315292: One error in the PO file.
+	
 	* configure.in: require gstreamer >= 0.8.11
 
 	* src/goo-player-cd.c (cd_player_skip_to, update_progress_cb): 
 	do not add the from_sector value anymore.
+
+	Fixes bug #320699: the length bar stops when playing a song.
 
 2005-08-28  Paolo Bacchilega  <paobac@cvs.gnome.org>
 

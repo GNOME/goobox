@@ -421,7 +421,7 @@ search_result_saved_cb (DialogData *data,
 {
 	if (! success) {
 		_gtk_error_dialog_run (GTK_WINDOW (data->dialog),
-				       _("Could not search a cover on Internet"),
+				       _("Could not search for a cover on Internet"),
 				       gnome_vfs_result_to_string (data->vfs_result));
 		return;
 	}
