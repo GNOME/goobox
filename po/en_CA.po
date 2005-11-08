@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-18 04:55-0400\n"
+"POT-Creation-Date: 2005-11-08 12:28-0500\n"
 "PO-Revision-Date: 2005-07-18 01:43-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -137,7 +137,7 @@ msgstr "_Selected tracks"
 msgid "_Wave"
 msgstr "_Wave"
 
-#: data/goobox.desktop.in.h:1 src/goo-window.c:2518 src/goo-window.c:2526
+#: data/goobox.desktop.in.h:1 src/goo-window.c:2520 src/goo-window.c:2528
 msgid "CD Player"
 msgstr "CD Player"
 
@@ -201,9 +201,9 @@ msgstr "%u, loading image: %u"
 msgid "Loading images"
 msgstr "Loading images"
 
-#: src/dlg-cover-chooser.c:424 src/goo-window.c:3175
-msgid "Could not search a cover on Internet"
-msgstr "Could not search a cover on Internet"
+#: src/dlg-cover-chooser.c:424 src/goo-window.c:3177
+msgid "Could not search for a cover on Internet"
+msgstr "Could not search for a cover on Internet"
 
 #: src/dlg-cover-chooser.c:431
 msgid "No image found"
@@ -319,19 +319,19 @@ msgstr "Error reading CD"
 msgid "The specified device is not valid"
 msgstr "The specified device is not valid"
 
-#: src/goo-player-cd.c:795
+#: src/goo-player-cd.c:792
 msgid "Drive not ready"
 msgstr "Drive not ready"
 
-#: src/goo-player-cd.c:799
+#: src/goo-player-cd.c:796
 msgid "Tray open"
 msgstr "Tray open"
 
-#: src/goo-player-cd.c:800 src/goo-player-cd.c:804
+#: src/goo-player-cd.c:797 src/goo-player-cd.c:801
 msgid "No disc"
 msgstr "No disc"
 
-#: src/goo-player-cd.c:808
+#: src/goo-player-cd.c:805
 msgid "Data CD"
 msgstr "Data CD"
 
@@ -345,7 +345,7 @@ msgstr "%s / %s"
 msgid "Click here to choose a cover for this CD"
 msgstr "Click here to choose a cover for this CD"
 
-#: src/goo-player-info.c:686 src/goo-window.c:1445
+#: src/goo-player-info.c:686 src/goo-window.c:1447
 msgid "Paused"
 msgstr "Paused"
 
@@ -361,7 +361,7 @@ msgstr "Checking CD drive"
 msgid "Reading CD"
 msgstr "Reading CD"
 
-#: src/goo-player-info.c:722 src/goo-window.c:1459
+#: src/goo-player-info.c:722 src/goo-window.c:1461
 msgid "Audio CD"
 msgstr "Audio CD"
 
@@ -406,80 +406,75 @@ msgstr "Hide _tracks"
 msgid "Show _tracks"
 msgstr "Show _tracks"
 
-#: src/goo-window.c:193
+#: src/goo-window.c:194
 #, c-format
 msgid "%d track"
 msgid_plural "%d tracks"
 msgstr[0] "%d track"
 msgstr[1] "%d tracks"
 
-#: src/goo-window.c:197
-#, c-format
-msgid "year %d"
-msgstr "year %d"
-
-#: src/goo-window.c:636
+#: src/goo-window.c:638
 msgid "Length"
 msgstr "Length"
 
-#: src/goo-window.c:637
+#: src/goo-window.c:639
 msgid "Title"
 msgstr "Title"
 
-#: src/goo-window.c:638
+#: src/goo-window.c:640
 msgid "Artist"
 msgstr "Artist"
 
-#: src/goo-window.c:646
+#: src/goo-window.c:648
 msgid "#"
 msgstr "#"
 
-#: src/goo-window.c:1340 src/ui.h:65
+#: src/goo-window.c:1342 src/ui.h:65
 msgid "_Pause"
 msgstr "_Pause"
 
-#: src/goo-window.c:1341
+#: src/goo-window.c:1343
 msgid "Pause playing"
 msgstr "Pause playing"
 
-#: src/goo-window.c:1723 src/goo-window.c:1740 src/ui.h:53 src/ui.h:57
+#: src/goo-window.c:1725 src/goo-window.c:1742 src/ui.h:53 src/ui.h:57
 #: src/ui.h:61
 msgid "_Play"
 msgstr "_Play"
 
-#: src/goo-window.c:1724 src/goo-window.c:1741
+#: src/goo-window.c:1726 src/goo-window.c:1743
 msgid "Play CD"
 msgstr "Play CD"
 
-#: src/goo-window.c:2834
+#: src/goo-window.c:2836
 msgid "Could not eject the CD"
 msgstr "Could not eject the CD"
 
-#: src/goo-window.c:2846
+#: src/goo-window.c:2848
 msgid "Could not read drive"
 msgstr "Could not read drive"
 
-#: src/goo-window.c:3039
+#: src/goo-window.c:3041
 msgid "Could not save cover image"
 msgstr "Could not save cover image"
 
-#: src/goo-window.c:3049
+#: src/goo-window.c:3051
 msgid "Could not load image"
 msgstr "Could not load image"
 
-#: src/goo-window.c:3110
+#: src/goo-window.c:3112
 msgid "Choose CD Cover Image"
 msgstr "Choose CD Cover Image"
 
-#: src/goo-window.c:3129
+#: src/goo-window.c:3131
 msgid "Images"
 msgstr "Images"
 
-#: src/goo-window.c:3137
+#: src/goo-window.c:3139
 msgid "All files"
 msgstr "All files"
 
-#: src/goo-window.c:3176
+#: src/goo-window.c:3178
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -487,20 +482,20 @@ msgstr ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 
-#: src/goo-window.c:3215
+#: src/goo-window.c:3217
 msgid "_Show Window"
 msgstr "_Show Window"
 
-#: src/goo-window.c:3216
+#: src/goo-window.c:3218
 msgid "Show the main window"
 msgstr "Show the main window"
 
-#: src/goo-window.c:3229 src/ui.h:117
+#: src/goo-window.c:3231 src/ui.h:117
 msgid "_Hide Window"
 msgstr "_Hide Window"
 
 #. "H"
-#: src/goo-window.c:3230 src/ui.h:118
+#: src/goo-window.c:3232 src/ui.h:118
 msgid "Hide the main window"
 msgstr "Hide the main window"
 
@@ -696,8 +691,8 @@ msgid "_Search on Internet"
 msgstr "_Search on Internet"
 
 #: src/ui.h:110
-msgid "Search a CD cover on Internet"
-msgstr "Search a CD cover on Internet"
+msgid "Search for a CD cover on Internet"
+msgstr "Search for a CD cover on Internet"
 
 #: src/ui.h:113
 msgid "_Remove Cover"
