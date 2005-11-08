@@ -548,7 +548,7 @@ goo_player_info_init (GooPlayerInfo *info)
 			  G_CALLBACK (time_scale_value_changed_cb), 
 			  info);
 	g_signal_connect (priv->time_scale, 
-			  "button-press-event",
+			  "button_press_event",
 			  G_CALLBACK (time_scale_button_press_cb), 
 			  info);
 	g_signal_connect (priv->time_scale, 

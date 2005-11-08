@@ -1,3 +1,10 @@
+2005-11-08  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* configure.in: require gstreamer >= 0.8.11
+
+	* src/goo-player-cd.c (cd_player_skip_to, update_progress_cb): 
+	do not add the from_sector value anymore.
+
 2005-08-28  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-window.c (window_update_statusbar_list_info): changed

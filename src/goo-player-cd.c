@@ -221,8 +221,7 @@ update_progress_cb (gpointer callback_data)
 	GooPlayer   *player = GOO_PLAYER (player_cd);
 	GooPlayerCDPrivateData *priv = player_cd->priv;
 	gboolean     ret;
-	guint64      sector = 0;
-	gint64       from_sector;
+	gint64       sector = 0;
 	double       fraction;
 
 	if (priv->update_progress_id != 0) {
@@ -234,8 +233,7 @@ update_progress_cb (gpointer callback_data)
 	if (!ret)
 		return FALSE;
 
-	from_sector = priv->current_track->from_sector - TOC_OFFSET;
-	fraction = ((double) (sector - from_sector)) / (double) priv->current_track->sectors;
+	fraction = ((double) sector) / (double) priv->current_track->sectors;
 	g_signal_emit_by_name (G_OBJECT (player), 
 			       "progress", 
 			       fraction,
@@ -575,7 +573,7 @@ cd_player_skip_to (GooPlayer *player,
 {
 	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
 	GooPlayerCDPrivateData *priv = player_cd->priv;
-	gint64       from_sector, to_sector, sectors;
+	gint64       to_sector, sectors;
 	GstEvent    *event;
 
 	if (goo_player_get_is_busy (player))
@@ -584,10 +582,9 @@ cd_player_skip_to (GooPlayer *player,
 	if (priv->play_thread == NULL)
 		return;
 
-	from_sector = priv->current_track->from_sector - TOC_OFFSET;
 	to_sector = priv->current_track->to_sector - TOC_OFFSET;
 
-	sectors = (from_sector + ((gint64) SECTORS_PER_SEC * seconds));
+	sectors = (gint64) SECTORS_PER_SEC * seconds;
 	sectors = MIN (sectors, to_sector - 1);
 
 	event = gst_event_new_seek (priv->sector_format | GST_SEEK_METHOD_SET | GST_SEEK_FLAG_FLUSH, sectors);

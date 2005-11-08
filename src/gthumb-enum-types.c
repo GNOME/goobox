@@ -3,7 +3,6 @@
 
 #include <glib-object.h>
 
-
 /* enumerations from "gth-image-list.h" */
 #include "gth-image-list.h"
 GType
@@ -26,7 +25,6 @@ gth_cursor_movement_get_type (void)
   }
   return etype;
 }
-
 GType
 gth_selection_change_get_type (void)
 {
@@ -42,7 +40,6 @@ gth_selection_change_get_type (void)
   }
   return etype;
 }
-
 
 /* Generated data ends here */
 
