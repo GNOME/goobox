@@ -22,7 +22,8 @@ INCLUDES =						\
 	-DGLADEDIR=\""$(gladedir)"\" 			\
 	-DGOO_GLADEDIR=\""$(gladedir)"\"     		\
 	$(DISABLE_DEPRECATED)				\
-	$(GOO_CFLAGS)
+	$(GOO_CFLAGS)					\
+	$(LIBNOTIFY_CFLAGS)
 
 gnome_media_cddbslave2_idl_sources =           	\
 	GNOME_Media_CDDBSlave2-stubs.c         	\
@@ -187,6 +188,7 @@ gthumb-enum-types.c: $(GTH_HEADER_FILES) $(GLIB_MKENUMS) $(srcdir)/gthumb-enum-t
 
 goobox_LDADD = 					\
 	$(GOO_LIBS) 				\
+	$(LIBNOTIFY_LIBS)			\
 	$(SYSTEM_LIBS)
 
 EXTRA_DIST = 					\

@@ -1,5 +1,20 @@
 2005-11-09  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* NEWS: updated.
+
+	* src/ui.h: Added Quit on the tray icon popup menu.
+
+	* src/main.h: 
+	* src/main.c: 
+	* src/goo-window.c: 
+	* src/Makefile.am: 
+	* configure.in: 
+
+	Notify the playing track when the main window is hidden.  
+	Requires libnotify.
+
+	* src/dlg-ripper.c (update_progress_cb): use gint64 instead of guint64
+	
 	* src/goo-player-cd.c (list_thread): use GST_QUERY_SEGMENT_END
 	instead of GST_QUERY_TOTAL, as suggested by Felix Riemann (#312657).
 	(cd_player_skip_to): fixed computation of the last available sector.

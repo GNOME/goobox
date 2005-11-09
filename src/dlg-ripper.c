@@ -240,7 +240,7 @@ update_progress_cb (gpointer callback_data)
 	DialogData  *data = callback_data;
 	TrackInfo   *track = data->current_track->data;
 	gint64       from_sector;
-	guint64      sector = 0;
+	gint64       sector = 0;
 	gboolean     ret;
 
 	if (data->update_handle != 0) {

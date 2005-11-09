@@ -45,6 +45,11 @@
 #include <gdk/gdkx.h>
 #endif /* HAVE_MMKEYS */
 
+#ifdef HAVE_LIBNOTIFY
+#include <libnotify/notify.h>
+static NotifyHandle *notify_h = NULL;
+#endif /* HAVE_LIBNOTIFY */
+
 GtkWindow *main_window = NULL;
 int        AutoPlay = FALSE;
 int        PlayPause = FALSE;
@@ -184,6 +189,12 @@ int main (int argc, char **argv)
 	
 	gst_init (NULL, NULL);
 	/*gst_use_threads (TRUE);*/
+
+
+#ifdef HAVE_LIBNOTIFY
+	if (! notify_init ("goobox")) 
+                g_error ("Cannot initialize notification system.");
+#endif /* HAVE_LIBNOTIFY */
 
 	goo_stock_init ();
 	init_session (argv);
@@ -537,3 +548,27 @@ init_mmkeys (void)
 }
 
 #endif /* HAVE_MMKEYS */
+
+
+void 
+system_notify (const char *title,
+	       const char *msg)
+{
+#ifdef HAVE_LIBNOTIFY
+	NotifyIcon *icon = notify_icon_new_from_uri("goobox");
+
+	notify_h = notify_send_notification (notify_h,
+					     "device",
+					     NOTIFY_URGENCY_NORMAL,
+					     title,
+					     msg,
+					     icon,
+					     TRUE, 0, 
+					     NULL, // no hints
+					     NULL, // no user data
+					     0);
+	
+	if (icon != NULL)
+		notify_icon_destroy(icon);
+#endif /* HAVE_LIBNOTIFY */
+}

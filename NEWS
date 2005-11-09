@@ -1,3 +1,15 @@
+version 0.9.93
+--------------
+	* Notify the playing track when the main window is hidden. Requires 
+          libnotify.
+	* Added the Quit command on the tray icon popup menu.
+	* Fixed bug #312657: all tracks have a length of 0:00.
+	* Fixed bug #315292: One error in the PO file.
+	* Fixed bug #320699: the length bar stops when playing a song.
+	* Fixed bug #312261: Gnome-doc-utils migration patch.
+	* Requires libglade 2.5.0 or greater.
+	* Requires gstreamer 0.8.11.
+
 version 0.9.92
 --------------
 	* Automatically fetch the cover image on Internet for CDs the user

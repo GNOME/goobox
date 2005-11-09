@@ -130,6 +130,7 @@ struct _GooWindowPrivateData {
 	GtkWidget       *preview;
 	int              pos_x, pos_y;
 	gboolean         hibernate;
+	gboolean         notify_action;
 };
 
 static int icon_size = 0;
@@ -919,6 +920,9 @@ play_song (GooWindow *window,
 	   gint       track_number)
 {
 	GooWindowPrivateData *priv = window->priv;
+
+	if (!GTK_WIDGET_VISIBLE (window))
+		priv->notify_action = TRUE;
 	goo_player_seek_song (priv->player, track_number);
 }
 
@@ -1344,6 +1348,34 @@ player_start_cb (GooPlayer       *player,
 					   GOO_STOCK_PAUSE,
 					   "/MenuBar/CDMenu/",
 					   NULL);
+
+#ifdef HAVE_LIBNOTIFY
+		if (priv->notify_action) {
+			GString    *info = g_string_new("");
+			const char *artist, *album;
+
+			artist = goo_player_get_subtitle (priv->player);
+			if (artist != NULL) {
+				char *e_artist = g_markup_escape_text (artist, -1);
+				g_string_append_printf (info, "<big>%s</big>\n", e_artist);
+				g_free (e_artist);
+			}
+
+			album = goo_player_get_title (priv->player);
+			if (album != NULL) {
+				char *e_album = g_markup_escape_text (album, -1);
+				g_string_append_printf (info, "<i>%s</i>", e_album);
+				g_free (e_album);
+			}
+
+			system_notify (priv->current_song->title,
+				       info->str);
+			g_string_free (info, TRUE);
+
+			priv->notify_action = FALSE;
+		}
+#endif /* HAVE_LIBNOTIFY */
+
 		break;
 	default:
 		break;
@@ -1468,11 +1500,12 @@ window_update_title (GooWindow *window)
 
 	gtk_window_set_title (GTK_WINDOW (window), title->str);
 
-	if (priv->tray_tips != NULL)
+	if (priv->tray_tips != NULL) {
 		gtk_tooltips_set_tip (GTK_TOOLTIPS (priv->tray_tips), 
 				      priv->tray_box, 
 				      title->str,
 				      NULL);
+	}
 
 	g_string_free (title, TRUE);
 }

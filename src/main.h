@@ -29,4 +29,7 @@ extern GtkWindow *main_window;
 extern int AutoPlay;
 extern int HideShow;
 
+void system_notify (const char *title,
+		    const char *msg);
+
 #endif /* MAIN_H */

@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
  
-AC_INIT(goobox, 0.9.92)
+AC_INIT(goobox, 0.9.93)
 AC_CONFIG_SRCDIR(src/main.c)
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
@@ -26,6 +26,7 @@ LIBBONOBO_REQUIRED=2.6.0
 GNOME_VFS_REQUIRED=2.6.0
 LIBGLADE_REQUIRED=2.4.0
 GSTREAMER_REQUIRED=0.8.11
+LIBNOTIFY_REQUIRED=0.2.1
 
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GTK_REQUIRED)
@@ -34,6 +35,7 @@ AC_SUBST(LIBGNOMEUI_REQUIRED)
 AC_SUBST(GNOME_VFS_REQUIRED)
 AC_SUBST(LIBGLADE_REQUIRED)
 AC_SUBST(GSTREAMER_REQUIRED)
+AC_SUBST(LIBNOTIFY_REQUIRED)
 
 dnl ===========================================================================
 
@@ -122,6 +124,25 @@ else
 fi
 AC_MSG_RESULT($use_mmkeys)
 
+dnl
+dnl libnotify
+dnl
+AC_MSG_CHECKING(for libnotify)
+have_libnotify=no
+LIBNOTIFY_LIBS=""
+LIBNOTIFY_CFLAGS=""
+if pkg-config --atleast-version=$LIBNOTIFY_REQUIRED libnotify; then
+   have_libnotify=yes
+   LIBNOTIFY_LIBS=`pkg-config --libs libnotify`
+   LIBNOTIFY_CFLAGS=`pkg-config --cflags libnotify`
+   AC_DEFINE(HAVE_LIBNOTIFY, 1, [Have libnotify])
+fi
+AC_MSG_RESULT($have_libnotify)
+AC_SUBST(LIBNOTIFY_LIBS)
+AC_SUBST(LIBNOTIFY_CFLAGS)
+
+
+
 dnl ******************************
 
 SYSTEM_LIBS=""
@@ -206,4 +227,5 @@ Configuration:
     	Have Gtk+ 2.5.x:        ${have_gtk_2_5}
     	Use LibGlade 2.5.x:     ${use_libglade_2_5}
 	Enable multimedia keys: ${use_mmkeys}
+	Enable notification:    ${have_libnotify}
 "
