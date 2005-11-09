@@ -1,3 +1,9 @@
+2005-11-09  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-player-cd.c (list_thread): use GST_QUERY_SEGMENT_END
+	instead of GST_QUERY_TOTAL, as suggested by Felix Riemann (#312657).
+	(cd_player_skip_to): fixed computation of the last available sector.
+
 2005-11-08  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/ui.h: 

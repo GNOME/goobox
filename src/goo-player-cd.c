@@ -417,7 +417,7 @@ list_thread (void *thread_data)
 
 	debug (DEBUG_INFO, "TOTAL TRACKS: %" G_GINT64_FORMAT "\n", priv->n_tracks);
 
-	gst_pad_query (priv->source_pad, GST_QUERY_TOTAL, &(priv->sector_format), &total_sectors);
+	gst_pad_query (priv->source_pad, GST_QUERY_SEGMENT_END, &(priv->sector_format), &total_sectors);
 	total_sectors += TOC_OFFSET;
 	
 	debug (DEBUG_INFO, "TOTAL SECTORS: %" G_GINT64_FORMAT "\n", total_sectors);
@@ -573,7 +573,7 @@ cd_player_skip_to (GooPlayer *player,
 {
 	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
 	GooPlayerCDPrivateData *priv = player_cd->priv;
-	gint64       to_sector, sectors;
+	gint64       to_sector, last_sector;
 	GstEvent    *event;
 
 	if (goo_player_get_is_busy (player))
@@ -582,12 +582,11 @@ cd_player_skip_to (GooPlayer *player,
 	if (priv->play_thread == NULL)
 		return;
 
-	to_sector = priv->current_track->to_sector - TOC_OFFSET;
+	last_sector = priv->current_track->to_sector - priv->current_track->from_sector;
+	to_sector = (gint64) SECTORS_PER_SEC * seconds;
+	to_sector = MIN (to_sector, last_sector - 1);
 
-	sectors = (gint64) SECTORS_PER_SEC * seconds;
-	sectors = MIN (sectors, to_sector - 1);
-
-	event = gst_event_new_seek (priv->sector_format | GST_SEEK_METHOD_SET | GST_SEEK_FLAG_FLUSH, sectors);
+	event = gst_event_new_seek (priv->sector_format | GST_SEEK_METHOD_SET | GST_SEEK_FLAG_FLUSH, to_sector);
 	if (!gst_pad_send_event (priv->source_pad, event))
 		g_warning ("seek failed");
 }
