@@ -127,21 +127,26 @@ AC_MSG_RESULT($use_mmkeys)
 dnl
 dnl libnotify
 dnl
-AC_MSG_CHECKING(for libnotify)
+
+AC_ARG_ENABLE(notification,[AC_HELP_STRING([--enable-notification],[enable current track notification if libnotify is available [default=yes]])],, [enable_notification="yes"])
+AM_CONDITIONAL(ENABLE_NOTIFICATION, test "x$enable_notification" = xyes)
+
 have_libnotify=no
 LIBNOTIFY_LIBS=""
 LIBNOTIFY_CFLAGS=""
-if pkg-config --atleast-version=$LIBNOTIFY_REQUIRED libnotify; then
-   have_libnotify=yes
-   LIBNOTIFY_LIBS=`pkg-config --libs libnotify`
-   LIBNOTIFY_CFLAGS=`pkg-config --cflags libnotify`
-   AC_DEFINE(HAVE_LIBNOTIFY, 1, [Have libnotify])
+if test x"$enable_notification" = xyes; then
+   AC_MSG_CHECKING(for libnotify)
+
+   if pkg-config --atleast-version=$LIBNOTIFY_REQUIRED libnotify; then
+      have_libnotify=yes
+      LIBNOTIFY_LIBS=`pkg-config --libs libnotify`
+      LIBNOTIFY_CFLAGS=`pkg-config --cflags libnotify`
+      AC_DEFINE(HAVE_LIBNOTIFY, 1, [Have libnotify])
+   fi
 fi
 AC_MSG_RESULT($have_libnotify)
 AC_SUBST(LIBNOTIFY_LIBS)
 AC_SUBST(LIBNOTIFY_CFLAGS)
-
-
 
 dnl ******************************
 

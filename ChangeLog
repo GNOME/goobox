@@ -1,3 +1,8 @@
+2005-11-10  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* configure.in: added --enable-notification option
+	to configure to enable/disable notification.
+
 2005-11-09  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* NEWS: updated.
