@@ -1,3 +1,7 @@
+2005-11-10  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* de.po: Fixed bug #321150: german translation has al little typo
+
 2005-11-08  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.

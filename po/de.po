@@ -43,7 +43,7 @@ msgstr "<b>CD-Laufwerk</b>"
 
 #: ../data/glade/goobox.glade.h:3
 msgid "<b>Destination folder</b>"
-msgstr "<b>Zielordner/b>"
+msgstr "<b>Zielordner</b>"
 
 #: ../data/glade/goobox.glade.h:4
 msgid "<b>Extract</b>"
