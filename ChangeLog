@@ -1,3 +1,12 @@
+2005-11-18  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	[ version 0.9.93 released ]
+
+	* src/main.h (system_notify): 
+	* src/main.c (system_notify): 
+	* src/goo-window.c (player_start_cb): added position hint to the
+	notification.
+
 2005-11-10  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* configure.in: added --enable-notification option

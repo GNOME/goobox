@@ -30,6 +30,8 @@ extern int AutoPlay;
 extern int HideShow;
 
 void system_notify (const char *title,
-		    const char *msg);
+		    const char *msg,
+		    int         x,
+		    int         y);
 
 #endif /* MAIN_H */

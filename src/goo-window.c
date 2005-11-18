@@ -1353,6 +1353,7 @@ player_start_cb (GooPlayer       *player,
 		if (priv->notify_action) {
 			GString    *info = g_string_new("");
 			const char *artist, *album;
+			int         x = -1, y = -1;
 
 			artist = goo_player_get_subtitle (priv->player);
 			if (artist != NULL) {
@@ -1368,10 +1369,19 @@ player_start_cb (GooPlayer       *player,
 				g_free (e_album);
 			}
 
+			if (priv->tray != NULL) {
+				GdkWindow *win = priv->tray->window;
+				int        w, h;
+				gdk_window_get_origin (win, &x, &y);
+				gdk_window_get_geometry (win, NULL, NULL, &w, &h, NULL);
+				y += h;
+				x += (w / 2);
+			}
 			system_notify (priv->current_song->title,
-				       info->str);
-			g_string_free (info, TRUE);
+				       info->str,
+				       x, y);
 
+			g_string_free (info, TRUE);
 			priv->notify_action = FALSE;
 		}
 #endif /* HAVE_LIBNOTIFY */

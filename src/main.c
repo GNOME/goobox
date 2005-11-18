@@ -552,10 +552,19 @@ init_mmkeys (void)
 
 void 
 system_notify (const char *title,
-	       const char *msg)
+	       const char *msg,
+	       int         x,
+	       int         y)
 {
 #ifdef HAVE_LIBNOTIFY
-	NotifyIcon *icon = notify_icon_new_from_uri("goobox");
+	NotifyIcon  *icon = notify_icon_new_from_uri("goobox");
+	NotifyHints *hints = NULL;
+
+	if ((x >= 0) && (y >= 0)) {
+		hints = notify_hints_new ();
+		notify_hints_set_int (hints, "x", x);
+		notify_hints_set_int (hints, "y", y);
+	}
 
 	notify_h = notify_send_notification (notify_h,
 					     "device",
@@ -564,11 +573,11 @@ system_notify (const char *title,
 					     msg,
 					     icon,
 					     TRUE, 0, 
-					     NULL, // no hints
+					     hints, // no hints
 					     NULL, // no user data
 					     0);
 	
 	if (icon != NULL)
-		notify_icon_destroy(icon);
+		notify_icon_destroy (icon);
 #endif /* HAVE_LIBNOTIFY */
 }
