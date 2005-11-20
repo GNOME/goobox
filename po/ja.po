@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox v0.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-21 00:19+0900\n"
-"PO-Revision-Date: 2005-07-21 00:18+0900\n"
+"POT-Creation-Date: 2005-11-20 16:39+0900\n"
+"PO-Revision-Date: 2005-11-20 16:35+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -136,8 +136,8 @@ msgstr "指定したトラック(_S)"
 msgid "_Wave"
 msgstr "Wave(_W)"
 
-#: ../data/goobox.desktop.in.h:1 ../src/goo-window.c:2518
-#: ../src/goo-window.c:2526
+#: ../data/goobox.desktop.in.h:1 ../src/goo-window.c:2563
+#: ../src/goo-window.c:2571
 msgid "CD Player"
 msgstr "CD プレイヤー"
 
@@ -172,7 +172,7 @@ msgstr ""
 msgid "Goobox"
 msgstr "Goobox"
 
-#: ../src/actions.c:206 ../src/actions.c:221 ../src/main.c:122
+#: ../src/actions.c:206 ../src/actions.c:221 ../src/main.c:127
 msgid "CD player and ripper"
 msgstr "CD を演奏したり切り出したりします"
 
@@ -202,8 +202,8 @@ msgstr "%u (ジャケットの読み込み中: %u)"
 msgid "Loading images"
 msgstr "ジャケットの読み込み中"
 
-#: ../src/dlg-cover-chooser.c:424 ../src/goo-window.c:3175
-msgid "Could not search a cover on Internet"
+#: ../src/dlg-cover-chooser.c:424 ../src/goo-window.c:3220
+msgid "Could not search for a cover on Internet"
 msgstr "インターネットから CD ジャケットを検索できませんでした"
 
 #: ../src/dlg-cover-chooser.c:431
@@ -322,19 +322,19 @@ msgstr "CD を読み込む際にエラー"
 msgid "The specified device is not valid"
 msgstr "指定したデバイスが間違っています"
 
-#: ../src/goo-player-cd.c:795
+#: ../src/goo-player-cd.c:791
 msgid "Drive not ready"
 msgstr "ドライブが使用中です"
 
-#: ../src/goo-player-cd.c:799
+#: ../src/goo-player-cd.c:795
 msgid "Tray open"
 msgstr "トレイを開く"
 
-#: ../src/goo-player-cd.c:800 ../src/goo-player-cd.c:804
+#: ../src/goo-player-cd.c:796 ../src/goo-player-cd.c:800
 msgid "No disc"
 msgstr "ディスクなし"
 
-#: ../src/goo-player-cd.c:808
+#: ../src/goo-player-cd.c:804
 msgid "Data CD"
 msgstr "データ CD"
 
@@ -348,7 +348,7 @@ msgstr "%s / %s"
 msgid "Click here to choose a cover for this CD"
 msgstr "ここをクリックすると、この CD のジャケットを変更できます"
 
-#: ../src/goo-player-info.c:686 ../src/goo-window.c:1445
+#: ../src/goo-player-info.c:686 ../src/goo-window.c:1489
 msgid "Paused"
 msgstr "停止中"
 
@@ -364,7 +364,7 @@ msgstr "CD ドライブのチェック中"
 msgid "Reading CD"
 msgstr "CD の読み込み中"
 
-#: ../src/goo-player-info.c:722 ../src/goo-window.c:1459
+#: ../src/goo-player-info.c:722 ../src/goo-window.c:1503
 msgid "Audio CD"
 msgstr "音楽 CD"
 
@@ -410,100 +410,95 @@ msgstr "トラック数を隠す(_T)"
 msgid "Show _tracks"
 msgstr "トラック数の表示(_T)"
 
-#: ../src/goo-window.c:193
+#: ../src/goo-window.c:195
 #, c-format
 msgid "%d track"
 msgid_plural "%d tracks"
 msgstr[0] "トラック数 %d"
 msgstr[1] "トラック数 %d"
 
-#: ../src/goo-window.c:197
-#, c-format
-msgid "year %d"
-msgstr "制作年 %d"
-
-#: ../src/goo-window.c:636
+#: ../src/goo-window.c:639
 msgid "Length"
 msgstr "演奏時間"
 
-#: ../src/goo-window.c:637
+#: ../src/goo-window.c:640
 msgid "Title"
 msgstr "題名"
 
-#: ../src/goo-window.c:638
+#: ../src/goo-window.c:641
 msgid "Artist"
 msgstr "アーティスト"
 
-#: ../src/goo-window.c:646
+#: ../src/goo-window.c:649
 msgid "#"
 msgstr "#"
 
-#: ../src/goo-window.c:1340 ../src/ui.h:65
+#: ../src/goo-window.c:1346 ../src/ui.h:65
 msgid "_Pause"
 msgstr "一時停止(_P)"
 
-#: ../src/goo-window.c:1341
+#: ../src/goo-window.c:1347
 msgid "Pause playing"
 msgstr "演奏を一時停止します"
 
-#: ../src/goo-window.c:1723 ../src/goo-window.c:1740 ../src/ui.h:53
+#: ../src/goo-window.c:1768 ../src/goo-window.c:1785 ../src/ui.h:53
 #: ../src/ui.h:57 ../src/ui.h:61
 msgid "_Play"
 msgstr "演奏(_P)"
 
-#: ../src/goo-window.c:1724 ../src/goo-window.c:1741
+#: ../src/goo-window.c:1769 ../src/goo-window.c:1786
 msgid "Play CD"
 msgstr "CD を演奏します"
 
-#: ../src/goo-window.c:2834
+#: ../src/goo-window.c:2879
 msgid "Could not eject the CD"
 msgstr "CD を取り出せませんでした"
 
-#: ../src/goo-window.c:2846
+#: ../src/goo-window.c:2891
 msgid "Could not read drive"
 msgstr "ドライブを読み込めませんでした"
 
-#: ../src/goo-window.c:3039
+#: ../src/goo-window.c:3084
 msgid "Could not save cover image"
 msgstr "ジャケットの画像を保存できませんでした"
 
-#: ../src/goo-window.c:3049
+#: ../src/goo-window.c:3094
 msgid "Could not load image"
 msgstr "ジャケットの画像を読み込めませんでした"
 
-#: ../src/goo-window.c:3110
+#: ../src/goo-window.c:3155
 msgid "Choose CD Cover Image"
 msgstr "CD ジャケットの画像の選択"
 
-#: ../src/goo-window.c:3129
+#: ../src/goo-window.c:3174
 msgid "Images"
 msgstr "画像"
 
-#: ../src/goo-window.c:3137
+#: ../src/goo-window.c:3182
 msgid "All files"
 msgstr "全てのファイル"
 
-#: ../src/goo-window.c:3176
+#: ../src/goo-window.c:3221
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 msgstr ""
 "アルバムのジャケットを検索するにはアーティストとアルバム名を入力して下さい。"
 
-#: ../src/goo-window.c:3215
+#: ../src/goo-window.c:3260
 msgid "_Show Window"
 msgstr "ウィンドウの表示(_S)"
 
-#: ../src/goo-window.c:3216
+#: ../src/goo-window.c:3261
 msgid "Show the main window"
 msgstr "メイン・ウィンドウを表示します"
 
-#: ../src/goo-window.c:3229 ../src/ui.h:117
+#: ../src/goo-window.c:3274 ../src/ui.h:117
 msgid "_Hide Window"
 msgstr "ウィンドウを隠す(_H)"
 
 #. "H"
-#: ../src/goo-window.c:3230 ../src/ui.h:118
+#: ../src/goo-window.c:3275 ../src/ui.h:118
 msgid "Hide the main window"
 msgstr "メイン・ウィンドウを隠します"
 
@@ -519,55 +514,55 @@ msgstr "プレビュー"
 msgid "pixels"
 msgstr "ピクセル"
 
-#: ../src/main.c:73
+#: ../src/main.c:78
 msgid "CD device to be used"
 msgstr "使用する CD-ROM ドライブを指定する"
 
-#: ../src/main.c:74
+#: ../src/main.c:79
 msgid "DEVICE_PATH"
 msgstr "DEVICE_PATH"
 
-#: ../src/main.c:76
+#: ../src/main.c:81
 msgid "Play the CD on startup"
 msgstr "起動したら CD を演奏する"
 
-#: ../src/main.c:79 ../src/ui.h:54
+#: ../src/main.c:84 ../src/ui.h:54
 msgid "Play/Pause"
 msgstr "CD を演奏したり、演奏を一時停止します"
 
-#: ../src/main.c:82 ../src/ui.h:74
+#: ../src/main.c:87 ../src/ui.h:74
 msgid "Play the next track"
 msgstr "次のトラックを演奏します"
 
-#: ../src/main.c:85 ../src/ui.h:78
+#: ../src/main.c:90 ../src/ui.h:78
 msgid "Play the previous track"
 msgstr "前のトラックを演奏します"
 
-#: ../src/main.c:88 ../src/ui.h:82
+#: ../src/main.c:93 ../src/ui.h:82
 msgid "Eject the CD"
 msgstr "CD を取り出します"
 
-#: ../src/main.c:91
+#: ../src/main.c:96
 msgid "Hide/Show the main window"
 msgstr "メイン・ウィンドウの ON/OFF を切り替える"
 
-#: ../src/main.c:94
+#: ../src/main.c:99
 msgid "Volume Up"
 msgstr "音量レベルを上げる"
 
-#: ../src/main.c:97
+#: ../src/main.c:102
 msgid "Volume Down"
 msgstr "音量レベルを下げる"
 
-#: ../src/main.c:100 ../src/ui.h:102
+#: ../src/main.c:105 ../src/ui.h:102
 msgid "Quit the application"
 msgstr "アプリケーションを終了します"
 
-#: ../src/main.c:254
+#: ../src/main.c:265
 msgid "Cannot start the CD player"
 msgstr "CD プレイヤーを起動できません"
 
-#: ../src/main.c:255
+#: ../src/main.c:266
 msgid ""
 "In order to read CDs you have to install the cdparanoia gstreamer plugin"
 msgstr ""
@@ -700,8 +695,8 @@ msgid "_Search on Internet"
 msgstr "インターネットで検索(_S)"
 
 #: ../src/ui.h:110
-msgid "Search a CD cover on Internet"
-msgstr "CD ジャケットをインターネットを介して取得します"
+msgid "Search for a CD cover on Internet"
+msgstr "インターネットから CD ジャケットを取得します"
 
 #: ../src/ui.h:113
 msgid "_Remove Cover"
