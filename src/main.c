@@ -193,7 +193,7 @@ int main (int argc, char **argv)
 
 #ifdef HAVE_LIBNOTIFY
 	if (! notify_init ("goobox")) 
-                g_error ("Cannot initialize notification system.");
+                g_warning ("Cannot initialize notification system.");
 #endif /* HAVE_LIBNOTIFY */
 
 	goo_stock_init ();
@@ -557,6 +557,9 @@ system_notify (const char *title,
 	       int         y)
 {
 #ifdef HAVE_LIBNOTIFY
+	if(!notify_is_initted())
+		return;
+
 	NotifyIcon  *icon = notify_icon_new_from_uri("goobox");
 	NotifyHints *hints = NULL;
 

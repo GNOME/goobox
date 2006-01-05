@@ -1,3 +1,14 @@
+2006-01-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/main.c (main, system_notify): 
+
+	Fixed bug #325867 - goobox shouldn't die if libnotify couldn't be 
+	initialized.  Patch by Felix Riemann.
+
+2005-11-19  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/ui.h: use the stock labels as much as possible.
+
 2005-11-18  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	[ version 0.9.93 released ]
