@@ -1,4 +1,8 @@
-2006-01-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
+2006-01-24  Clytie Siddall <clytie@riverland.net.au>
+
+	* configure.in	Added vi in ALL_LINGUAS line.
+	
+	2006-01-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/main.c (main, system_notify): 
 
@@ -140,7 +144,7 @@
 	Automatically fetch the cover image on Internet the first time a CD is
 	inserted.
 
-2005-05-16  Iñaki Larrañaga  <dooteo@euskalgnu.org>
+2005-05-16  Iï¿½aki Larraï¿½aga  <dooteo@euskalgnu.org>
 
 	* configure.in: Added "eu" (Basque) to ALL_LINGUAS.
 
