@@ -1,3 +1,9 @@
+2006-02-06  Jens Seidel  <jensseidel@users.sf.net>
+
+	* de.po: German translation update and fixes done by myself and Helge
+	Kreutzmann <kreutzm@itp.uni-hannover.de>. Compare
+	http://bugs.debian.org/314066.
+	
 2006-02-01  Ilkka Tuohela  <hile@iki.fi>
 
 	* fi.po: Updated Finnish translation.
