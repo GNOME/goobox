@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sound-juicer 0.5.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-11 21:48+0200\n"
-"PO-Revision-Date: 2005-04-11 21:54+0200\n"
+"POT-Creation-Date: 2005-05-05 15:51+0200\n"
+"PO-Revision-Date: 2005-05-05 16:03+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -219,7 +219,7 @@ msgid "Searching images..."
 msgstr "Søker etter bilder..."
 
 #: ../src/dlg-extract.c:420
-#, c-format, fuzzy
+#, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
 "CD tracks:\n"
@@ -228,7 +228,13 @@ msgid ""
 "• %s → FLAC\n"
 "• %s → Mp3\n"
 "• %s → Wave"
-msgstr "Du må ha minst en av følgende GStreamer-tillegg installert for å hente ut spor:\n\n"
+msgstr ""
+"Du må ha minst en av følgende GStreamer-tillegg installert for å hente ut spor:\n"
+"\n"
+"* %s Ogg Vorbis\n"
+"* %s FLAC\n"
+"* %s Mp3\n"
+"* %s Wave"
 
 #: ../src/dlg-extract.c:433
 msgid "No encoder available."
@@ -429,7 +435,7 @@ msgstr "_Pause"
 
 #: ../src/goo-window.c:1340
 msgid "Pause playing"
-msgstr ""
+msgstr "Sett avspilling på pause"
 
 #: ../src/goo-window.c:1565 ../src/goo-window.c:1582 ../src/ui.h:53
 #: ../src/ui.h:57 ../src/ui.h:61
