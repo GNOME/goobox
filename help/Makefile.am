@@ -5,4 +5,4 @@ DOC_MODULE = goobox
 DOC_ENTITIES = legal.xml
 DOC_INCLUDES = 
 
-DOC_LINGUAS =
+DOC_LINGUAS = sv

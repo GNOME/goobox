@@ -1,3 +1,8 @@
+2006-11-16  Daniel Nylander <po@danielnylander.se>
+
+	* sv/sv.po: Added Swedish translation.
+	* Makefile.am: Added sv to DOC_LINGUAS.
+
 2005-08-01  Tommi Vainikainen  <thv@iki.fi>
 
 	* Makefile.am, C/Makefile.am, C/goobox-C.omf, goobox.omf.in,
