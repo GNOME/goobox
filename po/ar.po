@@ -1,380 +1,816 @@
 # translation of goobox.po to 
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) 2004 THE PACKAGE'S COPYRIGHT HOLDER, 2004.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 15:12+0200\n"
-"PO-Revision-Date: 2004-10-16 11:08+0200\n"
-"Last-Translator:  <lumina@silverpen.de>\n"
+"POT-Creation-Date: 2006-07-22 20:59+0200\n"
+"PO-Revision-Date: 2006-11-17 23:55+0100\n"
+"Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;"
 
-#: data/glade/goobox.glade.h:1
-msgid "    "
-msgstr "    "
-
-#: data/glade/goobox.glade.h:2
-msgid "<b>CD Drive</b>"
-msgstr "<b>سوّاقة الأقراص المدمجة</b>"
-
-#: data/glade/goobox.glade.h:3
-msgid "<b>Destination folder</b>"
-msgstr "<b>المجلّد الهدف</b>"
-
-#: data/glade/goobox.glade.h:4
-msgid "<b>Extract</b>"
-msgstr "<b>إستخراج</b>"
-
-#: data/glade/goobox.glade.h:5
-msgid "<b>File type</b>"
-msgstr "<b>نوع الملفّ</b>"
-
-#: data/glade/goobox.glade.h:6
-msgid "Choose destination folder"
-msgstr "انتقي المجلّد الهدف"
-
-#: data/glade/goobox.glade.h:7
-msgid "Excellent quality lossless compression"
-msgstr "ضغط ذي جودة ممتازة و دون خسارة"
-
-#: data/glade/goobox.glade.h:8
-msgid "Extract Tracks"
-msgstr "استخراج المقطوعات"
-
-#: data/glade/goobox.glade.h:9
-msgid "Extracting Tracks"
-msgstr "جاري إستخراج المقطوعات"
-
-#: data/glade/goobox.glade.h:10
-msgid "Good quality lossy compression"
-msgstr "ضغط ذي جودة طيّبة لكنّ بخسارة"
-
-#: data/glade/goobox.glade.h:11
-msgid "High quality lossy compression"
-msgstr "ضغط ذي جودة جيّدة لكنّ بخسارة"
-
-#: data/glade/goobox.glade.h:12
-msgid "Preferences"
-msgstr "تفضيلات"
-
-#: data/glade/goobox.glade.h:13
-msgid "Raw audio"
-msgstr "صوت خام"
-
-#: data/glade/goobox.glade.h:14
-msgid "_All tracks"
-msgstr "_كلّ المقطوعات"
-
-#: data/glade/goobox.glade.h:15
-msgid "_FLAC"
-msgstr "FLAC"
-
-#: data/glade/goobox.glade.h:16
-msgid "_MP3"
-msgstr "MP3"
-
-#: data/glade/goobox.glade.h:17
-msgid "_Ogg Vorbis"
-msgstr "Ogg Vorbis"
-
-#: data/glade/goobox.glade.h:18
-msgid "_Selected tracks"
-msgstr "المقطوعات المُ_نتقات"
-
-#: data/glade/goobox.glade.h:19
-msgid "_Wave"
-msgstr "Wave"
-
-#: data/goobox.desktop.in.h:1 src/goo-window.c:1802 src/goo-window.c:1808
-msgid "CD Player"
-msgstr "عازف الأقراص المدمجة"
-
-#: data/goobox.desktop.in.h:2
-msgid "Play and extract CDs"
-msgstr "عزف و إستخراج الأقراص المدمجة"
-
-#: data/GNOME_Goobox.server.in.in.h:1
+#: ../data/GNOME_Goobox.server.in.in.h:1
 msgid "Goobox Application"
 msgstr "تطبيق غوبُكس"
 
-#: data/GNOME_Goobox.server.in.in.h:2
+#: ../data/GNOME_Goobox.server.in.in.h:2
 msgid "Goobox Application Factory"
 msgstr "مصنع تطبيق غوبُكس"
 
-#: src/actions.c:129
+#: ../data/glade/goo_cover_chooser.glade.h:1
+#, fuzzy
+msgid "Choose a CD Cover"
+msgstr "تفضيلات قاعدة بيانات القرص المدمج"
+
+#: ../data/glade/goo_cover_chooser.glade.h:2
+#, fuzzy
+msgid "Found images:"
+msgstr "كل الصّور"
+
+#: ../data/glade/goobox.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: ../data/glade/goobox.glade.h:2
+msgid "<b>CD Drive</b>"
+msgstr "<b>سوّاقة الأقراص المدمجة</b>"
+
+#: ../data/glade/goobox.glade.h:3
+msgid "<b>Destination folder</b>"
+msgstr "<b>المجلّد الهدف</b>"
+
+#: ../data/glade/goobox.glade.h:4
+msgid "<b>Extract</b>"
+msgstr "<b>إستخراج</b>"
+
+#: ../data/glade/goobox.glade.h:5
+#, fuzzy
+msgid "<b>FLAC</b>"
+msgstr "<b>سوّاقة الأقراص المدمجة</b>"
+
+#: ../data/glade/goobox.glade.h:6
+msgid "<b>File type</b>"
+msgstr "<b>نوع الملفّ</b>"
+
+#: ../data/glade/goobox.glade.h:7
+msgid "<b>MP3</b>"
+msgstr ""
+
+#: ../data/glade/goobox.glade.h:8
+#, fuzzy
+msgid "<b>Ogg Vorbis</b>"
+msgstr "Ogg Vorbis"
+
+#: ../data/glade/goobox.glade.h:9
+#, fuzzy
+msgid "Advanced _Options"
+msgstr "إخفاء خيارات القرص المتقدّمة"
+
+#: ../data/glade/goobox.glade.h:10
+#: ../src/dlg-extract.c:263
+msgid "Choose destination folder"
+msgstr "انتقي المجلّد الهدف"
+
+#: ../data/glade/goobox.glade.h:11
+#, fuzzy
+msgid "Encoding"
+msgstr "التشفيرة"
+
+#: ../data/glade/goobox.glade.h:12
+msgid "Excellent quality lossless compression"
+msgstr "ضغط ذي جودة ممتازة و دون خسارة"
+
+#: ../data/glade/goobox.glade.h:13
+msgid "Extract Tracks"
+msgstr "استخراج المقطوعات"
+
+#: ../data/glade/goobox.glade.h:14
+msgid "Extracting Tracks"
+msgstr "جاري إستخراج المقطوعات"
+
+#: ../data/glade/goobox.glade.h:15
+#, fuzzy
+msgid "General"
+msgstr "عامّ"
+
+#: ../data/glade/goobox.glade.h:16
+msgid "Good quality lossy compression"
+msgstr "ضغط ذي جودة طيّبة لكنّ بخسارة"
+
+#: ../data/glade/goobox.glade.h:17
+msgid "High quality lossy compression"
+msgstr "ضغط ذي جودة جيّدة لكنّ بخسارة"
+
+#: ../data/glade/goobox.glade.h:18
+msgid "Preferences"
+msgstr "تفضيلات"
+
+#: ../data/glade/goobox.glade.h:19
+msgid "Raw audio"
+msgstr "صوت خام"
+
+#: ../data/glade/goobox.glade.h:20
+msgid "_All tracks"
+msgstr "_كلّ المقطوعات"
+
+#: ../data/glade/goobox.glade.h:21
+msgid "_FLAC"
+msgstr "FLAC"
+
+#: ../data/glade/goobox.glade.h:22
+msgid "_MP3"
+msgstr "MP3"
+
+#: ../data/glade/goobox.glade.h:23
+msgid "_Ogg Vorbis"
+msgstr "Ogg Vorbis"
+
+#: ../data/glade/goobox.glade.h:24
+#, fuzzy
+msgid "_Save playlist"
+msgstr "حفظ قائمة التّشغيل"
+
+#: ../data/glade/goobox.glade.h:25
+msgid "_Selected tracks"
+msgstr "المقطوعات المُ_نتقات"
+
+#: ../data/glade/goobox.glade.h:26
+msgid "_Wave"
+msgstr "Wave"
+
+#: ../data/goobox.desktop.in.h:1
+#: ../src/goo-window.c:2563
+#: ../src/goo-window.c:2571
+msgid "CD Player"
+msgstr "عازف الأقراص المدمجة"
+
+#: ../data/goobox.desktop.in.h:2
+msgid "Play and extract CDs"
+msgstr "عزف و إستخراج الأقراص المدمجة"
+
+#: ../data/goobox.schemas.in.h:1
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr ""
+
+#: ../data/goobox.schemas.in.h:2
+msgid "Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgstr ""
+
+#: ../src/actions.c:139
+#, fuzzy
+msgid "Could not display help"
+msgstr "لم يمكن عرض المساعدة"
+
+#.
+#. const char       *documenters [] = {
+#. NULL
+#. };
+#: ../src/actions.c:192
 msgid "translator_credits"
 msgstr "عرفات المديني، تونس <lumina@silverpen.de>"
 
-#: src/actions.c:137
+#: ../src/actions.c:203
+#: ../src/actions.c:218
 msgid "Goobox"
 msgstr "غوبُكس"
 
-#: src/actions.c:140 src/main.c:75
+#: ../src/actions.c:206
+#: ../src/actions.c:221
+#: ../src/main.c:127
 msgid "CD player and ripper"
 msgstr "عازف و مستخرج الأقراص المدمجة"
 
-#: src/eggtrayicon.c:118
-msgid "Orientation"
-msgstr "الإتّجاه"
-
-#: src/eggtrayicon.c:119
-msgid "The orientation of the tray."
-msgstr "اتجاه المقبض."
-
-#: src/file-utils.c:588
-msgid "Cannot find a terminal, using xterm, even if it may not work"
-msgstr "لم يمكن ايجاد شاشة طرفيّة سيستخدم xterm حتى و إن لم يعمل"
-
-#: src/goo-cdrom-linux.c:125
-msgid "Error reading CD"
-msgstr "خطأ عند قراءة القرص المدمج"
-
-#: src/goo-player-cd.c:630
-msgid "Drive not ready"
-msgstr "السوّاقة غير مستعدّة"
-
-#: src/goo-player-cd.c:634
-msgid "Tray open"
-msgstr "الطبق مفتوح"
-
-#: src/goo-player-cd.c:638
-msgid "No disc"
-msgstr "لا وجود لقرص"
-
-#: src/goo-player-cd.c:642
-msgid "Data CD"
-msgstr "قرص بيانات مدمج"
-
-#: src/goo-player-info.c:425 src/goo-window.c:1142
-msgid "Paused"
-msgstr "اوقف مؤقتّا"
-
-#: src/goo-player-info.c:436
-msgid "Ejecting CD"
-msgstr "جاري طرد القرص المدمج"
-
-#: src/goo-player-info.c:440
-msgid "Checking CD drive"
-msgstr "جاري مراقبة السوّاقة"
-
-#: src/goo-player-info.c:444
-msgid "Reading CD"
-msgstr "جاري قراءة القرص المدمج"
-
-#: src/goo-player-info.c:457 src/goo-window.c:1162
-msgid "Audio CD"
-msgstr "قرص صوتي"
-
-#: src/goo-window.c:171
-#, c-format
-msgid "%d track, %s"
-msgid_plural "%d tracks, %s"
-msgstr[0] "المقطوعة %d، %s"
-
-#: src/goo-window.c:456
-msgid "Length"
-msgstr "المدّة"
-
-#: src/goo-window.c:457
-msgid "Title"
-msgstr "العنوان"
-
-#: src/goo-window.c:458
-msgid "Artist"
-msgstr "الفنان"
-
-#: src/goo-window.c:466
-msgid "#"
-msgstr "#"
-
-#: src/goo-window.c:955 src/ui.h:52
-msgid "_Pause"
-msgstr "_توقّف مؤقّت"
-
-#: src/goo-window.c:956
-msgid "Pause playing"
-msgstr "ايقاف مؤقّت للعزف"
-
-#: src/goo-window.c:1209 src/goo-window.c:1220 src/ui.h:44 src/ui.h:48
-msgid "_Play"
-msgstr "_عزف"
-
-#: src/goo-window.c:1210 src/goo-window.c:1221
-msgid "Play CD"
-msgstr "عزف القرص المدمج"
-
-#: src/goo-window.c:2003
-msgid "Could not eject the CD"
-msgstr "لم يمكن طرد القرص المدمج"
-
-#: src/goo-window.c:2015
-msgid "Could not read drive"
-msgstr "لم يمكن قراءة السوّاقة"
-
-#: src/gtk-utils.c:700
+#: ../src/actions.c:350
+#: ../src/gtk-utils.c:797
 msgid "Could not execute command"
 msgstr "لم يمكن تنفيذ الأمر"
 
-#: src/main.c:190
-msgid "Cannot start the CD player"
-msgstr "لم يمكن تشعيل عازف الأقراص المدمج"
+#: ../src/bacon-cd-selection.c:200
+#, fuzzy
+msgid "Unnamed CDROM"
+msgstr "قرص غير مسمّى"
 
-#: src/main.c:191
-msgid "In order to read CDs you have to install the cdparanoia gstreamer plugin"
-msgstr "يتوجّب عليك تثبيت ملحق cdparanoia لـ gstreamer حتّى يمكنك قراءة الأقراص المدمجة"
+#: ../src/cd-drive.c:835
+#, fuzzy, c-format
+msgid "Unnamed SCSI Drive (%s)"
+msgstr "مشغل من دون اسم"
 
-#: src/ui.h:34
-msgid "_CD"
-msgstr "_قرص مدمج"
+#: ../src/cd-drive.c:1395
+#, fuzzy
+msgid "File image"
+msgstr "صورة ملف"
 
-#: src/ui.h:35
-msgid "_Edit"
-msgstr "_تحرير"
+#: ../src/dlg-cover-chooser.c:274
+#, fuzzy, c-format
+msgid "%u, loading image: %u"
+msgstr "فشل تحميل الصورة ل %s"
 
-#: src/ui.h:36
-msgid "_View"
-msgstr "_عرض"
+#: ../src/dlg-cover-chooser.c:312
+#, fuzzy
+msgid "Loading images"
+msgstr "كل الصّور"
 
-#: src/ui.h:37
-msgid "_Help"
-msgstr "_مساعدة"
+#: ../src/dlg-cover-chooser.c:424
+#: ../src/goo-window.c:3220
+msgid "Could not search for a cover on Internet"
+msgstr ""
 
-#: src/ui.h:40
-msgid "_About"
-msgstr "_حول"
+#: ../src/dlg-cover-chooser.c:431
+#, fuzzy
+msgid "No image found"
+msgstr "لم يُعثر على أي جهاز"
 
-#: src/ui.h:41
-msgid "Information about the program"
-msgstr "معلومات عن البرنامج"
+#: ../src/dlg-cover-chooser.c:493
+#: ../src/dlg-extract.c:219
+#: ../src/dlg-preferences.c:146
+#, fuzzy, c-format
+msgid "Could not display help: %s"
+msgstr "لم يمكن عرض المساعدة: %s"
 
-#: src/ui.h:45
+#: ../src/dlg-cover-chooser.c:697
+#, fuzzy
+msgid "Searching images..."
+msgstr "كل الصّور"
+
+#: ../src/dlg-extract.c:420
+#, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+msgstr ""
+
+#: ../src/dlg-extract.c:433
+#, fuzzy
+msgid "No encoder available."
+msgstr "لا وجود لوصف."
+
+#: ../src/dlg-preferences.c:167
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr ""
+
+#: ../src/dlg-preferences.c:171
+#, fuzzy, c-format
+msgid "Compression level: %d"
+msgstr "مستوى واحد"
+
+#: ../src/dlg-preferences.c:175
+#, fuzzy, c-format
+msgid "Quality: %d"
+msgstr "جودة الصورة"
+
+#: ../src/dlg-preferences.c:357
+#: ../src/dlg-preferences.c:365
+#, fuzzy
+msgid "Smaller size"
+msgstr "حجم النص أصغر"
+
+#: ../src/dlg-preferences.c:361
+#: ../src/dlg-preferences.c:369
+#, fuzzy
+msgid "Higher quality"
+msgstr "جودة الصورة"
+
+#: ../src/dlg-preferences.c:373
+#, fuzzy
+msgid "Faster compression"
+msgstr "نسبة الضّغط:"
+
+#: ../src/dlg-preferences.c:377
+#, fuzzy
+msgid "Higher compression"
+msgstr "نسبة الضّغط:"
+
+#: ../src/dlg-ripper.c:215
+#, fuzzy, c-format
+msgid "Elapsed: %s / Remaining: %s"
+msgstr "بقي دقيقة واحدة (%d%%)"
+
+#: ../src/dlg-ripper.c:382
+#, fuzzy
+msgid "Could not display the destination folder"
+msgstr "لا يمكن انشاء الدليل المرسل اليه: %s."
+
+#: ../src/dlg-ripper.c:524
+#, fuzzy
+msgid "Tracks extracted successfully"
+msgstr "تمّ نسخ المقطوعات بنجاح."
+
+#: ../src/dlg-ripper.c:526
+#, fuzzy
+msgid "_View destination folder"
+msgstr "عرض المجلد الحالي"
+
+#: ../src/dlg-ripper.c:539
+#, fuzzy, c-format
+msgid "Extracting track %d of %d: %s"
+msgstr "قطعة مجهولة"
+
+#: ../src/dlg-ripper.c:592
+#, fuzzy
+msgid "Ripped with Goobox"
+msgstr "تم الاتصال مع %s باستخدام %s"
+
+#: ../src/eggtrayicon.c:118
+msgid "Orientation"
+msgstr "الإتّجاه"
+
+#: ../src/eggtrayicon.c:119
+msgid "The orientation of the tray."
+msgstr "اتجاه المقبض."
+
+#: ../src/file-utils.c:643
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr "لم يمكن ايجاد شاشة طرفيّة سيستخدم xterm حتى و إن لم يعمل"
+
+#: ../src/goo-cdrom-bsd.c:140
+#: ../src/goo-cdrom-linux.c:121
+#: ../src/goo-cdrom-solaris.c:123
+msgid "Error reading CD"
+msgstr "خطأ عند قراءة القرص المدمج"
+
+#: ../src/goo-cdrom.c:323
+#, fuzzy
+msgid "The specified device is not valid"
+msgstr "الموقع المدخل ليس سليماً."
+
+#: ../src/goo-player-cd.c:791
+msgid "Drive not ready"
+msgstr "السوّاقة غير مستعدّة"
+
+#: ../src/goo-player-cd.c:795
+msgid "Tray open"
+msgstr "الطبق مفتوح"
+
+#: ../src/goo-player-cd.c:796
+#: ../src/goo-player-cd.c:800
+msgid "No disc"
+msgstr "لا وجود لقرص"
+
+#: ../src/goo-player-cd.c:804
+msgid "Data CD"
+msgstr "قرص بيانات مدمج"
+
+#: ../src/goo-player-info.c:236
+#: ../src/goo-player-info.c:261
+#: ../src/goo-player-info.c:758
+#, fuzzy, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#: ../src/goo-player-info.c:499
+msgid "Click here to choose a cover for this CD"
+msgstr ""
+
+#: ../src/goo-player-info.c:686
+#: ../src/goo-window.c:1489
+msgid "Paused"
+msgstr "اوقف مؤقتّا"
+
+#: ../src/goo-player-info.c:697
+msgid "Ejecting CD"
+msgstr "جاري طرد القرص المدمج"
+
+#: ../src/goo-player-info.c:701
+msgid "Checking CD drive"
+msgstr "جاري مراقبة السوّاقة"
+
+#: ../src/goo-player-info.c:705
+#: ../src/goo-player-info.c:709
+msgid "Reading CD"
+msgstr "جاري قراءة القرص المدمج"
+
+#: ../src/goo-player-info.c:722
+#: ../src/goo-window.c:1503
+msgid "Audio CD"
+msgstr "قرص صوتي"
+
+#: ../src/goo-stock.c:53
+#, fuzzy
+msgid "_Extract"
+msgstr "ا_ستخراج"
+
+#: ../src/goo-stock.c:54
+#, fuzzy
+msgid "_Reset"
+msgstr "_تصفير"
+
+#: ../src/goo-stock.c:55
+#: ../src/goo-stock.c:56
+#: ../src/goo-stock.c:57
+#: ../src/goo-stock.c:58
+msgid "V_olume"
+msgstr ""
+
+#: ../src/goo-volume-button.c:147
+#: ../src/goo-volume-tool-button.c:284
+#, fuzzy, c-format
+msgid "Volume level: %3.0f%%"
+msgstr "احكام مستوى شدة الصوت"
+
+#: ../src/goo-volume-button.c:328
+#: ../src/goo-volume-tool-button.c:494
+#, fuzzy
+msgid "+"
+msgstr "+"
+
+#: ../src/goo-volume-button.c:344
+#: ../src/goo-volume-tool-button.c:510
+#, fuzzy
+msgid "-"
+msgstr "-"
+
+#: ../src/goo-volume-tool-button.c:538
+#, fuzzy
+msgid "Change the volume level"
+msgstr "احكام مستوى شدة الصوت"
+
+#: ../src/goo-volume-tool-button.c:605
+#, fuzzy
+msgid "Volume"
+msgstr "شدة الصوت"
+
+#: ../src/goo-window.c:65
+#, fuzzy
+msgid "Hide _tracks"
+msgstr "إ_خفاء أعمدة الأدوات"
+
+#: ../src/goo-window.c:66
+#, fuzzy
+msgid "Show _tracks"
+msgstr "اظهار التفاصيل"
+
+#: ../src/goo-window.c:195
+#, fuzzy, c-format
+msgid "%d track"
+msgid_plural "%d tracks"
+msgstr[0] "المقطع %s"
+
+#: ../src/goo-window.c:639
+msgid "Length"
+msgstr "المدّة"
+
+#: ../src/goo-window.c:640
+msgid "Title"
+msgstr "العنوان"
+
+#: ../src/goo-window.c:641
+msgid "Artist"
+msgstr "الفنان"
+
+#: ../src/goo-window.c:649
+msgid "#"
+msgstr "#"
+
+#: ../src/goo-window.c:1346
+#: ../src/ui.h:65
+msgid "_Pause"
+msgstr "_توقّف مؤقّت"
+
+#: ../src/goo-window.c:1347
+msgid "Pause playing"
+msgstr "ايقاف مؤقّت للعزف"
+
+#: ../src/goo-window.c:1768
+#: ../src/goo-window.c:1785
+#: ../src/ui.h:53
+#: ../src/ui.h:57
+#: ../src/ui.h:61
+msgid "_Play"
+msgstr "_عزف"
+
+#: ../src/goo-window.c:1769
+#: ../src/goo-window.c:1786
+msgid "Play CD"
+msgstr "عزف القرص المدمج"
+
+#: ../src/goo-window.c:2879
+msgid "Could not eject the CD"
+msgstr "لم يمكن طرد القرص المدمج"
+
+#: ../src/goo-window.c:2891
+msgid "Could not read drive"
+msgstr "لم يمكن قراءة السوّاقة"
+
+#: ../src/goo-window.c:3084
+#, fuzzy
+msgid "Could not save cover image"
+msgstr "لم يمكن حفظ المستند \"%s\" في \"%s\"."
+
+#: ../src/goo-window.c:3094
+#, fuzzy
+msgid "Could not load image"
+msgstr "لم يمكن تحميل دفتر العناوين"
+
+#: ../src/goo-window.c:3155
+#, fuzzy
+msgid "Choose CD Cover Image"
+msgstr "كتابة الصورة للقرص"
+
+#: ../src/goo-window.c:3174
+#, fuzzy
+msgid "Images"
+msgstr "صور"
+
+#: ../src/goo-window.c:3182
+#, fuzzy
+msgid "All files"
+msgstr "جميع الملفات"
+
+#: ../src/goo-window.c:3221
+msgid "You have to enter the artist and album names in order to find the album cover."
+msgstr ""
+
+#: ../src/goo-window.c:3260
+#, fuzzy
+msgid "_Show Window"
+msgstr "إظهار/إخفاء شريط حالة النّافذة."
+
+#: ../src/goo-window.c:3261
+#, fuzzy
+msgid "Show the main window"
+msgstr "ارتفاع النّافذة الرّئيسيّة."
+
+#: ../src/goo-window.c:3274
+#: ../src/ui.h:113
+#, fuzzy
+msgid "_Hide Window"
+msgstr "إظهار/إخفاء شريط حالة النّافذة."
+
+#. "H"
+#: ../src/goo-window.c:3275
+#: ../src/ui.h:114
+#, fuzzy
+msgid "Hide the main window"
+msgstr "ارتفاع النّافذة الرّئيسيّة."
+
+#: ../src/gth-image-list.c:3520
+#, fuzzy
+msgid "No image"
+msgstr "لا صورة."
+
+#: ../src/gtk-file-chooser-preview.c:203
+#, fuzzy
+msgid "Preview"
+msgstr "لمحة"
+
+#: ../src/gtk-file-chooser-preview.c:328
+#, fuzzy
+msgid "pixels"
+msgstr "بكسلات"
+
+#: ../src/main.c:78
+#, fuzzy
+msgid "CD device to be used"
+msgstr "سيستخدم GOK للتسجيل"
+
+#: ../src/main.c:79
+#, fuzzy
+msgid "DEVICE_PATH"
+msgstr "مسار الجهاز"
+
+#: ../src/main.c:81
+#, fuzzy
+msgid "Play the CD on startup"
+msgstr "عزف القرص المدمج عند البدأ"
+
+#: ../src/main.c:84
+#: ../src/ui.h:54
 msgid "Play/Pause"
 msgstr "عزف/إيقاف مؤقت"
 
-#: src/ui.h:49
-msgid "Play"
-msgstr "عزف"
+#: ../src/main.c:87
+#: ../src/ui.h:74
+#, fuzzy
+msgid "Play the next track"
+msgstr "مختصر مفتاح المقطوعة التالية."
 
-#: src/ui.h:53
-msgid "Pause"
-msgstr "إيقاف مؤقّت"
+#: ../src/main.c:90
+#: ../src/ui.h:78
+#, fuzzy
+msgid "Play the previous track"
+msgstr "مختصر مفتاح المقطوعة السابقة"
 
-#: src/ui.h:56
-msgid "_Stop"
-msgstr "_توقّف"
-
-#: src/ui.h:57
-msgid "Stop"
-msgstr "توقّف"
-
-#: src/ui.h:60
-msgid "_Next"
-msgstr "ال_تّالي"
-
-#: src/ui.h:61
-msgid "Play next track"
-msgstr "عزف القرص التّالي"
-
-#: src/ui.h:64
-msgid "Pre_v"
-msgstr "_سابق"
-
-#: src/ui.h:65
-msgid "Play previous track"
-msgstr "عزف المقطوعة السّابقة"
-
-#: src/ui.h:68
-msgid "_Eject"
-msgstr "_طرد"
-
-#: src/ui.h:69
-msgid "Eject CD"
+#: ../src/main.c:93
+#: ../src/ui.h:82
+#, fuzzy
+msgid "Eject the CD"
 msgstr "طرد القرص المدمج"
 
-#: src/ui.h:72
-msgid "_Reload"
-msgstr "إ_عادة التحميل"
+#: ../src/main.c:96
+#, fuzzy
+msgid "Hide/Show the main window"
+msgstr "إظهار/إخفاء شريط حالة النّافذة."
 
-#: src/ui.h:73
-msgid "Reload CD"
-msgstr "إعادة تحميل القرص المدمج"
+#: ../src/main.c:99
+#, fuzzy
+msgid "Volume Up"
+msgstr "صوت أعلى"
 
-#: src/ui.h:76
-msgid "_Preferences"
-msgstr "_تفضيلات"
+#: ../src/main.c:102
+#, fuzzy
+msgid "Volume Down"
+msgstr "صوت أخف"
 
-#: src/ui.h:77
-msgid "Edit various preferences"
-msgstr "تحرير تفضيلات متعدّدة"
-
-#: src/ui.h:80
-msgid "E_xtract Tracks"
-msgstr "إستخراج ال_مقطوعات"
-
-#: src/ui.h:81
-msgid "Save tracks to disk as files"
-msgstr "حفظ المقطوعات كملفّات على القرص"
-
-#: src/ui.h:84
-msgid "_CD Properties"
-msgstr "خصائص ال_قرص المدمج"
-
-#: src/ui.h:85
-msgid "Edit CD artist, album and tracks titles"
-msgstr "تحرير فنان و ألبوم و عناوين مقطوعات القرص المدمج"
-
-#: src/ui.h:88
-msgid "_Quit"
-msgstr "_إنهاء"
-
-#: src/ui.h:89
+#: ../src/main.c:105
+#: ../src/ui.h:98
 msgid "Quit the application"
 msgstr "إنهاء التطبيق"
 
-#: src/ui.h:97
+#: ../src/main.c:265
+msgid "Cannot start the CD player"
+msgstr "لم يمكن تشعيل عازف الأقراص المدمج"
+
+#: ../src/main.c:266
+msgid "In order to read CDs you have to install the cdparanoia gstreamer plugin"
+msgstr "يتوجّب عليك تثبيت ملحق cdparanoia لـ gstreamer حتّى يمكنك قراءة الأقراص المدمجة"
+
+#: ../src/track-info.c:118
+#, fuzzy, c-format
+msgid "Track %u"
+msgstr "المقطع %s"
+
+#: ../src/ui.h:34
+msgid "_CD"
+msgstr "_قرص مدمج"
+
+#: ../src/ui.h:35
+msgid "_Edit"
+msgstr "_تحرير"
+
+#: ../src/ui.h:36
+msgid "_View"
+msgstr "_عرض"
+
+#: ../src/ui.h:37
+msgid "_Help"
+msgstr "_مساعدة"
+
+#: ../src/ui.h:38
+#, fuzzy
+msgid "CD C_over"
+msgstr "إنتهت اللعبة!"
+
+#: ../src/ui.h:42
+msgid "Information about the program"
+msgstr "معلومات عن البرنامج"
+
+#: ../src/ui.h:46
+#, fuzzy
+msgid "Display the manual"
+msgstr "عرض توثيق فايل رلا"
+
+#: ../src/ui.h:49
+#, fuzzy
+msgid "_Keyboard shortcuts"
+msgstr "اختصارات لوحة المفاتيح"
+
+#: ../src/ui.h:58
+msgid "Play"
+msgstr "عزف"
+
+#: ../src/ui.h:62
+#, fuzzy
+msgid "Play this track"
+msgstr "هل يعزف هذا المرجوع صوتا"
+
+#: ../src/ui.h:66
+msgid "Pause"
+msgstr "إيقاف مؤقّت"
+
+#: ../src/ui.h:69
+msgid "_Stop"
+msgstr "_توقّف"
+
+#: ../src/ui.h:70
+#, fuzzy
+msgid "Stop playing"
+msgstr "عرض فيلم"
+
+#: ../src/ui.h:73
+msgid "_Next"
+msgstr "ال_تّالي"
+
+#: ../src/ui.h:77
+msgid "Pre_v"
+msgstr "_سابق"
+
+#: ../src/ui.h:81
+msgid "_Eject"
+msgstr "_طرد"
+
+#: ../src/ui.h:86
+msgid "Edit various preferences"
+msgstr "تحرير تفضيلات متعدّدة"
+
+#: ../src/ui.h:89
+msgid "E_xtract Tracks"
+msgstr "إستخراج ال_مقطوعات"
+
+#: ../src/ui.h:90
+#, fuzzy
+msgid "Save the tracks to disk as files"
+msgstr "حفظ المقطوعات كملفّات على القرص"
+
+#: ../src/ui.h:93
+msgid "_CD Properties"
+msgstr "خصائص ال_قرص المدمج"
+
+#: ../src/ui.h:94
+#, fuzzy
+msgid "Edit the CD artist, album and tracks titles"
+msgstr "تحرير فنان و ألبوم و عناوين مقطوعات القرص المدمج"
+
+#: ../src/ui.h:101
+#, fuzzy
+msgid "_Choose from Disk"
+msgstr "حجم مخبأ القرص"
+
+#: ../src/ui.h:102
+msgid "Choose a CD cover from the local disk"
+msgstr ""
+
+#: ../src/ui.h:105
+#, fuzzy
+msgid "_Search on Internet"
+msgstr "<b>برتكول الإنترنت (IPv4)</b>"
+
+#: ../src/ui.h:106
+msgid "Search for a CD cover on Internet"
+msgstr ""
+
+#: ../src/ui.h:109
+#, fuzzy
+msgid "_Remove Cover"
+msgstr "هل أحذف السمة \"%s\" ؟"
+
+#: ../src/ui.h:110
+msgid "Remove current CD cover"
+msgstr ""
+
+#: ../src/ui.h:122
 msgid "_Toolbar"
 msgstr "_عمود الأدوات"
 
-#: src/ui.h:98
+#: ../src/ui.h:123
 msgid "View the main toolbar"
 msgstr "عرض عمود الأدوات الرئيسيّ"
 
-#: src/ui.h:102
+#: ../src/ui.h:127
 msgid "Stat_usbar"
 msgstr "ع_مود الحالة"
 
-#: src/ui.h:103
+#: ../src/ui.h:128
 msgid "View the statusbar"
 msgstr "عرض عمود الحالة"
 
-#: src/ui.h:107
+#: ../src/ui.h:132
 msgid "Play _All"
 msgstr "عزف ال_كلّ"
 
-#: src/ui.h:108
+#: ../src/ui.h:133
 msgid "Play all tracks"
 msgstr "عزف كلّ المقطوعات"
 
-#: src/ui.h:112
+#: ../src/ui.h:137
 msgid "_Repeat"
 msgstr "إ_عادة"
 
-#: src/ui.h:113
+#: ../src/ui.h:138
 msgid "Restart playing when finished"
 msgstr "إعادة العزف إثر الإنتهاء"
 
-#: src/ui.h:117
+#: ../src/ui.h:142
 msgid "S_huffle"
 msgstr "_خلط"
 
-#: src/ui.h:118
-msgid "Shuffle tracks before playing"
-msgstr "خلط قبل العزف"
+#: ../src/ui.h:143
+#, fuzzy
+msgid "Play tracks in a random order"
+msgstr "ترتيب عشوائي لمستويات اللعب"
+
+#~ msgid "_About"
+#~ msgstr "_حول"
+#~ msgid "Stop"
+#~ msgstr "توقّف"
+#~ msgid "_Reload"
+#~ msgstr "إ_عادة التحميل"
+#~ msgid "Reload CD"
+#~ msgstr "إعادة تحميل القرص المدمج"
+#~ msgid "_Preferences"
+#~ msgstr "_تفضيلات"
+#~ msgid "_Quit"
+#~ msgstr "_إنهاء"
+#~ msgid "Shuffle tracks before playing"
+#~ msgstr "خلط قبل العزف"
 
