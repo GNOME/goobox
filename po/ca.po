@@ -1,0 +1,725 @@
+# Traducció del goobox de l'equip de Softcatalà.
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gnome-mount package.
+# Joan Duran <jodufi@gmail.com>, 2007.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: goobox\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-02-15 09:40+0100\n"
+"PO-Revision-Date: 2007-02-15 09:44+0100\n"
+"Last-Translator: Joan Duran <jodufi@gmail.com>\n"
+"Language-Team: Catalan <tradgnome@softcatala.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: ../data/GNOME_Goobox.server.in.in.h:1
+msgid "Goobox Application"
+msgstr "Aplicació Goobox"
+
+#: ../data/GNOME_Goobox.server.in.in.h:2
+msgid "Goobox Application Factory"
+msgstr "Factoria de l'aplicació Goobox"
+
+#: ../data/glade/goo_cover_chooser.glade.h:1
+msgid "Choose a CD Cover"
+msgstr "Escolliu una caràtula de CD"
+
+#: ../data/glade/goo_cover_chooser.glade.h:2
+msgid "Found images:"
+msgstr "Imatges trobades:"
+
+#: ../data/glade/goobox.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: ../data/glade/goobox.glade.h:2
+msgid "<b>CD Drive</b>"
+msgstr "<b>Unitat de CD</b>"
+
+#: ../data/glade/goobox.glade.h:3
+msgid "<b>Destination folder</b>"
+msgstr "<b>Carpeta destí</b>"
+
+#: ../data/glade/goobox.glade.h:4
+msgid "<b>Extract</b>"
+msgstr "<b>Extreu</b>"
+
+#: ../data/glade/goobox.glade.h:5
+msgid "<b>FLAC</b>"
+msgstr "<b>FLAC</b>"
+
+#: ../data/glade/goobox.glade.h:6
+msgid "<b>File type</b>"
+msgstr "<b>Tipus de fitxer</b>"
+
+#: ../data/glade/goobox.glade.h:7
+msgid "<b>MP3</b>"
+msgstr "<b>MP3</b>"
+
+#: ../data/glade/goobox.glade.h:8
+msgid "<b>Ogg Vorbis</b>"
+msgstr "<b>Ogg Vorbis</b>"
+
+#: ../data/glade/goobox.glade.h:9
+msgid "Advanced _Options"
+msgstr "_Opcions avançades"
+
+#: ../data/glade/goobox.glade.h:10 ../src/dlg-extract.c:263
+msgid "Choose destination folder"
+msgstr "Escolliu la carpeta destí"
+
+#: ../data/glade/goobox.glade.h:11
+msgid "Encoding"
+msgstr "Codificació"
+
+#: ../data/glade/goobox.glade.h:12
+msgid "Excellent quality lossless compression"
+msgstr "Compressió d'excel·lent qualitat sense pèrdues"
+
+#: ../data/glade/goobox.glade.h:13
+msgid "Extract Tracks"
+msgstr "Extreu les peces"
+
+#: ../data/glade/goobox.glade.h:14
+msgid "Extracting Tracks"
+msgstr "S'estan extraient les peces"
+
+#: ../data/glade/goobox.glade.h:15
+msgid "General"
+msgstr "General"
+
+#: ../data/glade/goobox.glade.h:16
+msgid "Good quality lossy compression"
+msgstr "Compressió de bona qualitat amb pèrdues"
+
+#: ../data/glade/goobox.glade.h:17
+msgid "High quality lossy compression"
+msgstr "Compressió d'alta qualitat amb pèrdues"
+
+#: ../data/glade/goobox.glade.h:18
+msgid "Preferences"
+msgstr "Preferències"
+
+#: ../data/glade/goobox.glade.h:19
+msgid "Raw audio"
+msgstr "Àudio en brut"
+
+#: ../data/glade/goobox.glade.h:20
+msgid "_All tracks"
+msgstr "_Totes les peces"
+
+#: ../data/glade/goobox.glade.h:21
+msgid "_FLAC"
+msgstr "_FLAC"
+
+#: ../data/glade/goobox.glade.h:22
+msgid "_MP3"
+msgstr "_MP3"
+
+#: ../data/glade/goobox.glade.h:23
+msgid "_Ogg Vorbis"
+msgstr "_Ogg Vorbis"
+
+#: ../data/glade/goobox.glade.h:24
+msgid "_Save playlist"
+msgstr "_Desa la llista de reproducció"
+
+#: ../data/glade/goobox.glade.h:25
+msgid "_Selected tracks"
+msgstr "Peces _seleccionades"
+
+#: ../data/glade/goobox.glade.h:26
+msgid "_Wave"
+msgstr "_Ona"
+
+#: ../data/goobox.desktop.in.h:1 ../src/goo-window.c:2563
+#: ../src/goo-window.c:2571
+msgid "CD Player"
+msgstr "Reproductor de CD"
+
+#: ../data/goobox.desktop.in.h:2
+msgid "Play and extract CDs"
+msgstr "Reproduir i extreure CD"
+
+#: ../data/goobox.schemas.in.h:1
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "Els valors possibles són: ogg, flac, mp3, wave."
+
+#: ../data/goobox.schemas.in.h:2
+msgid ""
+"Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgstr ""
+"Els valors possibles són: system, text_below, text_beside, text_only, "
+"icons_only."
+
+#: ../src/actions.c:139
+msgid "Could not display help"
+msgstr "No s'ha pogut mostrar l'ajuda"
+
+#.
+#. const char       *documenters [] = {
+#. NULL
+#. };
+#: ../src/actions.c:192
+msgid "translator_credits"
+msgstr "Joan Duran <jodufi@gmail.com>"
+
+#: ../src/actions.c:203 ../src/actions.c:218
+msgid "Goobox"
+msgstr "Goobox"
+
+#: ../src/actions.c:206 ../src/actions.c:221 ../src/main.c:127
+msgid "CD player and ripper"
+msgstr "Reproductor i extractor de CD"
+
+#: ../src/actions.c:350 ../src/gtk-utils.c:797
+msgid "Could not execute command"
+msgstr "No s'ha pogut executar l'ordre"
+
+#: ../src/bacon-cd-selection.c:200
+msgid "Unnamed CDROM"
+msgstr "CDROM sense nom"
+
+#: ../src/cd-drive.c:835
+#, c-format
+msgid "Unnamed SCSI Drive (%s)"
+msgstr "Unitat SCSI sense nom (%s)"
+
+#: ../src/cd-drive.c:1395
+msgid "File image"
+msgstr "Fitxer d'imatge"
+
+#: ../src/dlg-cover-chooser.c:274
+#, c-format
+msgid "%u, loading image: %u"
+msgstr "%u, s'està carregant la imatge: %u"
+
+#: ../src/dlg-cover-chooser.c:312
+msgid "Loading images"
+msgstr "S'estan carregant les imatges"
+
+#: ../src/dlg-cover-chooser.c:424 ../src/goo-window.c:3220
+msgid "Could not search for a cover on Internet"
+msgstr "No s'ha pogut fer la cerca d'una caràtula a Internet"
+
+#: ../src/dlg-cover-chooser.c:431
+msgid "No image found"
+msgstr "No s'ha trobat cap imatge"
+
+#: ../src/dlg-cover-chooser.c:493 ../src/dlg-extract.c:219
+#: ../src/dlg-preferences.c:146
+#, c-format
+msgid "Could not display help: %s"
+msgstr "No s'ha pogut mostrar l'ajuda: %s"
+
+#: ../src/dlg-cover-chooser.c:697
+msgid "Searching images..."
+msgstr "S'estan cercant les imatges..."
+
+#: ../src/dlg-extract.c:420
+#, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract "
+"CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+msgstr ""
+"Per poder extreure peces del CD es necessita almenys un dels següents "
+"connectors del GStreamer:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Mp3\n"
+"• %s → Wave"
+
+#: ../src/dlg-extract.c:433
+msgid "No encoder available."
+msgstr "No hi ha disponible cap codificador."
+
+#: ../src/dlg-preferences.c:167
+#, c-format
+msgid "Nominal bitrate: %d Kbps"
+msgstr "Ràtio de bits nominal: %d Kbps"
+
+#: ../src/dlg-preferences.c:171
+#, c-format
+msgid "Compression level: %d"
+msgstr "Nivell de compressió: %d"
+
+#: ../src/dlg-preferences.c:175
+#, c-format
+msgid "Quality: %d"
+msgstr "Qualitat: %d"
+
+#: ../src/dlg-preferences.c:357 ../src/dlg-preferences.c:365
+msgid "Smaller size"
+msgstr "Mida més petita"
+
+#: ../src/dlg-preferences.c:361 ../src/dlg-preferences.c:369
+msgid "Higher quality"
+msgstr "Qualitat més alta"
+
+#: ../src/dlg-preferences.c:373
+msgid "Faster compression"
+msgstr "Compressió més ràpida"
+
+#: ../src/dlg-preferences.c:377
+msgid "Higher compression"
+msgstr "Compressió més alta"
+
+#: ../src/dlg-ripper.c:215
+#, c-format
+msgid "Elapsed: %s / Remaining: %s"
+msgstr "Transcorregut: %s / Restant: %s"
+
+#: ../src/dlg-ripper.c:382
+msgid "Could not display the destination folder"
+msgstr "No s'ha pogut mostrar la carpeta destí"
+
+#: ../src/dlg-ripper.c:524
+msgid "Tracks extracted successfully"
+msgstr "Les peces s'han extret correctament"
+
+#: ../src/dlg-ripper.c:526
+msgid "_View destination folder"
+msgstr "_Mostra la carpeta destí"
+
+#: ../src/dlg-ripper.c:539
+#, c-format
+msgid "Extracting track %d of %d: %s"
+msgstr "S'està extraient la peça %d de %d: %s"
+
+#: ../src/dlg-ripper.c:592
+msgid "Ripped with Goobox"
+msgstr "S'ha extret amb el Goobox"
+
+#: ../src/eggtrayicon.c:118
+msgid "Orientation"
+msgstr "Orientació"
+
+#: ../src/eggtrayicon.c:119
+msgid "The orientation of the tray."
+msgstr "La orientació de la safata."
+
+#: ../src/file-utils.c:643
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr ""
+"No es pot trobar un terminal, s'utilitzarà xtrem, encara que podria no "
+"funcionar"
+
+#: ../src/goo-cdrom-bsd.c:140 ../src/goo-cdrom-linux.c:121
+#: ../src/goo-cdrom-solaris.c:123
+msgid "Error reading CD"
+msgstr "S'ha produït un error en llegir un CD"
+
+#: ../src/goo-cdrom.c:323
+msgid "The specified device is not valid"
+msgstr "El dispositiu indicat no és vàlid"
+
+#: ../src/goo-player-cd.c:791
+msgid "Drive not ready"
+msgstr "La unitat no està a punt"
+
+#: ../src/goo-player-cd.c:795
+msgid "Tray open"
+msgstr "Safata oberta"
+
+#: ../src/goo-player-cd.c:796 ../src/goo-player-cd.c:800
+msgid "No disc"
+msgstr "No hi ha cap disc"
+
+#: ../src/goo-player-cd.c:804
+msgid "Data CD"
+msgstr "CD de dades"
+
+#: ../src/goo-player-info.c:236 ../src/goo-player-info.c:261
+#: ../src/goo-player-info.c:758
+#, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#: ../src/goo-player-info.c:499
+msgid "Click here to choose a cover for this CD"
+msgstr "Cliqueu aquí per a escollir una caràtula per a aquest CD"
+
+#: ../src/goo-player-info.c:686 ../src/goo-window.c:1489
+msgid "Paused"
+msgstr "En pausa"
+
+#: ../src/goo-player-info.c:697
+msgid "Ejecting CD"
+msgstr "S'està expulsant el CD"
+
+#: ../src/goo-player-info.c:701
+msgid "Checking CD drive"
+msgstr "S'està comprovant la unitat de CD"
+
+#: ../src/goo-player-info.c:705 ../src/goo-player-info.c:709
+msgid "Reading CD"
+msgstr "S'està llegint el CD"
+
+#: ../src/goo-player-info.c:722 ../src/goo-window.c:1503
+msgid "Audio CD"
+msgstr "CD d'àudio"
+
+#: ../src/goo-stock.c:53
+msgid "_Extract"
+msgstr "_Extreu"
+
+#: ../src/goo-stock.c:54
+msgid "_Reset"
+msgstr "_Reinicia"
+
+#: ../src/goo-stock.c:55 ../src/goo-stock.c:56 ../src/goo-stock.c:57
+#: ../src/goo-stock.c:58
+msgid "V_olume"
+msgstr "V_olum"
+
+#: ../src/goo-volume-button.c:147 ../src/goo-volume-tool-button.c:284
+#, c-format
+msgid "Volume level: %3.0f%%"
+msgstr "Nivell del volum: %3.0f%%"
+
+#: ../src/goo-volume-button.c:328 ../src/goo-volume-tool-button.c:494
+msgid "+"
+msgstr "+"
+
+#: ../src/goo-volume-button.c:344 ../src/goo-volume-tool-button.c:510
+msgid "-"
+msgstr "-"
+
+#: ../src/goo-volume-tool-button.c:538
+msgid "Change the volume level"
+msgstr "Canvia el nivell del volum"
+
+#: ../src/goo-volume-tool-button.c:605
+msgid "Volume"
+msgstr "Volum"
+
+#: ../src/goo-window.c:65
+msgid "Hide _tracks"
+msgstr "Amaga les _peces"
+
+#: ../src/goo-window.c:66
+msgid "Show _tracks"
+msgstr "Mostra les _peces"
+
+#: ../src/goo-window.c:195
+#, c-format
+msgid "%d track"
+msgid_plural "%d tracks"
+msgstr[0] "%d peça"
+msgstr[1] "%d peces"
+
+#: ../src/goo-window.c:639
+msgid "Length"
+msgstr "Durada"
+
+#: ../src/goo-window.c:640
+msgid "Title"
+msgstr "Títol"
+
+#: ../src/goo-window.c:641
+msgid "Artist"
+msgstr "Artista"
+
+#: ../src/goo-window.c:649
+msgid "#"
+msgstr "#"
+
+#: ../src/goo-window.c:1346 ../src/ui.h:65
+msgid "_Pause"
+msgstr "Fes una _pausa"
+
+#: ../src/goo-window.c:1347
+msgid "Pause playing"
+msgstr "Fa una pausa de la reprodució"
+
+#: ../src/goo-window.c:1768 ../src/goo-window.c:1785 ../src/ui.h:53
+#: ../src/ui.h:57 ../src/ui.h:61
+msgid "_Play"
+msgstr "_Reprodueix"
+
+#: ../src/goo-window.c:1769 ../src/goo-window.c:1786
+msgid "Play CD"
+msgstr "Reprodueix el CD"
+
+#: ../src/goo-window.c:2879
+msgid "Could not eject the CD"
+msgstr "No s'ha pogut extreure el CD"
+
+#: ../src/goo-window.c:2891
+msgid "Could not read drive"
+msgstr "No s'ha pogut llegir la unitat"
+
+#: ../src/goo-window.c:3084
+msgid "Could not save cover image"
+msgstr "No s'ha pogut desar la imatge de la caràtula"
+
+#: ../src/goo-window.c:3094
+msgid "Could not load image"
+msgstr "No s'ha pogut carregar la imatge"
+
+#: ../src/goo-window.c:3155
+msgid "Choose CD Cover Image"
+msgstr "Escolliu una imatge de caràtula de CD"
+
+#: ../src/goo-window.c:3174
+msgid "Images"
+msgstr "Imatges"
+
+#: ../src/goo-window.c:3182
+msgid "All files"
+msgstr "Tots els fitxers"
+
+#: ../src/goo-window.c:3221
+msgid ""
+"You have to enter the artist and album names in order to find the album "
+"cover."
+msgstr ""
+"Heu d'introduir el nom de l'artista i de l'àlbum per trobar-ne la caràtula."
+
+#: ../src/goo-window.c:3260
+msgid "_Show Window"
+msgstr "_Mostra la finestra"
+
+#: ../src/goo-window.c:3261
+msgid "Show the main window"
+msgstr "Mostra la finestra principal"
+
+#: ../src/goo-window.c:3274 ../src/ui.h:113
+msgid "_Hide Window"
+msgstr "_Amaga la finestra"
+
+#. "H"
+#: ../src/goo-window.c:3275 ../src/ui.h:114
+msgid "Hide the main window"
+msgstr "Amaga la finestra principal"
+
+#: ../src/gth-image-list.c:3520
+msgid "No image"
+msgstr "No hi ha cap imatge"
+
+#: ../src/gtk-file-chooser-preview.c:203
+msgid "Preview"
+msgstr "Previsualització"
+
+#: ../src/gtk-file-chooser-preview.c:328
+msgid "pixels"
+msgstr "píxels"
+
+#: ../src/main.c:78
+msgid "CD device to be used"
+msgstr "Unitat de CD a utilitzar"
+
+#: ../src/main.c:79
+msgid "DEVICE_PATH"
+msgstr "DEVICE_PATH"
+
+#: ../src/main.c:81
+msgid "Play the CD on startup"
+msgstr "Reprodueix el CD en iniciar"
+
+#: ../src/main.c:84 ../src/ui.h:54
+msgid "Play/Pause"
+msgstr "Reprodueix/Fes una pausa"
+
+#: ../src/main.c:87 ../src/ui.h:74
+msgid "Play the next track"
+msgstr "Reprodueix la següent peça"
+
+#: ../src/main.c:90 ../src/ui.h:78
+msgid "Play the previous track"
+msgstr "Reprodueix l'anterior peça"
+
+#: ../src/main.c:93 ../src/ui.h:82
+msgid "Eject the CD"
+msgstr "Expulsa el CD"
+
+#: ../src/main.c:96
+msgid "Hide/Show the main window"
+msgstr "Amaga/mostra la finestra principal"
+
+#: ../src/main.c:99
+msgid "Volume Up"
+msgstr "Apuja el volum"
+
+#: ../src/main.c:102
+msgid "Volume Down"
+msgstr "Abaixa el volum"
+
+#: ../src/main.c:105 ../src/ui.h:98
+msgid "Quit the application"
+msgstr "Surt de l'aplicació"
+
+#: ../src/main.c:265
+msgid "Cannot start the CD player"
+msgstr "No es pot iniciar el reproductor de CD"
+
+#: ../src/main.c:266
+msgid ""
+"In order to read CDs you have to install the cdparanoia gstreamer plugin"
+msgstr ""
+"Per a poder llegir els CD heu d'instal·lar el connector cdparanoia del "
+"GStreamer"
+
+#: ../src/track-info.c:118
+#, c-format
+msgid "Track %u"
+msgstr "Peça %u"
+
+#: ../src/ui.h:34
+msgid "_CD"
+msgstr "_CD"
+
+#: ../src/ui.h:35
+msgid "_Edit"
+msgstr "_Edita"
+
+#: ../src/ui.h:36
+msgid "_View"
+msgstr "_Visualitza"
+
+#: ../src/ui.h:37
+msgid "_Help"
+msgstr "A_juda"
+
+#: ../src/ui.h:38
+msgid "CD C_over"
+msgstr "Ca_ràtula del CD"
+
+#: ../src/ui.h:42
+msgid "Information about the program"
+msgstr "Informació quant al programa"
+
+#: ../src/ui.h:46
+msgid "Display the manual"
+msgstr "Mostra el manual"
+
+#: ../src/ui.h:49
+msgid "_Keyboard shortcuts"
+msgstr "_Dreceres de teclat"
+
+#: ../src/ui.h:58
+msgid "Play"
+msgstr "Reprodueix"
+
+#: ../src/ui.h:62
+msgid "Play this track"
+msgstr "Reprodueix aquesta peça"
+
+#: ../src/ui.h:66
+msgid "Pause"
+msgstr "Fes una pausa"
+
+#: ../src/ui.h:69
+msgid "_Stop"
+msgstr "_Atura"
+
+#: ../src/ui.h:70
+msgid "Stop playing"
+msgstr "Atura la reproducció"
+
+#: ../src/ui.h:73
+msgid "_Next"
+msgstr "_Següent"
+
+#: ../src/ui.h:77
+msgid "Pre_v"
+msgstr "A_nterior"
+
+#: ../src/ui.h:81
+msgid "_Eject"
+msgstr "_Expulsa"
+
+#: ../src/ui.h:86
+msgid "Edit various preferences"
+msgstr "Edita diverses preferències"
+
+#: ../src/ui.h:89
+msgid "E_xtract Tracks"
+msgstr "E_xtreu les peces"
+
+#: ../src/ui.h:90
+msgid "Save the tracks to disk as files"
+msgstr "Desa les peces al disc com a fitxers"
+
+#: ../src/ui.h:93
+msgid "_CD Properties"
+msgstr "Propietats del _CD"
+
+#: ../src/ui.h:94
+msgid "Edit the CD artist, album and tracks titles"
+msgstr "Edita l'artista, l'àlbum i els títols de les peces del CD"
+
+#: ../src/ui.h:101
+msgid "_Choose from Disk"
+msgstr "_Escolliu del disc"
+
+#: ../src/ui.h:102
+msgid "Choose a CD cover from the local disk"
+msgstr "Escolliu una caràtula de CD del disc local"
+
+#: ../src/ui.h:105
+msgid "_Search on Internet"
+msgstr "_Cerca a Internet"
+
+#: ../src/ui.h:106
+msgid "Search for a CD cover on Internet"
+msgstr "Cerca una caràtula de CD a Internet"
+
+#: ../src/ui.h:109
+msgid "_Remove Cover"
+msgstr "_Suprimeix la caràtula"
+
+#: ../src/ui.h:110
+msgid "Remove current CD cover"
+msgstr "Suprimeix la caràtula de CD actual"
+
+#: ../src/ui.h:122
+msgid "_Toolbar"
+msgstr "_Barra d'eines"
+
+#: ../src/ui.h:123
+msgid "View the main toolbar"
+msgstr "_Visualitza la barra d'eines principal"
+
+#: ../src/ui.h:127
+msgid "Stat_usbar"
+msgstr "B_arra d'estat"
+
+#: ../src/ui.h:128
+msgid "View the statusbar"
+msgstr "Visualitza la barra d'estat"
+
+#: ../src/ui.h:132
+msgid "Play _All"
+msgstr "R_eprodueix totes"
+
+#: ../src/ui.h:133
+msgid "Play all tracks"
+msgstr "Reprodueix totes les peces"
+
+#: ../src/ui.h:137
+msgid "_Repeat"
+msgstr "_Repeteix"
+
+#: ../src/ui.h:138
+msgid "Restart playing when finished"
+msgstr "Reinicia la reproducció quan finalitzi"
+
+#: ../src/ui.h:142
+msgid "S_huffle"
+msgstr "_Mescla"
+
+#: ../src/ui.h:143
+msgid "Play tracks in a random order"
+msgstr "Reprodueix les peces aleatoriament"
