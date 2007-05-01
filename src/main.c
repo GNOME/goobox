@@ -46,8 +46,10 @@
 #endif /* HAVE_MMKEYS */
 
 #ifdef HAVE_LIBNOTIFY
+
 #include <libnotify/notify.h>
-static NotifyHandle *notify_h = NULL;
+static NotifyNotification *notification = NULL;
+
 #endif /* HAVE_LIBNOTIFY */
 
 GtkWindow *main_window = NULL;
@@ -228,7 +230,7 @@ initialize_data ()
 
 
 static void 
-release_data ()
+release_data (void)
 {
 	if (goo_application != NULL)
 		bonobo_object_unref (goo_application);
@@ -239,41 +241,9 @@ release_data ()
 /* Create the windows. */
 
 
-static gboolean
-check_plugins (void)
-{
-	GstElement *cdparanoia;
-	gboolean    result;
-
-	cdparanoia = gst_element_factory_make ("cdparanoia", "cdreader");
-	result = (cdparanoia != NULL);
-	if (cdparanoia != NULL) 
-		gst_object_unref (GST_OBJECT (cdparanoia));
-
-	return result;
-}
-
-
 static void 
 prepare_app (poptContext pctx)
 {
-	if (!check_plugins()) {
-		GtkWidget *d;
-		d = _gtk_message_dialog_new (NULL,
-					     0,
-					     GTK_STOCK_DIALOG_ERROR,
-					     _("Cannot start the CD player"),
-					     _("In order to read CDs you have to install the cdparanoia gstreamer plugin"),
-					     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-					     NULL);
-		g_signal_connect (G_OBJECT (d), "response",
-				  G_CALLBACK (bonobo_main_quit),
-				  NULL);
-		gtk_widget_show (d);
-
-		return;
-	}
-
 	if (session_is_restored ()) 
 		load_session ();
 	else 
@@ -288,7 +258,7 @@ prepare_app (poptContext pctx)
 }
 
 
- /* SM support */
+/* SM support */
 
 
 /* The master client we use for SM */
@@ -486,30 +456,29 @@ filter_mmkeys (GdkXEvent *xevent,
 	if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPlay) == key->keycode) {	
 		goo_window_toggle_play (GOO_WINDOW (main_window));
 		return GDK_FILTER_REMOVE;
-
-	} else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPause) == key->keycode) {	
+	} 
+	else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPause) == key->keycode) {	
 		goo_window_pause (GOO_WINDOW (main_window));
 		return GDK_FILTER_REMOVE;
-
-	} else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioStop) == key->keycode) {
+	} 
+	else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioStop) == key->keycode) {
 		goo_window_stop (GOO_WINDOW (main_window));
 		return GDK_FILTER_REMOVE;		
-
-	} else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPrev) == key->keycode) {
+	} 
+	else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPrev) == key->keycode) {
 		goo_window_prev (GOO_WINDOW (main_window));
 		return GDK_FILTER_REMOVE;		
-
-	} else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioNext) == key->keycode) {
+	} 
+	else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioNext) == key->keycode) {
 		goo_window_next (GOO_WINDOW (main_window));
 		return GDK_FILTER_REMOVE;
-
-	} else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_Eject) == key->keycode) {
+	} 
+	else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_Eject) == key->keycode) {
 		goo_window_eject (GOO_WINDOW (main_window));
 		return GDK_FILTER_REMOVE;
-
-	} else {
+	} 
+	else 
 		return GDK_FILTER_CONTINUE;
-	}
 }
 
 
@@ -557,30 +526,21 @@ system_notify (const char *title,
 	       int         y)
 {
 #ifdef HAVE_LIBNOTIFY
-	if(!notify_is_initted())
+
+	if (! notify_is_initted())
 		return;
 
-	NotifyIcon  *icon = notify_icon_new_from_uri("goobox");
-	NotifyHints *hints = NULL;
-
-	if ((x >= 0) && (y >= 0)) {
-		hints = notify_hints_new ();
-		notify_hints_set_int (hints, "x", x);
-		notify_hints_set_int (hints, "y", y);
-	}
-
-	notify_h = notify_send_notification (notify_h,
-					     "device",
-					     NOTIFY_URGENCY_NORMAL,
-					     title,
-					     msg,
-					     icon,
-					     TRUE, 0, 
-					     hints, // no hints
-					     NULL, // no user data
-					     0);
+	if (notification == NULL) 
+		notification = 	notify_notification_new (title, msg, "goobox", NULL);
+	else
+		notify_notification_update (notification, title, msg, "goobox");
 	
-	if (icon != NULL)
-		notify_icon_destroy (icon);
+	if ((x >= 0) && (y >= 0)) 
+		notify_notification_set_geometry_hints (notification,
+							NULL,
+							x, y);
+
+	notify_notification_show (notification, NULL);
+	
 #endif /* HAVE_LIBNOTIFY */
 }

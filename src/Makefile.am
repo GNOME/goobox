@@ -159,11 +159,11 @@ goo-marshal.c: goo-marshal.list $(GLIB_GENMARSHAL)
 	$(GLIB_GENMARSHAL) $< --body --prefix=goo_marshal >> $@
 
 gthumb-marshal.h: gthumb-marshal.list $(GLIB_GENMARSHAL)
-	$(GLIB_GENMARSHAL) gthumb-marshal.list --header --prefix=gthumb_marshal > $@
+	$(GLIB_GENMARSHAL) $< --header --prefix=gthumb_marshal > $@
 
-gthumb-marshal.c: gthumb-marshal.h gthumb-marshal.list $(GLIB_GENMARSHAL)
+gthumb-marshal.c: gthumb-marshal.list gthumb-marshal.h  $(GLIB_GENMARSHAL)
 	echo "#include \"gthumb-marshal.h\"" > $@ && \
-	$(GLIB_GENMARSHAL) gthumb-marshal.list --body --prefix=gthumb_marshal >> $@
+	$(GLIB_GENMARSHAL) $< --body --prefix=gthumb_marshal >> $@
 
 gthumb-enum-types.h: $(GTH_HEADER_FILES) $(GLIB_MKENUMS)
 	$(GLIB_MKENUMS) \
@@ -171,20 +171,20 @@ gthumb-enum-types.h: $(GTH_HEADER_FILES) $(GLIB_MKENUMS)
 		--fprod "/* enumerations from \"@filename@\" */\n" \
 		--vhead "GType @enum_name@_get_type (void);\n#define GTH_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
 		--ftail "G_END_DECLS\n\n#endif /* GTHUMB_ENUM_TYPES_H */" \
-		$(GTH_HEADER_FILES) > xgen-geth \
-	&& (cmp -s xgen-geth $(srcdir)/gthumb-enum-types.h || cp xgen-geth $(srcdir)/gthumb-enum-types.h ) \
-	&& rm -f xgen-geth
+		$^> xgen-$(@F) \
+	&& (cmp -s xgen-$(@F) gthumb-enum-types.h || cp xgen-$(@F) gthumb-enum-types.h ) \
+        && rm -f xgen-$(@F)
 
-gthumb-enum-types.c: $(GTH_HEADER_FILES) $(GLIB_MKENUMS) $(srcdir)/gthumb-enum-types.h
+gthumb-enum-types.c: $(GTH_HEADER_FILES) gthumb-enum-types.h
 	$(GLIB_MKENUMS) \
 		--fhead "#include <glib-object.h>\n" \
 		--fprod "\n/* enumerations from \"@filename@\" */\n#include \"@filename@\"" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static GType etype = 0;\n  if (etype == 0) {\n    static const G@Type@Value values[] = {" \
 		--vprod "      { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 		--vtail "      { 0, NULL, NULL }\n    };\n    etype = g_@type@_register_static (\"@EnumName@\", values);\n  }\n  return etype;\n}\n" \
-		$(GTH_HEADER_FILES) > xgen-getc \
-	&& cp xgen-getc $(srcdir)/gthumb-enum-types.c  \
-	&& rm -f xgen-getc
+		$^> xgen-$(@F) \
+	&& (cmp -s xgen-$(@F) gthumb-enum-types.c || cp xgen-$(@F) gthumb-enum-types.c ) \
+        && rm -f xgen-$(@F)
 
 goobox_LDADD = 					\
 	$(GOO_LIBS) 				\
@@ -200,6 +200,7 @@ EXTRA_DIST = 					\
 CLEANFILES = 					\
 	$(BUILT_SOURCES) 			\
 	$(GTH_MARSHALLERS) 			\
+	$(GTH_ENUMS)				\
 	$(gnome_media_cddbslave2_idl_sources) 	\
 	$(gnome_goobox_idl_sources) 		\
 	gnome_media_cddbslave2_idl_stamp	\

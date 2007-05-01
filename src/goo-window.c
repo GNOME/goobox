@@ -28,8 +28,6 @@
 #include <libgnomeui/gnome-window-icon.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
 #include <gst/gst.h>
-#include <gst/gconf/gconf.h>
-#include <gst/play/play.h>
 
 #include "actions.h"
 #include "dlg-cover-chooser.h"
@@ -1350,6 +1348,7 @@ player_start_cb (GooPlayer       *player,
 					   NULL);
 
 #ifdef HAVE_LIBNOTIFY
+
 		if (priv->notify_action) {
 			GString    *info = g_string_new("");
 			const char *artist, *album;
@@ -1384,6 +1383,7 @@ player_start_cb (GooPlayer       *player,
 			g_string_free (info, TRUE);
 			priv->notify_action = FALSE;
 		}
+		
 #endif /* HAVE_LIBNOTIFY */
 
 		break;
@@ -2006,14 +2006,15 @@ update_ui_from_expander_state (GooWindow *window)
 					   eel_gconf_get_integer (PREF_UI_WINDOW_WIDTH, DEFAULT_WIN_WIDTH),
 					   eel_gconf_get_integer (PREF_UI_WINDOW_HEIGHT, DEFAULT_WIN_HEIGHT));
 		gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (priv->statusbar), TRUE);
-		gtk_widget_show (priv->list_view->parent);
+		/*gtk_widget_show (priv->list_view->parent);*/
 		gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
-	} else {
+	} 
+	else {
 		if (GTK_WIDGET_REALIZED (window))
 			save_window_size (window);
 		gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (priv->statusbar), FALSE); 
 		gtk_expander_set_label (expander, _(SHOW_TRACK_LIST));
-		gtk_widget_hide (priv->list_view->parent);
+		/*gtk_widget_hide (priv->list_view->parent);*/
 		gtk_window_set_resizable (GTK_WINDOW (window), FALSE);
 	}
 }
@@ -2263,11 +2264,9 @@ goo_window_construct (GooWindow  *window,
 	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (priv->list_store),
 					 COLUMN_TITLE, title_column_sort_func,
 					 NULL, NULL);
-
 	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (priv->list_store),
 					 COLUMN_ARTIST, artist_column_sort_func,
 					 NULL, NULL);
-
 	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (priv->list_store),
 					 COLUMN_TIME, time_column_sort_func,
 					 NULL, NULL);
@@ -2473,6 +2472,7 @@ goo_window_construct (GooWindow  *window,
 	/**/
 
 	priv->list_expander = expander = gtk_expander_new_with_mnemonic (_(HIDE_TRACK_LIST));
+	gtk_container_add (GTK_CONTAINER (priv->list_expander), scrolled_window);
 	gtk_expander_set_expanded (GTK_EXPANDER (expander), eel_gconf_get_boolean (PREF_UI_PLAYLIST, TRUE));
 	g_signal_connect (expander,
 			  "notify::expanded",
@@ -2481,9 +2481,7 @@ goo_window_construct (GooWindow  *window,
 
 	gtk_box_pack_start (GTK_BOX (vbox), 
 			    expander, 
-			    FALSE, FALSE, 6);
-
-	gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
+			    TRUE, TRUE, 0);
 
 	gnome_app_set_contents (GNOME_APP (window), vbox);
 	gtk_widget_show_all (vbox);
@@ -2502,6 +2500,7 @@ goo_window_construct (GooWindow  *window,
 		device = g_strdup (location);
 	else
 		device = eel_gconf_get_string (PREF_GENERAL_DEVICE, DEFAULT_DEVICE);
+		
 	priv->player = goo_player_cd_new (device);
 	g_free (device);
 
@@ -2748,7 +2747,8 @@ goo_window_play (GooWindow *window)
 			play_next_song_in_playlist (window);
 		else
 			play_song (window, 0);
-	} else {
+	} 
+	else {
 		set_current_song_icon (window, GOO_STOCK_PLAY);
 		goo_player_play (priv->player);
 	}
@@ -2831,9 +2831,11 @@ goo_window_next (GooWindow *window)
 			goo_window_set_current_song (window, new_track);
 
 			goo_window_play (window);
-		} else
+		} 
+		else
 			play_next_song_in_playlist (window);
-	} else {
+	} 
+	else {
 		goo_window_stop (window);
 		goo_window_set_current_song (window, 0);
 		goo_window_play (window);

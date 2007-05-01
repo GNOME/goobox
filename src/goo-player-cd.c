@@ -25,9 +25,8 @@
 #include <string.h>
 #include <gnome.h>
 #include <gst/gst.h>
-#include <gst/gconf/gconf.h>
-#include <gst/play/play.h>
-#include <gst/mixer/mixer.h>
+#include <musicbrainz/queries.h>
+#include <musicbrainz/mb_c.h>
 
 #include "goo-player-cd.h"
 #include "goo-cdrom.h"
@@ -46,13 +45,15 @@
 
 struct _GooPlayerCDPrivateData {
 	GooCdrom        *cdrom;
-	GstElement      *play_thread;
+	GstElement      *pipeline;
 	GstElement      *source;
 	GstPad          *source_pad;
 	GstElement      *volume;
 	gint64           total_time;
-	gint64           n_tracks;
-	GstFormat        track_format, sector_format;
+	int              n_tracks;
+	GstFormat        track_format;
+	GstFormat        sector_format;
+	
 	GList           *tracks;
 	TrackInfo       *current_track;
 	char            *discid;
@@ -69,6 +70,8 @@ struct _GooPlayerCDPrivateData {
 	guint            check_id;
 	gboolean         exiting;
 
+	char            *rdf;
+	
 	CDDBSlaveClient *cddb_client;
 };
 
@@ -119,13 +122,13 @@ static gboolean
 update_state_cb (gpointer data)
 {
 	GooPlayerCD *player = data;
-	GooPlayerCDPrivateData *priv = player->priv;
 
-	g_source_remove (priv->update_state_id);
-	goo_cdrom_update_state (priv->cdrom);
-	priv->update_state_id = g_timeout_add (POLL_TIMEOUT,
-					       update_state_cb,
-					       player);
+	g_source_remove (player->priv->update_state_id);
+	goo_cdrom_update_state (player->priv->cdrom);
+	player->priv->update_state_id = g_timeout_add (POLL_TIMEOUT,
+					               update_state_cb,
+						       player);
+						       
 	return FALSE;
 }
 
@@ -149,15 +152,13 @@ add_state_polling (GooPlayerCD *player)
 static void
 remove_state_polling (GooPlayerCD *player)
 {
-	GooPlayerCDPrivateData *priv = player->priv;
+	if (player->priv->update_state_id == 0) 
+		return;
 
-	if (priv->update_state_id != 0) {
+	debug (DEBUG_INFO, "REMOVE POLLING\n");
 
-		debug (DEBUG_INFO, "REMOVE POLLING\n");
-
-		g_source_remove (priv->update_state_id);
-		priv->update_state_id = 0;
-	}
+	g_source_remove (player->priv->update_state_id);
+	player->priv->update_state_id = 0;
 }
 
 
@@ -169,10 +170,10 @@ destroy_pipeline (GooPlayerCD *player,
 
 	goo_cdrom_unlock_tray (priv->cdrom);
 
-	if (priv->play_thread != NULL) {
-		gst_element_set_state (priv->play_thread, GST_STATE_NULL);
-		gst_object_unref (GST_OBJECT (priv->play_thread));
-		priv->play_thread = NULL;
+	if (priv->pipeline != NULL) {
+		gst_element_set_state (priv->pipeline, GST_STATE_NULL);
+		gst_object_unref (GST_OBJECT (priv->pipeline));
+		priv->pipeline = NULL;
 	}
 
 	if (priv->update_progress_id != 0) {
@@ -193,24 +194,34 @@ static gboolean
 player_done_cb (gpointer callback_data)
 {
 	GooPlayer *player = GOO_PLAYER (callback_data);
+	
 	action_done (player, GOO_PLAYER_ACTION_PLAY);
+	
 	return FALSE;
 }
 
 
-static void
-player_eos_cb (GstBin   *bin, 
-	       gpointer  data)
+static gboolean
+pipeline_bus_message_cb (GstBus     *bus,
+		         GstMessage *message,
+		         gpointer    data)
 {
-	GooPlayerCD *player_cd = data;
-	GooPlayerCDPrivateData *priv = player_cd->priv;
+	GooPlayerCD *player_cd = (GooPlayerCD *) data;
 
-	if (priv->update_progress_id != 0) {
-		g_source_remove (priv->update_progress_id);
-		priv->update_progress_id = 0;
+	switch (GST_MESSAGE_TYPE (message)) {
+	case GST_MESSAGE_EOS:
+		if (player_cd->priv->update_progress_id != 0) {
+			g_source_remove (player_cd->priv->update_progress_id);
+			player_cd->priv->update_progress_id = 0;
+		}
+		g_idle_add (player_done_cb, data);	
+		break;
+		
+	default:
+		break;
 	}
-
-	g_idle_add (player_done_cb, data);
+	
+	return TRUE;
 }
 
 
@@ -229,7 +240,7 @@ update_progress_cb (gpointer callback_data)
 		priv->update_progress_id = 0;
 	}
 	
-	ret = gst_pad_query (priv->source_pad, GST_QUERY_POSITION, &priv->sector_format, &sector);
+	ret = gst_pad_query_position (priv->source_pad, &priv->sector_format, &sector);
 	if (!ret)
 		return FALSE;
 
@@ -248,49 +259,54 @@ update_progress_cb (gpointer callback_data)
 static void
 create_pipeline (GooPlayerCD *player)
 {
-	GooPlayerCDPrivateData *priv = player->priv;
-	GstElement *sink, *queue, *audio_thread;
+	const char *device;
+	GstElement *audioconvert;
+	GstElement *audioresample;
+	GstElement *queue;
+	GstElement *sink;
 
 	destroy_pipeline (player, FALSE);
 	remove_state_polling (player);
+	goo_cdrom_lock_tray (player->priv->cdrom);
 
-	goo_cdrom_lock_tray (priv->cdrom);
+	player->priv->pipeline = gst_pipeline_new ("pipeline");
 
-	priv->play_thread = gst_thread_new ("play_thread");
-		
-	priv->source = gst_element_factory_make ("cdparanoia", "cdparanoia");
-	/*g_object_set (G_OBJECT (priv->source), 
-		      "paranoia-mode", 0, 
-		      NULL); FIXME*/
-	debug (DEBUG_INFO, "DEVICE: %s\n", goo_cdrom_get_device (priv->cdrom));
-	g_object_set (G_OBJECT (priv->source), 
-		      "device", goo_cdrom_get_device (priv->cdrom), 
+	player->priv->source = gst_element_make_from_uri (GST_URI_SRC, "cdda://", "source");
+	device = goo_cdrom_get_device (player->priv->cdrom);
+	debug (DEBUG_INFO, "DEVICE: %s\n", device);
+	g_object_set (G_OBJECT (player->priv->source), 
+		      "device", device, 
 		      NULL);
 
-	priv->volume = gst_element_factory_make ("volume", "volume");
-
+	audioconvert = gst_element_factory_make ("audioconvert", "convert");
+    	audioresample = gst_element_factory_make ("audioresample", "resample");
+	player->priv->volume = gst_element_factory_make ("volume", "volume");
 	queue = gst_element_factory_make ("queue", "queue");
-	/* FIXME
-	g_object_set (G_OBJECT (queue), 
-		      "max-size-bytes", QUEUE_SIZE,
-		      NULL);
-	*/
-
-	sink = gst_gconf_get_default_audio_sink ();
-	audio_thread = gst_thread_new ("a_decoder_thread");
-
-	gst_bin_add_many (GST_BIN (audio_thread), sink, NULL);
-	gst_bin_add_many (GST_BIN (priv->play_thread), priv->source, priv->volume, queue, audio_thread, NULL);
-	gst_element_link_many (priv->source, priv->volume, queue, sink, NULL);
-
-	priv->track_format = gst_format_get_by_nick ("track");
-	priv->sector_format = gst_format_get_by_nick ("sector");
-	priv->source_pad = gst_element_get_pad (priv->source, "src");
+	sink = gst_element_factory_make ("gconfaudiosink", "sink");
 	
-	g_signal_connect (priv->source,
-			  "eos", 
-			  G_CALLBACK (player_eos_cb), 
-			  player);
+	gst_bin_add_many (GST_BIN (player->priv->pipeline), 
+			  player->priv->source,
+			  queue,
+			  audioconvert,
+			  audioresample, 
+			  player->priv->volume, 
+			  sink, 
+			  NULL);
+	gst_element_link_many (player->priv->source,
+			       queue,
+			       audioconvert,
+			       audioresample, 
+			       player->priv->volume, 
+			       sink, 
+			       NULL);
+
+	player->priv->track_format = gst_format_get_by_nick ("track");
+	player->priv->sector_format = gst_format_get_by_nick ("sector");
+	player->priv->source_pad = gst_element_get_pad (player->priv->source, "src");
+	
+	gst_bus_add_watch (gst_pipeline_get_bus (GST_PIPELINE (player->priv->pipeline)),
+			   pipeline_bus_message_cb, 
+			   player);
 }
 
 
@@ -330,27 +346,96 @@ cd_player_update (GooPlayer *player)
 }
 
 
-static int
-check_thread (gpointer data)
+static void
+set_cd_metadata_from_rdf (GooPlayer *player, 
+			  char      *rdf)
 {
-	GooPlayer              *player = data;
-	GooPlayerCD            *player_cd = GOO_PLAYER_CD (player);
-	GooPlayerCDPrivateData *priv = player_cd->priv;
-	GString                *offsets;
-	GList                  *scan;
-	gboolean                done, exiting;
+	GooPlayerCD   *player_cd = GOO_PLAYER_CD (player);
+	musicbrainz_t  mb;
+	int            n_albums;
+	char           data[1024];
+	int            n_track;
+	GList         *scan;
 
-	/* Remove check. */
+	if (rdf == NULL)
+		return;
 
-        g_source_remove (priv->check_id);
-        priv->check_id = 0;
+	mb = mb_New ();
+	mb_UseUTF8 (mb, TRUE);
+	mb_SetResultRDF (mb, rdf);
+	
+	n_albums = mb_GetResultInt(mb, MBE_GetNumAlbums);
+	g_print ("NumAlbums: %d\n", n_albums);
+	
+	if (n_albums != 1) 
+		goto set_cd_metadata_end;
+		
+	mb_Select1 (mb, MBS_SelectAlbum, 1);
+
+ 	g_free (player_cd->priv->title);
+ 	player_cd->priv->title = NULL;
+ 		
+ 	g_free (player_cd->priv->artist);
+ 	player_cd->priv->artist = NULL;
+ 		
+ 	g_free (player_cd->priv->genre);
+ 	player_cd->priv->genre = NULL;
+ 		
+ 	player_cd->priv->year = 0;
+ 		
+ 	if (mb_GetResultData (mb, MBE_AlbumGetAlbumName, data, sizeof (data))) 
+		player_cd->priv->title = g_strdup (data);
+	else
+		player_cd->priv->title = g_strdup (_("Unknown Title"));
+ 
+	if (mb_GetResultData (mb, MBE_AlbumGetAlbumArtistId, data, sizeof (data))) 
+		if (g_ascii_strncasecmp (MBI_VARIOUS_ARTIST_ID, data, 64) == 0)
+			player_cd->priv->artist = g_strdup (_("Various"));
+		
+	if (mb_GetResultInt (mb, MBE_AlbumGetNumTracks) != player_cd->priv->n_tracks)
+		goto set_cd_metadata_end;	
+		
+	for (scan = player_cd->priv->tracks, n_track = 1; scan; scan = scan->next, n_track++) {
+		TrackInfo *track = scan->data;
+			
+		if (mb_GetResultData1 (mb, MBE_AlbumGetTrackName, data, sizeof (data), n_track))
+			track_info_set_title (track, data);
+				
+		if ((player_cd->priv->artist == NULL) && (mb_GetResultData1 (mb, MBE_AlbumGetArtistName, data, sizeof (data), n_track)))
+			player_cd->priv->artist = g_strdup (data);
+	}
+		
+	goo_player_set_title (player, player_cd->priv->title);
+	goo_player_set_subtitle (player, player_cd->priv->artist);
+	goo_player_set_year (player, player_cd->priv->year);
+	
+	action_done (player, GOO_PLAYER_ACTION_METADATA);		
+
+set_cd_metadata_end:
+	
+	mb_Delete (mb);
+}
+
+
+static int
+check_get_cd_metadata (gpointer data)
+{
+	GooPlayer     *player = data;
+	GooPlayerCD   *player_cd = GOO_PLAYER_CD (player);
+	gboolean       done, exiting;
+	char          *rdf;
+				
+	/* Remove the check. */
+
+        g_source_remove (player_cd->priv->check_id);
+        player_cd->priv->check_id = 0;
 	
 	/**/
 
-	g_mutex_lock (priv->yes_or_no);
-	done = priv->thread == NULL;
-	exiting = priv->exiting;
-        g_mutex_unlock (priv->yes_or_no);
+	g_mutex_lock (player_cd->priv->yes_or_no);
+	done = player_cd->priv->thread == NULL;
+	exiting = player_cd->priv->exiting;
+        g_mutex_unlock (player_cd->priv->yes_or_no);
 
 	if (exiting) {
 		goo_player_set_is_busy (player, FALSE);
@@ -359,108 +444,216 @@ check_thread (gpointer data)
 	}
 
 	if (!done) {
-		priv->check_id = g_timeout_add (REFRESH_RATE, 
-						check_thread, 
-						player);
+		player_cd->priv->check_id = g_timeout_add (REFRESH_RATE, 
+						           check_get_cd_metadata, 
+					 	           player);
+		return FALSE;
+	}
+	
+	/**/
+
+	g_mutex_lock (player_cd->priv->yes_or_no);
+	rdf = player_cd->priv->rdf;
+	player_cd->priv->rdf = NULL;
+	g_mutex_unlock (player_cd->priv->yes_or_no);
+	
+	if (rdf != NULL) { 
+		set_cd_metadata_from_rdf (player, rdf);
+		g_free (rdf);
+	}
+	
+	return FALSE;			
+}
+
+
+static void * 
+get_cd_metadata (void *thread_data)
+{
+	GooPlayer     *player = thread_data;
+	GooPlayerCD   *player_cd = GOO_PLAYER_CD (player);
+	musicbrainz_t  mb;
+	char          *rdf = NULL;
+	
+	mb = mb_New ();
+	mb_UseUTF8 (mb, TRUE);
+	if (mb_Query (mb, MBQ_GetCDInfo)) {
+		int rdf_len;
+	
+		rdf_len = mb_GetResultRDFLen (mb);
+		rdf = g_malloc (rdf_len + 1);
+		mb_GetResultRDF (mb, rdf, rdf_len);
+	}
+	mb_Delete (mb);
+
+	g_mutex_lock (player_cd->priv->yes_or_no);
+	g_free (player_cd->priv->rdf);
+	player_cd->priv->rdf = rdf;
+	player_cd->priv->thread = NULL;
+	g_mutex_unlock (player_cd->priv->yes_or_no);
+
+	g_thread_exit (NULL);
+
+	return NULL;
+}
+
+static int
+check_get_cd_tracks (gpointer data)
+{
+	GooPlayer   *player = data;
+	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
+	gboolean     done;
+	gboolean     exiting;
+
+	/* Remove check. */
+
+        g_source_remove (player_cd->priv->check_id);
+        player_cd->priv->check_id = 0;
+	
+	/**/
+
+	g_mutex_lock (player_cd->priv->yes_or_no);
+	done = player_cd->priv->thread == NULL;
+	exiting = player_cd->priv->exiting;
+        g_mutex_unlock (player_cd->priv->yes_or_no);
+
+	if (exiting) {
+		goo_player_set_is_busy (player, FALSE);
+		destroy_pipeline (player_cd, TRUE);
+		return FALSE;
+	}
+
+	if (!done) {
+		player_cd->priv->check_id = g_timeout_add (REFRESH_RATE, 
+							   check_get_cd_tracks, 
+							   player);
 		return FALSE;
 	}
 
 	/**/
 
 	goo_player_set_is_busy (player, FALSE);
-	gst_element_set_state (priv->play_thread, GST_STATE_NULL);
+	gst_element_set_state (player_cd->priv->pipeline, GST_STATE_NULL);
 	goo_player_set_state (player, GOO_PLAYER_STATE_STOPPED, TRUE);
 	action_done (player, GOO_PLAYER_ACTION_LIST);
 	destroy_pipeline (player_cd, TRUE);
 
 	/**/
 
-	offsets = g_string_new (NULL);
+	g_mutex_lock (player_cd->priv->yes_or_no);
+	player_cd->priv->thread = g_thread_create (get_cd_metadata, player, FALSE, NULL);
+	g_mutex_unlock (player_cd->priv->yes_or_no);
 	
-	for (scan = priv->tracks; scan; scan = scan->next) {
-		TrackInfo *track = scan->data;
-		char      *offset;
-		offset = g_strdup_printf ("%" G_GINT64_FORMAT " ", track->from_sector);
-		g_string_append (offsets, offset);
-		g_free (offset);
-	}
-
-	cddb_slave_client_query (priv->cddb_client, 
-				 priv->discid, 
-				 priv->n_tracks, 
-				 offsets->str, 
-				 priv->total_time / GST_SECOND,
-				 PACKAGE,
-				 VERSION);
-
-	g_string_free (offsets, TRUE);
+	player_cd->priv->check_id = g_timeout_add (REFRESH_RATE, check_get_cd_metadata, player);
 
 	return FALSE;
 }
 
 
-static void * 
-list_thread (void *thread_data)
+static int 
+sum_of_digits (int n) 
 {
-	GooPlayer              *player = thread_data;
-	GooPlayerCD            *player_cd = GOO_PLAYER_CD (player);
-	GooPlayerCDPrivateData *priv = player_cd->priv;
-	GstFormat               time_format = GST_FORMAT_TIME;
-	gint                    i;
-	gint64                  from_sector = 0, total_sectors;
+	int sum = 0;
+	while (n > 0) {
+		sum = sum + (n % 10);
+		n = n / 10;
+	}
+	return sum;
+}
 
-	gst_element_set_state (priv->play_thread, GST_STATE_PAUSED);
+
+static char *
+get_disc_id (GList *tracks)
+{
+	GList *scan;
+	int    checksum = 0;
+	int    n_tracks = 0;
+	int    first_sector;
+	int    last_sector;
+	int    disc_id;
+	
+	for (scan = tracks; scan; scan = scan->next) {
+		TrackInfo *track = scan->data;
+		
+		checksum += sum_of_digits (track->from_sector /  SECTORS_PER_SEC);
+		n_tracks++;
+		
+		if (scan == tracks)
+			first_sector = track->from_sector;
+		if (scan->next == NULL)
+			last_sector = track->to_sector;
+	}
+	
+	disc_id = ((checksum % 255) << 24) | (((last_sector - first_sector) / SECTORS_PER_SEC) << 8) | n_tracks;
+	
+	return g_strdup_printf ("%x", disc_id);
+}
+
+
+static int
+get_total_time (GList *tracks)
+{
+	int first_sector;
+	int last_sector;
+	
+	first_sector = ((TrackInfo*)tracks->data)->from_sector;
+	last_sector = ((TrackInfo*)tracks->data)->to_sector;
+	
+	return (last_sector - first_sector) / SECTORS_PER_SEC;
+}
+
+
+static void * 
+get_cd_tracks (void *thread_data)
+{
+	GooPlayer   *player = thread_data;
+	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
+
+	if (player_cd->priv->pipeline != NULL)
+		gst_element_set_state (player_cd->priv->pipeline, GST_STATE_PAUSED);
 
 	/**/
 
-	gst_pad_query (priv->source_pad, GST_QUERY_TOTAL, &(priv->track_format), &(priv->n_tracks));
-
-	debug (DEBUG_INFO, "TOTAL TRACKS: %" G_GINT64_FORMAT "\n", priv->n_tracks);
-
-	gst_pad_query (priv->source_pad, GST_QUERY_SEGMENT_END, &(priv->sector_format), &total_sectors);
-	total_sectors += TOC_OFFSET;
+	musicbrainz_t mb;
 	
-	debug (DEBUG_INFO, "TOTAL SECTORS: %" G_GINT64_FORMAT "\n", total_sectors);
-	
-	gst_pad_convert (priv->source_pad, 
-			 priv->sector_format, 
-			 total_sectors, 
-			 &time_format, 
-			 &(priv->total_time));
-
-	debug (DEBUG_INFO, "TOTAL TIME: %" G_GINT64_FORMAT "\n", priv->total_time);
-
-	for (i = 0; i <= priv->n_tracks; i++) {
-		gint64 to_sector;
-
-		if (i < priv->n_tracks) {
-			gst_pad_convert (priv->source_pad, 
-					 priv->track_format, 
-					 i, 
-					 &priv->sector_format, 
-					 &to_sector);
-			to_sector += TOC_OFFSET;
-			debug (DEBUG_INFO, "TRACK %d: %" G_GINT64_FORMAT "\n", i, to_sector);
-		} else 
-			to_sector = total_sectors;
+	mb = mb_New ();
+	mb_UseUTF8 (mb, TRUE);
+	mb_SetDevice (mb, (char*) goo_player_get_location (player));
+	if (mb_Query (mb, MBQ_GetCDTOC)) {
+		char data[256];
+		int  i;
 		
-		if (i > 0) {
+		mb_GetResultData(mb, MBE_TOCGetCDIndexId, data, sizeof (data));
+		g_print ("==> [MB] DISC ID: %s\n", data);
+		g_print ("==> [MB] FIRST TRACK: %d\n", mb_GetResultInt (mb, MBE_TOCGetFirstTrack));
+		player_cd->priv->n_tracks = mb_GetResultInt (mb, MBE_TOCGetLastTrack);
+		g_print ("==> [MB] LAST TRACK: %d\n", player_cd->priv->n_tracks);
+		
+		for (i = 0; i < player_cd->priv->n_tracks; i++) {
 			TrackInfo *track;
-			track = track_info_new (i - 1, from_sector, to_sector);
-			priv->tracks = g_list_prepend (priv->tracks, track);
+			int        from_sector;
+			int        n_sectors;
+			
+			from_sector = mb_GetResultInt1 (mb, MBE_TOCGetTrackSectorOffset, i + 2);
+			n_sectors = mb_GetResultInt1 (mb, MBE_TOCGetTrackNumSectors, i + 2);
+			
+			g_print ("==> [MB] Track %d: [%d, %d]\n", i, from_sector, from_sector + n_sectors);
+			
+			track = track_info_new (i, from_sector, from_sector + n_sectors);
+			player_cd->priv->tracks = g_list_prepend (player_cd->priv->tracks, track);
 		}
-		
-		from_sector = to_sector;
 	}
-	priv->tracks = g_list_reverse (priv->tracks);
+	mb_Delete (mb);
 
-	g_free (priv->discid);
-	g_object_get (priv->source, "discid", &(priv->discid), NULL);
-	debug (DEBUG_INFO, "DISC ID: %s\n", priv->discid);
+	player_cd->priv->tracks = g_list_reverse (player_cd->priv->tracks);
+	player_cd->priv->total_time = get_total_time (player_cd->priv->tracks);
 
-	g_mutex_lock (priv->yes_or_no);
-	priv->thread = NULL;
-	g_mutex_unlock (priv->yes_or_no);
+	g_free (player_cd->priv->discid);
+	player_cd->priv->discid = get_disc_id (player_cd->priv->tracks);
+	debug (DEBUG_INFO, "DISC ID: %s\n", player_cd->priv->discid);
+
+	g_mutex_lock (player_cd->priv->yes_or_no);
+	player_cd->priv->thread = NULL;
+	g_mutex_unlock (player_cd->priv->yes_or_no);
 
 	g_thread_exit (NULL);
 
@@ -471,15 +664,14 @@ list_thread (void *thread_data)
 static void
 cd_player_list (GooPlayer *player)
 {
-	GooPlayerCD            *player_cd = GOO_PLAYER_CD (player);
-	GooPlayerCDPrivateData *priv = player_cd->priv;
+	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
 
 	if (goo_player_get_is_busy (player))
 		return;
 
 	goo_player_cd_empty_list (player);
 
-	if (goo_cdrom_get_state (priv->cdrom) != GOO_CDROM_STATE_OK) {
+	if (goo_cdrom_get_state (player_cd->priv->cdrom) != GOO_CDROM_STATE_OK) {
 		debug (DEBUG_INFO, "NOT OK\n");
 		goo_player_set_state (player, GOO_PLAYER_STATE_ERROR, TRUE);
 		action_done (player, GOO_PLAYER_ACTION_LIST);
@@ -488,9 +680,12 @@ cd_player_list (GooPlayer *player)
 
 	goo_player_set_is_busy (player, TRUE);
 	create_pipeline (player_cd);
-	priv->thread  = g_thread_create (list_thread, player, FALSE, NULL);
-
-	priv->check_id = g_timeout_add (REFRESH_RATE, check_thread, player);
+	
+	g_mutex_lock (player_cd->priv->yes_or_no);
+	player_cd->priv->thread = g_thread_create (get_cd_tracks, player, FALSE, NULL);
+	g_mutex_unlock (player_cd->priv->yes_or_no);
+	
+	player_cd->priv->check_id = g_timeout_add (REFRESH_RATE, check_get_cd_tracks, player);
 }
 
 
@@ -513,7 +708,7 @@ cd_player_seek_song (GooPlayer *player,
 
 	goo_player_stop (player);
 	create_pipeline (player_cd);
-	gst_element_set_state (priv->play_thread, GST_STATE_PAUSED);
+	gst_element_set_state (priv->pipeline, GST_STATE_PAUSED);
 
 	/* seek to track */
 
@@ -527,7 +722,13 @@ cd_player_seek_song (GooPlayer *player,
 
 	g_return_if_fail (priv->current_track != NULL);
 
-	event = gst_event_new_segment_seek (priv->track_format | GST_SEEK_METHOD_SET | GST_SEEK_FLAG_FLUSH, track_n, track_n + 1);
+	event = gst_event_new_seek (1.0, 
+				    priv->track_format,
+				    GST_SEEK_FLAG_FLUSH,
+				    GST_SEEK_TYPE_SET,
+				    track_n, 
+				    GST_SEEK_TYPE_SET,
+				    track_n + 1);
 	if (!gst_pad_send_event (priv->source_pad, event))
 		g_warning ("seek failed");
 
@@ -572,22 +773,22 @@ cd_player_skip_to (GooPlayer *player,
 		   guint      seconds)
 {
 	GooPlayerCD *player_cd = GOO_PLAYER_CD (player);
-	GooPlayerCDPrivateData *priv = player_cd->priv;
-	gint64       to_sector, last_sector;
 	GstEvent    *event;
 
 	if (goo_player_get_is_busy (player))
 		return;
 
-	if (priv->play_thread == NULL)
+	if (player_cd->priv->pipeline == NULL)
 		return;
 
-	last_sector = priv->current_track->to_sector - priv->current_track->from_sector;
-	to_sector = (gint64) SECTORS_PER_SEC * seconds;
-	to_sector = MIN (to_sector, last_sector - 1);
-
-	event = gst_event_new_seek (priv->sector_format | GST_SEEK_METHOD_SET | GST_SEEK_FLAG_FLUSH, to_sector);
-	if (!gst_pad_send_event (priv->source_pad, event))
+	event = gst_event_new_seek (1.0, 
+				    GST_FORMAT_TIME,
+				    GST_SEEK_FLAG_FLUSH,
+				    GST_SEEK_TYPE_SET, 
+				    G_GINT64_CONSTANT (1000000000) * seconds,
+				    GST_SEEK_TYPE_NONE, 
+				    0);
+	if (! gst_pad_send_event (player_cd->priv->source_pad, event))
 		g_warning ("seek failed");
 }
 
@@ -607,15 +808,15 @@ cd_player_play (GooPlayer *player)
 		return;
 	}
 
-	if (! ((priv->play_thread != NULL)
+	if (! ((priv->pipeline != NULL)
 	       && ((goo_player_get_state (player) == GOO_PLAYER_STATE_PAUSED)
 		   || (goo_player_get_state (player) == GOO_PLAYER_STATE_SEEKING))))
 		create_pipeline (player_cd);
 
 	vol = goo_player_get_volume (player);
-	gst_mixer_set_volume (GST_MIXER (priv->volume), NULL, &vol);
+	g_object_set (G_OBJECT (priv->volume), "volume", (double) vol, NULL);
 
-	gst_element_set_state (priv->play_thread, GST_STATE_PLAYING);
+	gst_element_set_state (priv->pipeline, GST_STATE_PLAYING);
 	goo_player_set_state (player, GOO_PLAYER_STATE_PLAYING, TRUE);
 
 	priv->update_progress_id = g_timeout_add (PROGRESS_DELAY, update_progress_cb, player);
@@ -631,10 +832,10 @@ cd_player_pause (GooPlayer *player)
 	if (goo_player_get_is_busy (player))
 		return;
 
-	if (priv->play_thread == NULL)
+	if (priv->pipeline == NULL)
 		return;
 
-	gst_element_set_state (priv->play_thread, GST_STATE_PAUSED);
+	gst_element_set_state (priv->pipeline, GST_STATE_PAUSED);
 	goo_player_set_state (GOO_PLAYER (player), GOO_PLAYER_STATE_PAUSED, TRUE);
 	action_done (player, GOO_PLAYER_ACTION_PAUSE);
 }
@@ -649,7 +850,7 @@ cd_player_stop (GooPlayer *player)
 	if (goo_player_get_is_busy (player))
 		return;
 
-	if (priv->play_thread == NULL)
+	if (priv->pipeline == NULL)
 		return;
 
 	destroy_pipeline (player_cd, TRUE);
@@ -729,8 +930,8 @@ cd_player_set_location (GooPlayer  *player,
 
 
 void
-cd_player_set_volume (GooPlayer  *player,
-		      int         vol)
+cd_player_set_volume (GooPlayer *player,
+		      int        vol)
 {
 	GooPlayerCDPrivateData *priv = GOO_PLAYER_CD (player)->priv;
 
@@ -738,7 +939,7 @@ cd_player_set_volume (GooPlayer  *player,
 		return;
 
 	if (priv->volume != NULL)
-		gst_mixer_set_volume (GST_MIXER (priv->volume), NULL, &vol);
+		g_object_set (G_OBJECT (priv->volume), "volume", (double) vol / 100.0, NULL);
 }
 
 
@@ -818,15 +1019,16 @@ cdrom_state_changed_cb (GooCdrom  *cdrom,
 	else if (cdrom_state == GOO_CDROM_STATE_OK) {
 		goo_player_set_state (player, GOO_PLAYER_STATE_STOPPED, TRUE);
 		goo_player_list (player);
-
-	} else if (cdrom_state == GOO_CDROM_STATE_ERROR) {
+	} 
+	else if (cdrom_state == GOO_CDROM_STATE_ERROR) {
 		GError *error = goo_cdrom_get_error (priv->cdrom);
+		
 		goo_player_set_error (player, error);
 		goo_player_set_state (player, GOO_PLAYER_STATE_ERROR, TRUE);
 		goo_player_cd_empty_list (player);
 		action_done (player, GOO_PLAYER_ACTION_LIST);
-
-	} else {
+	} 
+	else {
 		goo_player_set_error (player, g_error_new (GOO_CDROM_ERROR, 0, "%s", message));
 		goo_player_set_state (player, GOO_PLAYER_STATE_ERROR, TRUE);
 		goo_player_cd_empty_list (player);
@@ -870,8 +1072,10 @@ cddb_slave_listener_event_cb (BonoboListener    *listener,
 	if (query->result != GNOME_Media_CDDBSlave2_OK)
 		return;
 
-	if (! cddb_slave_client_is_valid (priv->cddb_client, priv->discid)) 
+	if (! cddb_slave_client_is_valid (priv->cddb_client, priv->discid)) {
+		action_done (player, GOO_PLAYER_ACTION_METADATA);
 		return;
+	}
 
 	track_info = cddb_slave_client_get_tracks (priv->cddb_client, priv->discid);
 	ntracks = count_tracks (track_info);

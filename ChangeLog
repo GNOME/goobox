@@ -1,3 +1,17 @@
+2007-05-01  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* data/Makefile.am: 
+	* src/dlg-cover-chooser.c: 
+	* src/dlg-ripper.c: 
+	* src/goo-player-cd.c: 
+	* src/goo-window.c: 
+	* src/gthumb-enum-types.c: 
+	* src/main.c: 
+	* src/Makefile.am: 
+	* configure.in: bumped version to 1.9.0
+
+	Started porting to gstreamer-0.10 and to musicbrainz.
+
 2007-02-16  Josep Puigdemont i Casamajó  <josep.puigdemont@gmail.com>
 
 	* ca.po: Added "ca" to ALL_LINGUAS.
@@ -16,7 +30,7 @@
 
 	* configure.in	Added vi in ALL_LINGUAS line.
 	
-	2006-01-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
+2006-01-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/main.c (main, system_notify): 
 

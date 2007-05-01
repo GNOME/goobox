@@ -241,15 +241,13 @@ update_progress_cb (gpointer callback_data)
 	TrackInfo   *track = data->current_track->data;
 	gint64       from_sector;
 	gint64       sector = 0;
-	gboolean     ret;
 
 	if (data->update_handle != 0) {
 		g_source_remove (data->update_handle);
 		data->update_handle = 0;
 	}
 	
-	ret = gst_pad_query (data->source_pad, GST_QUERY_POSITION, &data->sector_format, &sector);
-	if (!ret)
+	if (! gst_pad_query_position (data->source_pad, &data->sector_format, &sector))
 		return FALSE;
 	
 	from_sector = track->from_sector - TOC_OFFSET;
@@ -270,7 +268,7 @@ create_pipeline (DialogData *data)
 	int         mp3_quality;
 	GParamSpec *pspec;
 
-	data->rip_thread = gst_thread_new ("rip_thread");
+	data->rip_thread = gst_pipeline_new ("rip_thread");
 		
 	data->source = gst_element_factory_make ("cdparanoia", "cdparanoia");
 	g_object_set (G_OBJECT (data->source), 
@@ -581,29 +579,29 @@ rip_current_track (DialogData *data)
 	/* Set song tags. */
 
 	if (GST_IS_TAG_SETTER (data->encoder)) {
-		gst_tag_setter_add (GST_TAG_SETTER (data->encoder),   
-				    GST_TAG_MERGE_REPLACE,
-				    GST_TAG_TITLE, track->title,
-				    GST_TAG_ARTIST, data->artist,
-				    GST_TAG_ALBUM, data->album,
-				    GST_TAG_TRACK_NUMBER, (guint) track->number + 1,
-				    GST_TAG_TRACK_COUNT, (guint) data->total_tracks,
-				    GST_TAG_DURATION, (guint64) track->length * GST_SECOND, 
-				    GST_TAG_COMMENT, _("Ripped with Goobox"),
-				    GST_TAG_ENCODER, PACKAGE_NAME,
-				    GST_TAG_ENCODER_VERSION, PACKAGE_VERSION,
-				    NULL);
+		gst_tag_setter_add_tags (GST_TAG_SETTER (data->encoder),   
+				         GST_TAG_MERGE_REPLACE,
+				         GST_TAG_TITLE, track->title,
+				         GST_TAG_ARTIST, data->artist,
+				         GST_TAG_ALBUM, data->album,
+				         GST_TAG_TRACK_NUMBER, (guint) track->number + 1,
+				         GST_TAG_TRACK_COUNT, (guint) data->total_tracks,
+				         GST_TAG_DURATION, (guint64) track->length * GST_SECOND, 
+				         GST_TAG_COMMENT, _("Ripped with Goobox"),
+				         GST_TAG_ENCODER, PACKAGE_NAME,
+				         GST_TAG_ENCODER_VERSION, PACKAGE_VERSION,
+				         NULL);
 		if (data->genre != NULL)
-			gst_tag_setter_add (GST_TAG_SETTER (data->encoder),   
-					    GST_TAG_MERGE_REPLACE,
-					    GST_TAG_GENRE, data->genre,
-					    NULL);
+			gst_tag_setter_add_tags (GST_TAG_SETTER (data->encoder),   
+					         GST_TAG_MERGE_REPLACE,
+					         GST_TAG_GENRE, data->genre,
+					         NULL);
 		if (data->year != 0) {
 			GDate *d = g_date_new_dmy (1, 1, data->year);
-			gst_tag_setter_add (GST_TAG_SETTER (data->encoder),   
-					    GST_TAG_MERGE_REPLACE,
-					    GST_TAG_DATE,  g_date_get_julian (d),
-					    NULL);
+			gst_tag_setter_add_tags (GST_TAG_SETTER (data->encoder),   
+					         GST_TAG_MERGE_REPLACE,
+					         GST_TAG_DATE,  g_date_get_julian (d),
+					         NULL);
 			g_date_free (d);
 		}
 	}
@@ -611,8 +609,14 @@ rip_current_track (DialogData *data)
 	/* Seek to track. */
 
 	gst_element_set_state (data->rip_thread, GST_STATE_PAUSED);
-	event = gst_event_new_segment_seek (data->track_format | GST_SEEK_METHOD_SET | GST_SEEK_FLAG_FLUSH, track->number, track->number + 1);
-	if (!gst_pad_send_event (data->source_pad, event)) {
+	event = gst_event_new_seek (1.0, 
+				    data->track_format,
+				    GST_SEEK_FLAG_SEGMENT,
+				    GST_SEEK_TYPE_SET,
+				    track->number,
+				    GST_SEEK_TYPE_SET,
+				    track->number + 1);
+	if (! gst_pad_send_event (data->source_pad, event)) {
 		g_warning ("seek failed");
 		return;
 	}

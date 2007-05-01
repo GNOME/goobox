@@ -700,9 +700,6 @@ dlg_cover_chooser (GooWindow  *window,
 }
 
 
-
-
-
 static void
 auto_fetch__image_saved_cb (DialogData *data,
 			    const char *filename,

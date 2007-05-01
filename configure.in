@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
  
-AC_INIT(goobox, 0.9.93)
+AC_INIT(goobox, 1.9.0)
 AC_CONFIG_SRCDIR(src/main.c)
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
@@ -18,15 +18,16 @@ dnl it too, or it will never make it into the spec file!
 dnl
 dnl ==========================================================================
 
-GLIB_REQUIRED=2.4.0
-GTK_REQUIRED=2.4.0
-LIBGNOME_REQUIRED=2.6.0
-LIBGNOMEUI_REQUIRED=2.6.0
+GLIB_REQUIRED=2.12.0
+GTK_REQUIRED=2.10.0
+LIBGNOME_REQUIRED=2.16.0
+LIBGNOMEUI_REQUIRED=2.16.0
 LIBBONOBO_REQUIRED=2.6.0
-GNOME_VFS_REQUIRED=2.6.0
-LIBGLADE_REQUIRED=2.4.0
-GSTREAMER_REQUIRED=0.8.11
-LIBNOTIFY_REQUIRED=0.2.1
+GNOME_VFS_REQUIRED=2.18.0
+LIBGLADE_REQUIRED=2.6.0
+GSTREAMER_REQUIRED=0.10.12
+LIBNOTIFY_REQUIRED=0.4.3
+LIBMUSICBRAINZ_REQUIRED=2.1.0
 
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GTK_REQUIRED)
@@ -36,6 +37,7 @@ AC_SUBST(GNOME_VFS_REQUIRED)
 AC_SUBST(LIBGLADE_REQUIRED)
 AC_SUBST(GSTREAMER_REQUIRED)
 AC_SUBST(LIBNOTIFY_REQUIRED)
+AC_SUBST(LIBMUSICBRAINZ_REQUIRED)
 
 dnl ===========================================================================
 
@@ -51,34 +53,10 @@ PKG_CHECK_MODULES(GOO,				\
 	gnome-vfs-2.0 >= $GNOME_VFS_REQUIRED	\
 	gnome-vfs-module-2.0			\
 	libglade-2.0 >= $LIBGLADE_REQUIRED	\
-	gstreamer-0.8 >= $GSTREAMER_REQUIRED	\
-	gstreamer-libs-0.8			\
-	gstreamer-play-0.8			\
-	gstreamer-gconf-0.8)
+	gstreamer-0.10 >= $GSTREAMER_REQUIRED	\
+	libmusicbrainz >= $LIBMUSICBRAINZ_REQUIRED)
 AC_SUBST(GOO_CFLAGS)
 AC_SUBST(GOO_LIBS)
-
-dnl
-dnl GTK+ version
-dnl
-AC_MSG_CHECKING(for Gtk+ 2.5.x)
-have_gtk_2_5=no
-if pkg-config --atleast-version=2.5.0 gtk+-2.0; then
-   have_gtk_2_5="yes"
-   AC_DEFINE(HAVE_GTK_2_5, 1, [Have gtk+ 2.5.x])
-fi
-AC_MSG_RESULT($have_gtk_2_5)
-
-dnl
-dnl LibGlade version
-dnl
-AC_MSG_CHECKING(for libglade 2.5.x)
-use_libglade_2_5=no
-if pkg-config --atleast-version=2.5.0 libglade-2.0 && test x"$have_gtk_2_5" = "xyes"; then
-   use_libglade_2_5="yes"
-   AC_DEFINE(USE_LIBGLADE_2_5, 1, [Use libglade 2.5.x])
-fi
-AC_MSG_RESULT($use_libglade_2_5)
 
 dnl
 dnl IDL modules
@@ -229,8 +207,6 @@ Configuration:
 
         Source code location:   ${srcdir}
         Compiler:               ${CC}
-    	Have Gtk+ 2.5.x:        ${have_gtk_2_5}
-    	Use LibGlade 2.5.x:     ${use_libglade_2_5}
 	Enable multimedia keys: ${use_mmkeys}
 	Enable notification:    ${have_libnotify}
 "
