@@ -1,5 +1,9 @@
 2007-05-02  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* data/goobox.desktop.in.in: added missing file.
+
+2007-05-02  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
 	* many_files: Install theme-friendly icons.  Simplify the support 
 	of a new language for translators.  Correct the location an 
 	application appears in menus.  Removed unused files.

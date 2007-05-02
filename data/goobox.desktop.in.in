@@ -1,0 +1,14 @@
+[Desktop Entry]
+_Name=CD Player
+_Comment=Play and extract CDs
+Categories=GNOME;GTK;AudioVideo;
+Encoding=UTF-8
+Exec=goobox
+Icon=goobox
+StartupNotify=true
+Terminal=false
+Type=Application
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=goobox
+X-GNOME-Bugzilla-Component=general
+X-GNOME-Bugzilla-Version=@VERSION@
