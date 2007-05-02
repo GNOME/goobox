@@ -176,68 +176,48 @@ void
 activate_action_about (GtkAction *action, 
 		       gpointer   data)
 {
-	GooWindow        *window = data;
-	static GtkWidget *about = NULL;
-#ifndef HAVE_GTK_2_5
-	GdkPixbuf        *logo;
-#endif
-	const char       *authors[] = {
+	GooWindow  *window = data;
+	const char *authors[] = {
 		"Paolo Bacchilega <paolo.bacchilega@libero.it>", 
 		NULL
 	};
 	/*
-	  const char       *documenters [] = {
+	  const char     *documenters [] = {
 	  NULL
 	  };*/
-	const char       *translator_credits = _("translator_credits");
+	const char *translator_credits = _("translator_credits");
+        char       *license_text;
+        const char *license[] = {
+                "Goobox is free software; you can redistribute it and/or modify"
+                "it under the terms of the GNU General Public License as published by "
+                "the Free Software Foundation; either version 2 of the License, or "
+                "(at your option) any later version.",
+                "Goobox is distributed in the hope that it will be useful, "
+                "but WITHOUT ANY WARRANTY; without even the implied warranty of "
+                "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "
+                "GNU General Public License for more details.",
+                "You should have received a copy of the GNU General Public License "
+                "along with Goobox; if not, write to the Free Software Foundation, Inc., "
+                "51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA"
+        };
 
-	if (about != NULL) {
-		gtk_window_present (GTK_WINDOW (about));
-		return;
-	}
+        license_text = g_strconcat (license[0], "\n\n", license[1], "\n\n",
+                                    license[2], "\n\n", NULL);
 
-#ifdef HAVE_GTK_2_5
-
-	about = gtk_about_dialog_new ();
-	g_object_set (about,
-		      "name",  _("Goobox"),
-		      "version", VERSION,
-		      "copyright", "Copyright \xc2\xa9 2004-2005 Free Software Foundation, Inc.",
-		      "comments", _("CD player and ripper"),
-		      "authors", authors,
-		      /*"documenters", documenters,*/
-		      "translator_credits", strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-		      "website", NULL,
-		      "website_label", NULL,
-		      "license", NULL,
-		      NULL);
-
-#else
-
-	logo = gdk_pixbuf_new_from_file (PIXMAPSDIR "/goobox.png", NULL);
-	about = gnome_about_new (_("Goobox"), 
-				 VERSION,
-				 "Copyright \xc2\xa9 2004-2005 Free Software Foundation, Inc.",
-				 _("CD player and ripper"),
-				 authors,
-				 NULL /*documenters*/,
-				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-				 logo);
-	if (logo != NULL)
-                g_object_unref (logo);
-
-#endif
-
-	gtk_window_set_destroy_with_parent (GTK_WINDOW (about), TRUE);
-	gtk_window_set_transient_for (GTK_WINDOW (about), 
-				      GTK_WINDOW (window));
-
-	g_signal_connect (G_OBJECT (about), 
-			  "destroy",
-			  G_CALLBACK (gtk_widget_destroyed), 
-			  &about);
-
-	gtk_widget_show (about);
+        gtk_show_about_dialog (GTK_WINDOW (window),
+        		       "name", "Goobox",
+                               "version", VERSION,
+                               "copyright", "Copyright \xc2\xa9 2004-2007 Free Software Foundation, Inc.",
+                               "comments", _("CD player and ripper"),
+                               "authors", authors,
+                               /*"documenters", documenters,*/
+                               "translator_credits", strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
+                               "logo-icon-name", "goobox",
+                               "license", license_text,
+                               "wrap-license", TRUE,
+                               NULL);
+                               
+	g_free (license_text);
 }
 
 

@@ -18,7 +18,6 @@ INCLUDES =						\
         -DGOO_SYSCONFDIR=\"$(sysconfdir)\"   		\
         -DGOO_DATADIR=\"$(datadir)\"     	    	\
         -DGOO_LIBDIR=\"$(libdir)\"  	         	\
-	-DPIXMAPSDIR=\""$(datadir)/pixmaps"\"		\
 	-DGLADEDIR=\""$(gladedir)"\" 			\
 	-DGOO_GLADEDIR=\""$(gladedir)"\"     		\
 	$(DISABLE_DEPRECATED)				\
@@ -98,8 +97,6 @@ goobox_SOURCES = 				\
 	dlg-ripper.h				\
 	eggtrayicon.c				\
 	eggtrayicon.h				\
-	file-list.c				\
-	file-list.h				\
 	file-utils.c				\
 	file-utils.h				\
 	gconf-utils.c				\
@@ -147,9 +144,7 @@ goobox_SOURCES = 				\
 	track-info.c				\
 	track-info.h				\
 	typedefs.h				\
-	ui.h					\
-	utf8-fnmatch.c				\
-	utf8-fnmatch.h
+	ui.h					
 
 goo-marshal.h: goo-marshal.list $(GLIB_GENMARSHAL)
 	$(GLIB_GENMARSHAL) $< --header --prefix=goo_marshal > $@

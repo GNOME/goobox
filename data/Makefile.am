@@ -1,16 +1,14 @@
-SUBDIRS = glade
+SUBDIRS = glade icons
 
 @INTLTOOL_DESKTOP_RULE@
 
+desktop_in_in_files = goobox.desktop.in.in
+desktop_in_files = $(desktop_in_in_files:.desktop.in.in=.desktop.in) 
 desktopdir = $(datadir)/applications
-desktop_in_files=goobox.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop) 
 
 applicationsdir = $(datadir)/application-registry
 applications_DATA = goobox.applications
-
-icondir = $(datadir)/pixmaps
-icon_DATA = goobox.png
 
 schemadir = @GCONF_SCHEMA_FILE_DIR@
 schema_in_files = goobox.schemas.in
@@ -35,6 +33,7 @@ EXTRA_DIST = 			\
 	goobox.schemas		\
 	goobox.schemas.in	\
 	$(applications_DATA)	\
+	$(desktop_in_in_files)	\
 	$(desktop_in_files)	\
 	$(desktop_DATA)		\
 	$(icon_DATA)		\
@@ -43,6 +42,7 @@ EXTRA_DIST = 			\
 
 DISTCLEANFILES =                \
 	$(schema_DATA)		\
+	$(desktop_in_files)     \
 	$(desktop_DATA)		\
 	$(server_DATA)		\
 	GNOME_Goobox.server.in	\

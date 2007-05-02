@@ -40,7 +40,6 @@
 #include <libgnomevfs/gnome-vfs-mime.h>
 #include <gconf/gconf-client.h>
 #include "file-utils.h"
-#include "utf8-fnmatch.h"
 
 
 #define BUF_SIZE 4096
@@ -682,31 +681,6 @@ application_get_command (const GnomeVFSMimeApplication *app)
 		command = escape_str (app->command, bad_chars);
 
 	return command;
-}
-
-
-gboolean
-match_patterns (char       **patterns, 
-		const char  *string,
-		int          flags)
-{
-	int i;
-	int result;
-       
-	if (patterns[0] == NULL)
-		return TRUE;
-	
-	if (string == NULL)
-		return FALSE;
-	
-	result = FNM_NOMATCH;
-	i = 0;
-	while ((result != 0) && (patterns[i] != NULL)) {
-		result = g_utf8_fnmatch (patterns[i], string, flags);
-		i++;
-	}
-
-	return (result == 0);
 }
 
 

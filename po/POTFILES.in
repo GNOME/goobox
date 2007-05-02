@@ -24,8 +24,6 @@ src/dlg-ripper.c
 src/dlg-ripper.h
 src/eggtrayicon.c
 src/eggtrayicon.h
-src/file-list.c
-src/file-list.h
 src/file-utils.c
 src/file-utils.h
 src/gconf-utils.c
@@ -77,5 +75,3 @@ src/track-info.c
 src/track-info.h
 src/typedefs.h
 src/ui.h
-src/utf8-fnmatch.c
-src/utf8-fnmatch.h

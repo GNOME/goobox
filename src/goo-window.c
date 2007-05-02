@@ -25,7 +25,6 @@
 #include <string.h>
 #include <gnome.h>
 #include <libbonobo.h>
-#include <libgnomeui/gnome-window-icon.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
 #include <gst/gst.h>
 
@@ -49,7 +48,6 @@
 #include "song-info.h"
 #include "typedefs.h"
 #include "ui.h"
-#include "utf8-fnmatch.h"
 #include "GNOME_Media_CDDBSlave2.h"
 
 #include "icons/pixbufs.h"
@@ -2220,6 +2218,8 @@ goo_window_construct (GooWindow  *window,
 	GError               *error = NULL;		
 	char                 *device;
 
+	gtk_window_set_icon_name (GTK_WINDOW (window), "goobox");
+
 	priv->track_editor = CORBA_OBJECT_NIL;
 	
 	g_signal_connect (G_OBJECT (window), 
@@ -2230,8 +2230,6 @@ goo_window_construct (GooWindow  *window,
 			  "key_press_event",
 			  G_CALLBACK (window_key_press_cb), 
 			  window);
-
-	gnome_window_icon_set_from_default (GTK_WINDOW (window));
 
 	if (icon_size == 0) {
 		int icon_width, icon_height;

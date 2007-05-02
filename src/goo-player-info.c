@@ -454,7 +454,6 @@ goo_player_info_init (GooPlayerInfo *info)
 	gtk_misc_set_alignment (GTK_MISC (priv->title3_label), 0.0, 0.5);
 	gtk_label_set_selectable (GTK_LABEL (priv->title3_label), TRUE);
 
-#ifdef HAVE_GTK_2_5
 	gtk_label_set_ellipsize (GTK_LABEL (priv->title1_label),
 				 PANGO_ELLIPSIZE_END);
 	gtk_label_set_width_chars (GTK_LABEL (priv->title2_label), MIN_CHARS);
@@ -466,7 +465,6 @@ goo_player_info_init (GooPlayerInfo *info)
 	gtk_label_set_ellipsize (GTK_LABEL (priv->title3_label),
 				 PANGO_ELLIPSIZE_END);
 	gtk_label_set_width_chars (GTK_LABEL (priv->title3_label), MIN_CHARS);
-#endif
 
 	/* Time */
 
