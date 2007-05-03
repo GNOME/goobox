@@ -47,57 +47,101 @@
 
 
 gboolean
-path_is_file (const gchar *path)
+path_exists (const gchar *path)
 {
-	GnomeVFSFileInfo *info;
-	GnomeVFSResult result;
-	gboolean is_file;
-	gchar *escaped;
+        GnomeVFSFileInfo *info;
+        GnomeVFSResult result;
+        gboolean exists;
+        gchar *escaped;
 
-	if (! path || ! *path) return FALSE; 
+        if (! path || ! *path) return FALSE;
 
-	info = gnome_vfs_file_info_new ();
-	escaped = gnome_vfs_escape_host_and_path_string (path);
-	result = gnome_vfs_get_file_info (escaped, 
-					  info, 
-					  (GNOME_VFS_FILE_INFO_DEFAULT 
-					   | GNOME_VFS_FILE_INFO_FOLLOW_LINKS));
-	is_file = FALSE;
-	if (result == GNOME_VFS_OK)		
-		is_file = (info->type == GNOME_VFS_FILE_TYPE_REGULAR);
-	
-	g_free (escaped);
-	gnome_vfs_file_info_unref (info);
+        info = gnome_vfs_file_info_new ();
+        escaped = gnome_vfs_escape_path_string (path);
+        result = gnome_vfs_get_file_info (escaped,
+                                          info,
+                                          (GNOME_VFS_FILE_INFO_DEFAULT
+                                           | GNOME_VFS_FILE_INFO_FOLLOW_LINKS));
 
-	return is_file;
+        exists = (result == GNOME_VFS_OK);
+
+        g_free (escaped);
+        gnome_vfs_file_info_unref (info);
+
+        return exists;
 }
 
 
 gboolean
-path_is_dir (const gchar *path)
+uri_exists (const char  *uri)
 {
-	GnomeVFSFileInfo *info;
-	GnomeVFSResult result;
-	gboolean is_dir;
-	gchar *escaped;
+        GnomeVFSFileInfo *info;
+        GnomeVFSResult    result;
+        gboolean          exists;
 
-	if (! path || ! *path) 
-		return FALSE; 
+        if (uri == NULL) 
+                return FALSE;
 
-	info = gnome_vfs_file_info_new ();
-	escaped = gnome_vfs_escape_host_and_path_string (path);
-	result = gnome_vfs_get_file_info (escaped, 
-					  info, 
-					  (GNOME_VFS_FILE_INFO_DEFAULT 
-					   | GNOME_VFS_FILE_INFO_FOLLOW_LINKS));
-	is_dir = FALSE;
-	if (result == GNOME_VFS_OK)
-		is_dir = (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY);
-	
-	g_free (escaped);
-	gnome_vfs_file_info_unref (info);
+        info = gnome_vfs_file_info_new ();
+        result = gnome_vfs_get_file_info (uri,
+                                          info,
+                                          GNOME_VFS_FILE_INFO_DEFAULT);
 
-	return is_dir;
+        exists = (result == GNOME_VFS_OK);
+
+        gnome_vfs_file_info_unref (info);
+
+        return exists;  
+}
+
+
+gboolean
+uri_is_file (const char *uri)
+{
+        GnomeVFSFileInfo *info;
+        GnomeVFSResult    result;
+        gboolean          is_file;
+
+        if (! uri || ! *uri)
+                return FALSE;
+
+        info = gnome_vfs_file_info_new ();
+        result = gnome_vfs_get_file_info (uri,
+                                          info,
+                                          (GNOME_VFS_FILE_INFO_DEFAULT
+                                           | GNOME_VFS_FILE_INFO_FOLLOW_LINKS));
+        is_file = FALSE;
+        if (result == GNOME_VFS_OK)
+                is_file = (info->type == GNOME_VFS_FILE_TYPE_REGULAR);
+
+        gnome_vfs_file_info_unref (info);
+
+        return is_file;
+}
+
+
+gboolean
+uri_is_dir (const char *uri)
+{
+        GnomeVFSFileInfo *info;
+        GnomeVFSResult    result;
+        gboolean          is_dir;
+
+        if (! uri || ! *uri)
+                return FALSE;
+
+        info = gnome_vfs_file_info_new ();
+        result = gnome_vfs_get_file_info (uri,
+                                          info,
+                                          (GNOME_VFS_FILE_INFO_DEFAULT
+                                           | GNOME_VFS_FILE_INFO_FOLLOW_LINKS));
+        is_dir = FALSE;
+        if (result == GNOME_VFS_OK)
+                is_dir = (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY);
+
+        gnome_vfs_file_info_unref (info);
+
+        return is_dir;
 }
 
 
@@ -226,50 +270,27 @@ get_file_ctime (const gchar *path)
 
 
 gboolean 
-file_copy (const gchar *from, 
-	   const gchar *to)
+file_copy (const char *source_uri, 
+	   const char *dest_uri)
 {
-	FILE *fin, *fout;
-	gchar buf[BUF_SIZE];
-	gchar *dest_dir;
-	gint  n;
-
-	if (strcmp (from, to) == 0) {
-		g_warning ("cannot copy file %s: source and destination are the same\n", from);
-		return FALSE;
-	}
-
-	fin = fopen (from, "rb");
-	if (! fin) 
-		return FALSE;
-
-	dest_dir = remove_level_from_path (to);
-	if (ensure_dir_exists (dest_dir, 0755) != GNOME_VFS_OK) {
-		g_free (dest_dir);
-		fclose (fin);
-		return FALSE;
-	}
-
-	fout = fopen (to, "wb");
-	if (! fout) {
-		g_free (dest_dir);
-		fclose (fin);
-		return FALSE;
-	}
-
-	while ((n = fread (buf, sizeof (char), BUF_SIZE, fin)) != 0) 
-		if (fwrite (buf, sizeof (char), n, fout) != n) {
-			g_free (dest_dir);
-			fclose (fin);
-			fclose (fout);
-			return FALSE;
-		}
-
-	g_free (dest_dir);
-	fclose (fin);
-	fclose (fout);
-
-	return TRUE;
+        GnomeVFSURI    *real_source_uri;
+        GnomeVFSURI    *real_dest_uri;
+        GnomeVFSResult  result;
+                
+        real_source_uri = gnome_vfs_uri_new (source_uri);
+        real_dest_uri = gnome_vfs_uri_new (dest_uri);
+                
+        result = gnome_vfs_xfer_uri (real_source_uri, 
+        			     real_dest_uri,
+                                     GNOME_VFS_XFER_RECURSIVE, 
+                                     GNOME_VFS_XFER_ERROR_MODE_ABORT,
+                                     GNOME_VFS_XFER_OVERWRITE_MODE_REPLACE,
+                                     NULL, NULL);
+                
+        gnome_vfs_uri_unref (real_source_uri);
+        gnome_vfs_uri_unref (real_dest_uri);
+                
+        return result == GNOME_VFS_OK;
 }
 
 
@@ -378,23 +399,23 @@ remove_ending_separator (const gchar *path)
 
 
 GnomeVFSResult
-ensure_dir_exists (const gchar *a_path,
+ensure_dir_exists (const gchar *uri,
 		   mode_t       mode)
 {
 	char *path;
 	char *p;
 	char *scheme;
 
-	if (! a_path) 
+	if (uri == NULL) 
 		return GNOME_VFS_ERROR_BAD_PARAMETERS;
 	
-	if (path_is_dir (a_path))
+	if (uri_is_dir (uri))
 		return GNOME_VFS_OK;
 
-	path = g_strdup (a_path);
+	path = g_strdup (uri);
 	p = path;
 
-	scheme = gnome_vfs_get_uri_scheme (a_path);
+	scheme = gnome_vfs_get_uri_scheme (path);
 	if (scheme != NULL) {
 		p += strlen (scheme);
 		if (strncmp (p, "://", 3) == 0)
@@ -414,7 +435,7 @@ ensure_dir_exists (const gchar *a_path,
 			end = FALSE;
 		}
 			
-		if (! path_is_dir (path)) {
+		if (! uri_is_dir (path)) {
 			GnomeVFSResult result;
 			result = gnome_vfs_make_directory (path, mode);
 			if (result != GNOME_VFS_OK) {
@@ -909,7 +930,7 @@ rmdir_recursive (const gchar *directory)
 	GList    *scan;
 	gboolean  error = FALSE;
 
-	if (! path_is_dir (directory)) 
+	if (! uri_is_dir (directory)) 
 		return FALSE;
 
 	path_list_new (directory, &files, &dirs);
@@ -1016,124 +1037,9 @@ get_temp_work_dir_name (void)
 					  "/goobox",
 					  getpid (),
 					  count++);
-	} while (path_is_file (result) && (try++ < MAX_TRIES));
+	} while (uri_is_file (result) && (try++ < MAX_TRIES));
 
 	return result;
-}
-
-
-/* file list utils */
-
-
-gboolean
-file_list__match_pattern (const char *line, 
-			  const char *pattern)
-{
-	const char *l = line, *p = pattern;
-
-	for (; (*p != 0) && (*l != 0); p++, l++) {
-		if (*p != '%') {
-			if (*p != *l)
-				return FALSE;
-		} else {
-			p++;
-			switch (*p) {
-			case 'a':
-				break;
-			case 'n':
-				if (!isdigit (*l)) 
-					return FALSE;
-				break;
-			case 'c':
-				if (!isalpha (*l)) 
-					return FALSE;
-				break;
-			default:
-				return FALSE;
-			}
-		}
-	}
-	
-	return (*p == 0);
-}
-
-
-int
-file_list__get_index_from_pattern (const char *line, 
-				   const char *pattern)
-{
-	int         line_l, pattern_l;
-	const char *l;
-
-	line_l = strlen (line);
-	pattern_l = strlen (pattern);
-
-	if ((pattern_l == 0) || (line_l == 0))
-		return -1;
-
-	for (l = line; *l != 0; l++) 
-		if (file_list__match_pattern (l, pattern))
-			return (l - line);
-	
-	return -1;
-}
-
-
-char*
-file_list__get_next_field (const char *line,
-			   int         start_from,
-			   int         field_n)
-{
-	const char *f_start, *f_end;
-	
-	line = line + start_from;
-	
-	f_start = line;
-	while ((*f_start == ' ') && (*f_start != *line))
-		f_start++;
-	f_end = f_start;
-
-	while ((field_n > 0) && (*f_end != 0)) {
-		if (*f_end == ' ') {
-			field_n--;
-			if (field_n != 0) {
-				while ((*f_end == ' ') && (*f_end != *line))
-					f_end++;
-				f_start = f_end;
-			}
-		} else
-			f_end++;
-	}
-	
-	return g_strndup (f_start, f_end - f_start);
-}
-
-
-char*
-file_list__get_prev_field (const char *line,
-			   int         start_from,
-			   int         field_n)
-{
-	const char *f_start, *f_end;
-
-	f_start = line + start_from - 1;
-	while ((*f_start == ' ') && (*f_start != *line))
-		f_start--;
-	f_end = f_start;
-
-	while ((field_n > 0) && (*f_start != *line)) {
-		if (*f_start == ' ') {
-			field_n--;
-			if (field_n != 0) {
-				while ((*f_start == ' ') && (*f_start != *line))
-					f_start--;
-				f_end = f_start;
-			}
-		} else
-			f_start--;
-	}
-
-	return g_strndup (f_start + 1, f_end - f_start);
 }
 
 
@@ -1160,6 +1066,23 @@ new_uri_from_path (const char *path)
 	return uri;
 }
 
+
+char *
+get_uri_from_local_path (const char *local_path)
+{
+        char *escaped;
+        char *uri;
+
+        escaped = escape_uri (local_path);
+        if (escaped[0] == '/') {
+                uri = g_strconcat ("file://", escaped, NULL);
+                g_free (escaped);
+        }
+        else
+                uri = escaped;
+
+        return uri;
+}
 
 
 static gboolean

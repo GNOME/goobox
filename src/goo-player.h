@@ -122,6 +122,7 @@ gboolean         goo_player_get_is_busy         (GooPlayer       *player);
 /**/
 
 const char *     goo_player_get_discid          (GooPlayer       *player);
+const char *     goo_player_get_asin            (GooPlayer       *player);
 TrackInfo  *     goo_player_get_track           (GooPlayer       *player,
 				                 guint            n);
 GList      *     goo_player_get_tracks          (GooPlayer       *player);

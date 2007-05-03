@@ -205,9 +205,9 @@ activate_action_about (GtkAction *action,
                                     license[2], "\n\n", NULL);
 
         gtk_show_about_dialog (GTK_WINDOW (window),
-        		       "name", "Goobox",
+        		       "name", _("CD Player"),
                                "version", VERSION,
-                               "copyright", "Copyright \xc2\xa9 2004-2007 Free Software Foundation, Inc.",
+                               "copyright", _("Copyright \xc2\xa9 2004-2007 Free Software Foundation, Inc."),
                                "comments", _("CD player and ripper"),
                                "authors", authors,
                                /*"documenters", documenters,*/

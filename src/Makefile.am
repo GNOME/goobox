@@ -24,17 +24,6 @@ INCLUDES =						\
 	$(GOO_CFLAGS)					\
 	$(LIBNOTIFY_CFLAGS)
 
-gnome_media_cddbslave2_idl_sources =           	\
-	GNOME_Media_CDDBSlave2-stubs.c         	\
-	GNOME_Media_CDDBSlave2-skels.c         	\
-	GNOME_Media_CDDBSlave2.h         	\
-	GNOME_Media_CDDBSlave2-common.c
-
-$(gnome_media_cddbslave2_idl_sources): gnome_media_cddbslave2_idl_stamp
-gnome_media_cddbslave2_idl_stamp: GNOME_Media_CDDBSlave2.idl $(ORBIT_IDL)
-	$(ORBIT_IDL) $(IDL_INCLUDES) $<
-	touch $@
-
 gnome_goobox_idl_sources =           	\
 	GNOME_Goobox-stubs.c         	\
 	GNOME_Goobox-skels.c         	\
@@ -81,12 +70,9 @@ goobox_SOURCES = 				\
 	$(BUILT_SOURCES)			\
 	$(BACON_SOURCES)			\
 	$(GTH_SOURCES)				\
-	$(gnome_media_cddbslave2_idl_sources)	\
 	$(gnome_goobox_idl_sources)		\
 	actions.c				\
 	actions.h				\
-	cddb-slave-client.c			\
-	cddb-slave-client.h			\
 	dlg-cover-chooser.c			\
 	dlg-cover-chooser.h			\
 	dlg-extract.c				\
@@ -103,8 +89,6 @@ goobox_SOURCES = 				\
 	gconf-utils.h				\
 	glib-utils.c				\
 	glib-utils.h				\
-	gnome-vfs-helpers.c			\
-	gnome-vfs-helpers.h			\
 	goo-application.c			\
 	goo-application.h			\
 	goo-cdrom.c				\
@@ -117,8 +101,8 @@ goobox_SOURCES = 				\
 	goo-cdrom-solaris.h			\
 	goo-error.c				\
 	goo-error.h				\
-	goo-player-cd.c				\
-	goo-player-cd.h				\
+	goo-player.c				\
+	goo-player.h				\
 	goo-player-info.c			\
 	goo-player-info.h			\
 	goo-volume-button.c			\
@@ -187,14 +171,11 @@ goobox_LDADD = 					\
 EXTRA_DIST = 					\
 	goo-marshal.list 			\
 	gthumb-marshal.list 			\
-	GNOME_Media_CDDBSlave2.idl		\
 	GNOME_Goobox.idl
 
 CLEANFILES = 					\
 	$(BUILT_SOURCES) 			\
 	$(GTH_MARSHALLERS) 			\
 	$(GTH_ENUMS)				\
-	$(gnome_media_cddbslave2_idl_sources) 	\
 	$(gnome_goobox_idl_sources) 		\
-	gnome_media_cddbslave2_idl_stamp	\
 	gnome_goobox_idl_stamp

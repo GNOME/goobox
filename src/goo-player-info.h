@@ -27,7 +27,7 @@
 #include <glib-object.h>
 #include <gtk/gtkhbox.h>
 #include "goo-window.h"
-#include "goo-player-cd.h"
+#include "goo-player.h"
 #include "song-info.h"
 
 #define GOO_TYPE_PLAYER_INFO              (goo_player_info_get_type ())

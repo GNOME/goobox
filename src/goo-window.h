@@ -24,7 +24,7 @@
 #define GOO_WINDOW_H
 
 #include <libgnomeui/gnome-app.h>
-#include "goo-player-cd.h"
+#include "goo-player.h"
 
 #define GOO_TYPE_WINDOW              (goo_window_get_type ())
 #define GOO_WINDOW(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GOO_TYPE_WINDOW, GooWindow))
@@ -66,9 +66,9 @@ void        goo_window_next                      (GooWindow   *window);
 void        goo_window_eject                     (GooWindow   *window);
 void        goo_window_set_location              (GooWindow   *window,
 						  const char  *location);
-GList      *goo_window_get_song_list             (GooWindow   *window,
+GList *     goo_window_get_song_list             (GooWindow   *window,
 						  gboolean     selection);
-GooPlayer  *goo_window_get_player                (GooWindow   *window);
+GooPlayer * goo_window_get_player                (GooWindow   *window);
 void        goo_window_edit_cddata               (GooWindow   *window);
 void        goo_window_update_cover              (GooWindow   *window);
 void        goo_window_set_cover_image           (GooWindow   *window,

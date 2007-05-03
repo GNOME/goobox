@@ -46,7 +46,7 @@
 #include "preferences.h"
 #include "song-info.h"
 #include "track-info.h"
-#include "goo-player-cd.h"
+#include "goo-player.h"
 #include "dlg-ripper.h"
 
 #define GLADE_EXTRACT_FILE "goobox.glade"

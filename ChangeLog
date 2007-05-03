@@ -1,5 +1,12 @@
 2007-05-03  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* many_files: Removed cddbslave support.  Download the cover from
+	amazon if the asin is available.  Renamed goo-player-cd.[ch] as 
+	goo-player.[ch].  Removed gnome-vfs-helpers.[ch].  Save musicbrainz
+	metadata in a local cache.
+	
+2007-05-03  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
 	* many_files: Use stock icons.  Update icons when the icon theme 
 	changes.  Removed goo-player.[ch], because it was a redundant
 	abstraction.

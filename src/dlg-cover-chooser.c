@@ -43,10 +43,8 @@
 #include "goo-window.h"
 #include "goo-stock.h"
 #include "gth-image-list.h"
-#include "gnome-vfs-helpers.h"
 #include "preferences.h"
 #include "gconf-utils.h"
-#include "gnome-vfs-helpers.h"
 
 #define GLADE_CHOOSER_FILE "goo_cover_chooser.glade"
 #define MAX_IMAGES 20
@@ -77,6 +75,7 @@ struct _DialogData {
 	gboolean             autofetching;
 
 	FileSavedFunc        file_saved_func;
+	char                *source;
 	char                *dest;
 
 	GnomeVFSAsyncHandle *vfs_handle;
@@ -112,6 +111,7 @@ destroy_cb (GtkWidget  *widget,
 	}
 
 	g_free (data->dest);
+	g_free (data->source);
 	g_free (data->album);
 	g_free (data->artist);
 	path_list_free (data->url_list);
@@ -134,15 +134,8 @@ copy_progress_update_cb (GnomeVFSAsyncHandle      *handle,
 	if (info->status != GNOME_VFS_XFER_PROGRESS_STATUS_OK) {
 		data->vfs_result = info->status;
 		return FALSE;
-
-	} else if (info->phase == GNOME_VFS_XFER_PHASE_OPENTARGET) {
-		debug (DEBUG_INFO, "OPEN TARGET: %s\n", info->target_name);
-		data->tmpfiles = g_list_prepend (data->tmpfiles, g_strdup (info->target_name));
-
-	} else if (info->phase == GNOME_VFS_XFER_PHASE_CLOSETARGET) {
-		debug (DEBUG_INFO, "CLOSE TARGET: %s\n", info->target_name);
-
-	} else if (info->phase == GNOME_VFS_XFER_PHASE_COMPLETED) {
+	} 
+	if (info->phase == GNOME_VFS_XFER_PHASE_COMPLETED) {
 		debug (DEBUG_INFO, "COMPLETED");
 	
 		if (data->file_saved_func != NULL)
@@ -166,6 +159,7 @@ copy_file_from_url (DialogData    *data,
 	GnomeVFSResult             result;
 
 	data->file_saved_func = file_saved_func;
+	
 	g_free (data->dest);
 	data->dest = g_strdup (uri_dest);
 
@@ -532,7 +526,7 @@ revert_cb (GtkWidget  *widget,
 		return;
 
 	original_cover = goo_window_get_cover_filename (data->window);
-	gnome_vfs_x_copy_uri_simple (data->cover_backup, original_cover);
+	file_copy (data->cover_backup, original_cover);
 	goo_window_update_cover (data->window);
 }
 
@@ -606,7 +600,7 @@ backup_cover_image (DialogData   *data)
 	gnome_vfs_uri_unref (uri);
 
 	cover_backup = g_build_filename (data->tmpdir, ORIGINAL_COVER, NULL);
-	gnome_vfs_x_copy_uri_simple (original_cover, cover_backup);
+	file_copy (original_cover, cover_backup);
 	g_free (original_cover);
 
 	data->tmpfiles = g_list_prepend (data->tmpfiles, cover_backup);
@@ -723,6 +717,7 @@ auto_fetch__image_saved_cb (DialogData *data,
 {
 	if (success) {
 		char *tmpfile = g_strdup (filename);
+		
 		debug (DEBUG_INFO, "LOAD IMAGE: %s\n", tmpfile);
 		data->tmpfiles = g_list_prepend (data->tmpfiles, tmpfile);
 
@@ -751,14 +746,14 @@ auto_fetch__search_result_saved_cb (DialogData *data,
 		g_free (filename);
 
 		copy_file_from_url (data, url, dest, auto_fetch__image_saved_cb);
-
-	} else
+	} 
+	else
 		destroy_cb (NULL, data);
 }
 
 
 static gboolean
-auto_fetch__start_searching (gpointer callback_data)
+auto_fetch_from_name__start_searching (gpointer callback_data)
 {
 	DialogData *data = callback_data;
 	char       *query;
@@ -779,9 +774,9 @@ auto_fetch__start_searching (gpointer callback_data)
 
 
 void
-fetch_cover_image (GooWindow  *window,
-		   const char *album,
-		   const char *artist)
+fetch_cover_image_from_name (GooWindow  *window,
+		             const char *album,
+		             const char *artist)
 {
 	DialogData *data;
 	
@@ -795,5 +790,41 @@ fetch_cover_image (GooWindow  *window,
 	data->tmpdir = g_strdup (get_temp_work_dir ());
 	ensure_dir_exists (data->tmpdir, DIR_PERM);
 
-	data->load_id = g_idle_add (auto_fetch__start_searching, data);
+	data->load_id = g_idle_add (auto_fetch_from_name__start_searching, data);
+}
+
+
+static gboolean
+auto_fetch_from_asin__start_searching (gpointer callback_data)
+{
+	DialogData *data = callback_data;
+	char       *dest;
+
+	g_source_remove (data->load_id);
+	data->load_id = 0;
+
+	dest = g_build_filename (data->tmpdir, "1.jpg", NULL);
+	copy_file_from_url (data, data->source, dest, auto_fetch__image_saved_cb);
+	g_free (dest);
+
+	return FALSE;
+}
+
+
+void
+fetch_cover_image_from_asin (GooWindow  *window,
+		             const char *asin)
+{
+	DialogData *data;
+	
+	data = g_new0 (DialogData, 1);
+	data->window = window;
+	data->max_images = 1;
+	data->autofetching = TRUE;
+
+	data->tmpdir = g_strdup (get_temp_work_dir ());
+	ensure_dir_exists (data->tmpdir, DIR_PERM);
+
+	data->source = g_strdup_printf ("http://images.amazon.com/images/P/%s.01._SCLZZZZZZZ_.jpg", asin);
+	data->load_id = g_idle_add (auto_fetch_from_asin__start_searching, data);
 }

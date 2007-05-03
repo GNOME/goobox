@@ -34,7 +34,7 @@
 #include "file-utils.h"
 #include "goo-marshal.h"
 #include "goo-stock.h"
-#include "goo-player-cd.h"
+#include "goo-player.h"
 #include "goo-player-info.h"
 #include "goo-window.h"
 #include "goo-volume-tool-button.h"
@@ -47,11 +47,9 @@
 #include "song-info.h"
 #include "typedefs.h"
 #include "ui.h"
-#include "GNOME_Media_CDDBSlave2.h"
 
 #include "icons/pixbufs.h"
 
-#define CDDBSLAVE_TRACK_EDITOR_IID "OAFIID:GNOME_Media_CDDBSlave2_TrackEditor"
 #define ICON_GTK_SIZE GTK_ICON_SIZE_LARGE_TOOLBAR
 #define GCONF_NOTIFICATIONS 6
 #define FILES_TO_PROCESS_AT_ONCE 500
@@ -116,8 +114,6 @@ struct _GooWindowPrivateData {
 	GList           *playlist;                  /* int list. */
 
 	double           fraction;
-
-	GNOME_Media_CDDBTrackEditor track_editor;
 
 	gboolean         exiting;
 	guint            check_id;
@@ -569,9 +565,6 @@ goo_window_update_titles (GooWindow *window)
 }
 
 
-static void destroy_track_editor (GNOME_Media_CDDBTrackEditor track_editor);
-
-
 static void 
 goo_window_finalize (GObject *object)
 {
@@ -615,9 +608,6 @@ goo_window_finalize (GObject *object)
 		g_object_unref (priv->player);
 
 		song_info_unref (priv->current_song);
-
-		destroy_track_editor (priv->track_editor);
-		priv->track_editor = NULL;
 
 		path_list_free (priv->url_list);
 		priv->url_list = NULL;
@@ -934,7 +924,6 @@ play_song (GooWindow *window,
 static void
 play_next_song_in_playlist (GooWindow *window)
 {
-	GooWindowPrivateData *priv = window->priv;
 	gboolean  play_all;
 	gboolean  shuffle;
 	gboolean  repeat;
@@ -944,15 +933,15 @@ play_next_song_in_playlist (GooWindow *window)
 	shuffle  = eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE);
 	repeat = eel_gconf_get_boolean (PREF_PLAYLIST_REPEAT, FALSE);
 
-	next = priv->playlist;
+	next = window->priv->playlist;
 
 	if ((next == NULL) && repeat) {
-		if (priv->current_song != NULL) {
-			song_info_unref (priv->current_song);
-			priv->current_song = NULL;
+		if (window->priv->current_song != NULL) {
+			song_info_unref (window->priv->current_song);
+			window->priv->current_song = NULL;
 		}
 		create_playlist (window, play_all, shuffle);
-		next = priv->playlist;
+		next = window->priv->playlist;
 	}
 	
 	print_playlist (window);
@@ -962,7 +951,7 @@ play_next_song_in_playlist (GooWindow *window)
 	else {
 		int pos = GPOINTER_TO_INT (next->data);
 		play_song (window, pos);
-		priv->playlist = g_list_remove_link (priv->playlist, next);
+		window->priv->playlist = g_list_remove_link (window->priv->playlist, next);
 		g_list_free (next);
 	}
 }
@@ -1024,19 +1013,6 @@ pref_playlist_shuffle_changed (GConfClient *client,
 }
 
 
-static void 
-goo_window_realize (GtkWidget *widget)
-{
-	GooWindow *window;
-	GooWindowPrivateData *priv;
-
-	window = GOO_WINDOW (widget);
-	priv = window->priv;
-
-	GTK_WIDGET_CLASS (parent_class)->realize (widget);
-}
-
-
 static void
 save_window_size (GooWindow *window)
 {
@@ -1052,21 +1028,19 @@ static void
 goo_window_unrealize (GtkWidget *widget)
 {
 	GooWindow *window;
-	GooWindowPrivateData *priv;
-	gboolean playlist_visible;
+	gboolean   playlist_visible;
 
 	window = GOO_WINDOW (widget);
-	priv = window->priv;
 
 	/* save ui preferences. */
 
-	playlist_visible = gtk_expander_get_expanded (GTK_EXPANDER (priv->list_expander));
+	playlist_visible = gtk_expander_get_expanded (GTK_EXPANDER (window->priv->list_expander));
 	eel_gconf_set_boolean (PREF_UI_PLAYLIST, playlist_visible);
 	if (playlist_visible)
 		save_window_size (window);
 
-	preferences_set_sort_method (priv->sort_method);
-	preferences_set_sort_type (priv->sort_type);
+	preferences_set_sort_method (window->priv->sort_method);
+	preferences_set_sort_type (window->priv->sort_type);
 
 	GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
@@ -1076,10 +1050,9 @@ static gboolean
 first_time_idle (gpointer callback_data)
 {
 	GooWindow *window = callback_data;
-	GooWindowPrivateData *priv = window->priv;
 
-	g_source_remove (priv->first_timeout_handle);
-	goo_player_update (priv->player);
+	g_source_remove (window->priv->first_timeout_handle);
+	goo_player_update (window->priv->player);
 
 	return FALSE;
 }
@@ -1120,8 +1093,6 @@ goo_window_class_init (GooWindowClass *class)
 	gobject_class = (GObjectClass*) class;
 
 	gobject_class->finalize = goo_window_finalize;
-
-	widget_class->realize   = goo_window_realize;
 	widget_class->unrealize = goo_window_unrealize;
 	widget_class->show      = goo_window_show;
 }
@@ -1537,16 +1508,23 @@ goo_window_get_cover_filename (GooWindow *window)
 {
 	const char *discid;
 	char       *filename;
+	char       *dir;
 	
 	discid = goo_player_get_discid (window->priv->player);
 	if (discid == NULL)
 		return NULL;
 
-	filename = g_strconcat (g_get_home_dir (), G_DIR_SEPARATOR_S, 
-				".cddbslave", G_DIR_SEPARATOR_S, 
+	dir = g_build_filename (g_get_home_dir (), 
+				".gnome2", 
+				"goobox.d",
+				"covers", 
+			   	NULL);
+	ensure_dir_exists (dir, 0700);
+	filename = g_strconcat (dir, G_DIR_SEPARATOR_S, 
 				discid, ".png", 
 				NULL);
-
+	g_free (dir);
+	
 	return filename;
 }
 
@@ -1704,32 +1682,34 @@ static void
 auto_fetch_cover_image (GooWindow *window)
 {
 	char        *filename;
-	GnomeVFSURI *uri;
-	gboolean     cover_exists;
-	const char  *album, *artist;
+	const char  *album;
+	const char  *artist;
 
 	if (window->priv->hibernate)
 		return;
 
-	if (!goo_window_get_current_cd_autofetch (window))
+	if (! goo_window_get_current_cd_autofetch (window))
 		return;
 	goo_window_set_current_cd_autofetch (window, FALSE);
 
 	filename = goo_window_get_cover_filename (window);
 	if (filename == NULL)
 		return;
-	uri = new_uri_from_path (filename);
-	cover_exists = gnome_vfs_uri_exists (uri);
-	gnome_vfs_uri_unref (uri);
-	g_free (filename);
-	if (cover_exists)
+
+	if (g_file_test (filename, G_FILE_TEST_EXISTS)) {
+		g_free (filename);
 		return;
+	}
 
 	album = goo_player_get_album (window->priv->player);
 	artist = goo_player_get_artist (window->priv->player);
 	if ((album == NULL) || (artist == NULL))
 		return;
-	fetch_cover_image (window, album, artist);
+
+	if (goo_player_get_asin (window->priv->player) != NULL) 
+		fetch_cover_image_from_asin (window, goo_player_get_asin (window->priv->player));
+	else
+		fetch_cover_image_from_name (window, album, artist);
 }
 
 
@@ -2241,8 +2221,6 @@ goo_window_construct (GooWindow  *window,
 
 	gtk_window_set_icon_name (GTK_WINDOW (window), "goobox");
 
-	priv->track_editor = CORBA_OBJECT_NIL;
-	
 	g_signal_connect (G_OBJECT (window), 
 			  "delete_event",
 			  G_CALLBACK (window_delete_event_cb),
@@ -2570,7 +2548,7 @@ goo_window_construct (GooWindow  *window,
 				(GDestroyNotify) tray_object_destroyed);
 
 	gtk_container_add (GTK_CONTAINER (priv->tray), priv->tray_box);
-	priv->tray_icon = gtk_image_new_from_stock (GOO_STOCK_AUDIO_CD, GTK_ICON_SIZE_BUTTON);
+	priv->tray_icon = gtk_image_new_from_icon_name ("goobox", GTK_ICON_SIZE_BUTTON);
 
 	g_signal_connect (G_OBJECT (priv->tray_icon), 
 			  "expose_event",
@@ -2681,16 +2659,16 @@ static gboolean
 check_player_state_cb (gpointer data)
 {
 	GooWindow *window = data;
- 	GooWindowPrivateData *priv = window->priv;
 
-	g_source_remove (priv->check_id);
+	g_source_remove (window->priv->check_id);
 
-	if (!goo_player_get_is_busy (priv->player)) 
+	if (!goo_player_get_is_busy (window->priv->player)) 
 		goo_window_destroy (window);
 	else
-		priv->check_id = g_timeout_add (PLAYER_CHECK_RATE, 
-						check_player_state_cb, 
-						window);
+		window->priv->check_id = g_timeout_add (PLAYER_CHECK_RATE, 
+							check_player_state_cb, 
+							window);
+
 	return FALSE;
 }
 
@@ -2698,19 +2676,17 @@ check_player_state_cb (gpointer data)
 void
 goo_window_close (GooWindow *window)
 {
- 	GooWindowPrivateData *priv = window->priv;
-
-	priv->exiting = TRUE;
-	if (!goo_player_get_is_busy (priv->player)) 
+	window->priv->exiting = TRUE;
+	if (! goo_player_get_is_busy (window->priv->player)) 
 		goo_window_destroy (window);
 	else {
 		gtk_widget_set_sensitive (GTK_WIDGET (window), FALSE);
 
-		if (priv->check_id != 0)
-			g_source_remove (priv->check_id);
-		priv->check_id = g_timeout_add (PLAYER_CHECK_RATE, 
-						check_player_state_cb, 
-						window);
+		if (window->priv->check_id != 0)
+			g_source_remove (window->priv->check_id);
+		window->priv->check_id = g_timeout_add (PLAYER_CHECK_RATE, 
+							check_player_state_cb, 
+							window);
 	}
 }
 
@@ -2729,8 +2705,8 @@ goo_window_set_toolbar_visibility (GooWindow   *window,
 
 
 void
-goo_window_set_statusbar_visibility  (GooWindow   *window,
-				      gboolean     visible)
+goo_window_set_statusbar_visibility (GooWindow *window,
+				     gboolean   visible)
 {
 	g_return_if_fail (window != NULL);
 
@@ -2960,100 +2936,10 @@ goo_window_get_song_list (GooWindow *window,
 }
 
 
-/**/
-
-
-static void
-restart_track_editor (GNOME_Media_CDDBTrackEditor track_editor,
-		      GooWindow *window)
-{
-	GooWindowPrivateData *priv = window->priv;
-	CORBA_Environment     ev;
-
-	g_return_if_fail (GOO_IS_WINDOW (window));
-
-	debug (DEBUG_INFO, "RESTART TRACK EDITOR");
-
-	CORBA_exception_init (&ev);
-
-	priv->track_editor = bonobo_activation_activate_from_id (CDDBSLAVE_TRACK_EDITOR_IID, 0, NULL, &ev);
-	if (BONOBO_EX (&ev)) {
-		g_warning ("Could not reactivate track editor.\n%s", CORBA_exception_id (&ev));
-		priv->track_editor = CORBA_OBJECT_NIL;
-	}  else
-		ORBit_small_listen_for_broken (priv->track_editor, 
-					       G_CALLBACK (restart_track_editor), 
-					       window);
-
-	CORBA_exception_free (&ev);
-}
-
-
-static void
-destroy_track_editor (GNOME_Media_CDDBTrackEditor track_editor)
-{
-	if (track_editor != CORBA_OBJECT_NIL) {
-		ORBit_small_unlisten_for_broken (track_editor, G_CALLBACK (restart_track_editor));
-		bonobo_object_release_unref (track_editor, NULL);
-	}
-}
-
-
 void
 goo_window_edit_cddata (GooWindow *window)
 {
-	GooWindowPrivateData *priv = window->priv;
-	CORBA_Environment     ev;
-	const char           *discid;
-
-	if (window->priv->hibernate)
-		return;
-
-	discid = goo_player_get_discid (window->priv->player);
-	
-	if (discid == NULL) 
-		return;
-	
-	CORBA_exception_init (&ev);
-
-	if (priv->track_editor == CORBA_OBJECT_NIL) {
-		priv->track_editor = bonobo_activation_activate_from_id (CDDBSLAVE_TRACK_EDITOR_IID, 0, NULL, &ev);
-		if (BONOBO_EX (&ev)) {
-			g_warning ("Could not activate track editor.\n%s",
-				   CORBA_exception_id (&ev));
-			CORBA_exception_free (&ev);
-			return;
-		}
-
-		if (priv->track_editor == CORBA_OBJECT_NIL) {
-			/* FIXME: Should be an error dialog */
-			g_warning ("Could not start track editor.");
-			return;
-		}
-
-		/* Listen for the trackeditor dying on us, then restart it */
-		ORBit_small_listen_for_broken (priv->track_editor, 
-					       G_CALLBACK (restart_track_editor), 
-					       window);
-	}
-
-	GNOME_Media_CDDBTrackEditor_setDiscID (priv->track_editor, discid, &ev);
-	if (BONOBO_EX (&ev)) {
-		destroy_track_editor (priv->track_editor);
-		priv->track_editor = CORBA_OBJECT_NIL;
-		CORBA_exception_free (&ev);
-		return;
-	}
-	
-	GNOME_Media_CDDBTrackEditor_showWindow (priv->track_editor, &ev);
-	if (BONOBO_EX (&ev)) {
-		destroy_track_editor (priv->track_editor);
-		priv->track_editor = CORBA_OBJECT_NIL;
-		CORBA_exception_free (&ev);
-		return;
-	}
-
-	CORBA_exception_free (&ev);
+	/* FIXME */
 }
 
 

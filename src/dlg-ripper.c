@@ -48,7 +48,7 @@
 #include "preferences.h"
 #include "song-info.h"
 #include "track-info.h"
-#include "goo-player-cd.h"
+#include "goo-player.h"
 #include "goo-cdrom.h"
 
 #define TOC_OFFSET 150
