@@ -25,21 +25,15 @@
 
 #define GOO_STOCK_EJECT       "media-eject"
 #define GOO_STOCK_EXTRACT     "gtk-cdrom"
-#define GOO_STOCK_NEXT        "media-next"
-#define GOO_STOCK_PAUSE       "media-pause"
-#define GOO_STOCK_PLAY        "media-play"
-#define GOO_STOCK_PREV        "media-prev"
 #define GOO_STOCK_RESET       "goo-reset"
-#define GOO_STOCK_STOP        "media-stop"
-#define GOO_STOCK_NO_COVER    "goo-no-cover"
-#define GOO_STOCK_VOLUME_MAX  "goo-volume-max"
-#define GOO_STOCK_VOLUME_MED  "goo-volume-med"
-#define GOO_STOCK_VOLUME_MIN  "goo-volume-min"
-#define GOO_STOCK_VOLUME_ZERO "goo-volume-zero"
-#define GOO_STOCK_WEB         "panel-internet"
-
+#define GOO_STOCK_NO_DISC     "gnome-dev-removable"
+#define GOO_STOCK_DATA_DISC   "gnome-dev-cdrom"
+#define GOO_STOCK_AUDIO_CD    "gnome-dev-cdrom-audio"
+#define GOO_STOCK_VOLUME_MAX  "audio-volume-high"
+#define GOO_STOCK_VOLUME_MED  "audio-volume-medium"
+#define GOO_STOCK_VOLUME_MIN  "audio-volume-low"
+#define GOO_STOCK_VOLUME_ZERO "audio-volume-muted"
 
 void goo_stock_init (void);
-
 
 #endif /* GOO_STOCK_H */

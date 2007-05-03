@@ -34,7 +34,6 @@
 #include "file-utils.h"
 #include "goo-marshal.h"
 #include "goo-stock.h"
-#include "goo-player.h"
 #include "goo-player-cd.h"
 #include "goo-player-info.h"
 #include "goo-window.h"
@@ -185,7 +184,7 @@ window_update_statusbar_list_info (GooWindow *window)
 		char       *year_s = NULL;
 		GString    *status;
 
-		album = goo_player_cd_get_album (GOO_PLAYER_CD (priv->player));
+		album = goo_player_get_album (priv->player);
 
 		set_time_string (time_text, priv->total_time);
 		tracks_s = g_strdup_printf (ngettext ("%d track", "%d tracks", priv->songs), priv->songs);
@@ -266,6 +265,7 @@ window_update_sensitivity (GooWindow *window)
 	gboolean       one_file_selected;
 	GooPlayerState state;
 	gboolean       error;
+	gboolean       audio_cd;
 	gboolean       playing;
 	gboolean       paused;
 	gboolean       stopped;
@@ -277,34 +277,35 @@ window_update_sensitivity (GooWindow *window)
 	one_file_selected = n_selected == 1;
 	state             = goo_player_get_state (priv->player);
 	error             = (state == GOO_PLAYER_STATE_ERROR) || priv->hibernate;
+	audio_cd          = ! error && (state != GOO_PLAYER_STATE_NO_DISC) && (state != GOO_PLAYER_STATE_DATA_DISC);
 	playing           = state == GOO_PLAYER_STATE_PLAYING;
 	paused            = state == GOO_PLAYER_STATE_PAUSED;
 	stopped           = state == GOO_PLAYER_STATE_STOPPED;
 	play_all          = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
-	discid            = goo_player_cd_get_discid (GOO_PLAYER_CD (window->priv->player));
+	discid            = goo_player_get_discid (window->priv->player);
 
-	set_sensitive (window, "Play", !error && !playing);
-	set_sensitive (window, "PlaySelected", !error && one_file_selected);
-	set_sensitive (window, "Pause", !error && playing);
-	set_sensitive (window, "Stop", !error && (playing || paused));
-	set_sensitive (window, "TogglePlay", !error);
-	set_sensitive (window, "Next", !error);
-	set_sensitive (window, "Prev", !error);
+	set_sensitive (window, "Play", audio_cd && !playing);
+	set_sensitive (window, "PlaySelected", audio_cd && one_file_selected);
+	set_sensitive (window, "Pause", audio_cd && playing);
+	set_sensitive (window, "Stop", audio_cd && (playing || paused));
+	set_sensitive (window, "TogglePlay", audio_cd);
+	set_sensitive (window, "Next", audio_cd);
+	set_sensitive (window, "Prev", audio_cd);
 
-	set_sensitive (window, "Extract", !error && (priv->songs > 0));
-	set_sensitive (window, "Properties", !error && (discid != NULL));
-	set_sensitive (window, "PickCoverFromDisk", !error && (discid != NULL));
-	set_sensitive (window, "RemoveCover", !error && (discid != NULL));
-	set_sensitive (window, "SearchCoverFromWeb", !error && (discid != NULL));
+	set_sensitive (window, "Extract", audio_cd && (priv->songs > 0));
+	set_sensitive (window, "Properties", audio_cd && (discid != NULL));
+	set_sensitive (window, "PickCoverFromDisk", audio_cd && (discid != NULL));
+	set_sensitive (window, "RemoveCover", audio_cd && (discid != NULL));
+	set_sensitive (window, "SearchCoverFromWeb", audio_cd && (discid != NULL));
 
 	goo_player_info_set_sensitive (GOO_PLAYER_INFO (priv->info), !error && (discid != NULL));
 	set_sensitive (window, "Repeat", play_all);
 	set_sensitive (window, "Shuffle", play_all);
 
-	gtk_widget_set_sensitive (priv->list_view, !priv->hibernate && (discid != NULL));
+	gtk_widget_set_sensitive (priv->list_view, audio_cd);
 
-	set_sensitive (window, "Eject", !priv->hibernate);
-	set_sensitive (window, "Preferences", !priv->hibernate);
+	set_sensitive (window, "Eject", ! priv->hibernate);
+	set_sensitive (window, "Preferences", ! priv->hibernate);
 }
 
 
@@ -632,12 +633,9 @@ goo_window_finalize (GObject *object)
 static void
 add_columns (GtkTreeView *treeview)
 {
-	static char       *titles[] = { N_("Length"),
-					N_("Title"), 
-					N_("Artist") };
 	GtkCellRenderer   *renderer;
 	GtkTreeViewColumn *column;
-	int                i, j;
+	GValue             value = { 0, };
 
 	/* The Number column. */
 
@@ -664,35 +662,45 @@ add_columns (GtkTreeView *treeview)
 	gtk_tree_view_column_set_sort_column_id (column, COLUMN_NUMBER);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
-	/* Other columns */
+	/* Track */
+	
+	column = gtk_tree_view_column_new ();
+	gtk_tree_view_column_set_title (column, _("Title"));
+	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+	gtk_tree_view_column_set_resizable (column, FALSE);
+	gtk_tree_view_column_set_expand (column, TRUE);
+	gtk_tree_view_column_set_sort_column_id (column, COLUMN_TITLE);
+	
+	renderer = gtk_cell_renderer_text_new ();
+	
+	g_value_init (&value, PANGO_TYPE_ELLIPSIZE_MODE);
+	g_value_set_enum (&value, PANGO_ELLIPSIZE_END);
+	g_object_set_property (G_OBJECT (renderer), "ellipsize", &value);
+	g_value_unset (&value);
+	
+	gtk_tree_view_column_pack_start (column, renderer, TRUE);
+        gtk_tree_view_column_set_attributes (column, renderer,
+                                             "text", COLUMN_TITLE,
+                                             NULL);
+		
+	gtk_tree_view_append_column (treeview, column);
+	
+	/* Time */
+	
+	column = gtk_tree_view_column_new ();
+	gtk_tree_view_column_set_title (column, _("Length"));
+	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+	gtk_tree_view_column_set_resizable (column, FALSE);
+	gtk_tree_view_column_set_sort_column_id (column, COLUMN_TIME);
 
-	for (j = 0, i = COLUMN_ICON + 1; i < NUMBER_OF_COLUMNS; i++, j++) {
-		renderer = gtk_cell_renderer_text_new ();
-		column = gtk_tree_view_column_new_with_attributes (_(titles[j]),
-								   renderer,
-								   "text", i,
-								   NULL);
-
-		gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
-		gtk_tree_view_column_set_resizable (column, TRUE);
-
-		gtk_tree_view_column_set_sort_column_id (column, i);
-
-		gtk_tree_view_append_column (treeview, column);
-
-		if (i == COLUMN_ARTIST)
-			gtk_tree_view_column_set_visible (column, FALSE);
-
-		if (i == COLUMN_TITLE) {
-			GValue  value = { 0, };
-			g_value_init (&value, PANGO_TYPE_ELLIPSIZE_MODE);
-			g_value_set_enum (&value, PANGO_ELLIPSIZE_END);
-			g_object_set_property (G_OBJECT (renderer), 
-					       "ellipsize", 
-					       &value);
-			g_value_unset (&value);
-		}
-	}
+	renderer = gtk_cell_renderer_text_new ();
+	
+	gtk_tree_view_column_pack_start (column, renderer, TRUE);
+        gtk_tree_view_column_set_attributes (column, renderer,
+                                             "text", COLUMN_TIME,
+                                             NULL);
+                                             
+	gtk_tree_view_append_column (treeview, column);                                             	
 }
 
 
@@ -1341,7 +1349,7 @@ player_start_cb (GooPlayer       *player,
 					   "TogglePlay", 
 					   _("_Pause"), 
 					   _("Pause playing"),
-					   GOO_STOCK_PAUSE,
+					   GTK_STOCK_MEDIA_PAUSE,
 					   "/MenuBar/CDMenu/",
 					   NULL);
 
@@ -1352,7 +1360,7 @@ player_start_cb (GooPlayer       *player,
 			const char *artist, *album;
 			int         x = -1, y = -1;
 
-			artist = goo_player_get_subtitle (priv->player);
+			artist = goo_player_get_artist (priv->player);
 			if (artist != NULL) {
 				char *e_artist = g_markup_escape_text (artist, -1);
 				g_string_append_printf (info, "<big>%s</big>\n", e_artist);
@@ -1457,14 +1465,12 @@ window_update_title (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
 	GooPlayerState state;
-	gboolean       error;
 	gboolean       playing;
 	gboolean       paused;
 	gboolean       stopped;
 	GString       *title;
 
 	state   = goo_player_get_state (priv->player);
-	error   = state == GOO_PLAYER_STATE_ERROR;
 	playing = state == GOO_PLAYER_STATE_PLAYING;
 	paused  = state == GOO_PLAYER_STATE_PAUSED;
 	stopped = state == GOO_PLAYER_STATE_STOPPED;
@@ -1485,17 +1491,24 @@ window_update_title (GooWindow *window)
 			g_string_append_printf (title, 
 						" [%s]",
 						_("Paused"));
-
-	} else if (error) {
+	} 
+	else if (state == GOO_PLAYER_STATE_ERROR) {
 		GError *error = goo_player_get_error (priv->player);
+		
 		g_string_append (title, g_strdup (error->message));
 		g_error_free (error);
-
-	} else {
+	} 
+	else if (state == GOO_PLAYER_STATE_NO_DISC) {
+		g_string_append (title, _("No Disc"));
+	} 
+	else if (state == GOO_PLAYER_STATE_DATA_DISC) {
+		g_string_append (title, _("Data Disc"));
+	}
+	else {
 		const char *p_title, *p_subtitle;
 
 		p_title = goo_player_get_title (priv->player);
-		p_subtitle = goo_player_get_subtitle (priv->player);
+		p_subtitle = goo_player_get_artist (priv->player);
 		
 		if ((p_title == NULL) || (p_subtitle == NULL)) 
 			g_string_append (title, _("Audio CD"));
@@ -1522,16 +1535,17 @@ window_update_title (GooWindow *window)
 char *
 goo_window_get_cover_filename (GooWindow *window)
 {
-	GooPlayerCD *player_cd = GOO_PLAYER_CD (window->priv->player);
-	char        *discid;
-	char        *filename;
+	const char *discid;
+	char       *filename;
 	
-	discid = g_strconcat (goo_player_cd_get_discid (player_cd), ".png", NULL);;
+	discid = goo_player_get_discid (window->priv->player);
 	if (discid == NULL)
 		return NULL;
 
-	filename = g_build_filename (g_get_home_dir (), ".cddbslave", discid, NULL);
-	g_free (discid);
+	filename = g_strconcat (g_get_home_dir (), G_DIR_SEPARATOR_S, 
+				".cddbslave", G_DIR_SEPARATOR_S, 
+				discid, ".png", 
+				NULL);
 
 	return filename;
 }
@@ -1540,22 +1554,29 @@ goo_window_get_cover_filename (GooWindow *window)
 void
 goo_window_update_cover (GooWindow *window)
 {
-	char      *filename;
-	GdkPixbuf *image;
+	GooPlayerState  state;
+	char           *filename;
+	
+	state = goo_player_get_state (window->priv->player);
+
+	if ((state == GOO_PLAYER_STATE_ERROR) 
+	    || (state == GOO_PLAYER_STATE_NO_DISC)) {
+	    	goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), "no-disc");
+	    	return;
+	}
+	    
+	if (state == GOO_PLAYER_STATE_DATA_DISC) {
+	    	goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), "data-disc");
+	    	return;
+	}
 	
 	filename = goo_window_get_cover_filename (window);
 	if (filename == NULL) {
-		goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), NULL);
+		goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), "audio-cd");
 		return;
 	}
-
-	image = gdk_pixbuf_new_from_file (filename, NULL);
-	if (image != NULL) {
-		goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), image);
-		g_object_unref (image);
-	} else
-		goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), NULL);
-
+	
+	goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), filename);
 	g_free (filename);
 }
 
@@ -1632,7 +1653,7 @@ goo_window_set_current_cd_autofetch (GooWindow *window,
 				   config_filename, 
 				   G_KEY_FILE_NONE,
 				   NULL);
-	discid = goo_player_cd_get_discid (GOO_PLAYER_CD (window->priv->player));
+	discid = goo_player_get_discid (window->priv->player);
 	g_key_file_set_boolean (kv_file,
 				CONFIG_KEY_AUTOFETCH_GROUP,
 				discid,
@@ -1661,7 +1682,7 @@ goo_window_get_current_cd_autofetch (GooWindow *window)
 				   config_filename, 
 				   G_KEY_FILE_NONE,
 				   NULL);
-	discid = goo_player_cd_get_discid (GOO_PLAYER_CD (window->priv->player));
+	discid = goo_player_get_discid (window->priv->player);
 
 	value = g_key_file_get_boolean (kv_file,
 					CONFIG_KEY_AUTOFETCH_GROUP,
@@ -1704,8 +1725,8 @@ auto_fetch_cover_image (GooWindow *window)
 	if (cover_exists)
 		return;
 
-	album = goo_player_cd_get_album (GOO_PLAYER_CD (window->priv->player));
-	artist = goo_player_cd_get_artist (GOO_PLAYER_CD (window->priv->player));
+	album = goo_player_get_album (window->priv->player);
+	artist = goo_player_get_artist (window->priv->player);
 	if ((album == NULL) || (artist == NULL))
 		return;
 	fetch_cover_image (window, album, artist);
@@ -1756,7 +1777,7 @@ player_done_cb (GooPlayer       *player,
 	case GOO_PLAYER_ACTION_SEEK_SONG:
 		goo_window_set_current_song (window, goo_player_get_current_song (priv->player));
 		goo_window_select_current_song (window);
-		set_current_song_icon (window, GOO_STOCK_PLAY);
+		set_current_song_icon (window, GTK_STOCK_MEDIA_PLAY);
 		break;
 	case GOO_PLAYER_ACTION_PLAY:
 	case GOO_PLAYER_ACTION_STOP:
@@ -1765,24 +1786,24 @@ player_done_cb (GooPlayer       *player,
 					   "TogglePlay", 
 					   _("_Play"), 
 					   _("Play CD"),
-					   GOO_STOCK_PLAY,
+					   GTK_STOCK_MEDIA_PLAY,
 					   "/MenuBar/CDMenu/",
 					   NULL);
 		if (action == GOO_PLAYER_ACTION_PLAY) {
-			set_current_song_icon (window, GOO_STOCK_PLAY);
+			set_current_song_icon (window, GTK_STOCK_MEDIA_PLAY);
 			priv->next_timeout_handle = g_timeout_add (IDLE_TIMEOUT, next_time_idle, window);
 		} else if (action == GOO_PLAYER_ACTION_STOP) {
-			set_current_song_icon (window, GOO_STOCK_STOP);
+			set_current_song_icon (window, GTK_STOCK_MEDIA_STOP);
 		}
 
 		break;
 	case GOO_PLAYER_ACTION_PAUSE:
-		set_current_song_icon (window, GOO_STOCK_PAUSE);
+		set_current_song_icon (window, GTK_STOCK_MEDIA_PAUSE);
 		set_action_label_and_icon (window,
 					   "TogglePlay", 
 					   _("_Play"), 
 					   _("Play CD"),
-					   GOO_STOCK_PLAY,
+					   GTK_STOCK_MEDIA_PLAY,
 					   "/MenuBar/CDMenu/",
 					   NULL);
 		break;
@@ -2499,7 +2520,7 @@ goo_window_construct (GooWindow  *window,
 	else
 		device = eel_gconf_get_string (PREF_GENERAL_DEVICE, DEFAULT_DEVICE);
 		
-	priv->player = goo_player_cd_new (device);
+	priv->player = goo_player_new (device);
 	g_free (device);
 
 	g_signal_connect (priv->player, 
@@ -2549,7 +2570,7 @@ goo_window_construct (GooWindow  *window,
 				(GDestroyNotify) tray_object_destroyed);
 
 	gtk_container_add (GTK_CONTAINER (priv->tray), priv->tray_box);
-	priv->tray_icon = gtk_image_new_from_stock (GOO_STOCK_NO_COVER, GTK_ICON_SIZE_BUTTON);
+	priv->tray_icon = gtk_image_new_from_stock (GOO_STOCK_AUDIO_CD, GTK_ICON_SIZE_BUTTON);
 
 	g_signal_connect (G_OBJECT (priv->tray_icon), 
 			  "expose_event",
@@ -2747,7 +2768,7 @@ goo_window_play (GooWindow *window)
 			play_song (window, 0);
 	} 
 	else {
-		set_current_song_icon (window, GOO_STOCK_PLAY);
+		set_current_song_icon (window, GTK_STOCK_MEDIA_PLAY);
 		goo_player_play (priv->player);
 	}
 }
@@ -2988,7 +3009,7 @@ goo_window_edit_cddata (GooWindow *window)
 	if (window->priv->hibernate)
 		return;
 
-	discid = goo_player_cd_get_discid (GOO_PLAYER_CD (window->priv->player));
+	discid = goo_player_get_discid (window->priv->player);
 	
 	if (discid == NULL) 
 		return;
@@ -3212,8 +3233,8 @@ goo_window_search_cover_on_internet (GooWindow *window)
 
 	debug (DEBUG_INFO, "SEARCH ON INTERNET\n");
 
-	album = goo_player_cd_get_album (GOO_PLAYER_CD (window->priv->player));
-	artist = goo_player_cd_get_artist (GOO_PLAYER_CD (window->priv->player));
+	album = goo_player_get_album (window->priv->player);
+	artist = goo_player_get_artist (window->priv->player);
 
 	if ((album == NULL) || (artist == NULL)) {
 		_gtk_error_dialog_run (GTK_WINDOW (window),

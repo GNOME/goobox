@@ -24,7 +24,7 @@
 #define GOO_WINDOW_H
 
 #include <libgnomeui/gnome-app.h>
-#include "goo-player.h"
+#include "goo-player-cd.h"
 
 #define GOO_TYPE_WINDOW              (goo_window_get_type ())
 #define GOO_WINDOW(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GOO_TYPE_WINDOW, GooWindow))

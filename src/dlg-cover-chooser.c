@@ -33,6 +33,7 @@
 #include <libgnome/libgnome.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
 #include <libgnomevfs/gnome-vfs-async-ops.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
 #include <glade/glade.h>
 #include "typedefs.h"
 #include "main.h"
@@ -154,8 +155,8 @@ copy_progress_update_cb (GnomeVFSAsyncHandle      *handle,
 
 static void
 copy_file_from_url (DialogData    *data,
-		    const char    *src,
-		    const char    *dest,
+		    const char    *uri_source,
+		    const char    *uri_dest,
 		    FileSavedFunc  file_saved_func)
 {
 	GList                     *src_uri_list, *dest_uri_list;
@@ -166,10 +167,10 @@ copy_file_from_url (DialogData    *data,
 
 	data->file_saved_func = file_saved_func;
 	g_free (data->dest);
-	data->dest = g_strdup (dest);
+	data->dest = g_strdup (uri_dest);
 
-	src_uri_list = g_list_prepend (NULL, new_uri_from_path (src));
-	dest_uri_list = g_list_prepend (NULL, new_uri_from_path (dest));
+	src_uri_list = g_list_prepend (NULL, gnome_vfs_uri_new (uri_source));
+	dest_uri_list = g_list_prepend (NULL, gnome_vfs_uri_new (uri_dest));
 
 	xfer_options    = GNOME_VFS_XFER_DEFAULT;
 	xfer_error_mode = GNOME_VFS_XFER_ERROR_MODE_ABORT;
@@ -199,7 +200,7 @@ copy_file_from_url (DialogData    *data,
 
 	if (result != GNOME_VFS_OK) {
 		if (file_saved_func != NULL)
-			(*file_saved_func) (data, dest, FALSE);
+			(*file_saved_func) (data, uri_dest, FALSE);
 	}
 }
 
@@ -332,7 +333,7 @@ make_file_list_from_search_result (DialogData *data,
 		return FALSE;
 	
 	partial_url = NULL;
-	while ((n = read (fd, buf+buf_offset, BUFFER_SIZE-buf_offset-1)) > 0) {
+	while ((n = read (fd, buf + buf_offset, BUFFER_SIZE - buf_offset - 1)) > 0) {
 		const char *prefix = "/images?q=tbn:";
 		int         prefix_len = strlen (prefix);
 		char       *url_start;
@@ -357,8 +358,8 @@ make_file_list_from_search_result (DialogData *data,
 					g_string_append (partial_url, url_start);
 				url_start = NULL;
 				copy_tail = FALSE;
-
-			} else {
+			}
+			else {
 				char *url_tail = g_strndup (url_start, url_end - url_start);
 				char *url;
 				char *complete_url;
@@ -369,7 +370,8 @@ make_file_list_from_search_result (DialogData *data,
 					url = partial_url->str;
 					g_string_free (partial_url, FALSE);
 					partial_url = NULL;
-				} else 
+				} 
+				else 
 					url = url_tail;
 					
 				complete_url = g_strconcat ("http://images.google.com", url, NULL);
@@ -396,7 +398,8 @@ make_file_list_from_search_result (DialogData *data,
 				 buf + buf_offset + n - prefix_len, 
 				 prefix_len);
 			buf_offset = prefix_len;
-		} else 
+		} 
+		else 
 			buf_offset = 0;
 	}
 
@@ -439,13 +442,26 @@ search_result_saved_cb (DialogData *data,
 static char*
 get_query (DialogData *data)
 {
-	return g_strconcat ("http://images.google.com",
-			    "/images?q=",
-			    data->album,
-			    "+",
-			    data->artist,
-			    /* "&imgsz=medium", FIXME*/
-			    NULL);
+	char *s_album;
+	char *s_artist;
+	char *query;
+	
+	s_album = gnome_vfs_escape_string (data->album);
+	s_artist = gnome_vfs_escape_string (data->artist);
+	
+	query = g_strconcat ("http://images.google.com",
+			     "/images?q=",
+			     s_artist,
+			     "+",
+			     s_album,
+			     "+Cover",
+			     /* "&imgsz=medium", FIXME*/
+			     NULL);
+			     
+	g_free (s_album);
+	g_free (s_artist);
+	
+	return query;
 }
 
 

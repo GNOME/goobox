@@ -32,20 +32,7 @@ static struct {
 	gconstpointer  default_pixbuf;
 	gconstpointer  menu_pixbuf;
 } items[] = {
-	{ GOO_STOCK_EJECT,        eject_24_rgba,        NULL },
-	{ GOO_STOCK_EXTRACT,      extract_24_rgba,      extract_16_rgba },
-	{ GOO_STOCK_NEXT,         next_24_rgba,         NULL },
-	{ GOO_STOCK_PAUSE,        pause_24_rgba,        NULL },
-	{ GOO_STOCK_PLAY,         play_24_rgba,         NULL },
-	{ GOO_STOCK_PREV,         prev_24_rgba,         NULL },
-	{ GOO_STOCK_RESET,        reset_24_rgba,        reset_16_rgba },
-	{ GOO_STOCK_STOP,         stop_24_rgba,         NULL },
-	{ GOO_STOCK_NO_COVER,     no_cover_48_rgba,     NULL },
-	{ GOO_STOCK_VOLUME_MAX,   volume_max_24_rgba,   volume_16_rgba },
-	{ GOO_STOCK_VOLUME_MED,   volume_med_24_rgba,   volume_16_rgba },
-	{ GOO_STOCK_VOLUME_MIN,   volume_min_24_rgba,   volume_16_rgba },
-	{ GOO_STOCK_VOLUME_ZERO,  volume_zero_24_rgba,  volume_16_rgba },
-	{ GOO_STOCK_WEB,          web_24_rgba,          web_16_rgba },
+	{ GOO_STOCK_RESET, reset_24_rgba, reset_16_rgba }
 };
 
 
@@ -59,15 +46,39 @@ static const GtkStockItem stock_items [] = {
 };
 
 
+static struct {
+	const char  *id;
+	GtkIconSize  size;
+} stock_items_from_theme [] = { 
+	{ GOO_STOCK_VOLUME_MAX, GTK_ICON_SIZE_LARGE_TOOLBAR }, 
+	{ GOO_STOCK_VOLUME_MED, GTK_ICON_SIZE_LARGE_TOOLBAR },
+	{ GOO_STOCK_VOLUME_MIN, GTK_ICON_SIZE_LARGE_TOOLBAR },
+	{ GOO_STOCK_VOLUME_ZERO, GTK_ICON_SIZE_LARGE_TOOLBAR },
+	{ GOO_STOCK_NO_DISC, GTK_ICON_SIZE_DIALOG },
+	{ GOO_STOCK_AUDIO_CD, GTK_ICON_SIZE_DIALOG }, 
+	{ GOO_STOCK_DATA_DISC, GTK_ICON_SIZE_DIALOG }
+};
+
+
 static gboolean stock_initialized = FALSE;
+
+
+static void
+init_stock_icons_again (GtkIconTheme *icon_theme,
+                        gpointer      user_data)
+{
+	stock_initialized = FALSE;
+	goo_stock_init ();
+}
 
 
 void
 goo_stock_init (void)
 {
 	GtkIconFactory *factory;
+	GtkIconTheme   *theme;
 	int             i;
-
+	
 	if (stock_initialized)
 		return;
 	stock_initialized = TRUE;
@@ -102,7 +113,7 @@ goo_stock_init (void)
 						     items[i].default_pixbuf, 
 						     FALSE, 
 						     NULL);
-		
+			
 		gtk_icon_source_set_pixbuf (source, pixbuf);
 
 		gtk_icon_source_set_size_wildcarded (source, FALSE);
@@ -123,7 +134,50 @@ goo_stock_init (void)
 		g_object_unref (pixbuf);
 	}
 
-	gtk_icon_factory_add_default (factory);
+	theme = gtk_icon_theme_get_default ();
+	g_signal_connect (theme, 
+			  "changed",
+			  G_CALLBACK (init_stock_icons_again),
+			  NULL);
 
+	for (i = 0; i < G_N_ELEMENTS (stock_items_from_theme); i++) {
+		GdkPixbuf     *pixbuf;
+		GtkIconSet    *set;
+		GtkIconSource *source;
+		GError        *error = NULL;
+		int            w, h;
+		
+		gtk_icon_size_lookup (stock_items_from_theme[i].size, &w, &h);	
+		pixbuf = gtk_icon_theme_load_icon (theme, stock_items_from_theme[i].id, w, 0, &error);
+		if (pixbuf == NULL) {
+			g_print ("Goo-WARNING **: %s\n", error->message);
+			g_clear_error (&error);
+			continue;
+		}
+		
+		set = gtk_icon_set_new ();
+		source = gtk_icon_source_new ();
+		
+		gtk_icon_source_set_pixbuf (source, pixbuf);
+
+		gtk_icon_source_set_size_wildcarded (source, FALSE);
+		gtk_icon_source_set_state_wildcarded (source, TRUE);
+		gtk_icon_source_set_direction_wildcarded (source, TRUE);
+		gtk_icon_source_set_size (source, stock_items_from_theme[i].size);
+		gtk_icon_set_add_source (set, source);
+
+		gtk_icon_source_set_size_wildcarded (source, TRUE);
+		gtk_icon_source_set_state_wildcarded (source, TRUE);
+		gtk_icon_source_set_direction_wildcarded (source, TRUE);
+		gtk_icon_set_add_source (set, source);
+
+		gtk_icon_factory_add (factory, stock_items_from_theme[i].id, set);
+		
+		gtk_icon_set_unref (set);
+		gtk_icon_source_free (source);
+		g_object_unref (pixbuf);
+	}
+
+	gtk_icon_factory_add_default (factory);
 	g_object_unref (factory);
 }

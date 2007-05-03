@@ -53,7 +53,8 @@ struct _GooPlayerInfoPrivateData {
 	GtkWidget   *time_scale;
 	GtkWidget   *cover_image;
 	GtkWidget   *cover_button;
-	GtkWidget   *cover_sep;
+	GtkWidget   *status_image;
+	GtkWidget   *notebook;
 	GtkTooltips *tips;
 	char         current_time[64];
 	char         total_time[64];
@@ -425,6 +426,7 @@ goo_player_info_init (GooPlayerInfo *info)
 {
 	GooPlayerInfoPrivateData *priv;
 	GtkWidget *vbox, *time_box;
+	GtkWidget *frame;
 
 	info->priv = g_new0 (GooPlayerInfoPrivateData, 1);
 	priv = info->priv;
@@ -511,17 +513,34 @@ goo_player_info_init (GooPlayerInfo *info)
 			  G_CALLBACK (cover_button_drag_data_received), 
 			  info);
 
-	priv->cover_image = gtk_image_new_from_stock (GOO_STOCK_NO_COVER, GTK_ICON_SIZE_DIALOG);
+	priv->cover_image = gtk_image_new_from_stock (GOO_STOCK_NO_DISC, GTK_ICON_SIZE_DIALOG);
 	gtk_widget_set_size_request (priv->cover_image, COVER_SIZE, COVER_SIZE);
 	gtk_widget_show (priv->cover_image);
 	gtk_container_add (GTK_CONTAINER (priv->cover_button), priv->cover_image);
 
-	gtk_box_pack_start (GTK_BOX (info), priv->cover_button, FALSE, FALSE, 0);
+	/* Status image */
+	
+	priv->status_image = gtk_image_new_from_stock (GOO_STOCK_NO_DISC, GTK_ICON_SIZE_DIALOG);
+	gtk_widget_set_size_request (priv->status_image, COVER_SIZE, COVER_SIZE);
+	gtk_widget_show (priv->cover_image);
+	/*gtk_container_set_border_width (GTK_CONTAINER (priv->status_image), 6);*/
 
-	priv->cover_sep = gtk_vseparator_new ();
-	gtk_box_pack_start (GTK_BOX (info), priv->cover_sep, FALSE, FALSE, 6);
-	gtk_widget_show (priv->cover_sep);
-	gtk_widget_set_no_show_all (priv->cover_sep, TRUE);
+	/* Frame */
+
+	priv->notebook = gtk_notebook_new ();
+	gtk_notebook_set_show_tabs (GTK_NOTEBOOK (priv->notebook), FALSE);
+	gtk_notebook_set_show_border (GTK_NOTEBOOK (priv->notebook), FALSE);
+	gtk_widget_show (priv->notebook);
+	
+	gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook), priv->status_image, NULL);
+	gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook), priv->cover_button, NULL);
+	
+	frame = gtk_frame_new (NULL);
+	gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+	gtk_widget_show (frame);
+	gtk_container_add (GTK_CONTAINER (frame), priv->notebook);
+
+	gtk_box_pack_start (GTK_BOX (info), frame, FALSE, FALSE, 0);
 
 	/**/
 
@@ -625,7 +644,7 @@ update_subtitle (GooPlayerInfo  *info,
 	const char *title, *subtitle;
 
 	title = goo_player_get_title (priv->player);
-	subtitle = goo_player_get_subtitle (priv->player);
+	subtitle = goo_player_get_artist (priv->player);
 
 	if ((title == NULL) || (subtitle == NULL)) {
 		set_time_string (priv->total_time, song->time);
@@ -655,7 +674,8 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 		gtk_widget_show (priv->time_scale);
 		gtk_widget_show (priv->time_label);
 		gtk_widget_show (priv->playing_label);
-	} else {
+	} 
+	else {
 		gtk_widget_hide (priv->time_scale);
 		gtk_widget_hide (priv->time_label);
 		gtk_widget_hide (priv->playing_label);
@@ -665,14 +685,17 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 	gtk_label_set_selectable (GTK_LABEL (priv->title2_label), FALSE);
 	gtk_label_set_selectable (GTK_LABEL (priv->title3_label), FALSE);
 
-	if (state == GOO_PLAYER_STATE_ERROR) {
+	if ((state == GOO_PLAYER_STATE_ERROR)
+	    || (state == GOO_PLAYER_STATE_NO_DISC)
+	    || (state == GOO_PLAYER_STATE_DATA_DISC)) {
 		GError *error = goo_player_get_error (priv->player);
+		
 		set_title1 (info, error->message);
 		set_title2 (info, "");
 		set_title3 (info, "");
 		g_error_free (error);
-
-	} else {
+	} 
+	else {
 		SongInfo *song = goo_player_get_song (priv->player, goo_player_get_current_song (priv->player));
 
 		if (song != NULL) {
@@ -690,40 +713,42 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 			update_subtitle (info, song);
 
 			song_info_unref (song);
-
-		} else if (state == GOO_PLAYER_STATE_EJECTING) {
+		} 
+		else if (state == GOO_PLAYER_STATE_EJECTING) {
 			set_title1 (info, _("Ejecting CD"));
 			set_title2 (info, "");
-			
-		} else if (state == GOO_PLAYER_STATE_UPDATING) {
+		} 
+		else if (state == GOO_PLAYER_STATE_UPDATING) {
 			set_title1 (info, _("Checking CD drive"));
 			set_title2 (info, "");
-			
-		} else if (state == GOO_PLAYER_STATE_SEEKING) {
+		} 
+		else if (state == GOO_PLAYER_STATE_SEEKING) {
 			set_title1 (info, _("Reading CD"));
 			set_title2 (info, "");
-
-		} else if (state == GOO_PLAYER_STATE_LISTING) {
+		} 
+		else if (state == GOO_PLAYER_STATE_LISTING) {
 			set_title1 (info, _("Reading CD"));
 			set_title2 (info, "");
-
-		} else {
+		} 
+		else {
 			const char *title, *subtitle;
 
 			title = goo_player_get_title (priv->player);
-			subtitle = goo_player_get_subtitle (priv->player);
+			subtitle = goo_player_get_artist (priv->player);
 
 			if (title != NULL) {
 				set_title1 (info, title);
 				gtk_label_set_selectable (GTK_LABEL (priv->title1_label), TRUE);
-			} else
+			} 
+			else
 				set_title1 (info, _("Audio CD"));
 
 			if (subtitle != NULL) {
 				set_title2 (info, subtitle);
 				set_title3 (info, priv->total_time);
 				gtk_label_set_selectable (GTK_LABEL (priv->title2_label), TRUE);
-			} else {
+			} 
+			else {
 				set_title2 (info, priv->total_time);
 				set_title3 (info, "");
 			}
@@ -771,14 +796,44 @@ goo_player_info_set_sensitive (GooPlayerInfo  *info,
 
 
 void
-goo_player_info_set_cover (GooPlayerInfo  *info,
-			   GdkPixbuf      *cover)
+goo_player_info_set_cover (GooPlayerInfo *info,
+			   const char    *cover)
 {
-	if (cover != NULL) {
-		gtk_image_set_from_pixbuf (GTK_IMAGE (info->priv->cover_image), cover);
-		gtk_widget_hide (info->priv->cover_sep);
-	} else {
-		gtk_image_set_from_stock (GTK_IMAGE (info->priv->cover_image), GOO_STOCK_NO_COVER, GTK_ICON_SIZE_DIALOG);
-		gtk_widget_show (info->priv->cover_sep);
+	GdkPixbuf *image;
+	
+	if (cover == NULL)
+		return;
+		
+	if (strcmp (cover, "no-disc") == 0) {
+		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 0);
+		gtk_image_set_from_stock (GTK_IMAGE (info->priv->status_image), 
+					  GOO_STOCK_NO_DISC, 
+					  GTK_ICON_SIZE_DIALOG);
+		return;
 	}
+
+	if (strcmp (cover, "data-disc") == 0) {
+		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 0);
+		gtk_image_set_from_stock (GTK_IMAGE (info->priv->status_image), 
+					  GOO_STOCK_DATA_DISC, 
+					  GTK_ICON_SIZE_DIALOG);
+		return;
+	}
+
+	if (strcmp (cover, "audio-cd") == 0) {
+		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 1);
+		gtk_image_set_from_stock (GTK_IMAGE (info->priv->cover_image), 
+					  GOO_STOCK_AUDIO_CD, 
+					  GTK_ICON_SIZE_DIALOG);
+		return;
+	}
+	
+	image = gdk_pixbuf_new_from_file (cover, NULL);
+	if (image != NULL) {
+		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 1);
+		gtk_image_set_from_pixbuf (GTK_IMAGE (info->priv->cover_image), image);
+	}
+	else 
+		goo_player_info_set_cover (info, "audio-cd");
+	
 }

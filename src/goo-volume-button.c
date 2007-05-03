@@ -50,9 +50,92 @@ enum {
 static GtkToggleButtonClass *parent_class = NULL;
 static guint goo_volume_button_signals[LAST_SIGNAL] = { 0 };
 
-static void goo_volume_button_class_init  (GooVolumeButtonClass *class);
-static void goo_volume_button_init        (GooVolumeButton *player);
-static void goo_volume_button_finalize    (GObject *object);
+
+static void
+update_volume_label (GooVolumeButton *button)
+{
+	double     value = button->priv->value;
+	char      *text;
+	char      *icon;
+	GtkWidget *image;
+
+	if ((value - 0.0) < 10e-3)
+		icon = GOO_STOCK_VOLUME_ZERO;
+	else if (value < 25.0)
+		icon = GOO_STOCK_VOLUME_MIN;
+	else if (value < 75.0)
+		icon = GOO_STOCK_VOLUME_MED;
+	else
+		icon = GOO_STOCK_VOLUME_MAX;
+
+	image = gtk_image_new_from_stock (icon, GTK_ICON_SIZE_BUTTON);
+	if (image != NULL) 
+		g_object_set (button, 
+			      "image", image, 
+			      NULL);
+
+	text = g_strdup_printf ("%3.0f%%", value);
+	gtk_label_set_text (GTK_LABEL (button->priv->volume_label), text);
+	g_free (text);
+
+	text = g_strdup_printf (_("Volume level: %3.0f%%"), button->priv->value);
+	gtk_tooltips_set_tip (button->priv->tips,
+			      GTK_WIDGET (button),
+			      text,
+			      NULL);
+	g_free (text);
+}
+
+
+static void 
+goo_volume_button_finalize (GObject *object)
+{
+        GooVolumeButton *button;
+
+        g_return_if_fail (object != NULL);
+        g_return_if_fail (GOO_IS_VOLUME_BUTTON (object));
+
+	button = GOO_VOLUME_BUTTON (object);
+	if (button->priv != NULL) {
+		GooVolumeButtonPrivateData *priv = button->priv;
+
+		gtk_object_unref (GTK_OBJECT (priv->tips));
+
+		g_free (button->priv);
+		button->priv = NULL;
+	}
+
+	G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+
+static void 
+goo_volume_button_class_init (GooVolumeButtonClass *klass)
+{
+        GObjectClass   *gobject_class = G_OBJECT_CLASS (klass);
+
+        parent_class = g_type_class_peek_parent (klass);
+
+	goo_volume_button_signals[CHANGED] =
+                g_signal_new ("changed",
+			      G_TYPE_FROM_CLASS (klass),
+			      G_SIGNAL_RUN_LAST,
+			      G_STRUCT_OFFSET (GooVolumeButtonClass, changed),
+			      NULL, NULL,
+			      goo_marshal_VOID__VOID,
+			      G_TYPE_NONE, 
+			      0);
+
+        gobject_class->finalize = goo_volume_button_finalize;
+}
+
+
+static void 
+goo_volume_button_init (GooVolumeButton *button)
+{
+	button->priv = g_new0 (GooVolumeButtonPrivateData, 1);
+	button->priv->value = 0.0;
+}
 
 
 GType
@@ -80,77 +163,6 @@ goo_volume_button_get_type ()
 	}
 
         return type;
-}
-
-
-static void 
-goo_volume_button_class_init (GooVolumeButtonClass *class)
-{
-        GObjectClass   *gobject_class = G_OBJECT_CLASS (class);
-
-        parent_class = g_type_class_peek_parent (class);
-
-	goo_volume_button_signals[CHANGED] =
-                g_signal_new ("changed",
-			      G_TYPE_FROM_CLASS (class),
-			      G_SIGNAL_RUN_LAST,
-			      G_STRUCT_OFFSET (GooVolumeButtonClass, changed),
-			      NULL, NULL,
-			      goo_marshal_VOID__VOID,
-			      G_TYPE_NONE, 
-			      0);
-
-        gobject_class->finalize = goo_volume_button_finalize;
-}
-
-
-static void 
-goo_volume_button_init (GooVolumeButton *button)
-{
-	GooVolumeButtonPrivateData *priv;
-
-	button->priv = g_new0 (GooVolumeButtonPrivateData, 1);
-	priv = button->priv;
-
-	priv->value = 0.0;
-}
-
-
-static void
-update_volume_label (GooVolumeButton *button)
-{
-	double     value = button->priv->value;
-	char      *text;
-	char      *stock_id;
-	GtkWidget *image;
-
-	if ((value - 0.0) < 10e-3)
-		stock_id = GOO_STOCK_VOLUME_ZERO;
-	else if (value < 25.0)
-		stock_id = GOO_STOCK_VOLUME_MIN;
-	else if (value < 75.0)
-		stock_id = GOO_STOCK_VOLUME_MED;
-	else
-		stock_id = GOO_STOCK_VOLUME_MAX;
-
-	image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-
-	if (image != NULL) 
-		g_object_set (button, 
-			      "image", image, 
-			      NULL);
-
-	text = g_strdup_printf ("%3.0f%%", value);
-	gtk_label_set_text (GTK_LABEL (button->priv->volume_label), text);
-	g_free (text);
-
-	text = g_strdup_printf (_("Volume level: %3.0f%%"), 
-				button->priv->value);
-	gtk_tooltips_set_tip (button->priv->tips,
-			      GTK_WIDGET (button),
-			      text,
-			      NULL);
-	g_free (text);
 }
 
 
@@ -360,28 +372,6 @@ goo_volume_button_construct (GooVolumeButton *button,
 			  "scroll_event",
 			  G_CALLBACK (button_scroll_event_cb), 
 			  button);
-}
-
-
-static void 
-goo_volume_button_finalize (GObject *object)
-{
-        GooVolumeButton *button;
-
-        g_return_if_fail (object != NULL);
-        g_return_if_fail (GOO_IS_VOLUME_BUTTON (object));
-
-	button = GOO_VOLUME_BUTTON (object);
-	if (button->priv != NULL) {
-		GooVolumeButtonPrivateData *priv = button->priv;
-
-		gtk_object_unref (GTK_OBJECT (priv->tips));
-
-		g_free (button->priv);
-		button->priv = NULL;
-	}
-
-	G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 

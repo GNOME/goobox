@@ -27,7 +27,7 @@
 #include <glib-object.h>
 #include <gtk/gtkhbox.h>
 #include "goo-window.h"
-#include "goo-player.h"
+#include "goo-player-cd.h"
 #include "song-info.h"
 
 #define GOO_TYPE_PLAYER_INFO              (goo_player_info_get_type ())
@@ -72,6 +72,6 @@ void             goo_player_info_set_time         (GooPlayerInfo  *info,
 void             goo_player_info_set_sensitive    (GooPlayerInfo  *info,
 						   gboolean        value);
 void             goo_player_info_set_cover        (GooPlayerInfo  *info,
-						   GdkPixbuf      *cover);
+						   const char     *cover);
 
 #endif /* GOO_PLAYER_INFO_H */

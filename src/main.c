@@ -194,8 +194,10 @@ int main (int argc, char **argv)
 
 
 #ifdef HAVE_LIBNOTIFY
+
 	if (! notify_init ("goobox")) 
                 g_warning ("Cannot initialize notification system.");
+                
 #endif /* HAVE_LIBNOTIFY */
 
 	goo_stock_init ();
@@ -219,7 +221,7 @@ static void
 initialize_data ()
 {
         g_set_application_name (_("Goobox"));
-        gtk_window_set_default_icon_name ("goobox");
+        gtk_window_set_default_icon_name ("gnome-dev-cdrom-audio");
 
 	eel_gconf_monitor_add ("/apps/goobox");
 }

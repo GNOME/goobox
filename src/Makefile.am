@@ -117,8 +117,6 @@ goobox_SOURCES = 				\
 	goo-cdrom-solaris.h			\
 	goo-error.c				\
 	goo-error.h				\
-	goo-player.c				\
-	goo-player.h				\
 	goo-player-cd.c				\
 	goo-player-cd.h				\
 	goo-player-info.c			\

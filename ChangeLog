@@ -1,3 +1,9 @@
+2007-05-03  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* many_files: Use stock icons.  Update icons when the icon theme 
+	changes.  Removed goo-player.[ch], because it was a redundant
+	abstraction.
+
 2007-05-02  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* data/goobox.desktop.in.in: added missing file.

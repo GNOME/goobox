@@ -49,38 +49,42 @@ static GtkActionEntry action_entries[] = {
 	  N_("_Keyboard shortcuts"), "",
 	  " ",
 	  G_CALLBACK (activate_action_shortcuts) },
-	{ "TogglePlay", GOO_STOCK_PLAY,
+	{ "TogglePlay", GTK_STOCK_MEDIA_PLAY,
 	  N_("_Play"), "space",
 	  N_("Play/Pause"),
 	  G_CALLBACK (activate_action_toggle_play) },
-	{ "Play", GOO_STOCK_PLAY,
+	{ "Play", GTK_STOCK_MEDIA_PLAY,
 	  N_("_Play"), NULL,
 	  N_("Play"),
 	  G_CALLBACK (activate_action_play) },
-	{ "PlaySelected", GOO_STOCK_PLAY,
+	{ "PlaySelected", GTK_STOCK_MEDIA_PLAY,
 	  N_("_Play"), NULL,
 	  N_("Play this track"),
 	  G_CALLBACK (activate_action_play_selected) },
-	{ "Pause", GOO_STOCK_PAUSE,
+	{ "Pause", GTK_STOCK_MEDIA_PAUSE,
 	  N_("_Pause"), NULL,
 	  N_("Pause"),
 	  G_CALLBACK (activate_action_pause) },
-	{ "Stop", GOO_STOCK_STOP,
+	{ "Stop", GTK_STOCK_MEDIA_STOP,
 	  N_("_Stop"), "Escape",
 	  N_("Stop playing"),
 	  G_CALLBACK (activate_action_stop) },
-	{ "Next", GOO_STOCK_NEXT,
+	{ "Next", GTK_STOCK_MEDIA_NEXT,
 	  N_("_Next"), "N",
 	  N_("Play the next track"),
 	  G_CALLBACK (activate_action_next) },
-	{ "Prev", GOO_STOCK_PREV,
+	{ "Prev", GTK_STOCK_MEDIA_PREVIOUS,
 	  N_("Pre_v"), "P",
 	  N_("Play the previous track"),
 	  G_CALLBACK (activate_action_prev) },
-	{ "Eject", GOO_STOCK_EJECT,
+	{ "Eject", NULL,
 	  N_("_Eject"), "J",
 	  N_("Eject the CD"),
 	  G_CALLBACK (activate_action_eject) },
+	{ "EjectToolBar", GOO_STOCK_EJECT,
+	  N_("_Eject"), "J",
+	  N_("Eject the CD"),
+	  G_CALLBACK (activate_action_eject) },	  
 	{ "Preferences", GTK_STOCK_PREFERENCES,
 	  NULL, NULL,
 	  N_("Edit various preferences"),
@@ -101,7 +105,7 @@ static GtkActionEntry action_entries[] = {
 	  N_("_Choose from Disk"), "",
 	  N_("Choose a CD cover from the local disk"),
 	  G_CALLBACK (activate_action_pick_cover_from_disk) },
-	{ "SearchCoverFromWeb", GOO_STOCK_WEB,
+	{ "SearchCoverFromWeb", NULL,
 	  N_("_Search on Internet"), NULL,
 	  N_("Search for a CD cover on Internet"),
 	  G_CALLBACK (activate_action_search_cover_on_internet) },
@@ -155,10 +159,11 @@ static const gchar *ui_info =
 "      <menuitem action='Stop'/>"
 "      <menuitem action='Next'/>"
 "      <menuitem action='Prev'/>"
+"      <separator />"
 "      <menuitem action='Eject'/>"
-"      <separator name='sep01'/>"
+"      <separator />"
 "      <menuitem action='Extract'/>"
-"      <separator name='sep02'/>"
+"      <separator />"
 "      <menuitem action='Quit'/>"
 "    </menu>"
 "    <menu action='EditMenu'>"
@@ -191,8 +196,8 @@ static const gchar *ui_info =
 "    <toolitem action='Play'/>"
 "    <toolitem action='Pause'/>"
 "    <toolitem action='Next'/>"
-"    <separator name='sep01'/>"
-"    <toolitem action='Eject'/>"
+"    <separator />"
+"    <toolitem action='EjectToolBar'/>"
 "  </toolbar>"
 "  <popup name='ListPopupMenu'>"
 "    <menuitem action='PlaySelected'/>"
