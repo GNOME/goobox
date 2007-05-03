@@ -78,9 +78,7 @@ struct _GooVolumeToolButtonClass {
 };
 
 GType         goo_volume_tool_button_get_type     (void) G_GNUC_CONST;
-GtkToolItem  *goo_volume_tool_button_new          (double from_value,
-						   double to_value,
-						   double step);
+GtkToolItem  *goo_volume_tool_button_new          (void);
 double        goo_volume_tool_button_get_volume   (GooVolumeToolButton *button);
 void          goo_volume_tool_button_set_volume   (GooVolumeToolButton *button,
 						   double           value,

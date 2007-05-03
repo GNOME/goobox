@@ -114,9 +114,9 @@ const char *     goo_player_get_location        (GooPlayer       *player);
 const char *     goo_player_get_title           (GooPlayer       *player);
 const char *     goo_player_get_artist          (GooPlayer       *player);
 int              goo_player_get_year            (GooPlayer       *player);
-int              goo_player_get_volume          (GooPlayer       *player);
+double           goo_player_get_volume          (GooPlayer       *player);
 void             goo_player_set_volume          (GooPlayer       *player,
-						 int              vol);
+						 double           vol);
 gboolean         goo_player_get_is_busy         (GooPlayer       *player);
 
 /**/

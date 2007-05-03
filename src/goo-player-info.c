@@ -828,7 +828,7 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 		return;
 	}
 	
-	image = gdk_pixbuf_new_from_file (cover, NULL);
+	image = gdk_pixbuf_new_from_file_at_size (cover, 80, 80, NULL);
 	if (image != NULL) {
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 1);
 		gtk_image_set_from_pixbuf (GTK_IMAGE (info->priv->cover_image), image);

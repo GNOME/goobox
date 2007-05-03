@@ -166,20 +166,20 @@ update_volume_label (GooVolumeToolButton *button)
 
 	if ((value - 0.0) < 10e-3)
 		icon = GOO_STOCK_VOLUME_ZERO;
-	else if (value < 25.0)
+	else if (value < 0.25)
 		icon = GOO_STOCK_VOLUME_MIN;
-	else if (value < 75.0)
+	else if (value < 0.75)
 		icon = GOO_STOCK_VOLUME_MED;
 	else
 		icon = GOO_STOCK_VOLUME_MAX;
 
 	gtk_tool_button_set_stock_id (GTK_TOOL_BUTTON (button), icon);
 	
-	text = g_strdup_printf ("%3.0f%%", value);
+	text = g_strdup_printf ("%3.0f%%", value * 100.0);
 	gtk_label_set_text (GTK_LABEL (button->priv->volume_label), text);
 	g_free (text);
 
-	text = g_strdup_printf (_("Volume level: %3.0f%%"), button->priv->value);
+	text = g_strdup_printf (_("Volume level: %3.0f%%"), button->priv->value * 100.0);
 	gtk_tooltips_set_tip (button->priv->tips,
 			      GTK_WIDGET (button),
 			      text,
@@ -420,7 +420,8 @@ popup_win_event_cb (GtkWidget           *widget,
 		    || (event_widget == button->priv->arrow_button)) {
 			ungrab (button);
 			return TRUE;
-		} else {
+		} 
+		else {
 			int x, y, w, h;
 			gdk_window_get_geometry (priv->popup_win->window, 
 						 &x, &y, &w, &h, NULL);
@@ -478,10 +479,7 @@ button_scroll_event_cb (GtkWidget           *widget,
 
 
 static void 
-goo_volume_button_construct (GooVolumeToolButton *button,
-			     double               from_value,
-			     double               to_value,
-			     double               step)
+goo_volume_button_construct (GooVolumeToolButton *button)
 {
 	struct _GooVolumeToolButtonPrivate *priv = button->priv;
 	GtkWidget *box;
@@ -519,11 +517,11 @@ goo_volume_button_construct (GooVolumeToolButton *button,
 	label = gtk_label_new (_("+"));
 	gtk_box_pack_start (GTK_BOX (volume_vbox), label, FALSE, FALSE, 0);
 
-	priv->volume_scale = gtk_vscale_new_with_range (from_value, to_value, step);
+	priv->volume_scale = gtk_vscale_new_with_range (0.0, 1.0, 0.1);
 	gtk_range_set_inverted (GTK_RANGE (priv->volume_scale), TRUE);
 	gtk_scale_set_draw_value (GTK_SCALE (priv->volume_scale), FALSE);
 	/*gtk_range_set_update_policy (GTK_RANGE (priv->volume_scale), GTK_UPDATE_DELAYED);*/
-	gtk_range_set_increments (GTK_RANGE (priv->volume_scale), step, step);
+	gtk_range_set_increments (GTK_RANGE (priv->volume_scale), 0.1, 0.1);
 
 	gtk_box_pack_start (GTK_BOX (volume_vbox), priv->volume_scale, TRUE, TRUE, 0);
 
@@ -597,16 +595,14 @@ goo_volume_button_construct (GooVolumeToolButton *button,
 
 
 GtkToolItem *
-goo_volume_tool_button_new (double from_value,
-			    double to_value,
-			    double step)
+goo_volume_tool_button_new (void)
 {
 	GooVolumeToolButton *button;
 
 	button = g_object_new (GOO_TYPE_VOLUME_TOOL_BUTTON, NULL);
 
 	gtk_tool_button_set_label (GTK_TOOL_BUTTON (button), _("Volume"));
-	goo_volume_button_construct (GOO_VOLUME_TOOL_BUTTON (button), from_value, to_value, step);
+	goo_volume_button_construct (GOO_VOLUME_TOOL_BUTTON (button));
 
 	return GTK_TOOL_ITEM (button);
 }
@@ -624,7 +620,6 @@ goo_volume_tool_button_set_volume (GooVolumeToolButton *button,
 				   double               vol,
 				   gboolean             notify)
 {
-	vol = CLAMP (vol, 0.0, 100.0);
 	button->priv->value = vol;
 	button->priv->mute = FLOAT_EQUAL (button->priv->value, 0.0);
 

@@ -721,7 +721,7 @@ auto_fetch__image_saved_cb (DialogData *data,
 		debug (DEBUG_INFO, "LOAD IMAGE: %s\n", tmpfile);
 		data->tmpfiles = g_list_prepend (data->tmpfiles, tmpfile);
 
-		goo_window_set_cover_image (data->window, filename);
+		goo_window_set_cover_image (data->window, get_path_from_uri (filename));
 	}
 
 	destroy_cb (NULL, data);
@@ -803,7 +803,7 @@ auto_fetch_from_asin__start_searching (gpointer callback_data)
 	g_source_remove (data->load_id);
 	data->load_id = 0;
 
-	dest = g_build_filename (data->tmpdir, "1.jpg", NULL);
+	dest = g_strconcat ("file://", data->tmpdir, "/1.jpg", NULL);
 	copy_file_from_url (data, data->source, dest, auto_fetch__image_saved_cb);
 	g_free (dest);
 

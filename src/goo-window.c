@@ -581,8 +581,8 @@ goo_window_finalize (GObject *object)
 		GooWindowPrivateData *priv = window->priv;
 
 		/* Save preferences */
-		eel_gconf_set_integer (PREF_GENERAL_VOLUME, 
-				       goo_player_get_volume (priv->player));
+		
+		eel_gconf_set_integer (PREF_GENERAL_VOLUME, goo_player_get_volume (priv->player));
 
 		/**/
 
@@ -2186,8 +2186,7 @@ static void
 volume_button_changed_cb (GooVolumeToolButton *button,
 			  GooWindow           *window)
 {
-	int vol = (int) goo_volume_tool_button_get_volume (button);
-	goo_player_set_volume (window->priv->player, vol);
+	goo_player_set_volume (window->priv->player, goo_volume_tool_button_get_volume (button));
 }
 
 
@@ -2424,7 +2423,7 @@ goo_window_construct (GooWindow  *window,
 				    -1);
 	}
 
-	priv->volume_button = (GtkWidget*) goo_volume_tool_button_new (0.0, 100.0, 5.0);
+	priv->volume_button = (GtkWidget*) goo_volume_tool_button_new ();
 	g_signal_connect (priv->volume_button, 
 			  "changed",
 			  G_CALLBACK (volume_button_changed_cb), 
@@ -2956,50 +2955,47 @@ goo_window_set_cover_image (GooWindow  *window,
 {
 	GdkPixbuf *image;
 	GError    *error = NULL;
+	GdkPixbuf *frame;
+	char      *cover_filename;
 
 	if (window->priv->hibernate)
 		return;
 
 	goo_window_set_current_cd_autofetch (window, FALSE);
 
-	image = gdk_pixbuf_new_from_file_at_size (filename, 
-						  COVER_SIZE - 2, 
-						  COVER_SIZE - 2, 
-						  &error);
-	if (image != NULL) {
-		GdkPixbuf *frame;
-		char      *cover_filename;
-		
-		frame = gdk_pixbuf_new (gdk_pixbuf_get_colorspace (image),
-					gdk_pixbuf_get_has_alpha (image),
-					gdk_pixbuf_get_bits_per_sample (image),
-					gdk_pixbuf_get_width (image) + 2,
-					gdk_pixbuf_get_height (image) + 2);
-		gdk_pixbuf_fill (frame, 0x00000000);
-		gdk_pixbuf_copy_area (image, 
-				      0, 0,
-				      gdk_pixbuf_get_width (image),
-				      gdk_pixbuf_get_height (image),
-				      frame,
-				      1, 1);
-
-		cover_filename = goo_window_get_cover_filename (window);
-		debug (DEBUG_INFO, "SAVE IMAGE %s\n", cover_filename);
-		
-		if (! gdk_pixbuf_save (frame, cover_filename, "png", &error, NULL))
-			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
-							   _("Could not save cover image"),
-							   &error);
-		g_free (cover_filename);
-		g_object_unref (frame);
-		g_object_unref (image);
-
-		goo_window_update_cover (window);
-
-	} else 
+	image = gdk_pixbuf_new_from_file (filename, &error);
+	if (image == NULL) {
 		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
 						   _("Could not load image"),
 						   &error);
+		return;
+	}
+		
+	frame = gdk_pixbuf_new (gdk_pixbuf_get_colorspace (image),
+				gdk_pixbuf_get_has_alpha (image),
+				gdk_pixbuf_get_bits_per_sample (image),
+				gdk_pixbuf_get_width (image) + 2,
+				gdk_pixbuf_get_height (image) + 2);
+	gdk_pixbuf_fill (frame, 0x00000000);
+	gdk_pixbuf_copy_area (image, 
+			      0, 0,
+			      gdk_pixbuf_get_width (image),
+			      gdk_pixbuf_get_height (image),
+			      frame,
+			      1, 1);
+
+	cover_filename = goo_window_get_cover_filename (window);
+	debug (DEBUG_INFO, "SAVE IMAGE %s\n", cover_filename);
+		
+	if (! gdk_pixbuf_save (frame, cover_filename, "png", &error, NULL))
+		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
+						   _("Could not save cover image"),
+						   &error);
+	g_free (cover_filename);
+	g_object_unref (frame);
+	g_object_unref (image);
+
+	goo_window_update_cover (window);	
 }
 
 
@@ -3170,8 +3166,8 @@ goo_window_toggle_visibility (GooWindow *window)
 					   /*"/MenuBar/View/",  FIXME*/
 					   "/TrayPopupMenu/",
 					   NULL);
-
-	} else {
+	} 
+	else {
 		gtk_window_move (GTK_WINDOW (window),
 				 window->priv->pos_x,
 				 window->priv->pos_y);

@@ -48,7 +48,7 @@ struct _GooPlayerPrivateData {
 	GooPlayerAction  action;
 	GError          *error;
 	int              current_song;
-	int              volume_value;
+	double           volume_value;
 	char            *location;
 	gboolean         is_busy;
 		
@@ -476,7 +476,6 @@ goo_player_init (GooPlayer *player)
 	priv->action = GOO_PLAYER_ACTION_NONE;
 	priv->error = NULL;
 	priv->current_song = 0;
-	priv->volume_value = 0;
 	priv->location = NULL;
 	priv->title = NULL;
 	priv->year = 0;
@@ -489,8 +488,8 @@ goo_player_init (GooPlayer *player)
 	priv->discid = NULL;
 	priv->n_tracks = 0;
 	priv->tracks = NULL;
-	player->priv->current_song = -1;
-	priv->volume_value = 100;
+	priv->current_song = -1;
+	priv->volume_value = 1.0;
 
 	priv->update_progress_id = 0;
 }
@@ -1261,8 +1260,6 @@ goo_player_get_year (GooPlayer *player)
 void
 goo_player_play (GooPlayer *player)
 {
-	int vol;
-	
 	if (goo_player_get_is_busy (player))
 		return;		
 	if (player->priv->state == GOO_PLAYER_STATE_PLAYING)
@@ -1281,8 +1278,7 @@ goo_player_play (GooPlayer *player)
 		   || (goo_player_get_state (player) == GOO_PLAYER_STATE_SEEKING))))
 		create_pipeline (player);
 
-	vol = goo_player_get_volume (player);
-	g_object_set (G_OBJECT (player->priv->volume), "volume", (double) vol, NULL);
+	g_object_set (G_OBJECT (player->priv->volume), "volume", goo_player_get_volume (player), NULL);
 
 	gst_element_set_state (player->priv->pipeline, GST_STATE_PLAYING);
 	goo_player_set_state (player, GOO_PLAYER_STATE_PLAYING, TRUE);
@@ -1395,7 +1391,7 @@ goo_player_get_state (GooPlayer *player)
 }
 
 
-int
+double
 goo_player_get_volume (GooPlayer *player)
 {
 	return player->priv->volume_value;
@@ -1404,14 +1400,14 @@ goo_player_get_volume (GooPlayer *player)
 
 void
 goo_player_set_volume (GooPlayer *player,
-		       int        vol)
+		       double     vol)
 {
 	if (goo_player_get_is_busy (player))
 		return;
 
 	player->priv->volume_value = vol;
 	if (player->priv->volume != NULL)
-		g_object_set (G_OBJECT (player->priv->volume), "volume", (double) vol / 100.0, NULL);	
+		g_object_set (G_OBJECT (player->priv->volume), "volume", vol, NULL);	
 }
 
 

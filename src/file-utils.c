@@ -1085,6 +1085,18 @@ get_uri_from_local_path (const char *local_path)
 }
 
 
+const char *
+get_path_from_uri (const char *uri)
+{
+	const char *file_prefix = "file://";
+	int         file_prefix_l = strlen (file_prefix);
+	
+	if (strncmp (uri, file_prefix, file_prefix_l) == 0)
+		uri += file_prefix_l;
+	return uri;
+}
+
+
 static gboolean
 valid_filename_char (char c) 
 {

@@ -1,5 +1,11 @@
 2007-05-03  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* many_files: Use a volume scale from 0.0 to 1.0.  Fixed copying of
+	remote cover images.  Save the cover at the original size, resize
+	the cover before displaying it.
+
+2007-05-03  Paolo Bacchilega  <paobac@cvs.gnome.org>
+	
 	* many_files: Removed cddbslave support.  Download the cover from
 	amazon if the asin is available.  Renamed goo-player-cd.[ch] as 
 	goo-player.[ch].  Removed gnome-vfs-helpers.[ch].  Save musicbrainz

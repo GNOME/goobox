@@ -94,6 +94,7 @@ char *              get_temp_work_dir_name       (void);
 char *              escape_uri                   (const char *uri);
 GnomeVFSURI *       new_uri_from_path            (const char *path);
 char *              get_uri_from_local_path      (const char *local_path);
+const char *        get_path_from_uri            (const char *uri);
 char *              tracktitle_to_filename       (const char *trackname);
 gboolean            is_program_in_path           (const char *program_name);
 
