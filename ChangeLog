@@ -1,3 +1,8 @@
+2007-05-04  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* many_files: Read the list of drives only at startup time.  
+	Move the extraction options in the preferences dialog.
+
 2007-05-03  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* many_files: Use a volume scale from 0.0 to 1.0.  Fixed copying of

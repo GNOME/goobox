@@ -117,6 +117,10 @@ static GtkActionEntry action_entries[] = {
 	  N_("_Hide Window"), NULL /*"H"*/,
 	  N_("Hide the main window"),
 	  G_CALLBACK (activate_action_toggle_visibility) },
+	{ "Reload", GTK_STOCK_REFRESH,
+	  NULL, "<Ctrl>R",
+	  NULL,
+	  G_CALLBACK (activate_action_reload) }
 };
 static guint n_action_entries = G_N_ELEMENTS (action_entries);
 

@@ -54,9 +54,10 @@ enum {
 };
 
 struct BaconCdSelectionPrivate {
-	GList *cdroms;
-	gboolean have_file_image;
-	gboolean show_recorders_only;
+	GList    *cdroms;
+	gboolean  have_file_image;
+	gboolean  show_recorders_only;
+	gboolean  free_cd_drives;
 };
 
 static void bacon_cd_selection_init (BaconCdSelection *bcs);
@@ -134,21 +135,14 @@ bacon_cd_selection_init (BaconCdSelection *bcs)
 static void
 bacon_cd_selection_finalize (GObject *object)
 {
-	GList *l;
 	BaconCdSelection *bcs = (BaconCdSelection *) object;
 
 	g_return_if_fail (bcs != NULL);
 	g_return_if_fail (BACON_IS_CD_SELECTION (bcs));
 
-	l = bcs->priv->cdroms;
-	while (l != NULL)
-	{
-		CDDrive *cdrom = l->data;
-
-		l = g_list_remove (l, cdrom);
-		cd_drive_free (cdrom);
-	}
-
+	if (bcs->priv->free_cd_drives)
+		g_list_foreach (bcs->priv->cdroms, (GFunc) cd_drive_free, NULL);
+	g_list_free (bcs->priv->cdroms);
 	g_free (bcs->priv);
 	bcs->priv = NULL;
 
@@ -180,58 +174,65 @@ combo_device_changed (GtkComboBox *combo, gpointer user_data)
 }
 
 static void
-cdrom_combo_box (BaconCdSelection *bcs, gboolean show_recorders_only, gboolean show_file_image)
+cdrom_combo_box (BaconCdSelection *bcs,
+		 CDDrive          *current_drive)
 {
 	GList *l;
-	CDDrive *cdrom;
-
-	bcs->priv->cdroms = scan_for_cdroms (show_recorders_only, show_file_image);
-
-	for (l = bcs->priv->cdroms; l != NULL; l = l->next)
-	{
-		cdrom = l->data;
-
-		if (cdrom->display_name == NULL) {
-			g_warning ("cdrom->display_name != NULL failed");
-		}
-
-		gtk_combo_box_append_text (GTK_COMBO_BOX (bcs),
-				cdrom->display_name
-				? cdrom->display_name : _("Unnamed CDROM"));
-	}
-	gtk_combo_box_set_active (GTK_COMBO_BOX (bcs), 0);
+	int    n, active = 0;
 
 	if (bcs->priv->cdroms == NULL) {
-		gtk_widget_set_sensitive (GTK_WIDGET (bcs), FALSE);
+		bcs->priv->cdroms = scan_for_cdroms (FALSE, FALSE);
+		bcs->priv->free_cd_drives = TRUE;		
 	}
+
+	for (l = bcs->priv->cdroms, n = 0; l != NULL; l = l->next, n++) {
+		CDDrive *cdrom = l->data;
+
+		if (cdrom->display_name == NULL) 
+			g_warning ("cdrom->display_name != NULL failed");
+
+		if (cdrom == current_drive)
+			active = n; 
+
+		gtk_combo_box_append_text (GTK_COMBO_BOX (bcs),
+					   cdrom->display_name ? cdrom->display_name : _("Unnamed CDROM"));
+	}
+	gtk_combo_box_set_active (GTK_COMBO_BOX (bcs), active);
+
+	if (bcs->priv->cdroms == NULL) 
+		gtk_widget_set_sensitive (GTK_WIDGET (bcs), FALSE);
 }
 
 GtkWidget *
-bacon_cd_selection_new (void)
+bacon_cd_selection_new (GList   *drives,
+			CDDrive *current_drive)
 {
-	GtkWidget *widget;
+	GtkWidget        *widget;
 	BaconCdSelection *bcs;
-	GtkCellRenderer *cell;
-	GtkListStore *store;
+	GtkCellRenderer  *cell;
+	GtkListStore     *store;
 
-	widget = GTK_WIDGET
-		(g_object_new (bacon_cd_selection_get_type (), NULL));
+	widget = GTK_WIDGET (g_object_new (bacon_cd_selection_get_type (), NULL));
 
 	store = gtk_list_store_new (1, G_TYPE_STRING);
-	gtk_combo_box_set_model (GTK_COMBO_BOX (widget),
-			GTK_TREE_MODEL (store));
+	gtk_combo_box_set_model (GTK_COMBO_BOX (widget), GTK_TREE_MODEL (store));
 
 	cell = gtk_cell_renderer_text_new ();
 	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget), cell, TRUE);
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), cell,
-			"text", 0,
-			NULL);
+					"text", 0,
+					NULL);
 
 	bcs = BACON_CD_SELECTION (widget);
-	cdrom_combo_box (bcs, FALSE, FALSE);
+	
+	if (drives != NULL)
+		bcs->priv->cdroms = g_list_copy (drives);
+	cdrom_combo_box (bcs, current_drive);
 
-	g_signal_connect (G_OBJECT (bcs), "changed",
-			G_CALLBACK (combo_device_changed), bcs);
+	g_signal_connect (G_OBJECT (bcs), 
+			  "changed",
+			  G_CALLBACK (combo_device_changed), 
+			  bcs);
 
 	return widget;
 }
@@ -245,25 +246,24 @@ bacon_cd_selection_set_have_file_image (BaconCdSelection *bcs,
 	g_return_if_fail (bcs != NULL);
 	g_return_if_fail (BACON_IS_CD_SELECTION (bcs));
 
-	if (bcs->priv->have_file_image == have_file_image) {
+	if (bcs->priv->have_file_image == have_file_image)
 		return;
-	}
 
-	if (have_file_image == FALSE)
-	{
+	if (have_file_image == FALSE) {
 		GList *item;
-		int index;
+		int    index;
 
 		index = g_list_length (bcs->priv->cdroms) - 1;
 		gtk_combo_box_remove_text (GTK_COMBO_BOX (bcs), index);
 
 		item = g_list_last (bcs->priv->cdroms);
 		cdrom = (CDDrive *)item->data;
-		cd_drive_free (cdrom);
-		bcs->priv->cdroms = g_list_delete_link
-			(bcs->priv->cdroms, item);
+		if (bcs->priv->free_cd_drives)
+			cd_drive_free (cdrom);
+		bcs->priv->cdroms = g_list_delete_link (bcs->priv->cdroms, item);
 		gtk_widget_set_sensitive (GTK_WIDGET (bcs), (bcs->priv->cdroms != NULL));
-	} else {
+	} 
+	else {
 		gboolean activate = FALSE;
 
 		cdrom = cd_drive_get_file_image ();
@@ -325,13 +325,15 @@ bacon_cd_selection_set_recorders_only (BaconCdSelection *bcs,
 			      || drive->type & CDDRIVE_TYPE_DVD_RW_RECORDER
 			      || drive->type & CDDRIVE_TYPE_FILE)) {
 				gtk_combo_box_remove_text (GTK_COMBO_BOX (bcs), i);
-				cd_drive_free (drive);
+				if (bcs->priv->free_cd_drives)
+					cd_drive_free (drive);
 				bcs->priv->cdroms = g_list_delete_link (bcs->priv->cdroms, l);
 			}
 
 			l = prev;
 		}
-	} else {
+	} 
+	else {
 		GList *drives = scan_for_cdroms (recorders_only, bcs->priv->have_file_image);
 		GList *l;
 		int i = g_list_length (bcs->priv->cdroms);
@@ -353,8 +355,10 @@ bacon_cd_selection_set_recorders_only (BaconCdSelection *bcs,
 				bcs->priv->cdroms = g_list_insert (bcs->priv->cdroms,
 								   drive,
 								   i);
-			} else {
-				cd_drive_free (drive);
+			} 
+			else {
+				if (bcs->priv->free_cd_drives)
+					cd_drive_free (drive);
 			}
 		}
 		g_list_free (drives);

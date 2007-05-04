@@ -35,6 +35,7 @@
 #include "goo-cdrom.h"
 #include "glib-utils.h"
 #include "file-utils.h"
+#include "main.h"
 
 #define TOC_OFFSET 150
 #define SECTORS_PER_SEC 75
@@ -51,7 +52,8 @@ struct _GooPlayerPrivateData {
 	double           volume_value;
 	char            *location;
 	gboolean         is_busy;
-		
+	
+	CDDrive         *drive;
 	GooCdrom        *cdrom;
 	GstElement      *pipeline;
 	GstElement      *source;
@@ -293,7 +295,13 @@ create_pipeline (GooPlayer *player)
 	audioconvert = gst_element_factory_make ("audioconvert", "convert");
     	audioresample = gst_element_factory_make ("audioresample", "resample");
 	player->priv->volume = gst_element_factory_make ("volume", "volume");
+	
 	queue = gst_element_factory_make ("queue", "queue");
+	g_object_set (queue,
+		      "min-threshold-time", (guint64) 200 * GST_MSECOND,
+		      "max-size-time", (guint64) 2 * GST_SECOND,
+		      NULL);
+	
 	sink = gst_element_factory_make ("gconfaudiosink", "sink");
 	
 	gst_bin_add_many (GST_BIN (player->priv->pipeline), 
@@ -641,6 +649,7 @@ goo_player_new (const char *location)
 	player->priv->location = g_strdup (location);
 
 	device = goo_player_get_location (GOO_PLAYER (player));
+	player->priv->drive = get_drive_from_device (device);
 	player->priv->cdrom = goo_cdrom_new (device);
 	
 	g_signal_connect (player->priv->cdrom, 
@@ -649,6 +658,13 @@ goo_player_new (const char *location)
 			  GOO_PLAYER (player));
 
 	return player;
+}
+
+
+CDDrive *
+goo_player_get_drive (GooPlayer *player)
+{
+	return player->priv->drive;
 }
 
 

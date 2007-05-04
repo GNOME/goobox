@@ -43,14 +43,14 @@ typedef struct {
 	void (*device_changed) (GtkWidget *bcs, const char *device_path);
 } BaconCdSelectionClass;
 
-GtkType bacon_cd_selection_get_type              (void);
-GtkWidget *bacon_cd_selection_new                (void);
-
-void bacon_cd_selection_set_device		 (BaconCdSelection *bcs,
-						  const char *device);
-const char *bacon_cd_selection_get_device	 (BaconCdSelection *bcs);
-const char *bacon_cd_selection_get_default_device (BaconCdSelection *bcs);
-const CDDrive *bacon_cd_selection_get_cdrom       (BaconCdSelection *bcs);
+GtkType        bacon_cd_selection_get_type           (void);
+GtkWidget     *bacon_cd_selection_new                (GList            *devices,
+						      CDDrive          *current_drive);
+void           bacon_cd_selection_set_device	     (BaconCdSelection *bcs,
+						      const char       *device);
+const char    *bacon_cd_selection_get_device	     (BaconCdSelection *bcs);
+const char    *bacon_cd_selection_get_default_device (BaconCdSelection *bcs);
+const CDDrive *bacon_cd_selection_get_cdrom          (BaconCdSelection *bcs);
 
 G_END_DECLS
 

@@ -34,6 +34,7 @@
 #define GOO_STOCK_VOLUME_MIN  "audio-volume-low"
 #define GOO_STOCK_VOLUME_ZERO "audio-volume-muted"
 
+
 void goo_stock_init (void);
 
 #endif /* GOO_STOCK_H */

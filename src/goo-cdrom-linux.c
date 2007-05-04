@@ -115,7 +115,7 @@ update_state_from_fd (GooCdrom *cdrom,
 {
 	int           state;
 	GooCdromState cdrom_state;
-
+	
 	state = ioctl (fd, CDROM_DISC_STATUS, 0);
 	if (state < 0) {
 		goo_cdrom_set_error_from_string (cdrom, _("Error reading CD"));
@@ -150,7 +150,7 @@ update_state_from_fd (GooCdrom *cdrom,
 		cdrom_state = GOO_CDROM_STATE_OK;
 		break;
 	default:
-		cdrom_state = GOO_CDROM_STATE_DATA_CD;
+		cdrom_state = GOO_CDROM_STATE_DATA_CD;			
 		break;
 	}
 

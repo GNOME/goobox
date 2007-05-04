@@ -24,6 +24,7 @@
 #define GOO_PLAYER_H
 
 #include <glib.h>
+#include "cd-drive.h"
 #include "song-info.h"
 #include "track-info.h"
 
@@ -90,7 +91,7 @@ struct _GooPlayerClass
 
 GType            goo_player_get_type            (void);
 GooPlayer *      goo_player_new                 (const char      *location);
-
+CDDrive *        goo_player_get_drive           (GooPlayer       *player);
 void             goo_player_update              (GooPlayer       *player);
 void             goo_player_list                (GooPlayer       *player);
 void             goo_player_seek_song           (GooPlayer       *player,

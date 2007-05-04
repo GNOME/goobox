@@ -22,7 +22,8 @@ INCLUDES =						\
 	-DGOO_GLADEDIR=\""$(gladedir)"\"     		\
 	$(DISABLE_DEPRECATED)				\
 	$(GOO_CFLAGS)					\
-	$(LIBNOTIFY_CFLAGS)
+	$(LIBNOTIFY_CFLAGS)				\
+	$(HAL_CFLAGS)
 
 gnome_goobox_idl_sources =           	\
 	GNOME_Goobox-stubs.c         	\
@@ -166,6 +167,7 @@ gthumb-enum-types.c: $(GTH_HEADER_FILES) gthumb-enum-types.h
 goobox_LDADD = 					\
 	$(GOO_LIBS) 				\
 	$(LIBNOTIFY_LIBS)			\
+	$(HAL_LIBS)				\
 	$(SYSTEM_LIBS)
 
 EXTRA_DIST = 					\

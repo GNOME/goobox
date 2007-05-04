@@ -29,11 +29,9 @@
 
 #include <gtk/gtk.h>
 #include <libgnome/libgnome.h>
-#include <libgnomeui/gnome-dialog.h>
-#include <libgnomeui/gnome-dialog-util.h>
-#include <libgnomeui/gnome-propertybox.h>
-#include <libgnomeui/gnome-pixmap.h>
 #include <glade/glade.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
+#include <gst/gst.h>
 #include "main.h"
 #include "gconf-utils.h"
 #include "typedefs.h"
@@ -43,6 +41,8 @@
 #include "goo-stock.h"
 
 #define GLADE_PREF_FILE "goobox.glade"
+
+enum { TEXT_COLUMN, DATA_COLUMN, PRESENT_COLUMN, N_COLUMNS };
 
 static int ogg_rate[] = { 64, 80, 96, 112, 128, 160, 192, 224, 256, 320 };
 static int mp3_quality[] = { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
@@ -67,6 +67,12 @@ typedef struct {
 	GtkWidget *dialog;
 	GtkWidget *drive_selector;
 
+	GtkWidget *p_destination_filechooserbutton;
+
+	GtkTreeModel *filetype_model;
+	GtkWidget *p_filetype_combobox;
+	GtkWidget *p_encoding_notebook;
+
 	GtkWidget *p_ogg_quality_label;
 	GtkWidget *p_ogg_scale;
 	GtkWidget *p_ogg_smaller_label;
@@ -89,8 +95,18 @@ static void
 apply_cb (GtkWidget  *widget, 
 	  DialogData *data)
 {
-	const char *device;
+	const char    *destination;
+	char          *unesc_destination = NULL;
+	const char    *device;
+	const char    *current_device;
 
+	destination = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (data->p_destination_filechooserbutton));
+	unesc_destination = gnome_vfs_unescape_string (destination, "");
+	eel_gconf_set_path (PREF_EXTRACT_DESTINATION, unesc_destination);
+	g_free (unesc_destination);
+
+	pref_set_file_format (gtk_combo_box_get_active (GTK_COMBO_BOX (data->p_filetype_combobox)));
+	
 	eel_gconf_set_float (PREF_ENCODER_OGG_QUALITY, (float) data->ogg_value / 10.0);
 	eel_gconf_set_integer (PREF_ENCODER_FLAC_COMPRESSION, flac_compression[data->flac_value]);
 	eel_gconf_set_integer (PREF_ENCODER_MP3_QUALITY, mp3_quality[data->mp3_value]);
@@ -98,8 +114,15 @@ apply_cb (GtkWidget  *widget,
 	/**/
 
 	device = bacon_cd_selection_get_device (BACON_CD_SELECTION (data->drive_selector));
-	if (device != NULL) 
-		eel_gconf_set_string (PREF_GENERAL_DEVICE, device);
+	if (device == NULL) 
+		return;
+		
+	current_device = goo_player_get_location (goo_window_get_player (data->window));
+	
+	if ((current_device != NULL) && (strcmp (current_device, device) == 0)) 
+		return;
+		
+	eel_gconf_set_string (PREF_GENERAL_DEVICE, device);
 	goo_window_set_location (data->window, device);
 	goo_window_update (data->window);
 }
@@ -224,13 +247,13 @@ scale_value_changed_cb (GtkRange   *range,
 		if (data->ogg_value == i_value)
 			return;
 		data->ogg_value = i_value;
-
-	} else if (range == (GtkRange*) data->p_flac_scale) {
+	} 
+	else if (range == (GtkRange*) data->p_flac_scale) {
 		if (data->flac_value == i_value)
 			return;
 		data->flac_value = i_value;
-
-	} else if (range == (GtkRange*) data->p_mp3_scale) {
+	} 
+	else if (range == (GtkRange*) data->p_mp3_scale) {
 		if (data->mp3_value == i_value)
 			return;
 		data->mp3_value = i_value;
@@ -238,9 +261,6 @@ scale_value_changed_cb (GtkRange   *range,
 
 	update_info (data);
 }
-
-
-
 
 
 static int 
@@ -284,18 +304,37 @@ get_current_value (DialogData    *data,
 }
 
 
+static void
+filetype_combobox_changed_cb (GtkComboBox *widget,
+                              DialogData  *data)
+{
+	gtk_notebook_set_current_page (GTK_NOTEBOOK (data->p_encoding_notebook), 
+				       gtk_combo_box_get_active (GTK_COMBO_BOX (data->p_filetype_combobox)));
+}
+
+
 /* create the main dialog. */
 void
 dlg_preferences (GooWindow *window)
 {
-	DialogData       *data;
-	GtkWidget        *btn_close;
-	GtkWidget        *btn_help;
-	GtkWidget        *btn_reset;
-	GtkWidget        *box;
-	char             *device = NULL;
-	char             *text;
-
+	DialogData      *data;
+	GtkWidget       *btn_close;
+	GtkWidget       *btn_help;
+	GtkWidget       *btn_reset;
+	GtkWidget       *box;
+	GtkWidget       *filetype_combobox_box;
+	char            *device = NULL;
+	char            *text;
+	GtkWidget       *filetype_btn = NULL;
+	char            *path = NULL;
+	GooFileFormat    file_format;
+	GstElement      *encoder;
+	gboolean         ogg_encoder, flac_encoder, mp3_encoder, wave_encoder;
+	gboolean         find_first_available;
+	char            *esc_uri = NULL;
+	GtkTreeIter      iter;
+        GtkCellRenderer *renderer;
+        
 	data = g_new0 (DialogData, 1);
 	data->window = window;
 	data->gui = glade_xml_new (GOO_GLADEDIR "/" GLADE_PREF_FILE, NULL, NULL);
@@ -307,11 +346,14 @@ dlg_preferences (GooWindow *window)
 
 	eel_gconf_preload_cache ("/apps/goobox/general", GCONF_CLIENT_PRELOAD_ONELEVEL);
 
-	goo_window_set_location (data->window, NULL);
-
 	/* Get the widgets. */
 
 	data->dialog = glade_xml_get_widget (data->gui, "preferences_dialog");
+
+	data->p_destination_filechooserbutton = glade_xml_get_widget (data->gui, "p_destination_filechooserbutton");
+
+	filetype_combobox_box = glade_xml_get_widget (data->gui, "filetype_combobox_box");
+	data->p_encoding_notebook = glade_xml_get_widget (data->gui, "p_encoding_notebook");
 
 	data->p_ogg_quality_label = glade_xml_get_widget (data->gui, "p_ogg_quality_label");
 	data->p_ogg_scale = glade_xml_get_widget (data->gui, "p_ogg_scale");
@@ -354,6 +396,105 @@ dlg_preferences (GooWindow *window)
 		gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
 	}
 
+	/* Extraction */
+	
+	data->filetype_model = GTK_TREE_MODEL (gtk_list_store_new (N_COLUMNS,
+                                                                   G_TYPE_STRING,
+                                                                   G_TYPE_INT,
+                                                                   G_TYPE_BOOLEAN));
+	data->p_filetype_combobox = gtk_combo_box_new_with_model (data->filetype_model);
+	
+	renderer = gtk_cell_renderer_text_new ();
+        gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (data->p_filetype_combobox),
+                                    renderer,
+                                    FALSE);
+        gtk_cell_layout_set_attributes  (GTK_CELL_LAYOUT (data->p_filetype_combobox),
+                                         renderer,
+                                         "text", TEXT_COLUMN,
+                                         "sensitive", PRESENT_COLUMN,
+                                         NULL);
+	gtk_widget_show (data->p_filetype_combobox);
+	gtk_box_pack_start (GTK_BOX (filetype_combobox_box), data->p_filetype_combobox, TRUE, TRUE, 0);
+
+	/**/
+	
+	path = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "~");
+	esc_uri = gnome_vfs_escape_host_and_path_string (path);
+	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (data->p_destination_filechooserbutton), esc_uri);
+	g_free (esc_uri);
+	g_free (path);
+
+	encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
+	ogg_encoder = encoder != NULL;
+        gtk_list_store_append (GTK_LIST_STORE (data->filetype_model), &iter);
+        gtk_list_store_set (GTK_LIST_STORE (data->filetype_model),
+                            &iter,
+                            TEXT_COLUMN, "Ogg Vorbis",
+                            DATA_COLUMN, GOO_FILE_FORMAT_OGG,
+                            PRESENT_COLUMN, ogg_encoder,
+                           -1);
+	if (encoder != NULL) 
+		gst_object_unref (GST_OBJECT (encoder));
+
+	encoder = gst_element_factory_make (FLAC_ENCODER, "encoder");
+	flac_encoder = encoder != NULL;
+        gtk_list_store_append (GTK_LIST_STORE (data->filetype_model), &iter);
+        gtk_list_store_set (GTK_LIST_STORE (data->filetype_model),
+                            &iter,
+                            TEXT_COLUMN, "FLAC",
+                            DATA_COLUMN, GOO_FILE_FORMAT_FLAC,
+                            PRESENT_COLUMN, flac_encoder,
+                           -1);
+	if (encoder != NULL) 
+		gst_object_unref (GST_OBJECT (encoder));
+
+	encoder = gst_element_factory_make (MP3_ENCODER, "encoder");
+	mp3_encoder = encoder != NULL;
+        gtk_list_store_append (GTK_LIST_STORE (data->filetype_model), &iter);
+        gtk_list_store_set (GTK_LIST_STORE (data->filetype_model),
+                            &iter,
+                            TEXT_COLUMN, "MP3",
+                            DATA_COLUMN, GOO_FILE_FORMAT_MP3,
+                            PRESENT_COLUMN, mp3_encoder,
+                           -1);	
+	if (encoder != NULL) 
+		gst_object_unref (GST_OBJECT (encoder));
+
+	encoder = gst_element_factory_make (WAVE_ENCODER, "encoder");
+	wave_encoder = encoder != NULL;
+        gtk_list_store_append (GTK_LIST_STORE (data->filetype_model), &iter);
+        gtk_list_store_set (GTK_LIST_STORE (data->filetype_model),
+                            &iter,
+                            TEXT_COLUMN, "Wave",
+                            DATA_COLUMN, GOO_FILE_FORMAT_WAVE,
+                            PRESENT_COLUMN, wave_encoder,
+                           -1);
+	if (encoder != NULL) 
+		gst_object_unref (GST_OBJECT (encoder));
+
+	file_format = pref_get_file_format ();
+
+	find_first_available = (((file_format == GOO_FILE_FORMAT_OGG) && !ogg_encoder)
+				|| ((file_format == GOO_FILE_FORMAT_FLAC) && !flac_encoder)
+				|| ((file_format == GOO_FILE_FORMAT_MP3) && !mp3_encoder)
+				|| ((file_format == GOO_FILE_FORMAT_WAVE) && !wave_encoder));
+
+	if (find_first_available) {
+		if (ogg_encoder)
+			file_format = GOO_FILE_FORMAT_OGG;
+		else if (flac_encoder)
+			file_format = GOO_FILE_FORMAT_FLAC;
+		else if (mp3_encoder)
+			file_format = GOO_FILE_FORMAT_MP3;
+		else if (wave_encoder)
+			file_format = GOO_FILE_FORMAT_WAVE;
+	}
+	
+	gtk_combo_box_set_active (GTK_COMBO_BOX (data->p_filetype_combobox), file_format);
+	gtk_notebook_set_current_page (GTK_NOTEBOOK (data->p_encoding_notebook), file_format);
+
+	/* Encoding */
+
 	text = g_strdup_printf ("<small><i>%s</i></small>", _("Smaller size"));
 	gtk_label_set_markup (GTK_LABEL (data->p_ogg_smaller_label), text);
 	g_free (text);
@@ -393,7 +534,7 @@ dlg_preferences (GooWindow *window)
 
 	/**/
 
-	data->drive_selector = bacon_cd_selection_new ();
+	data->drive_selector = bacon_cd_selection_new (Drives, goo_player_get_drive (goo_window_get_player (window)));
 	gtk_widget_show (data->drive_selector);
 	gtk_box_pack_start (GTK_BOX (box), data->drive_selector, TRUE, TRUE, 0);
 	
@@ -426,6 +567,11 @@ dlg_preferences (GooWindow *window)
 			  G_CALLBACK (drive_selector_device_changed_cb),
 			  data);
 
+	g_signal_connect (G_OBJECT (data->p_filetype_combobox), 
+			  "changed",
+			  G_CALLBACK (filetype_combobox_changed_cb),
+			  data);
+
 	g_signal_connect (G_OBJECT (data->p_ogg_scale), 
 			  "value_changed",
 			  G_CALLBACK (scale_value_changed_cb),
@@ -442,6 +588,6 @@ dlg_preferences (GooWindow *window)
 	/* run dialog. */
 
 	gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
-	gtk_window_set_modal (GTK_WINDOW (data->dialog), TRUE);
+	gtk_window_set_modal (GTK_WINDOW (data->dialog), FALSE);
 	gtk_widget_show (data->dialog);
 }

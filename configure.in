@@ -209,8 +209,8 @@ echo "
 
 Configuration:
 
-        Source code location:   ${srcdir}
-        Compiler:               ${CC}
+	Source code location:   ${srcdir}
+	Compiler:               ${CC}
 	Enable multimedia keys: ${use_mmkeys}
 	Enable notification:    ${have_libnotify}
 "

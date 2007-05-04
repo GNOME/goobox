@@ -817,6 +817,7 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 		gtk_image_set_from_stock (GTK_IMAGE (info->priv->status_image), 
 					  GOO_STOCK_DATA_DISC, 
 					  GTK_ICON_SIZE_DIALOG);
+
 		return;
 	}
 

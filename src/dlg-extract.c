@@ -62,13 +62,7 @@ typedef struct {
 	GtkWidget   *dialog;
 	GtkWidget   *e_alltrack_radiobutton;
 	GtkWidget   *e_selected_radiobutton;
-	GtkWidget   *e_destination_filechooserbutton;
-	GtkWidget   *e_ogg_radiobutton;
-	GtkWidget   *e_flac_radiobutton;
-	GtkWidget   *e_mp3_radiobutton;
-	GtkWidget   *e_wave_radiobutton;
 	GtkWidget   *e_save_playlist_checkbutton;
-	GtkWidget   *e_options_expander;
 } DialogData;
 
 
@@ -155,26 +149,7 @@ static void
 ok_cb (GtkWidget  *widget, 
        DialogData *data)
 {
-	const char    *destination;
-	char          *unesc_destination = NULL;
-	GooFileFormat  file_format = GOO_FILE_FORMAT_OGG;
-
 	/* save preferences */
-
-	destination = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (data->e_destination_filechooserbutton));
-	unesc_destination = gnome_vfs_unescape_string (destination, "");
-	eel_gconf_set_path (PREF_EXTRACT_DESTINATION, unesc_destination);
-	g_free (unesc_destination);
-
-	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_ogg_radiobutton)))
-		file_format = GOO_FILE_FORMAT_OGG;
-	else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_flac_radiobutton)))
-		file_format = GOO_FILE_FORMAT_FLAC;
-	else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_mp3_radiobutton)))
-		file_format = GOO_FILE_FORMAT_MP3;
-	else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_wave_radiobutton)))
-		file_format = GOO_FILE_FORMAT_WAVE;
-	pref_set_file_format (file_format);
 
 	eel_gconf_set_boolean (PREF_EXTRACT_SAVE_PLAYLIST, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_save_playlist_checkbutton)));
 
@@ -223,18 +198,66 @@ help_cb (GtkWidget  *widget,
 void
 dlg_extract (GooWindow *window)
 {
+	GstElement       *encoder;
+	gboolean          ogg_encoder, flac_encoder, mp3_encoder, wave_encoder;
 	DialogData       *data;
 	GtkWidget        *btn_ok;
 	GtkWidget        *btn_cancel;
 	GtkWidget        *btn_help;
-	GtkWidget        *filetype_btn;
-	char             *path = NULL;
-	GooFileFormat     file_format;
 	int               selected;
-	GstElement       *encoder;
-	gboolean          ogg_encoder, flac_encoder, mp3_encoder, wave_encoder;
-	gboolean          find_first_available;
-	char             *esc_uri = NULL;
+
+	encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
+	ogg_encoder = encoder != NULL;
+	if (encoder != NULL) 
+		gst_object_unref (GST_OBJECT (encoder));
+
+	encoder = gst_element_factory_make (FLAC_ENCODER, "encoder");
+	flac_encoder = encoder != NULL;
+	if (encoder != NULL) 
+		gst_object_unref (GST_OBJECT (encoder));
+
+	encoder = gst_element_factory_make (MP3_ENCODER, "encoder");
+	mp3_encoder = encoder != NULL;
+	if (encoder != NULL) 
+		gst_object_unref (GST_OBJECT (encoder));
+
+	encoder = gst_element_factory_make (WAVE_ENCODER, "encoder");
+	wave_encoder = encoder != NULL;
+	if (encoder != NULL) 
+		gst_object_unref (GST_OBJECT (encoder));
+
+	if (!ogg_encoder && !flac_encoder && !mp3_encoder && !wave_encoder) {
+		GtkWidget *d;
+		char      *msg;
+		
+		msg = g_strdup_printf (_("You need at least one of the following GStreamer plugins in order to extract CD tracks:\n\n"
+					 "\342\200\242 %s \342\206\222 Ogg Vorbis\n"
+					 "\342\200\242 %s \342\206\222 FLAC\n"
+					 "\342\200\242 %s \342\206\222 Mp3\n"
+					 "\342\200\242 %s \342\206\222 Wave"),
+				       OGG_ENCODER,
+				       FLAC_ENCODER,
+				       MP3_ENCODER,
+				       WAVE_ENCODER);
+
+		d = _gtk_message_dialog_new (GTK_WINDOW (window),
+					     GTK_DIALOG_MODAL,
+					     GTK_STOCK_DIALOG_ERROR,
+					     _("No encoder available."),
+					     msg,
+					     GTK_STOCK_OK, GTK_RESPONSE_OK,
+					     NULL);
+		g_free (msg);
+
+		g_signal_connect (G_OBJECT (d), "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  NULL);
+		gtk_widget_show (d);
+
+		return;
+	}
+
+	/**/
 
 	goo_window_stop (window);
 
@@ -257,16 +280,8 @@ dlg_extract (GooWindow *window)
 	/* Get the widgets. */
 
 	data->dialog = glade_xml_get_widget (data->gui, "extract_dialog");
-
-	data->e_options_expander = glade_xml_get_widget (data->gui, "e_options_expander");
-
 	data->e_alltrack_radiobutton = glade_xml_get_widget (data->gui, "e_alltrack_radiobutton");
 	data->e_selected_radiobutton = glade_xml_get_widget (data->gui, "e_selected_radiobutton");
-	data->e_destination_filechooserbutton = glade_xml_get_widget (data->gui, "e_destination_filechooserbutton");
-	data->e_ogg_radiobutton = glade_xml_get_widget (data->gui, "e_ogg_radiobutton");
-	data->e_flac_radiobutton = glade_xml_get_widget (data->gui, "e_flac_radiobutton");
-	data->e_mp3_radiobutton = glade_xml_get_widget (data->gui, "e_mp3_radiobutton");
-	data->e_wave_radiobutton = glade_xml_get_widget (data->gui, "e_wave_radiobutton");
 	data->e_save_playlist_checkbutton = glade_xml_get_widget (data->gui, "e_save_playlist_checkbutton");
 
 	btn_ok = glade_xml_get_widget (data->gui, "e_okbutton");
@@ -280,134 +295,20 @@ dlg_extract (GooWindow *window)
 
 	g_object_set_data (G_OBJECT (data->dialog), "dialog_data", data);
 
+	/* FIXME: use this property or delete it. */
 	if (eel_gconf_get_boolean (PREF_EXTRACT_FIRST_TIME, TRUE)) {
 		eel_gconf_set_boolean (PREF_EXTRACT_FIRST_TIME, FALSE);
-		gtk_expander_set_expanded (GTK_EXPANDER (data->e_options_expander), TRUE);
-	} else
-		gtk_expander_set_expanded (GTK_EXPANDER (data->e_options_expander), FALSE);
+	} 
 
 	selected = g_list_length (data->selected_songs);
 	if (selected == 0) {
 		gtk_widget_set_sensitive (data->e_selected_radiobutton, FALSE);
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->e_alltrack_radiobutton), TRUE);
-	} else {
+	} 
+	else {
 		gtk_widget_set_sensitive (data->e_selected_radiobutton, TRUE);
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->e_selected_radiobutton), TRUE);
 	}
-
-	path = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "~");
-
-	gtk_widget_show (data->e_destination_filechooserbutton);
-	esc_uri = gnome_vfs_escape_host_and_path_string (path);
-	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (data->e_destination_filechooserbutton), esc_uri);
-	g_free (esc_uri);
-
-	g_free (path);
-
-	encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
-	ogg_encoder = encoder != NULL;
-	gtk_widget_set_sensitive (data->e_ogg_radiobutton, ogg_encoder);
-	if (encoder != NULL) 
-		gst_object_unref (GST_OBJECT (encoder));
-
-	encoder = gst_element_factory_make (FLAC_ENCODER, "encoder");
-	flac_encoder = encoder != NULL;
-	gtk_widget_set_sensitive (data->e_flac_radiobutton, flac_encoder);
-	if (encoder != NULL) 
-		gst_object_unref (GST_OBJECT (encoder));
-
-	encoder = gst_element_factory_make (MP3_ENCODER, "encoder");
-	mp3_encoder = encoder != NULL;
-	gtk_widget_set_sensitive (data->e_mp3_radiobutton, mp3_encoder);
-	if (encoder != NULL) 
-		gst_object_unref (GST_OBJECT (encoder));
-
-	encoder = gst_element_factory_make (WAVE_ENCODER, "encoder");
-	wave_encoder = encoder != NULL;
-	gtk_widget_set_sensitive (data->e_wave_radiobutton, wave_encoder);
-	if (encoder != NULL) 
-		gst_object_unref (GST_OBJECT (encoder));
-
-	if (!ogg_encoder && !flac_encoder && !mp3_encoder && !wave_encoder) {
-		GtkWidget *d;
-		char *msg;
-		
-		msg = g_strdup_printf (_("You need at least one of the following GStreamer plugins in order to extract CD tracks:\n\n"
-					 "\342\200\242 %s \342\206\222 Ogg Vorbis\n"
-					 "\342\200\242 %s \342\206\222 FLAC\n"
-					 "\342\200\242 %s \342\206\222 Mp3\n"
-					 "\342\200\242 %s \342\206\222 Wave"),
-				       OGG_ENCODER,
-				       FLAC_ENCODER,
-				       MP3_ENCODER,
-				       WAVE_ENCODER);
-
-		d = _gtk_message_dialog_new (GTK_WINDOW (window),
-					     GTK_DIALOG_MODAL,
-					     GTK_STOCK_DIALOG_ERROR,
-					     _("No encoder available."),
-					     msg,
-					     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-					     NULL);
-		g_free (msg);
-
-		g_signal_connect (G_OBJECT (d), "response",
-				  G_CALLBACK (gtk_widget_destroy),
-				  NULL);
-		gtk_widget_show (d);
-
-		destroy_cb (NULL, data);
-		return;
-	}
-
-	file_format = pref_get_file_format ();
-
-	find_first_available = (((file_format == GOO_FILE_FORMAT_OGG) && !ogg_encoder)
-				|| ((file_format == GOO_FILE_FORMAT_FLAC) && !flac_encoder)
-				|| ((file_format == GOO_FILE_FORMAT_MP3) && !mp3_encoder)
-				|| ((file_format == GOO_FILE_FORMAT_WAVE) && !wave_encoder));
-
-	if (find_first_available) {
-		if (ogg_encoder)
-			file_format = GOO_FILE_FORMAT_OGG;
-		else if (flac_encoder)
-			file_format = GOO_FILE_FORMAT_FLAC;
-		else if (mp3_encoder)
-			file_format = GOO_FILE_FORMAT_MP3;
-		else if (wave_encoder)
-			file_format = GOO_FILE_FORMAT_WAVE;
-	}
-
-	switch (file_format) {
-	case GOO_FILE_FORMAT_OGG:
-		filetype_btn = data->e_ogg_radiobutton;
-		break;
-	case GOO_FILE_FORMAT_FLAC:
-		filetype_btn = data->e_flac_radiobutton;
-		break;
-	case GOO_FILE_FORMAT_MP3:
-		filetype_btn = data->e_mp3_radiobutton;
-		break;
-	case GOO_FILE_FORMAT_WAVE:
-		filetype_btn = data->e_wave_radiobutton;
-		break;
-	}
-
-	switch (file_format) {
-	case GOO_FILE_FORMAT_OGG:
-		filetype_btn = data->e_ogg_radiobutton;
-		break;
-	case GOO_FILE_FORMAT_FLAC:
-		filetype_btn = data->e_flac_radiobutton;
-		break;
-	case GOO_FILE_FORMAT_MP3:
-		filetype_btn = data->e_mp3_radiobutton;
-		break;
-	case GOO_FILE_FORMAT_WAVE:
-		filetype_btn = data->e_wave_radiobutton;
-		break;
-	}
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (filetype_btn), TRUE);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->e_save_playlist_checkbutton), eel_gconf_get_boolean (PREF_EXTRACT_SAVE_PLAYLIST, TRUE));
 

@@ -58,13 +58,13 @@
 #define HIDE_TRACK_LIST N_("Hide _tracks")
 #define SHOW_TRACK_LIST N_("Show _tracks")
 #define DEFAULT_DEVICE "/dev/cdrom"
-#define DEFAULT_VOLUME 100
+#define DEFAULT_VOLUME 1.0
 #define PLAYER_CHECK_RATE 100
 #define COVER_SIZE 80
 #define IDLE_TIMEOUT 200
 #define FALLBACK_ICON_SIZE 16
 #define CONFIG_KEY_AUTOFETCH_GROUP "AutoFetch"
-
+#define VOLUME_BUTTON_POSITION 3
 
 struct _GooWindowPrivateData {
 	GtkUIManager    *ui;
@@ -266,20 +266,18 @@ window_update_sensitivity (GooWindow *window)
 	gboolean       paused;
 	gboolean       stopped;
 	gboolean       play_all;
-	const char    *discid;
 
 	n_selected        = _gtk_count_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (priv->list_view)));
 	sel_not_null      = n_selected > 0;
 	one_file_selected = n_selected == 1;
 	state             = goo_player_get_state (priv->player);
 	error             = (state == GOO_PLAYER_STATE_ERROR) || priv->hibernate;
-	audio_cd          = ! error && (state != GOO_PLAYER_STATE_NO_DISC) && (state != GOO_PLAYER_STATE_DATA_DISC);
 	playing           = state == GOO_PLAYER_STATE_PLAYING;
 	paused            = state == GOO_PLAYER_STATE_PAUSED;
 	stopped           = state == GOO_PLAYER_STATE_STOPPED;
 	play_all          = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
-	discid            = goo_player_get_discid (window->priv->player);
-
+	audio_cd          = (! error) && (goo_player_get_discid (window->priv->player) != NULL);
+	
 	set_sensitive (window, "Play", audio_cd && !playing);
 	set_sensitive (window, "PlaySelected", audio_cd && one_file_selected);
 	set_sensitive (window, "Pause", audio_cd && playing);
@@ -289,12 +287,12 @@ window_update_sensitivity (GooWindow *window)
 	set_sensitive (window, "Prev", audio_cd);
 
 	set_sensitive (window, "Extract", audio_cd && (priv->songs > 0));
-	set_sensitive (window, "Properties", audio_cd && (discid != NULL));
-	set_sensitive (window, "PickCoverFromDisk", audio_cd && (discid != NULL));
-	set_sensitive (window, "RemoveCover", audio_cd && (discid != NULL));
-	set_sensitive (window, "SearchCoverFromWeb", audio_cd && (discid != NULL));
+	set_sensitive (window, "Properties", audio_cd);
+	set_sensitive (window, "PickCoverFromDisk", audio_cd);
+	set_sensitive (window, "RemoveCover", audio_cd);
+	set_sensitive (window, "SearchCoverFromWeb", audio_cd);
 
-	goo_player_info_set_sensitive (GOO_PLAYER_INFO (priv->info), !error && (discid != NULL));
+	goo_player_info_set_sensitive (GOO_PLAYER_INFO (priv->info), audio_cd);
 	set_sensitive (window, "Repeat", play_all);
 	set_sensitive (window, "Shuffle", play_all);
 
@@ -1542,12 +1540,12 @@ goo_window_update_cover (GooWindow *window)
 	    	goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), "no-disc");
 	    	return;
 	}
-	    
+
 	if (state == GOO_PLAYER_STATE_DATA_DISC) {
 	    	goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), "data-disc");
 	    	return;
 	}
-	
+
 	filename = goo_window_get_cover_filename (window);
 	if (filename == NULL) {
 		goo_player_info_set_cover (GOO_PLAYER_INFO (window->priv->info), "audio-cd");
@@ -1828,6 +1826,7 @@ player_state_changed_cb (GooPlayer *player,
 			 GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
+	
 	goo_player_info_update_state (GOO_PLAYER_INFO (priv->info));
 	window_update_sensitivity (window);
 	window_update_title (window);
@@ -1867,6 +1866,7 @@ selection_changed_cb (GtkTreeSelection *selection,
 		      gpointer          user_data)
 {
 	GooWindow *window = user_data;
+	
 	window_update_sensitivity (window);
 	window_update_title (window);
 }
@@ -2378,7 +2378,7 @@ goo_window_construct (GooWindow  *window,
 			      1, 1, 0);
 
 	priv->toolbar = toolbar = gtk_ui_manager_get_widget (ui, "/ToolBar");
-	gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), FALSE);
+	gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), TRUE);
 
 	gnome_app_add_docked (GNOME_APP (window),
 			      toolbar,
@@ -2420,7 +2420,7 @@ goo_window_construct (GooWindow  *window,
 		gtk_widget_show (GTK_WIDGET (sep));
 		gtk_toolbar_insert (GTK_TOOLBAR (priv->toolbar), 
 				    GTK_TOOL_ITEM (sep),
-				    -1);
+				    VOLUME_BUTTON_POSITION);
 	}
 
 	priv->volume_button = (GtkWidget*) goo_volume_tool_button_new ();
@@ -2432,7 +2432,7 @@ goo_window_construct (GooWindow  *window,
 	gtk_tool_item_set_is_important (GTK_TOOL_ITEM (priv->volume_button), FALSE); /*FIXME*/
 	gtk_toolbar_insert (GTK_TOOLBAR (priv->toolbar), 
 			    GTK_TOOL_ITEM (priv->volume_button), 
-			    -1);
+			    VOLUME_BUTTON_POSITION + 1);
 
 	/* Create the statusbar. */
 
@@ -2569,7 +2569,7 @@ goo_window_construct (GooWindow  *window,
 	priv->tray_popup_menu = gtk_ui_manager_get_widget (ui, "/TrayPopupMenu");
 	gnome_popup_menu_attach (priv->tray_popup_menu, priv->tray_box, NULL);
 	gtk_widget_show_all (priv->tray);
-
+	
 	/* Add notification callbacks. */
 
 	i = 0;
@@ -2878,11 +2878,12 @@ goo_window_eject (GooWindow *window)
 
 
 void
-goo_window_set_location (GooWindow   *window,
-			 const char  *device_path)
+goo_window_set_location (GooWindow  *window,
+			 const char *device_path)
 {
 	if (!goo_player_set_location (window->priv->player, device_path)) {
 		GError *e = goo_player_get_error (window->priv->player);
+		
 		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
 						   _("Could not read drive"), &e);
 	}
@@ -3130,7 +3131,7 @@ goo_window_search_cover_on_internet (GooWindow *window)
 
 
 void
-goo_window_remove_cover (GooWindow   *window)
+goo_window_remove_cover (GooWindow *window)
 {
 	char *cover_filename;
 
@@ -3216,8 +3217,8 @@ goo_window_set_hibernate (GooWindow   *window,
 
 	if (hibernate) {
 		goo_window_set_location (window, NULL);
-		
-	} else {
+	} 
+	else {
 		char *device;
 
 		device = eel_gconf_get_string (PREF_GENERAL_DEVICE, NULL);

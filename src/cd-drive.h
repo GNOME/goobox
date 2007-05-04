@@ -63,25 +63,27 @@ typedef enum {
 typedef struct CDDrivePriv CDDrivePriv;
 
 typedef struct {
-	CDDriveType type;
-	char *display_name;
-	int max_speed_write;
-	int max_speed_read;
-	char *cdrecord_id;
-	char *device;
+	CDDriveType  type;
+	char        *display_name;
+	int          max_speed_write;
+	int          max_speed_read;
+	char        *cdrecord_id;
+	char        *device;
 	CDDrivePriv *priv;
 } CDDrive;
 
 #define SIZE_TO_TIME(size) (size > 0 ? (int) (((size / 1024 / 1024) - 1) * 48 / 7): 0)
 
 /* Returns a list of CDDrive structs */
-GList *scan_for_cdroms (gboolean recorder_only, gboolean add_image);
-void cd_drive_free (CDDrive *drive);
-CDMediaType cd_drive_get_media_type (CDDrive *drive);
-CDMediaType cd_drive_get_media_type_and_rewritable (CDDrive *drive, gboolean *is_rewritable);
-CDMediaType cd_drive_get_media_type_from_path (const char *device_path);
-gint64 cd_drive_get_media_size (CDDrive *drive);
-gint64 cd_drive_get_media_size_from_path (const char *device_path);
-CDDrive *cd_drive_get_file_image (void);
+GList *     scan_for_cdroms                        (gboolean    recorder_only, 
+						    gboolean    add_image);
+void        cd_drive_free                          (CDDrive    *drive);
+CDMediaType cd_drive_get_media_type                (CDDrive    *drive);
+CDMediaType cd_drive_get_media_type_and_rewritable (CDDrive    *drive, 
+						    gboolean   *is_rewritable);
+CDMediaType cd_drive_get_media_type_from_path      (const char *device_path);
+gint64      cd_drive_get_media_size                (CDDrive    *drive);
+gint64      cd_drive_get_media_size_from_path      (const char *device_path);
+CDDrive *   cd_drive_get_file_image                (void);
 
 #endif

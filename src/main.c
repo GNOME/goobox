@@ -38,6 +38,7 @@
 #include "goo-application.h"
 #include "gtk-utils.h"
 #include "glib-utils.h"
+#include "cd-drive.h"
 
 #ifdef HAVE_MMKEYS
 #include <X11/Xlib.h>
@@ -62,6 +63,7 @@ int        HideShow = FALSE;
 int        VolumeUp = FALSE;
 int        VolumeDown = FALSE;
 int        Quit = FALSE;
+GList     *Drives = NULL;
 
 static void     prepare_app         (poptContext pctx);
 static void     initialize_data     (void);
@@ -218,12 +220,14 @@ int main (int argc, char **argv)
 
 
 static void 
-initialize_data ()
+initialize_data (void)
 {
         g_set_application_name (_("Goobox"));
         gtk_window_set_default_icon_name ("gnome-dev-cdrom-audio");
 
 	eel_gconf_monitor_add ("/apps/goobox");
+	
+	Drives = scan_for_cdroms (FALSE, FALSE);
 }
 
 
@@ -233,6 +237,33 @@ release_data (void)
 	if (goo_application != NULL)
 		bonobo_object_unref (goo_application);
 	eel_global_client_free ();
+	
+	if (Drives != NULL) {
+		g_list_foreach (Drives, (GFunc) cd_drive_free, NULL);
+		g_list_free (Drives);
+		Drives = NULL;
+	}
+}
+
+
+CDDrive * 
+get_drive_from_device (const char *device)
+{
+	GList *scan;
+	
+	if (device == NULL)
+		return NULL;
+	
+	for (scan = Drives; scan; scan = scan->next) {
+		CDDrive *drive = scan->data;
+		
+		if (drive->device == NULL)
+			continue;
+		if (strcmp (drive->device, device) == 0)
+			return drive;
+	}
+	
+	return NULL;
 }
 
 
