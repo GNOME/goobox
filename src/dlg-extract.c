@@ -62,7 +62,6 @@ typedef struct {
 	GtkWidget   *dialog;
 	GtkWidget   *e_alltrack_radiobutton;
 	GtkWidget   *e_selected_radiobutton;
-	GtkWidget   *e_save_playlist_checkbutton;
 } DialogData;
 
 
@@ -149,12 +148,6 @@ static void
 ok_cb (GtkWidget  *widget, 
        DialogData *data)
 {
-	/* save preferences */
-
-	eel_gconf_set_boolean (PREF_EXTRACT_SAVE_PLAYLIST, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_save_playlist_checkbutton)));
-
-	/**/
-
 	gtk_window_set_modal (GTK_WINDOW (data->dialog), FALSE);
 	gtk_widget_hide (data->dialog); 
 
@@ -199,7 +192,7 @@ void
 dlg_extract (GooWindow *window)
 {
 	GstElement       *encoder;
-	gboolean          ogg_encoder, flac_encoder, mp3_encoder, wave_encoder;
+	gboolean          ogg_encoder, flac_encoder, wave_encoder;
 	DialogData       *data;
 	GtkWidget        *btn_ok;
 	GtkWidget        *btn_cancel;
@@ -216,17 +209,12 @@ dlg_extract (GooWindow *window)
 	if (encoder != NULL) 
 		gst_object_unref (GST_OBJECT (encoder));
 
-	encoder = gst_element_factory_make (MP3_ENCODER, "encoder");
-	mp3_encoder = encoder != NULL;
-	if (encoder != NULL) 
-		gst_object_unref (GST_OBJECT (encoder));
-
 	encoder = gst_element_factory_make (WAVE_ENCODER, "encoder");
 	wave_encoder = encoder != NULL;
 	if (encoder != NULL) 
 		gst_object_unref (GST_OBJECT (encoder));
 
-	if (!ogg_encoder && !flac_encoder && !mp3_encoder && !wave_encoder) {
+	if (!ogg_encoder && !flac_encoder && !wave_encoder) {
 		GtkWidget *d;
 		char      *msg;
 		
@@ -282,7 +270,6 @@ dlg_extract (GooWindow *window)
 	data->dialog = glade_xml_get_widget (data->gui, "extract_dialog");
 	data->e_alltrack_radiobutton = glade_xml_get_widget (data->gui, "e_alltrack_radiobutton");
 	data->e_selected_radiobutton = glade_xml_get_widget (data->gui, "e_selected_radiobutton");
-	data->e_save_playlist_checkbutton = glade_xml_get_widget (data->gui, "e_save_playlist_checkbutton");
 
 	btn_ok = glade_xml_get_widget (data->gui, "e_okbutton");
 	btn_cancel = glade_xml_get_widget (data->gui, "e_cancelbutton");
@@ -301,16 +288,11 @@ dlg_extract (GooWindow *window)
 	} 
 
 	selected = g_list_length (data->selected_songs);
-	if (selected == 0) {
-		gtk_widget_set_sensitive (data->e_selected_radiobutton, FALSE);
+	gtk_widget_set_sensitive (data->e_selected_radiobutton, selected > 0);
+	if (selected <= 1)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->e_alltrack_radiobutton), TRUE);
-	} 
-	else {
-		gtk_widget_set_sensitive (data->e_selected_radiobutton, TRUE);
+	else
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->e_selected_radiobutton), TRUE);
-	}
-
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->e_save_playlist_checkbutton), eel_gconf_get_boolean (PREF_EXTRACT_SAVE_PLAYLIST, TRUE));
 
 	/* Set the signals handlers. */
 

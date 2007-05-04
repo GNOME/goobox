@@ -148,7 +148,6 @@ pref_util_restore_window_geometry (GtkWindow  *window,
 static EnumStringTable file_format_table [] = {
 	{ GOO_FILE_FORMAT_OGG,  "ogg" },
 	{ GOO_FILE_FORMAT_FLAC, "flac" },
-	{ GOO_FILE_FORMAT_MP3,  "mp3" },
 	{ GOO_FILE_FORMAT_WAVE, "wave" },
 	{ 0, NULL }
 };

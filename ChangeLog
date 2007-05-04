@@ -1,5 +1,11 @@
 2007-05-04  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* many_files: moved "save playlist" to the preferences dialog.
+	Reorganized the preferences dialog, borrowed many thinks from
+	the Banshee preferences dialog.  Removed mp3 encoding support.
+
+2007-05-04  Paolo Bacchilega  <paobac@cvs.gnome.org>
+	
 	* many_files: Read the list of drives only at startup time.  
 	Move the extraction options in the preferences dialog.
 

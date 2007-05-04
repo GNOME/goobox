@@ -112,8 +112,6 @@ typedef enum vbr_mode_e {
   vbr_default=vbr_rh    /* change this to change the default VBR mode of LAME */
 } vbr_mode;
 
-static int mp3_bitrate[] = { 320, 256, 224, 192, 160, 128, 112, 96, 80, 64 };
-
 
 /* called when the main dialog is closed. */
 static void
@@ -263,10 +261,8 @@ update_progress_cb (gpointer callback_data)
 static void
 create_pipeline (DialogData *data)
 {
-	float       ogg_quality;
-	int         flac_compression;
-	int         mp3_quality;
-	GParamSpec *pspec;
+	float ogg_quality;
+	int   flac_compression;
 
 	data->rip_thread = gst_pipeline_new ("rip_thread");
 		
@@ -292,23 +288,6 @@ create_pipeline (DialogData *data)
 		g_object_set (data->encoder,
 			      "quality", flac_compression,
 			      NULL);
-		break;
-
-	case GOO_FILE_FORMAT_MP3:
-		data->encoder = gst_element_factory_make (MP3_ENCODER, "encoder");
-		data->ext = "mp3";
-		mp3_quality = eel_gconf_get_integer (PREF_ENCODER_MP3_QUALITY, DEFAULT_MP3_QUALITY);
-		pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (data->encoder), "vbr_quality");
-		if (pspec != NULL) {
-			g_object_set (data->encoder,
-				      "vbr", vbr_mtrh,
-				      "vbr_quality", mp3_quality,
-				      NULL);
-			g_param_spec_unref (pspec);
-		} else 
-			g_object_set (data->encoder,
-				      "bitrate", mp3_bitrate[mp3_quality],
-				      NULL);
 		break;
 
 	case GOO_FILE_FORMAT_WAVE:
