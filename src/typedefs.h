@@ -25,7 +25,6 @@
 
 #define OGG_ENCODER "vorbisenc"
 #define FLAC_ENCODER "flacenc"
-#define MP3_ENCODER "lame"
 #define WAVE_ENCODER "wavenc"
 
 typedef enum {

@@ -56,9 +56,8 @@
 #define DESTINATION_PERMISSIONS 0755
 #define PLS_PERMISSIONS 0644
 #define UPDATE_DELAY 400
-#define DEFAULT_OGG_QUALITY 0.3
+#define DEFAULT_OGG_QUALITY 0.5
 #define DEFAULT_FLAC_COMPRESSION 5
-#define DEFAULT_MP3_QUALITY 4
 #define BUFFER_SIZE 1024
 
 typedef struct {
@@ -78,9 +77,10 @@ typedef struct {
 	char          *ext;
 	GooCdrom      *cdrom;
 
-	GstElement    *rip_thread;
+	GstElement    *pipeline;
 	GstElement    *source;
 	GstElement    *encoder;
+	GstElement    *container;
 	GstElement    *sink;
 	GstPad        *source_pad;
 	GstFormat      track_format, sector_format;
@@ -96,7 +96,6 @@ typedef struct {
 
 	GtkWidget     *dialog;
 	GtkWidget     *r_progress_progressbar;
-	GtkWidget     *r_progress_label;
 	GtkWidget     *r_track_label;
 } DialogData;
 
@@ -126,9 +125,9 @@ destroy_cb (GtkWidget  *widget,
 	if (data->ripping && (data->current_file != NULL))
 		gnome_vfs_unlink (data->current_file);
 
-	if (data->rip_thread != NULL) {
-		gst_element_set_state (data->rip_thread, GST_STATE_NULL);
-		gst_object_unref (GST_OBJECT (data->rip_thread));
+	if (data->pipeline != NULL) {
+		gst_element_set_state (data->pipeline, GST_STATE_NULL);
+		gst_object_unref (GST_OBJECT (data->pipeline));
 	}
 
 	if (data->timer != NULL)
@@ -163,7 +162,7 @@ rip_next_track (gpointer callback_data)
 	data->current_file = NULL;
 
 	gst_element_set_state (data->encoder, GST_STATE_NULL);
-	gst_element_set_state (data->rip_thread, GST_STATE_NULL);
+	gst_element_set_state (data->pipeline, GST_STATE_NULL);
 
 	track = data->current_track->data;
 	data->prev_tracks_sectors += track->sectors;
@@ -176,59 +175,56 @@ rip_next_track (gpointer callback_data)
 }
 
 
-static char *
-time_pretty_print (double s)
-{
-	char *r, *rr;
-	int   i;
-	
-	if (s < 0.0)
-		return g_strdup ("00:00");
-
-	i = (int) (floor (s + 0.5));
-	r = g_strdup_printf ("%2d:%2d", i / 60, i % 60);
-	for (rr = r; *rr != 0; rr++)
-		if (*rr == ' ')
-			*rr = '0';
-
-	return r;
-}
-
-
 static gboolean
 update_ui (gpointer callback_data)
 {
 	DialogData *data = callback_data;
 	double      fraction;
-	double      e, r;
-	char       *elapsed, *s_e, *s_r;
+	double      elapsed, remaining;
+	int         minutes;
+	char       *msg, *time_left;
 
 	fraction = ((double) (data->current_track_sectors + data->prev_tracks_sectors)) / (double) data->total_sectors;
 	gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (data->r_progress_progressbar), fraction);
 
-	e = g_timer_elapsed (data->timer, NULL);
-	r = (e / fraction) - e;
-	s_e = time_pretty_print (e);
-	s_r = time_pretty_print (r);
-	elapsed = g_strdup_printf (_("Elapsed: %s / Remaining: %s"), s_e, s_r);
-	gtk_progress_bar_set_text  (GTK_PROGRESS_BAR (data->r_progress_progressbar), elapsed);
-	g_free (s_e);
-	g_free (s_r);
-	g_free (elapsed);
+	elapsed = g_timer_elapsed (data->timer, NULL);
+	remaining = (elapsed / fraction) - elapsed;	
+	minutes = (int) (floor (remaining + 0.5)) / 60;
+	if (minutes == 0)
+		time_left = g_strdup (_("less than a minute left"));
+	else
+		time_left = g_strdup_printf (ngettext ("about %d minute left", "about %d minutes left", minutes), minutes);
+	msg = g_strdup_printf (_("%d of %d tracks extracted, %s"), data->current_track_n - 1, data->tracks_n, time_left);
+
+	gtk_progress_bar_set_text  (GTK_PROGRESS_BAR (data->r_progress_progressbar), msg);
+
+	g_free (msg);
+	g_free (time_left);
 
 	return FALSE;
 }
 
-
-static void
-encoder_eos_cb (GstBin     *bin, 
-		DialogData *data)
+static gboolean
+pipeline_bus_message_cb (GstBus     *bus,
+		         GstMessage *message,
+		         gpointer    callback_data)
 {
-	if (data->update_handle != 0) {
-		g_source_remove (data->update_handle);
-		data->update_handle = 0;
+	DialogData *data = callback_data;
+	
+	switch (GST_MESSAGE_TYPE (message)) {
+	case GST_MESSAGE_EOS:
+		if (data->update_handle != 0) {
+			g_source_remove (data->update_handle);
+			data->update_handle = 0;
+		}
+		g_idle_add (rip_next_track, data);	
+		break;
+		
+	default:
+		break;
 	}
-	g_idle_add (rip_next_track, data);
+	
+	return TRUE;
 }
 
 
@@ -236,8 +232,6 @@ static gboolean
 update_progress_cb (gpointer callback_data)
 {
 	DialogData  *data = callback_data;
-	TrackInfo   *track = data->current_track->data;
-	gint64       from_sector;
 	gint64       sector = 0;
 
 	if (data->update_handle != 0) {
@@ -248,8 +242,7 @@ update_progress_cb (gpointer callback_data)
 	if (! gst_pad_query_position (data->source_pad, &data->sector_format, &sector))
 		return FALSE;
 	
-	from_sector = track->from_sector - TOC_OFFSET;
-	data->current_track_sectors = sector - from_sector;
+	data->current_track_sectors = sector;
 	g_idle_add (update_ui, data);
 
 	data->update_handle = g_timeout_add (UPDATE_DELAY, update_progress_cb, data);
@@ -261,28 +254,37 @@ update_progress_cb (gpointer callback_data)
 static void
 create_pipeline (DialogData *data)
 {
-	float ogg_quality;
-	int   flac_compression;
-
-	data->rip_thread = gst_pipeline_new ("rip_thread");
+	GstElement *audioconvert;
+	GstElement *audioresample;	
+	GstElement *queue;
+	float       ogg_quality;
+	int         flac_compression;
+	
+	data->pipeline = gst_pipeline_new ("pipeline");
 		
-	data->source = gst_element_factory_make ("cdparanoia", "cdparanoia");
+	data->source = gst_element_make_from_uri (GST_URI_SRC, "cdda://", "source");
 	g_object_set (G_OBJECT (data->source), 
-		      "device", data->location,
+		      "device", data->location, 
 		      NULL);
+	
+	audioconvert = gst_element_factory_make ("audioconvert", "convert");
+    	audioresample = gst_element_factory_make ("audioresample", "resample");
+	queue = gst_element_factory_make ("queue", "queue");
+	g_object_set (queue, "max-size-time", 120 * GST_SECOND, NULL);
 
 	switch (data->format) {
 	case GOO_FILE_FORMAT_OGG:	
 		data->encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
 		data->ext = "ogg";
-		ogg_quality = eel_gconf_get_float (PREF_ENCODER_OGG_QUALITY, DEFAULT_OGG_QUALITY) + 0.05;
+		ogg_quality = eel_gconf_get_float (PREF_ENCODER_OGG_QUALITY, DEFAULT_OGG_QUALITY);
 		g_object_set (data->encoder,
 			      "quality", ogg_quality,
 			      NULL);
+		data->container = gst_element_factory_make ("oggmux", "tagger");
 		break;
 
 	case GOO_FILE_FORMAT_FLAC:
-		data->encoder = gst_element_factory_make (FLAC_ENCODER, "encoder");
+		data->encoder = data->container = gst_element_factory_make (FLAC_ENCODER, "encoder");
 		data->ext = "flac";
 		flac_compression = eel_gconf_get_integer (PREF_ENCODER_FLAC_COMPRESSION, DEFAULT_FLAC_COMPRESSION);
 		g_object_set (data->encoder,
@@ -291,23 +293,37 @@ create_pipeline (DialogData *data)
 		break;
 
 	case GOO_FILE_FORMAT_WAVE:
-		data->encoder = gst_element_factory_make (WAVE_ENCODER, "encoder");
+		data->encoder = data->container = gst_element_factory_make (WAVE_ENCODER, "encoder");
 		data->ext = "wav";
 		break;
 	}
-	g_signal_connect (data->encoder, 
-			  "eos", 
-			  G_CALLBACK (encoder_eos_cb), 
-			  data);
 
 	data->sink = gst_element_factory_make ("gnomevfssink", "filesink");
 
-	gst_bin_add_many (GST_BIN (data->rip_thread), data->source, data->encoder, data->sink, NULL);
-	gst_element_link_many (data->source, data->encoder, data->sink, NULL);
+	if (data->encoder == data->container) {
+		gst_bin_add_many (GST_BIN (data->pipeline), data->source, queue, 
+				  audioconvert, audioresample, data->encoder, 
+				  data->sink, NULL);
+		gst_element_link_many (data->source, queue, audioconvert, 
+				       audioresample, data->encoder, 
+				       data->sink, NULL);
+	}
+	else {
+		gst_bin_add_many (GST_BIN (data->pipeline), data->source, queue, 
+				  audioconvert, audioresample, data->encoder,
+				  data->container, data->sink, NULL);
+		gst_element_link_many (data->source, queue, audioconvert, 
+				       audioresample, data->encoder, 
+				       data->container, data->sink, NULL);
+	}
 
 	data->track_format = gst_format_get_by_nick ("track");
 	data->sector_format = gst_format_get_by_nick ("sector");
 	data->source_pad = gst_element_get_pad (data->source, "src");
+	  
+	gst_bus_add_watch (gst_pipeline_get_bus (GST_PIPELINE (data->pipeline)),
+			   pipeline_bus_message_cb, 
+			   data);
 }
 
 
@@ -389,7 +405,7 @@ get_track_filename (TrackInfo  *track,
 	char *filename, *track_filename;
 
 	filename = tracktitle_to_filename (track->title);
-	track_filename = g_strdup_printf ("%s - %s.%s", zero_padded (track->number + 1), filename, ext);
+	track_filename = g_strdup_printf ("%s. %s.%s", zero_padded (track->number + 1), filename, ext);
 	g_free (filename);
 
 	return track_filename;
@@ -483,7 +499,6 @@ rip_current_track (DialogData *data)
 	char           *msg;
 	char           *filename;
 	char           *folder;
-	char           *e_title;
 	GstEvent       *event;
 	GnomeVFSResult  result;
 
@@ -513,17 +528,9 @@ rip_current_track (DialogData *data)
 	}
 		
 	track = data->current_track->data;
-	msg = g_strdup_printf (_("Extracting track %d of %d: %s"), 
-			       data->current_track_n,
-			       data->tracks_n,
-			       "");
-	gtk_label_set_text (GTK_LABEL (data->r_progress_label), msg);
-	g_free (msg);
 
-	e_title = g_markup_escape_text (track->title, -1);
-	msg = g_strconcat ("<b>", e_title, "</b>", NULL);
+	msg = g_markup_printf_escaped (_("<i>Extracting \"%s\"</i>"), track->title); 
 	gtk_label_set_markup (GTK_LABEL (data->r_track_label), msg);
-	g_free (e_title);
 	g_free (msg);
 
 	/* Set the filename */
@@ -535,8 +542,8 @@ rip_current_track (DialogData *data)
 
 		utf8_folder = g_locale_to_utf8 (folder, -1, 0, 0, 0);
 		_gtk_error_dialog_run (GTK_WINDOW (data->window),
-				       "Could not extract tracks",
-				       "Could not create folder %s\n\n%s",
+				       _("Could not extract tracks"),
+				       _("Could not create folder \"%s\"\n\n%s"),
 				       utf8_folder,
 				       gnome_vfs_result_to_string (result));
 		g_free (utf8_folder);
@@ -587,10 +594,10 @@ rip_current_track (DialogData *data)
 		
 	/* Seek to track. */
 
-	gst_element_set_state (data->rip_thread, GST_STATE_PAUSED);
+	gst_element_set_state (data->pipeline, GST_STATE_PAUSED);
 	event = gst_event_new_seek (1.0, 
 				    data->track_format,
-				    GST_SEEK_FLAG_SEGMENT,
+				    GST_SEEK_FLAG_FLUSH,
 				    GST_SEEK_TYPE_SET,
 				    track->number,
 				    GST_SEEK_TYPE_SET,
@@ -605,7 +612,7 @@ rip_current_track (DialogData *data)
 	data->current_track_sectors = 0;
 	data->update_handle = g_timeout_add (UPDATE_DELAY, update_progress_cb, data);
 
-	gst_element_set_state (data->rip_thread, GST_STATE_PLAYING);
+	gst_element_set_state (data->pipeline, GST_STATE_PLAYING);
 }
 
 
@@ -632,9 +639,6 @@ start_ripper (DialogData *data)
 
 	rip_current_track (data);
 }
-
-
-
 
 
 /* create the main dialog. */
@@ -681,14 +685,11 @@ dlg_ripper (GooWindow     *window,
 
 	data->dialog = glade_xml_get_widget (data->gui, "ripper_dialog");
 	data->r_progress_progressbar = glade_xml_get_widget (data->gui, "r_progress_progressbar");
-	data->r_progress_label = glade_xml_get_widget (data->gui, "r_progress_label");
 	data->r_track_label = glade_xml_get_widget (data->gui, "r_track_label");
 	btn_cancel = glade_xml_get_widget (data->gui, "r_cancelbutton");
 
 	/* Set widgets data. */
 
-	gtk_label_set_ellipsize (GTK_LABEL (data->r_progress_label),
-				 PANGO_ELLIPSIZE_END);
 	gtk_label_set_ellipsize (GTK_LABEL (data->r_track_label),
 				 PANGO_ELLIPSIZE_END);
 

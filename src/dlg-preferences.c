@@ -48,9 +48,7 @@ enum { TEXT_COLUMN, DATA_COLUMN, PRESENT_COLUMN, N_COLUMNS };
 static int flac_compression[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
 #define N_VALUES 10
-#define OGG_DEFAULT_VALUE 4
-#define FLAC_DEFAULT_VALUE 5
-#define DEFAULT_OGG_QUALITY 0.3
+#define DEFAULT_OGG_QUALITY 0.5
 #define DEFAULT_FLAC_COMPRESSION 5
 
 typedef struct {
@@ -466,13 +464,13 @@ format_dialog_scale_value_changed_cb (GtkRange         *range,
 
 
 static int 
-find_index (int a[], int v, int default_value)
+find_index (int a[], int v)
 {
 	int i;
 	for (i = 0; i < N_VALUES; i++)
 		if (a[i] == v)
 			return i;
-	return default_value;
+	return 5;
 }
 
 
@@ -488,7 +486,7 @@ get_current_value (GooFileFormat format)
 		break;
 	case GOO_FILE_FORMAT_FLAC:
 		value = eel_gconf_get_integer (PREF_ENCODER_FLAC_COMPRESSION, DEFAULT_FLAC_COMPRESSION);
-		index = find_index (flac_compression, value, FLAC_DEFAULT_VALUE);
+		index = find_index (flac_compression, value);
 		break;
 	default:
 		break;

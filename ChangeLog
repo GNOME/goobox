@@ -1,3 +1,11 @@
+2007-05-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/typedefs.h: 
+	* src/goo-player.c: 
+	* src/dlg-ripper.c: 
+	* src/dlg-preferences.c: 
+	* src/dlg-extract.c: started fixing the ripper.
+
 2007-05-04  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* many_files: moved "save playlist" to the preferences dialog.

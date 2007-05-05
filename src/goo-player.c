@@ -305,20 +305,11 @@ create_pipeline (GooPlayer *player)
 	sink = gst_element_factory_make ("gconfaudiosink", "sink");
 	
 	gst_bin_add_many (GST_BIN (player->priv->pipeline), 
-			  player->priv->source,
-			  queue,
-			  audioconvert,
-			  audioresample, 
-			  player->priv->volume, 
-			  sink, 
-			  NULL);
-	gst_element_link_many (player->priv->source,
-			       queue,
-			       audioconvert,
-			       audioresample, 
-			       player->priv->volume, 
-			       sink, 
-			       NULL);
+			  player->priv->source, queue, audioconvert,
+			  audioresample, player->priv->volume, sink, NULL);
+	gst_element_link_many (player->priv->source, queue,
+			       audioconvert, audioresample, 
+			       player->priv->volume, sink, NULL);
 
 	player->priv->track_format = gst_format_get_by_nick ("track");
 	player->priv->sector_format = gst_format_get_by_nick ("sector");

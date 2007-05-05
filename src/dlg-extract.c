@@ -221,11 +221,9 @@ dlg_extract (GooWindow *window)
 		msg = g_strdup_printf (_("You need at least one of the following GStreamer plugins in order to extract CD tracks:\n\n"
 					 "\342\200\242 %s \342\206\222 Ogg Vorbis\n"
 					 "\342\200\242 %s \342\206\222 FLAC\n"
-					 "\342\200\242 %s \342\206\222 Mp3\n"
-					 "\342\200\242 %s \342\206\222 Wave"),
+					 "\342\200\242 %s \342\206\222 Waveform PCM"),
 				       OGG_ENCODER,
 				       FLAC_ENCODER,
-				       MP3_ENCODER,
 				       WAVE_ENCODER);
 
 		d = _gtk_message_dialog_new (GTK_WINDOW (window),
