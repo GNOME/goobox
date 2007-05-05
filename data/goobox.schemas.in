@@ -209,7 +209,7 @@
 	<applyto>/apps/goobox/dialogs/extract/destination</applyto>
 	<owner>goobox</owner>
 	<type>string</type>
-	<default>~</default>
+	<default></default>
 	<locale name="C">
 	  <short></short>
 	  <long> 

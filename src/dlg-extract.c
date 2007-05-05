@@ -48,6 +48,7 @@
 #include "track-info.h"
 #include "goo-player.h"
 #include "dlg-ripper.h"
+#include "file-utils.h"
 
 #define GLADE_EXTRACT_FILE "goobox.glade"
 
@@ -119,7 +120,10 @@ dlg_extract__start_ripping (GtkWidget *dialog)
 
 	data = g_object_get_data (G_OBJECT (dialog), "dialog_data");
 	
-	destination = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "~");
+	destination = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "");
+	if ((destination == NULL) || (strcmp (destination, "") == 0)) 
+		destination = xdg_user_dir_lookup ("MUSIC");
+		
 	file_format = pref_get_file_format ();
 	tracks_to_rip = get_tracks (data, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_selected_radiobutton)));
 

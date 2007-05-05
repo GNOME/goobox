@@ -1,5 +1,14 @@
 2007-05-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/dlg-extract.c: 
+	* src/dlg-preferences.c: 
+	* src/file-utils.h: 
+	* src/file-utils.c (xdg_user_dir_lookup): new function
+
+	Use the xdg MUSIC user dir a default destination to extract tracks.
+
+2007-05-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
+	
 	* src/ui.h: more hig compliant menu.
 
 2007-05-05  Paolo Bacchilega  <paobac@cvs.gnome.org>

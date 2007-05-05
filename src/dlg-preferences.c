@@ -39,6 +39,7 @@
 #include "preferences.h"
 #include "bacon-cd-selection.h"
 #include "goo-stock.h"
+#include "file-utils.h"
 
 #define GLADE_PREF_FILE "goobox.glade"
 
@@ -296,7 +297,10 @@ dlg_preferences (GooWindow *window)
 
 	/**/
 	
-	path = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "~");
+	
+	path = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "");
+	if ((path == NULL) || (strcmp (path, "") == 0)) 
+		path = xdg_user_dir_lookup ("MUSIC");
 	esc_uri = gnome_vfs_escape_host_and_path_string (path);
 	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (data->p_destination_filechooserbutton), esc_uri);
 	g_free (esc_uri);
