@@ -26,15 +26,7 @@
 #include "typedefs.h"
 #include "goo-window.h"
 
-void   dlg_ripper   (GooWindow     *window,
-		     const char    *location,
-		     const char    *destination,
-		     GooFileFormat  format,
-		     const char    *album,
-		     const char    *artist,
-		     int            year,
-		     const char    *genre,
-		     int            total_tracks,
-		     GList         *tracks);
+void   dlg_ripper (GooWindow *window,
+		   GList     *tracks);
 
 #endif /* DLG_RIPPER_H */

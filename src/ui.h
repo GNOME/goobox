@@ -93,6 +93,10 @@ static GtkActionEntry action_entries[] = {
 	  N_("E_xtract Tracks"), "E",
 	  N_("Save the tracks to disk as files"),
 	  G_CALLBACK (activate_action_extract) },
+	{ "ExtractSelected", GOO_STOCK_EXTRACT,
+	  N_("E_xtract Tracks"), "E",
+	  N_("Save the selected tracks to disk as files"),
+	  G_CALLBACK (activate_action_extract_selected) },
 	{ "Properties", GTK_STOCK_PROPERTIES,
 	  NULL, "<Ctrl>Return",
 	  N_("Edit the disc artist, album and the tracks titles"),
@@ -197,15 +201,17 @@ static const gchar *ui_info =
 "    </menu>"
 "  </menubar>"
 "  <toolbar  name='ToolBar'>"
+"    <toolitem action='TogglePlay'/>"
 "    <toolitem action='Play'/>"
 "    <toolitem action='Pause'/>"
 "    <toolitem action='Next'/>"
 "    <separator />"
+"    <toolitem action='Extract'/>"
 "    <toolitem action='EjectToolBar'/>"
 "  </toolbar>"
 "  <popup name='ListPopupMenu'>"
 "    <menuitem action='PlaySelected'/>"
-"    <menuitem action='Extract'/>"
+"    <menuitem action='ExtractSelected'/>"
 "  </popup>"
 "  <popup name='TrayPopupMenu'>"
 "    <menuitem action='TogglePlay'/>"

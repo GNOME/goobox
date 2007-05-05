@@ -179,23 +179,32 @@ static gboolean
 update_ui (gpointer callback_data)
 {
 	DialogData *data = callback_data;
+	int         ripped_tracks;
 	double      fraction;
-	double      elapsed, remaining;
-	int         minutes;
 	char       *msg, *time_left;
 
-	fraction = ((double) (data->current_track_sectors + data->prev_tracks_sectors)) / (double) data->total_sectors;
+	ripped_tracks = data->current_track_sectors + data->prev_tracks_sectors;
+	fraction = (double) ripped_tracks / data->total_sectors;
 	gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (data->r_progress_progressbar), fraction);
 
-	elapsed = g_timer_elapsed (data->timer, NULL);
-	remaining = (elapsed / fraction) - elapsed;	
-	minutes = (int) (floor (remaining + 0.5)) / 60;
-	if (minutes == 0)
-		time_left = g_strdup (_("less than a minute left"));
-	else
-		time_left = g_strdup_printf (ngettext ("about %d minute left", "about %d minutes left", minutes), minutes);
+	/* wait a bit before predicting the remaining time. */
+	if ((fraction < 10e-3) || (ripped_tracks < 250)) {
+		time_left = g_strdup (_("extracting..."));
+	} 
+	else {  
+		double elapsed, remaining;
+		int    minutes;
+		
+		elapsed = g_timer_elapsed (data->timer, NULL);
+		remaining = (elapsed / fraction) - elapsed;	
+		minutes = (int) (floor (remaining + 0.5)) / 60;
+		if (minutes == 0)
+			time_left = g_strdup (_("less than a minute left"));
+		else
+			time_left = g_strdup_printf (ngettext ("about %d minute left", "about %d minutes left", minutes), minutes);
+	}
+	
 	msg = g_strdup_printf (_("%d of %d tracks extracted, %s"), data->current_track_n - 1, data->tracks_n, time_left);
-
 	gtk_progress_bar_set_text  (GTK_PROGRESS_BAR (data->r_progress_progressbar), msg);
 
 	g_free (msg);
@@ -204,35 +213,45 @@ update_ui (gpointer callback_data)
 	return FALSE;
 }
 
-static gboolean
-pipeline_bus_message_cb (GstBus     *bus,
-		         GstMessage *message,
-		         gpointer    callback_data)
+
+static void
+pipeline_eos_cb (GstBus     *bus, 
+		 GstMessage *message, 
+		 gpointer    callback_data)
 {
 	DialogData *data = callback_data;
 	
-	switch (GST_MESSAGE_TYPE (message)) {
-	case GST_MESSAGE_EOS:
-		if (data->update_handle != 0) {
-			g_source_remove (data->update_handle);
-			data->update_handle = 0;
-		}
-		g_idle_add (rip_next_track, data);	
-		break;
-		
-	default:
-		break;
+	if (data->update_handle != 0) {
+		g_source_remove (data->update_handle);
+		data->update_handle = 0;
 	}
-	
-	return TRUE;
+	g_idle_add (rip_next_track, data);	
+}
+
+
+static void
+pipeline_error_cb (GstBus     *bus, 
+		   GstMessage *message, 
+		   gpointer    callback_data)
+{
+	DialogData *data = callback_data;
+	GError     *error;
+
+	gtk_window_set_modal (GTK_WINDOW (data->dialog), FALSE);
+	gtk_widget_hide (data->dialog);
+
+	gst_message_parse_error (message, &error, NULL);
+	_gtk_error_dialog_from_gerror_run (GTK_WINDOW (data->window), _("Could not extract the tracks"), &error);	
+
+	gtk_widget_destroy (data->dialog);	
 }
 
 
 static gboolean
 update_progress_cb (gpointer callback_data)
 {
-	DialogData  *data = callback_data;
-	gint64       sector = 0;
+	DialogData *data = callback_data;
+	gint64      sector = 0;
 
 	if (data->update_handle != 0) {
 		g_source_remove (data->update_handle);
@@ -254,6 +273,7 @@ update_progress_cb (gpointer callback_data)
 static void
 create_pipeline (DialogData *data)
 {
+	GstBus     *bus;
 	GstElement *audioconvert;
 	GstElement *audioresample;	
 	GstElement *queue;
@@ -261,31 +281,37 @@ create_pipeline (DialogData *data)
 	int         flac_compression;
 	
 	data->pipeline = gst_pipeline_new ("pipeline");
-		
-	data->source = gst_element_make_from_uri (GST_URI_SRC, "cdda://1", "source");
+	
+	/*data->source = gst_element_make_from_uri (GST_URI_SRC, "cdda://1", "source");*/
+	data->source = gst_element_factory_make ("cdparanoiasrc", "source");
 	g_object_set (G_OBJECT (data->source), 
 		      "device", data->location, 
+		      "read-speed", G_MAXINT,
 		      NULL);
-	
+
 	audioconvert = gst_element_factory_make ("audioconvert", "convert");
     	audioresample = gst_element_factory_make ("audioresample", "resample");
+    	
 	queue = gst_element_factory_make ("queue", "queue");
 	g_object_set (queue, "max-size-time", 120 * GST_SECOND, NULL);
 
 	switch (data->format) {
 	case GOO_FILE_FORMAT_OGG:	
-		data->encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
 		data->ext = "ogg";
+		
+		data->encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
 		ogg_quality = eel_gconf_get_float (PREF_ENCODER_OGG_QUALITY, DEFAULT_OGG_QUALITY);
 		g_object_set (data->encoder,
 			      "quality", ogg_quality,
 			      NULL);
-		data->container = gst_element_factory_make ("oggmux", "tagger");
+		
+		data->container = gst_element_factory_make ("oggmux", "container");
 		break;
 
 	case GOO_FILE_FORMAT_FLAC:
-		data->encoder = data->container = gst_element_factory_make (FLAC_ENCODER, "encoder");
 		data->ext = "flac";
+		
+		data->encoder = data->container = gst_element_factory_make (FLAC_ENCODER, "encoder");
 		flac_compression = eel_gconf_get_integer (PREF_ENCODER_FLAC_COMPRESSION, DEFAULT_FLAC_COMPRESSION);
 		g_object_set (data->encoder,
 			      "quality", flac_compression,
@@ -293,12 +319,13 @@ create_pipeline (DialogData *data)
 		break;
 
 	case GOO_FILE_FORMAT_WAVE:
-		data->encoder = data->container = gst_element_factory_make (WAVE_ENCODER, "encoder");
 		data->ext = "wav";
+		
+		data->encoder = data->container = gst_element_factory_make (WAVE_ENCODER, "encoder");
 		break;
 	}
 
-	data->sink = gst_element_factory_make ("gnomevfssink", "filesink");
+	data->sink = gst_element_factory_make ("gnomevfssink", "sink");
 
 	if (data->encoder == data->container) {
 		gst_bin_add_many (GST_BIN (data->pipeline), data->source, queue, 
@@ -320,10 +347,17 @@ create_pipeline (DialogData *data)
 	data->track_format = gst_format_get_by_nick ("track");
 	data->sector_format = gst_format_get_by_nick ("sector");
 	data->source_pad = gst_element_get_pad (data->source, "src");
-	  
-	gst_bus_add_watch (gst_pipeline_get_bus (GST_PIPELINE (data->pipeline)),
-			   pipeline_bus_message_cb, 
-			   data);
+
+	bus =  gst_element_get_bus (data->pipeline);
+	gst_bus_add_signal_watch (bus);
+	g_signal_connect (G_OBJECT (bus), 
+			  "message::error", 
+			  G_CALLBACK (pipeline_error_cb), 
+			  data);
+	g_signal_connect (G_OBJECT (bus), 
+			  "message::eos", 
+			  G_CALLBACK (pipeline_eos_cb), 
+			  data);
 }
 
 
@@ -337,10 +371,10 @@ get_destination_folder (DialogData *data)
 	artist_filename = tracktitle_to_filename (data->artist);
 	album_filename = tracktitle_to_filename (data->album);
 	
-	result = g_build_filename (data->destination,
-				   artist_filename,
-				   album_filename,
-				   NULL);
+	result = g_strconcat (data->destination, G_DIR_SEPARATOR_S,
+			      artist_filename, G_DIR_SEPARATOR_S,
+			      album_filename,
+			      NULL);
 
 	g_free (artist_filename);
 	g_free (album_filename);
@@ -409,6 +443,21 @@ get_track_filename (TrackInfo  *track,
 	g_free (filename);
 
 	return track_filename;
+}
+
+
+static char *
+get_track_uriname (TrackInfo  *track,
+		    const char *ext)
+{
+	char *filename;
+	char *uriname;
+	
+	filename = get_track_filename (track, ext);
+	uriname = gnome_vfs_escape_string (filename);
+	g_free (filename);
+	
+	return uriname;
 }
 
 
@@ -509,6 +558,7 @@ rip_current_track (DialogData *data)
 			save_playlist (data);
 
 		data->ripping = FALSE;
+		gtk_window_set_modal (GTK_WINDOW (data->dialog), FALSE);
 		gtk_widget_hide (data->dialog);
 
 		d = _gtk_ok_dialog_with_checkbutton_new (GTK_WINDOW (data->window),
@@ -551,9 +601,9 @@ rip_current_track (DialogData *data)
 		return;
 	}
 
-	filename = get_track_filename (track, data->ext);
 	g_free (data->current_file);
-	data->current_file = g_build_filename (folder, filename, NULL);
+	filename = get_track_uriname (track, data->ext);
+	data->current_file = g_strconcat (folder, G_DIR_SEPARATOR_S, filename, NULL);
 	g_free (filename);
 	g_free (folder);
 
@@ -624,39 +674,32 @@ start_ripper (DialogData *data)
 	data->ripping = TRUE;
 
 	goo_cdrom_lock_tray (data->cdrom);
+	create_pipeline (data);
 
 	data->prev_tracks_sectors = 0;
 	data->total_sectors = 0;
 	for (scan = data->tracks; scan; scan = scan->next) {
 		TrackInfo *track = scan->data;
+		
 		data->total_sectors += track->sectors;
 	}
-	create_pipeline (data);
 	data->current_track_n = 1;
 	data->current_track = data->tracks;
 
-	g_timer_start (data->timer);
-
+	g_timer_start (data->timer);	
 	rip_current_track (data);
 }
 
 
 /* create the main dialog. */
 void
-dlg_ripper (GooWindow     *window,
-	    const char    *location,
-	    const char    *destination,
-	    GooFileFormat  format,
-	    const char    *album,
-	    const char    *artist,
-	    int            year,
-	    const char    *genre,
-	    int            total_tracks,
-	    GList         *tracks)
+dlg_ripper (GooWindow *window,
+	    GList     *tracks)
 {
 	DialogData  *data;
 	GtkWidget   *btn_cancel;
-
+	GooPlayer   *player;
+	
 	data = g_new0 (DialogData, 1);
 	data->window = window;
 	data->gui = glade_xml_new (GOO_GLADEDIR "/" GLADE_RIPPER_FILE, NULL, NULL);
@@ -666,20 +709,34 @@ dlg_ripper (GooWindow     *window,
                 return;
         }
 
-	data->location = g_strdup (location);
-	data->destination = g_strdup (destination);
-	data->format = format;
-	data->album = g_strdup (album);
-	data->artist = g_strdup (artist);
-	data->year = year;
-	if (genre != NULL)
-		data->genre = g_strdup (genre);
-	data->tracks = track_list_dup (tracks);
+	goo_window_stop (window);
+	player = goo_window_get_player (window);
+
+	data->destination = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "");
+	if ((data->destination == NULL) || (strcmp (data->destination, "") == 0)) { 
+		char *tmp;
+		
+		tmp = xdg_user_dir_lookup ("MUSIC");
+		data->destination = get_uri_from_local_path (tmp);
+		g_free (tmp);
+	}
+	data->location = g_strdup (goo_player_get_location (player));
+	data->format = pref_get_file_format ();
+	data->album = g_strdup (goo_player_get_album (player));
+	data->artist = g_strdup (goo_player_get_artist (player));
+	data->year = goo_player_get_year (player);
+	if (goo_player_get_genre (player) != NULL)
+		data->genre = g_strdup (goo_player_get_genre (player));
+	if (tracks == NULL)
+		data->tracks = goo_player_get_tracks (player);
+	else
+		data->tracks = track_list_dup (tracks);
 	data->tracks_n = g_list_length (data->tracks);
-	data->total_tracks = total_tracks;
+	data->total_tracks = goo_player_get_n_tracks (player);
+	
 	data->update_handle = 0;
 	data->timer = g_timer_new ();
-	data->cdrom = goo_cdrom_new (location);
+	data->cdrom = goo_cdrom_new (data->location);
 
 	/* Get the widgets. */
 

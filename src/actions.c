@@ -188,16 +188,16 @@ activate_action_about (GtkAction *action,
 	const char *translator_credits = _("translator_credits");
         char       *license_text;
         const char *license[] = {
-                "Goobox is free software; you can redistribute it and/or modify"
+                "CD Player is free software; you can redistribute it and/or modify"
                 "it under the terms of the GNU General Public License as published by "
                 "the Free Software Foundation; either version 2 of the License, or "
                 "(at your option) any later version.",
-                "Goobox is distributed in the hope that it will be useful, "
+                "CD Player is distributed in the hope that it will be useful, "
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "
                 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "
                 "GNU General Public License for more details.",
                 "You should have received a copy of the GNU General Public License "
-                "along with Goobox; if not, write to the Free Software Foundation, Inc., "
+                "along with CD Player; if not, write to the Free Software Foundation, Inc., "
                 "51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA"
         };
 
@@ -208,7 +208,7 @@ activate_action_about (GtkAction *action,
         		       "name", _("CD Player"),
                                "version", VERSION,
                                "copyright", _("Copyright \xc2\xa9 2004-2007 Free Software Foundation, Inc."),
-                               "comments", _("CD player and ripper"),
+                               "comments", _("Play CDs and save the tracks to disk as files"),
                                "authors", authors,
                                /*"documenters", documenters,*/
                                "translator_credits", strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
@@ -275,6 +275,7 @@ sj_watch_func (GPid     pid,
 	       gpointer data)
 {
 	GooWindow *window = data;
+	
 	g_spawn_close_pid (pid);
 	goo_window_set_hibernate (window, FALSE);
 }
@@ -329,9 +330,30 @@ activate_action_extract (GtkAction *action,
 			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
 							   _("Could not execute command"), 
 							   &error);
-
-	} else
+	}
+	else
 		dlg_extract (window);
+}
+
+
+void
+activate_action_extract_selected (GtkAction *action, 
+			 	  gpointer   data)
+{
+	GooWindow *window = data;
+	
+	if (preferences_get_use_sound_juicer ()) {
+		GError *error = NULL;
+
+		goo_window_set_hibernate (window, TRUE);		
+
+		if (! exec_sj ("sound-juicer", &error, data))
+			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
+							   _("Could not execute command"), 
+							   &error);
+	}
+	else
+		dlg_extract_selected (window);	
 }
 
 

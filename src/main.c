@@ -65,7 +65,7 @@ int        VolumeDown = FALSE;
 int        Quit = FALSE;
 GList     *Drives = NULL;
 
-static void     prepare_app         (poptContext pctx);
+static void     prepare_app         (void);
 static void     initialize_data     (void);
 static void     release_data        (void);
 
@@ -74,78 +74,85 @@ static gboolean session_is_restored (void);
 static gboolean load_session        (void);
 static void     init_mmkeys         (void);
 
-static char         *default_device = NULL;
-static BonoboObject *goo_application = NULL;
+static char           *default_device = NULL;
+static BonoboObject   *goo_application = NULL;
+static GOptionContext *context = NULL;
 
-struct poptOption options[] = {
-	{ "device", 'd', POPT_ARG_STRING, &default_device, 0,
+static const GOptionEntry options[] = {
+	{ "device", 'd',  0, G_OPTION_ARG_STRING, &default_device, 
 	  N_("CD device to be used"),
 	  N_("DEVICE_PATH") },
-	{ "play", '\0', POPT_ARG_NONE, &AutoPlay, 0,
+	{ "play", '\0', 0, G_OPTION_ARG_NONE, &AutoPlay,
           N_("Play the CD on startup"),
           0 },
-	{ "play-pause", '\0', POPT_ARG_NONE, &PlayPause, 0,
+	{ "play-pause", '\0', 0, G_OPTION_ARG_NONE, &PlayPause, 
           N_("Play/Pause"),
           0 },
-	{ "next", '\0', POPT_ARG_NONE, &Next, 0,
+	{ "next", '\0', 0, G_OPTION_ARG_NONE, &Next,
           N_("Play the next track"),
           0 },
-	{ "previous", '\0', POPT_ARG_NONE, &Prev, 0,
+	{ "previous", '\0', 0, G_OPTION_ARG_NONE, &Prev,
           N_("Play the previous track"),
           0 },
-	{ "eject", '\0', POPT_ARG_NONE, &Eject, 0,
+	{ "eject", '\0', 0, G_OPTION_ARG_NONE, &Eject,
           N_("Eject the CD"),
           0 },
-	{ "hide-show", '\0', POPT_ARG_NONE, &HideShow, 0,
+	{ "hide-show", '\0', 0, G_OPTION_ARG_NONE, &HideShow,
           N_("Hide/Show the main window"),
           0 },
-	{ "volume-up", '\0', POPT_ARG_NONE, &VolumeUp, 0,
+	{ "volume-up", '\0', 0, G_OPTION_ARG_NONE, &VolumeUp,
           N_("Volume Up"),
           0 },
-	{ "volume-down", '\0', POPT_ARG_NONE, &VolumeDown, 0,
+	{ "volume-down", '\0', 0, G_OPTION_ARG_NONE, &VolumeDown,
           N_("Volume Down"),
           0 },
-	{ "quit", '\0', POPT_ARG_NONE, &Quit, 0,
+	{ "quit", '\0', 0, G_OPTION_ARG_NONE, &Quit,
           N_("Quit the application"),
           0 },
-	{ NULL, '\0', 0, NULL, 0 }
+          
+	{ NULL }
 };
 
 
 /* -- Main -- */
 
+
 int main (int argc, char **argv)
 {
 	GnomeProgram *program;
-	GValue value = { 0 };
-	poptContext pctx;
-	CORBA_Object factory;
+	char         *description;
+	CORBA_Object  factory;
+
+	if (! g_thread_supported ()) 
+		g_thread_init (NULL);
 
 	bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
-
- 	program = gnome_program_init ("goobox", VERSION,
-				      LIBGNOMEUI_MODULE, argc, argv,
-				      GNOME_PARAM_POPT_TABLE, options,
-				      GNOME_PARAM_HUMAN_READABLE_NAME, _("CD player and ripper"),
+	
+        description = g_strdup_printf ("- %s", _("Play CDs and save the tracks to disk as files"));
+        context = g_option_context_new (description);
+        g_free (description);
+        g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
+	g_option_context_add_group (context, gst_init_get_option_group ());
+  	g_option_context_set_ignore_unknown_options (context, TRUE);
+  
+	program = gnome_program_init ("goobox", VERSION,
+			              LIBGNOMEUI_MODULE, argc, argv,
+			              GNOME_PARAM_GOPTION_CONTEXT, context,
+			              GNOME_PARAM_HUMAN_READABLE_NAME, _("CD Player"),
 				      GNOME_PARAM_APP_PREFIX, GOO_PREFIX,
                                       GNOME_PARAM_APP_SYSCONFDIR, GOO_SYSCONFDIR,
                                       GNOME_PARAM_APP_DATADIR, GOO_DATADIR,
                                       GNOME_PARAM_APP_LIBDIR, GOO_LIBDIR,
 				      NULL);
 
-	g_object_get_property (G_OBJECT (program),
-			       GNOME_PARAM_POPT_CONTEXT,
-			       g_value_init (&value, G_TYPE_POINTER));
-	pctx = g_value_get_pointer (&value);
-
 	factory = bonobo_activation_activate_from_id ("OAFIID:GNOME_Goobox_Application_Factory",
 						      Bonobo_ACTIVATION_FLAG_EXISTING_ONLY,
 						      NULL, NULL);
 
 	if (factory != NULL) {
-		CORBA_Environment     env;
+		CORBA_Environment        env;
 		GNOME_Goobox_Application app;
 
 		CORBA_exception_init (&env);
@@ -181,20 +188,11 @@ int main (int argc, char **argv)
 		exit (0);
 	}
 
-	if (! g_thread_supported ()) {
-		g_thread_init (NULL);
-		gdk_threads_init ();
-	}
-
 	if (! gnome_vfs_init ()) 
                 g_error ("Cannot initialize the Virtual File System.");
-
+	gnome_authentication_manager_init ();
 	glade_gnome_init ();
 	
-	gst_init (NULL, NULL);
-	/*gst_use_threads (TRUE);*/
-
-
 #ifdef HAVE_LIBNOTIFY
 
 	if (! notify_init ("goobox")) 
@@ -205,8 +203,7 @@ int main (int argc, char **argv)
 	goo_stock_init ();
 	init_session (argv);
 	initialize_data ();
-	prepare_app (pctx);
-	poptFreeContext (pctx);
+	prepare_app ();
 
 	bonobo_main ();
 
@@ -270,9 +267,49 @@ get_drive_from_device (const char *device)
 /* Create the windows. */
 
 
-static void 
-prepare_app (poptContext pctx)
+static gboolean
+check_plugins (void)
 {
+	char *required_plugins[] = { "cdparanoiasrc", "gnomevfssink", "audioconvert", "volume" };
+	int   i;
+
+	for (i = 0; i < G_N_ELEMENTS (required_plugins); i++) {
+		GstElement *element;
+		gboolean    present;
+		
+		element = gst_element_factory_make (required_plugins[i], NULL);
+		present = (element != NULL);
+		if (element != NULL) 
+			gst_object_unref (GST_OBJECT (element));
+	
+		if (! present)
+			return FALSE;
+	}	
+
+	return TRUE;
+}
+
+
+static void 
+prepare_app (void)
+{
+	if (! check_plugins ()) {
+		GtkWidget *d;
+		d = _gtk_message_dialog_new (NULL,
+					     0,
+					     GTK_STOCK_DIALOG_ERROR,
+					     _("Cannot start the CD player"),
+					     _("In order to read CDs you have to install the gstreamer base plugins"),
+					     GTK_STOCK_OK, GTK_RESPONSE_OK,
+					     NULL);
+		g_signal_connect (G_OBJECT (d), "response",
+				  G_CALLBACK (bonobo_main_quit),
+				  NULL);
+		gtk_widget_show (d);
+
+		return;
+	}
+	
 	if (session_is_restored ()) 
 		load_session ();
 	else 

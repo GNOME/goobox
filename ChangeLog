@@ -1,5 +1,15 @@
 2007-05-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* many_files: Fixed tracks extraction.  Extract all the tracks when 
+	no track or only one track is selected.  Ask what to extract when 
+	more than one track is selected.  Allow to extrac the selected 
+	tracks from the track list context menu.  Always call the program
+	"CD Player"	in the UI, "goobox" is a codename and should remain 
+	hidden to the user.  Ported to GOption.  Check the plugins at 
+	startup.
+
+2007-05-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
+	
 	* src/main.c: use goobox as default window icon.
 	
 	* src/goo-player.c: 

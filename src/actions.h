@@ -44,6 +44,7 @@ void activate_action_play_all (GtkAction *action, gpointer data);
 void activate_action_repeat (GtkAction *action, gpointer data);
 void activate_action_shuffle (GtkAction *action, gpointer data);
 void activate_action_extract (GtkAction *action, gpointer data);
+void activate_action_extract_selected (GtkAction *action, gpointer data);
 void activate_action_preferences (GtkAction *action, gpointer data);
 void activate_action_edit_cddata (GtkAction *action, gpointer data);
 void activate_action_pick_cover_from_disk (GtkAction *action, gpointer data);

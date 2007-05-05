@@ -1113,7 +1113,8 @@ tracktitle_to_filename (const char *trackname)
 	char       *filename, *f, *f2;
 	const char *t;
 	gboolean    add_space;
-
+	char       *uri_name;
+	
 	if (trackname == NULL)
 		return NULL;
 
@@ -1156,7 +1157,10 @@ tracktitle_to_filename (const char *trackname)
 			add_space = TRUE;
 	*f2 = 0;
 
-	return filename;
+	uri_name = gnome_vfs_escape_string (filename);
+	g_free (filename);
+
+	return uri_name;
 }
 
 

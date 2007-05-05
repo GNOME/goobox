@@ -285,7 +285,8 @@ create_pipeline (GooPlayer *player)
 
 	player->priv->pipeline = gst_pipeline_new ("pipeline");
 
-	player->priv->source = gst_element_make_from_uri (GST_URI_SRC, "cdda://1", "source");
+	/*player->priv->source = gst_element_make_from_uri (GST_URI_SRC, "cdda://1", "source");*/
+	player->priv->source = gst_element_factory_make ("cdparanoiasrc", "source");
 	device = goo_cdrom_get_device (player->priv->cdrom);
 	debug (DEBUG_INFO, "DEVICE: %s\n", device);
 	g_object_set (G_OBJECT (player->priv->source), 
@@ -1459,6 +1460,13 @@ GList *
 goo_player_get_tracks (GooPlayer *player)
 {
 	return track_list_dup (player->priv->tracks);
+}
+
+
+int
+goo_player_get_n_tracks (GooPlayer *player)
+{
+	return player->priv->n_tracks;
 }
 
 

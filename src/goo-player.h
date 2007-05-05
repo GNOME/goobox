@@ -127,6 +127,7 @@ const char *     goo_player_get_asin            (GooPlayer       *player);
 TrackInfo  *     goo_player_get_track           (GooPlayer       *player,
 				                 guint            n);
 GList      *     goo_player_get_tracks          (GooPlayer       *player);
+int              goo_player_get_n_tracks        (GooPlayer       *player);
 const char *     goo_player_get_artist          (GooPlayer       *player);
 const char *     goo_player_get_album           (GooPlayer       *player);
 const char *     goo_player_get_genre           (GooPlayer       *player);

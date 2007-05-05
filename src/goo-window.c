@@ -64,7 +64,7 @@
 #define IDLE_TIMEOUT 200
 #define FALLBACK_ICON_SIZE 16
 #define CONFIG_KEY_AUTOFETCH_GROUP "AutoFetch"
-#define VOLUME_BUTTON_POSITION 3
+#define VOLUME_BUTTON_POSITION 4
 
 struct _GooWindowPrivateData {
 	GtkUIManager    *ui;
@@ -174,47 +174,23 @@ window_update_statusbar_list_info (GooWindow *window)
 	gtk_statusbar_pop (GTK_STATUSBAR (priv->statusbar), priv->list_info_cid);
 
 	if (priv->songs != 0) {
-		const char *album;
 		char        time_text[64];
 		char       *tracks_s = NULL;
-		int         year;
-		char       *year_s = NULL;
 		GString    *status;
 
-		album = goo_player_get_album (priv->player);
-
-		set_time_string (time_text, priv->total_time);
 		tracks_s = g_strdup_printf (ngettext ("%d track", "%d tracks", priv->songs), priv->songs);
-
-		year = goo_player_get_year (priv->player);
-		if (year > 0)
-			/*year_s = g_strdup_printf (_("year %d"), year);*/
-			year_s = g_strdup_printf ("(%d)", year);
-                else
-			year_s = NULL;
+		set_time_string (time_text, priv->total_time);
 		
 		status = g_string_new (NULL);
-
 		g_string_append (status, tracks_s);
 		g_string_append (status, ", ");
 		g_string_append (status, time_text);
-
-		if (album != NULL) {
-			g_string_append (status, ", ");
-			g_string_append (status, album);
-		}
-		
-		if (year_s != NULL) {
-			g_string_append (status, " ");
-			g_string_append (status, year_s);
-		}
 
 		gtk_statusbar_push (GTK_STATUSBAR (priv->statusbar), 
 				    priv->list_info_cid, 
 				    status->str);
 
 		g_string_free (status, TRUE);
-		g_free (year_s);
 		g_free (tracks_s);
 	}
 }
@@ -2391,10 +2367,13 @@ goo_window_construct (GooWindow  *window,
 	{
 		GtkAction *action;
 
-		action = gtk_ui_manager_get_action (ui, "/ToolBar/Play");
+		action = gtk_ui_manager_get_action (ui, "/ToolBar/TogglePlay");
 		g_object_set (action, "is_important", TRUE, NULL);
 		g_object_unref (action);
 
+		action = gtk_ui_manager_get_action (ui, "/ToolBar/Play");
+		g_object_set (action, "is_important", TRUE, NULL);
+		g_object_unref (action);
 		
 		action = gtk_ui_manager_get_action (ui, "/ToolBar/Pause");
 		g_object_set (action, "is_important", TRUE, NULL);
@@ -2407,6 +2386,27 @@ goo_window_construct (GooWindow  *window,
 		*/
 	}
 
+	{
+		GtkSizeGroup *size_group;
+		GtkWidget    *toggle_play;
+		GtkWidget    *play_button;
+		GtkWidget    *pause_button;
+
+		toggle_play = gtk_ui_manager_get_widget (window->priv->ui, "/ToolBar/TogglePlay");
+		toggle_play = gtk_ui_manager_get_widget (window->priv->ui, "/ToolBar/TogglePlay");
+	
+		play_button = gtk_ui_manager_get_widget (window->priv->ui, "/ToolBar/Play");
+		gtk_tool_item_set_visible_horizontal (GTK_TOOL_ITEM (play_button), FALSE);
+	
+		pause_button = gtk_ui_manager_get_widget (window->priv->ui, "/ToolBar/Pause");
+		gtk_tool_item_set_visible_horizontal (GTK_TOOL_ITEM (pause_button), FALSE);
+	
+		size_group = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
+		
+		gtk_size_group_add_widget (size_group, toggle_play);
+		gtk_size_group_add_widget (size_group, play_button);
+		gtk_size_group_add_widget (size_group, pause_button);		
+	}
 
 	priv->file_popup_menu = gtk_ui_manager_get_widget (ui, "/ListPopupMenu");
 	priv->cover_popup_menu = gtk_ui_manager_get_widget (ui, "/CoverPopupMenu");

@@ -78,14 +78,11 @@ apply_cb (GtkWidget  *widget,
 	  DialogData *data)
 {
 	const char    *destination;
-	char          *unesc_destination = NULL;
 	const char    *device;
 	const char    *current_device;
 
 	destination = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (data->p_destination_filechooserbutton));
-	unesc_destination = gnome_vfs_unescape_string (destination, "");
-	eel_gconf_set_path (PREF_EXTRACT_DESTINATION, unesc_destination);
-	g_free (unesc_destination);
+	eel_gconf_set_path (PREF_EXTRACT_DESTINATION, destination);
 
 	pref_set_file_format (gtk_combo_box_get_active (GTK_COMBO_BOX (data->p_filetype_combobox)));
 	eel_gconf_set_boolean (PREF_EXTRACT_SAVE_PLAYLIST, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->p_save_playlist_checkbutton)));
@@ -222,7 +219,7 @@ dlg_preferences (GooWindow *window)
 	GtkWidget       *filetype_combobox_box;
 	GtkWidget       *p_filetype_properties_button;
 	char            *device = NULL;
-	char            *path = NULL;
+	char            *destination = NULL;
 	GooFileFormat    file_format;
 	GstElement      *encoder;
 	gboolean         ogg_encoder, flac_encoder, wave_encoder;
@@ -305,13 +302,16 @@ dlg_preferences (GooWindow *window)
 	/**/
 	
 	
-	path = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "");
-	if ((path == NULL) || (strcmp (path, "") == 0)) 
-		path = xdg_user_dir_lookup ("MUSIC");
-	esc_uri = gnome_vfs_escape_host_and_path_string (path);
-	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (data->p_destination_filechooserbutton), esc_uri);
-	g_free (esc_uri);
-	g_free (path);
+	destination = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "");
+	if ((destination == NULL) || (strcmp (destination, "") == 0)) { 
+		char *tmp;
+		
+		tmp = xdg_user_dir_lookup ("MUSIC");
+		destination = get_uri_from_local_path (tmp);
+		g_free (tmp);
+	}	
+	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (data->p_destination_filechooserbutton), destination);
+	g_free (destination);
 
 	encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
 	ogg_encoder = encoder != NULL;

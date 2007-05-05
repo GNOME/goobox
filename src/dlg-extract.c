@@ -80,18 +80,17 @@ destroy_cb (GtkWidget  *widget,
 
 
 static GList*
-get_tracks (DialogData *data,
-	    gboolean    selected)
+get_tracks_from_songs (GooPlayer *player,
+		       GList     *selected_songs)
 {
 	GList *tracks = NULL;
 	GList *scan;
 
-	if (!selected)
-		return goo_player_get_tracks (data->player_cd);
-
-	for (scan = data->selected_songs; scan; scan = scan->next) {
+	for (scan = selected_songs; scan; scan = scan->next) {
 		SongInfo  *song = scan->data;
-		TrackInfo *track = goo_player_get_track (data->player_cd, song->number);
+		TrackInfo *track;
+		
+		track = goo_player_get_track (player, song->number);
 		track_info_ref (track);
 		tracks = g_list_prepend (tracks, track);
 	}
@@ -100,50 +99,26 @@ get_tracks (DialogData *data,
 }
 
 
-void
-dlg_extract__close (GtkWidget *dialog)
+static gboolean
+dlg_extract__start_ripping (gpointer callback_data)
 {
+	GtkWidget  *dialog = callback_data;
 	DialogData *data;
+	GList      *tracks_to_rip;
 
 	data = g_object_get_data (G_OBJECT (dialog), "dialog_data");
-	gtk_widget_destroy (data->dialog);
-}
 
+	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_selected_radiobutton)))
+		tracks_to_rip = get_tracks_from_songs (data->player_cd, data->selected_songs);
+	else
+		tracks_to_rip = goo_player_get_tracks (data->player_cd);
 
-void
-dlg_extract__start_ripping (GtkWidget *dialog)
-{
-	DialogData    *data;
-	char          *destination;
-	GooFileFormat  file_format;
-	GList         *tracks_to_rip;
-
-	data = g_object_get_data (G_OBJECT (dialog), "dialog_data");
+	dlg_ripper (data->window, tracks_to_rip);
 	
-	destination = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "");
-	if ((destination == NULL) || (strcmp (destination, "") == 0)) 
-		destination = xdg_user_dir_lookup ("MUSIC");
-		
-	file_format = pref_get_file_format ();
-	tracks_to_rip = get_tracks (data, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_selected_radiobutton)));
-
-	dlg_ripper (data->window,
-		    goo_player_get_location (GOO_PLAYER (data->player_cd)),
-		    destination,
-		    file_format,
-		    goo_player_get_album (data->player_cd),
-		    goo_player_get_artist (data->player_cd),
-		    goo_player_get_year (GOO_PLAYER (data->player_cd)),
-		    goo_player_get_genre (data->player_cd),
-		    g_list_length (data->songs),
-		    tracks_to_rip);
-
 	track_list_free (tracks_to_rip);
-	g_free (destination);
-
-	/**/
-
 	gtk_widget_destroy (data->dialog);
+	
+	return FALSE;
 }
 
 
@@ -155,7 +130,7 @@ ok_cb (GtkWidget  *widget,
 	gtk_window_set_modal (GTK_WINDOW (data->dialog), FALSE);
 	gtk_widget_hide (data->dialog); 
 
-	dlg_extract__start_ripping (data->dialog);		
+	g_idle_add (dlg_extract__start_ripping, data->dialog);		
 }
 
 
@@ -193,7 +168,7 @@ help_cb (GtkWidget  *widget,
 
 /* create the main dialog. */
 void
-dlg_extract (GooWindow *window)
+dlg_extract_ask (GooWindow *window)
 {
 	GstElement       *encoder;
 	gboolean          ogg_encoder, flac_encoder, wave_encoder;
@@ -248,8 +223,6 @@ dlg_extract (GooWindow *window)
 	}
 
 	/**/
-
-	goo_window_stop (window);
 
 	data = g_new0 (DialogData, 1);
 	data->window = window;
@@ -320,4 +293,37 @@ dlg_extract (GooWindow *window)
 	gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
 	gtk_window_set_modal (GTK_WINDOW (data->dialog), TRUE);
 	gtk_widget_show (data->dialog);
+}
+
+
+void
+dlg_extract_selected (GooWindow *window)
+{
+	GList *selected_songs;
+	GList *tracks_to_rip;
+	
+	selected_songs = goo_window_get_song_list (window, TRUE);
+	tracks_to_rip = get_tracks_from_songs (goo_window_get_player (window), selected_songs);
+
+	dlg_ripper (window, tracks_to_rip);
+
+	track_list_free (tracks_to_rip);
+	song_list_free (selected_songs);
+}
+
+
+void
+dlg_extract (GooWindow *window)
+{
+	GList *selected_songs;
+	int    n_selected_songs;
+	
+	selected_songs = goo_window_get_song_list (window, TRUE);
+	n_selected_songs = g_list_length (selected_songs);
+	song_list_free (selected_songs);
+	
+	if (n_selected_songs <= 1)
+		dlg_ripper (window, NULL);
+	else
+		dlg_extract_ask (window);
 }
