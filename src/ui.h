@@ -35,7 +35,7 @@ static GtkActionEntry action_entries[] = {
 	{ "EditMenu", NULL, N_("_Edit") },
 	{ "ViewMenu", NULL, N_("_View") },
 	{ "HelpMenu", NULL, N_("_Help") },
-	{ "CDCoverMenu", NULL, N_("Disc C_over") },
+	{ "CDCoverMenu", NULL, N_("C_over") },
 
 	{ "About", GNOME_STOCK_ABOUT,
 	  NULL, NULL,
@@ -94,7 +94,7 @@ static GtkActionEntry action_entries[] = {
 	  N_("Save the tracks to disk as files"),
 	  G_CALLBACK (activate_action_extract) },
 	{ "Properties", GTK_STOCK_PROPERTIES,
-	  N_("_Disc Properties"), NULL,
+	  NULL, "<Ctrl>Return",
 	  N_("Edit the disc artist, album and the tracks titles"),
 	  G_CALLBACK (activate_action_edit_cddata) },
 	{ "Quit", GTK_STOCK_QUIT,
@@ -110,7 +110,7 @@ static GtkActionEntry action_entries[] = {
 	  N_("Search for a disc cover on Internet"),
 	  G_CALLBACK (activate_action_search_cover_on_internet) },
 	{ "RemoveCover", GTK_STOCK_REMOVE,
-	  N_("_Remove Cover"), NULL,
+	  NULL, NULL,
 	  N_("Remove current disc cover"),
 	  G_CALLBACK (activate_action_remove_cover) },
 	{ "ToggleVisibility", NULL,
@@ -159,14 +159,15 @@ static const gchar *ui_info =
 "<ui>"
 "  <menubar name='MenuBar'>"
 "    <menu action='CDMenu'>"
+"      <menuitem action='Extract'/>"
+"      <menuitem action='Eject'/>"
+"      <separator />"
 "      <menuitem action='TogglePlay'/>"
 "      <menuitem action='Stop'/>"
 "      <menuitem action='Next'/>"
 "      <menuitem action='Prev'/>"
 "      <separator />"
-"      <menuitem action='Eject'/>"
-"      <separator />"
-"      <menuitem action='Extract'/>"
+"      <menuitem action='Properties'/>"
 "      <separator />"
 "      <menuitem action='Quit'/>"
 "    </menu>"
@@ -175,7 +176,6 @@ static const gchar *ui_info =
 "      <menuitem action='Repeat'/>"
 "      <menuitem action='Shuffle'/>"
 "      <separator name='sep01'/>"
-"      <menuitem action='Properties'/>"
 "      <menu action='CDCoverMenu'>"
 "        <menuitem action='PickCoverFromDisk'/>"
 "        <menuitem action='SearchCoverFromWeb'/>"

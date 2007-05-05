@@ -1,5 +1,9 @@
 2007-05-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/ui.h: more hig compliant menu.
+
+2007-05-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
+	
 	* src/typedefs.h: 
 	* src/goo-player.c: 
 	* src/dlg-ripper.c: 
