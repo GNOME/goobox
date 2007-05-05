@@ -76,6 +76,7 @@ struct _GooWindowPrivateData {
 	WindowSortMethod sort_method;
 	GtkSortType      sort_type;
 
+	GtkWidget       *preferences_dialog;
 	GtkWidget       *statusbar;
 	GtkWidget       *file_popup_menu;
 	GtkWidget       *tray_popup_menu;
@@ -2217,8 +2218,6 @@ goo_window_construct (GooWindow  *window,
 	GtkUIManager         *ui;
 	GError               *error = NULL;		
 	char                 *device;
-
-	gtk_window_set_icon_name (GTK_WINDOW (window), "goobox");
 
 	g_signal_connect (G_OBJECT (window), 
 			  "delete_event",

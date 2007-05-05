@@ -262,7 +262,7 @@ create_pipeline (DialogData *data)
 	
 	data->pipeline = gst_pipeline_new ("pipeline");
 		
-	data->source = gst_element_make_from_uri (GST_URI_SRC, "cdda://", "source");
+	data->source = gst_element_make_from_uri (GST_URI_SRC, "cdda://1", "source");
 	g_object_set (G_OBJECT (data->source), 
 		      "device", data->location, 
 		      NULL);

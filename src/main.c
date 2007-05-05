@@ -223,7 +223,7 @@ static void
 initialize_data (void)
 {
         g_set_application_name (_("Goobox"));
-        gtk_window_set_default_icon_name ("gnome-dev-cdrom-audio");
+        gtk_window_set_default_icon_name ("goobox");
 
 	eel_gconf_monitor_add ("/apps/goobox");
 	

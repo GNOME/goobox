@@ -113,6 +113,7 @@ destroy_cb (GtkWidget  *widget,
 	    DialogData *data)
 {
 	apply_cb (widget, data);
+	data->window->preferences_dialog = NULL;
 	g_object_unref (G_OBJECT (data->gui));
 	g_free (data);
 }
@@ -230,6 +231,11 @@ dlg_preferences (GooWindow *window)
 	GtkTreeIter      iter;
         GtkCellRenderer *renderer;
         
+        if (window->preferences_dialog != NULL) {
+        	gtk_window_present (GTK_WINDOW (window->preferences_dialog));
+        	return;
+        }
+        
 	data = g_new0 (DialogData, 1);
 	data->window = window;
 	data->gui = glade_xml_new (GOO_GLADEDIR "/" GLADE_PREF_FILE, NULL, NULL);
@@ -244,6 +250,7 @@ dlg_preferences (GooWindow *window)
 	/* Get the widgets. */
 
 	data->dialog = glade_xml_get_widget (data->gui, "preferences_dialog");
+	window->preferences_dialog = data->dialog;
 
 	data->p_destination_filechooserbutton = glade_xml_get_widget (data->gui, "p_destination_filechooserbutton");
 

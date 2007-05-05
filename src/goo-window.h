@@ -39,7 +39,8 @@ typedef struct _GooWindowPrivateData GooWindowPrivateData;
 
 struct _GooWindow
 {
-	GnomeApp __parent;
+	GnomeApp              __parent;
+	GtkWidget            *preferences_dialog;
 	GooWindowPrivateData *priv;
 };
 

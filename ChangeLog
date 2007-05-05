@@ -1,5 +1,20 @@
 2007-05-05  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/main.c: use goobox as default window icon.
+	
+	* src/goo-player.c: 
+	* src/dlg-ripper.c: use cdda://1 as url
+
+	* src/goo-window.h: 
+	* src/goo-window.c: 	
+	* src/dlg-preferences.c: do not allow to open more than one 
+	preferences dialog.
+	
+	* data/glade/goo_cover_chooser.glade: changed buttons order in the
+	"choose cover" dialog.
+	
+2007-05-05  Paolo Bacchilega  <paobac@cvs.gnome.org>	
+	
 	* src/dlg-extract.c: 
 	* src/dlg-preferences.c: 
 	* src/file-utils.h: 
