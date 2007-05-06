@@ -8,6 +8,8 @@ data/goobox.desktop.in
 data/goobox.schemas.in
 src/actions.c
 src/actions.h
+src/album-info.c
+src/album-info.h
 src/bacon-cd-selection.c
 src/bacon-cd-selection.h
 src/cd-drive.c
