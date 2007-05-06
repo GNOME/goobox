@@ -342,7 +342,7 @@ save_session (GnomeClient *client)
 	prefix = gnome_client_get_config_prefix (client);
 	gnome_config_push_prefix (prefix);
 
-	gnome_config_set_string ("Session/location", goo_player_get_location (goo_window_get_player (GOO_WINDOW (main_window))));
+	gnome_config_set_string ("Session/device", goo_player_get_device (goo_window_get_player (GOO_WINDOW (main_window))));
 
 	gnome_config_pop_prefix ();
 	gnome_config_sync ();
@@ -434,13 +434,13 @@ session_is_restored (void)
 gboolean
 load_session (void)
 {
-	char *location;
+	char *device;
 
 	gnome_config_push_prefix (gnome_client_get_config_prefix (master_client));
 
-	location = gnome_config_get_string ("Session/location");
-	main_window = goo_window_new (location);
-	g_free (location);
+	device = gnome_config_get_string ("Session/device");
+	main_window = goo_window_new (device);
+	g_free (device);
 
 	gnome_config_pop_prefix ();
 

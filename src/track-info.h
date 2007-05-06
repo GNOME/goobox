@@ -36,7 +36,6 @@ typedef struct {
 	int     min, sec;
 	char   *title;
 	char   *artist;
-	
 } TrackInfo;
 
 #define GOO_TYPE_TRACK_INFO (track_info_get_type ())

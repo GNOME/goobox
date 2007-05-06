@@ -107,9 +107,7 @@ struct _GooWindowPrivateData {
 						     * handle. */
 
 	GooPlayer       *player;
-	GList           *tracks;                /* TrackInfo list. */
-	int              n_tracks;
-        gint64           total_time;
+	AlbumInfo       *album;
 	TrackInfo       *current_track;
 	GList           *playlist;                  /* int list. */
 
@@ -130,7 +128,7 @@ static GList *window_list = NULL;
 
 
 enum {
-	COLUMN_SONG_INFO,
+	COLUMN_TRACK_INFO,
 	COLUMN_NUMBER,
 	COLUMN_ICON,
 	COLUMN_TIME,
@@ -141,11 +139,12 @@ enum {
 
 
 static void
-set_active (GooWindow   *window,
-	    const char  *action_name, 
-	    gboolean     is_active)
+set_active (GooWindow  *window,
+	    const char *action_name, 
+	    gboolean    is_active)
 {
 	GtkAction *action;
+	
 	action = gtk_action_group_get_action (window->priv->actions, action_name);
 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), is_active);
 }
@@ -157,6 +156,7 @@ set_sensitive (GooWindow  *window,
 	       gboolean    sensitive)
 {
 	GtkAction *action;
+	
 	action = gtk_action_group_get_action (window->priv->actions, action_name);
 	g_object_set (action, "sensitive", sensitive, NULL);
 }
@@ -166,19 +166,19 @@ static void
 window_update_statusbar_list_info (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
-
+	
 	if (window == NULL)
 		return;
 
 	gtk_statusbar_pop (GTK_STATUSBAR (priv->statusbar), priv->list_info_cid);
 
-	if (priv->tracks != 0) {
+	if (priv->album->n_tracks != 0) {
 		char        time_text[64];
 		char       *tracks_s = NULL;
 		GString    *status;
 
-		tracks_s = g_strdup_printf (ngettext ("%d track", "%d tracks", priv->n_tracks), priv->n_tracks);
-		set_time_string (time_text, priv->total_time);
+		tracks_s = g_strdup_printf (ngettext ("%d track", "%d tracks", priv->album->n_tracks), priv->album->n_tracks);
+		set_time_string (time_text, priv->album->total_length);
 		
 		status = g_string_new (NULL);
 		g_string_append (status, tracks_s);
@@ -262,7 +262,7 @@ window_update_sensitivity (GooWindow *window)
 	set_sensitive (window, "Next", audio_cd);
 	set_sensitive (window, "Prev", audio_cd);
 
-	set_sensitive (window, "Extract", audio_cd && (priv->n_tracks > 0));
+	set_sensitive (window, "Extract", audio_cd && (priv->album->n_tracks > 0));
 	set_sensitive (window, "Properties", audio_cd);
 	set_sensitive (window, "PickCoverFromDisk", audio_cd);
 	set_sensitive (window, "RemoveCover", audio_cd);
@@ -314,7 +314,7 @@ get_iter_from_track_number (GooWindow   *window,
 	do {
 		TrackInfo *track;
 		
-		gtk_tree_model_get (model, iter, COLUMN_SONG_INFO, &track, -1);
+		gtk_tree_model_get (model, iter, COLUMN_TRACK_INFO, &track, -1);
 		if (track->number == track_number) {
 			track_info_unref (track);
 			return TRUE;
@@ -401,7 +401,7 @@ update_list_idle (gpointer callback_data)
 
 		time_s = get_time_string (track->length);
 		gtk_list_store_set (priv->list_store, &iter,
-				    COLUMN_SONG_INFO, track,
+				    COLUMN_TRACK_INFO, track,
 				    COLUMN_NUMBER, track->number + 1, /*FIXME*/
 				    COLUMN_ICON, icon,
 				    COLUMN_TIME, time_s,
@@ -437,14 +437,11 @@ goo_window_update_list (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
 	UpdateData *udata;
-	GList      *scan;
-
+	
 	if (GTK_WIDGET_REALIZED (priv->list_view))
 		gtk_tree_view_scroll_to_point (GTK_TREE_VIEW (priv->list_view), 0, 0);
 
 	/**/
-
-	track_list_free (priv->tracks);
 
 	track_info_unref (priv->current_track);	
 	priv->current_track = NULL;
@@ -455,16 +452,7 @@ goo_window_update_list (GooWindow *window)
 
 	/**/
 
-	priv->tracks = goo_player_get_tracks (priv->player);
-	priv->n_tracks = 0;
-	priv->total_time = 0;
-	for (scan = priv->tracks; scan; scan = scan->next) {
-		TrackInfo *track = scan->data;
-		priv->n_tracks++;
-		priv->total_time += track->length;
-	}
-
-	goo_player_info_set_total_time (GOO_PLAYER_INFO (priv->info), priv->total_time);
+	goo_player_info_set_total_time (GOO_PLAYER_INFO (priv->info), priv->album->total_length);
 	
 	/**/
 
@@ -472,30 +460,13 @@ goo_window_update_list (GooWindow *window)
 
 	udata = g_new0 (UpdateData, 1);
 	udata->window = window;
-	if (priv->tracks != NULL)
-		udata->file_list = g_list_copy (priv->tracks);
+	if (priv->album->tracks != NULL)
+		udata->file_list = g_list_copy (priv->album->tracks);
 	update_list_idle (udata);
 }
 
 
 /**/
-
-
-static TrackInfo *
-find_track_from_number (GList *tracks,
-		        int    number)
-{
-	GList *scan;
-
-	for (scan = tracks; scan; scan = scan->next) {
-		TrackInfo *track = scan->data;
-		
-		if (track->number == number)
-			return track;
-	}
-
-	return NULL;
-}
 
 
 static void
@@ -504,25 +475,23 @@ goo_window_update_titles (GooWindow *window)
 	GooWindowPrivateData *priv = window->priv;
 	GtkTreeModel         *model = GTK_TREE_MODEL (priv->list_store);
 	GtkTreeIter           iter;
-	GList                *tracks;
 
 	if (! gtk_tree_model_get_iter_first (model, &iter))
 		return;
 
-	tracks = goo_player_get_tracks (priv->player);
 	do {
 		TrackInfo *track;
 		TrackInfo *new_track;
 		
-		gtk_tree_model_get (model, &iter, COLUMN_SONG_INFO, &track, -1);
-		new_track = find_track_from_number (tracks, track->number);
+		gtk_tree_model_get (model, &iter, COLUMN_TRACK_INFO, &track, -1);
+		new_track = album_info_get_track (priv->album, track->number);
 		track_info_unref (track);
-
+		
 		if (new_track == NULL)
 			continue;
 
 		gtk_list_store_set (priv->list_store, &iter,
-				    COLUMN_SONG_INFO, new_track,
+				    COLUMN_TRACK_INFO, new_track,
 				    COLUMN_TITLE, new_track->title,
 				    COLUMN_ARTIST, new_track->artist,
 				    -1);
@@ -536,8 +505,6 @@ goo_window_update_titles (GooWindow *window)
 		}
 
 	} while (gtk_tree_model_iter_next (model, &iter));
-
-	track_list_free (tracks);
 }
 
 
@@ -578,12 +545,11 @@ goo_window_finalize (GObject *object)
 			priv->cover_popup_menu = NULL;
 		}
 
-		track_list_free (priv->tracks);
-
 		g_signal_handlers_disconnect_by_data (priv->player, window);
 		g_object_unref (priv->player);
 
 		track_info_unref (priv->current_track);
+		album_info_unref (priv->album);
 
 		path_list_free (priv->url_list);
 		priv->url_list = NULL;
@@ -790,7 +756,7 @@ get_track_number_from_position (GooWindow   *window,
 	do {
 		TrackInfo *track;
 		int       n;
-		gtk_tree_model_get (model, &iter, COLUMN_SONG_INFO, &track, -1);
+		gtk_tree_model_get (model, &iter, COLUMN_TRACK_INFO, &track, -1);
 		n = track->number;
 		track_info_unref (track);
 		if (i == pos)
@@ -817,7 +783,7 @@ get_position_from_track_number (GooWindow   *window,
 	do {
 		TrackInfo *track;
 		int       n;
-		gtk_tree_model_get (model, &iter, COLUMN_SONG_INFO, &track, -1);
+		gtk_tree_model_get (model, &iter, COLUMN_TRACK_INFO, &track, -1);
 		n = track->number;
 		track_info_unref (track);
 		if (n == track_number)
@@ -836,7 +802,7 @@ create_playlist (GooWindow *window,
 {
 	GooWindowPrivateData *priv = window->priv;
 	GList *playlist;
-	int    pos = 0, i, n;
+	int    pos = 0, i;
 
 	debug (DEBUG_INFO, "PLAY ALL: %d\n", play_all);
 	debug (DEBUG_INFO, "SHUFFLE: %d\n", shuffle);
@@ -852,10 +818,11 @@ create_playlist (GooWindow *window,
 
 	if (priv->current_track != NULL)
 		pos = get_position_from_track_number (window, priv->current_track->number);
-	n = g_list_length (priv->tracks);
 
-	for (i = 0; i < n; i++, pos = (pos + 1) % n) {
-		int track_number = get_track_number_from_position (window, pos);
+	for (i = 0; i < priv->album->n_tracks; i++, pos = (pos + 1) % priv->album->n_tracks) {
+		int track_number;
+		
+		track_number = get_track_number_from_position (window, pos);
 		if ((priv->current_track != NULL) 
 		    && (priv->current_track->number == track_number))
 			continue;
@@ -871,6 +838,7 @@ create_playlist (GooWindow *window,
 
 		while (playlist != NULL) {
 			GList *item;
+			
 			pos = g_rand_int_range (grand, 0, len--);
 			item = g_list_nth (playlist, pos);
 			playlist = g_list_remove_link (playlist, item);
@@ -1118,8 +1086,8 @@ title_column_sort_func (GtkTreeModel *model,
 	TrackInfo *track1 = NULL, *track2 = NULL;
 	int       retval = -1;
 
-        gtk_tree_model_get (model, a, COLUMN_SONG_INFO, &track1, -1);
-        gtk_tree_model_get (model, b, COLUMN_SONG_INFO, &track2, -1);
+        gtk_tree_model_get (model, a, COLUMN_TRACK_INFO, &track1, -1);
+        gtk_tree_model_get (model, b, COLUMN_TRACK_INFO, &track2, -1);
 
 	if ((track1 == NULL) && (track2 == NULL))
 		retval = 0;
@@ -1146,8 +1114,8 @@ artist_column_sort_func (GtkTreeModel *model,
 	TrackInfo *track1 = NULL, *track2 = NULL;
 	int       retval = -1;
 
-        gtk_tree_model_get (model, a, COLUMN_SONG_INFO, &track1, -1);
-        gtk_tree_model_get (model, b, COLUMN_SONG_INFO, &track2, -1);
+        gtk_tree_model_get (model, a, COLUMN_TRACK_INFO, &track1, -1);
+        gtk_tree_model_get (model, b, COLUMN_TRACK_INFO, &track2, -1);
 
 	if ((track1 == NULL) && (track2 == NULL))
 		retval = 0;
@@ -1179,8 +1147,8 @@ time_column_sort_func (GtkTreeModel *model,
 	TrackInfo *track1 = NULL, *track2 = NULL;
 	int       retval = -1;
 
-        gtk_tree_model_get (model, a, COLUMN_SONG_INFO, &track1, -1);
-        gtk_tree_model_get (model, b, COLUMN_SONG_INFO, &track2, -1);
+        gtk_tree_model_get (model, a, COLUMN_TRACK_INFO, &track1, -1);
+        gtk_tree_model_get (model, b, COLUMN_TRACK_INFO, &track2, -1);
 
 	if ((track1 == NULL) && (track2 == NULL))
 		retval = 0;
@@ -1301,22 +1269,19 @@ player_start_cb (GooPlayer       *player,
 #ifdef HAVE_LIBNOTIFY
 
 		if (priv->notify_action) {
-			GString    *info = g_string_new("");
-			const char *artist, *album;
-			int         x = -1, y = -1;
+			GString *info = g_string_new("");
+			int      x = -1, y = -1;
 
-			artist = goo_player_get_artist (priv->player);
-			if (artist != NULL) {
-				char *e_artist = g_markup_escape_text (artist, -1);
-				g_string_append_printf (info, "<big>%s</big>\n", e_artist);
-				g_free (e_artist);
-			}
-
-			album = goo_player_get_title (priv->player);
-			if (album != NULL) {
-				char *e_album = g_markup_escape_text (album, -1);
+			if (priv->album->title != NULL) {
+				char *e_album = g_markup_escape_text (priv->album->title, -1);
 				g_string_append_printf (info, "<i>%s</i>", e_album);
 				g_free (e_album);
+			}
+
+			if (priv->album->artist != NULL) {
+				char *e_artist = g_markup_escape_text (priv->album->artist, -1);
+				g_string_append_printf (info, "<big>%s</big>\n", e_artist);
+				g_free (e_artist);
 			}
 
 			if (priv->tray != NULL) {
@@ -1386,8 +1351,6 @@ static void
 goo_window_set_current_track (GooWindow *window,
 			      int        n)
 {
-	TrackInfo *track;
-
 	if (window->priv->hibernate)
 		return;
 
@@ -1397,10 +1360,8 @@ goo_window_set_current_track (GooWindow *window,
 		window->priv->current_track = NULL;
 	}
 
-	track = goo_player_get_track (window->priv->player, n);
-	window->priv->current_track = track;
-	 
-	goo_player_info_set_total_time (GOO_PLAYER_INFO (window->priv->info), track->length);
+	window->priv->current_track = album_info_get_track (window->priv->album, n);
+	goo_player_info_set_total_time (GOO_PLAYER_INFO (window->priv->info), window->priv->current_track->length);
 }
 
 
@@ -1430,7 +1391,7 @@ window_update_title (GooWindow *window)
 		g_string_append_printf (title, 
 					"  [%d/%d]",
 					priv->current_track->number + 1,
-					priv->n_tracks);
+					priv->album->n_tracks);
 		if (paused)
 			g_string_append_printf (title, 
 						" [%s]",
@@ -1449,17 +1410,12 @@ window_update_title (GooWindow *window)
 		g_string_append (title, _("Data Disc"));
 	}
 	else {
-		const char *p_title, *p_subtitle;
-
-		p_title = goo_player_get_title (priv->player);
-		p_subtitle = goo_player_get_artist (priv->player);
-		
-		if ((p_title == NULL) || (p_subtitle == NULL)) 
+		if ((priv->album->title == NULL) || (priv->album->artist == NULL)) 
 			g_string_append (title, _("Audio CD"));
 		else {
-			g_string_append (title, p_title);
+			g_string_append (title, priv->album->title);
 			g_string_append (title, " - ");
-			g_string_append (title, p_subtitle);
+			g_string_append (title, priv->album->artist);
 		}
 	}
 
@@ -1654,9 +1610,7 @@ goo_window_get_current_cd_autofetch (GooWindow *window)
 static void
 auto_fetch_cover_image (GooWindow *window)
 {
-	char        *filename;
-	const char  *album;
-	const char  *artist;
+	char *filename;
 
 	if (window->priv->hibernate)
 		return;
@@ -1674,15 +1628,10 @@ auto_fetch_cover_image (GooWindow *window)
 		return;
 	}
 
-	album = goo_player_get_album (window->priv->player);
-	artist = goo_player_get_artist (window->priv->player);
-	if ((album == NULL) || (artist == NULL))
-		return;
-
-	if (goo_player_get_asin (window->priv->player) != NULL) 
-		fetch_cover_image_from_asin (window, goo_player_get_asin (window->priv->player));
-	else
-		fetch_cover_image_from_name (window, album, artist);
+	if (window->priv->album->asin != NULL) 
+		fetch_cover_image_from_asin (window, window->priv->album->asin);
+	else if ((window->priv->album->title != NULL) && (window->priv->album->artist != NULL))
+		fetch_cover_image_from_name (window, window->priv->album->title, window->priv->album->artist);
 }
 
 
@@ -1691,10 +1640,18 @@ autoplay_cb (gpointer data)
 {
 	GooWindow *window = data;
 	
-	if (window->priv->n_tracks > 0) 
+	if (window->priv->album->n_tracks > 0) 
 		goo_window_play (window);
 	
 	return FALSE;
+}
+
+
+static void
+goo_window_update_album (GooWindow *window)
+{
+	album_info_unref (window->priv->album);
+	window->priv->album = album_info_copy (goo_player_get_album (window->priv->player));
 }
 
 
@@ -1710,6 +1667,7 @@ player_done_cb (GooPlayer       *player,
 
 	switch (action) {
 	case GOO_PLAYER_ACTION_LIST:
+		goo_window_update_album (window);
 		goo_player_info_update_state (GOO_PLAYER_INFO (priv->info));
 		goo_window_update_list (window);
 		goo_window_update_cover (window);
@@ -1720,18 +1678,22 @@ player_done_cb (GooPlayer       *player,
 			g_idle_add (autoplay_cb, window);
 		}
 		break;
+
 	case GOO_PLAYER_ACTION_METADATA:
+		goo_window_update_album (window);
 		goo_player_info_update_state (GOO_PLAYER_INFO (priv->info));
 		goo_window_update_titles (window);
 		window_update_title (window);
 		window_update_statusbar_list_info (window);
 		auto_fetch_cover_image (window);
 		break;
+		
 	case GOO_PLAYER_ACTION_SEEK_SONG:
 		goo_window_set_current_track (window, goo_player_get_current_track (priv->player));
 		goo_window_select_current_track (window);
 		set_current_track_icon (window, GTK_STOCK_MEDIA_PLAY);
 		break;
+		
 	case GOO_PLAYER_ACTION_PLAY:
 	case GOO_PLAYER_ACTION_STOP:
 		goo_player_info_set_time (GOO_PLAYER_INFO (priv->info), 0);
@@ -1751,6 +1713,7 @@ player_done_cb (GooPlayer       *player,
 		}
 
 		break;
+		
 	case GOO_PLAYER_ACTION_PAUSE:
 		set_current_track_icon (window, GTK_STOCK_MEDIA_PAUSE);
 		set_action_label_and_icon (window,
@@ -1761,9 +1724,11 @@ player_done_cb (GooPlayer       *player,
 					   "/MenuBar/CDMenu/",
 					   NULL);
 		break;
+		
 	case GOO_PLAYER_ACTION_EJECT:
 		goo_player_update (priv->player);
 		break;
+		
 	default:
 		break;
 	}
@@ -1823,7 +1788,7 @@ row_activated_cb (GtkTreeView       *tree_view,
 		return;
 	
 	gtk_tree_model_get (GTK_TREE_MODEL (window->priv->list_store), &iter,
-			    COLUMN_SONG_INFO, &track,
+			    COLUMN_TRACK_INFO, &track,
 			    -1);
 
 	goo_window_stop (window);
@@ -2046,7 +2011,7 @@ window_key_press_cb (GtkWidget   *widget,
 	gboolean   retval = FALSE;
 	int        new_track = -1;
 
-	if (window->priv->n_tracks == 0)
+	if (window->priv->album->n_tracks == 0)
 		return FALSE;
 
 	switch (event->keyval) {
@@ -2070,7 +2035,7 @@ window_key_press_cb (GtkWidget   *widget,
 		break;
 	}
 
-	if (new_track >= 0 && new_track <= window->priv->n_tracks - 1) {
+	if ((new_track >= 0) && (new_track <= window->priv->album->n_tracks - 1)) {
 		goo_window_stop (window);
 		goo_window_set_current_track (window, new_track);
 		goo_window_play (window);
@@ -2171,12 +2136,13 @@ goo_window_init (GooWindow *window)
 	window->priv->check_id = 0;
 	window->priv->url_list = NULL;
 	window->priv->hibernate = FALSE;
+	window->priv->album = album_info_new ();
 }
 
 
 static void
 goo_window_construct (GooWindow  *window,
-		      const char *location)
+		      const char *device_path)
 {
 	GooWindowPrivateData *priv = window->priv;
 	GtkWidget            *menubar, *toolbar;
@@ -2190,7 +2156,7 @@ goo_window_construct (GooWindow  *window,
 	GtkUIManager         *ui;
 	GError               *error = NULL;		
 	char                 *device;
-
+	
 	g_signal_connect (G_OBJECT (window), 
 			  "delete_event",
 			  G_CALLBACK (window_delete_event_cb),
@@ -2487,11 +2453,10 @@ goo_window_construct (GooWindow  *window,
 
 	/**/
 
-	if (location != NULL)
-		device = g_strdup (location);
-	else
+	if (device_path == NULL)
 		device = eel_gconf_get_string (PREF_GENERAL_DEVICE, DEFAULT_DEVICE);
-		
+	else
+		device = g_strdup (device_path);
 	priv->player = goo_player_new (device);
 	g_free (device);
 
@@ -2512,8 +2477,6 @@ goo_window_construct (GooWindow  *window,
 			  G_CALLBACK (player_state_changed_cb), 
 			  window);
 
-	priv->tracks = NULL;
-	priv->n_tracks = 0;
 	priv->playlist = NULL;
 
 	goo_player_info_set_player (GOO_PLAYER_INFO (priv->info), priv->player);
@@ -2626,12 +2589,12 @@ goo_window_get_type ()
 
 
 GtkWindow * 
-goo_window_new (const char *location)
+goo_window_new (const char *device)
 {
 	GooWindow *window;
 
 	window = (GooWindow*) g_object_new (GOO_TYPE_WINDOW, NULL);
-	goo_window_construct (window, location);
+	goo_window_construct (window, device);
 
 	window_list = g_list_prepend (window_list, window);
 
@@ -2804,7 +2767,7 @@ goo_window_next (GooWindow *window)
 {
 	GooWindowPrivateData *priv = window->priv;
 
-	if (window->priv->n_tracks == 0)
+	if (window->priv->album->n_tracks == 0)
 		return;
 
 	if (priv->current_track != NULL) {
@@ -2816,7 +2779,7 @@ goo_window_next (GooWindow *window)
 			goo_window_stop (window);
 
 			current_pos = get_position_from_track_number (window, current_track);
-			new_pos = MIN (current_pos + 1, priv->n_tracks - 1);
+			new_pos = MIN (current_pos + 1, priv->album->n_tracks - 1);
 			new_track = get_track_number_from_position (window, new_pos);
 			goo_window_set_current_track (window, new_track);
 
@@ -2839,7 +2802,7 @@ goo_window_prev (GooWindow *window)
 	GooWindowPrivateData *priv = window->priv;
 	int new_pos, new_track;
 
-	if (priv->n_tracks == 0)
+	if (priv->album->n_tracks == 0)
 		return;
 
 	goo_window_stop (window);
@@ -2851,7 +2814,7 @@ goo_window_prev (GooWindow *window)
 		new_pos = MAX (current_pos - 1, 0);
 	} 
 	else
-		new_pos = priv->n_tracks - 1;
+		new_pos = priv->album->n_tracks - 1;
 
 	new_track = get_track_number_from_position (window, new_pos);
 	goo_window_set_current_track (window, new_track);
@@ -2875,10 +2838,10 @@ goo_window_eject (GooWindow *window)
 
 
 void
-goo_window_set_location (GooWindow  *window,
+goo_window_set_device (GooWindow  *window,
 			 const char *device_path)
 {
-	if (!goo_player_set_location (window->priv->player, device_path)) {
+	if (!goo_player_set_device (window->priv->player, device_path)) {
 		GError *e = goo_player_get_error (window->priv->player);
 		
 		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
@@ -2900,9 +2863,16 @@ add_selected_track (GtkTreeModel *model,
 	TrackInfo  *track;
 
 	gtk_tree_model_get (model, iter,
-			    COLUMN_SONG_INFO, &track,
+			    COLUMN_TRACK_INFO, &track,
 			    -1);
 	*list = g_list_prepend (*list, track);
+}
+
+
+AlbumInfo *
+goo_window_get_album (GooWindow *window)
+{
+	return window->priv->album;
 }
 
 
@@ -2914,11 +2884,11 @@ goo_window_get_tracks (GooWindow *window,
 	GtkTreeSelection     *list_selection;
 	GList                *tracks;
 
-	if (priv->tracks == NULL)
+	if (priv->album->tracks == NULL)
 		return NULL;
 	
 	if (! selection) 
-		return track_list_dup (priv->tracks);
+		return track_list_dup (priv->album->tracks);
 
 	/* return selected track list */
 
@@ -3104,8 +3074,6 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 void
 goo_window_search_cover_on_internet (GooWindow *window)
 {
-	const char *album, *artist;
-
 	if (window->priv->hibernate)
 		return;
 
@@ -3113,17 +3081,14 @@ goo_window_search_cover_on_internet (GooWindow *window)
 
 	debug (DEBUG_INFO, "SEARCH ON INTERNET\n");
 
-	album = goo_player_get_album (window->priv->player);
-	artist = goo_player_get_artist (window->priv->player);
-
-	if ((album == NULL) || (artist == NULL)) {
+	if ((window->priv->album->title == NULL) || (window->priv->album->artist == NULL)) {
 		_gtk_error_dialog_run (GTK_WINDOW (window),
 				       _("Could not search for a cover on Internet"),
 				       _("You have to enter the artist and album names in order to find the album cover."));
 		return;
 	}
 
-	dlg_cover_chooser (window, album, artist);
+	dlg_cover_chooser (window, window->priv->album->title, window->priv->album->artist);
 }
 
 
@@ -3213,13 +3178,13 @@ goo_window_set_hibernate (GooWindow   *window,
 	window->priv->hibernate = hibernate;
 
 	if (hibernate) {
-		goo_window_set_location (window, NULL);
+		goo_window_set_device (window, NULL);
 	} 
 	else {
 		char *device;
 
 		device = eel_gconf_get_string (PREF_GENERAL_DEVICE, NULL);
-		goo_window_set_location (window, device);
+		goo_window_set_device (window, device);
 		g_free (device);
 		
 		goo_window_update (window);

@@ -74,6 +74,8 @@ goobox_SOURCES = 				\
 	$(gnome_goobox_idl_sources)		\
 	actions.c				\
 	actions.h				\
+	album-info.c				\
+	album-info.h				\
 	dlg-cover-chooser.c			\
 	dlg-cover-chooser.h			\
 	dlg-extract.c				\

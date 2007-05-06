@@ -1,5 +1,10 @@
 2007-05-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* many_files: Save the album data in a album_info structure.
+	Added files album-info.[ch]
+
+2007-05-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
 	* src/goo-player-info.c: 
 	* src/goo-player.c: fixed seeking.
 

@@ -50,7 +50,7 @@ struct _GooWindowClass
 };
 
 GType       goo_window_get_type                  (void);
-GtkWindow * goo_window_new                       (const char  *location);
+GtkWindow * goo_window_new                       (const char  *device);
 void        goo_window_close                     (GooWindow   *window);
 void        goo_window_set_toolbar_visibility    (GooWindow   *window,
 						  gboolean     visible);
@@ -65,8 +65,9 @@ void        goo_window_pause                     (GooWindow   *window);
 void        goo_window_prev                      (GooWindow   *window);
 void        goo_window_next                      (GooWindow   *window);
 void        goo_window_eject                     (GooWindow   *window);
-void        goo_window_set_location              (GooWindow   *window,
-						  const char  *location);
+void        goo_window_set_device                (GooWindow   *window,
+						  const char  *device);
+AlbumInfo * goo_window_get_album                 (GooWindow   *window);
 GList *     goo_window_get_tracks                (GooWindow   *window,
 						  gboolean     selection);
 GooPlayer * goo_window_get_player                (GooWindow   *window);

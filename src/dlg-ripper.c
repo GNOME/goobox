@@ -61,20 +61,16 @@
 
 typedef struct {
 	GooWindow     *window;
-	char          *location;
+	char          *device;
 	char          *destination;
 	GooFileFormat  format;
-	char          *album;
-	char          *artist;
-	int            year;
-	char          *genre;
 	GList         *tracks;
-	int            tracks_n;
-	int            total_tracks;
+	int            n_tracks;
 	GList         *current_track;
 	int            current_track_n;
 	char          *ext;
 	GooCdrom      *cdrom;
+	AlbumInfo     *album;
 
 	GstElement    *pipeline;
 	GstElement    *source;
@@ -136,11 +132,8 @@ destroy_cb (GtkWidget  *widget,
 	goo_cdrom_unlock_tray (data->cdrom);
 	g_object_unref (data->cdrom);
 	
-	g_free (data->location);
+	g_free (data->device);
 	g_free (data->destination);
-	g_free (data->album);
-	g_free (data->artist);
-	g_free (data->genre);
 	g_free (data->current_file);
 	track_list_free (data->tracks);
 
@@ -212,7 +205,7 @@ update_ui (gpointer callback_data)
 		data->prev_remaining_time = remaining_time;
 	}
 	
-	msg = g_strdup_printf (_("Extracting track: %d of %d %s"), data->current_track_n, data->tracks_n, (time_left != NULL ? time_left : ""));
+	msg = g_strdup_printf (_("Extracting track: %d of %d %s"), data->current_track_n, data->n_tracks, (time_left != NULL ? time_left : ""));
 	gtk_progress_bar_set_text  (GTK_PROGRESS_BAR (data->r_progress_progressbar), msg);
 
 	g_free (msg);
@@ -293,7 +286,7 @@ create_pipeline (DialogData *data)
 	/*data->source = gst_element_make_from_uri (GST_URI_SRC, "cdda://1", "source");*/
 	data->source = gst_element_factory_make ("cdparanoiasrc", "source");
 	g_object_set (G_OBJECT (data->source), 
-		      "device", data->location, 
+		      "device", data->device, 
 		      "read-speed", G_MAXINT,
 		      NULL);
 
@@ -376,8 +369,8 @@ get_destination_folder (DialogData *data)
 	char *album_filename;
 	char *result;
 
-	artist_filename = tracktitle_to_filename (data->artist);
-	album_filename = tracktitle_to_filename (data->album);
+	artist_filename = tracktitle_to_filename (data->album->artist);
+	album_filename = tracktitle_to_filename (data->album->title);
 	
 	result = g_strconcat (data->destination, G_DIR_SEPARATOR_S,
 			      artist_filename, G_DIR_SEPARATOR_S,
@@ -463,7 +456,7 @@ save_playlist (DialogData *data)
 	GnomeVFSHandle *handle;
 
 	folder = get_destination_folder (data);
-	album_filename = tracktitle_to_filename (data->album);
+	album_filename = tracktitle_to_filename (data->album->title);
 	filename = g_strconcat ("file://", folder, "/", album_filename, ".pls", NULL);
 	g_free (album_filename);
 
@@ -486,7 +479,7 @@ save_playlist (DialogData *data)
 				 strlen (buffer),
 				 NULL);
 
-		sprintf (buffer, "NumberOfEntries=%d\n", data->tracks_n);
+		sprintf (buffer, "NumberOfEntries=%d\n", data->n_tracks);
 		gnome_vfs_write (handle,
 				 buffer,
 				 strlen (buffer),
@@ -517,7 +510,7 @@ save_playlist (DialogData *data)
 			g_free (unescaped);		 
 			g_free (track_filename);
 
-			sprintf (buffer, "Title%d=%s - %s\n", n, data->artist, track->title);
+			sprintf (buffer, "Title%d=%s - %s\n", n, data->album->artist, track->title);
 			gnome_vfs_write (handle,
 					 buffer,
 					 strlen (buffer),
@@ -615,30 +608,25 @@ rip_current_track (DialogData *data)
 		gst_tag_setter_add_tags (GST_TAG_SETTER (data->encoder),   
 				         GST_TAG_MERGE_REPLACE,
 				         GST_TAG_TITLE, track->title,
-				         GST_TAG_ARTIST, data->artist,
-				         GST_TAG_ALBUM, data->album,
+				         GST_TAG_ARTIST, data->album->artist,
+				         GST_TAG_ALBUM, data->album->title,
 				         GST_TAG_TRACK_NUMBER, (guint) track->number + 1,
-				         GST_TAG_TRACK_COUNT, (guint) data->total_tracks,
+				         GST_TAG_TRACK_COUNT, (guint) data->n_tracks,
 				         GST_TAG_DURATION, (guint64) track->length * GST_SECOND, 
 				         GST_TAG_COMMENT, _("Ripped with CD Player"),
 				         GST_TAG_ENCODER, PACKAGE_NAME,
 				         GST_TAG_ENCODER_VERSION, PACKAGE_VERSION,
 				         NULL);
-		if (data->genre != NULL)
+		if (data->album->genre != NULL)
 			gst_tag_setter_add_tags (GST_TAG_SETTER (data->encoder),   
 					         GST_TAG_MERGE_REPLACE,
-					         GST_TAG_GENRE, data->genre,
+					         GST_TAG_GENRE, data->album->genre,
 					         NULL);
-		if (data->year != 0) {
-			GDate *d;
-			
-			d = g_date_new_dmy (1, 1, data->year);
+		if (g_date_valid (data->album->release_date)) 
 			gst_tag_setter_add_tags (GST_TAG_SETTER (data->encoder),   
 					         GST_TAG_MERGE_REPLACE,
-					         GST_TAG_DATE,  d,
+					         GST_TAG_DATE, data->album->release_date,
 					         NULL);
-			g_date_free (d);
-		}
 	}
 		
 	/* Seek to track. */
@@ -719,23 +707,18 @@ dlg_ripper (GooWindow *window,
 		data->destination = get_uri_from_local_path (tmp);
 		g_free (tmp);
 	}
-	data->location = g_strdup (goo_player_get_location (player));
+	data->device = g_strdup (goo_player_get_device (player));
 	data->format = pref_get_file_format ();
-	data->album = g_strdup (goo_player_get_album (player));
-	data->artist = g_strdup (goo_player_get_artist (player));
-	data->year = goo_player_get_year (player);
-	if (goo_player_get_genre (player) != NULL)
-		data->genre = g_strdup (goo_player_get_genre (player));
+	data->album = goo_player_get_album (player);
 	if (tracks == NULL)
-		data->tracks = goo_player_get_tracks (player);
+		data->tracks = track_list_dup (data->album->tracks);
 	else
 		data->tracks = track_list_dup (tracks);
-	data->tracks_n = g_list_length (data->tracks);
-	data->total_tracks = goo_player_get_n_tracks (player);
+	data->n_tracks = g_list_length (data->tracks);
 	
 	data->update_handle = 0;
 	data->timer = g_timer_new ();
-	data->cdrom = goo_cdrom_new (data->location);
+	data->cdrom = goo_cdrom_new (data->device);
 
 	/* Get the widgets. */
 

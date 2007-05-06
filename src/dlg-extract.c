@@ -90,7 +90,7 @@ dlg_extract__start_ripping (gpointer callback_data)
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->e_selected_radiobutton)))
 		tracks_to_rip = track_list_dup (data->selected_tracks);
 	else
-		tracks_to_rip = goo_player_get_tracks (data->player_cd);
+		tracks_to_rip = track_list_dup (goo_player_get_album (data->player_cd)->tracks);
 
 	dlg_ripper (data->window, tracks_to_rip);
 	

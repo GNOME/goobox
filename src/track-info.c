@@ -41,7 +41,9 @@ track_info_new (int    number,
 
 	track->ref = 1;
 	track->number = number;
+	
 	track_info_set_title (track, NULL);
+	track_info_set_artist (track, NULL);
 
 	track->from_sector = from_sector;
 	track->to_sector = to_sector;
@@ -61,6 +63,7 @@ static void
 track_info_free (TrackInfo *track)
 {
 	g_free (track->title);
+	g_free (track->artist);
 	g_free (track);
 }
 
@@ -71,7 +74,9 @@ track_info_get_type (void)
 	static GType type = 0;
   
 	if (type == 0)
-		type = g_boxed_type_register_static ("TrackInfo", (GBoxedCopyFunc) track_info_copy, (GBoxedFreeFunc) track_info_free);
+		type = g_boxed_type_register_static ("TrackInfo", 
+						     (GBoxedCopyFunc) track_info_copy,
+						     (GBoxedFreeFunc) track_info_free);
   
 	return type;
 }
@@ -102,6 +107,7 @@ track_info_copy (TrackInfo *src)
 
 	dest = track_info_new (src->number, src->from_sector, src->to_sector);
 	track_info_set_title (dest, src->title);
+	track_info_set_artist (dest, src->artist);
 
 	return dest;
 }

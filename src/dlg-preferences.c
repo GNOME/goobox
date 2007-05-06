@@ -93,13 +93,13 @@ apply_cb (GtkWidget  *widget,
 	if (device == NULL) 
 		return;
 		
-	current_device = goo_player_get_location (goo_window_get_player (data->window));
+	current_device = goo_player_get_device (goo_window_get_player (data->window));
 	
 	if ((current_device != NULL) && (strcmp (current_device, device) == 0)) 
 		return;
 		
 	eel_gconf_set_string (PREF_GENERAL_DEVICE, device);
-	goo_window_set_location (data->window, device);
+	goo_window_set_device (data->window, device);
 	goo_window_update (data->window);
 }
 
@@ -224,7 +224,6 @@ dlg_preferences (GooWindow *window)
 	GstElement      *encoder;
 	gboolean         ogg_encoder, flac_encoder, wave_encoder;
 	gboolean         find_first_available;
-	char            *esc_uri = NULL;
 	GtkTreeIter      iter;
         GtkCellRenderer *renderer;
         

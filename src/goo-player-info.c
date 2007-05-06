@@ -638,20 +638,19 @@ static void
 update_subtitle (GooPlayerInfo *info,
 		 TrackInfo     *track)
 {
-	GooPlayerInfoPrivateData *priv = info->priv;
-	const char *title, *artist;
-
-	title = goo_player_get_title (priv->player);
-	artist = goo_player_get_artist (priv->player);
-
-	if ((title == NULL) || (artist == NULL)) {
-		set_time_string (priv->total_time, track->length);
-		set_title2 (info, priv->total_time);
-	} else {
-		set_title2 (info, title);
-		set_title3 (info, artist);
-		gtk_label_set_selectable (GTK_LABEL (priv->title2_label), TRUE);
-		gtk_label_set_selectable (GTK_LABEL (priv->title3_label), TRUE);
+ 	AlbumInfo *album;
+	
+	album = goo_window_get_album (info->priv->window);
+	
+	if ((album->title == NULL) || (album->artist == NULL)) {
+		set_time_string (info->priv->total_time, track->length);
+		set_title2 (info, info->priv->total_time);
+	} 
+	else {
+		set_title2 (info, album->title);
+		set_title3 (info, album->artist);
+		gtk_label_set_selectable (GTK_LABEL (info->priv->title2_label), TRUE);
+		gtk_label_set_selectable (GTK_LABEL (info->priv->title3_label), TRUE);
 	}
 }
 
@@ -660,12 +659,14 @@ void
 goo_player_info_update_state (GooPlayerInfo  *info)
 {
 	GooPlayerInfoPrivateData *priv = info->priv;
-	GooPlayerState state;
-
+	GooPlayerState  state;
+	AlbumInfo      *album;
+	
 	if (priv->player == NULL)
 		return;
 
 	state = goo_player_get_state (priv->player);
+	album = goo_window_get_album (info->priv->window);
 
 	if ((state == GOO_PLAYER_STATE_PLAYING) 
 	    || (state == GOO_PLAYER_STATE_PAUSED)) {
@@ -696,7 +697,7 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 	else {
 		TrackInfo *track;
 		
-		track = goo_player_get_track (priv->player, goo_player_get_current_track (priv->player));
+		track = album_info_get_track (album, goo_player_get_current_track (priv->player));
 
 		if (track != NULL) {
 			char *state_s = "";
@@ -729,26 +730,22 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 			set_title2 (info, "");
 		} 
 		else {
-			const char *title;
-			const char *artist;
-			char        year[128];
+			char year[128];
 			
-			title = goo_player_get_title (priv->player);
-			artist = goo_player_get_artist (priv->player);
-			if (goo_player_get_year (priv->player) != 0)
-				sprintf (year, "%d", goo_player_get_year (priv->player));
+			if (g_date_valid (album->release_date) != 0)
+				sprintf (year, "%u", g_date_get_year (album->release_date));
 			else
 				year[0] = '\0';
 
-			if (title != NULL) {
-				set_title1 (info, title);
+			if (album->title != NULL) {
+				set_title1 (info, album->title);
 				gtk_label_set_selectable (GTK_LABEL (priv->title1_label), TRUE);
 			} 
 			else
 				set_title1 (info, _("Audio CD"));
 
-			if (artist != NULL) {
-				set_title2 (info, artist);
+			if (album->artist != NULL) {
+				set_title2 (info, album->artist);
 				set_title3 (info, year);
 				gtk_label_set_selectable (GTK_LABEL (priv->title2_label), TRUE);
 			} 
