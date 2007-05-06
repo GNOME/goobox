@@ -26,8 +26,8 @@
 #include "track-info.h"
 
 #define SECTORS_PER_SEC 75
-#define TO_SECTOR(t) ((t)/GST_SECOND*SECTORS_PER_SEC)
-#define TO_TIME(s) (((s)/SECTORS_PER_SEC)*GST_SECOND)
+#define TO_SECTOR(t) ((t) / GST_SECOND * SECTORS_PER_SEC)
+#define TO_TIME(s) (((s) / SECTORS_PER_SEC) * GST_SECOND)
 
 
 TrackInfo*
@@ -116,6 +116,18 @@ track_info_set_title (TrackInfo  *track,
 		track->title = g_strdup (title);
 	else
 		track->title = g_strdup_printf (_("Track %u"), track->number + 1);
+}
+
+
+void
+track_info_set_artist (TrackInfo  *track,
+		       const char *artist)
+{
+	g_free (track->artist);
+	if (artist != NULL)
+		track->artist = g_strdup (artist);
+	else
+		track->artist = g_strdup (_("Unknown Artist"));
 }
 
 

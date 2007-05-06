@@ -25,7 +25,6 @@
 
 #include <glib.h>
 #include "cd-drive.h"
-#include "song-info.h"
 #include "track-info.h"
 
 #define GOO_TYPE_PLAYER              (goo_player_get_type ())
@@ -94,11 +93,9 @@ GooPlayer *      goo_player_new                 (const char      *location);
 CDDrive *        goo_player_get_drive           (GooPlayer       *player);
 void             goo_player_update              (GooPlayer       *player);
 void             goo_player_list                (GooPlayer       *player);
-void             goo_player_seek_song           (GooPlayer       *player,
+void             goo_player_seek_track          (GooPlayer       *player,
 						 int              n);
-SongInfo *       goo_player_get_song            (GooPlayer       *player,
-						 int              n);
-int              goo_player_get_current_song    (GooPlayer       *player);
+int              goo_player_get_current_track   (GooPlayer       *player);
 void             goo_player_skip_to             (GooPlayer       *player,
 						 guint            seconds);
 void             goo_player_play                (GooPlayer       *player);
@@ -106,7 +103,6 @@ void             goo_player_pause               (GooPlayer       *player);
 void             goo_player_stop                (GooPlayer       *player);
 gboolean         goo_player_eject               (GooPlayer       *player);
 GError *         goo_player_get_error           (GooPlayer       *player);
-GList *          goo_player_get_song_list       (GooPlayer       *player);
 GooPlayerAction  goo_player_get_action          (GooPlayer       *player);
 GooPlayerState   goo_player_get_state           (GooPlayer       *player);
 gboolean         goo_player_set_location        (GooPlayer       *player,
@@ -119,9 +115,6 @@ double           goo_player_get_volume          (GooPlayer       *player);
 void             goo_player_set_volume          (GooPlayer       *player,
 						 double           vol);
 gboolean         goo_player_get_is_busy         (GooPlayer       *player);
-
-/**/
-
 const char *     goo_player_get_discid          (GooPlayer       *player);
 const char *     goo_player_get_asin            (GooPlayer       *player);
 TrackInfo  *     goo_player_get_track           (GooPlayer       *player,

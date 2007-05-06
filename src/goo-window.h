@@ -67,7 +67,7 @@ void        goo_window_next                      (GooWindow   *window);
 void        goo_window_eject                     (GooWindow   *window);
 void        goo_window_set_location              (GooWindow   *window,
 						  const char  *location);
-GList *     goo_window_get_song_list             (GooWindow   *window,
+GList *     goo_window_get_tracks                (GooWindow   *window,
 						  gboolean     selection);
 GooPlayer * goo_window_get_player                (GooWindow   *window);
 void        goo_window_edit_cddata               (GooWindow   *window);

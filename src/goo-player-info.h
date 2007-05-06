@@ -28,7 +28,6 @@
 #include <gtk/gtkhbox.h>
 #include "goo-window.h"
 #include "goo-player.h"
-#include "song-info.h"
 
 #define GOO_TYPE_PLAYER_INFO              (goo_player_info_get_type ())
 #define GOO_PLAYER_INFO(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GOO_TYPE_PLAYER_INFO, GooPlayerInfo))

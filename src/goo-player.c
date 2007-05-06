@@ -48,7 +48,6 @@ struct _GooPlayerPrivateData {
 	GooPlayerState   state;
 	GooPlayerAction  action;
 	GError          *error;
-	int              current_song;
 	double           volume_value;
 	char            *location;
 	gboolean         is_busy;
@@ -66,6 +65,7 @@ struct _GooPlayerPrivateData {
 	
 	GList           *tracks;
 	TrackInfo       *current_track;
+	int              current_track_n;
 	char            *discid;
 	char            *asin;
 	char            *artist;
@@ -331,6 +331,7 @@ goo_player_empty_list (GooPlayer *player)
 	player->priv->n_tracks = 0;
 	player->priv->total_time = 0;
 	player->priv->current_track = NULL;
+	player->priv->current_track_n = -1;
 	
 	g_free (player->priv->discid);
 	player->priv->discid = NULL;
@@ -344,24 +345,7 @@ goo_player_empty_list (GooPlayer *player)
 	g_free (player->priv->genre);
 	player->priv->genre = NULL;
 
-	player->priv->current_song = -1;
 	player->priv->year = 0;
-}
-
-
-static SongInfo*
-create_song_info (GooPlayer *player,
-		  TrackInfo *track) 
-{
-	SongInfo *song;
-
-	song = song_info_new ();
-	song->number = track->number;
-	song->title = g_strdup (track->title);
-	song->artist = g_strdup (player->priv->artist);
-	song->time = track->length;
-
-	return song;
 }
 
 
@@ -475,7 +459,6 @@ goo_player_init (GooPlayer *player)
 	priv->state = GOO_PLAYER_STATE_STOPPED;
 	priv->action = GOO_PLAYER_ACTION_NONE;
 	priv->error = NULL;
-	priv->current_song = 0;
 	priv->location = NULL;
 	priv->title = NULL;
 	priv->year = 0;
@@ -488,7 +471,7 @@ goo_player_init (GooPlayer *player)
 	priv->discid = NULL;
 	priv->n_tracks = 0;
 	priv->tracks = NULL;
-	priv->current_song = -1;
+	priv->current_track_n = -1;
 	priv->volume_value = 1.0;
 
 	priv->update_progress_id = 0;
@@ -693,7 +676,7 @@ set_cd_metadata_from_rdf (GooPlayer *player,
 	musicbrainz_t  mb;
 	int            n_albums;
 	char           data[1024];
-	int            n_track;
+	int            n_track;          
 	GList         *scan;
 
 	if (rdf == NULL)
@@ -703,10 +686,10 @@ set_cd_metadata_from_rdf (GooPlayer *player,
 	mb_UseUTF8 (mb, TRUE);
 	mb_SetResultRDF (mb, rdf);
 	
-	n_albums = mb_GetResultInt(mb, MBE_GetNumAlbums);
-	g_print ("NumAlbums: %d\n", n_albums);
+	n_albums = mb_GetResultInt (mb, MBE_GetNumAlbums);
+	g_print ("[MB] Num Albums: %d\n", n_albums);
 	
-	if (n_albums != 1) 
+	if (n_albums < 1) 
 		goto set_cd_metadata_end;
 		
 	mb_Select1 (mb, MBS_SelectAlbum, 1);
@@ -721,10 +704,26 @@ set_cd_metadata_from_rdf (GooPlayer *player,
  	player->priv->genre = NULL;
  		
  	player->priv->year = 0;
+ 	
+ 	if (mb_GetResultInt (mb, MBE_AlbumGetNumReleaseDates) >= 1) {
+ 		int y, m ,d;
+ 		
+		mb_Select1 (mb, MBS_SelectReleaseDate, 1);
+ 		
+		mb_GetResultData (mb, MBE_ReleaseGetDate, data, sizeof (data));
+		debug (DEBUG_INFO, "==> [MB] RELEASE DATE: %s\n", data);
+		if (sscanf (data, "%d-%d-%d", &y, &m, &d) > 0);
+			player->priv->year = y; 
+ 		
+		mb_GetResultData (mb, MBE_ReleaseGetCountry, data, sizeof (data));
+		debug (DEBUG_INFO, "==> [MB] RELEASE COUNTRY: %s\n", data);
+ 		
+		mb_Select (mb, MBS_Back);
+ 	}
 
-	if (mb_GetResultData(mb, MBE_AlbumGetAmazonAsin, data, sizeof (data))) {
+	if (mb_GetResultData (mb, MBE_AlbumGetAmazonAsin, data, sizeof (data))) {
 		player->priv->asin = g_strdup (data);
-		g_print ("==> [MB] ASIN: %s\n", player->priv->asin);
+		debug (DEBUG_INFO, "==> [MB] ASIN: %s\n", player->priv->asin);
 	}
  		
  	if (mb_GetResultData (mb, MBE_AlbumGetAlbumName, data, sizeof (data))) 
@@ -744,9 +743,12 @@ set_cd_metadata_from_rdf (GooPlayer *player,
 			
 		if (mb_GetResultData1 (mb, MBE_AlbumGetTrackName, data, sizeof (data), n_track))
 			track_info_set_title (track, data);
-				
-		if ((player->priv->artist == NULL) && (mb_GetResultData1 (mb, MBE_AlbumGetArtistName, data, sizeof (data), n_track)))
-			player->priv->artist = g_strdup (data);
+			
+		if (mb_GetResultData1 (mb, MBE_AlbumGetArtistName, data, sizeof (data), n_track)) {
+			track_info_set_artist (track, data);
+			if (player->priv->artist == NULL)
+				player->priv->artist = g_strdup (data);
+		}
 	}
 
 	action_done (player, GOO_PLAYER_ACTION_METADATA);		
@@ -774,7 +776,7 @@ get_cached_rdf_path (GooPlayer *player)
 	if (player->priv->discid == NULL)
 		return NULL;
 		
-	dir = g_build_filename (g_get_home_dir (), ".gnome2", "sound-juicer", "cache", NULL);
+	dir = g_build_filename (g_get_home_dir (), ".gnome2", "goobox.d", "cache", NULL);
 	if (ensure_dir_exists (dir, 0700) == GNOME_VFS_OK) 
 		path = g_build_filename (dir, player->priv->discid, NULL);
 	g_free (dir);
@@ -803,7 +805,7 @@ save_rdf_to_cache (GooPlayer  *player,
 	}
   
 	if (! g_file_set_contents (path, rdf, strlen (rdf), &error)) {
-		g_print ("%s\n", error->message);
+		debug (DEBUG_INFO, "%s\n", error->message);
 		g_clear_error (&error);
 	}
 	
@@ -823,7 +825,7 @@ read_cached_rdf (GooPlayer *player)
 		return NULL;
 	
 	if (! g_file_get_contents (path, &rdf, NULL, &error)) {
-		g_print ("%s\n", error->message);
+		debug (DEBUG_INFO, "%s\n", error->message);
 		g_clear_error (&error);
 		rdf = NULL;
 	}
@@ -1050,23 +1052,23 @@ get_cd_tracks (void *thread_data)
 		int  i;
 		
 		mb_GetResultData(mb, MBE_TOCGetCDIndexId, data, sizeof (data));
-		player->priv->discid = g_strdup (data);
-		
-		g_print ("==> [MB] DISC ID: %s\n", player->priv->discid);
+		player->priv->discid = g_strdup (data);	
+		debug (DEBUG_INFO, "==> [MB] DISC ID: %s\n", player->priv->discid);
 			
-		g_print ("==> [MB] FIRST TRACK: %d\n", mb_GetResultInt (mb, MBE_TOCGetFirstTrack));
+		debug (DEBUG_INFO, "==> [MB] FIRST TRACK: %d\n", mb_GetResultInt (mb, MBE_TOCGetFirstTrack));
+		
 		player->priv->n_tracks = mb_GetResultInt (mb, MBE_TOCGetLastTrack);
-		g_print ("==> [MB] LAST TRACK: %d\n", player->priv->n_tracks);
+		debug (DEBUG_INFO, "==> [MB] LAST TRACK: %d\n", player->priv->n_tracks);
 		
 		for (i = 0; i < player->priv->n_tracks; i++) {
 			TrackInfo *track;
-			int        from_sector;
-			int        n_sectors;
+			gint64     from_sector;
+			gint64     n_sectors;
 			
 			from_sector = mb_GetResultInt1 (mb, MBE_TOCGetTrackSectorOffset, i + 2);
 			n_sectors = mb_GetResultInt1 (mb, MBE_TOCGetTrackNumSectors, i + 2);
 			
-			g_print ("==> [MB] Track %d: [%d, %d]\n", i, from_sector, from_sector + n_sectors);
+			debug (DEBUG_INFO, "==> [MB] Track %d: [%"G_GINT64_FORMAT", %"G_GINT64_FORMAT"]\n", i, from_sector, from_sector + n_sectors);
 			
 			track = track_info_new (i, from_sector, from_sector + n_sectors);
 			player->priv->tracks = g_list_prepend (player->priv->tracks, track);
@@ -1120,9 +1122,26 @@ goo_player_list (GooPlayer *player)
 }
 
 
+static TrackInfo*
+get_track (GooPlayer *player,
+           guint      n)
+{
+	GList *scan;
+
+	for (scan = player->priv->tracks; scan; scan = scan->next) {
+		TrackInfo *track = scan->data;
+		
+		if (track->number == n)
+			return track;
+	}
+
+	return NULL;
+}
+
+
 void
-goo_player_seek_song (GooPlayer *player,
-		      int        n)
+goo_player_seek_track (GooPlayer *player,
+		       int        n)
 {
 	GstEvent *event;
 	int       track_n;
@@ -1148,11 +1167,12 @@ goo_player_seek_song (GooPlayer *player,
 	goo_player_set_state (player, GOO_PLAYER_STATE_SEEKING, TRUE);
 
 	track_n = CLAMP (n, 0, player->priv->n_tracks - 1);
-	player->priv->current_song = track_n;
-	player->priv->current_track = goo_player_get_track (player, track_n);
-
+	player->priv->current_track_n = track_n;
+		
 	debug (DEBUG_INFO, "seek to track %d\n", track_n); /* FIXME */
-
+	
+	player->priv->current_track = get_track (player, player->priv->current_track_n);
+	
 	g_return_if_fail (player->priv->current_track != NULL);
 
 	event = gst_event_new_seek (1.0, 
@@ -1162,7 +1182,7 @@ goo_player_seek_song (GooPlayer *player,
 				    track_n, 
 				    GST_SEEK_TYPE_SET,
 				    track_n + 1);
-	if (!gst_pad_send_event (player->priv->source_pad, event))
+	if (! gst_pad_send_event (player->priv->source_pad, event))
 		g_warning ("seek failed");
 
 	action_done (player, GOO_PLAYER_ACTION_SEEK_SONG);
@@ -1170,27 +1190,10 @@ goo_player_seek_song (GooPlayer *player,
 }
 
 
-SongInfo *
-goo_player_get_song (GooPlayer *player,
-		     int        n)
-{
-	TrackInfo *track;
-	
-	if (n < 0)
-		return NULL;
-	
-	track = goo_player_get_track (player, n);
-	if (track == NULL)
-		return NULL;
-	
-	return create_song_info (player, track);	
-}
-
-
 int
-goo_player_get_current_song (GooPlayer *player)
+goo_player_get_current_track (GooPlayer *player)
 {
-	return player->priv->current_song;
+	return player->priv->current_track_n;
 }
 
 
@@ -1367,24 +1370,6 @@ goo_player_get_error (GooPlayer *player)
 }
 
 
-GList *
-goo_player_get_song_list (GooPlayer *player)
-{
-	GList *list = NULL, *scan;
-
-	if (goo_player_get_is_busy (player))
-		return NULL;
-
-	for (scan = player->priv->tracks; scan; scan = scan->next) {
-		TrackInfo *track = scan->data;
-		
-		list = g_list_prepend (list, create_song_info (player, track));
-	}
-
-	return list;
-}
-
-
 GooPlayerAction
 goo_player_get_action (GooPlayer *player)
 {
@@ -1442,17 +1427,15 @@ goo_player_get_asin (GooPlayer *player)
 
 TrackInfo*
 goo_player_get_track (GooPlayer *player,
-			 guint        n)
+		      guint        n)
 {
-	GList *scan;
-
-	for (scan = player->priv->tracks; scan; scan = scan->next) {
-		TrackInfo *track = scan->data;
-		if (track->number == n)
-			return track;
-	}
-
-	return NULL;
+	TrackInfo *track;
+	
+	track = get_track (player, n);
+	if (track == NULL)
+		return NULL;
+	
+	return track_info_copy (track);
 }
 
 

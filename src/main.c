@@ -219,7 +219,7 @@ int main (int argc, char **argv)
 static void 
 initialize_data (void)
 {
-        g_set_application_name (_("Goobox"));
+        g_set_application_name (_("CD Player"));
         gtk_window_set_default_icon_name ("goobox");
 
 	eel_gconf_monitor_add ("/apps/goobox");

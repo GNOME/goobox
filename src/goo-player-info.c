@@ -32,8 +32,8 @@
 
 #define SPACING 0
 #define TITLE1_FORMAT "<span size='large' weight='bold'>%s</span>"
-#define TITLE2_FORMAT "%s"
-#define TITLE3_FORMAT "<i>%s</i>"
+#define TITLE2_FORMAT "<i>%s</i>"
+#define TITLE3_FORMAT "%s"
 #define TIME_FORMAT "%s"
 #define PLAYING_FORMAT "[ <small>%s</small> ]"
 #define SCALE_WIDTH 150
@@ -59,7 +59,7 @@ struct _GooPlayerInfoPrivateData {
 	char         current_time[64];
 	char         total_time[64];
 	char         time[64];
-	gint64       song_length;
+	gint64       track_length;
 	gboolean     dragging;
 	guint        update_id;
 };
@@ -225,13 +225,13 @@ time_scale_value_changed_cb (GtkRange      *range,
 			     GooPlayerInfo *info)
 {
 	double new_value = gtk_range_get_value (range);
-	int    seconds = (int) (new_value * info->priv->song_length);
+	int    seconds = (int) (new_value * info->priv->track_length);
 
 	if (info->priv->dragging) {
 		GooPlayerInfoPrivateData *priv = info->priv;
 		gint64 current_time;
 
-		current_time = priv->song_length * (new_value / 100.0);
+		current_time = priv->track_length * (new_value / 100.0);
 
 		set_time_string (priv->current_time, current_time);
 		sprintf (priv->time, _("%s / %s"), priv->total_time, priv->current_time);
@@ -257,7 +257,7 @@ update_time_label_cb (gpointer data)
 		priv->update_id = 0;
 	}
 	
-	current_time = priv->song_length * new_value;
+	current_time = priv->track_length * new_value;
 	set_time_string (priv->current_time, current_time);
 	sprintf (priv->time, _("%s / %s"), priv->current_time, priv->total_time);
 	set_time (info, priv->time);
@@ -637,21 +637,21 @@ goo_player_info_set_player (GooPlayerInfo  *info,
 
 
 static void
-update_subtitle (GooPlayerInfo  *info,
-		 SongInfo       *song)
+update_subtitle (GooPlayerInfo *info,
+		 TrackInfo     *track)
 {
 	GooPlayerInfoPrivateData *priv = info->priv;
-	const char *title, *subtitle;
+	const char *title, *artist;
 
 	title = goo_player_get_title (priv->player);
-	subtitle = goo_player_get_artist (priv->player);
+	artist = goo_player_get_artist (priv->player);
 
-	if ((title == NULL) || (subtitle == NULL)) {
-		set_time_string (priv->total_time, song->time);
+	if ((title == NULL) || (artist == NULL)) {
+		set_time_string (priv->total_time, track->length);
 		set_title2 (info, priv->total_time);
 	} else {
-		set_title2 (info, subtitle);
-		set_title3 (info, title);
+		set_title2 (info, title);
+		set_title3 (info, artist);
 		gtk_label_set_selectable (GTK_LABEL (priv->title2_label), TRUE);
 		gtk_label_set_selectable (GTK_LABEL (priv->title3_label), TRUE);
 	}
@@ -696,23 +696,23 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 		g_error_free (error);
 	} 
 	else {
-		SongInfo *song = goo_player_get_song (priv->player, goo_player_get_current_song (priv->player));
+		TrackInfo *track;
+		
+		track = goo_player_get_track (priv->player, goo_player_get_current_track (priv->player));
 
-		if (song != NULL) {
+		if (track != NULL) {
 			char *state_s = "";
 
-			priv->song_length = song->time;
+			priv->track_length = track->length;
 
 			if (state == GOO_PLAYER_STATE_PAUSED)
 				state_s = _("Paused");
 			set_playing (info, state_s);
 
-			set_title1 (info, song->title);
+			set_title1 (info, track->title);
 			gtk_label_set_selectable (GTK_LABEL (priv->title1_label), TRUE);
 
-			update_subtitle (info, song);
-
-			song_info_unref (song);
+			update_subtitle (info, track);
 		} 
 		else if (state == GOO_PLAYER_STATE_EJECTING) {
 			set_title1 (info, _("Ejecting CD"));
@@ -731,10 +731,16 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 			set_title2 (info, "");
 		} 
 		else {
-			const char *title, *subtitle;
-
+			const char *title;
+			const char *artist;
+			char        year[128];
+			
 			title = goo_player_get_title (priv->player);
-			subtitle = goo_player_get_artist (priv->player);
+			artist = goo_player_get_artist (priv->player);
+			if (goo_player_get_year (priv->player) != 0)
+				sprintf (year, "%d", goo_player_get_year (priv->player));
+			else
+				year[0] = '\0';
 
 			if (title != NULL) {
 				set_title1 (info, title);
@@ -743,16 +749,18 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 			else
 				set_title1 (info, _("Audio CD"));
 
-			if (subtitle != NULL) {
-				set_title2 (info, subtitle);
-				set_title3 (info, priv->total_time);
+			if (artist != NULL) {
+				set_title2 (info, artist);
+				set_title3 (info, year);
 				gtk_label_set_selectable (GTK_LABEL (priv->title2_label), TRUE);
 			} 
 			else {
-				set_title2 (info, priv->total_time);
+				set_title2 (info, year);
 				set_title3 (info, "");
 			}
 		}
+		
+		track_info_unref (track);
 	}
 }
 
@@ -782,7 +790,7 @@ goo_player_info_set_time (GooPlayerInfo  *info,
 	set_time (info, priv->time);
 
 	g_signal_handlers_block_by_data (priv->time_scale, info);
-	gtk_range_set_value (GTK_RANGE (priv->time_scale), (double) current_time / priv->song_length);
+	gtk_range_set_value (GTK_RANGE (priv->time_scale), (double) current_time / priv->track_length);
 	g_signal_handlers_unblock_by_data (priv->time_scale, info);
 }
 

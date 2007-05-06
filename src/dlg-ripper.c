@@ -46,7 +46,6 @@
 #include "typedefs.h"
 #include "goo-window.h"
 #include "preferences.h"
-#include "song-info.h"
 #include "track-info.h"
 #include "goo-player.h"
 #include "goo-cdrom.h"
@@ -91,6 +90,7 @@ typedef struct {
 	char          *current_file;
 	gboolean       ripping;
 	GTimer        *timer;
+	double         prev_remaining_time;
 
 	GladeXML      *gui;
 
@@ -189,22 +189,30 @@ update_ui (gpointer callback_data)
 
 	/* wait a bit before predicting the remaining time. */
 	if ((fraction < 10e-3) || (ripped_tracks < 250)) {
-		time_left = g_strdup (_("extracting..."));
+		time_left = NULL;
+		data->prev_remaining_time = -1.0;
 	} 
 	else {  
-		double elapsed, remaining;
-		int    minutes;
+		double elapsed, remaining_time;
+		int    minutes, seconds;
 		
 		elapsed = g_timer_elapsed (data->timer, NULL);
-		remaining = (elapsed / fraction) - elapsed;	
-		minutes = (int) (floor (remaining + 0.5)) / 60;
-		if (minutes == 0)
-			time_left = g_strdup (_("less than a minute left"));
-		else
-			time_left = g_strdup_printf (ngettext ("about %d minute left", "about %d minutes left", minutes), minutes);
+		remaining_time = (elapsed / fraction) - elapsed;	
+		minutes = (int) (floor (remaining_time + 0.5)) / 60;
+		seconds = (int) (floor (remaining_time + 0.5)) % 60;
+		
+		if ((data->prev_remaining_time > 0.0) 
+		    && ( fabs (data->prev_remaining_time - remaining_time) > 20.0))
+			time_left = NULL;
+		else if (minutes > 59) 
+			time_left = g_strdup_printf (_("(%d:%02d:%02d Remaining)"), minutes / 60, minutes % 60, seconds);
+		else 
+			time_left = g_strdup_printf (_("(%d:%02d Remaining)"), minutes, seconds);
+			
+		data->prev_remaining_time = remaining_time;
 	}
 	
-	msg = g_strdup_printf (_("%d of %d tracks extracted, %s"), data->current_track_n - 1, data->tracks_n, time_left);
+	msg = g_strdup_printf (_("Extracting track: %d of %d %s"), data->current_track_n, data->tracks_n, (time_left != NULL ? time_left : ""));
 	gtk_progress_bar_set_text  (GTK_PROGRESS_BAR (data->r_progress_progressbar), msg);
 
 	g_free (msg);
@@ -439,25 +447,10 @@ get_track_filename (TrackInfo  *track,
 	char *filename, *track_filename;
 
 	filename = tracktitle_to_filename (track->title);
-	track_filename = g_strdup_printf ("%s. %s.%s", zero_padded (track->number + 1), filename, ext);
+	track_filename = g_strdup_printf ("%s.%%20%s.%s", zero_padded (track->number + 1), filename, ext);
 	g_free (filename);
 
 	return track_filename;
-}
-
-
-static char *
-get_track_uriname (TrackInfo  *track,
-		    const char *ext)
-{
-	char *filename;
-	char *uriname;
-	
-	filename = get_track_filename (track, ext);
-	uriname = gnome_vfs_escape_string (filename);
-	g_free (filename);
-	
-	return uriname;
 }
 
 
@@ -508,16 +501,20 @@ save_playlist (DialogData *data)
 		for (scan = data->tracks; scan; scan = scan->next) {
 			TrackInfo *track = scan->data;
 			char      *track_filename;
+			char      *unescaped;
 
 			n++;
 
 			track_filename = get_track_filename (track, data->ext);
+			unescaped = gnome_vfs_unescape_string (track_filename, "");
 			
-			sprintf (buffer, "File%d=%s\n", n, track_filename);
+			sprintf (buffer, "File%d=%s\n", n, unescaped);
 			gnome_vfs_write (handle,
 					 buffer,
 					 strlen (buffer),
 					 NULL);
+			
+			g_free (unescaped);		 
 			g_free (track_filename);
 
 			sprintf (buffer, "Title%d=%s - %s\n", n, data->artist, track->title);
@@ -576,7 +573,7 @@ rip_current_track (DialogData *data)
 
 		return;
 	}
-		
+
 	track = data->current_track->data;
 
 	msg = g_markup_printf_escaped (_("<i>Extracting \"%s\"</i>"), track->title); 
@@ -602,7 +599,7 @@ rip_current_track (DialogData *data)
 	}
 
 	g_free (data->current_file);
-	filename = get_track_uriname (track, data->ext);
+	filename = get_track_filename (track, data->ext);
 	data->current_file = g_strconcat (folder, G_DIR_SEPARATOR_S, filename, NULL);
 	g_free (filename);
 	g_free (folder);
@@ -612,7 +609,7 @@ rip_current_track (DialogData *data)
 	gst_element_set_state (data->sink, GST_STATE_NULL);
 	g_object_set (G_OBJECT (data->sink), "location", data->current_file, NULL);
 
-	/* Set song tags. */
+	/* Set track tags. */
 
 	if (GST_IS_TAG_SETTER (data->encoder)) {
 		gst_tag_setter_add_tags (GST_TAG_SETTER (data->encoder),   
@@ -623,7 +620,7 @@ rip_current_track (DialogData *data)
 				         GST_TAG_TRACK_NUMBER, (guint) track->number + 1,
 				         GST_TAG_TRACK_COUNT, (guint) data->total_tracks,
 				         GST_TAG_DURATION, (guint64) track->length * GST_SECOND, 
-				         GST_TAG_COMMENT, _("Ripped with Goobox"),
+				         GST_TAG_COMMENT, _("Ripped with CD Player"),
 				         GST_TAG_ENCODER, PACKAGE_NAME,
 				         GST_TAG_ENCODER_VERSION, PACKAGE_VERSION,
 				         NULL);
@@ -633,10 +630,12 @@ rip_current_track (DialogData *data)
 					         GST_TAG_GENRE, data->genre,
 					         NULL);
 		if (data->year != 0) {
-			GDate *d = g_date_new_dmy (1, 1, data->year);
+			GDate *d;
+			
+			d = g_date_new_dmy (1, 1, data->year);
 			gst_tag_setter_add_tags (GST_TAG_SETTER (data->encoder),   
 					         GST_TAG_MERGE_REPLACE,
-					         GST_TAG_DATE,  g_date_get_julian (d),
+					         GST_TAG_DATE,  d,
 					         NULL);
 			g_date_free (d);
 		}

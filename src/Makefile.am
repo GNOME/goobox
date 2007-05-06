@@ -122,8 +122,6 @@ goobox_SOURCES = 				\
 	main.h					\
 	preferences.c				\
 	preferences.h				\
-	song-info.c				\
-	song-info.h				\
 	track-info.c				\
 	track-info.h				\
 	typedefs.h				\

@@ -69,8 +69,6 @@ src/main.c
 src/main.h
 src/preferences.c
 src/preferences.h
-src/song-info.c
-src/song-info.h
 src/track-info.c
 src/track-info.h
 src/typedefs.h
