@@ -224,23 +224,21 @@ static void
 time_scale_value_changed_cb (GtkRange      *range,
 			     GooPlayerInfo *info)
 {
-	double new_value = gtk_range_get_value (range);
-	int    seconds = (int) (new_value * info->priv->track_length);
+	double new_value;
+	gint64 current_time;
+	
+	new_value = gtk_range_get_value (range);
+	current_time = info->priv->track_length * (new_value / 100.0);
+	set_time_string (info->priv->current_time, current_time);
+	sprintf (info->priv->time, _("%s / %s"), info->priv->total_time, info->priv->current_time);
+	set_time (info, info->priv->time);
 
-	if (info->priv->dragging) {
-		GooPlayerInfoPrivateData *priv = info->priv;
-		gint64 current_time;
-
-		current_time = priv->track_length * (new_value / 100.0);
-
-		set_time_string (priv->current_time, current_time);
-		sprintf (priv->time, _("%s / %s"), priv->total_time, priv->current_time);
-		set_time (info, priv->time);
-
-		return;
+	if (! info->priv->dragging) {
+		int seconds;
+		
+		seconds = (int) (new_value * info->priv->track_length);
+		g_signal_emit (info, goo_player_info_signals[SKIP_TO], 0, seconds);
 	}
-
-	g_signal_emit (info, goo_player_info_signals[SKIP_TO], 0, seconds);
 }
 
 

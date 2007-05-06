@@ -1,5 +1,10 @@
 2007-05-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-player-info.c: 
+	* src/goo-player.c: fixed seeking.
+
+2007-05-06  Paolo Bacchilega  <paobac@cvs.gnome.org>	
+	
 	* many_files: Removed song-info.[ch].  Read release year from
 	metadata.  Fixed extraction of tracks with spacial characters.
 	Show the remaining time only when the forecast starts to stabilize.

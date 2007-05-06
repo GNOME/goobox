@@ -1143,8 +1143,7 @@ void
 goo_player_seek_track (GooPlayer *player,
 		       int        n)
 {
-	GstEvent *event;
-	int       track_n;
+	int track_n;
 		
 	if (goo_player_get_is_busy (player))
 		return;
@@ -1175,16 +1174,17 @@ goo_player_seek_track (GooPlayer *player,
 	
 	g_return_if_fail (player->priv->current_track != NULL);
 
-	event = gst_event_new_seek (1.0, 
-				    player->priv->track_format,
-				    GST_SEEK_FLAG_FLUSH,
-				    GST_SEEK_TYPE_SET,
-				    track_n, 
-				    GST_SEEK_TYPE_SET,
-				    track_n + 1);
-	if (! gst_pad_send_event (player->priv->source_pad, event))
+	if (! gst_element_seek (player->priv->pipeline,
+			        1.0, 
+			        player->priv->track_format,
+			        GST_SEEK_FLAG_FLUSH,
+			        GST_SEEK_TYPE_SET,
+			        track_n, 
+			        GST_SEEK_TYPE_SET,
+			        track_n + 1))
 		g_warning ("seek failed");
-
+	gst_element_get_state (player->priv->pipeline, NULL, NULL, -1);
+	
 	action_done (player, GOO_PLAYER_ACTION_SEEK_SONG);
 	goo_player_play (player);
 }
@@ -1201,23 +1201,24 @@ void
 goo_player_skip_to (GooPlayer *player,
 		    guint      seconds)
 {
-	GstEvent *event;
-
 	if (goo_player_get_is_busy (player))
 		return;
 
 	if (player->priv->pipeline == NULL)
 		return;
 
-	event = gst_event_new_seek (1.0, 
-				    GST_FORMAT_TIME,
-				    GST_SEEK_FLAG_FLUSH,
-				    GST_SEEK_TYPE_SET, 
-				    G_GINT64_CONSTANT (1000000000) * seconds,
-				    GST_SEEK_TYPE_NONE, 
-				    0);
-	if (! gst_pad_send_event (player->priv->source_pad, event))
-		g_warning ("seek failed");
+	gst_element_set_state (player->priv->pipeline, GST_STATE_PAUSED);
+	gst_element_seek (player->priv->pipeline,
+			  1.0, 
+			  GST_FORMAT_TIME,
+			  GST_SEEK_FLAG_FLUSH,
+			  GST_SEEK_TYPE_SET, 
+			  G_GINT64_CONSTANT (1000000000) * seconds,
+			  GST_SEEK_TYPE_NONE, 
+			  0);
+	gst_element_get_state (player->priv->pipeline, NULL, NULL, -1);
+	
+	gst_element_set_state (player->priv->pipeline, GST_STATE_PLAYING);
 }
 
 
