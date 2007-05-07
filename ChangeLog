@@ -1,3 +1,8 @@
+2007-05-07  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c (player_start_cb): add a new line between title
+	and album in the notification message.
+
 2007-05-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* many_files: Save the album data in a album_info structure.

@@ -1278,9 +1278,11 @@ player_start_cb (GooPlayer       *player,
 				g_free (e_album);
 			}
 
+			g_string_append (info, "\n");
+
 			if (priv->album->artist != NULL) {
 				char *e_artist = g_markup_escape_text (priv->album->artist, -1);
-				g_string_append_printf (info, "<big>%s</big>\n", e_artist);
+				g_string_append_printf (info, "<big>%s</big>", e_artist);
 				g_free (e_artist);
 			}
 
