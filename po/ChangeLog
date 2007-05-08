@@ -1,3 +1,7 @@
+2007-05-08  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* POTFILES.skip: added data/GNOME_Goobox.server.in
+
 2007-05-06  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* POTFILES.in: added album-info.[ch]
