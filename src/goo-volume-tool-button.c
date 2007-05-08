@@ -23,25 +23,18 @@
  *
  */
 
-/* GTK - The GIMP Toolkit
+/* This file contains code taken from:
+ * 
+ * GTK - The GIMP Toolkit
  *
  * Copyright (C) 2003 Ricardo Fernandez Pascual
  * Copyright (C) 2004 Paolo Borelli
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * 
+ * and:
+ * 
+ * Volume Button / popup widget
+ * (c) copyright 2005 Ronald S. Bultje <rbultje@ronald.bitfreak.net>
+ * 
  */
 
 #include <config.h>
@@ -54,11 +47,12 @@
 #include "goo-stock.h"
 
 #define GOO_VOLUME_TOOL_BUTTON_GET_PRIVATE(object)(G_TYPE_INSTANCE_GET_PRIVATE ((object), GOO_TYPE_VOLUME_TOOL_BUTTON, GooVolumeToolButtonPrivate))
-#define FLOAT_EQUAL(a,b) (fabs (a - b) < 1e-6)
+#define FLOAT_EQUAL(a,b) (fabs ((a) - (b)) < 1e-6)
 
-#define SCALE_WIDTH 50
-#define SCALE_HEIGHT 145
-#define DEFAULT_VOLUME 50.0
+#define SCALE_WIDTH 25
+#define SCALE_HEIGHT 100
+#define DEFAULT_VOLUME 1.0
+#define CLICK_TIMEOUT 250
 
 struct _GooVolumeToolButtonPrivate {
 	GtkWidget   *button;
@@ -76,6 +70,9 @@ struct _GooVolumeToolButtonPrivate {
 	double       step;
 	gboolean     mute;
 	double       mute_value;
+	
+	guint        timeout : 1;
+	guint32      pop_time;
 };
 
 enum {
@@ -337,42 +334,81 @@ button_clicked_cb (GtkWidget           *widget,
 }
 
 
-static void
-arrow_button_toggled_cb (GtkToggleButton     *toggle_button,
-			 GooVolumeToolButton *button)
+static gboolean
+arrow_button_press_cb (GtkToggleButton     *toggle_button,
+		       GdkEventButton      *event,
+		       GooVolumeToolButton *button)
 {
 	GooVolumeToolButtonPrivate *priv;
+	GtkWidget      *widget;
+	GtkAdjustment  *adj;
+  	int             x, y, m, dx, dy, sx, sy, ystartoff, mouse_y;
+  	float           v;
+  	GdkEventButton *e;
 
+	gtk_toggle_button_set_active (toggle_button, TRUE);
+  	
 	priv = GOO_VOLUME_TOOL_BUTTON_GET_PRIVATE (button);
+	
+	widget = GTK_WIDGET (toggle_button);
+	adj = gtk_range_get_adjustment (GTK_RANGE (priv->volume_scale));
+	
+	priv->timeout = TRUE;
 
-	if (gtk_toggle_button_get_active (toggle_button)) {
-		GtkWidget     *widget = GTK_WIDGET (toggle_button);
-		GtkAllocation  allocation = widget->allocation;
-		int            root_x, root_y;
+    	gtk_window_set_screen (GTK_WINDOW (priv->popup_win), gtk_widget_get_screen (widget));
+  
+  	gdk_window_get_origin (widget->window, &x, &y);
+  	x += widget->allocation.x;
+  	y += widget->allocation.y;
+  
+	gtk_window_move (GTK_WINDOW (priv->popup_win),
+			 x, y - (SCALE_HEIGHT / 2));
+	update_volume_label (button);
+	gtk_widget_show_all (priv->popup_win);
 
-		gdk_window_get_origin (widget->window, &root_x, &root_y);
-		gtk_window_move (GTK_WINDOW (priv->popup_win),
-				 root_x + allocation.x,
-				 root_y + allocation.y + allocation.height);
-		update_volume_label (button);
+	gdk_window_get_origin (priv->popup_win->window, &dx, &dy);
+  	dy += priv->popup_win->allocation.y;
+  	gdk_window_get_origin (priv->volume_scale->window, &sx, &sy);
+  	sy += priv->volume_scale->allocation.y;
+  	ystartoff = sy - dy;
+  	mouse_y = event->y;
 
-		gtk_widget_show_all (priv->popup_win);
-		gtk_window_resize (GTK_WINDOW (priv->popup_win),
-				   SCALE_WIDTH,
-				   SCALE_HEIGHT);
+	v = gtk_range_get_value (GTK_RANGE (priv->volume_scale)) / (adj->upper - adj->lower);
+  	x += (widget->allocation.width - priv->popup_win->allocation.width) / 2;
+  	y -= ystartoff;
+  	y -= GTK_RANGE (priv->volume_scale)->min_slider_size / 2;
+  	m = priv->volume_scale->allocation.height - GTK_RANGE (priv->volume_scale)->min_slider_size;
+  	y -= m * (1.0 - v);
+  	y += mouse_y;
+  	gtk_window_move (GTK_WINDOW (priv->popup_win), x, y);
+  
+	gdk_window_get_origin (priv->volume_scale->window, &sx, &sy);
+	
+	gdk_pointer_grab (priv->popup_win->window, 
+			  TRUE,
+			  (GDK_POINTER_MOTION_MASK 
+			   | GDK_BUTTON_PRESS_MASK 
+			   | GDK_BUTTON_RELEASE_MASK),
+			  NULL, 
+			  NULL, 
+			  GDK_CURRENT_TIME);
+	gdk_keyboard_grab (priv->popup_win->window, TRUE, GDK_CURRENT_TIME);
+	gtk_widget_grab_focus (priv->volume_scale);
+	gtk_grab_add (priv->popup_win);
 
-		gdk_pointer_grab (priv->popup_win->window, 
-				  TRUE,
-				  (GDK_POINTER_MOTION_MASK 
-				   | GDK_BUTTON_PRESS_MASK 
-				   | GDK_BUTTON_RELEASE_MASK),
-				  NULL, 
-				  NULL, 
-				  GDK_CURRENT_TIME);
-		gdk_keyboard_grab (priv->popup_win->window, TRUE, GDK_CURRENT_TIME);
-		gtk_widget_grab_focus (priv->volume_scale);
-		gtk_grab_add (priv->popup_win);
-	} 
+	/* forward event to the slider */
+	e = (GdkEventButton *) gdk_event_copy ((GdkEvent *) event);
+	e->window = priv->volume_scale->window;
+	e->x = priv->volume_scale->allocation.width / 2;
+	m = priv->volume_scale->allocation.height - GTK_RANGE (priv->volume_scale)->min_slider_size;
+	e->y = ((1.0 - v) * m) + GTK_RANGE (priv->volume_scale)->min_slider_size / 2;
+	gtk_widget_event (priv->volume_scale, (GdkEvent *) e);
+	e->window = event->window;
+	gdk_event_free ((GdkEvent *) e);		
+
+	priv->pop_time = event->time;
+
+	return FALSE;
 }
 
 
@@ -384,6 +420,27 @@ ungrab (GooVolumeToolButton *button)
 	gtk_grab_remove (button->priv->popup_win);
 	gtk_widget_hide (button->priv->popup_win);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button->priv->arrow_button), FALSE);
+}
+
+
+static gboolean
+scale_button_release_cb (GtkToggleButton     *toggle_button,
+		         GdkEventButton      *event,
+		         GooVolumeToolButton *button)
+{
+	GooVolumeToolButtonPrivate *priv;
+	priv = GOO_VOLUME_TOOL_BUTTON_GET_PRIVATE (button);
+
+	if (priv->timeout) {
+		/* if we did a quick click, leave the window open; else, hide it */
+		if (event->time > priv->pop_time + CLICK_TIMEOUT) {
+			ungrab (button);
+			return FALSE;
+		}
+		priv->timeout = FALSE;
+	}
+	
+	return FALSE;
 }
 
 
@@ -423,9 +480,10 @@ popup_win_event_cb (GtkWidget           *widget,
 		} 
 		else {
 			int x, y, w, h;
+			
 			gdk_window_get_geometry (priv->popup_win->window, 
 						 &x, &y, &w, &h, NULL);
-			
+
 			if ((event->button.x < 0) 
 			    || (event->button.x > w)
 			    || (event->button.y < 0) 
@@ -486,9 +544,10 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 	GtkWidget *arrow;
 	GtkWidget *arrow_button;
 	GtkWidget *real_button;
+	GtkWidget *up_button;
+	GtkWidget *down_button;
 	GtkWidget *out_frame;
 	GtkWidget *volume_vbox;
-	GtkWidget *label;
 
 	priv->tips = gtk_tooltips_new ();
 	gtk_object_ref (GTK_OBJECT (priv->tips));
@@ -514,24 +573,32 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 	gtk_container_set_border_width (GTK_CONTAINER (volume_vbox), 0);
 	gtk_container_add (GTK_CONTAINER (out_frame), volume_vbox);
 
-	label = gtk_label_new (_("+"));
-	gtk_box_pack_start (GTK_BOX (volume_vbox), label, FALSE, FALSE, 0);
+	/*label = gtk_label_new (_("+"));*/
+	up_button = gtk_button_new_with_label (_("+"));
+	gtk_button_set_relief (GTK_BUTTON (up_button), GTK_RELIEF_NONE);
+	gtk_box_pack_start (GTK_BOX (volume_vbox), up_button, FALSE, FALSE, 0);
 
 	priv->volume_scale = gtk_vscale_new_with_range (0.0, 1.0, 0.1);
 	gtk_range_set_inverted (GTK_RANGE (priv->volume_scale), TRUE);
 	gtk_scale_set_draw_value (GTK_SCALE (priv->volume_scale), FALSE);
 	/*gtk_range_set_update_policy (GTK_RANGE (priv->volume_scale), GTK_UPDATE_DELAYED);*/
 	gtk_range_set_increments (GTK_RANGE (priv->volume_scale), 0.1, 0.1);
-
+	gtk_widget_set_size_request (priv->volume_scale, -1, SCALE_HEIGHT);
+	 
 	gtk_box_pack_start (GTK_BOX (volume_vbox), priv->volume_scale, TRUE, TRUE, 0);
 
 	g_signal_connect (priv->volume_scale, 
 			  "value_changed",
 			  G_CALLBACK (volume_scale_value_changed_cb), 
 			  button);
-
-	label = gtk_label_new (_("-"));
-	gtk_box_pack_start (GTK_BOX (volume_vbox), label, FALSE, FALSE, 0);
+	g_signal_connect (priv->volume_scale, 
+			  "button_release_event",
+			  G_CALLBACK (scale_button_release_cb), 
+			  button);
+			  
+	down_button = gtk_button_new_with_label (_("-"));
+	gtk_button_set_relief (GTK_BUTTON (down_button), GTK_RELIEF_NONE);
+	gtk_box_pack_start (GTK_BOX (volume_vbox), down_button, FALSE, FALSE, 0);
 
 	/**/
 
@@ -561,7 +628,8 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 	gtk_tooltips_set_tip (priv->tips, arrow_button, _("Change the volume level"), NULL);
 
 	gtk_widget_show_all (box);
-
+	gtk_widget_hide (button->priv->volume_label);
+	
 	gtk_container_add (GTK_CONTAINER (button), box);
 
 	button->priv->button = real_button;
@@ -583,8 +651,8 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 			  G_CALLBACK (button_clicked_cb), 
 			  button);
 	g_signal_connect (arrow_button, 
-			  "toggled",
-			  G_CALLBACK (arrow_button_toggled_cb), 
+			  "button_press_event",
+			  G_CALLBACK (arrow_button_press_cb), 
 			  button);
 
 	g_signal_connect (G_OBJECT (button->priv->button),

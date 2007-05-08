@@ -1261,7 +1261,7 @@ player_start_cb (GooPlayer       *player,
 		set_action_label_and_icon (window,
 					   "TogglePlay", 
 					   _("_Pause"), 
-					   _("Pause playing"),
+					   _("Pause"),
 					   GTK_STOCK_MEDIA_PAUSE,
 					   "/MenuBar/CDMenu/",
 					   NULL);
@@ -1698,11 +1698,12 @@ player_done_cb (GooPlayer       *player,
 		
 	case GOO_PLAYER_ACTION_PLAY:
 	case GOO_PLAYER_ACTION_STOP:
+	case GOO_PLAYER_ACTION_EJECT:
 		goo_player_info_set_time (GOO_PLAYER_INFO (priv->info), 0);
 		set_action_label_and_icon (window,
 					   "TogglePlay", 
 					   _("_Play"), 
-					   _("Play CD"),
+					   _("Play"),
 					   GTK_STOCK_MEDIA_PLAY,
 					   "/MenuBar/CDMenu/",
 					   NULL);
@@ -1710,10 +1711,10 @@ player_done_cb (GooPlayer       *player,
 			set_current_track_icon (window, GTK_STOCK_MEDIA_PLAY);
 			priv->next_timeout_handle = g_timeout_add (IDLE_TIMEOUT, next_time_idle, window);
 		} 
-		else if (action == GOO_PLAYER_ACTION_STOP) {
+		else if (action == GOO_PLAYER_ACTION_STOP) 
 			set_current_track_icon (window, GTK_STOCK_MEDIA_STOP);
-		}
-
+		else if (action == GOO_PLAYER_ACTION_EJECT) 
+			goo_player_update (priv->player);
 		break;
 		
 	case GOO_PLAYER_ACTION_PAUSE:
@@ -1721,14 +1722,10 @@ player_done_cb (GooPlayer       *player,
 		set_action_label_and_icon (window,
 					   "TogglePlay", 
 					   _("_Play"), 
-					   _("Play CD"),
+					   _("Play"),
 					   GTK_STOCK_MEDIA_PLAY,
 					   "/MenuBar/CDMenu/",
 					   NULL);
-		break;
-		
-	case GOO_PLAYER_ACTION_EJECT:
-		goo_player_update (priv->player);
 		break;
 		
 	default:
@@ -2273,20 +2270,6 @@ goo_window_construct (GooWindow  *window,
 					     action_toggle_entries, 
 					     n_action_toggle_entries, 
 					     window);
-	/*
-	gtk_action_group_add_radio_actions (actions, 
-					    view_as_entries, 
-					    n_view_as_entries,
-					    window->list_mode,
-					    G_CALLBACK (view_as_radio_action), 
-					    window);
-	gtk_action_group_add_radio_actions (actions, 
-					    sort_by_entries, 
-					    n_sort_by_entries,
-					    window->sort_type,
-					    G_CALLBACK (sort_by_radio_action), 
-					    window);
-	*/
 
 	priv->ui = ui = gtk_ui_manager_new ();
 	
@@ -2342,12 +2325,6 @@ goo_window_construct (GooWindow  *window,
 		action = gtk_ui_manager_get_action (ui, "/ToolBar/Pause");
 		g_object_set (action, "is_important", TRUE, NULL);
 		g_object_unref (action);
-
-		/*
-		action = gtk_ui_manager_get_action (ui, "/ToolBar/Stop");
-		g_object_set (action, "is_important", TRUE, NULL);
-		g_object_unref (action);
-		*/
 	}
 
 	{
@@ -2385,7 +2362,7 @@ goo_window_construct (GooWindow  *window,
 				    GTK_TOOL_ITEM (sep),
 				    VOLUME_BUTTON_POSITION);
 	}
-
+	
 	priv->volume_button = (GtkWidget*) goo_volume_tool_button_new ();
 	g_signal_connect (priv->volume_button, 
 			  "changed",
@@ -2831,7 +2808,7 @@ goo_window_eject (GooWindow *window)
 	if (window->priv->hibernate)
 		return;
 
-	if (!goo_player_eject (window->priv->player)) {
+	if (! goo_player_eject (window->priv->player)) {
 		GError *e = goo_player_get_error (window->priv->player);
 		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
 						   _("Could not eject the CD"), &e);
@@ -2843,7 +2820,7 @@ void
 goo_window_set_device (GooWindow  *window,
 			 const char *device_path)
 {
-	if (!goo_player_set_device (window->priv->player, device_path)) {
+	if (! goo_player_set_device (window->priv->player, device_path)) {
 		GError *e = goo_player_get_error (window->priv->player);
 		
 		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
@@ -3128,7 +3105,6 @@ goo_window_toggle_visibility (GooWindow *window)
 					   _("_Show Window"), 
 					   _("Show the main window"),
 					   NULL,
-					   /*"/MenuBar/View/",  FIXME*/
 					   "/TrayPopupMenu/",
 					   NULL);
 	} 

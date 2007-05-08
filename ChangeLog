@@ -1,5 +1,16 @@
 2007-05-08  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-window.c: use always the same tooltips for the playe and 
+	pause commands.
+	
+	* src/goo-volume-button.c:
+	* src/goo-volume-button.h: removed.
+	
+	* src/goo-volume-tool-button.c: allow to change the colume with a 
+	single click and drag action.
+
+2007-05-08  Paolo Bacchilega  <paobac@cvs.gnome.org>	
+	
 	* data/GNOME_Goobox.server.in.in: renamed as GNOME_Goobox.server.in
 	
 	* src/gthumb-enum-type.c:
