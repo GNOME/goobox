@@ -57,7 +57,7 @@
 #define HIDE_TRACK_LIST N_("Hide _tracks")
 #define SHOW_TRACK_LIST N_("Show _tracks")
 #define DEFAULT_DEVICE "/dev/cdrom"
-#define DEFAULT_VOLUME 1.0
+#define DEFAULT_VOLUME 100
 #define PLAYER_CHECK_RATE 100
 #define COVER_SIZE 80
 #define IDLE_TIMEOUT 200
@@ -525,8 +525,8 @@ goo_window_finalize (GObject *object)
 
 		/* Save preferences */
 		
-		eel_gconf_set_integer (PREF_GENERAL_VOLUME, goo_player_get_volume (priv->player));
-
+		eel_gconf_set_integer (PREF_GENERAL_VOLUME, (int) (goo_player_get_volume (priv->player) * 100.0));
+		
 		/**/
 
 		gtk_object_destroy (GTK_OBJECT (priv->tooltips));
@@ -2461,7 +2461,7 @@ goo_window_construct (GooWindow  *window,
 	goo_player_info_set_player (GOO_PLAYER_INFO (priv->info), priv->player);
 
 	goo_volume_tool_button_set_volume (GOO_VOLUME_TOOL_BUTTON (priv->volume_button), 
-					   eel_gconf_get_integer (PREF_GENERAL_VOLUME, DEFAULT_VOLUME),
+					   eel_gconf_get_integer (PREF_GENERAL_VOLUME, DEFAULT_VOLUME) / 100.0,
 					   TRUE);
 
 	/* Create the tray icon. */

@@ -1,5 +1,11 @@
 2007-05-08  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-volume-tool-button.c: use buttons insead of label for the
+	+ and -
+	* src/goo-window.c: save and restore the volume correctly.
+	
+2007-05-08  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
 	* src/goo-window.c: use always the same tooltips for the playe and 
 	pause commands.
 	
