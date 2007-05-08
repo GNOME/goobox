@@ -1,5 +1,5 @@
 <oaf_info>
-	<oaf_server iid="OAFIID:GNOME_Goobox_Application_Factory" type="exe" location="goo">
+	<oaf_server iid="OAFIID:GNOME_Goobox_Application_Factory" type="exe" location="goobox">
 		<oaf_attribute name="repo_ids" type="stringv">
 			<item value="IDL:GNOME/ObjectFactory:1.0"/>
 		</oaf_attribute>
