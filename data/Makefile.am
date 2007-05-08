@@ -10,11 +10,13 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 applicationsdir = $(datadir)/application-registry
 applications_DATA = goobox.applications
 
+@INTLTOOL_SCHEMAS_RULE@
+
 schemadir = @GCONF_SCHEMA_FILE_DIR@
 schema_in_files = goobox.schemas.in
 schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 
-@INTLTOOL_SCHEMAS_RULE@
+@INTLTOOL_SERVER_RULE@
 
 bonobodir = $(libdir)/bonobo
 serverdir = $(libdir)/bonobo/servers
@@ -22,7 +24,6 @@ server_in_files = GNOME_Goobox.server.in.in
 server_DATA = $(server_in_files:.server.in.in=.server)
 $(server_in_files:.server.in.in=.server.in): $(server_in_files)
 	sed -e "s|\@BONOBODIR\@|$(bonobodir)|" $< > $@
-@INTLTOOL_SERVER_RULE@
 
 if SCHEMAS_INSTALL
 install-data-local:

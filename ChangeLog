@@ -1,5 +1,9 @@
 2007-05-08  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* data/Makefile.am:
+	* po/POTFILES.in:
+	* src/Makefile.am: attempt to fix distcheck.
+
 	* configure.in: added AC_CONFIG_MACRO_DIR([m4])
 
 2007-05-07  Paolo Bacchilega  <paobac@cvs.gnome.org>

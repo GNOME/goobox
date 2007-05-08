@@ -153,7 +153,7 @@ gthumb-enum-types.h: $(GTH_HEADER_FILES) $(GLIB_MKENUMS)
 	&& (cmp -s xgen-$(@F) gthumb-enum-types.h || cp xgen-$(@F) gthumb-enum-types.h ) \
         && rm -f xgen-$(@F)
 
-gthumb-enum-types.c: $(GTH_HEADER_FILES) gthumb-enum-types.h
+gthumb-enum-types.c: gthumb-enum-types.h $(GTH_HEADER_FILES)
 	$(GLIB_MKENUMS) \
 		--fhead "#include <glib-object.h>\n" \
 		--fprod "\n/* enumerations from \"@filename@\" */\n#include \"@filename@\"" \
@@ -162,7 +162,7 @@ gthumb-enum-types.c: $(GTH_HEADER_FILES) gthumb-enum-types.h
 		--vtail "      { 0, NULL, NULL }\n    };\n    etype = g_@type@_register_static (\"@EnumName@\", values);\n  }\n  return etype;\n}\n" \
 		$^> xgen-$(@F) \
 	&& (cmp -s xgen-$(@F) gthumb-enum-types.c || cp xgen-$(@F) gthumb-enum-types.c ) \
-        && rm -f xgen-$(@F)
+	&& rm -f xgen-$(@F)
 
 goobox_LDADD = 					\
 	$(GOO_LIBS) 				\

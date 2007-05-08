@@ -14,8 +14,6 @@ src/bacon-cd-selection.c
 src/bacon-cd-selection.h
 src/cd-drive.c
 src/cd-drive.h
-src/cddb-slave-client.c
-src/cddb-slave-client.h
 src/dlg-cover-chooser.c
 src/dlg-cover-chooser.h
 src/dlg-extract.c
@@ -32,8 +30,6 @@ src/gconf-utils.c
 src/gconf-utils.h
 src/glib-utils.c
 src/glib-utils.h
-src/gnome-vfs-helpers.c
-src/gnome-vfs-helpers.h
 src/goo-application.c
 src/goo-application.h
 src/goo-cdrom-bsd.c
@@ -44,8 +40,6 @@ src/goo-cdrom.c
 src/goo-cdrom.h
 src/goo-error.c
 src/goo-error.h
-src/goo-player-cd.c
-src/goo-player-cd.h
 src/goo-player-info.c
 src/goo-player-info.h
 src/goo-player.c
