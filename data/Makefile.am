@@ -26,9 +26,6 @@ serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_Goobox.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
 
-$(server_in_files): $(server_in_files).in Makefile
-	sed -e "s|\@BONOBODIR\@|$(bonobodir)|" $< > $@
-
 @INTLTOOL_SERVER_RULE@
 
 EXTRA_DIST = 			\
@@ -46,5 +43,4 @@ DISTCLEANFILES =                \
 	$(schema_DATA)		\
 	$(desktop_in_files)     \
 	$(desktop_DATA)		\
-	$(server_DATA)		\
-	$(server_DATA).in
+	$(server_DATA)
