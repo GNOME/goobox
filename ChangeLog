@@ -1,5 +1,8 @@
 2007-05-08  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/gthumb-enum-type.c:
+	* src/gthumb-enum-type.h: removed generated files.
+
 	* data/Makefile.am:
 	* po/POTFILES.in:
 	* src/Makefile.am: attempt to fix distcheck.

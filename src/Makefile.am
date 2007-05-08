@@ -153,7 +153,7 @@ gthumb-enum-types.h: $(GTH_HEADER_FILES) $(GLIB_MKENUMS)
 	&& (cmp -s xgen-$(@F) gthumb-enum-types.h || cp xgen-$(@F) gthumb-enum-types.h ) \
         && rm -f xgen-$(@F)
 
-gthumb-enum-types.c: gthumb-enum-types.h $(GTH_HEADER_FILES)
+gthumb-enum-types.c: $(GTH_HEADER_FILES) gthumb-enum-types.h
 	$(GLIB_MKENUMS) \
 		--fhead "#include <glib-object.h>\n" \
 		--fprod "\n/* enumerations from \"@filename@\" */\n#include \"@filename@\"" \
