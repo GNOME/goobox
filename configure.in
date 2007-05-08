@@ -9,6 +9,7 @@ AM_CONFIG_HEADER(config.h)
 
 AM_PROG_LIBTOOL
 
+AC_CONFIG_MACRO_DIR([m4])
 GNOME_DOC_INIT
 
 dnl ==========================================================================
