@@ -215,7 +215,6 @@ static const gchar *ui_info =
 "  </popup>"
 "  <popup name='TrayPopupMenu'>"
 "    <menuitem action='TogglePlay'/>"
-"    <menuitem action='Stop'/>"
 "    <menuitem action='Next'/>"
 "    <menuitem action='Eject'/>"
 "    <separator/>"

@@ -381,8 +381,7 @@ arrow_button_press_cb (GtkToggleButton     *toggle_button,
   	y -= m * (1.0 - v);
   	y += mouse_y;
   	gtk_window_move (GTK_WINDOW (priv->popup_win), x, y);
-  
-	gdk_window_get_origin (priv->volume_scale->window, &sx, &sy);
+  	gdk_window_get_origin (priv->volume_scale->window, &sx, &sy);
 	
 	gdk_pointer_grab (priv->popup_win->window, 
 			  TRUE,
@@ -408,7 +407,7 @@ arrow_button_press_cb (GtkToggleButton     *toggle_button,
 
 	priv->pop_time = event->time;
 
-	return FALSE;
+	return TRUE;
 }
 
 
@@ -419,6 +418,7 @@ ungrab (GooVolumeToolButton *button)
 	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
 	gtk_grab_remove (button->priv->popup_win);
 	gtk_widget_hide (button->priv->popup_win);
+	
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button->priv->arrow_button), FALSE);
 }
 

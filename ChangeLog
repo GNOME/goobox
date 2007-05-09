@@ -1,3 +1,11 @@
+2007-05-09  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-volume-tool-button.c (arrow_button_press_cb): always
+	return TRUE.
+	* src/goo-window.c (player_done_cb): use g_idle_add instead of 
+	g_timeout_add.
+	* src/ui.h: removed Stop from the notification icon menu.
+
 2007-05-08  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-volume-tool-button.c: use buttons insead of label for the

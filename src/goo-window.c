@@ -1228,6 +1228,7 @@ set_action_label_and_icon (GooWindow  *window,
 	while (action_prefix != NULL) {
 		char      *path = g_strconcat (action_prefix, action_name, NULL);
 		GtkAction *action = gtk_ui_manager_get_action (priv->ui, path);
+		
 		if (action != NULL)
 			g_object_set (G_OBJECT (action), 
 				      "label", label, 
@@ -1709,7 +1710,7 @@ player_done_cb (GooPlayer       *player,
 					   NULL);
 		if (action == GOO_PLAYER_ACTION_PLAY) {
 			set_current_track_icon (window, GTK_STOCK_MEDIA_PLAY);
-			priv->next_timeout_handle = g_timeout_add (IDLE_TIMEOUT, next_time_idle, window);
+			priv->next_timeout_handle = g_idle_add (next_time_idle, window);
 		} 
 		else if (action == GOO_PLAYER_ACTION_STOP) 
 			set_current_track_icon (window, GTK_STOCK_MEDIA_STOP);
