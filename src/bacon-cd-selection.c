@@ -25,17 +25,10 @@
 #include "config.h"
 #endif
 
+#include <string.h>
 #include <glib.h>
 #include <glib/gi18n.h>
-
-#include <string.h>
-
-#include <gtk/gtkmenu.h>
-#include <gtk/gtkcombobox.h>
-#include <gtk/gtkliststore.h>
-#include <gtk/gtkcelllayout.h>
-#include <gtk/gtkcellrenderertext.h>
-
+#include <gtk/gtk.h>
 #include "bacon-cd-selection.h"
 #include "cd-drive.h"
 
@@ -54,10 +47,11 @@ enum {
 };
 
 struct BaconCdSelectionPrivate {
-	GList    *cdroms;
-	gboolean  have_file_image;
-	gboolean  show_recorders_only;
-	gboolean  free_cd_drives;
+	GtkListStore *store;
+	GList        *cdroms;
+	gboolean      have_file_image;
+	gboolean      show_recorders_only;
+	gboolean      free_cd_drives;
 };
 
 static void bacon_cd_selection_init (BaconCdSelection *bcs);
@@ -186,16 +180,21 @@ cdrom_combo_box (BaconCdSelection *bcs,
 	}
 
 	for (l = bcs->priv->cdroms, n = 0; l != NULL; l = l->next, n++) {
-		CDDrive *cdrom = l->data;
-
+		CDDrive     *cdrom = l->data;
+		GtkTreeIter  iter;
+		
 		if (cdrom->display_name == NULL) 
 			g_warning ("cdrom->display_name != NULL failed");
 
 		if (cdrom == current_drive)
 			active = n; 
 
-		gtk_combo_box_append_text (GTK_COMBO_BOX (bcs),
-					   cdrom->display_name ? cdrom->display_name : _("Unnamed CDROM"));
+		gtk_list_store_append (bcs->priv->store, &iter);
+		gtk_list_store_set (bcs->priv->store, &iter,
+				    0, cdrom->display_name ? cdrom->display_name : _("Unnamed CDROM"),
+				    1, GTK_STOCK_CDROM,
+				    -1);
+					   
 	}
 	gtk_combo_box_set_active (GTK_COMBO_BOX (bcs), active);
 
@@ -210,12 +209,18 @@ bacon_cd_selection_new (GList   *drives,
 	GtkWidget        *widget;
 	BaconCdSelection *bcs;
 	GtkCellRenderer  *cell;
-	GtkListStore     *store;
-
+	
 	widget = GTK_WIDGET (g_object_new (bacon_cd_selection_get_type (), NULL));
+	bcs = BACON_CD_SELECTION (widget);
+	
+	bcs->priv->store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+	gtk_combo_box_set_model (GTK_COMBO_BOX (widget), GTK_TREE_MODEL (bcs->priv->store));
 
-	store = gtk_list_store_new (1, G_TYPE_STRING);
-	gtk_combo_box_set_model (GTK_COMBO_BOX (widget), GTK_TREE_MODEL (store));
+	cell = gtk_cell_renderer_pixbuf_new ();
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget), cell, FALSE);
+	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), cell,
+					"stock-id", 1,
+					NULL);
 
 	cell = gtk_cell_renderer_text_new ();
 	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget), cell, TRUE);
@@ -223,8 +228,6 @@ bacon_cd_selection_new (GList   *drives,
 					"text", 0,
 					NULL);
 
-	bcs = BACON_CD_SELECTION (widget);
-	
 	if (drives != NULL)
 		bcs->priv->cdroms = g_list_copy (drives);
 	cdrom_combo_box (bcs, current_drive);
@@ -239,9 +242,10 @@ bacon_cd_selection_new (GList   *drives,
 
 static void
 bacon_cd_selection_set_have_file_image (BaconCdSelection *bcs,
-		gboolean have_file_image)
+					gboolean have_file_image)
 {
-	CDDrive *cdrom;
+	CDDrive     *cdrom;
+	GtkTreeIter  iter;
 
 	g_return_if_fail (bcs != NULL);
 	g_return_if_fail (BACON_IS_CD_SELECTION (bcs));
@@ -254,7 +258,8 @@ bacon_cd_selection_set_have_file_image (BaconCdSelection *bcs,
 		int    index;
 
 		index = g_list_length (bcs->priv->cdroms) - 1;
-		gtk_combo_box_remove_text (GTK_COMBO_BOX (bcs), index);
+		gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (bcs->priv->store), &iter, NULL, index);
+		gtk_list_store_remove (bcs->priv->store, &iter);
 
 		item = g_list_last (bcs->priv->cdroms);
 		cdrom = (CDDrive *)item->data;
@@ -267,11 +272,15 @@ bacon_cd_selection_set_have_file_image (BaconCdSelection *bcs,
 		gboolean activate = FALSE;
 
 		cdrom = cd_drive_get_file_image ();
-		gtk_combo_box_append_text (GTK_COMBO_BOX (bcs),
-				cdrom->display_name);
-		if (bcs->priv->cdroms == NULL) {
-			activate = TRUE;
-		}
+					   
+		gtk_list_store_append (bcs->priv->store, &iter);
+		gtk_list_store_set (bcs->priv->store, &iter,
+				    0, cdrom->display_name,
+				    1, GTK_STOCK_CDROM,
+				    -1);
+					   
+		if (bcs->priv->cdroms == NULL) 
+			activate = TRUE;		
 		bcs->priv->cdroms = g_list_append (bcs->priv->cdroms, cdrom);
 		gtk_widget_set_sensitive (GTK_WIDGET (bcs), TRUE);
 		if (activate != FALSE) {
@@ -324,7 +333,11 @@ bacon_cd_selection_set_recorders_only (BaconCdSelection *bcs,
 			      || drive->type & CDDRIVE_TYPE_DVD_RAM_RECORDER
 			      || drive->type & CDDRIVE_TYPE_DVD_RW_RECORDER
 			      || drive->type & CDDRIVE_TYPE_FILE)) {
-				gtk_combo_box_remove_text (GTK_COMBO_BOX (bcs), i);
+			      	GtkTreeIter iter;
+			      	
+			      	gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (bcs->priv->store), &iter, NULL, i);
+				gtk_list_store_remove (bcs->priv->store, &iter);
+				
 				if (bcs->priv->free_cd_drives)
 					cd_drive_free (drive);
 				bcs->priv->cdroms = g_list_delete_link (bcs->priv->cdroms, l);
@@ -349,9 +362,14 @@ bacon_cd_selection_set_recorders_only (BaconCdSelection *bcs,
 			if (!g_list_find_custom (bcs->priv->cdroms,
 						 drive,
 						 (GCompareFunc)compare_drives)) {
-				gtk_combo_box_insert_text (GTK_COMBO_BOX (bcs),
-							   i,
-							   drive->display_name);
+				GtkTreeIter iter;
+				
+				gtk_list_store_insert (bcs->priv->store, &iter, i);
+				gtk_list_store_set (bcs->priv->store, &iter,
+						    0, drive->display_name,
+						    1, GTK_STOCK_CDROM,
+						    -1);
+
 				bcs->priv->cdroms = g_list_insert (bcs->priv->cdroms,
 								   drive,
 								   i);
