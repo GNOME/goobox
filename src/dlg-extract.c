@@ -289,6 +289,7 @@ dlg_extract_selected (GooWindow *window)
 void
 dlg_extract (GooWindow *window)
 {
+	/* FIXME
 	GList *selected_tracks;
 	int    n_selected_tracks;
 	
@@ -298,6 +299,7 @@ dlg_extract (GooWindow *window)
 	
 	if (n_selected_tracks <= 1)
 		dlg_ripper (window, NULL);
-	else
-		dlg_extract_ask (window);
+	else*/
+	
+	dlg_extract_ask (window);
 }
