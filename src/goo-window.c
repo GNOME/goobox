@@ -72,6 +72,7 @@ struct _GooWindowPrivateData {
 	GtkWidget       *toolbar;
 	GtkWidget       *list_expander;
 
+	GtkTreeViewColumn *author_column;
 	WindowSortMethod sort_method;
 	GtkSortType      sort_type;
 
@@ -563,7 +564,8 @@ goo_window_finalize (GObject *object)
 
 
 static void
-add_columns (GtkTreeView *treeview)
+add_columns (GooWindow   *window,
+	     GtkTreeView *treeview)
 {
 	GtkCellRenderer   *renderer;
 	GtkTreeViewColumn *column;
@@ -594,12 +596,12 @@ add_columns (GtkTreeView *treeview)
 	gtk_tree_view_column_set_sort_column_id (column, COLUMN_NUMBER);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
-	/* Track */
+	/* Title */
 	
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Title"));
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
-	gtk_tree_view_column_set_resizable (column, FALSE);
+	gtk_tree_view_column_set_resizable (column, TRUE);
 	gtk_tree_view_column_set_expand (column, TRUE);
 	gtk_tree_view_column_set_sort_column_id (column, COLUMN_TITLE);
 	
@@ -616,6 +618,30 @@ add_columns (GtkTreeView *treeview)
                                              NULL);
 		
 	gtk_tree_view_append_column (treeview, column);
+
+	/* Author */
+	
+	window->priv->author_column = column = gtk_tree_view_column_new ();
+	gtk_tree_view_column_set_title (column, _("Artist"));
+	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+	gtk_tree_view_column_set_resizable (column, FALSE);
+	gtk_tree_view_column_set_expand (column, TRUE);
+	gtk_tree_view_column_set_sort_column_id (column, COLUMN_ARTIST);
+	
+	renderer = gtk_cell_renderer_text_new ();
+	
+	g_value_init (&value, PANGO_TYPE_ELLIPSIZE_MODE);
+	g_value_set_enum (&value, PANGO_ELLIPSIZE_END);
+	g_object_set_property (G_OBJECT (renderer), "ellipsize", &value);
+	g_value_unset (&value);
+	
+	gtk_tree_view_column_pack_start (column, renderer, TRUE);
+        gtk_tree_view_column_set_attributes (column, renderer,
+                                             "text", COLUMN_ARTIST,
+                                             NULL);
+		
+	gtk_tree_view_append_column (treeview, column);
+	gtk_tree_view_column_set_visible (column, FALSE);
 	
 	/* Time */
 	
@@ -1655,6 +1681,9 @@ goo_window_update_album (GooWindow *window)
 {
 	album_info_unref (window->priv->album);
 	window->priv->album = album_info_copy (goo_player_get_album (window->priv->player));
+	
+	gtk_tree_view_column_set_visible (window->priv->author_column,
+					  window->priv->album->various_artist);
 }
 
 
@@ -2190,7 +2219,7 @@ goo_window_construct (GooWindow  *window,
 	priv->list_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (priv->list_store));
 
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (priv->list_view), TRUE);
-	add_columns (GTK_TREE_VIEW (priv->list_view));
+	add_columns (window, GTK_TREE_VIEW (priv->list_view));
 	gtk_tree_view_set_enable_search (GTK_TREE_VIEW (priv->list_view), TRUE);
 	gtk_tree_view_set_search_column (GTK_TREE_VIEW (priv->list_view), COLUMN_TITLE);
 

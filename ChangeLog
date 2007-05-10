@@ -1,5 +1,10 @@
 2007-05-10  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-window.c: show the artist column when the CD is of
+	variuos artists.
+
+2007-05-10  Paolo Bacchilega  <paobac@cvs.gnome.org>
+	
 	* src/ui.h: 
 	* src/dlg-extract.c: always use dlg_extract_ask when selecting
 	extract.
