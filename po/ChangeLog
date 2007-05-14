@@ -1,3 +1,8 @@
+2007-05-14  Daniel Nylander  <po@danielnylander.se>
+
+	* sv.po: Updated Swedish translation.
+	* POTFILES.in: Added and removed missing files.
+
 2007-05-08  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* POTFILES.skip: added data/GNOME_Goobox.server.in

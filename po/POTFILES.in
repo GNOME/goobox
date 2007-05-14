@@ -1,10 +1,10 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 [encoding: UTF-8]
-data/GNOME_Goobox.server.in
-data/glade/goo_cover_chooser.glade
 data/glade/goobox.glade
-data/goobox.desktop.in
+data/glade/goo_cover_chooser.glade
+data/GNOME_Goobox.server.in
+data/goobox.desktop.in.in
 data/goobox.schemas.in
 src/actions.c
 src/actions.h
@@ -33,29 +33,25 @@ src/glib-utils.h
 src/goo-application.c
 src/goo-application.h
 src/goo-cdrom-bsd.c
+src/goo-cdrom.c
+src/goo-cdrom.h
 src/goo-cdrom-linux.c
 src/goo-cdrom-linux.h
 src/goo-cdrom-solaris.c
-src/goo-cdrom.c
-src/goo-cdrom.h
 src/goo-error.c
 src/goo-error.h
-src/goo-player-info.c
-src/goo-player-info.h
 src/goo-player.c
 src/goo-player.h
+src/goo-player-info.c
+src/goo-player-info.h
 src/goo-stock.c
 src/goo-stock.h
-src/goo-volume-button.c
-src/goo-volume-button.h
-src/goo-volume-tool-button.c
-src/goo-volume-tool-button.h
 src/goo-window.c
 src/goo-window.h
+src/goo-volume-tool-button.c
+src/goo-volume-tool-button.h
 src/gth-image-list.c
 src/gth-image-list.h
-src/gthumb-enum-types.c
-src/gthumb-enum-types.h
 src/gthumb-slide.c
 src/gthumb-slide.h
 src/gtk-file-chooser-preview.c
