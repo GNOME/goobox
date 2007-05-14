@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox doc\n"
-"POT-Creation-Date: 2006-11-16 03:55+0000\n"
-"PO-Revision-Date: 2006-11-16 20:32+0100\n"
+"POT-Creation-Date: 2007-05-06 03:32+0100\n"
+"PO-Revision-Date: 2007-05-14 21:06+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -10,8 +10,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: C/goobox.xml:18(title)
-msgid "<application>Goobox</application> Manual V1.0"
-msgstr "Handbok för <application>Goobox</application> v1.0"
+msgid "<application>CD Player</application> Manual V1.0"
+msgstr "Handbok för <application>Cd-spelare</application> v1.0"
 
 #: C/goobox.xml:20(para)
 msgid "User manual for Goobox the CD player."
@@ -99,16 +99,16 @@ msgid "Introduction"
 msgstr "Introduktion"
 
 #: C/goobox.xml:90(para)
-msgid "With <application>Goobox</application> you can play audio Compact Discs (CDs) and save the CD tracks as audio files."
-msgstr "<application>Goobox</application> kan spela upp cd-skivor (ljud) och spara cd-spåren som ljudfiler."
+msgid "With <application>CD Player</application> you can play audio Compact Discs (CDs) and save the CD tracks as audio files."
+msgstr "<application>Cd-spelare</application> kan spela upp cd-skivor (ljud) och spara cd-spåren som ljudfiler."
 
 #: C/goobox.xml:97(title)
 msgid "Quick Reference: Keyboard Shortcuts"
 msgstr "Snabbreferens: Tangentbordsgenvägar"
 
 #: C/goobox.xml:98(para)
-msgid "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> provide a quick reference for all of the <application>Goobox</application> keyword shortcuts. Look in the menus for other shortcuts."
-msgstr "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> tillhandahåller en snabbreferens för alla tangentbordsgenvägar i <application>Goobox</application>. Leta i menyerna efter andra genvägar."
+msgid "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> provide a quick reference for all of the <application>CD Player</application> keyword shortcuts. Look in the menus for other shortcuts."
+msgstr "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> tillhandahåller en snabbreferens för alla tangentbordsgenvägar i <application>Cd-spelare</application>. Se i menyerna efter andra genvägar."
 
 #: C/goobox.xml:103(title)
 msgid "Keyboard shortcuts"
