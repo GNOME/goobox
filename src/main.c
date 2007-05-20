@@ -246,21 +246,34 @@ release_data (void)
 CDDrive * 
 get_drive_from_device (const char *device)
 {
-	GList *scan;
+	CDDrive *result = NULL;
+	char    *resolved_device = NULL;
+	GList   *scan;
 	
 	if (device == NULL)
 		return NULL;
 	
+	if (resolve_all_symlinks (device, &resolved_device) != GNOME_VFS_OK)
+		resolved_device = NULL;
+
+	if (resolved_device == NULL)
+		return NULL;
+	
+	device = get_path_from_uri (resolved_device);
 	for (scan = Drives; scan; scan = scan->next) {
 		CDDrive *drive = scan->data;
 		
 		if (drive->device == NULL)
 			continue;
-		if (strcmp (drive->device, device) == 0)
-			return drive;
+		if (strcmp (drive->device, device) == 0) {
+			result = drive;
+			break;
+		}
 	}
 	
-	return NULL;
+	g_free (resolved_device);
+	
+	return result;
 }
 
 

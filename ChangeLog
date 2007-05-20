@@ -1,3 +1,14 @@
+2007-05-20  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* data/glade/properties.glade: started working on the properties
+	dialog.
+
+	* src/file-utils.c: 
+	* src/file-utils.h: 
+	* src/main.c: 
+	* src/goo-player.c: check whether the cd device is valid before
+	using it.
+
 2007-05-10  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-window.c: show the artist column when the CD is of

@@ -482,7 +482,7 @@ cdrom_state_changed_cb (GooCdrom  *cdrom,
 	char          *message = "";
 
 	if (goo_player_get_device (player) == NULL)
-		return;
+		return; 
 
 	cdrom_state = goo_cdrom_get_state (cdrom);
 
@@ -557,6 +557,20 @@ cdrom_state_changed_cb (GooCdrom  *cdrom,
 }
 
 
+static void
+create_cdrom (GooPlayer *player)
+{
+	if (player->priv->cdrom != NULL)
+		return;
+		
+	player->priv->cdrom = goo_cdrom_new (player->priv->drive->device);
+	g_signal_connect (player->priv->cdrom, 
+			  "state_changed",
+			  G_CALLBACK (cdrom_state_changed_cb), 
+			  GOO_PLAYER (player));
+}
+
+
 GooPlayer *
 goo_player_new (const char *device)
 {
@@ -565,12 +579,8 @@ goo_player_new (const char *device)
 	player = GOO_PLAYER (g_object_new (GOO_TYPE_PLAYER, NULL));
 
 	player->priv->drive = get_drive_from_device (device);
-	player->priv->cdrom = goo_cdrom_new (device);
-	
-	g_signal_connect (player->priv->cdrom, 
-			  "state_changed",
-			  G_CALLBACK (cdrom_state_changed_cb), 
-			  GOO_PLAYER (player));
+	if (player->priv->drive != NULL) 
+		create_cdrom (player);
 
 	return player;
 }
@@ -597,6 +607,14 @@ notify_action_start (GooPlayer *player)
 void
 goo_player_update (GooPlayer *player)
 {
+	if (player->priv->cdrom == NULL) {
+		goo_player_set_error (player, g_error_new (GOO_CDROM_ERROR, 0, "%s", _("Invalid device")));
+		goo_player_set_state (player, GOO_PLAYER_STATE_NO_DISC, TRUE);
+		goo_player_empty_list (player);
+		action_done (player, GOO_PLAYER_ACTION_LIST);		
+		return;
+	}
+	
 	player->priv->action = GOO_PLAYER_ACTION_UPDATE;
 	player->priv->state = GOO_PLAYER_STATE_UPDATING;
 	notify_action_start (player);
@@ -1107,12 +1125,14 @@ goo_player_set_device (GooPlayer  *player,
 	destroy_pipeline (player, FALSE);
 	remove_state_polling (player);
 
-	goo_cdrom_set_device (player->priv->cdrom, device);
 	player->priv->drive = get_drive_from_device (device);
-
-	if (device == NULL) 
+	if (player->priv->drive == NULL) 
 		goo_player_set_state (player, GOO_PLAYER_STATE_ERROR, FALSE);
-
+	else {
+		create_cdrom (player);
+		goo_cdrom_set_device (player->priv->cdrom, player->priv->drive->device);
+	}
+		
 	return TRUE;
 }
 
@@ -1120,7 +1140,10 @@ goo_player_set_device (GooPlayer  *player,
 const char *
 goo_player_get_device (GooPlayer *player)
 {
-	return player->priv->drive->device;
+	if (player->priv->drive == NULL)
+		return NULL;
+	else
+		return player->priv->drive->device;
 }
 
 

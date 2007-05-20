@@ -44,6 +44,7 @@
 
 #define BUF_SIZE 4096
 #define MAX_PATTERNS 128
+#define MAX_SYMLINKS_FOLLOWED 32
 
 
 gboolean
@@ -1288,4 +1289,295 @@ error:
                 return user_dir;
         } else
                 return strdup (home_dir);
+}
+
+
+char *
+get_uri_host (const char *uri)
+{
+	const char *idx;
+
+	idx = strstr (uri, "://");
+	if (idx == NULL)
+		return NULL;
+	idx = strstr (idx + 3, "/");
+	if (idx == NULL)
+		return NULL;
+	return g_strndup (uri, (idx - uri));
+}
+
+
+static char *
+build_uri (const char *s1,
+	   const char *s2)
+{
+	char *s = NULL;
+
+	if ((s1 == NULL) && (s2 == NULL))
+		return NULL;
+
+	if ((s1 == NULL) || (strcmp (s1, "") == 0))
+		return g_strdup (s2);
+	if ((s2 == NULL) || (strcmp (s2, "") == 0))
+		return g_strdup (s1);
+
+	if ((s1[strlen (s1) - 1] == GNOME_VFS_URI_PATH_CHR) || (s2[0] == GNOME_VFS_URI_PATH_CHR))
+		s = g_strconcat (s1, s2, NULL);
+	else
+		s = g_strconcat (s1, GNOME_VFS_URI_PATH_STR, s2, NULL);
+
+	return s;
+}
+
+
+const char *
+remove_host_from_uri (const char *uri)
+{
+	const char *idx;
+
+	idx = strstr (uri, "://");
+	if (idx == NULL)
+		return uri;
+	idx = strstr (idx + 3, "/");
+	if (idx == NULL)
+		return NULL;
+	return idx;
+}
+
+
+/*
+ * example 1) input : "/xxx/yyy/.."         output : "/xxx"
+ * example 2) input : "/xxx/yyy/../www"     output : "/xxx/www"
+ * example 3) input : "/xxx/../yyy/../www"  output : "/www"
+ * example 4) input : "/xxx/../yyy/../"     output : "/"
+ * example 5) input : "/xxx/./"             output : "/xxx"
+ * example 6) input : "/xxx/./yyy"          output : "/xxx/yyy"
+ *
+ * Note : PATH must be absolute.
+ */
+char *
+remove_special_dirs_from_path (const char *uri)
+{
+	const char  *path;
+	char       **pathv;
+	GList       *list = NULL;
+	int          i;
+	GString     *result_s;
+	char        *scheme;
+	char        *result;
+	int	     start_at;
+
+	scheme = get_uri_host (uri);
+
+	if ((scheme == NULL) && ! g_path_is_absolute (uri))
+		return g_strdup (uri);
+
+	path = remove_host_from_uri (uri);
+
+	if ((path == NULL) || (strstr (path, ".") == NULL))
+		return g_strdup (uri);
+
+	pathv = g_strsplit (path, "/", 0);
+
+	/* Trimmed uris might not start with a slash */
+	if (*path != '/')
+		start_at = 0;
+	else
+		start_at = 1;
+
+	/* Ignore first slash, if present. It will be re-added later. */
+	for (i = start_at; pathv[i] != NULL; i++) {
+		if (strcmp (pathv[i], ".") == 0) {
+			/* nothing to do. */
+		} else if (strcmp (pathv[i], "..") == 0) {
+			if (list == NULL) {
+				/* path error. */
+				g_strfreev (pathv);
+				return NULL;
+			}
+			list = g_list_delete_link (list, list);
+		} else
+			list = g_list_prepend (list, pathv[i]);
+	}
+
+	result_s = g_string_new (NULL);
+
+	/* re-insert URI scheme */
+	if (scheme != NULL) {
+		g_string_append (result_s, scheme);
+
+		if (start_at == 0)
+			/* delete trailing slash, because an extra one is added below */
+			g_string_truncate (result_s, result_s->len - 1);
+
+		g_free (scheme);
+	}
+
+	if (list == NULL)
+		g_string_append_c (result_s, '/');
+	else {
+		GList *scan;
+
+		list = g_list_reverse (list);
+		for (scan = list; scan; scan = scan->next) {
+			g_string_append_c (result_s, '/');
+			g_string_append (result_s, scan->data);
+		}
+	}
+	result = result_s->str;
+	g_string_free (result_s, FALSE);
+	g_strfreev (pathv);
+
+	return result;
+}
+
+
+static GnomeVFSResult
+resolve_symlinks (const char  *text_uri,
+		  const char  *relative_link,
+		  char       **resolved_text_uri,
+		  int          n_followed_symlinks)
+{
+	GnomeVFSResult     result = GNOME_VFS_OK;
+	char              *resolved_uri;
+	char 		  *uri;
+	char              *tmp;
+	GnomeVFSFileInfo  *info;
+	const char        *path;
+	char             **names;
+	int                i;
+
+	*resolved_text_uri = NULL;
+
+	if (text_uri == NULL)
+		return GNOME_VFS_OK;
+	if (*text_uri == '\0')
+		return GNOME_VFS_ERROR_INVALID_URI;
+
+	info = gnome_vfs_file_info_new ();
+
+	resolved_uri = get_uri_host (text_uri);
+	if (resolved_uri == NULL)
+		resolved_uri = g_strdup ("file://");
+
+	tmp = build_uri (text_uri, relative_link);
+	uri = remove_special_dirs_from_path (tmp);
+	g_free (tmp);
+
+	/* split the uri and resolve one name at a time. */
+
+	path = remove_host_from_uri (uri);
+	if (path == NULL) {
+		*resolved_text_uri = resolved_uri;
+		return GNOME_VFS_OK;
+	}
+
+	names = g_strsplit (path, GNOME_VFS_URI_PATH_STR, -1);
+	g_free (uri);
+
+	for (i = 0; (result == GNOME_VFS_OK) && (names[i] != NULL); i++) {
+		char  *try_uri;
+		char  *symlink;
+	    	char **symlink_names;
+	    	int    j;
+	    	char  *base_uri;
+
+		if (strcmp (names[i], "") == 0)
+			continue;
+
+		gnome_vfs_file_info_clear (info);
+
+		try_uri = g_strconcat (resolved_uri, GNOME_VFS_URI_PATH_STR, names[i], NULL);
+
+		result = gnome_vfs_get_file_info (try_uri, info, GNOME_VFS_FILE_INFO_DEFAULT);
+		if (result != GNOME_VFS_OK) {
+			g_free (try_uri);
+			break;
+		}
+
+		/* if names[i] isn't a symbolic link add it to the resolved uri and continue */
+
+		if (!((info->type == GNOME_VFS_FILE_TYPE_SYMBOLIC_LINK) &&
+		      (info->valid_fields & GNOME_VFS_FILE_INFO_FIELDS_SYMLINK_NAME))) {
+
+			g_free (resolved_uri);
+			resolved_uri = try_uri;
+
+			continue;
+		}
+
+		g_free (try_uri);
+
+		/* names[i] is a symbolic link */
+
+		n_followed_symlinks++;
+		if (n_followed_symlinks > MAX_SYMLINKS_FOLLOWED) {
+			result = GNOME_VFS_ERROR_TOO_MANY_LINKS;
+			break;
+		}
+
+		/* get the symlink escaping the value info->symlink_name */
+
+		symlink = g_strdup ("");
+		symlink_names = g_strsplit (info->symlink_name, GNOME_VFS_URI_PATH_STR, -1);
+		for (j = 0; symlink_names[j] != NULL; j++) {
+			char *symlink_name = symlink_names[j];
+	    		char *e_symlink_name;
+
+		    	if ((strcmp (symlink_name, "..") == 0) || (strcmp (symlink_name, ".") == 0))
+		    		e_symlink_name = g_strdup (symlink_name);
+		    	if (strcmp (symlink_name, "") == 0)
+		    		e_symlink_name = g_strdup (GNOME_VFS_URI_PATH_STR);
+		    	else
+		    		e_symlink_name = gnome_vfs_escape_string (symlink_name);
+
+		    	if (strcmp (symlink, "") == 0) {
+		    		g_free (symlink);
+		    		symlink = e_symlink_name;
+		    	}
+		    	else {
+		    		char *tmp;
+
+		   		tmp = build_uri (symlink, e_symlink_name);
+
+	    			g_free (symlink);
+	    			g_free (e_symlink_name);
+
+	    			symlink = tmp;
+	    		}
+	    	}
+	    	g_strfreev (symlink_names);
+
+		/* if the symlink is absolute reset the base uri, else use
+		 * the currently resolved uri as base. */
+
+	    	if (symlink[0] == GNOME_VFS_URI_PATH_CHR) {
+	    		g_free (resolved_uri);
+	    		base_uri = get_uri_host (text_uri);
+	    	} else
+	    		base_uri = resolved_uri;
+
+		/* resolve the new uri recursively */
+
+	    	result = resolve_symlinks (base_uri, symlink, &resolved_uri, n_followed_symlinks);
+
+	    	g_free (base_uri);
+		g_free (symlink);
+	}
+
+	g_strfreev (names);
+	gnome_vfs_file_info_unref (info);
+
+	if (result == GNOME_VFS_OK)
+		*resolved_text_uri = resolved_uri;
+
+	return result;
+}
+
+
+GnomeVFSResult
+resolve_all_symlinks (const char  *text_uri,
+		      char       **resolved_text_uri)
+{
+	return resolve_symlinks (text_uri, "", resolved_text_uri, 0);
 }
