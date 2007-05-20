@@ -1,5 +1,13 @@
 2007-05-20  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/main.h: 
+	* src/main.c: 
+	* src/goo-window.c: 
+	* src/goo-application.c: 
+	* src/GNOME_Goobox.idl: create a window for each device.
+
+2007-05-20  Paolo Bacchilega  <paobac@cvs.gnome.org>
+	
 	* data/glade/properties.glade: started working on the properties
 	dialog.
 

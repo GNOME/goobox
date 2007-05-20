@@ -63,19 +63,39 @@ goo_application_new (GdkScreen *screen)
 
 
 static void
+impl_goo_application_set_device (PortableServer_Servant  _servant,
+				 const CORBA_char       *device,
+			         CORBA_Environment      *ev)
+{
+	if (*device == '\0') 
+		device = NULL;
+
+	if (device != NULL) {
+		GooPlayer *player;
+		CDDrive   *current_drive;
+		
+		player = goo_window_get_player (GOO_WINDOW (main_window));
+		current_drive = goo_player_get_drive (player);
+		
+		if (current_drive == NULL) 
+			goo_window_set_device (GOO_WINDOW (main_window), device);
+		else {
+			main_window = get_window_from_device (device);
+			if (main_window == NULL)
+				main_window = goo_window_new (device);
+		}
+	}
+}
+
+
+static void
 impl_goo_application_present (PortableServer_Servant  _servant,
 			      CORBA_Environment      *ev)
 {
-	GooPlayer *player;
-
 	if (GTK_WIDGET_VISIBLE (main_window))
 		gtk_window_present (main_window);
 	else
 		goo_window_toggle_visibility (GOO_WINDOW (main_window));
-
-	player = goo_window_get_player (GOO_WINDOW (main_window));
-	if (goo_player_get_state (player) != GOO_PLAYER_STATE_PLAYING) 
-		goo_window_update (GOO_WINDOW (main_window));
 }
 
 
@@ -163,6 +183,8 @@ static void
 goo_application_class_init (GooApplicationClass *klass)
 {
         POA_GNOME_Goobox_Application__epv *epv = &klass->epv;
+        
+        epv->set_device  = impl_goo_application_set_device;
         epv->present     = impl_goo_application_present;
         epv->play        = impl_goo_application_play;
         epv->play_pause  = impl_goo_application_play_pause;

@@ -5,6 +5,7 @@ module GNOME {
   module Goobox {
 		
     interface Application : Bonobo::Unknown {
+      oneway void set_device (in string device);
       oneway void present ();
       oneway void play ();
       oneway void play_pause ();
@@ -12,8 +13,8 @@ module GNOME {
       oneway void prev ();
       oneway void eject ();
       oneway void hide_show ();
-      oneway void volume_up();
-      oneway void volume_down();
+      oneway void volume_up ();
+      oneway void volume_down ();
       oneway void quit ();
     };
     

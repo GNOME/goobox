@@ -117,7 +117,8 @@ static const GOptionEntry options[] = {
 /* -- Main -- */
 
 
-int main (int argc, char **argv)
+int main (int    argc, 
+	  char **argv)
 {
 	GnomeProgram *program;
 	char         *description;
@@ -274,6 +275,27 @@ get_drive_from_device (const char *device)
 	g_free (resolved_device);
 	
 	return result;
+}
+
+
+GtkWindow *
+get_window_from_device (const char *device)
+{
+	CDDrive *device_drive;
+	GList   *scan;
+	
+	device_drive = get_drive_from_device (device);
+	if (device_drive == NULL)
+		return NULL;
+		
+	for (scan = window_list; scan; scan = scan->next) {
+		GooWindow *window = scan->data;
+
+		if (goo_player_get_drive (goo_window_get_player (window)) == device_drive)
+			return (GtkWindow *) window;
+	}
+	
+	return NULL;
 }
 
 

@@ -125,7 +125,7 @@ struct _GooWindowPrivateData {
 
 static int icon_size = 0;
 static GnomeAppClass *parent_class = NULL;
-static GList *window_list = NULL;
+GList *window_list = NULL;
 
 
 enum {
@@ -2848,7 +2848,7 @@ goo_window_eject (GooWindow *window)
 
 void
 goo_window_set_device (GooWindow  *window,
-			 const char *device_path)
+		       const char *device_path)
 {
 	if (! goo_player_set_device (window->priv->player, device_path)) {
 		GError *e = goo_player_get_error (window->priv->player);

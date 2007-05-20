@@ -28,14 +28,16 @@
 #include "cd-drive.h"
 
 extern GtkWindow *main_window;
+extern GList     *window_list;
 extern int        AutoPlay;
 extern int        HideShow;
 extern GList     *Drives;
 
-void      system_notify         (const char *title,
-		    		 const char *msg,
-		    		 int         x,
-		    		 int         y);
-CDDrive * get_drive_from_device (const char *device);
+void        system_notify          (const char *title,
+		    		    const char *msg,
+		    		    int         x,
+		    		    int         y);
+CDDrive *   get_drive_from_device  (const char *device);
+GtkWindow * get_window_from_device (const char *device);
 
 #endif /* MAIN_H */
