@@ -25,6 +25,8 @@
 #include <gst/gst.h>
 #include "album-info.h"
 
+#define MBI_VARIOUS_ARTIST_ID  "89ad4ac3-39f7-470e-963a-56509c546377"
+
 
 AlbumInfo*
 album_info_new (void)
@@ -35,8 +37,9 @@ album_info_new (void)
 
 	album->ref = 1;
 	album->release_date = g_date_new ();
+	album_info_set_id (album, NULL);
 	album_info_set_title (album, NULL);
-	album_info_set_artist (album, NULL);
+	album_info_set_artist (album, NULL, NULL);
 	album_info_set_tracks (album, NULL);
 	
 	return album;
@@ -48,6 +51,7 @@ album_info_free (AlbumInfo *album)
 {
 	g_free (album->title);
 	g_free (album->artist);
+	g_free (album->artist_id);
 	g_free (album->genre);
 	g_free (album->asin);
 	g_date_free (album->release_date);
@@ -93,8 +97,9 @@ album_info_copy (AlbumInfo *src)
 	AlbumInfo *dest;
 
 	dest = album_info_new ();
+	album_info_set_id (dest, src->id);
 	album_info_set_title (dest, src->title);
-	album_info_set_artist (dest, src->artist);
+	album_info_set_artist (dest, src->artist, src->artist_id);
 	album_info_set_genre (dest, src->genre);
 	album_info_set_asin (dest, src->asin);
 	album_info_set_release_date (dest, src->release_date);
@@ -102,6 +107,18 @@ album_info_copy (AlbumInfo *src)
 	album_info_set_tracks (dest, src->tracks);
 	
 	return dest;
+}
+
+
+void
+album_info_set_id (AlbumInfo  *album,
+		   const char *id)
+{
+	g_free (album->id);
+	if (id != NULL)
+		album->id = g_strdup (id);
+	else
+		album->id = NULL;
 }
 
 
@@ -119,17 +136,22 @@ album_info_set_title (AlbumInfo  *album,
 
 void
 album_info_set_artist (AlbumInfo  *album,
-		       const char *artist)
+		       const char *artist,
+		       const char *artist_id)
 {
 	g_free (album->artist);
+	g_free (album->artist_id);
 	
-	album->various_artist = (artist != NULL) && (strcmp (artist, VARIUOS_ARTIST_ID) == 0);
-	if (album->various_artist)
-		album->artist = g_strdup (_("Various"));
-	else if (artist != NULL) 
+	album->various_artist = (artist_id != NULL) && (strcmp (artist_id, MBI_VARIOUS_ARTIST_ID) == 0);
+	if (artist != NULL) 
 		album->artist = g_strdup (artist);
+	else if (album->various_artist)
+		album->artist = g_strdup (_("Various"));
 	else
 		album->artist = NULL /*g_strdup (_("Unknown Artist"))*/;
+
+	if ((artist_id != NULL) && (strcmp (artist_id, KEEP_PREVIOUS_VALUE) != 0))
+		album->artist_id = g_strdup (artist_id);
 }
 
 
@@ -204,6 +226,30 @@ album_info_get_track (AlbumInfo  *album,
 	return NULL;	
 }
 				     
+				     
+void
+album_info_copy_metadata (AlbumInfo *to_album,
+			  AlbumInfo *from_album)
+{
+	GList *scan_to, *scan_from;
+
+	album_info_set_id (to_album, from_album->id);
+	album_info_set_title (to_album, from_album->title);
+	album_info_set_artist (to_album, from_album->artist, from_album->artist_id);
+	album_info_set_genre (to_album, from_album->genre);
+	album_info_set_asin (to_album, from_album->asin);
+	album_info_set_release_date (to_album, from_album->release_date);
+
+	for (scan_to = to_album->tracks, scan_from = from_album->tracks; 
+	     scan_to && scan_from; 
+	     scan_to = scan_to->next, scan_from = scan_from->next) {
+		TrackInfo *to_track = scan_to->data;
+		TrackInfo *from_track = scan_from->data;
+		
+		track_info_copy_metadata (to_track, from_track);
+	}
+}
+
 
 /* -- */
 

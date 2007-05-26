@@ -36,24 +36,28 @@ typedef struct {
 	int     min, sec;
 	char   *title;
 	char   *artist;
+	char   *artist_id;
 } TrackInfo;
 
 #define GOO_TYPE_TRACK_INFO (track_info_get_type ())
 
-GType           track_info_get_type    (void);
-TrackInfo *     track_info_new         (int         number,
-					gint64      from_sector, 
-					gint64      to_sector);
-void            track_info_ref         (TrackInfo  *track);
-void            track_info_unref       (TrackInfo  *track);
-TrackInfo *     track_info_copy        (TrackInfo  *track);
-void            track_info_set_title   (TrackInfo  *track,
-					const char *title);
-void            track_info_set_artist  (TrackInfo  *track,
-					const char *artist);
+GType           track_info_get_type       (void);
+TrackInfo *     track_info_new            (int         number,
+					   gint64      from_sector, 
+					   gint64      to_sector);
+void            track_info_ref            (TrackInfo  *track);
+void            track_info_unref          (TrackInfo  *track);
+TrackInfo *     track_info_copy           (TrackInfo  *track);
+void            track_info_set_title      (TrackInfo  *track,
+					   const char *title);
+void            track_info_set_artist     (TrackInfo  *track,
+					   const char *artist,
+					   const char *artist_id);
+void            track_info_copy_metadata  (TrackInfo  *to_info,
+					   TrackInfo  *from_info);
 
-GList *         track_list_dup         (GList      *track_list);
-void            track_list_free        (GList      *track_list);
+GList *         track_list_dup            (GList      *track_list);
+void            track_list_free           (GList      *track_list);
 
 
 #endif /* TRACK_INFO_H */

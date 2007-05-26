@@ -29,11 +29,14 @@
 #include "track-info.h"
 
 #define VARIUOS_ARTIST_ID "XYZ#!@$%"
+#define KEEP_PREVIOUS_VALUE "(keep)"
 
 typedef struct {
 	int       ref;
+	char     *id;
 	char     *title;
 	char     *artist;
+	char     *artist_id;
 	gboolean  various_artist;
 	char     *genre;
 	char     *asin;
@@ -50,10 +53,13 @@ AlbumInfo *     album_info_new              (void);
 void            album_info_ref              (AlbumInfo  *album);
 void            album_info_unref            (AlbumInfo  *album);
 AlbumInfo *     album_info_copy             (AlbumInfo  *album);
+void            album_info_set_id           (AlbumInfo  *album,
+					     const char *id);
 void            album_info_set_title        (AlbumInfo  *album,
 					     const char *title);
 void            album_info_set_artist       (AlbumInfo  *album,
-					     const char *artist);
+					     const char *artist,
+					     const char *artist_id);
 void            album_info_set_genre        (AlbumInfo  *album,
 					     const char *genre);				 
 void            album_info_set_asin         (AlbumInfo  *album,
@@ -64,6 +70,8 @@ void            album_info_set_tracks       (AlbumInfo  *album,
 					     GList      *tracks);
 TrackInfo *     album_info_get_track        (AlbumInfo  *album,
 					     int         track_number);
+void            album_info_copy_metadata    (AlbumInfo  *to_album,
+					     AlbumInfo  *from_album);
 
 GList *         album_list_dup          (GList      *album_list);
 void            album_list_free         (GList      *album_list);

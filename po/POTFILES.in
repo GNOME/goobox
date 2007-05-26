@@ -3,6 +3,7 @@
 [encoding: UTF-8]
 data/glade/goobox.glade
 data/glade/goo_cover_chooser.glade
+data/glade/properties.glade
 data/GNOME_Goobox.server.in
 data/goobox.desktop.in.in
 data/goobox.schemas.in
@@ -20,6 +21,8 @@ src/dlg-extract.c
 src/dlg-extract.h
 src/dlg-preferences.c
 src/dlg-preferences.h
+src/dlg-properties.c
+src/dlg-properties.h
 src/dlg-ripper.c
 src/dlg-ripper.h
 src/eggtrayicon.c

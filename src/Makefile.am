@@ -82,6 +82,8 @@ goobox_SOURCES = 				\
 	dlg-extract.h				\
 	dlg-preferences.c			\
 	dlg-preferences.h			\
+	dlg-properties.c			\
+	dlg-properties.h			\
 	dlg-ripper.c				\
 	dlg-ripper.h				\
 	eggtrayicon.c				\
@@ -120,6 +122,8 @@ goobox_SOURCES = 				\
 	gtk-utils.h				\
 	main.c					\
 	main.h					\
+	metadata.c				\
+	metadata.h				\
 	preferences.c				\
 	preferences.h				\
 	track-info.c				\

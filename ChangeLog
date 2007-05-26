@@ -1,3 +1,8 @@
+2007-05-26  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* many_files: added ability to search CD metadata in the properties
+	dialog.
+
 2007-05-20  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/main.h: 

@@ -41,6 +41,7 @@ struct _GooWindow
 {
 	GnomeApp              __parent;
 	GtkWidget            *preferences_dialog;
+	GtkWidget            *properties_dialog;
 	GooWindowPrivateData *priv;
 };
 
@@ -71,7 +72,6 @@ AlbumInfo * goo_window_get_album                 (GooWindow   *window);
 GList *     goo_window_get_tracks                (GooWindow   *window,
 						  gboolean     selection);
 GooPlayer * goo_window_get_player                (GooWindow   *window);
-void        goo_window_edit_cddata               (GooWindow   *window);
 void        goo_window_update_cover              (GooWindow   *window);
 void        goo_window_set_cover_image           (GooWindow   *window,
 						  const char  *filename);

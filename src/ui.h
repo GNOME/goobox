@@ -100,7 +100,7 @@ static GtkActionEntry action_entries[] = {
 	{ "Properties", GTK_STOCK_PROPERTIES,
 	  NULL, "<Ctrl>Return",
 	  N_("Edit the disc artist, album and the tracks titles"),
-	  G_CALLBACK (activate_action_edit_cddata) },
+	  G_CALLBACK (activate_action_properties) },
 	{ "Quit", GTK_STOCK_QUIT,
 	  NULL, NULL,
 	  N_("Quit the application"),

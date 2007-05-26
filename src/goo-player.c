@@ -36,6 +36,7 @@
 #include "glib-utils.h"
 #include "file-utils.h"
 #include "main.h"
+#include "metadata.h"
 
 #define TOC_OFFSET 150
 #define SECTORS_PER_SEC 75
@@ -628,14 +629,22 @@ goo_player_update (GooPlayer *player)
 
 
 static void
+goo_player_set_album (GooPlayer *player,
+		      AlbumInfo *album)
+{
+	if (player->priv->album == NULL)
+		return;
+	album_info_copy_metadata (player->priv->album, album);
+	action_done (player, GOO_PLAYER_ACTION_METADATA);
+}
+
+
+static void
 set_cd_metadata_from_rdf (GooPlayer *player, 
 			  char      *rdf)
 {
 	musicbrainz_t  mb;
-	int            n_albums;
-	char           data[1024];
-	int            n_track;          
-	GList         *scan;
+	GList         *albums;
 
 	if (rdf == NULL)
 		return;
@@ -643,68 +652,18 @@ set_cd_metadata_from_rdf (GooPlayer *player,
 	mb = mb_New ();
 	mb_UseUTF8 (mb, TRUE);
 	mb_SetResultRDF (mb, rdf);
-	
-	n_albums = mb_GetResultInt (mb, MBE_GetNumAlbums);
-	g_print ("[MB] Num Albums: %d\n", n_albums);
-	
-	if (n_albums < 1) 
-		goto set_cd_metadata_end;
-	
-	mb_Select1 (mb, MBS_SelectAlbum, 1);
-	
- 	if (mb_GetResultInt (mb, MBE_AlbumGetNumReleaseDates) >= 1) {
- 		int y = 0, m = 0, d = 0;
- 		
-		mb_Select1 (mb, MBS_SelectReleaseDate, 1);
- 		
-		mb_GetResultData (mb, MBE_ReleaseGetDate, data, sizeof (data));
-		debug (DEBUG_INFO, "==> [MB] RELEASE DATE: %s\n", data);
-		if (sscanf (data, "%d-%d-%d", &y, &m, &d) > 0) {
-			GDate *date;
-		
-			date = g_date_new_dmy ((d > 0) ? d : 1, (m > 0) ? m : 1, (y > 0) ? y : 1);
-			album_info_set_release_date (player->priv->album, date);
-			g_date_free (date);
-		}
- 		
-		mb_GetResultData (mb, MBE_ReleaseGetCountry, data, sizeof (data));
-		debug (DEBUG_INFO, "==> [MB] RELEASE COUNTRY: %s\n", data);
- 		
-		mb_Select (mb, MBS_Back);
- 	}
 
-	if (mb_GetResultData (mb, MBE_AlbumGetAmazonAsin, data, sizeof (data))) {
-		album_info_set_asin (player->priv->album, data);
-		debug (DEBUG_INFO, "==> [MB] ASIN: %s\n", data);
-	}
- 		
- 	if (mb_GetResultData (mb, MBE_AlbumGetAlbumName, data, sizeof (data))) 
-		album_info_set_title (player->priv->album, data);
- 
-	if (mb_GetResultData (mb, MBE_AlbumGetAlbumArtistId, data, sizeof (data))) 
-		if (g_ascii_strncasecmp (MBI_VARIOUS_ARTIST_ID, data, 64) == 0)
-			album_info_set_artist (player->priv->album, VARIUOS_ARTIST_ID);		
+	albums = get_album_list (mb);
+	if (albums != NULL) {
+		AlbumInfo *first_album = albums->data;
 		
-	if (mb_GetResultInt (mb, MBE_AlbumGetNumTracks) != player->priv->album->n_tracks)
-		goto set_cd_metadata_end;	
+		/* FIXME: ask the user which album to use if the query 
+		 * returned more than one album. */
 		
-	for (scan = player->priv->album->tracks, n_track = 1; scan; scan = scan->next, n_track++) {
-		TrackInfo *track = scan->data;
-			
-		if (mb_GetResultData1 (mb, MBE_AlbumGetTrackName, data, sizeof (data), n_track))
-			track_info_set_title (track, data);
-			
-		if (mb_GetResultData1 (mb, MBE_AlbumGetArtistName, data, sizeof (data), n_track)) {
-			track_info_set_artist (track, data);
-			if (player->priv->album->artist == NULL)
-				album_info_set_artist (player->priv->album, data);
-		}
-	}
+		goo_player_set_album (player, first_album);
+		album_list_free (albums);
+	}	
 
-	action_done (player, GOO_PLAYER_ACTION_METADATA);		
-
-set_cd_metadata_end:
-	
 	mb_Delete (mb);
 }
 

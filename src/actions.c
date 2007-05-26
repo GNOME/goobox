@@ -38,6 +38,7 @@
 #include "preferences.h"
 #include "dlg-extract.h"
 #include "dlg-preferences.h"
+#include "dlg-properties.h"
 
 
 void
@@ -366,14 +367,6 @@ activate_action_preferences (GtkAction *action,
 
 
 void
-activate_action_edit_cddata (GtkAction *action, 
-			     gpointer   data)
-{
-	goo_window_edit_cddata (GOO_WINDOW (data));
-}
-
-
-void
 activate_action_pick_cover_from_disk (GtkAction *action, 
 				      gpointer   data)
 {
@@ -402,4 +395,12 @@ activate_action_toggle_visibility (GtkAction *action,
 				   gpointer   data)
 {
 	goo_window_toggle_visibility (GOO_WINDOW (data));
+}
+
+
+void
+activate_action_properties (GtkAction *action, 
+		            gpointer   data)
+{
+	dlg_properties (GOO_WINDOW (data));
 }

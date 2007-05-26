@@ -76,7 +76,6 @@ struct _GooWindowPrivateData {
 	WindowSortMethod sort_method;
 	GtkSortType      sort_type;
 
-	GtkWidget       *preferences_dialog;
 	GtkWidget       *statusbar;
 	GtkWidget       *file_popup_menu;
 	GtkWidget       *tray_popup_menu;
@@ -2909,13 +2908,6 @@ goo_window_get_tracks (GooWindow *window,
 	gtk_tree_selection_selected_foreach (list_selection, add_selected_track, &tracks);
 
 	return g_list_reverse (tracks);
-}
-
-
-void
-goo_window_edit_cddata (GooWindow *window)
-{
-	/* FIXME */
 }
 
 

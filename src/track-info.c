@@ -43,7 +43,7 @@ track_info_new (int    number,
 	track->number = number;
 	
 	track_info_set_title (track, NULL);
-	track_info_set_artist (track, NULL);
+	track_info_set_artist (track, NULL, NULL);
 
 	track->from_sector = from_sector;
 	track->to_sector = to_sector;
@@ -107,7 +107,7 @@ track_info_copy (TrackInfo *src)
 
 	dest = track_info_new (src->number, src->from_sector, src->to_sector);
 	track_info_set_title (dest, src->title);
-	track_info_set_artist (dest, src->artist);
+	track_info_set_artist (dest, src->artist, src->artist_id);
 
 	return dest;
 }
@@ -127,13 +127,29 @@ track_info_set_title (TrackInfo  *track,
 
 void
 track_info_set_artist (TrackInfo  *track,
-		       const char *artist)
+		       const char *artist,
+		       const char *artist_id)
 {
 	g_free (track->artist);
+	g_free (track->artist_id);
+	
 	if (artist != NULL)
 		track->artist = g_strdup (artist);
 	else
 		track->artist = g_strdup (_("Unknown Artist"));
+	if (artist_id != NULL)
+		track->artist_id = g_strdup (artist_id);
+	else
+		track->artist_id = NULL;
+}
+
+
+void
+track_info_copy_metadata (TrackInfo  *to_track,
+			  TrackInfo  *from_track)
+{
+	track_info_set_title (to_track, from_track->title);
+	track_info_set_artist (to_track, from_track->artist, from_track->artist_id);
 }
 
 
