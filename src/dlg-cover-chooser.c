@@ -444,11 +444,11 @@ get_query (DialogData *data)
 	s_artist = gnome_vfs_escape_string (data->artist);
 	
 	query = g_strconcat ("http://images.google.com",
-			     "/images?q=",
+			     "/images?q=%22",
 			     s_artist,
-			     "+",
+			     "%22+%22",
 			     s_album,
-			     "+Cover",
+			     "%22+Album",
 			     /* "&imgsz=medium", FIXME*/
 			     NULL);
 			     
@@ -573,9 +573,6 @@ image_list_item_activated_cb (GthImageList *list,
 {
 	ok_cb (NULL, data);
 }
-
-
-
 
 
 static void

@@ -1,5 +1,8 @@
 2007-05-28  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/dlg-cover-chooser.c: quote title and artist in the cover query.
+	* src/dlg-properties.c: use the RESET stock icon.
+	
 	* src/track-info.c: 
 	* src/goo-player.h: 
 	* src/goo-player.c: 

@@ -25,8 +25,7 @@
 #include <gtk/gtk.h>
 #include <libgnome/libgnome.h>
 #include <glade/glade.h>
-#include <musicbrainz/queries.h>
-#include <musicbrainz/mb_c.h>
+#include "goo-stock.h"
 #include "dlg-properties.h"
 #include "metadata.h"
 
@@ -454,6 +453,7 @@ dlg_properties (GooWindow *window)
         GtkWidget  *p_prev_album_button;
         GtkWidget  *p_next_album_button;
         GtkWidget  *p_reset_album_button;
+        GtkWidget  *image;
         
         if (window->properties_dialog != NULL) {
         	gtk_window_present (GTK_WINDOW (window->properties_dialog));
@@ -495,6 +495,13 @@ dlg_properties (GooWindow *window)
 	p_reset_album_button = glade_xml_get_widget (data->gui, "p_undobutton");
 	
 	/**/
+	
+	image = gtk_image_new_from_stock (GOO_STOCK_RESET, GTK_ICON_SIZE_BUTTON);
+	g_object_set (p_reset_album_button, 
+		      "use_stock", TRUE,
+		      "label", GOO_STOCK_RESET,
+		      "image", image,
+		      NULL);
 	
 	data->list_store = gtk_list_store_new (N_COLUMNS,
 					       G_TYPE_INT,
