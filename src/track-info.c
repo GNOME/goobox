@@ -117,6 +117,9 @@ void
 track_info_set_title (TrackInfo  *track,
 		      const char *title)
 {
+	if (title == track->title)
+		return;
+		
 	g_free (track->title);
 	if (title != NULL)
 		track->title = g_strdup (title);
@@ -130,6 +133,9 @@ track_info_set_artist (TrackInfo  *track,
 		       const char *artist,
 		       const char *artist_id)
 {
+	if (artist == track->artist)
+		return;
+		
 	g_free (track->artist);
 	g_free (track->artist_id);
 	

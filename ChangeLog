@@ -1,3 +1,14 @@
+2007-05-28  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/track-info.c: 
+	* src/goo-player.h: 
+	* src/goo-player.c: 
+	* src/dlg-properties.c: 
+	* src/album-info.h: 
+	* src/album-info.c: 
+	* data/glade/properties.glade: save the CD properties.  Load the CD
+	properties instead of loading the cached RDF result.
+
 2007-05-26  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* many_files: added ability to search CD metadata in the properties

@@ -625,16 +625,25 @@ goo_player_update (GooPlayer *player)
 }
 
 
+static void
+goo_player_set_is_busy (GooPlayer *player,
+			gboolean   is_busy)
+{
+	player->priv->is_busy = is_busy;
+}
+
+
 /* -- goo_player_list -- */
 
 
-static void
+void
 goo_player_set_album (GooPlayer *player,
 		      AlbumInfo *album)
 {
 	if (player->priv->album == NULL)
 		return;
 	album_info_copy_metadata (player->priv->album, album);
+	album_info_save_to_cache (player->priv->album, player->priv->discid);
 	action_done (player, GOO_PLAYER_ACTION_METADATA);
 }
 
@@ -660,19 +669,11 @@ set_cd_metadata_from_rdf (GooPlayer *player,
 		/* FIXME: ask the user which album to use if the query 
 		 * returned more than one album. */
 		
-		goo_player_set_album (player, first_album);
+		goo_player_set_album (player, first_album);		
 		album_list_free (albums);
 	}	
 
 	mb_Delete (mb);
-}
-
-
-static void
-goo_player_set_is_busy (GooPlayer *player,
-			gboolean   is_busy)
-{
-	player->priv->is_busy = is_busy;
 }
 
 
@@ -766,7 +767,7 @@ check_get_cd_metadata (gpointer data)
 
 	if (exiting) {
 		goo_player_set_is_busy (player, FALSE);
-		destroy_pipeline (player, TRUE);
+		destroy_pipeline (player, FALSE);
 		return FALSE;
 	}
 
@@ -787,6 +788,7 @@ check_get_cd_metadata (gpointer data)
 	if (rdf != NULL) { 
 		set_cd_metadata_from_rdf (player, rdf);
 		save_rdf_to_cache (player, rdf);
+		album_info_save_to_cache (player->priv->album, player->priv->discid);
 		g_free (rdf);
 	}
 	
@@ -867,7 +869,12 @@ check_get_cd_tracks (gpointer data)
 	destroy_pipeline (player, TRUE);
 
 	/**/
-	
+
+	if (album_info_load_from_cache (player->priv->album, player->priv->discid)) {
+		action_done (player, GOO_PLAYER_ACTION_METADATA);
+		return FALSE;
+	}
+		
 	rdf = read_cached_rdf (player); 
 	if (rdf != NULL) {
 		set_cd_metadata_from_rdf (player, rdf);

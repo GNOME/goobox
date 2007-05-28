@@ -24,6 +24,8 @@
 #include <gnome.h>
 #include <gst/gst.h>
 #include "album-info.h"
+#include "glib-utils.h"
+#include "file-utils.h"
 
 #define MBI_VARIOUS_ARTIST_ID  "89ad4ac3-39f7-470e-963a-56509c546377"
 
@@ -114,6 +116,9 @@ void
 album_info_set_id (AlbumInfo  *album,
 		   const char *id)
 {
+	if (album->id == id)
+		return;
+		
 	g_free (album->id);
 	if (id != NULL)
 		album->id = g_strdup (id);
@@ -126,6 +131,9 @@ void
 album_info_set_title (AlbumInfo  *album,
 		      const char *title)
 {
+	if (album->title == title)
+		return;
+		
 	g_free (album->title);
 	if (title != NULL)
 		album->title = g_strdup (title);
@@ -139,6 +147,9 @@ album_info_set_artist (AlbumInfo  *album,
 		       const char *artist,
 		       const char *artist_id)
 {
+	if (album->artist == artist)
+		return;
+		
 	g_free (album->artist);
 	g_free (album->artist_id);
 	
@@ -159,6 +170,9 @@ void
 album_info_set_genre (AlbumInfo  *album,
 		      const char *genre)
 {
+	if (album->genre == genre)
+		return;
+		
 	g_free (album->genre);
 	album->genre = NULL;
 	
@@ -171,6 +185,9 @@ void
 album_info_set_asin (AlbumInfo  *album,
 		     const char *asin)
 {
+	if (album->asin == asin)
+		return;
+		
 	g_free (album->asin);
 	album->asin = NULL;
 	
@@ -195,6 +212,9 @@ album_info_set_tracks (AlbumInfo  *album,
 		       GList      *tracks)
 {
 	GList *scan;
+	
+	if (album->tracks == tracks)
+		return;
 	
 	track_list_free (album->tracks);
 	album->tracks = track_list_dup (tracks);
@@ -236,6 +256,7 @@ album_info_copy_metadata (AlbumInfo *to_album,
 	album_info_set_id (to_album, from_album->id);
 	album_info_set_title (to_album, from_album->title);
 	album_info_set_artist (to_album, from_album->artist, from_album->artist_id);
+	to_album->various_artist = from_album->various_artist;
 	album_info_set_genre (to_album, from_album->genre);
 	album_info_set_asin (to_album, from_album->asin);
 	album_info_set_release_date (to_album, from_album->release_date);
@@ -248,6 +269,173 @@ album_info_copy_metadata (AlbumInfo *to_album,
 		
 		track_info_copy_metadata (to_track, from_track);
 	}
+}
+
+
+static char *
+get_cache_path (AlbumInfo  *album,
+		const char *disc_id)
+{
+	char *path = NULL;
+	char *dir;
+	
+	if (disc_id == NULL)
+		return NULL;
+		
+	dir = g_build_filename (g_get_home_dir (), ".gnome2", "goobox.d", "albums", NULL);
+	if (ensure_dir_exists (dir, 0700) == GNOME_VFS_OK) 
+		path = g_build_filename (dir, disc_id, NULL);
+	g_free (dir);
+	
+	return path;
+}
+
+
+gboolean
+album_info_load_from_cache (AlbumInfo  *album,
+			    const char *disc_id)
+{
+	GKeyFile *f;
+	char     *path;
+	char     *s;
+	int       i;
+	GList    *scan;
+	
+	path = get_cache_path (album, disc_id);
+	if (path == NULL)
+		return FALSE;
+	
+	f = g_key_file_new (); 
+	if (! g_key_file_load_from_file (f, path, G_KEY_FILE_NONE, NULL)) {
+		g_free (path);
+		g_key_file_free (f);
+		return FALSE;
+	}
+	g_free (path);
+	
+	s = g_key_file_get_string (f, "Album", "Title", NULL);
+	if (s != NULL) {
+		album_info_set_title (album, s);
+		g_free (s);
+	}
+	
+	s = g_key_file_get_string (f, "Album", "Artist", NULL);
+	if (s != NULL) {
+		album_info_set_artist (album, s, "");
+		g_free (s);
+	}
+	album->various_artist = g_key_file_get_boolean (f, "Album", "VariousArtists", NULL);
+	
+	s = g_key_file_get_string (f, "Album", "Genre", NULL);
+	if (s != NULL) {
+		album_info_set_genre (album, s);
+		g_free (s);
+	}
+	
+	s = g_key_file_get_string (f, "Album", "ReleaseDate", NULL);
+	if (s != NULL) {
+		int y = 0, m = 0, d = 0;
+		
+		if (sscanf (s, "%d/%d/%d", &d, &m, &y) > 0) {
+			GDate *date;
+		
+			date = g_date_new_dmy ((d > 0) ? d : 1, (m > 0) ? m : 1, (y > 0) ? y : 1);
+			album_info_set_release_date (album, date);
+			g_date_free (date);
+		}
+		g_free (s);
+	}
+
+	i = 1;
+	for (scan = album->tracks; scan; scan = scan->next) {
+		TrackInfo *track = scan->data;
+		char      *group;
+		
+		group = g_strdup_printf ("Track %d", i);
+		s = g_key_file_get_string (f, group, "Title", NULL);
+		if (s != NULL) {
+			track_info_set_title (track, s);
+			g_free (s);
+		}
+		s = g_key_file_get_string (f, group, "Artist", NULL);
+		if (s != NULL) {
+			track_info_set_artist (track, s, "");
+			g_free (s);
+		}
+		g_free (group);
+		
+		i++;
+	}
+		
+	g_key_file_free (f);
+	
+	return TRUE;
+}
+
+
+void
+album_info_save_to_cache (AlbumInfo  *album,
+			  const char *disc_id)
+{
+	GKeyFile *f;
+	char     *data;
+	gsize     length;
+	GError   *error = NULL;
+	int       i;
+	GList    *scan;
+	
+	f = g_key_file_new ();
+	
+	if (album->title != NULL)
+		g_key_file_set_string (f, "Album", "Title", album->title);
+	if (album->artist != NULL)
+		g_key_file_set_string (f, "Album", "Artist", album->artist);
+	g_key_file_set_boolean (f, "Album", "VariousArtists", album->various_artist);
+	if (album->genre != NULL)
+		g_key_file_set_string (f, "Album", "Genre", album->genre);
+	if (album->asin != NULL)
+		g_key_file_set_string (f, "Album", "Asin", album->asin);
+	if (g_date_valid (album->release_date)) {
+		char s[64];
+		
+		g_date_strftime (s, sizeof(s), "%d/%m/%Y", album->release_date);
+		g_key_file_set_string (f, "Album", "ReleaseDate", s);
+	}
+
+	i = 1;
+	for (scan = album->tracks; scan; scan = scan->next) {
+		TrackInfo *track = scan->data;
+		char      *group;
+		
+		group = g_strdup_printf ("Track %d", i);
+		g_key_file_set_string (f, group, "Title", track->title);
+		if (track->artist != NULL)
+			g_key_file_set_string (f, group, "Artist", track->artist);
+		g_free (group);
+		
+		i++;
+	}
+	
+	data = g_key_file_to_data (f, &length, &error);
+	if (data == NULL) {
+		debug (DEBUG_INFO, "%s\n", error->message);
+		g_clear_error (&error);
+	}
+	else {	
+		char *path;
+		
+		path = get_cache_path (album, disc_id);
+		if (path != NULL) {
+			if (! g_file_set_contents (path, data, length, &error)) {
+				debug (DEBUG_INFO, "%s\n", error->message);
+				g_clear_error (&error);
+			}
+			g_free (path);
+		}
+		g_free (data);
+	}
+	
+	g_key_file_free (f);
 }
 
 

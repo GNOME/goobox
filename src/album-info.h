@@ -41,7 +41,7 @@ typedef struct {
 	char     *genre;
 	char     *asin;
 	GDate    *release_date;
-	GList    *tracks; /* TrackInfo * */
+	GList    *tracks; /* TrackInfo */
 	int       n_tracks;
 	gint64    total_length;
 } AlbumInfo;
@@ -72,6 +72,10 @@ TrackInfo *     album_info_get_track        (AlbumInfo  *album,
 					     int         track_number);
 void            album_info_copy_metadata    (AlbumInfo  *to_album,
 					     AlbumInfo  *from_album);
+gboolean        album_info_load_from_cache  (AlbumInfo  *album,
+			    		     const char *disc_id);
+void            album_info_save_to_cache    (AlbumInfo  *to_album,
+			  		     const char *disc_id);
 
 GList *         album_list_dup          (GList      *album_list);
 void            album_list_free         (GList      *album_list);
