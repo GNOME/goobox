@@ -1,5 +1,11 @@
 2007-05-28  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/dlg-cover-chooser.c: escape the entire query.
+	* data/glade/properties.glade: make the dialog resizable.
+	* src/dlg-properties.c: remove incompatible albums from the list.
+
+2007-05-28  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
 	* src/dlg-cover-chooser.c: quote title and artist in the cover query.
 	* src/dlg-properties.c: use the RESET stock icon.
 	

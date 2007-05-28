@@ -222,6 +222,35 @@ show_album (DialogData *data,
 }
 
 
+static GList *
+remove_incompatible_albums (GList     *albums, 
+			    AlbumInfo *album)
+{
+	GList *scan;
+	
+	for (scan = albums; scan; /* nothing */) {
+		AlbumInfo *album2 = scan->data;
+		gboolean   incompatible = FALSE;
+		
+		if (album2->n_tracks != album->n_tracks)
+			incompatible = TRUE;
+			
+		if (incompatible) {
+			GList *tmp = scan;
+			
+			scan = scan->next;
+			albums = g_list_remove_link (albums, tmp);
+			album_info_unref (tmp->data);
+			g_list_free (tmp);
+		}
+		else
+			scan = scan->next;
+	}
+	
+	return albums;
+}
+
+
 static void
 search_cb (GtkWidget  *widget, 
 	   DialogData *data)
@@ -237,7 +266,7 @@ search_cb (GtkWidget  *widget,
 	mb_args[0] = (char*) gtk_entry_get_text (GTK_ENTRY (data->p_title_entry));
 	mb_args[1] = NULL;
 	if (! mb_QueryWithArgs (mb, MBQ_FindAlbumByName, mb_args)) {
-		char mb_error[1024];
+		char  mb_error[1024];
 		char *s;
 		
 	        mb_GetQueryError (mb, mb_error, sizeof (mb_error));
@@ -247,6 +276,7 @@ search_cb (GtkWidget  *widget,
 	}
 	else {	
 		data->albums = get_album_list (mb);
+		data->albums = remove_incompatible_albums (data->albums, goo_window_get_album (data->window));
 		data->n_albums = g_list_length (data->albums);
 	
 		if (data->n_albums == 0) { 

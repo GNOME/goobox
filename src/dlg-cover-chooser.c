@@ -436,26 +436,15 @@ search_result_saved_cb (DialogData *data,
 static char*
 get_query (DialogData *data)
 {
-	char *s_album;
-	char *s_artist;
-	char *query;
+	char *s, *e, *q;
+
+	s = g_strdup_printf ("\"%s\" \"%s\"", data->album, data->artist);
+	e = gnome_vfs_escape_string (s);
+	q = g_strconcat ("http://images.google.com/images?q=", e, NULL);
+	g_free (e);
+	g_free (s);
 	
-	s_album = gnome_vfs_escape_string (data->album);
-	s_artist = gnome_vfs_escape_string (data->artist);
-	
-	query = g_strconcat ("http://images.google.com",
-			     "/images?q=%22",
-			     s_artist,
-			     "%22+%22",
-			     s_album,
-			     "%22+Album",
-			     /* "&imgsz=medium", FIXME*/
-			     NULL);
-			     
-	g_free (s_album);
-	g_free (s_artist);
-	
-	return query;
+	return q;
 }
 
 
