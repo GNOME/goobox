@@ -453,6 +453,7 @@ goo_window_update_list (GooWindow *window)
 	/**/
 
 	goo_player_info_set_total_time (GOO_PLAYER_INFO (priv->info), priv->album->total_length);
+	gtk_expander_set_expanded (GTK_EXPANDER (window->priv->list_expander), (goo_player_get_discid (window->priv->player) != NULL));
 	
 	/**/
 

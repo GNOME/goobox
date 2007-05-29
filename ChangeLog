@@ -1,5 +1,11 @@
 2007-05-29  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-window.c: show the track list only if a CD is present.
+	* data/glade/goo_cover_chooser.glade: moved the apply button after
+	the close button.
+	
+2007-05-29  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
 	* data/glade/goo_cover_chooser.glade: 
 	* src/dlg-cover-chooser.c: added button to cancel image searching.
 
