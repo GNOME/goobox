@@ -88,20 +88,31 @@ struct _DialogData {
 	GtkWidget           *progress_label;
 	GtkWidget           *ok_button;
 	GtkWidget           *revert_button;
+	GtkWidget           *cc_cancel_search_button;
 };
 
 
-/* called when the main dialog is closed. */
+static void
+cancel_search (DialogData *data)
+{
+	if (data->vfs_handle != NULL) {
+		gnome_vfs_async_cancel (data->vfs_handle);
+		data->vfs_handle = NULL;
+	}
+
+	if (data->load_id != 0) {
+		g_source_remove (data->load_id);
+		data->load_id = 0;
+	}
+}
+
+
 static void
 destroy_cb (GtkWidget  *widget, 
 	    DialogData *data)
 {
-	if (data->vfs_handle != NULL)
-		gnome_vfs_async_cancel (data->vfs_handle);
-
-	if (data->load_id != 0)
-		g_source_remove (data->load_id);
-
+	cancel_search (data);
+	
 	if (data->tmpdir != NULL) {
 		g_list_foreach (data->tmpfiles, (GFunc) gnome_vfs_unlink, NULL);
 		path_list_free (data->tmpfiles);
@@ -594,6 +605,22 @@ backup_cover_image (DialogData   *data)
 }
 
 
+static void
+cancel_search_button_clicked_cb (GtkWidget  *widget, 
+       				 DialogData *data)
+{
+	char *text;
+	
+	cancel_search (data);
+	
+	text = g_strdup_printf ("%u", data->urls);
+	gtk_label_set_text (GTK_LABEL (data->progress_label), text);
+	g_free (text);
+	
+	gtk_widget_set_sensitive (widget, FALSE);
+}
+
+
 void
 dlg_cover_chooser (GooWindow  *window,
 		   const char *album,
@@ -627,6 +654,8 @@ dlg_cover_chooser (GooWindow  *window,
 	data->revert_button = glade_xml_get_widget (data->gui, "cc_revertbutton");
 	btn_cancel = glade_xml_get_widget (data->gui, "cc_cancelbutton");
 	btn_help = glade_xml_get_widget (data->gui, "cc_helpbutton");
+
+	data->cc_cancel_search_button = glade_xml_get_widget (data->gui, "cc_cancel_search_button");
 
 	data->image_list = gth_image_list_new (THUMB_SIZE + THUMB_BORDER);
 	gth_image_list_set_view_mode (GTH_IMAGE_LIST (data->image_list),
@@ -675,6 +704,10 @@ dlg_cover_chooser (GooWindow  *window,
 	g_signal_connect (G_OBJECT (data->image_list), 
 			  "item_activated",
 			  G_CALLBACK (image_list_item_activated_cb),
+			  data);
+	g_signal_connect (G_OBJECT (data->cc_cancel_search_button), 
+			  "clicked",
+			  G_CALLBACK (cancel_search_button_clicked_cb),
 			  data);
 
 	/* run dialog. */
