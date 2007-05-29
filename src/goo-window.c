@@ -453,7 +453,7 @@ goo_window_update_list (GooWindow *window)
 	/**/
 
 	goo_player_info_set_total_time (GOO_PLAYER_INFO (priv->info), priv->album->total_length);
-	gtk_expander_set_expanded (GTK_EXPANDER (window->priv->list_expander), (goo_player_get_discid (window->priv->player) != NULL));
+	gtk_expander_set_expanded (GTK_EXPANDER (window->priv->list_expander), (priv->album->tracks != NULL));
 	
 	/**/
 
@@ -2439,7 +2439,7 @@ goo_window_construct (GooWindow  *window,
 
 	priv->list_expander = expander = gtk_expander_new_with_mnemonic (_(HIDE_TRACK_LIST));
 	gtk_container_add (GTK_CONTAINER (priv->list_expander), scrolled_window);
-	gtk_expander_set_expanded (GTK_EXPANDER (expander), eel_gconf_get_boolean (PREF_UI_PLAYLIST, TRUE));
+	gtk_expander_set_expanded (GTK_EXPANDER (expander), FALSE /*eel_gconf_get_boolean (PREF_UI_PLAYLIST, TRUE)*/);
 	g_signal_connect (expander,
 			  "notify::expanded",
 			  G_CALLBACK (list_expander_expanded_cb), 

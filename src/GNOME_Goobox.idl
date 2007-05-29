@@ -9,6 +9,7 @@ module GNOME {
       oneway void present ();
       oneway void play ();
       oneway void play_pause ();
+      oneway void stop ();
       oneway void next ();
       oneway void prev ();
       oneway void eject ();

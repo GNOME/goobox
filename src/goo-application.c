@@ -51,7 +51,6 @@ goo_application_new (GdkScreen *screen)
 
         display_name = gdk_screen_make_display_name (screen);
         registration_id = bonobo_activation_make_registration_id ("OAFIID:GNOME_Goobox_Application_Factory", display_name);
-
         factory = bonobo_generic_factory_new (registration_id,
                                               goo_application_factory,
                                               NULL);
@@ -112,6 +111,14 @@ impl_goo_application_play_pause (PortableServer_Servant  _servant,
 				 CORBA_Environment      *ev)
 {
 	goo_window_toggle_play (GOO_WINDOW (main_window));
+}
+
+
+static void
+impl_goo_application_stop (PortableServer_Servant  _servant,
+			   CORBA_Environment      *ev)
+{
+	goo_window_stop (GOO_WINDOW (main_window));
 }
 
 
@@ -188,6 +195,7 @@ goo_application_class_init (GooApplicationClass *klass)
         epv->present     = impl_goo_application_present;
         epv->play        = impl_goo_application_play;
         epv->play_pause  = impl_goo_application_play_pause;
+        epv->stop        = impl_goo_application_stop;
         epv->next        = impl_goo_application_next;
         epv->prev        = impl_goo_application_prev;
         epv->eject       = impl_goo_application_eject;

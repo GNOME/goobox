@@ -56,6 +56,7 @@ static NotifyNotification *notification = NULL;
 GtkWindow *main_window = NULL;
 int        AutoPlay = FALSE;
 int        PlayPause = FALSE;
+int        Stop = FALSE;
 int        Next = FALSE;
 int        Prev = FALSE;
 int        Eject = FALSE;
@@ -87,6 +88,9 @@ static const GOptionEntry options[] = {
           0 },
 	{ "play-pause", '\0', 0, G_OPTION_ARG_NONE, &PlayPause, 
           N_("Play/Pause"),
+          0 },
+        { "stop", '\0', 0, G_OPTION_ARG_NONE, &Stop, 
+          N_("Stop playing"),
           0 },
 	{ "next", '\0', 0, G_OPTION_ARG_NONE, &Next,
           N_("Play the next track"),
@@ -148,6 +152,23 @@ int main (int    argc,
                                       GNOME_PARAM_APP_LIBDIR, GOO_LIBDIR,
 				      NULL);
 
+        if (! g_thread_supported ()) {
+                g_thread_init (NULL);
+                gdk_threads_init ();
+        }
+
+	if (! gnome_vfs_init ()) 
+                g_error ("Cannot initialize the Virtual File System.");
+	gnome_authentication_manager_init ();
+	glade_gnome_init ();
+	
+#ifdef HAVE_LIBNOTIFY
+
+	if (! notify_init ("goobox")) 
+                g_warning ("Cannot initialize notification system.");
+                
+#endif /* HAVE_LIBNOTIFY */
+
 	factory = bonobo_activation_activate_from_id ("OAFIID:GNOME_Goobox_Application_Factory",
 						      Bonobo_ACTIVATION_FLAG_EXISTING_ONLY,
 						      NULL, NULL);
@@ -155,7 +176,7 @@ int main (int    argc,
 	if (factory != NULL) {
 		CORBA_Environment        env;
 		GNOME_Goobox_Application app;
-
+		
 		CORBA_exception_init (&env);
 
 		app = bonobo_activation_activate_from_id ("OAFIID:GNOME_Goobox_Application", 0, NULL, &env);
@@ -164,6 +185,8 @@ int main (int    argc,
                 	GNOME_Goobox_Application_play (app, &env);
 		else if (PlayPause)
                 	GNOME_Goobox_Application_play_pause (app, &env);
+                else if (Stop)
+                	GNOME_Goobox_Application_stop (app, &env);
 		else if (Next)
                 	GNOME_Goobox_Application_next (app, &env);
 		else if (Prev)
@@ -188,18 +211,6 @@ int main (int    argc,
 
 		exit (0);
 	}
-
-	if (! gnome_vfs_init ()) 
-                g_error ("Cannot initialize the Virtual File System.");
-	gnome_authentication_manager_init ();
-	glade_gnome_init ();
-	
-#ifdef HAVE_LIBNOTIFY
-
-	if (! notify_init ("goobox")) 
-                g_warning ("Cannot initialize notification system.");
-                
-#endif /* HAVE_LIBNOTIFY */
 
 	goo_stock_init ();
 	init_session (argv);
