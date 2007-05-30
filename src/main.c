@@ -631,26 +631,95 @@ init_mmkeys (void)
 #endif /* HAVE_MMKEYS */
 
 
-void 
-system_notify (const char *title,
-	       const char *msg,
-	       int         x,
-	       int         y)
-{
 #ifdef HAVE_LIBNOTIFY
 
-	if (! notify_is_initted())
+
+static gboolean
+play_next (gpointer user_data)
+{
+	GooWindow *window = user_data;
+	
+	goo_window_next (window);
+	return FALSE;
+}
+
+
+static void
+notify_action_next_cb (NotifyNotification *notification,
+                       char               *action,
+                       gpointer            user_data)
+{
+	GooWindow *window = user_data;
+	
+	notify_notification_close (notification, NULL);
+	g_idle_add (play_next, window);
+}
+
+
+static void
+notify_action_stop_cb (NotifyNotification *notification,
+                       char               *action,
+                       gpointer            user_data)
+{
+	GooWindow *window = user_data;
+	
+	goo_window_stop (window);
+	notify_notification_close (notification, NULL);
+}
+
+
+#endif /* HAVE_LIBNOTIFY */
+
+
+void 
+system_notify (GooWindow  *window,
+	       const char *title,
+	       const char *msg)
+{
+#ifdef HAVE_LIBNOTIFY
+        GtkWidget *tray_icon;
+	GdkScreen *screen = NULL;
+	int        x = -1, y = -1;
+
+	if (! notify_is_initted ())
 		return;
 
-	if (notification == NULL) 
-		notification = 	notify_notification_new (title, msg, "goobox", NULL);
+	tray_icon = goo_window_get_tray_icon (window);
+	if (tray_icon != NULL) {
+		GdkWindow *win = tray_icon->window;
+		int        w, h;
+				
+		gdk_window_get_origin (win, &x, &y);
+		gdk_window_get_geometry (win, NULL, NULL, &w, &h, NULL);
+		y += h;
+		x += (w / 2);
+		
+		screen = gtk_widget_get_screen (tray_icon);
+	}
+
+	if (notification == NULL) {
+		notification = notify_notification_new (title, msg, "goobox", NULL);
+		notify_notification_set_urgency (notification, NOTIFY_URGENCY_LOW);
+		notify_notification_add_action (notification,
+						GTK_STOCK_MEDIA_NEXT,
+						_("Next"),
+						notify_action_next_cb,
+						window,
+						NULL);
+		notify_notification_add_action (notification,
+						GTK_STOCK_MEDIA_STOP,
+						_("Stop"),
+						notify_action_stop_cb,
+						window,
+						NULL);		
+	}
 	else
 		notify_notification_update (notification, title, msg, "goobox");
-	
-	if ((x >= 0) && (y >= 0)) 
+
+	/*if ((x >= 0) && (y >= 0)) 
 		notify_notification_set_geometry_hints (notification,
-							NULL,
-							x, y);
+							screen,
+							x, y);*/
 
 	notify_notification_show (notification, NULL);
 	

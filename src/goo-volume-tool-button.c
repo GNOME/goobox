@@ -201,7 +201,6 @@ goo_volume_tool_button_init (GooVolumeToolButton *button)
 	button->priv = GOO_VOLUME_TOOL_BUTTON_GET_PRIVATE (button);
 	button->priv->mute = FALSE;
 	button->priv->mute_value = 0.0;
-	
 	button->priv->value = 0.0;
 }
 
@@ -212,9 +211,7 @@ goo_volume_tool_button_finalize (GObject *object)
 	GooVolumeToolButton *button;
 
 	button = GOO_VOLUME_TOOL_BUTTON (object);
-
 	gtk_object_unref (GTK_OBJECT (button->priv->tips));
-
 	G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 

@@ -1,3 +1,12 @@
+2007-05-30  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/main.h: 
+	* src/main.c: 
+	* src/goo-window.h: 
+	* src/goo-volume-tool-button.c: 
+	* src/goo-window.c: Added next/stop actions in the notification.
+	Do not use the geometry hints.
+
 2007-05-29  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-window.c: 

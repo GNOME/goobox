@@ -23,8 +23,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <gtk/gtkwindow.h>
-
+#include "goo-window.h"
 #include "cd-drive.h"
 
 extern GtkWindow *main_window;
@@ -33,10 +32,9 @@ extern int        AutoPlay;
 extern int        HideShow;
 extern GList     *Drives;
 
-void        system_notify          (const char *title,
-		    		    const char *msg,
-		    		    int         x,
-		    		    int         y);
+void        system_notify          (GooWindow  *window,
+	       			    const char *title,
+	       			    const char *msg);
 CDDrive *   get_drive_from_device  (const char *device);
 GtkWindow * get_window_from_device (const char *device);
 

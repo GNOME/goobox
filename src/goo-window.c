@@ -454,7 +454,7 @@ goo_window_update_list (GooWindow *window)
 
 	goo_player_info_set_total_time (GOO_PLAYER_INFO (priv->info), priv->album->total_length);
 	gtk_expander_set_expanded (GTK_EXPANDER (window->priv->list_expander), (priv->album->tracks != NULL));
-	
+		
 	/**/
 
 	gtk_list_store_clear (priv->list_store);
@@ -1296,35 +1296,24 @@ player_start_cb (GooPlayer       *player,
 #ifdef HAVE_LIBNOTIFY
 
 		if (priv->notify_action) {
-			GString *info = g_string_new("");
-			int      x = -1, y = -1;
+			GString *info = g_string_new ("");
 
 			if (priv->album->title != NULL) {
 				char *e_album = g_markup_escape_text (priv->album->title, -1);
+				
 				g_string_append_printf (info, "<i>%s</i>", e_album);
 				g_free (e_album);
 			}
-
 			g_string_append (info, "\n");
-
 			if (priv->album->artist != NULL) {
 				char *e_artist = g_markup_escape_text (priv->album->artist, -1);
+				
 				g_string_append_printf (info, "<big>%s</big>", e_artist);
 				g_free (e_artist);
 			}
-
-			if (priv->tray != NULL) {
-				GdkWindow *win = priv->tray->window;
-				int        w, h;
-				gdk_window_get_origin (win, &x, &y);
-				gdk_window_get_geometry (win, NULL, NULL, &w, &h, NULL);
-				y += h;
-				x += (w / 2);
-			}
-			system_notify (priv->current_track->title,
-				       info->str,
-				       x, y);
-
+			system_notify (window,
+				       priv->current_track->title,
+				       info->str);
 			g_string_free (info, TRUE);
 			priv->notify_action = FALSE;
 		}
@@ -1635,6 +1624,13 @@ goo_window_get_current_cd_autofetch (GooWindow *window)
 	return value;
 }
 
+
+GtkWidget *
+goo_window_get_tray_icon (GooWindow *window)
+{
+	return window->priv->tray_icon;
+}
+ 
 
 static void
 auto_fetch_cover_image (GooWindow *window)
