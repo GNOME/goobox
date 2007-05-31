@@ -3,7 +3,7 @@
 /*
  *  Goo
  *
- *  Copyright (C) 2004 Free Software Foundation, Inc.
+ *  Copyright (C) 2004, 2007 Free Software Foundation, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,11 +23,9 @@
 #ifndef GOO_PLAYER_INFO_H
 #define GOO_PLAYER_INFO_H
 
-#include <glib.h>
 #include <glib-object.h>
 #include <gtk/gtkhbox.h>
 #include "goo-window.h"
-#include "goo-player.h"
 
 #define GOO_TYPE_PLAYER_INFO              (goo_player_info_get_type ())
 #define GOO_PLAYER_INFO(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GOO_TYPE_PLAYER_INFO, GooPlayerInfo))
@@ -52,25 +50,13 @@ struct _GooPlayerInfoClass
 
 	/*<signals>*/
 
-        void        (*cover_clicked)    (GooPlayerInfo   *info);
-        void        (*skip_to)          (GooPlayerInfo   *info,
-					 int              seconds);
+        void (*cover_clicked) (GooPlayerInfo *info);
+        void (*skip_to)       (GooPlayerInfo *info,
+			       int            seconds);
 
 };
 
-GType            goo_player_info_get_type         (void);
-GtkWidget *      goo_player_info_new              (GooWindow      *window,
-						   GooPlayer      *player);
-void             goo_player_info_set_player       (GooPlayerInfo  *info,
-						   GooPlayer      *player);
-void             goo_player_info_update_state     (GooPlayerInfo  *info);
-void             goo_player_info_set_total_time   (GooPlayerInfo  *info,
-						   gint64          current_time);
-void             goo_player_info_set_time         (GooPlayerInfo  *info,
-						   gint64          current_time);
-void             goo_player_info_set_sensitive    (GooPlayerInfo  *info,
-						   gboolean        value);
-void             goo_player_info_set_cover        (GooPlayerInfo  *info,
-						   const char     *cover);
+GType       goo_player_info_get_type (void);
+GtkWidget * goo_player_info_new      (GooWindow *window);
 
 #endif /* GOO_PLAYER_INFO_H */

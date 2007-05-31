@@ -3,7 +3,7 @@
 /*
  *  Goo
  *
- *  Copyright (C) 2004 Free Software Foundation, Inc.
+ *  Copyright (C) 2004, 2007 Free Software Foundation, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,7 +44,6 @@
 
 struct _GooPlayerInfoPrivateData {
 	GooWindow   *window;
-	GooPlayer   *player;
 	GtkWidget   *title1_label;
 	GtkWidget   *title2_label;
 	GtkWidget   *title3_label;
@@ -62,6 +61,9 @@ struct _GooPlayerInfoPrivateData {
 	gint64       track_length;
 	gboolean     dragging;
 	guint        update_id;
+	
+	double       fraction;
+	guint        update_progress_timeout;
 };
 
 enum {
@@ -587,8 +589,6 @@ goo_player_info_finalize (GObject *object)
 			g_source_remove (info->priv->update_id);
 			info->priv->update_id = 0;
 		}
-		if (info->priv->player != NULL)
-			g_object_unref (info->priv->player);
 		gtk_object_unref (GTK_OBJECT (info->priv->tips));
 		g_free (info->priv);
 		info->priv = NULL;
@@ -598,39 +598,46 @@ goo_player_info_finalize (GObject *object)
 }
 
 
-GtkWidget *
-goo_player_info_new (GooWindow *window,
-		     GooPlayer *player)
+static void
+goo_player_info_set_time (GooPlayerInfo  *info,
+			  gint64          current_time)
 {
-	GooPlayerInfo *info;
-	
-	info = GOO_PLAYER_INFO (g_object_new (GOO_TYPE_PLAYER_INFO, NULL));
+	GooPlayerInfoPrivateData *priv = info->priv;
 
-	if (window != NULL) 
-		info->priv->window = window;
+	if (priv->dragging) 
+		return;
 
-	if (player != NULL) {
-		g_object_ref (player);
-		info->priv->player = player;
-        }
+	set_time_string (priv->current_time, current_time);
+	sprintf (priv->time, _("%s / %s"), priv->current_time, priv->total_time);
+	set_time (info, priv->time);
 
-	return GTK_WIDGET (info);
+	g_signal_handlers_block_by_data (priv->time_scale, info);
+	gtk_range_set_value (GTK_RANGE (priv->time_scale), (double) current_time / priv->track_length);
+	g_signal_handlers_unblock_by_data (priv->time_scale, info);
 }
 
 
-void
-goo_player_info_set_player (GooPlayerInfo  *info,
-			    GooPlayer      *player)
+static gboolean
+update_progress_cb (gpointer data)
 {
-	if (info->priv->player != NULL) {
-		g_object_unref (info->priv->player);
-		info->priv->player = NULL;
-	}
+	GooPlayerInfo *info = data;
 
-	if (player != NULL) {
-		g_object_ref (player);
-		info->priv->player = player;
-	}
+	if ((info->priv->fraction < 0.0) || (info->priv->fraction > 1.0))
+		/* nothing */;
+	else
+		goo_player_info_set_time (info, info->priv->fraction * info->priv->track_length);
+	
+	return FALSE;
+}
+
+
+static void
+player_progress_cb (GooPlayer     *player,
+		    double         fraction,
+		    GooPlayerInfo *info)
+{
+	info->priv->fraction = fraction;
+	info->priv->update_progress_timeout = g_idle_add (update_progress_cb, info);
 }
 
 
@@ -655,17 +662,21 @@ update_subtitle (GooPlayerInfo *info,
 }
 
 
-void
+static void
 goo_player_info_update_state (GooPlayerInfo  *info)
 {
 	GooPlayerInfoPrivateData *priv = info->priv;
 	GooPlayerState  state;
 	AlbumInfo      *album;
+	GooPlayer      *player;
 	
-	if (priv->player == NULL)
+	if (info->priv->window == NULL)
+		return;
+	player = goo_window_get_player (info->priv->window);
+	if (player == NULL)
 		return;
 
-	state = goo_player_get_state (priv->player);
+	state = goo_player_get_state (player);
 	album = goo_window_get_album (info->priv->window);
 
 	if ((state == GOO_PLAYER_STATE_PLAYING) 
@@ -687,7 +698,7 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 	if ((state == GOO_PLAYER_STATE_ERROR)
 	    || (state == GOO_PLAYER_STATE_NO_DISC)
 	    || (state == GOO_PLAYER_STATE_DATA_DISC)) {
-		GError *error = goo_player_get_error (priv->player);
+		GError *error = goo_player_get_error (player);
 		
 		set_title1 (info, error->message);
 		set_title2 (info, "");
@@ -697,7 +708,7 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 	else {
 		TrackInfo *track;
 		
-		track = album_info_get_track (album, goo_player_get_current_track (priv->player));
+		track = album_info_get_track (album, goo_player_get_current_track (player));
 
 		if (track != NULL) {
 			char *state_s = "";
@@ -760,7 +771,33 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 }
 
 
-void
+static void
+goo_player_info_set_sensitive (GooPlayerInfo  *info,
+			       gboolean        value)
+{
+	gtk_widget_set_sensitive (info->priv->cover_button, value);
+}
+
+
+static void
+player_state_changed_cb (GooPlayer     *player,
+			 GooPlayerInfo *info)
+{
+	goo_player_info_update_state (info);
+	goo_player_info_set_sensitive (info, (goo_player_get_state (player) != GOO_PLAYER_STATE_ERROR) && (goo_player_get_discid (player) != NULL));
+}
+
+
+static void
+player_start_cb (GooPlayer       *player,
+		 GooPlayerAction  action,
+		 GooPlayerInfo   *info)
+{
+	goo_player_info_update_state (info);
+}
+
+
+static void
 goo_player_info_set_total_time (GooPlayerInfo  *info,
 				gint64          total_time)
 {
@@ -771,34 +808,40 @@ goo_player_info_set_total_time (GooPlayerInfo  *info,
 }
 
 
-void
-goo_player_info_set_time (GooPlayerInfo  *info,
-			  gint64          current_time)
+static void
+player_done_cb (GooPlayer       *player,
+		GooPlayerAction  action,
+		GError          *error,
+		GooPlayerInfo   *info)
 {
-	GooPlayerInfoPrivateData *priv = info->priv;
-
-	if (priv->dragging) 
-		return;
-
-	set_time_string (priv->current_time, current_time);
-	sprintf (priv->time, _("%s / %s"), priv->current_time, priv->total_time);
-	set_time (info, priv->time);
-
-	g_signal_handlers_block_by_data (priv->time_scale, info);
-	gtk_range_set_value (GTK_RANGE (priv->time_scale), (double) current_time / priv->track_length);
-	g_signal_handlers_unblock_by_data (priv->time_scale, info);
+	AlbumInfo *album;
+	
+	switch (action) {
+	case GOO_PLAYER_ACTION_LIST:
+		goo_player_info_update_state (info);
+		album = goo_player_get_album (player);
+		goo_player_info_set_total_time (info, album->total_length);
+		break;
+	case GOO_PLAYER_ACTION_METADATA:
+		goo_player_info_update_state (info);
+		break;
+	case GOO_PLAYER_ACTION_SEEK_SONG:
+		goo_player_info_update_state (info);
+		album = goo_player_get_album (player);
+		goo_player_info_set_total_time (info, album_info_get_track (album, goo_player_get_current_track (player))->length);
+		break;
+	case GOO_PLAYER_ACTION_PLAY:
+	case GOO_PLAYER_ACTION_STOP:
+	case GOO_PLAYER_ACTION_EJECT:
+		goo_player_info_set_time (info, 0);
+		break;
+	default:
+		break;
+	}
 }
 
 
-void
-goo_player_info_set_sensitive (GooPlayerInfo  *info,
-			       gboolean        value)
-{
-	gtk_widget_set_sensitive (info->priv->cover_button, value);
-}
-
-
-void
+static void
 goo_player_info_set_cover (GooPlayerInfo *info,
 			   const char    *cover)
 {
@@ -840,4 +883,75 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 	else 
 		goo_player_info_set_cover (info, "audio-cd");
 	
+}
+
+
+static void
+window_update_cover_cb (GooWindow     *window,
+			GooPlayerInfo *info)
+{
+	GooPlayerState  state;
+	char           *filename;
+	
+	state = goo_player_get_state (goo_window_get_player (window));
+
+	if ((state == GOO_PLAYER_STATE_ERROR) || (state == GOO_PLAYER_STATE_NO_DISC)) {
+	    	goo_player_info_set_cover (info, "no-disc");
+	    	return;
+	}
+
+	if (state == GOO_PLAYER_STATE_DATA_DISC) { 
+	    	goo_player_info_set_cover (info, "data-disc");
+	    	return;
+	}
+	
+	filename = goo_window_get_cover_filename (window);
+	if (filename == NULL) {
+		goo_player_info_set_cover (info, "audio-cd"); 
+		return;
+	}
+	
+	goo_player_info_set_cover (info, filename);
+	g_free (filename);
+}
+
+
+GtkWidget *
+goo_player_info_new (GooWindow *window)
+{
+	GooPlayerInfo *info;
+	GooPlayer     *player;
+	
+	g_return_val_if_fail (window != NULL, NULL);
+	
+	player = goo_window_get_player (window);
+	g_return_val_if_fail (player != NULL, NULL);
+	
+	info = GOO_PLAYER_INFO (g_object_new (GOO_TYPE_PLAYER_INFO, NULL));
+
+	info->priv->window = window;
+	
+	g_signal_connect (window, 
+			  "update_cover",
+			  G_CALLBACK (window_update_cover_cb), 
+			  info);
+	
+	g_signal_connect (player, 
+			  "start",
+			  G_CALLBACK (player_start_cb), 
+			  info);
+	g_signal_connect (player, 
+			  "done",
+			  G_CALLBACK (player_done_cb), 
+			  info);	
+	g_signal_connect (player, 
+			  "progress",
+			  G_CALLBACK (player_progress_cb), 
+			  info);
+	g_signal_connect (player, 
+			  "state_changed",
+			  G_CALLBACK (player_state_changed_cb), 
+			  info);
+
+	return GTK_WIDGET (info);
 }

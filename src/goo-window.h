@@ -48,6 +48,10 @@ struct _GooWindow
 struct _GooWindowClass
 {
 	GnomeAppClass __parent_class;
+	
+	/*<signals>*/
+
+	void (*update_cover) (GooWindow *window);
 };
 
 GType       goo_window_get_type                  (void);

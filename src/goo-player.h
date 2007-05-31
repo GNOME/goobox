@@ -113,9 +113,9 @@ const char *     goo_player_get_discid          (GooPlayer       *player);
 void             goo_player_set_album           (GooPlayer       *player,
 						 AlbumInfo       *album);
 AlbumInfo *      goo_player_get_album           (GooPlayer       *player);
-double           goo_player_get_volume          (GooPlayer       *player);
 void             goo_player_set_volume          (GooPlayer       *player,
 						 double           vol);
+double           goo_player_get_volume          (GooPlayer       *player);
 gboolean         goo_player_get_is_busy         (GooPlayer       *player);
 
 #endif /* GOO_PLAYER_H */

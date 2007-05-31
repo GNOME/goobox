@@ -1,5 +1,15 @@
 2007-05-31  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/goo-window.h: 
+	* src/goo-window.c: 
+	* src/goo-player-info.h: 
+	* src/goo-player-info.c: 
+	* src/goo-player.h: 
+	* src/album-info.h: use a player_info widget instead of the 
+	standard tooltip.
+	
+2007-05-31  Paolo Bacchilega  <paobac@cvs.gnome.org>	
+	
 	* src/track-info.c: 
 	* src/album-info.c:
 	* src/goo-window.c: set the is_important flag on for the extract 

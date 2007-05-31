@@ -64,8 +64,8 @@ void            album_info_set_genre        (AlbumInfo  *album,
 					     const char *genre);				 
 void            album_info_set_asin         (AlbumInfo  *album,
 					     const char *asin);
-void            album_info_set_release_date (AlbumInfo *album,
-					     GDate     *date);
+void            album_info_set_release_date (AlbumInfo  *album,
+					     GDate      *date);
 void            album_info_set_tracks       (AlbumInfo  *album,
 					     GList      *tracks);
 TrackInfo *     album_info_get_track        (AlbumInfo  *album,
@@ -77,8 +77,7 @@ gboolean        album_info_load_from_cache  (AlbumInfo  *album,
 void            album_info_save_to_cache    (AlbumInfo  *to_album,
 			  		     const char *disc_id);
 
-GList *         album_list_dup          (GList      *album_list);
-void            album_list_free         (GList      *album_list);
-
+GList *         album_list_dup              (GList      *album_list);
+void            album_list_free             (GList      *album_list);
 
 #endif /* GOO_ALBUM_INFO_H */
