@@ -1,3 +1,17 @@
+2007-05-31  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/track-info.c: 
+	* src/album-info.c:
+	* src/goo-window.c: set the is_important flag on for the extract 
+	command.
+	* src/goo-volume-tool-button.c: make the volume label visible.
+	* src/dlg-properties.c: add gtk_tree_view_set_rules_hint when the 
+	artist column is visible.
+	
+2007-05-30  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-volume-tool-button.c: implemented + and - button functions.
+
 2007-05-30  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/main.h: 

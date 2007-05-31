@@ -2351,6 +2351,10 @@ goo_window_construct (GooWindow  *window,
 		action = gtk_ui_manager_get_action (ui, "/ToolBar/Pause");
 		g_object_set (action, "is_important", TRUE, NULL);
 		g_object_unref (action);
+		
+		action = gtk_ui_manager_get_action (ui, "/ToolBar/Extract");
+		g_object_set (action, "is_important", TRUE, NULL);
+		g_object_unref (action);
 	}
 
 	{
@@ -2381,9 +2385,10 @@ goo_window_construct (GooWindow  *window,
 	/* Add the volume button to the toolbar. */
 	
 	{
-		GtkToolItem *sep = gtk_separator_tool_item_new ();
+		GtkToolItem *sep;
 		
-		gtk_widget_show (GTK_WIDGET (sep));
+		sep = gtk_separator_tool_item_new ();
+		gtk_widget_show (GTK_WIDGET (sep));	
 		gtk_toolbar_insert (GTK_TOOLBAR (priv->toolbar), 
 				    GTK_TOOL_ITEM (sep),
 				    VOLUME_BUTTON_POSITION);

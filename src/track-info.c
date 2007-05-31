@@ -117,14 +117,17 @@ void
 track_info_set_title (TrackInfo  *track,
 		      const char *title)
 {
+	if (title == NULL) {
+		g_free (track->title);
+		track->title = g_strdup_printf (_("Track %u"), track->number + 1);
+		return;
+	}
+	
 	if (title == track->title)
 		return;
-		
+
 	g_free (track->title);
-	if (title != NULL)
-		track->title = g_strdup (title);
-	else
-		track->title = g_strdup_printf (_("Track %u"), track->number + 1);
+	track->title = g_strdup (title);
 }
 
 
@@ -133,16 +136,21 @@ track_info_set_artist (TrackInfo  *track,
 		       const char *artist,
 		       const char *artist_id)
 {
+	if (artist == NULL) {
+		g_free (track->artist);
+		g_free (track->artist_id);
+		track->artist = NULL /*g_strdup (_("Unknown Artist"))*/;
+		track->artist_id = NULL;
+		return;
+	}
+	
 	if (artist == track->artist)
 		return;
 		
 	g_free (track->artist);
+	track->artist = g_strdup (artist);
+
 	g_free (track->artist_id);
-	
-	if (artist != NULL)
-		track->artist = g_strdup (artist);
-	else
-		track->artist = g_strdup (_("Unknown Artist"));
 	if (artist_id != NULL)
 		track->artist_id = g_strdup (artist_id);
 	else

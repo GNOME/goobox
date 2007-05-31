@@ -48,6 +48,7 @@ typedef struct {
 	GtkWidget         *p_info_box;
 	GtkWidget         *p_navigation_box;
 	GtkWidget         *p_album_label;
+	GtkWidget         *p_track_treeview;
 	
 	GList             *albums;
 	int                n_albums, current_album;
@@ -430,6 +431,7 @@ artist_combobox_changed_cb (GtkComboBox *widget,
 {
 	gboolean single_artist = gtk_combo_box_get_active (widget) == 0;
 	gtk_tree_view_column_set_visible (data->author_column, ! single_artist);
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (data->p_track_treeview), ! single_artist);
 	if (single_artist)
 		gtk_widget_show (data->p_artist_entry);
 	else
@@ -479,7 +481,6 @@ dlg_properties (GooWindow *window)
 	GtkWidget  *btn_ok;
 	GtkWidget  *btn_help;
 	GtkWidget  *btn_search;
-	GtkWidget  *tree_view;
         GtkWidget  *p_prev_album_button;
         GtkWidget  *p_next_album_button;
         GtkWidget  *p_reset_album_button;
@@ -518,7 +519,7 @@ dlg_properties (GooWindow *window)
 	btn_cancel = glade_xml_get_widget (data->gui, "p_cancelbutton");
 	btn_help = glade_xml_get_widget (data->gui, "p_helpbutton");
 	btn_search = glade_xml_get_widget (data->gui, "p_search_button");
-	tree_view = glade_xml_get_widget (data->gui, "p_track_treeview");
+	data->p_track_treeview = glade_xml_get_widget (data->gui, "p_track_treeview");
 	
 	p_prev_album_button = glade_xml_get_widget (data->gui, "p_prev_album_button");
 	p_next_album_button = glade_xml_get_widget (data->gui, "p_next_album_button");
@@ -538,8 +539,8 @@ dlg_properties (GooWindow *window)
 					       G_TYPE_STRING,
 					       G_TYPE_STRING,
 					       G_TYPE_POINTER);
-	gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view), GTK_TREE_MODEL (data->list_store));
-	add_columns (data, GTK_TREE_VIEW (tree_view));
+	gtk_tree_view_set_model (GTK_TREE_VIEW (data->p_track_treeview), GTK_TREE_MODEL (data->list_store));
+	add_columns (data, GTK_TREE_VIEW (data->p_track_treeview));
 	
 	/* Set the signals handlers. */
 

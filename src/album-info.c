@@ -131,14 +131,17 @@ void
 album_info_set_title (AlbumInfo  *album,
 		      const char *title)
 {
+	if (title == NULL) {
+		g_free (album->title);
+		album->title = NULL /*g_strdup (_("Unknown Album"))*/;
+		return;
+	}
+	
 	if (album->title == title)
 		return;
 		
 	g_free (album->title);
-	if (title != NULL)
-		album->title = g_strdup (title);
-	else
-		album->title = NULL /*g_strdup (_("Unknown Album"))*/;
+	album->title = g_strdup (title);
 }
 
 
@@ -147,6 +150,14 @@ album_info_set_artist (AlbumInfo  *album,
 		       const char *artist,
 		       const char *artist_id)
 {
+	if (artist == NULL) {
+		g_free (album->artist);
+		album->artist = NULL /*g_strdup (_("Unknown Artist"))*/;
+		g_free (album->artist_id);
+		album->artist_id = NULL;
+		return;
+	}
+	
 	if (album->artist == artist)
 		return;
 		
@@ -159,7 +170,7 @@ album_info_set_artist (AlbumInfo  *album,
 	else if (album->various_artist)
 		album->artist = g_strdup (_("Various"));
 	else
-		album->artist = NULL /*g_strdup (_("Unknown Artist"))*/;
+		album->artist = NULL;
 
 	if ((artist_id != NULL) && (strcmp (artist_id, KEEP_PREVIOUS_VALUE) != 0))
 		album->artist_id = g_strdup (artist_id);
