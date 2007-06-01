@@ -1,7 +1,7 @@
 # Swedish messages for goobox.
-# Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+# Daniel Nylander <po@danielnylander.se>, 2006, 2007.
 # Christian Rose <menthos@menthos.com>, 2004, 2005.
-# Daniel Nylander <po@danielnylander.se>, 2006.
 #
 # $Id: sv.po,v 1.4 2006/04/16 23:01:57 dnylande Exp $
 #
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-14 21:09+0200\n"
-"PO-Revision-Date: 2007-05-14 21:18+0100\n"
+"POT-Creation-Date: 2007-06-01 03:31+0100\n"
+"PO-Revision-Date: 2007-06-01 15:48+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -102,6 +102,42 @@ msgstr "Välj ett cd-omslag"
 msgid "Found images:"
 msgstr "Funna bilder:"
 
+#: ../data/glade/properties.glade.h:1
+msgid "No album found."
+msgstr "Inga album hittades."
+
+#: ../data/glade/properties.glade.h:2
+msgid "Properties"
+msgstr "Egenskaper"
+
+#: ../data/glade/properties.glade.h:3
+msgid "Search for the remaining data"
+msgstr "Sök efter återstående data"
+
+#: ../data/glade/properties.glade.h:4
+msgid ""
+"Single artist\n"
+"Various artists\n"
+msgstr ""
+"En artist\n"
+"Olika artister\n"
+
+#: ../data/glade/properties.glade.h:7
+msgid "T_racks:"
+msgstr "Spå_r:"
+
+#: ../data/glade/properties.glade.h:8
+msgid "_Artist:"
+msgstr "_Artist:"
+
+#: ../data/glade/properties.glade.h:9
+msgid "_Title:"
+msgstr "_Titel:"
+
+#: ../data/glade/properties.glade.h:10
+msgid "_Year:"
+msgstr "_År:"
+
 #: ../data/GNOME_Goobox.server.in.h:1
 msgid "Goobox Application"
 msgstr "Programmet Goobox"
@@ -111,11 +147,10 @@ msgid "Goobox Application Factory"
 msgstr "Programfabrik för Goobox"
 
 #: ../data/goobox.desktop.in.in.h:1
-#: ../src/actions.c:208
-#: ../src/goo-window.c:2525
-#: ../src/goo-window.c:2533
-#: ../src/main.c:143
-#: ../src/main.c:222
+#: ../src/actions.c:209
+#: ../src/goo-window.c:2563
+#: ../src/main.c:148
+#: ../src/main.c:234
 msgid "CD Player"
 msgstr "Cd-spelare"
 
@@ -131,7 +166,7 @@ msgstr "Möjliga värden är: ogg, flac, mp3, wave."
 msgid "Possible values are: system, text_below, text_beside, text_only, icons_only."
 msgstr "Möjliga värden är: system, text_below, text_beside, text_only, icons_only."
 
-#: ../src/actions.c:139
+#: ../src/actions.c:140
 msgid "Could not display help"
 msgstr "Kunde inte visa hjälp"
 
@@ -139,29 +174,31 @@ msgstr "Kunde inte visa hjälp"
 #. const char     *documenters [] = {
 #. NULL
 #. };
-#: ../src/actions.c:188
+#: ../src/actions.c:189
 msgid "translator_credits"
 msgstr ""
 "Daniel Nylander\n"
 "Christian Rose\n"
-"Skicka synpunkter på översättningen till tp-sv@listor.tp-sv.se"
+"\n"
+"Skicka synpunkter på översättningen till\n"
+"tp-sv@listor.tp-sv.se"
 
-#: ../src/actions.c:210
+#: ../src/actions.c:211
 msgid "Copyright © 2004-2007 Free Software Foundation, Inc."
 msgstr "Copyright © 2004-2007 Free Software Foundation, Inc."
 
-#: ../src/actions.c:211
-#: ../src/main.c:133
+#: ../src/actions.c:212
+#: ../src/main.c:138
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "Spela cd-skivor och spara spåren på disk som filer"
 
-#: ../src/actions.c:331
-#: ../src/actions.c:352
+#: ../src/actions.c:332
+#: ../src/actions.c:353
 #: ../src/gtk-utils.c:797
 msgid "Could not execute command"
 msgstr "Kunde inte köra kommando"
 
-#: ../src/album-info.c:128
+#: ../src/album-info.c:171
 msgid "Various"
 msgstr "Diverse"
 
@@ -178,32 +215,33 @@ msgstr "Namnlös SCSI-enhet (%s)"
 msgid "File image"
 msgstr "Filavbild"
 
-#: ../src/dlg-cover-chooser.c:269
+#: ../src/dlg-cover-chooser.c:280
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, läser in bild: %u"
 
-#: ../src/dlg-cover-chooser.c:307
+#: ../src/dlg-cover-chooser.c:318
 msgid "Loading images"
 msgstr "Läser in bilder"
 
-#: ../src/dlg-cover-chooser.c:421
-#: ../src/goo-window.c:3095
+#: ../src/dlg-cover-chooser.c:432
+#: ../src/goo-window.c:3125
 msgid "Could not search for a cover on Internet"
 msgstr "Kunde inte söka efter ett omslag på Internet"
 
-#: ../src/dlg-cover-chooser.c:428
+#: ../src/dlg-cover-chooser.c:439
 msgid "No image found"
 msgstr "Ingen bild hittades"
 
 #: ../src/dlg-cover-chooser.c:503
 #: ../src/dlg-extract.c:133
 #: ../src/dlg-preferences.c:146
+#: ../src/dlg-properties.c:155
 #, c-format
 msgid "Could not display help: %s"
 msgstr "Kunde inte visa hjälp: %s"
 
-#: ../src/dlg-cover-chooser.c:707
+#: ../src/dlg-cover-chooser.c:726
 msgid "Searching images..."
 msgstr "Söker efter bilder..."
 
@@ -280,6 +318,35 @@ msgstr "Kvalitet:"
 msgid "Compression level:"
 msgstr "Komprimeringsnivå:"
 
+#: ../src/dlg-properties.c:218
+#, c-format
+msgid "Album %d of %d"
+msgstr "Album %d av %d"
+
+#: ../src/dlg-properties.c:274
+#, c-format
+msgid "Search failed: %s\n"
+msgstr "Sökning misslyckades: %s\n"
+
+#: ../src/dlg-properties.c:284
+msgid "No album found"
+msgstr "Inget album hittades"
+
+#: ../src/dlg-properties.c:345
+#: ../src/goo-window.c:577
+msgid "#"
+msgstr "Nr"
+
+#: ../src/dlg-properties.c:363
+#: ../src/goo-window.c:602
+msgid "Title"
+msgstr "Titel"
+
+#: ../src/dlg-properties.c:396
+#: ../src/goo-window.c:625
+msgid "Artist"
+msgstr "Artist"
+
 #: ../src/dlg-ripper.c:201
 #, c-format
 msgid "(%d:%02d:%02d Remaining)"
@@ -343,7 +410,7 @@ msgstr "Orientering"
 msgid "The orientation of the tray."
 msgstr "Orienteringen på lådan."
 
-#: ../src/file-utils.c:663
+#: ../src/file-utils.c:664
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr "Kan inte hitta en terminal, använder xterm även om den kanske inte fungerar"
 
@@ -357,55 +424,58 @@ msgstr "Fel vid läsande av cd-skiva"
 msgid "The specified device is not valid"
 msgstr "Den angivna enheten är inte giltig"
 
-#: ../src/goo-player.c:498
+#: ../src/goo-player.c:499
 msgid "Drive not ready"
 msgstr "Enheten är inte redo"
 
-#: ../src/goo-player.c:502
+#: ../src/goo-player.c:503
 msgid "Tray open"
 msgstr "Släden öppen"
 
-#: ../src/goo-player.c:503
-#: ../src/goo-player.c:507
+#: ../src/goo-player.c:504
+#: ../src/goo-player.c:508
 msgid "No disc"
 msgstr "Ingen skiva"
 
-#: ../src/goo-player.c:511
-#: ../src/goo-window.c:1439
+#: ../src/goo-player.c:512
+#: ../src/goo-window.c:1435
 msgid "Data Disc"
 msgstr "Dataskiva"
 
-#: ../src/goo-player-info.c:233
-#: ../src/goo-player-info.c:260
-#: ../src/goo-player-info.c:784
+#: ../src/goo-player.c:612
+msgid "Invalid device"
+msgstr "Ogiltig enhet"
+
+#: ../src/goo-player-info.c:235
+#: ../src/goo-player-info.c:262
+#: ../src/goo-player-info.c:611
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
-#: ../src/goo-player-info.c:497
+#: ../src/goo-player-info.c:499
 msgid "Click here to choose a cover for this CD"
 msgstr "Klicka här för att välja ett omslag för denna cd"
 
-#: ../src/goo-player-info.c:708
-#: ../src/goo-window.c:1427
+#: ../src/goo-player-info.c:719
 msgid "Paused"
 msgstr "Gör paus"
 
-#: ../src/goo-player-info.c:717
+#: ../src/goo-player-info.c:728
 msgid "Ejecting CD"
 msgstr "Matar ut cd"
 
-#: ../src/goo-player-info.c:721
+#: ../src/goo-player-info.c:732
 msgid "Checking CD drive"
 msgstr "Kontrollerar cd-enhet"
 
-#: ../src/goo-player-info.c:725
-#: ../src/goo-player-info.c:729
+#: ../src/goo-player-info.c:736
+#: ../src/goo-player-info.c:740
 msgid "Reading CD"
 msgstr "Läser cd"
 
-#: ../src/goo-player-info.c:745
-#: ../src/goo-window.c:1443
+#: ../src/goo-player-info.c:756
+#: ../src/goo-window.c:1439
 msgid "Audio CD"
 msgstr "Ljud-cd"
 
@@ -432,126 +502,114 @@ msgstr "Dölj _spår"
 msgid "Show _tracks"
 msgstr "Visa _spår"
 
-#: ../src/goo-window.c:181
+#: ../src/goo-window.c:182
 #, c-format
 msgid "%d track"
 msgid_plural "%d tracks"
 msgstr[0] "%d spår"
 msgstr[1] "%d spår"
 
-#: ../src/goo-window.c:577
-msgid "#"
-msgstr "Nr"
-
-#: ../src/goo-window.c:602
-msgid "Title"
-msgstr "Titel"
-
-#: ../src/goo-window.c:625
-msgid "Artist"
-msgstr "Artist"
-
 #: ../src/goo-window.c:649
 msgid "Length"
 msgstr "Längd"
 
-#: ../src/goo-window.c:1290
+#: ../src/goo-window.c:1298
 #: ../src/ui.h:65
 msgid "_Pause"
 msgstr "_Paus"
 
-#: ../src/goo-window.c:1291
+#: ../src/goo-window.c:1299
 #: ../src/ui.h:66
 msgid "Pause"
 msgstr "Paus"
 
-#: ../src/goo-window.c:1436
+#: ../src/goo-window.c:1432
 msgid "No Disc"
 msgstr "Ingen skiva"
 
-#: ../src/goo-window.c:1735
-#: ../src/goo-window.c:1754
+#: ../src/goo-window.c:1715
+#: ../src/goo-window.c:1734
 #: ../src/ui.h:53
 #: ../src/ui.h:57
 #: ../src/ui.h:61
 msgid "_Play"
 msgstr "_Spela"
 
-#: ../src/goo-window.c:1736
-#: ../src/goo-window.c:1755
+#: ../src/goo-window.c:1716
+#: ../src/goo-window.c:1735
 #: ../src/ui.h:58
 msgid "Play"
 msgstr "Spela"
 
-#: ../src/goo-window.c:2844
+#: ../src/goo-window.c:2881
 msgid "Could not eject the CD"
 msgstr "Kunde inte mata ut cd-skivan"
 
-#: ../src/goo-window.c:2857
+#: ../src/goo-window.c:2894
 msgid "Could not read drive"
 msgstr "Kunde inte läsa enhet"
 
-#: ../src/goo-window.c:2946
+#: ../src/goo-window.c:2976
 msgid "Could not load image"
 msgstr "Kunde inte läsa in bild"
 
-#: ../src/goo-window.c:2969
+#: ../src/goo-window.c:2999
 msgid "Could not save cover image"
 msgstr "Kunde inte spara omslagsbild"
 
-#: ../src/goo-window.c:3035
+#: ../src/goo-window.c:3065
 msgid "Choose CD Cover Image"
 msgstr "Välj en cd-omslagsbild"
 
-#: ../src/goo-window.c:3054
+#: ../src/goo-window.c:3084
 msgid "Images"
 msgstr "Bilder"
 
-#: ../src/goo-window.c:3062
+#: ../src/goo-window.c:3092
 msgid "All files"
 msgstr "Alla filer"
 
-#: ../src/goo-window.c:3096
+#: ../src/goo-window.c:3126
 msgid "You have to enter the artist and album names in order to find the album cover."
 msgstr "Du måste ange namnet på artisten och albumet för att kunna söka efter albumomslaget."
 
-#: ../src/goo-window.c:3135
+#: ../src/goo-window.c:3165
 msgid "_Show Window"
 msgstr "_Visa fönster"
 
-#: ../src/goo-window.c:3136
+#: ../src/goo-window.c:3166
 msgid "Show the main window"
 msgstr "Visa huvudfönstret"
 
-#: ../src/goo-window.c:3148
+#: ../src/goo-window.c:3178
 #: ../src/ui.h:121
 msgid "_Hide Window"
 msgstr "_Dölj fönster"
 
 #. "H"
-#: ../src/goo-window.c:3149
+#: ../src/goo-window.c:3179
 #: ../src/ui.h:122
 msgid "Hide the main window"
 msgstr "Dölj huvudfönstret"
 
-#: ../src/goo-volume-tool-button.c:179
+#: ../src/goo-volume-tool-button.c:185
 #, c-format
 msgid "Volume level: %3.0f%%"
 msgstr "Volymnivå: %3.0f%%"
 
-#: ../src/goo-volume-tool-button.c:576
+#: ../src/goo-volume-tool-button.c:747
 msgid "+"
 msgstr "+"
 
-#: ../src/goo-volume-tool-button.c:598
+#: ../src/goo-volume-tool-button.c:789
 msgid "-"
 msgstr "-"
 
-#: ../src/goo-volume-tool-button.c:627
+#: ../src/goo-volume-tool-button.c:838
 msgid "Change the volume level"
 msgstr "Ändra nivån på volymen"
 
-#: ../src/goo-volume-tool-button.c:671
+#: ../src/goo-volume-tool-button.c:882
 msgid "Volume"
 msgstr "Volym"
 
@@ -567,70 +625,79 @@ msgstr "Förhandsgranskning"
 msgid "pixels"
 msgstr "bildpunkter"
 
-#: ../src/main.c:83
+#: ../src/main.c:84
 msgid "CD device to be used"
 msgstr "Cd-enhet att använda"
 
-#: ../src/main.c:84
+#: ../src/main.c:85
 msgid "DEVICE_PATH"
 msgstr "ENHETSSÖKVÄG"
 
-#: ../src/main.c:86
+#: ../src/main.c:87
 msgid "Play the CD on startup"
 msgstr "Spela cd-skivan vid uppstart"
 
-#: ../src/main.c:89
+#: ../src/main.c:90
 #: ../src/ui.h:54
 msgid "Play/Pause"
 msgstr "Spela/Gör paus"
 
-#: ../src/main.c:92
+#: ../src/main.c:93
+#: ../src/ui.h:70
+msgid "Stop playing"
+msgstr "Stoppa uppspelning"
+
+#: ../src/main.c:96
 #: ../src/ui.h:74
 msgid "Play the next track"
 msgstr "Spela nästa låt"
 
-#: ../src/main.c:95
+#: ../src/main.c:99
 #: ../src/ui.h:78
 msgid "Play the previous track"
 msgstr "Spela föregående spår"
 
-#: ../src/main.c:98
+#: ../src/main.c:102
 msgid "Eject the CD"
 msgstr "Mata ut cd-skivan"
 
-#: ../src/main.c:101
+#: ../src/main.c:105
 msgid "Hide/Show the main window"
 msgstr "Visa/dölj huvudfönstret"
 
-#: ../src/main.c:104
+#: ../src/main.c:108
 msgid "Volume Up"
 msgstr "Höj volymen"
 
-#: ../src/main.c:107
+#: ../src/main.c:111
 msgid "Volume Down"
 msgstr "Volym ned"
 
-#: ../src/main.c:110
+#: ../src/main.c:114
 #: ../src/ui.h:106
 msgid "Quit the application"
 msgstr "Avsluta programmet"
 
-#: ../src/main.c:301
+#: ../src/main.c:347
 msgid "Cannot start the CD player"
 msgstr "Kan inte starta cd-spelaren"
 
-#: ../src/main.c:302
+#: ../src/main.c:348
 msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgstr "För att kunna läsa cd-skivor måste du installera de grundläggande insticksmodulerna för gstreamer"
 
-#: ../src/track-info.c:124
+#: ../src/main.c:705
+msgid "Next"
+msgstr "Nästa"
+
+#: ../src/main.c:711
+msgid "Stop"
+msgstr "Stoppa"
+
+#: ../src/track-info.c:122
 #, c-format
 msgid "Track %u"
 msgstr "Spår %u"
-
-#: ../src/track-info.c:136
-msgid "Unknown Artist"
-msgstr "Okänd artist"
 
 #: ../src/ui.h:34
 msgid "_Disc"
@@ -671,10 +738,6 @@ msgstr "Spela detta spår"
 #: ../src/ui.h:69
 msgid "_Stop"
 msgstr "_Stopp"
-
-#: ../src/ui.h:70
-msgid "Stop playing"
-msgstr "Stoppa uppspelning"
 
 #: ../src/ui.h:73
 msgid "_Next"
@@ -775,6 +838,8 @@ msgstr "_Blanda"
 msgid "Play tracks in a random order"
 msgstr "Spela spår i slumpvis ordning"
 
+#~ msgid "Unknown Artist"
+#~ msgstr "Okänd artist"
 #~ msgid "<b>FLAC</b>"
 #~ msgstr "<b>FLAC</b>"
 #~ msgid "<b>File type</b>"
@@ -1056,8 +1121,6 @@ msgstr "Spela spår i slumpvis ordning"
 #~ msgstr "Okänd kolumn %d redigerades"
 #~ msgid "Could not create GConf client.\n"
 #~ msgstr "Kunde inte skapa GConf-klient.\n"
-#~ msgid "Track"
-#~ msgstr "Spår"
 #~ msgid "Duration"
 #~ msgstr "Varaktighet"
 #~ msgid "Cannot create MusicBrainz client"
@@ -1148,8 +1211,6 @@ msgstr "Spela spår i slumpvis ordning"
 #~ msgstr ""
 #~ "En fil med namnet \"%s\" finns, storlek %lu kB.\n"
 #~ "Vill du hoppa över detta spår eller skriva över det?"
-#~ msgid "mkdir() failed: %s"
-#~ msgstr "mkdir() misslyckades: %s"
 #~ msgid ""
 #~ "%at -- album title %aa -- album artist %tt -- track title %ta -- track "
 #~ "artist"
@@ -1184,8 +1245,6 @@ msgstr "Spela spår i slumpvis ordning"
 #~ msgstr "Lös komprimering med god kvalitet"
 #~ msgid "Album Progress"
 #~ msgstr "Albumförlopp"
-#~ msgid "Artist:"
-#~ msgstr "Artist:"
 #~ msgid "CD _Drive"
 #~ msgstr "Cd-_enhet"
 #~ msgid "Duration:"
@@ -1284,8 +1343,6 @@ msgstr "Spela spår i slumpvis ordning"
 #~ msgstr "_Genre: "
 #~ msgid "_Location: "
 #~ msgstr "_Plats: "
-#~ msgid "_Title: "
-#~ msgstr "_Titel: "
 #~ msgid "dialog1"
 #~ msgstr "dialog1"
 #~ msgid "42"
@@ -1300,8 +1357,6 @@ msgstr "Spela spår i slumpvis ordning"
 #~ msgstr "_Senast spelad:"
 #~ msgid "_Locations"
 #~ msgstr "_Platser"
-#~ msgid "_Properties"
-#~ msgstr "_Egenskaper"
 #~ msgid "_Rating: "
 #~ msgstr "_Betyg: "
 #~ msgid "Enter the _location (URI) of the file you would like to add:"
@@ -1511,10 +1566,6 @@ msgstr "Spela spår i slumpvis ordning"
 #~ msgstr "- %d.%02d"
 #~ msgid "Total: %d:%02d"
 #~ msgstr "Totalt: %d.%02d"
-#~ msgid "Invalid mode"
-#~ msgstr "Ogiltigt läge"
-#~ msgid "_Search:"
-#~ msgstr "_Sök:"
 #~ msgid "_Next Song"
 #~ msgstr "_Nästa låt"
 #~ msgid "Song Properties"
