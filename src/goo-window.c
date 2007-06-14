@@ -64,6 +64,7 @@
 #define FALLBACK_ICON_SIZE 16
 #define CONFIG_KEY_AUTOFETCH_GROUP "AutoFetch"
 #define VOLUME_BUTTON_POSITION 4
+#define TRAY_TOOLTIP_DELAY 500
 
 struct _GooWindowPrivateData {
 	GtkUIManager      *ui;
@@ -88,6 +89,7 @@ struct _GooWindowPrivateData {
 	GtkWidget         *tray_box;
 	GtkWidget         *tray_icon;
 	GtkTooltips       *tray_tips;
+	guint              tray_tooltip_delay;
 
 	GtkTooltips       *tooltips;
 	guint              help_message_cid;
@@ -532,7 +534,20 @@ goo_window_finalize (GObject *object)
 
 		gtk_object_destroy (GTK_OBJECT (priv->tooltips));
 		g_object_unref (priv->list_store);
-		
+			
+		if (priv->tray_tooltip_delay != 0) {
+			g_source_remove (priv->tray_tooltip_delay);
+			priv->tray_tooltip_delay = 0;
+		}
+		if (priv->next_timeout_handle != 0) {
+			g_source_remove (priv->next_timeout_handle);
+			priv->next_timeout_handle = 0;
+		}
+		if (priv->update_timeout_handle != 0) {
+			g_source_remove (priv->update_timeout_handle);
+			priv->update_timeout_handle = 0;
+		}
+	
 		if (priv->playlist != NULL)
 			g_list_free (priv->playlist);
 
@@ -1020,6 +1035,7 @@ first_time_idle (gpointer callback_data)
 	GooWindow *window = callback_data;
 
 	g_source_remove (window->priv->first_timeout_handle);
+	
 	goo_player_update (window->priv->player);
 
 	return FALSE;
@@ -2075,11 +2091,10 @@ tray_icon_pressed (GtkWidget   *widget,
 
 
 static gboolean
-tray_icon_enter_notify_event_cb (GtkWidget        *widget,
-                                 GdkEventCrossing *event,
-                                 gpointer          user_data)
+show_tray_icon_tooltip_cb (gpointer user_data)
 {
 	GooWindow *window = user_data;
+	GtkWidget *widget = window->priv->tray_box;
 	GdkScreen *screen;
 	int        tray_icon_x, tray_icon_y;
 	int        tray_icon_w, tray_icon_h;
@@ -2112,6 +2127,21 @@ tray_icon_enter_notify_event_cb (GtkWidget        *widget,
 
 
 static gboolean
+tray_icon_enter_notify_event_cb (GtkWidget        *widget,
+                                 GdkEventCrossing *event,
+                                 gpointer          user_data)
+{
+	GooWindow *window = user_data;
+	
+	if (window->priv->tray_tooltip_delay == 0)
+		window->priv->tray_tooltip_delay = g_timeout_add (TRAY_TOOLTIP_DELAY,
+							  	  show_tray_icon_tooltip_cb,
+							  	  window);
+	return FALSE;
+}
+
+
+static gboolean
 tray_icon_leave_notify_event_cb (GtkWidget        *widget,
                                  GdkEventCrossing *event,
                                  gpointer          user_data)
@@ -2119,6 +2149,10 @@ tray_icon_leave_notify_event_cb (GtkWidget        *widget,
 	GooWindow *window = user_data;
 	
 	gtk_widget_hide (window->priv->info_popup);
+	if (window->priv->tray_tooltip_delay != 0) {
+		g_source_remove (window->priv->tray_tooltip_delay);
+		window->priv->tray_tooltip_delay = 0;
+	}
 	
 	return FALSE;
 }
@@ -2457,7 +2491,7 @@ goo_window_construct (GooWindow  *window,
 	{
 		GtkWidget *info;
 		
-		info = goo_player_info_new (window);
+		info = goo_player_info_new (window, TRUE);
 		gtk_container_set_border_width (GTK_CONTAINER (info), 0);
 		g_signal_connect (info,
 				  "skip_to",
@@ -2515,7 +2549,7 @@ goo_window_construct (GooWindow  *window,
 		gtk_widget_show (out_frame);
 		gtk_container_add (GTK_CONTAINER (priv->info_popup), out_frame);
 		
-		info = goo_player_info_new (window);
+		info = goo_player_info_new (window, FALSE);
 		gtk_container_set_border_width (GTK_CONTAINER (info), 0);
 		gtk_widget_show_all (info);
 		g_signal_connect (info,

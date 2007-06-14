@@ -1,3 +1,10 @@
+2007-06-14  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-window.c: 
+	* src/goo-player-info.h: 
+	* src/goo-player-info.c: make the tootip style a bit different, added
+	a display delay.
+
 2007-05-31  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* src/goo-window.h: 

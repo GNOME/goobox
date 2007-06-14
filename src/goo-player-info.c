@@ -38,12 +38,17 @@
 #define PLAYING_FORMAT "[ <small>%s</small> ]"
 #define SCALE_WIDTH 150
 #define COVER_SIZE 80
+#define TRAY_COVER_SIZE 80
 #define MIN_WIDTH 420
+#define MIN_TOOLTIP_WIDTH 300
+#define MAX_TOOLTIP_WIDTH 500
 #define MIN_CHARS 45
 #define UPDATE_TIMEOUT 50
 
 struct _GooPlayerInfoPrivateData {
 	GooWindow   *window;
+	gboolean     interactive;
+	GtkWidget   *cover_frame;
 	GtkWidget   *title1_label;
 	GtkWidget   *title2_label;
 	GtkWidget   *title3_label;
@@ -118,9 +123,16 @@ static void
 goo_player_info_size_request (GtkWidget      *widget,
 			      GtkRequisition *requisition)
 {	
+	GooPlayerInfo *info;
+	
 	if (GTK_WIDGET_CLASS (parent_class)->size_request)
 		(* GTK_WIDGET_CLASS (parent_class)->size_request) (widget, requisition);
-	requisition->width = MAX (requisition->width, MIN_WIDTH);
+	
+	info = (GooPlayerInfo *) widget;
+	if (info->priv->interactive)
+		requisition->width = MAX (requisition->width, MIN_WIDTH);
+	else
+		requisition->width = MIN (MAX (requisition->width, MIN_TOOLTIP_WIDTH), MAX_TOOLTIP_WIDTH);
 }
 
 
@@ -424,11 +436,16 @@ cover_button_drag_data_received  (GtkWidget          *widget,
 static void 
 goo_player_info_init (GooPlayerInfo *info)
 {
+	info->priv = g_new0 (GooPlayerInfoPrivateData, 1);
+}
+
+
+static void 
+goo_player_info_construct (GooPlayerInfo *info)
+{
 	GooPlayerInfoPrivateData *priv;
 	GtkWidget *vbox, *time_box;
-	GtkWidget *frame;
 
-	info->priv = g_new0 (GooPlayerInfoPrivateData, 1);
 	priv = info->priv;
 
 	priv->dragging = FALSE;
@@ -436,6 +453,7 @@ goo_player_info_init (GooPlayerInfo *info)
 	priv->total_time[0] = '\0';
 	priv->update_id = 0;
 
+	GTK_WIDGET_UNSET_FLAGS (info, GTK_CAN_FOCUS);
 	GTK_BOX (info)->spacing = SPACING;
 	GTK_BOX (info)->homogeneous = FALSE;
 
@@ -450,11 +468,11 @@ goo_player_info_init (GooPlayerInfo *info)
 
 	priv->title2_label = gtk_label_new (NULL);
 	gtk_misc_set_alignment (GTK_MISC (priv->title2_label), 0.0, 0.5);
-	gtk_label_set_selectable (GTK_LABEL (priv->title2_label), TRUE);
+	gtk_label_set_selectable (GTK_LABEL (priv->title2_label), priv->interactive);
 
 	priv->title3_label = gtk_label_new (NULL);
 	gtk_misc_set_alignment (GTK_MISC (priv->title3_label), 0.0, 0.5);
-	gtk_label_set_selectable (GTK_LABEL (priv->title3_label), TRUE);
+	gtk_label_set_selectable (GTK_LABEL (priv->title3_label), priv->interactive);
 
 	gtk_label_set_ellipsize (GTK_LABEL (priv->title1_label),
 				 PANGO_ELLIPSIZE_END);
@@ -491,43 +509,56 @@ goo_player_info_init (GooPlayerInfo *info)
 
 	/* Image */
 
-	priv->cover_button = gtk_button_new ();
-	gtk_button_set_relief (GTK_BUTTON (priv->cover_button),
-			       GTK_RELIEF_NONE);
-	gtk_tooltips_set_tip (priv->tips,
-			      GTK_WIDGET (priv->cover_button),
-			      _("Click here to choose a cover for this CD"),
-			      NULL);
-	g_signal_connect (G_OBJECT (priv->cover_button),
-			  "clicked",
-			  G_CALLBACK (cover_button_clicked_cb),
-			  info);
 
-	gtk_drag_dest_set (priv->cover_button,
-			   GTK_DEST_DEFAULT_ALL,
-			   target_table, n_targets,
-			   GDK_ACTION_COPY);
-	
-	g_signal_connect (G_OBJECT (priv->cover_button), 
-			  "drag_data_received",
-			  G_CALLBACK (cover_button_drag_data_received), 
-			  info);
+	if (priv->interactive) {
+		priv->cover_button = gtk_button_new ();
+		gtk_button_set_relief (GTK_BUTTON (priv->cover_button),
+				       GTK_RELIEF_NONE);
+
+		gtk_tooltips_set_tip (priv->tips,
+				      GTK_WIDGET (priv->cover_button),
+				      _("Click here to choose a cover for this CD"),
+				      NULL);
+		g_signal_connect (G_OBJECT (priv->cover_button),
+				  "clicked",
+				  G_CALLBACK (cover_button_clicked_cb),
+				  info);
+		gtk_drag_dest_set (priv->cover_button,
+				   GTK_DEST_DEFAULT_ALL,
+				   target_table, n_targets,
+				   GDK_ACTION_COPY);
+		g_signal_connect (G_OBJECT (priv->cover_button), 
+				  "drag_data_received",
+				  G_CALLBACK (cover_button_drag_data_received), 
+				  info);
+	}
 
 	priv->cover_image = gtk_image_new_from_stock (GOO_STOCK_NO_DISC, GTK_ICON_SIZE_DIALOG);
-	gtk_widget_set_size_request (priv->cover_image, COVER_SIZE, COVER_SIZE);
+	if (priv->interactive)
+		gtk_widget_set_size_request (priv->cover_image, COVER_SIZE, COVER_SIZE);
+	else
+		gtk_widget_set_size_request (priv->cover_image, TRAY_COVER_SIZE, TRAY_COVER_SIZE);
 	gtk_widget_show (priv->cover_image);
-	gtk_container_add (GTK_CONTAINER (priv->cover_button), priv->cover_image);
+	
+	if (priv->interactive)
+		gtk_container_add (GTK_CONTAINER (priv->cover_button), priv->cover_image);
+	else
+		priv->cover_button = priv->cover_image;
 
 	/* Status image */
 	
 	priv->status_image = gtk_image_new_from_stock (GOO_STOCK_NO_DISC, GTK_ICON_SIZE_DIALOG);
-	gtk_widget_set_size_request (priv->status_image, COVER_SIZE, COVER_SIZE);
+	if (priv->interactive)
+		gtk_widget_set_size_request (priv->status_image, COVER_SIZE, COVER_SIZE);
+	else
+		gtk_widget_set_size_request (priv->status_image, TRAY_COVER_SIZE, TRAY_COVER_SIZE);
 	gtk_widget_show (priv->cover_image);
 	/*gtk_container_set_border_width (GTK_CONTAINER (priv->status_image), 6);*/
 
 	/* Frame */
 
 	priv->notebook = gtk_notebook_new ();
+	gtk_container_set_border_width (GTK_CONTAINER (priv->notebook), 0);
 	gtk_notebook_set_show_tabs (GTK_NOTEBOOK (priv->notebook), FALSE);
 	gtk_notebook_set_show_border (GTK_NOTEBOOK (priv->notebook), FALSE);
 	gtk_widget_show (priv->notebook);
@@ -535,13 +566,15 @@ goo_player_info_init (GooPlayerInfo *info)
 	gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook), priv->status_image, NULL);
 	gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook), priv->cover_button, NULL);
 	
-	frame = gtk_frame_new (NULL);
-	gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-	gtk_widget_show (frame);
-	gtk_container_add (GTK_CONTAINER (frame), priv->notebook);
+	priv->cover_frame = gtk_frame_new (NULL);
+	gtk_container_set_border_width (GTK_CONTAINER (priv->cover_frame), 6);
+	if (! priv->interactive)
+		gtk_frame_set_shadow_type (GTK_FRAME (priv->cover_frame), GTK_SHADOW_ETCHED_IN);
+	gtk_widget_show (priv->cover_frame);
+	gtk_container_add (GTK_CONTAINER (priv->cover_frame), priv->notebook);
 
-	gtk_box_pack_start (GTK_BOX (info), frame, FALSE, FALSE, 0);
-
+	gtk_box_pack_start (GTK_BOX (info), priv->cover_frame, FALSE, FALSE, 0);
+		
 	/**/
 
 	vbox = gtk_vbox_new (FALSE, 0);
@@ -656,8 +689,8 @@ update_subtitle (GooPlayerInfo *info,
 	else {
 		set_title2 (info, album->title);
 		set_title3 (info, album->artist);
-		gtk_label_set_selectable (GTK_LABEL (info->priv->title2_label), TRUE);
-		gtk_label_set_selectable (GTK_LABEL (info->priv->title3_label), TRUE);
+		gtk_label_set_selectable (GTK_LABEL (info->priv->title2_label), info->priv->interactive);
+		gtk_label_set_selectable (GTK_LABEL (info->priv->title3_label), info->priv->interactive);
 	}
 }
 
@@ -681,7 +714,8 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 
 	if ((state == GOO_PLAYER_STATE_PLAYING) 
 	    || (state == GOO_PLAYER_STATE_PAUSED)) {
-		gtk_widget_show (priv->time_scale);
+	    	if (info->priv->interactive)
+			gtk_widget_show (priv->time_scale);
 		gtk_widget_show (priv->time_label);
 		gtk_widget_show (priv->playing_label);
 	} 
@@ -720,7 +754,7 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 			set_playing (info, state_s);
 
 			set_title1 (info, track->title);
-			gtk_label_set_selectable (GTK_LABEL (priv->title1_label), TRUE);
+			gtk_label_set_selectable (GTK_LABEL (priv->title1_label), info->priv->interactive);
 
 			update_subtitle (info, track);
 		} 
@@ -750,7 +784,7 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 
 			if (album->title != NULL) {
 				set_title1 (info, album->title);
-				gtk_label_set_selectable (GTK_LABEL (priv->title1_label), TRUE);
+				gtk_label_set_selectable (GTK_LABEL (priv->title1_label), info->priv->interactive);
 			} 
 			else
 				set_title1 (info, _("Audio CD"));
@@ -758,7 +792,7 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 			if (album->artist != NULL) {
 				set_title2 (info, album->artist);
 				set_title3 (info, year);
-				gtk_label_set_selectable (GTK_LABEL (priv->title2_label), TRUE);
+				gtk_label_set_selectable (GTK_LABEL (priv->title2_label), info->priv->interactive);
 			} 
 			else {
 				set_title2 (info, year);
@@ -845,7 +879,7 @@ static void
 goo_player_info_set_cover (GooPlayerInfo *info,
 			   const char    *cover)
 {
-	GdkPixbuf *image;
+	gboolean cover_set = FALSE;
 	
 	if (cover == NULL)
 		return;
@@ -855,34 +889,34 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 		gtk_image_set_from_stock (GTK_IMAGE (info->priv->status_image), 
 					  GOO_STOCK_NO_DISC, 
 					  GTK_ICON_SIZE_DIALOG);
-		return;
 	}
-
-	if (strcmp (cover, "data-disc") == 0) {
+	else if (strcmp (cover, "data-disc") == 0) {
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 0);
 		gtk_image_set_from_stock (GTK_IMAGE (info->priv->status_image), 
 					  GOO_STOCK_DATA_DISC, 
 					  GTK_ICON_SIZE_DIALOG);
-
-		return;
 	}
-
-	if (strcmp (cover, "audio-cd") == 0) {
+	else if (strcmp (cover, "audio-cd") == 0) {
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 1);
 		gtk_image_set_from_stock (GTK_IMAGE (info->priv->cover_image), 
 					  GOO_STOCK_AUDIO_CD, 
 					  GTK_ICON_SIZE_DIALOG);
-		return;
+	}
+	else {
+		GdkPixbuf *image;
+			
+		image = gdk_pixbuf_new_from_file_at_size (cover, 80, 80, NULL);
+		if (image != NULL) {
+			gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 1);
+			gtk_image_set_from_pixbuf (GTK_IMAGE (info->priv->cover_image), image);
+			cover_set = TRUE;
+		}
+		else 
+			goo_player_info_set_cover (info, "audio-cd");
 	}
 	
-	image = gdk_pixbuf_new_from_file_at_size (cover, 80, 80, NULL);
-	if (image != NULL) {
-		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 1);
-		gtk_image_set_from_pixbuf (GTK_IMAGE (info->priv->cover_image), image);
-	}
-	else 
-		goo_player_info_set_cover (info, "audio-cd");
-	
+	if (! info->priv->interactive)
+		gtk_frame_set_shadow_type (GTK_FRAME (info->priv->cover_frame), cover_set ? GTK_SHADOW_NONE : GTK_SHADOW_ETCHED_IN);
 }
 
 
@@ -917,7 +951,8 @@ window_update_cover_cb (GooWindow     *window,
 
 
 GtkWidget *
-goo_player_info_new (GooWindow *window)
+goo_player_info_new (GooWindow *window,
+		     gboolean   interactive)
 {
 	GooPlayerInfo *info;
 	GooPlayer     *player;
@@ -930,6 +965,8 @@ goo_player_info_new (GooWindow *window)
 	info = GOO_PLAYER_INFO (g_object_new (GOO_TYPE_PLAYER_INFO, NULL));
 
 	info->priv->window = window;
+	info->priv->interactive = interactive;
+	goo_player_info_construct (info);
 	
 	g_signal_connect (window, 
 			  "update_cover",
