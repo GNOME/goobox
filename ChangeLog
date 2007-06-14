@@ -1,5 +1,10 @@
 2007-06-14  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* NEWS:
+	* configure.in: updated for 1.9.1
+
+2007-06-14  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
 	* src/goo-window.c: 
 	* src/goo-player-info.h: 
 	* src/goo-player-info.c: make the tootip style a bit different, added
@@ -137,7 +142,7 @@
 	* src/goo-volume-button.c:
 	* src/goo-volume-button.h: removed.
 	
-	* src/goo-volume-tool-button.c: allow to change the colume with a 
+	* src/goo-volume-tool-button.c: allow to change the volume with a 
 	single click and drag action.
 
 2007-05-08  Paolo Bacchilega  <paobac@cvs.gnome.org>	

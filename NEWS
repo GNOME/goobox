@@ -1,3 +1,38 @@
+version 1.9.1
+--------------
+
+	New features:
+	
+	* Ported to GStreamer 0.10 and MusicBrainz 2.1.  Removed CDDBSlave 
+	  support.
+	* Moved the extraction options in the preferences dialog.
+	* Added next/stop actions in the notification window.
+	* Show the CD cover and other information in the tray icon tooltip.
+ 	* Use the xdg MUSIC dir as default destination to extract tracks.
+	* Allow to change the volume with a single click and a drag action.
+	* Show the artist column in the track list when the CD is of variuos
+	  artists.
+	* Use a single window for each CD drive.
+	* Allow to extract the selected tracks from the track list context 
+	  menu.
+	* Added a --stop command line option.
+	* Download the cover from amazon if the asin is available.
+		  
+	Notable bugfixes:
+	  
+ 	* More hig compliant menus.
+	* Use stock icons as much as possible.  Update the icons when the icon 
+	  theme changes.  Install a theme-friendly application icon.
+ 	* Do not allow to open more than one preferences dialog.
+	* Ported to GOption.  
+	* Save the cover at the original size, resize the cover before 
+	  displaying it.
+	* Read the list of available drives only at startup time to not stop
+	  playing the CD when the preferences dialog is opened.
+	* Fixed extraction of tracks with spacial characters.
+	* In the ripper dialog show the remaining time only when the forecast
+	  starts to stabilize.
+	
 version 0.9.93
 --------------
 	* Notify the playing track when the main window is hidden. Requires 
