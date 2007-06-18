@@ -51,7 +51,7 @@
 #include "goo-cdrom.h"
 
 #define TOC_OFFSET 150
-#define GLADE_RIPPER_FILE "goobox.glade"
+#define GLADE_RIPPER_FILE "ripper_dialog.glade"
 #define DESTINATION_PERMISSIONS 0755
 #define PLS_PERMISSIONS 0644
 #define UPDATE_DELAY 400

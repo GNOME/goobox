@@ -1,8 +1,12 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 [encoding: UTF-8]
-data/glade/goobox.glade
-data/glade/goo_cover_chooser.glade
+data/glade/cover_chooser.glade
+data/glade/extract_dialog.glade
+data/glade/format_dialog.glade
+data/glade/preferences.glade
+data/glade/properties.glade
+data/glade/ripper_dialog.glade
 data/glade/properties.glade
 data/GNOME_Goobox.server.in
 data/goobox.desktop.in.in

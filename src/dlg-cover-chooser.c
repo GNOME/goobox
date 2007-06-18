@@ -46,7 +46,7 @@
 #include "preferences.h"
 #include "gconf-utils.h"
 
-#define GLADE_CHOOSER_FILE "goo_cover_chooser.glade"
+#define GLADE_CHOOSER_FILE "cover_chooser.glade"
 #define MAX_IMAGES 20
 #define READ_TIMEOUT 20
 #define BUFFER_SIZE 612

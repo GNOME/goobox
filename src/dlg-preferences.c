@@ -41,7 +41,8 @@
 #include "goo-stock.h"
 #include "file-utils.h"
 
-#define GLADE_PREF_FILE "goobox.glade"
+#define GLADE_PREF_FILE "preferences.glade"
+#define GLADE_FORMAT_FILE "format_dialog.glade"
 
 enum { TEXT_COLUMN, DATA_COLUMN, PRESENT_COLUMN, N_COLUMNS };
 
@@ -527,9 +528,9 @@ dlg_format (DialogData    *preferences_data,
         
 	data = g_new0 (FormatDialogData, 1);
 	data->format = format;
-	data->gui = glade_xml_new (GOO_GLADEDIR "/" GLADE_PREF_FILE, NULL, NULL);
+	data->gui = glade_xml_new (GOO_GLADEDIR "/" GLADE_FORMAT_FILE, NULL, NULL);
         if (!data->gui) {
-                g_warning ("Could not find " GLADE_PREF_FILE "\n");
+                g_warning ("Could not find " GLADE_FORMAT_FILE "\n");
 		g_free (data);
                 return;
         }

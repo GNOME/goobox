@@ -1,5 +1,22 @@
 2007-06-18  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* data/glade/cover_chooser.glade: 
+	* data/glade/extract_dialog.glade:
+	* data/glade/format_dialog.glade:
+	* data/glade/preferences.glade:
+	* data/glade/properties.glade:
+	* data/glade/ripper_dialog.glade:
+	* src/dlg-ripper.c: 
+	* src/dlg-preferences.c: 
+	* src/dlg-extract.c: 
+	* src/dlg-cover-chooser.c: 
+	
+	Fixed 321219 – [PATCH] goobox' glade-file should be split into 
+	several ones.
+	Patch by Felix Riemann.
+
+2007-06-18  Paolo Bacchilega  <paobac@cvs.gnome.org>
+	
 	* src/goo-player.c: 
 	* src/goo-player-info.h: 
 	* src/goo-player-info.c: 

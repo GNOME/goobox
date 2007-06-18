@@ -49,7 +49,7 @@
 #include "dlg-ripper.h"
 #include "file-utils.h"
 
-#define GLADE_EXTRACT_FILE "goobox.glade"
+#define GLADE_EXTRACT_FILE "extract_dialog.glade"
 
 typedef struct {
 	GooWindow   *window;
