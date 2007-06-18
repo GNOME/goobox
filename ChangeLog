@@ -1,3 +1,13 @@
+2007-06-18  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* src/goo-player.c: 
+	* src/goo-player-info.h: 
+	* src/goo-player-info.c: 
+	* src/goo-window.c (goo_window_prev): 
+	
+	Fixed bug #345810 – [PATCH] make skip-to-prev smarter.
+	Modified the patch #67933 written by Felix Riemann.
+
 2007-06-14  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* NEWS:

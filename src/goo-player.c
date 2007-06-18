@@ -240,7 +240,6 @@ update_progress_cb (gpointer callback_data)
 	GooPlayer *player = callback_data;
 	gboolean   ret;
 	gint64     sector = 0;
-	double     fraction;
 
 	if (player->priv->update_progress_id != 0) {
 		g_source_remove (player->priv->update_progress_id);
@@ -251,10 +250,9 @@ update_progress_cb (gpointer callback_data)
 	if (!ret)
 		return FALSE;
 
-	fraction = ((double) sector) / (double) player->priv->current_track->sectors;
 	g_signal_emit_by_name (G_OBJECT (player), 
 			       "progress", 
-			       fraction,
+			       ((double) sector) / (double) player->priv->current_track->sectors,
 			       NULL);
 
 	player->priv->update_progress_id = g_timeout_add (PROGRESS_DELAY, update_progress_cb, callback_data);
@@ -1074,7 +1072,6 @@ goo_player_skip_to (GooPlayer *player,
 			  GST_SEEK_TYPE_NONE, 
 			  0);
 	gst_element_get_state (player->priv->pipeline, NULL, NULL, -1);
-	
 	gst_element_set_state (player->priv->pipeline, GST_STATE_PLAYING);
 }
 

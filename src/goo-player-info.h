@@ -56,8 +56,9 @@ struct _GooPlayerInfoClass
 
 };
 
-GType       goo_player_info_get_type (void);
-GtkWidget * goo_player_info_new      (GooWindow *window,
-				      gboolean   interactive);
+GType       goo_player_info_get_type      (void);
+GtkWidget * goo_player_info_new           (GooWindow     *window,
+				           gboolean       interactive);
+double      goo_player_info_get_progress  (GooPlayerInfo *info);
 
 #endif /* GOO_PLAYER_INFO_H */

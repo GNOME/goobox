@@ -674,6 +674,13 @@ player_progress_cb (GooPlayer     *player,
 }
 
 
+double
+goo_player_info_get_progress (GooPlayerInfo *info)
+{
+	return info->priv->fraction;
+}
+
+
 static void
 update_subtitle (GooPlayerInfo *info,
 		 TrackInfo     *track)

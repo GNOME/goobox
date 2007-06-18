@@ -82,6 +82,7 @@ struct _GooWindowPrivateData {
 	GtkWidget         *tray_popup_menu;
 	GtkWidget         *cover_popup_menu;
 
+	GtkWidget         *info;
 	GtkWidget         *info_popup;
 	GtkWidget         *volume_button;
 
@@ -2488,20 +2489,18 @@ goo_window_construct (GooWindow  *window,
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	{
-		GtkWidget *info;
-		
-		info = goo_player_info_new (window, TRUE);
-		gtk_container_set_border_width (GTK_CONTAINER (info), 0);
-		g_signal_connect (info,
+	{	
+		window->priv->info = goo_player_info_new (window, TRUE);
+		gtk_container_set_border_width (GTK_CONTAINER (window->priv->info), 0);
+		g_signal_connect (window->priv->info,
 				  "skip_to",
 				  G_CALLBACK (player_info_skip_to_cb), 
 				  window);
-		g_signal_connect (info,
+		g_signal_connect (window->priv->info,
 				  "cover_clicked",
 				  G_CALLBACK (player_info_cover_clicked_cb), 
 				  window);
-		gtk_box_pack_start (GTK_BOX (hbox), info, TRUE, TRUE, 0);
+		gtk_box_pack_start (GTK_BOX (hbox), window->priv->info, TRUE, TRUE, 0);
 	}
 
 	/**/
@@ -2879,26 +2878,28 @@ goo_window_next (GooWindow *window)
 void
 goo_window_prev (GooWindow *window)
 {
-	GooWindowPrivateData *priv = window->priv;
-	int new_pos, new_track;
+	int new_pos;
 
-	if (priv->album->n_tracks == 0)
+	if (window->priv->album->n_tracks == 0)
 		return;
 
 	goo_window_stop (window);
 
-	if (priv->current_track != NULL) {
+	if (window->priv->current_track != NULL) {
 		int current_track, current_pos;
-		current_track = priv->current_track->number;
+		
+		current_track = window->priv->current_track->number;
 		current_pos = get_position_from_track_number (window, current_track);
-		new_pos = MAX (current_pos - 1, 0);
+		
+		if (goo_player_info_get_progress (GOO_PLAYER_INFO (window->priv->info)) * window->priv->current_track->length > 4)
+			new_pos = current_pos;
+		else
+			new_pos = MAX (current_pos - 1, 0);
 	} 
 	else
-		new_pos = priv->album->n_tracks - 1;
+		new_pos = window->priv->album->n_tracks - 1;
 
-	new_track = get_track_number_from_position (window, new_pos);
-	goo_window_set_current_track (window, new_track);
-
+	goo_window_set_current_track (window, get_track_number_from_position (window, new_pos));
 	goo_window_play (window);
 }
 
