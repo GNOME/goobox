@@ -1,3 +1,7 @@
+2007-06-25  Takeshi AIHANA <takeshi.aihana@gmail.com>
+
+	* ja.po: Updated Japanese translation.
+
 2007-06-18  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	* POTFILES.skip: new file.  added data/goobox.desktop.in
