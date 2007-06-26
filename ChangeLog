@@ -1,3 +1,8 @@
+2007-06-26  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
+	* Makefile.am: added --disable-schemas-install to 
+	DISTCHECK_CONFIGURE_FLAGS 
+
 2007-06-19  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
 	[ version 1.9.1 released ]

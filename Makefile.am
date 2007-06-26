@@ -30,4 +30,4 @@ DISTCLEANFILES =                        \
 	intltool-merge                  \
 	intltool-update
 
-DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper
+DISTCHECK_CONFIGURE_FLAGS = --disable-schemas-install --disable-scrollkeeper
