@@ -1,0 +1,258 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: goobox\n"
+"POT-Creation-Date: 2007-07-30 03:40+0100\n"
+"PO-Revision-Date: 2007-08-01 07:31+0100\n"
+"Last-Translator: Joan Duran <jodufi@gmail.com>\n"
+"Language-Team: Catalan <tradgnome@softcatala.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: C/goobox.xml:18(title) 
+msgid "<application>CD Player</application> Manual V1.0"
+msgstr "Manual del <application>reproductor de CD</application> v0.1.0"
+
+#: C/goobox.xml:20(para) 
+msgid "User manual for Goobox the CD player."
+msgstr "Manual d'usuari per al reproductor de CD Goobox"
+
+#: C/goobox.xml:24(year) 
+msgid "2005"
+msgstr "2005"
+
+#: C/goobox.xml:25(holder) 
+msgid "Paolo Bacchilega"
+msgstr "Paolo Bacchilega"
+
+#: C/goobox.xml:41(publishername) 
+msgid "GNOME Documentation Project"
+msgstr "Projecte de documentació del GNOME"
+
+#: C/goobox.xml:2(para) 
+msgid "Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License (GFDL), Version 1.1 or any later version published by the Free Software Foundation with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. You can find a copy of the GFDL at this <ulink type=\"help\" url=\"ghelp:fdl\">link</ulink> or in the file COPYING-DOCS distributed with this manual."
+msgstr "Teniu permís per a copiar, distribuir i/o modificar aquest document, sota els termes de la Llicència de documentació lliure GNU (GFDL), versió 1.1 o qualsevol versió publicada posteriorment per la Free Software Foundation, sense seccions invariants, sense texts de portada i sense texts de contraportada. Podeu trobar una còpia de la GFDL en aquest <ulink type=\"help\" url=\"ghelp:fdl\">enllaç</ulink> o en el fitxer COPYING-DOCS distribuït amb aquest manual."
+
+#: C/goobox.xml:12(para) 
+msgid "This manual is part of a collection of GNOME manuals distributed under the GFDL. If you want to distribute this manual separately from the collection, you can do so by adding a copy of the license to the manual, as described in section 6 of the license."
+msgstr "Aquest manual forma part d'una col·lecció de manuals del GNOME distribuïts sota la GFDL. Si voleu distribuir aquest manual independentment de la col·lecció, podeu fer-ho afegint una còpia de la llicència al manual, tal com es descriu a la secció 6 de la llicència."
+
+#: C/goobox.xml:19(para) 
+msgid "Many of the names used by companies to distinguish their products and services are claimed as trademarks. Where those names appear in any GNOME documentation, and the members of the GNOME Documentation Project are made aware of those trademarks, then the names are in capital letters or initial capital letters."
+msgstr "Molts dels noms que les empreses utilitzen per a distingir els seus productes i serveis es consideren marques comercials. Quan aquests noms apareguin en qualsevol documentació del GNOME, si els membres del Projecte de documentació del GNOME han estat avisats pel que fa a les marques, els noms apareixeran en majúscules o amb les inicials en majúscules."
+
+#: C/goobox.xml:35(para) 
+msgid "DOCUMENT IS PROVIDED ON AN \"AS IS\" BASIS, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES THAT THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS FREE OF DEFECTS MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE RISK AS TO THE QUALITY, ACCURACY, AND PERFORMANCE OF THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS WITH YOU. SHOULD ANY DOCUMENT OR MODIFIED VERSION PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT THE INITIAL WRITER, AUTHOR OR ANY CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY SERVICING, REPAIR OR CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF THIS LICENSE. NO USE OF ANY DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER; AND"
+msgstr "EL DOCUMENT S'OFEREIX «TAL COM ÉS», SENSE CAP TIPUS DE GARANTIA, NI EXPLÍCITA NI IMPLÍCITA; AIXÒ INCLOU, SENSE LIMITAR-S'HI, LES GARANTIES QUE EL DOCUMENT O LA VERSIÓ MODIFICADA DEL DOCUMENT NO TINGUI DEFECTES, SIGUI COMERCIALITZABLE, SIGUI ADEQUAT PER A UN ÚS CONCRET O NO INFRINGEIXI CAP LLEI. TOT EL RISC PEL QUE FA A LA QUALITAT, EXACTITUD I RENDIMENT DEL DOCUMENT O LA VERSIÓ MODIFICADA DEL DOCUMENT ÉS VOSTRE. EN CAS QUE EL DOCUMENT RESULTÉS DEFECTUÓS EN QUALSEVOL ASPECTE, VÓS (NO PAS L'ESCRIPTOR INICIAL, L'AUTOR O CAP ALTRE COL·LABORADOR) ASSUMIU TOT EL COST DE MANTENIMENT, REPARACIÓ O CORRECCIÓ. AQUESTA RENÚNCIA DE GARANTIA CONSTITUEIX UNA PART ESSENCIAL D'AQUESTA LLICÈNCIA. NO S'AUTORITZA L'ÚS DE CAP DOCUMENT O VERSIÓ MODIFICADA DEL DOCUMENT EXCEPTE SOTA AQUESTA RENÚNCIA DE GARANTIA; I "
+
+#: C/goobox.xml:55(para) 
+msgid "UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE AUTHOR, INITIAL WRITER, ANY CONTRIBUTOR, OR ANY DISTRIBUTOR OF THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT, OR ANY SUPPLIER OF ANY OF SUCH PARTIES, BE LIABLE TO ANY PERSON FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER DAMAGES OR LOSSES ARISING OUT OF OR RELATING TO USE OF THE DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT, EVEN IF SUCH PARTY SHALL HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGES."
+msgstr "EN CAP CAS I SOTA CAP INTERPRETACIÓ LEGAL, JA SIGUI PER AGREUJAMENT (INCLOENT-HI LA NEGLIGÈNCIA), CONTRACTE O ALTRE CAS, L'AUTOR, L'ESCRIPTOR ORIGINAL, QUALSEVOL DELS COL·LABORADORS O DISTRIBUÏDORS DEL DOCUMENT O UNA VERSIÓ MODIFICADA DEL DOCUMENT NI CAP PROVEÏDOR D'AQUESTES PARTS NO SERAN RESPONSABLES DAVANT DE NINGÚ PER CAP DANY DIRECTE, INDIRECTE, ESPECIAL, ACCIDENTAL O CONSECUTIU DE QUALSEVOL TIPUS; AIXÒ INCLOU, SENSE LIMITAR-S'HI, ELS DANYS PER PÈRDUA DE CLIENTS, INTERRUPCIONS DE LA FEINA, FALLADA O MALFUNCIONAMENT DE L'ORDINADOR, O QUALSEVOL ALTRA PÈRDUA O DANY RELACIONAT AMB L'ÚS DEL DOCUMENT I LES VERSIONS MODIFICADES DEL DOCUMENT, FINS I TOT SI S'HA INFORMAT AQUESTA PART DE LA POSSIBILITAT D'AQUESTS DANYS."
+
+#: C/goobox.xml:28(para) 
+msgid "DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE TERMS OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER UNDERSTANDING THAT: <placeholder-1/>"
+msgstr "EL DOCUMENT I LES VERSIONS MODIFICADES DEL DOCUMENT S'OFEREIXEN SOTA ELS TERMES DE LA LLICÈNCIA DE DOCUMENTACIÓ LLIURE DE GNU, TENINT EN COMPTE QUE: <placeholder-1/>"
+
+#: C/goobox.xml:48(firstname) 
+msgid "Paolo"
+msgstr "Paolo"
+
+#: C/goobox.xml:49(surname) 
+msgid "Bacchilega"
+msgstr "Bacchilega"
+
+#: C/goobox.xml:51(email) 
+msgid "paolo.bacchilega@libero.it"
+msgstr "paolo.bacchilega@libero.it"
+
+#: C/goobox.xml:61(revnumber) 
+msgid "1.0"
+msgstr "1.0"
+
+#: C/goobox.xml:62(date) 
+msgid "2005-01-20"
+msgstr "2005-01-20"
+
+#: C/goobox.xml:64(para) 
+msgid "First version, program version 0.7.1"
+msgstr "Primera versió, versió del programa 0.7.1"
+
+#. this is version of manual, not application
+#: C/goobox.xml:69(releaseinfo) 
+msgid "This is manual describes version 0.7.1 of Goobox"
+msgstr "Aquest manual descriu la versió 0.7.1 del Goobox"
+
+#: C/goobox.xml:75(primary) 
+msgid "goobox"
+msgstr "goobox"
+
+#: C/goobox.xml:78(primary) 
+msgid "CD Player"
+msgstr "Reproductor de CD"
+
+#: C/goobox.xml:81(secondary) 
+msgid "CD Ripper"
+msgstr "Extractor de CD"
+
+#: C/goobox.xml:89(title) 
+msgid "Introduction"
+msgstr "Introducció"
+
+#: C/goobox.xml:90(para) 
+msgid "With <application>CD Player</application> you can play audio Compact Discs (CDs) and save the CD tracks as audio files."
+msgstr "Amb el <application>reproductor de CD</application> podeu reproduir àudio de Discs Compactes (CDs) i desar les peces del CD com a fitxers d'àudio."
+
+#: C/goobox.xml:97(title) 
+msgid "Quick Reference: Keyboard Shortcuts"
+msgstr "Referència ràpida: dreceres de teclat"
+
+#: C/goobox.xml:98(para) 
+msgid "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> provide a quick reference for all of the <application>CD Player</application> keyword shortcuts. Look in the menus for other shortcuts."
+msgstr "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> proveeix una referència ràpida per a totes les dreceres de teclat del <application>reproductor de CD</application>. Vegeu en els menús per a altres dreceres."
+
+#: C/goobox.xml:103(title) 
+msgid "Keyboard shortcuts"
+msgstr "Dreceres de teclat"
+
+#: C/goobox.xml:111(para) 
+msgid "Keyboard Shortcut"
+msgstr "Drecera de teclat"
+
+#: C/goobox.xml:113(para) 
+msgid "Description"
+msgstr "Descripció"
+
+#: C/goobox.xml:120(keycap) 
+msgid "1"
+msgstr "1"
+
+#: C/goobox.xml:124(para) 
+msgid "Play the 1st track"
+msgstr "Reprodueix la primera peça"
+
+#: C/goobox.xml:130(keycap) 
+msgid "2"
+msgstr "2"
+
+#: C/goobox.xml:134(para) 
+msgid "Play the 2nd track"
+msgstr "Reprodueix la segona peça"
+
+#: C/goobox.xml:140(keycap) 
+msgid "3"
+msgstr "3"
+
+#: C/goobox.xml:144(para) 
+msgid "Play the 3rd track"
+msgstr "Reprodueix la tercera peça"
+
+#: C/goobox.xml:150(keycap) 
+msgid "4"
+msgstr "4"
+
+#: C/goobox.xml:154(para) 
+msgid "Play the 4th track"
+msgstr "Reprodueix la quarta peça"
+
+#: C/goobox.xml:160(keycap) 
+msgid "5"
+msgstr "5"
+
+#: C/goobox.xml:164(para) 
+msgid "Play the 5th track"
+msgstr "Reprodueix la cinquena peça"
+
+#: C/goobox.xml:170(keycap) 
+msgid "6"
+msgstr "6"
+
+#: C/goobox.xml:174(para) 
+msgid "Play the 6th track"
+msgstr "Reprodueix la sisena peça"
+
+#: C/goobox.xml:180(keycap) 
+msgid "7"
+msgstr "7"
+
+#: C/goobox.xml:184(para) 
+msgid "Play the 7th track"
+msgstr "Reprodueix la setena peça"
+
+#: C/goobox.xml:190(keycap) 
+msgid "8"
+msgstr "8"
+
+#: C/goobox.xml:194(para) 
+msgid "Play the 8th track"
+msgstr "Reprodueix la vuitena peça"
+
+#: C/goobox.xml:200(keycap) 
+msgid "9"
+msgstr "9"
+
+#: C/goobox.xml:204(para) 
+msgid "Play the 9th track"
+msgstr "Reprodueix la novena peça"
+
+#: C/goobox.xml:210(keycap) 
+msgid "0"
+msgstr "0"
+
+#: C/goobox.xml:214(para) 
+msgid "Play the 10th track"
+msgstr "Reprodueix la dècima peça"
+
+#: C/goobox.xml:220(keycap) 
+msgid "Space"
+msgstr "Espai"
+
+#: C/goobox.xml:224(para) 
+msgid "Play/Pause the current track"
+msgstr "Reprodueix/pausa la peça actual"
+
+#: C/goobox.xml:230(keycap) 
+msgid "Escape"
+msgstr "Esc"
+
+#: C/goobox.xml:234(para) 
+msgid "Stop playing the current track"
+msgstr "Atura la reproducció de la peça actual"
+
+#: C/goobox.xml:240(keycap) 
+msgid "N"
+msgstr "N"
+
+#: C/goobox.xml:244(para) 
+msgid "Play the next track"
+msgstr "Reprodueix la peça següent"
+
+#: C/goobox.xml:250(keycap) 
+msgid "P"
+msgstr "P"
+
+#: C/goobox.xml:254(para) 
+msgid "Play the previous track"
+msgstr "Reprodueix la peça anterior"
+
+#: C/goobox.xml:260(keycap) 
+msgid "J"
+msgstr "J"
+
+#: C/goobox.xml:264(para) 
+msgid "Eject the CD from the tray"
+msgstr "Expulsa el CD de la safata"
+
+#: C/goobox.xml:270(keycap) 
+msgid "E"
+msgstr "E"
+
+#: C/goobox.xml:274(para) 
+msgid "Open the <interface>Extract</interface> dialog"
+msgstr "Obre el diàleg <interface>Extreure</interface>"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2.
+#: C/goobox.xml:0(None) 
+msgid "translator-credits"
+msgstr "Joan Duran <jodufi@gmail.com>"
+
