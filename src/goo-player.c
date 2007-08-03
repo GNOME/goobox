@@ -408,7 +408,7 @@ goo_player_init (GooPlayer *player)
 	priv->action = GOO_PLAYER_ACTION_NONE;
 	priv->error = NULL;
 	priv->is_busy = FALSE;
-
+	
 	priv->yes_or_no = g_mutex_new ();
 	priv->check_id = 0;
 	priv->exiting = FALSE,

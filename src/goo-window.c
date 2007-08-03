@@ -65,6 +65,7 @@
 #define CONFIG_KEY_AUTOFETCH_GROUP "AutoFetch"
 #define VOLUME_BUTTON_POSITION 4
 #define TRAY_TOOLTIP_DELAY 500
+#define AUTOPLAY_DELAY 250
 
 struct _GooWindowPrivateData {
 	GtkUIManager      *ui;
@@ -1704,9 +1705,9 @@ player_done_cb (GooPlayer       *player,
 		goo_window_update_cover (window);
 		window_update_title (window);
 		set_current_track_icon (window, NULL);
-		if (AutoPlay) {
+		if (AutoPlay || eel_gconf_get_boolean (PREF_GENERAL_AUTOPLAY, TRUE)) {
 			AutoPlay = FALSE;
-			g_idle_add (autoplay_cb, window);
+			g_timeout_add (AUTOPLAY_DELAY, autoplay_cb, window);
 		}
 		break;
 

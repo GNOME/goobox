@@ -32,6 +32,7 @@
 #define PREF_GENERAL_VOLUME           "/apps/goobox/general/volume"
 #define PREF_GENERAL_COVER_PATH       "/apps/goobox/general/cover_path"
 #define PREF_GENERAL_USE_SJ           "/apps/goobox/general/use_sound_juicer"
+#define PREF_GENERAL_AUTOPLAY         "/apps/goobox/general/autoplay"
 
 #define PREF_UI_TOOLBAR               "/apps/goobox/ui/toolbar_visible"
 #define PREF_UI_STATUSBAR             "/apps/goobox/ui/statusbar_visible"

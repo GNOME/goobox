@@ -1,5 +1,17 @@
 2007-08-03  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/preferences.h: 
+	* src/goo-window.c (player_done_cb): use a timeout to start the 
+	autoplaying
+	* src/goo-player.c: 
+	* src/dlg-preferences.c: 
+	* data/glade/preferences.glade: 
+	* data/goobox.schemas.in: 
+
+	Added option to automatically play after CD insertion.
+
+2007-08-03  Paolo Bacchilega  <paobac@cvs.gnome.org>
+
 	* src/dlg-cover-chooser.c (get_query): remove the quotes from the query.
 	
 	* src/goo-window.c (goo_window_show): 

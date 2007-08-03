@@ -55,6 +55,19 @@
 	</locale>
       </schema>
 
+      <schema>
+	<key>/schemas/apps/goobox/general/autoplay</key>
+	<applyto>/apps/goobox/general/autoplay</applyto>
+	<owner>goobox</owner>
+	<type>bool</type>
+	<default>true</default>
+	<locale name="C">
+	  <short></short>
+	  <long>
+	  </long>
+	</locale>
+      </schema>
+
       <!-- UI -->
 
       <schema>

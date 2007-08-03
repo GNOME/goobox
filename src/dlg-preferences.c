@@ -64,6 +64,7 @@ typedef struct {
 	GtkWidget    *drive_selector;
 
 	GtkWidget    *p_destination_filechooserbutton;
+	GtkWidget    *p_autoplay_checkbutton;
 
 	GtkTreeModel *filetype_model;
 	GtkWidget    *p_filetype_combobox;
@@ -87,6 +88,7 @@ apply_cb (GtkWidget  *widget,
 
 	pref_set_file_format (gtk_combo_box_get_active (GTK_COMBO_BOX (data->p_filetype_combobox)));
 	eel_gconf_set_boolean (PREF_EXTRACT_SAVE_PLAYLIST, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->p_save_playlist_checkbutton)));
+	eel_gconf_set_boolean (PREF_GENERAL_AUTOPLAY, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->p_autoplay_checkbutton)));
 	
 	/**/
 
@@ -250,7 +252,8 @@ dlg_preferences (GooWindow *window)
 	window->preferences_dialog = data->dialog;
 
 	data->p_destination_filechooserbutton = glade_xml_get_widget (data->gui, "p_destination_filechooserbutton");
-
+	data->p_autoplay_checkbutton = glade_xml_get_widget (data->gui, "p_autoplay_checkbutton");
+	
 	filetype_combobox_box = glade_xml_get_widget (data->gui, "filetype_combobox_box");
 	data->p_encoding_notebook = glade_xml_get_widget (data->gui, "p_encoding_notebook");
 	data->p_filetype_properties_button = glade_xml_get_widget (data->gui, "p_filetype_properties_button");
@@ -300,7 +303,6 @@ dlg_preferences (GooWindow *window)
 	gtk_box_pack_start (GTK_BOX (filetype_combobox_box), data->p_filetype_combobox, TRUE, TRUE, 0);
 
 	/**/
-	
 	
 	destination = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "");
 	if ((destination == NULL) || (strcmp (destination, "") == 0)) { 
@@ -374,7 +376,8 @@ dlg_preferences (GooWindow *window)
 	set_description_label (data, "wave_description_label", _("WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio."));
 		
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->p_save_playlist_checkbutton), eel_gconf_get_boolean (PREF_EXTRACT_SAVE_PLAYLIST, TRUE));
-
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->p_autoplay_checkbutton), eel_gconf_get_boolean (PREF_GENERAL_AUTOPLAY, TRUE));
+	
 	/**/
 
 	data->drive_selector = bacon_cd_selection_new (Drives, goo_player_get_drive (goo_window_get_player (window)));
