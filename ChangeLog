@@ -1,5 +1,19 @@
 2007-08-03  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* src/ui.h: 
+	* src/goo-window.c: 
+	* src/actions.h: 
+	* src/actions.c: 
+	
+	Added ability to copy a disc, using nautilus-cd-burner.
+	
+2007-08-03  Paolo Bacchilega  <paobac@cvs.gnome.org>	
+	
+	* configure.in: set version to 1.9.2 to differentiate svn version from 
+	version 1.9.1
+	
+2007-08-03  Paolo Bacchilega  <paobac@cvs.gnome.org>	
+	
 	* src/preferences.h: 
 	* src/goo-window.c (player_done_cb): use a timeout to start the 
 	autoplaying

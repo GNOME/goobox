@@ -43,6 +43,7 @@ void activate_action_view_statusbar (GtkAction *action, gpointer data);
 void activate_action_play_all (GtkAction *action, gpointer data);
 void activate_action_repeat (GtkAction *action, gpointer data);
 void activate_action_shuffle (GtkAction *action, gpointer data);
+void activate_action_copy_disc (GtkAction *action, gpointer data);
 void activate_action_extract (GtkAction *action, gpointer data);
 void activate_action_extract_selected (GtkAction *action, gpointer data);
 void activate_action_preferences (GtkAction *action, gpointer data);

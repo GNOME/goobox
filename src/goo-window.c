@@ -269,6 +269,7 @@ window_update_sensitivity (GooWindow *window)
 	set_sensitive (window, "Prev", audio_cd);
 
 	set_sensitive (window, "Extract", audio_cd && (priv->album->n_tracks > 0));
+	set_sensitive (window, "CopyDisc", audio_cd && (priv->album->n_tracks > 0));
 	set_sensitive (window, "Properties", audio_cd);
 	set_sensitive (window, "PickCoverFromDisk", audio_cd);
 	set_sensitive (window, "RemoveCover", audio_cd);

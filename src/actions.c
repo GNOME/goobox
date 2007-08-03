@@ -271,9 +271,9 @@ activate_action_shuffle (GtkAction *action,
 
 
 static void
-sj_watch_func (GPid     pid,
-	       gint     status,
-	       gpointer data)
+external_app_watch_func (GPid     pid,
+	       	         gint     status,
+	                 gpointer data)
 {
 	GooWindow *window = data;
 	
@@ -283,9 +283,9 @@ sj_watch_func (GPid     pid,
 
 
 static gboolean
-exec_sj (const char  *command_line,
-	 GError     **error,
-	 gpointer     data)
+exec_external_app (const char  *command_line,
+	 	   GError     **error,
+	 	   gpointer     data)
 {
 	gboolean   retval;
 	gchar    **argv = NULL;
@@ -293,9 +293,7 @@ exec_sj (const char  *command_line,
 
 	g_return_val_if_fail (command_line != NULL, FALSE);
 	
-	if (!g_shell_parse_argv (command_line,
-				 NULL, &argv,
-				 error))
+	if (! g_shell_parse_argv (command_line, NULL, &argv, error))
 		return FALSE;
 
 	retval = g_spawn_async (NULL,
@@ -307,12 +305,32 @@ exec_sj (const char  *command_line,
 				&child_pid,
 				error);
 	g_strfreev (argv);
-
-	g_child_watch_add (child_pid,
-			   sj_watch_func,
-			   data);
+	g_child_watch_add (child_pid, external_app_watch_func, data);
 
 	return retval;
+}
+
+
+void
+activate_action_copy_disc (GtkAction *action, 
+			   gpointer   data)
+{
+	GooWindow *window = data;
+	char      *command;
+	GError    *error = NULL;
+
+	command = g_strconcat ("nautilus-cd-burner --source-device=", 
+			       goo_player_get_device (goo_window_get_player (window)), 
+			       NULL);
+
+	goo_window_set_hibernate (window, TRUE);
+	if (! exec_external_app (command, &error, data)) {
+		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
+						   _("Could not execute command"), 
+						   &error);
+		goo_window_set_hibernate (window, FALSE);
+	}
+	g_free (command);
 }
 
 
@@ -321,19 +339,21 @@ activate_action_extract (GtkAction *action,
 			 gpointer   data)
 {
 	GooWindow *window = data;
-
-	if (preferences_get_use_sound_juicer ()) {
-		GError *error = NULL;
-
-		goo_window_set_hibernate (window, TRUE);		
-
-		if (! exec_sj ("sound-juicer", &error, data))
-			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
-							   _("Could not execute command"), 
-							   &error);
-	}
-	else
+	GError    *error = NULL;
+	
+	if (! preferences_get_use_sound_juicer ()) {
 		dlg_extract (window);
+		return;
+	}
+
+	goo_window_set_hibernate (window, TRUE);		
+
+	if (! exec_external_app ("sound-juicer", &error, data)) {
+		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
+						   _("Could not execute command"), 
+						   &error);
+		goo_window_set_hibernate (window, FALSE);
+	}
 }
 
 
@@ -342,19 +362,21 @@ activate_action_extract_selected (GtkAction *action,
 			 	  gpointer   data)
 {
 	GooWindow *window = data;
+	GError    *error = NULL;
 	
-	if (preferences_get_use_sound_juicer ()) {
-		GError *error = NULL;
-
-		goo_window_set_hibernate (window, TRUE);		
-
-		if (! exec_sj ("sound-juicer", &error, data))
-			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
-							   _("Could not execute command"), 
-							   &error);
-	}
-	else
+	if (! preferences_get_use_sound_juicer ()) {
 		dlg_extract_selected (window);	
+		return;
+	}
+		
+	goo_window_set_hibernate (window, TRUE);		
+
+	if (! exec_external_app ("sound-juicer", &error, data)) {
+		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
+						   _("Could not execute command"), 
+						   &error);
+		goo_window_set_hibernate (window, FALSE);
+	}
 }
 
 

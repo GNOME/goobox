@@ -89,6 +89,10 @@ static GtkActionEntry action_entries[] = {
 	  NULL, NULL,
 	  N_("Edit various preferences"),
 	  G_CALLBACK (activate_action_preferences) },
+	{ "CopyDisc", NULL,
+	  N_("_Copy Disc"), "C",
+	  N_("Copy the content of this disc on another disc"),
+	  G_CALLBACK (activate_action_copy_disc) },
 	{ "Extract", GOO_STOCK_EXTRACT,
 	  N_("E_xtract Tracks"), "E",
 	  N_("Save the tracks to disk as files"),
@@ -164,6 +168,7 @@ static const gchar *ui_info =
 "  <menubar name='MenuBar'>"
 "    <menu action='CDMenu'>"
 "      <menuitem action='Extract'/>"
+"      <menuitem action='CopyDisc'/>"
 "      <menuitem action='Eject'/>"
 "      <separator />"
 "      <menuitem action='TogglePlay'/>"
