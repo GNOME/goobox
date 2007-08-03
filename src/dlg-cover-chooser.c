@@ -449,7 +449,7 @@ get_query (DialogData *data)
 {
 	char *s, *e, *q;
 
-	s = g_strdup_printf ("\"%s\" \"%s\"", data->album, data->artist);
+	s = g_strdup_printf ("%s %s", data->album, data->artist);
 	e = gnome_vfs_escape_string (s);
 	q = g_strconcat ("http://images.google.com/images?q=", e, NULL);
 	g_free (e);

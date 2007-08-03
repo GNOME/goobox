@@ -114,7 +114,7 @@
 	<applyto>/apps/goobox/ui/statusbar_visible</applyto>
 	<owner>goobox</owner>
 	<type>bool</type>
-	<default>true</default>
+	<default>false</default>
 	<locale name="C">
 	  <short></short>
 	  <long>

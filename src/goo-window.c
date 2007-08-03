@@ -1058,7 +1058,7 @@ goo_window_show (GtkWidget *widget)
 	set_active (window, "ViewToolbar", view_foobar);
 	goo_window_set_toolbar_visibility (window, view_foobar);
 
-	view_foobar = eel_gconf_get_boolean (PREF_UI_STATUSBAR, TRUE);
+	view_foobar = eel_gconf_get_boolean (PREF_UI_STATUSBAR, FALSE);
 	set_active (window, "ViewStatusbar", view_foobar);
 	goo_window_set_statusbar_visibility (window, view_foobar);
 
