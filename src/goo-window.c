@@ -120,6 +120,7 @@ struct _GooWindowPrivateData {
 	int                pos_x, pos_y;
 	gboolean           hibernate;
 	gboolean           notify_action;
+	gboolean           ejected;
 };
 
 enum {
@@ -1706,10 +1707,12 @@ player_done_cb (GooPlayer       *player,
 		goo_window_update_cover (window);
 		window_update_title (window);
 		set_current_track_icon (window, NULL);
-		if (AutoPlay || eel_gconf_get_boolean (PREF_GENERAL_AUTOPLAY, TRUE)) {
+		if (AutoPlay || (priv->ejected && eel_gconf_get_boolean (PREF_GENERAL_AUTOPLAY, TRUE))) {
 			AutoPlay = FALSE;
 			g_timeout_add (AUTOPLAY_DELAY, autoplay_cb, window);
 		}
+		if (goo_player_get_state (player) >= GOO_PLAYER_STATE_NO_DISC)
+			priv->ejected = FALSE;
 		break;
 
 	case GOO_PLAYER_ACTION_METADATA:
@@ -1742,8 +1745,10 @@ player_done_cb (GooPlayer       *player,
 		} 
 		else if (action == GOO_PLAYER_ACTION_STOP) 
 			set_current_track_icon (window, GTK_STOCK_MEDIA_STOP);
-		else if (action == GOO_PLAYER_ACTION_EJECT) 
+		else if (action == GOO_PLAYER_ACTION_EJECT) {
+			priv->ejected = TRUE;
 			goo_player_update (priv->player);
+		}
 		break;
 		
 	case GOO_PLAYER_ACTION_PAUSE:
