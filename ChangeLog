@@ -1,5 +1,10 @@
 2007-08-04  Paolo Bacchilega  <paobac@cvs.gnome.org>
 
+	* NEWS: 
+	* README: updated for version 1.9.2
+	
+2007-08-04  Paolo Bacchilega  <paobac@cvs.gnome.org>	
+	
 	* src/goo-window.c: autoplay only when the disc is inserted.
 
 2007-08-03  Paolo Bacchilega  <paobac@cvs.gnome.org>

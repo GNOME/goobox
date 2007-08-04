@@ -1,11 +1,11 @@
 
 			       * Goobox *
 				   
-		   A Compact Disk Player for GNOME
+		   A Compact Disk Player and Ripper for GNOME
 
 * About Goobox
 
-  Goobox is a CD player and ripper that always knowns just what to do.
+  Goobox is a CD player and ripper well integrated with the GNOME environment.
 
 * Licensing
 
@@ -15,23 +15,21 @@
 * Dependencies
 
   gtk+ 2.4.x
-  libgnome[ui] 2.6.x
+  libgnome[ui] 2.16.x
   libbonobo 2.6.x
-  gnome-vfs 2.6.0
-  libglade 2.4.x
-  gstreamer 0.8.x 
-  gnome-media 2.8.x
+  gnome-vfs 2.18.0
+  libglade 2.6.x
+  gstreamer 0.10.x 
+  libmusicbrainz 2.1.0
+  libnotify 0.4.3 (optional)
 
-  GStreamer plugins:
+  required gstreamer plugins:
     cdparanoia: used to play CDs
-    vorbisenc, flacenc, lame, wavenc: at least one of this to rip CDs.
+    vorbisenc, flacenc, wavenc: at least one of this in order to rip CDs.
 
-* Install
+* How to install
 
   ./configure 
   make
   make install
-
-
---
-Thanks to Iain Holmes and Ross Burton, authors of Gnome CD and Sound Juicer.
+  
