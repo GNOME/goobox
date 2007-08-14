@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-25 23:14+0900\n"
-"PO-Revision-Date: 2007-06-25 23:14+0900\n"
+"POT-Creation-Date: 2007-08-15 00:43+0900\n"
+"PO-Revision-Date: 2007-08-15 00:43+0900\n"
 "Last-Translator: Takeshi AIHANA <takeshi.aihana@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -90,24 +90,28 @@ msgstr ""
 "れた劣化の無い音声フォーマットです。</i></small>"
 
 #: ../data/glade/preferences.glade.h:8
+msgid "Automatically play newly inserted discs"
+msgstr "ディスクを挿入したら自動的に演奏を開始する"
+
+#: ../data/glade/preferences.glade.h:9
 msgid "CD Player Preferences"
 msgstr "CD プレイヤーの設定"
 
-#: ../data/glade/preferences.glade.h:9
+#: ../data/glade/preferences.glade.h:10
 msgid "Choose destination folder"
 msgstr "ファイルを格納するフォルダの選択"
 
-#: ../data/glade/preferences.glade.h:10
+#: ../data/glade/preferences.glade.h:11
 msgid "Extraction"
 msgstr "取り込み"
 
-#: ../data/glade/preferences.glade.h:11
+#: ../data/glade/preferences.glade.h:12
 msgid "General"
 msgstr "全般"
 
-#: ../data/glade/preferences.glade.h:12
+#: ../data/glade/preferences.glade.h:13
 msgid "_Save playlist"
-msgstr "演奏一覧も取り込む(_S)"
+msgstr "演奏一覧も保存する(_S)"
 
 #: ../data/glade/properties.glade.h:1
 msgid "No album found."
@@ -162,7 +166,7 @@ msgid "Goobox Application Factory"
 msgstr "Goobox アプリケーションのファクトリ"
 
 #: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:209
-#: ../src/goo-window.c:2596 ../src/main.c:148 ../src/main.c:234
+#: ../src/goo-window.c:2603 ../src/main.c:148 ../src/main.c:234
 msgid "CD Player"
 msgstr "CD プレイヤー"
 
@@ -201,7 +205,8 @@ msgstr "Copyright © 2004-2007 フリーソフトウェア財団, Inc."
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "CD を演奏しトラックを取り込んでファイルに保存します"
 
-#: ../src/actions.c:332 ../src/actions.c:353 ../src/gtk-utils.c:797
+#: ../src/actions.c:329 ../src/actions.c:353 ../src/actions.c:376
+#: ../src/gtk-utils.c:797
 msgid "Could not execute command"
 msgstr "コマンドを実行できませんでした"
 
@@ -231,7 +236,7 @@ msgstr "%u (ジャケットの読み込み中: %u)"
 msgid "Loading images"
 msgstr "ジャケットの読み込み中"
 
-#: ../src/dlg-cover-chooser.c:432 ../src/goo-window.c:3160
+#: ../src/dlg-cover-chooser.c:432 ../src/goo-window.c:3167
 msgid "Could not search for a cover on Internet"
 msgstr "インターネットから CD ジャケットを検索できませんでした"
 
@@ -240,7 +245,7 @@ msgid "No image found"
 msgstr "見つかりませんでした"
 
 #: ../src/dlg-cover-chooser.c:503 ../src/dlg-extract.c:133
-#: ../src/dlg-preferences.c:147 ../src/dlg-properties.c:155
+#: ../src/dlg-preferences.c:149 ../src/dlg-properties.c:155
 #, c-format
 msgid "Could not display help: %s"
 msgstr "ヘルプを表示できませんでした: %s"
@@ -270,20 +275,20 @@ msgstr ""
 msgid "No encoder available."
 msgstr "利用可能なエンコーダがありません"
 
-#: ../src/dlg-preferences.c:321 ../src/dlg-preferences.c:577
+#: ../src/dlg-preferences.c:323 ../src/dlg-preferences.c:580
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:333 ../src/dlg-preferences.c:580
+#: ../src/dlg-preferences.c:335 ../src/dlg-preferences.c:583
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:345
+#: ../src/dlg-preferences.c:347
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:372 ../src/dlg-preferences.c:603
+#: ../src/dlg-preferences.c:374 ../src/dlg-preferences.c:606
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
@@ -291,7 +296,7 @@ msgstr ""
 "Vorbis は高音質で MP3 よりもファイル・サイズを低く抑えることが可能ですが、劣"
 "化のあるオープン・ソースな音声コーディックです。"
 
-#: ../src/dlg-preferences.c:373 ../src/dlg-preferences.c:606
+#: ../src/dlg-preferences.c:375 ../src/dlg-preferences.c:609
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
@@ -299,7 +304,7 @@ msgstr ""
 "Free Lossless Audio Codec (FLAC) は圧縮されているものの、元の音声データからの"
 "音質の劣化が無いオープン・ソースなコーデックです。"
 
-#: ../src/dlg-preferences.c:374 ../src/dlg-preferences.c:609
+#: ../src/dlg-preferences.c:376 ../src/dlg-preferences.c:612
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
@@ -307,27 +312,27 @@ msgstr ""
 "WAV+PCM は非圧縮のパルス符号変調 (PCM: Pulse-Code Modulation) 化された劣化の"
 "無い音声フォーマットです。"
 
-#: ../src/dlg-preferences.c:557
+#: ../src/dlg-preferences.c:560
 msgid "Faster compression"
 msgstr "高速な圧縮"
 
-#: ../src/dlg-preferences.c:561
+#: ../src/dlg-preferences.c:564
 msgid "Higher compression"
 msgstr "高圧縮"
 
-#: ../src/dlg-preferences.c:566
+#: ../src/dlg-preferences.c:569
 msgid "Smaller size"
 msgstr "サイズを小さく"
 
-#: ../src/dlg-preferences.c:570
+#: ../src/dlg-preferences.c:573
 msgid "Higher quality"
 msgstr "高品質"
 
-#: ../src/dlg-preferences.c:591
+#: ../src/dlg-preferences.c:594
 msgid "Quality:"
 msgstr "品質:"
 
-#: ../src/dlg-preferences.c:594
+#: ../src/dlg-preferences.c:597
 msgid "Compression level:"
 msgstr "圧縮レベル:"
 
@@ -345,15 +350,15 @@ msgstr "検索に失敗しました: %s\n"
 msgid "No album found"
 msgstr "アルバムが見つかりませんでした"
 
-#: ../src/dlg-properties.c:345 ../src/goo-window.c:593
+#: ../src/dlg-properties.c:345 ../src/goo-window.c:596
 msgid "#"
 msgstr "#"
 
-#: ../src/dlg-properties.c:363 ../src/goo-window.c:618
+#: ../src/dlg-properties.c:363 ../src/goo-window.c:621
 msgid "Title"
 msgstr "タイトル"
 
-#: ../src/dlg-properties.c:396 ../src/goo-window.c:641
+#: ../src/dlg-properties.c:396 ../src/goo-window.c:644
 msgid "Artist"
 msgstr "アーティスト"
 
@@ -446,7 +451,7 @@ msgstr "トレイを開く"
 msgid "No disc"
 msgstr "ディスクなし"
 
-#: ../src/goo-player.c:510 ../src/goo-window.c:1452
+#: ../src/goo-player.c:510 ../src/goo-window.c:1455
 msgid "Data Disc"
 msgstr "データ・ディスク"
 
@@ -480,7 +485,7 @@ msgstr "CD ドライブのチェック中"
 msgid "Reading CD"
 msgstr "CD の読み込み中"
 
-#: ../src/goo-player-info.c:797 ../src/goo-window.c:1456
+#: ../src/goo-player-info.c:797 ../src/goo-window.c:1459
 msgid "Audio CD"
 msgstr "音楽 CD"
 
@@ -505,87 +510,87 @@ msgstr "トラックを隠す(_T)"
 msgid "Show _tracks"
 msgstr "トラックを表示する(_T)"
 
-#: ../src/goo-window.c:185
+#: ../src/goo-window.c:187
 #, c-format
 msgid "%d track"
 msgid_plural "%d tracks"
 msgstr[0] " %d個のトラック"
 msgstr[1] " %d個のトラック"
 
-#: ../src/goo-window.c:665
+#: ../src/goo-window.c:668
 msgid "Length"
 msgstr "演奏時間"
 
-#: ../src/goo-window.c:1315 ../src/ui.h:65
+#: ../src/goo-window.c:1318 ../src/ui.h:65
 msgid "_Pause"
 msgstr "一時停止(_P)"
 
-#: ../src/goo-window.c:1316 ../src/ui.h:66
+#: ../src/goo-window.c:1319 ../src/ui.h:66
 msgid "Pause"
 msgstr "一時停止します"
 
-#: ../src/goo-window.c:1449
+#: ../src/goo-window.c:1452
 msgid "No Disc"
 msgstr "ディスクなし"
 
-#: ../src/goo-window.c:1732 ../src/goo-window.c:1751 ../src/ui.h:53
+#: ../src/goo-window.c:1737 ../src/goo-window.c:1758 ../src/ui.h:53
 #: ../src/ui.h:57 ../src/ui.h:61
 msgid "_Play"
 msgstr "演奏(_P)"
 
-#: ../src/goo-window.c:1733 ../src/goo-window.c:1752 ../src/ui.h:58
+#: ../src/goo-window.c:1738 ../src/goo-window.c:1759 ../src/ui.h:58
 msgid "Play"
 msgstr "演奏します"
 
-#: ../src/goo-window.c:2916
+#: ../src/goo-window.c:2923
 msgid "Could not eject the CD"
 msgstr "CD を取り出せませんでした"
 
-#: ../src/goo-window.c:2929
+#: ../src/goo-window.c:2936
 msgid "Could not read drive"
 msgstr "ドライブを読み込めませんでした"
 
-#: ../src/goo-window.c:3011
+#: ../src/goo-window.c:3018
 msgid "Could not load image"
 msgstr "ジャケットの画像を読み込めませんでした"
 
-#: ../src/goo-window.c:3034
+#: ../src/goo-window.c:3041
 msgid "Could not save cover image"
 msgstr "ジャケットの画像を保存できませんでした"
 
-#: ../src/goo-window.c:3100
+#: ../src/goo-window.c:3107
 msgid "Choose CD Cover Image"
 msgstr "CD ジャケットの画像の選択"
 
-#: ../src/goo-window.c:3119
+#: ../src/goo-window.c:3126
 msgid "Images"
 msgstr "画像"
 
-#: ../src/goo-window.c:3127
+#: ../src/goo-window.c:3134
 msgid "All files"
 msgstr "全てのファイル"
 
-#: ../src/goo-window.c:3161
+#: ../src/goo-window.c:3168
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 msgstr ""
 "アルバムのジャケットを検索するにはアーティストとアルバム名を入力して下さい。"
 
-#: ../src/goo-window.c:3200
+#: ../src/goo-window.c:3207
 msgid "_Show Window"
 msgstr "ウィンドウの表示(_S)"
 
-#: ../src/goo-window.c:3201
+#: ../src/goo-window.c:3208
 msgid "Show the main window"
 msgstr "メイン・ウィンドウを表示します"
 
-#: ../src/goo-window.c:3213 ../src/ui.h:121
+#: ../src/goo-window.c:3220 ../src/ui.h:125
 msgid "_Hide Window"
 msgstr "ウィンドウを隠す(_H)"
 
 #. "H"
-#: ../src/goo-window.c:3214 ../src/ui.h:122
+#: ../src/goo-window.c:3221 ../src/ui.h:126
 msgid "Hide the main window"
 msgstr "メイン・ウィンドウを隠します"
 
@@ -666,7 +671,7 @@ msgstr "音量レベルを上げる"
 msgid "Volume Down"
 msgstr "音量レベルを下げる"
 
-#: ../src/main.c:114 ../src/ui.h:106
+#: ../src/main.c:114 ../src/ui.h:110
 msgid "Quit the application"
 msgstr "アプリケーションを終了します"
 
@@ -714,7 +719,7 @@ msgstr "CD のジャケット(_O)"
 
 #: ../src/ui.h:42
 msgid "Information about the program"
-msgstr "'goobox' の情報を表示します"
+msgstr "このプログラムの情報を表示します"
 
 #: ../src/ui.h:46
 msgid "Display the manual"
@@ -752,78 +757,86 @@ msgstr "ディスクを取り出します"
 msgid "Edit various preferences"
 msgstr "設定を編集します"
 
-#: ../src/ui.h:93 ../src/ui.h:97
+#: ../src/ui.h:93
+msgid "_Copy Disc"
+msgstr "ディスクのコピー(_C)"
+
+#: ../src/ui.h:94
+msgid "Copy the content of this disc on another disc"
+msgstr "このディスクの内容を他のディスクにコピーします"
+
+#: ../src/ui.h:97 ../src/ui.h:101
 msgid "E_xtract Tracks"
 msgstr "取り込む(_X)"
 
-#: ../src/ui.h:94
+#: ../src/ui.h:98
 msgid "Save the tracks to disk as files"
 msgstr "トラックをファイルに保存します"
 
-#: ../src/ui.h:98
+#: ../src/ui.h:102
 msgid "Save the selected tracks to disk as files"
 msgstr "選択したトラックをファイルに保存します"
 
-#: ../src/ui.h:102
+#: ../src/ui.h:106
 msgid "Edit the disc artist, album and the tracks titles"
 msgstr "ディスクのアーティスト、アルバム名、トラックのタイトルを編集します"
 
-#: ../src/ui.h:109
+#: ../src/ui.h:113
 msgid "_Choose from Disk"
 msgstr "ディスクから選択(_C)"
 
-#: ../src/ui.h:110
+#: ../src/ui.h:114
 msgid "Choose a disc cover from the local disk"
 msgstr "CD ジャケットの画像をローカル・ディスクから選択します"
 
-#: ../src/ui.h:113
+#: ../src/ui.h:117
 msgid "_Search on Internet"
 msgstr "インターネットで検索(_S)"
 
-#: ../src/ui.h:114
+#: ../src/ui.h:118
 msgid "Search for a disc cover on Internet"
 msgstr "インターネットから CD ジャケットを取得します"
 
-#: ../src/ui.h:118
+#: ../src/ui.h:122
 msgid "Remove current disc cover"
 msgstr "現在の CD ジャケットを削除します"
 
-#: ../src/ui.h:134
+#: ../src/ui.h:138
 msgid "_Toolbar"
 msgstr "ツールバー(_T)"
 
-#: ../src/ui.h:135
+#: ../src/ui.h:139
 msgid "View the main toolbar"
 msgstr "ツールバーを表示します"
 
-#: ../src/ui.h:139
+#: ../src/ui.h:143
 msgid "Stat_usbar"
 msgstr "ステータスバー(_U)"
 
-#: ../src/ui.h:140
+#: ../src/ui.h:144
 msgid "View the statusbar"
 msgstr "ステータスバーを表示します"
 
-#: ../src/ui.h:144
+#: ../src/ui.h:148
 msgid "Play _All"
 msgstr "全て演奏(_A)"
 
-#: ../src/ui.h:145
+#: ../src/ui.h:149
 msgid "Play all tracks"
 msgstr "全てのトラックを演奏します"
 
-#: ../src/ui.h:149
+#: ../src/ui.h:153
 msgid "_Repeat"
 msgstr "リピート(_R)"
 
-#: ../src/ui.h:150
+#: ../src/ui.h:154
 msgid "Restart playing when finished"
 msgstr "演奏を繰り返します"
 
-#: ../src/ui.h:154
+#: ../src/ui.h:158
 msgid "S_huffle"
 msgstr "シャッフル(_H)"
 
-#: ../src/ui.h:155
+#: ../src/ui.h:159
 msgid "Play tracks in a random order"
 msgstr "ランダムな順番でトラックを演奏します"
