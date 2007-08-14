@@ -3,8 +3,8 @@ version 1.9.2
 
 	New features:
 	
-	* Added option to automatically play after CD insertion.
 	* Added ability to copy a disc, using nautilus-cd-burner.
+	* Added option to automatically play after CD insertion.
 	* Hide the statusbar by default.
 
 version 1.9.1
