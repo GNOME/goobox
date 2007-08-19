@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: goobox 0.9.93\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-28 18:37+0200\n"
-"PO-Revision-Date: 2007-07-29 13:17+0200\n"
+"PO-Revision-Date: 2007-08-19 21:31+0200\n"
 "Last-Translator: Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
@@ -372,7 +372,7 @@ msgstr ""
 #: ../src/goo-stock.c:55 ../src/goo-stock.c:56 ../src/goo-stock.c:57
 #: ../src/goo-stock.c:58
 msgid "V_olume"
-msgstr ""
+msgstr "V_olum"
 
 #: ../src/goo-volume-button.c:147 ../src/goo-volume-tool-button.c:284
 #, c-format
@@ -435,7 +435,7 @@ msgstr ""
 #: ../src/goo-window.c:1768 ../src/goo-window.c:1785 ../src/ui.h:53
 #: ../src/ui.h:57 ../src/ui.h:61
 msgid "_Play"
-msgstr ""
+msgstr "_Legir"
 
 #: ../src/goo-window.c:1769 ../src/goo-window.c:1786
 msgid "Play CD"
@@ -608,7 +608,7 @@ msgstr "Pausa"
 
 #: ../src/ui.h:69
 msgid "_Stop"
-msgstr ""
+msgstr "_Arrêter"
 
 #: ../src/ui.h:70
 msgid "Stop playing"
