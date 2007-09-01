@@ -1,3 +1,7 @@
+2007-09-01  Paolo Bacchilega  <paobac@svn.gnome.org>
+
+	* MAINTAINERS: changed to comply with the new required format.
+
 2007-08-14  Paolo Bacchilega  <paobac@svn.gnome.org>
 
 	[ version 1.9.2 released ]
