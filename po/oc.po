@@ -165,9 +165,7 @@ msgstr "Impossible de mostrar l'ajuda"
 #. };
 #: ../src/actions.c:192
 msgid "translator_credits"
-msgstr ""
-"La còla occitana de revirada d'Ubuntu, 2006 - ubuntu-l10n-"
-"oci@lists.ubuntu.com"
+msgstr "Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay.org>"
 
 #: ../src/actions.c:203 ../src/actions.c:218
 msgid "Goobox"
@@ -414,7 +412,7 @@ msgstr "Longor"
 
 #: ../src/goo-window.c:640
 msgid "Title"
-msgstr "Titol"
+msgstr "Títol"
 
 #: ../src/goo-window.c:641
 msgid "Artist"
