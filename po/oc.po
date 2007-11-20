@@ -1,21 +1,25 @@
+# Translation of oc.po to Occitan
+# translation of oc.po to Occitan
 # Occitan translation of goobox.
-# Copyright (C) 2004-2006 Free Software Foundation, Inc.
+# Copyright (C) 2004-2006, 2007 Free Software Foundation, Inc.
 # This file is distributed under the GNU General Public License Version 2.
 #
 # Yannig MARCHEGAY (yannig@marchegay.org) - 2006-2007
 #
+# Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: goobox 0.9.93\n"
+"Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-13 17:49+0200\n"
-"PO-Revision-Date: 2007-08-19 21:31+0200\n"
-"Last-Translator: Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay.org>\n"
-"Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
+"PO-Revision-Date: 2007-11-20 15:00+0100\n"
+"Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
+"Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../data/glade/cover_chooser.glade.h:1
 msgid "Choose a CD Cover"
@@ -23,7 +27,7 @@ msgstr ""
 
 #: ../data/glade/cover_chooser.glade.h:2
 msgid "Found images:"
-msgstr "Imatges trobats :"
+msgstr "Imatges trobats&nbsp;:"
 
 #: ../data/glade/extract_dialog.glade.h:1 ../data/glade/preferences.glade.h:1
 msgid "    "
@@ -84,18 +88,16 @@ msgid "Automatically play newly inserted discs"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:9
-#, fuzzy
 msgid "CD Player Preferences"
-msgstr "Preferéncias"
+msgstr ""
 
 #: ../data/glade/preferences.glade.h:10
 msgid "Choose destination folder"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:11
-#, fuzzy
 msgid "Extraction"
-msgstr "_Traire"
+msgstr ""
 
 #: ../data/glade/preferences.glade.h:12
 msgid "General"
@@ -111,7 +113,7 @@ msgstr ""
 
 #: ../data/glade/properties.glade.h:2
 msgid "Properties"
-msgstr ""
+msgstr "Propietats"
 
 #: ../data/glade/properties.glade.h:3
 msgid "Search for the remaining data"
@@ -128,18 +130,16 @@ msgid "T_racks:"
 msgstr ""
 
 #: ../data/glade/properties.glade.h:8
-#, fuzzy
 msgid "_Artist:"
-msgstr "Artist"
+msgstr "_Artista&nbsp;:"
 
 #: ../data/glade/properties.glade.h:9
-#, fuzzy
 msgid "_Title:"
-msgstr "Títol"
+msgstr "_Títol&nbsp;:"
 
 #: ../data/glade/properties.glade.h:10
 msgid "_Year:"
-msgstr ""
+msgstr "_Annada :"
 
 #: ../data/glade/ripper_dialog.glade.h:1
 msgid "<big><b>Extracting tracks</b></big>"
@@ -171,13 +171,12 @@ msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr ""
 
 #: ../data/goobox.schemas.in.h:2
-msgid ""
-"Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgid "Possible values are: system, text_below, text_beside, text_only, icons_only."
 msgstr ""
 
 #: ../src/actions.c:140
 msgid "Could not display help"
-msgstr "Impossible de mostrar l'ajuda"
+msgstr "Impossible de visualizar l'ajuda"
 
 #.
 #. const char     *documenters [] = {
@@ -185,7 +184,7 @@ msgstr "Impossible de mostrar l'ajuda"
 #. };
 #: ../src/actions.c:189
 msgid "translator_credits"
-msgstr "Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay.org>"
+msgstr "Yannig Marchegay (Kokoyaya) <yannig@marchegay.org)"
 
 #: ../src/actions.c:211
 msgid "Copyright © 2004-2007 Free Software Foundation, Inc."
@@ -238,7 +237,7 @@ msgstr ""
 #: ../src/dlg-preferences.c:149 ../src/dlg-properties.c:155
 #, c-format
 msgid "Could not display help: %s"
-msgstr ""
+msgstr "Impossible de visualizar l'ajuda : %s"
 
 #: ../src/dlg-cover-chooser.c:726
 msgid "Searching images..."
@@ -265,7 +264,7 @@ msgstr ""
 
 #: ../src/dlg-preferences.c:335 ../src/dlg-preferences.c:583
 msgid "FLAC"
-msgstr ""
+msgstr "FLAC"
 
 #: ../src/dlg-preferences.c:347
 msgid "Waveform PCM"
@@ -348,7 +347,7 @@ msgstr ""
 #: ../src/dlg-ripper.c:203
 #, c-format
 msgid "(%d:%02d Remaining)"
-msgstr ""
+msgstr "(demòra %d:%02d)"
 
 #: ../src/dlg-ripper.c:208
 #, c-format
@@ -426,7 +425,6 @@ msgid "No disc"
 msgstr "Pas de disc"
 
 #: ../src/goo-player.c:510 ../src/goo-window.c:1455
-#, fuzzy
 msgid "Data Disc"
 msgstr "CD de donadas"
 
@@ -446,7 +444,7 @@ msgstr ""
 
 #: ../src/goo-player-info.c:760
 msgid "Paused"
-msgstr ""
+msgstr "En pausa"
 
 #: ../src/goo-player-info.c:769
 msgid "Ejecting CD"
@@ -505,7 +503,6 @@ msgid "Pause"
 msgstr "Pausa"
 
 #: ../src/goo-window.c:1452
-#, fuzzy
 msgid "No Disc"
 msgstr "Pas de disc"
 
@@ -659,14 +656,12 @@ msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgstr ""
 
 #: ../src/main.c:705
-#, fuzzy
 msgid "Next"
-msgstr "_Seguent"
+msgstr "Seguent"
 
 #: ../src/main.c:711
-#, fuzzy
 msgid "Stop"
-msgstr "_Arrêter"
+msgstr "Arrestar"
 
 #: ../src/track-info.c:122
 #, c-format
@@ -675,7 +670,7 @@ msgstr ""
 
 #: ../src/ui.h:34
 msgid "_Disc"
-msgstr ""
+msgstr "_Disc"
 
 #: ../src/ui.h:35
 msgid "_Edit"
@@ -683,7 +678,7 @@ msgstr "_Edicion"
 
 #: ../src/ui.h:36
 msgid "_View"
-msgstr "_Mostrar"
+msgstr "_Visualizacion"
 
 #: ../src/ui.h:37
 msgid "_Help"
@@ -711,11 +706,11 @@ msgstr ""
 
 #: ../src/ui.h:69
 msgid "_Stop"
-msgstr "_Arrêter"
+msgstr "_Arrestar"
 
 #: ../src/ui.h:73
 msgid "_Next"
-msgstr "_Seguent"
+msgstr "Seguent"
 
 #: ../src/ui.h:77
 msgid "Pre_v"
@@ -817,8 +812,3 @@ msgstr ""
 msgid "Play tracks in a random order"
 msgstr ""
 
-#~ msgid "_MP3"
-#~ msgstr "_MP3"
-
-#~ msgid "_CD"
-#~ msgstr "_CD"
