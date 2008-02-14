@@ -1,17 +1,18 @@
-# translation of eu.po to Basque
+# translation of goobox.HEAD.po to Basque
 # This file is distributed under the same license as the goobox package.
-# Copyright (C) 2004-2006, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2004-2006, 2007, 2008 Free Software Foundation, Inc.
 #
 # Mikel Olasagasti <hey_neken@mundurat.net>, 2004, 2005.
 # Iñaki Larrañaga  <dooteo@euskalgnu.org>, 2005, 2006.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: eu\n"
+"Project-Id-Version: goobox.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-09 18:47+0200\n"
-"PO-Revision-Date: 2007-08-09 19:03+0200\n"
-"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
+"POT-Creation-Date: 2008-02-14 16:01+0100\n"
+"PO-Revision-Date: 2008-02-12 22:39+0100\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -69,14 +70,18 @@ msgid ""
 "<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
 "compresses but does not degrade audio quality.</i></small>"
 msgstr ""
-"<small><i>Galerarik gabeko Audiko Kodeka Librea (FLAC edo Free Lossless Audio Codec) iturburu irekiko kodeka da, audio konprimitzen du "
-"kalitate galerarik gabe.</i></small>"
+"<small><i>Galerarik gabeko Audiko Kodeka Librea (FLAC edo Free Lossless "
+"Audio Codec) iturburu irekiko kodeka da, audioa konprimitzen du kalitate "
+"galerarik gabe.</i></small>"
 
 #: ../data/glade/preferences.glade.h:6
 msgid ""
 "<small><i>Vorbis is an open source, lossy audio codec with high quality "
 "output at a lower file size than MP3.</i></small>"
-msgstr "<small><i>Vorbis iturburu irekiko kodeka da, audioaren kalitatea galdu arren MP3rekin konparatuz tamaina txikiagoko eta kalitate altuagoko fixtategiak sortzen ditu.</i></small>"
+msgstr ""
+"<small><i>Vorbis iturburu irekiko kodeka da, audioaren kalitatea galdu arren "
+"MP3rekin konparatuz tamaina txikiagoko eta kalitate altuagoko fixtategiak "
+"sortzen ditu.</i></small>"
 
 #: ../data/glade/preferences.glade.h:7
 msgid ""
@@ -84,7 +89,8 @@ msgid ""
 "code modulated (PCM) audio.</i></small>"
 msgstr ""
 "<small><i>WAV+PCM kalitatearen galerarik gabeko formatua da, audioa "
-"konprimitu gabe mantentzen du, audioaren pultsu-kode modulatu gordina darabilena.</i></small>"
+"konprimitu gabe mantentzen du, audioaren pultsu-kode modulatu gordina "
+"darabilena.</i></small>"
 
 #: ../data/glade/preferences.glade.h:8
 msgid "Automatically play newly inserted discs"
@@ -120,7 +126,7 @@ msgstr "Propietateak"
 
 #: ../data/glade/properties.glade.h:3
 msgid "Search for the remaining data"
-msgstr "Bilatu fala diren datuak"
+msgstr "Bilatu falta diren datuak"
 
 #: ../data/glade/properties.glade.h:4
 msgid ""
@@ -128,7 +134,7 @@ msgid ""
 "Various artists\n"
 msgstr ""
 "Artista bakarra\n"
-"Hainbat artizta\n"
+"Hainbat artista\n"
 
 #: ../data/glade/properties.glade.h:7
 msgid "T_racks:"
@@ -152,7 +158,7 @@ msgstr "<big><b>Pistak erauzten</b></big>"
 
 #: ../data/glade/ripper_dialog.glade.h:2
 msgid "Extracting Tracks"
-msgstr "Pistak ateratzen"
+msgstr "Pistak erauzten"
 
 #: ../data/GNOME_Goobox.server.in.h:1
 msgid "Goobox Application"
@@ -176,8 +182,10 @@ msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr "Balio posibleak: ogg, flac, mp3, wave."
 
 #: ../data/goobox.schemas.in.h:2
-msgid "Possible values are: system, text_below, text_beside, text_only, icons_only."
-msgstr "Balio posibleak: system, text_below, text_beside, text_only, icons_only."
+msgid ""
+"Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgstr ""
+"Balio posibleak: system, text_below, text_beside, text_only, icons_only."
 
 #: ../src/actions.c:140
 msgid "Could not display help"
@@ -191,7 +199,7 @@ msgstr "Ezin izan da laguntza erakutsi"
 msgid "translator_credits"
 msgstr ""
 "Mikel Olasagasti <hey_neken@mundurat.net>\n"
-"IÃ±aki LarraÃ±aga <dooteo@euskalgnu.org>"
+"Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>"
 
 #: ../src/actions.c:211
 msgid "Copyright © 2004-2007 Free Software Foundation, Inc."
@@ -199,7 +207,7 @@ msgstr "Copyright-a © 2004-2007 Free Software Foundation, Inc."
 
 #: ../src/actions.c:212 ../src/main.c:138
 msgid "Play CDs and save the tracks to disk as files"
-msgstr "Erreproduzitu Cak eta gorde pistak diskoan fitxategi bezala"
+msgstr "Erreproduzitu CDak eta gorde pistak diskoan fitxategi bezala"
 
 #: ../src/actions.c:329 ../src/actions.c:353 ../src/actions.c:376
 #: ../src/gtk-utils.c:797
@@ -287,23 +295,26 @@ msgstr "Waveform PCM"
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
-msgstr "Vorbis iturburu irekiko kodeka da, audioaren kalitatea galdu arren MP3rekin konparatuz tamaina txikiagoko eta kalitate altuagoko fixtategiak sortzen ditu."
+msgstr ""
+"Vorbis iturburu irekiko kodeka da, audioaren kalitatea galdu arren MP3rekin "
+"konparatuz tamaina txikiagoko eta kalitate altuagoko fixtategiak sortzen "
+"ditu."
 
 #: ../src/dlg-preferences.c:375 ../src/dlg-preferences.c:609
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
 msgstr ""
-"Galerarik gabeko Audiko Kodeka Librea (FLAC edo Free Lossless Audio Codec) iturburu irekiko kodeka da, audio konprimitzen du "
-"kalitate galerarik gabe."
+"Galerarik gabeko Audiko Kodeka Librea (FLAC edo Free Lossless Audio Codec) "
+"iturburu irekiko kodeka da, audioa konprimitzen du kalitate galerarik gabe."
 
 #: ../src/dlg-preferences.c:376 ../src/dlg-preferences.c:612
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
 msgstr ""
-"WAV+PCM kalitatearen galerarik gabeko formatua da, audioa "
-"konprimitu gabe mantentzen du, audioaren pultsu-kode modulatu gordina darabilena."
+"WAV+PCM kalitatearen galerarik gabeko formatua da, audioa konprimitu gabe "
+"mantentzen du, audioaren pultsu-kode modulatu gordina darabilena."
 
 #: ../src/dlg-preferences.c:560
 msgid "Faster compression"
@@ -420,12 +431,13 @@ msgstr "Erretiluaren orientazioa."
 
 #: ../src/file-utils.c:664
 msgid "Cannot find a terminal, using xterm, even if it may not work"
-msgstr "Ezin da terminala aurkitu; xterm erabiliko da, nahiz eta agian funtzionatu ez"
+msgstr ""
+"Ezin da terminala aurkitu; xterm erabiliko da, nahiz eta agian funtzionatu ez"
 
 #: ../src/goo-cdrom-bsd.c:140 ../src/goo-cdrom-linux.c:121
 #: ../src/goo-cdrom-solaris.c:123
 msgid "Error reading CD"
-msgstr "Errorea CDa irakurtzen"
+msgstr "Errorea CDa irakurtzean"
 
 #: ../src/goo-cdrom.c:323
 msgid "The specified device is not valid"
@@ -506,8 +518,8 @@ msgstr "Erakutsi pis_tak"
 #, c-format
 msgid "%d track"
 msgid_plural "%d tracks"
-msgstr[0] "%d. pista"
-msgstr[1] "%d. pista"
+msgstr[0] "Pista %d"
+msgstr[1] "%d pista"
 
 #: ../src/goo-window.c:668
 msgid "Length"
@@ -566,7 +578,8 @@ msgstr "Fitxategi guztiak"
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
-msgstr "Artistaren eta albumaren izenak sartu behar dituzu albumaren azala bilatzeko."
+msgstr ""
+"Artistaren eta albumaren izenak sartu behar dituzu albumaren azala bilatzeko."
 
 #: ../src/goo-window.c:3207
 msgid "_Show Window"
@@ -588,7 +601,7 @@ msgstr "Ezkutatu leiho nagusia"
 #: ../src/goo-volume-tool-button.c:185
 #, c-format
 msgid "Volume level: %3.0f%%"
-msgstr "Bolumen maila: %3.0f%%"
+msgstr "Bolumen maila: %%%3.0f"
 
 #: ../src/goo-volume-tool-button.c:747
 msgid "+"
@@ -640,11 +653,11 @@ msgstr "Gelditu erreprodukzioa"
 
 #: ../src/main.c:96 ../src/ui.h:74
 msgid "Play the next track"
-msgstr "Erreproduzitu hurrengo kanta"
+msgstr "Erreproduzitu hurrengo pista"
 
 #: ../src/main.c:99 ../src/ui.h:78
 msgid "Play the previous track"
-msgstr "Erreproduzitu aurreko kanta"
+msgstr "Erreproduzitu aurreko pista"
 
 #: ../src/main.c:102
 msgid "Eject the CD"
@@ -672,7 +685,8 @@ msgstr "Ezin da CD erreproduzitzailea abiarazi"
 
 #: ../src/main.c:348
 msgid "In order to read CDs you have to install the gstreamer base plugins"
-msgstr "CDak irakurtzeko gstreamer oinarriaren plugin-ak instalatu behar dituzu"
+msgstr ""
+"CDak irakurtzeko gstreamer oinarriaren plugin-ak instalatu behar dituzu"
 
 #: ../src/main.c:705
 msgid "Next"
@@ -701,7 +715,7 @@ msgstr "_Ikusi"
 
 #: ../src/ui.h:37
 msgid "_Help"
-msgstr "L_aguntza"
+msgstr "_Laguntza"
 
 #: ../src/ui.h:38
 msgid "C_over"
@@ -830,4 +844,3 @@ msgstr "Na_hasia"
 #: ../src/ui.h:159
 msgid "Play tracks in a random order"
 msgstr "Erreproduzitu pistak ausazko ordenean"
-
