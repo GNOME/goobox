@@ -1,4 +1,4 @@
-# translation of goobox.HEAD.po to Basque
+# translation of eu.po to Basque
 # This file is distributed under the same license as the goobox package.
 # Copyright (C) 2004-2006, 2007, 2008 Free Software Foundation, Inc.
 #
@@ -8,10 +8,10 @@
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: goobox.HEAD\n"
+"Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-14 16:01+0100\n"
-"PO-Revision-Date: 2008-02-12 22:39+0100\n"
+"POT-Creation-Date: 2008-02-21 18:52+0100\n"
+"PO-Revision-Date: 2008-02-21 18:52+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -182,10 +182,8 @@ msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr "Balio posibleak: ogg, flac, mp3, wave."
 
 #: ../data/goobox.schemas.in.h:2
-msgid ""
-"Possible values are: system, text_below, text_beside, text_only, icons_only."
-msgstr ""
-"Balio posibleak: system, text_below, text_beside, text_only, icons_only."
+msgid "Possible values are: system, text_below, text_beside, text_only, icons_only."
+msgstr "Balio posibleak: system, text_below, text_beside, text_only, icons_only."
 
 #: ../src/actions.c:140
 msgid "Could not display help"
@@ -431,8 +429,7 @@ msgstr "Erretiluaren orientazioa."
 
 #: ../src/file-utils.c:664
 msgid "Cannot find a terminal, using xterm, even if it may not work"
-msgstr ""
-"Ezin da terminala aurkitu; xterm erabiliko da, nahiz eta agian funtzionatu ez"
+msgstr "Ezin da terminala aurkitu; xterm erabiliko da, nahiz eta agian funtzionatu ez"
 
 #: ../src/goo-cdrom-bsd.c:140 ../src/goo-cdrom-linux.c:121
 #: ../src/goo-cdrom-solaris.c:123
@@ -578,8 +575,7 @@ msgstr "Fitxategi guztiak"
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
-msgstr ""
-"Artistaren eta albumaren izenak sartu behar dituzu albumaren azala bilatzeko."
+msgstr "Artistaren eta albumaren izenak sartu behar dituzu albumaren azala bilatzeko."
 
 #: ../src/goo-window.c:3207
 msgid "_Show Window"
@@ -587,7 +583,7 @@ msgstr "_Erakutsi leihoa"
 
 #: ../src/goo-window.c:3208
 msgid "Show the main window"
-msgstr "Erakutsi lehio nagusian"
+msgstr "Erakutsi leiho nagusian"
 
 #: ../src/goo-window.c:3220 ../src/ui.h:125
 msgid "_Hide Window"
@@ -685,8 +681,7 @@ msgstr "Ezin da CD erreproduzitzailea abiarazi"
 
 #: ../src/main.c:348
 msgid "In order to read CDs you have to install the gstreamer base plugins"
-msgstr ""
-"CDak irakurtzeko gstreamer oinarriaren plugin-ak instalatu behar dituzu"
+msgstr "CDak irakurtzeko gstreamer oinarriaren plugin-ak instalatu behar dituzu"
 
 #: ../src/main.c:705
 msgid "Next"
@@ -844,3 +839,4 @@ msgstr "Na_hasia"
 #: ../src/ui.h:159
 msgid "Play tracks in a random order"
 msgstr "Erreproduzitu pistak ausazko ordenean"
+
