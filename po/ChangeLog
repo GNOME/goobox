@@ -27,9 +27,9 @@
 
 	* pl.po: Updated Polish translation by GNOME PL Team.
 
-2007-08-18  Jorge Gonz�lez  <jorgegonz@svn.gnome.org>
+2007-08-18  Jorge Gonzï¿½lez  <jorgegonz@svn.gnome.org>
 
-	* es.po: Updated Spanish translation by Jos� S�nchez Moreno and me.
+	* es.po: Updated Spanish translation by José Sánchez Moreno and me.
 
 2007-08-14  Takeshi AIHANA <takeshi.aihana@gmail.com>
 
@@ -88,9 +88,9 @@
 
 	* sv.po: Updated Swedish translation.
 
-2007-05-30  Jorge Gonz�lez <jorgegonz@svn.gnome.org>
+2007-05-30  Jorge Gonzï¿½lez <jorgegonz@svn.gnome.org>
 
-	* es.po: Updated Spanish translation by Jos� S�nchez Moreno and me.
+	* es.po: Updated Spanish translation by Josï¿½ Sï¿½nchez Moreno and me.
 
 2007-05-16  David Lodge <dave@cirt.net>
 
@@ -109,7 +109,7 @@
 
 	* POTFILES.in: added album-info.[ch]
 
-2007-02-15  Josep Puigdemont i Casamajó  <josep.puigdemont@gmail.com>
+2007-02-15  Josep Puigdemont i CasamajÃ³  <josep.puigdemont@gmail.com>
 
 	* ca.po: Added Catalan translation by Joan Duran <jodufi@gmail.com>.
 
@@ -287,11 +287,11 @@
 
 	* ru.po: Updated Russian translation.
 
-2005-05-20  I�aki Larra�aga  <dooteo@euskalgnu.org>
+2005-05-20  Iï¿½aki Larraï¿½aga  <dooteo@euskalgnu.org>
 
 	* eu.po: Saved as UTF-8 
 
-2005-05-16  I�aki Larra�aga  <dooteo@euskalgnu.org>
+2005-05-16  Iï¿½aki Larraï¿½aga  <dooteo@euskalgnu.org>
 
 	* eu.po: Updated Basque translation.
 
@@ -378,7 +378,7 @@
 
 	* cs.po: Updated Czech translation.
 
-2005-01-22  Žygimantas Beručka  <uid0@akl.lt>
+2005-01-22  Å½ygimantas BeruÄka  <uid0@akl.lt>
 
 	* lt.po: Updated Lithuanian translation.
 
@@ -453,7 +453,7 @@
 
 	* en_CA.po: Updated Canadian English translation.
 
-2005-01-04  Žygimantas Beručka  <uid0@akl.lt>
+2005-01-04  Å½ygimantas BeruÄka  <uid0@akl.lt>
 
 	* lt.po: Updated Lithuanian translation.
 
@@ -471,7 +471,7 @@
 
 	* nl.po: Translation added by Tino Meinen.
 
-2004-12-23  Žygimantas Beručka  <uid0@akl.lt>
+2004-12-23  Å½ygimantas BeruÄka  <uid0@akl.lt>
 
 	* lt.po: Updated Lithuanian translation.
 
@@ -499,7 +499,7 @@
 
 	* es.po: Updated Spanish translation.
 
-2004-12-11  Åœygimantas BeruÄka  <uid0@akl.lt>
+2004-12-11  ÃÅygimantas BeruÃÂka  <uid0@akl.lt>
 
 	* lt.po: Added Lithuanian translation.
 
@@ -539,7 +539,7 @@
 
 	* en_CA.po: Added Canadian English translation.
 
-2004-12-04  Danilo Å egan  <dsegan@gmx.net>
+2004-12-04  Danilo ÃÂ egan  <dsegan@gmx.net>
 
 	* POTFILES.in: Updated.
 
