@@ -5,4 +5,4 @@ DOC_MODULE = goobox
 DOC_ENTITIES = legal.xml
 DOC_INCLUDES = 
 
-DOC_LINGUAS = ca es oc sv
+DOC_LINGUAS = ca es fr oc sv
