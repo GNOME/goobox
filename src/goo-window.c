@@ -282,6 +282,7 @@ window_update_sensitivity (GooWindow *window)
 	gtk_widget_set_sensitive (priv->list_view, audio_cd);
 
 	set_sensitive (window, "Eject", ! priv->hibernate);
+	set_sensitive (window, "EjectToolBar", ! priv->hibernate);
 	set_sensitive (window, "Preferences", ! priv->hibernate);
 }
 

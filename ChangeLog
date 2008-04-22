@@ -1,5 +1,10 @@
 2008-04-22  Paolo Bacchilega  <paobac@svn.gnome.org>
 
+	* src/goo-window.c: update the sensitivity of the EjectToolBar
+	command as well.
+
+2008-04-22  Paolo Bacchilega  <paobac@svn.gnome.org>
+
 	* src/goo-window.c: added some spaces.
 	
 	* src/goo-player-info.c: use a smaller width for the tray icon tooltip.
