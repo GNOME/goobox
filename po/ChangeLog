@@ -1,3 +1,8 @@
+2008-04-22  Paolo Bacchilega  <paobac@svn.gnome.org>
+
+	* it.po: changed "<b>Estrazione di «%s»</b>" to 
+	"<i>Estrazione di «%s»</i>".  Tags shouldn't be changed ad capocchiam.
+
 2008-03-22  Kostas Papadimas <pkst@gnome.org>
 
 	* el.po: Updated  Greek translation by Giannis Katsampiris.

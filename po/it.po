@@ -393,7 +393,7 @@ msgstr "_Visualizza la cartella di destinazione"
 #: ../src/dlg-ripper.c:572
 #, c-format
 msgid "<i>Extracting \"%s\"</i>"
-msgstr "<b>Estrazione di «%s»</b>"
+msgstr "<i>Estrazione di «%s»</i>"
 
 #: ../src/dlg-ripper.c:585
 msgid "Could not extract tracks"
