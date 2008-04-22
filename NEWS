@@ -1,3 +1,16 @@
+version 2.0.0
+-------------
+
+	Bugs fixed:
+
+	* Fixed bug #478435 – several memory leaks.
+	* Open the 'copy cd' dialog on the same screen of the main window.
+	
+	Updated translations: 
+	
+	Greek, Finnish, French, Basque, Nepali, Catalan, Occitan, Italian, 
+	Polish, Spanish, Japanese.
+
 version 1.9.2
 --------------
 

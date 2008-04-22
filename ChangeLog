@@ -1,5 +1,8 @@
 2008-04-22  Paolo Bacchilega  <paobac@svn.gnome.org>
 
+	* configure.in: 
+	* NEWS: updated for version 2.0.0
+	
 	* src/actions.c: use gdk_spawn_on_screen instead of g_spawn_async.
 
 2008-04-22  Paolo Bacchilega  <paobac@svn.gnome.org>
