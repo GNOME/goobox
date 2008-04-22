@@ -1,5 +1,9 @@
 2008-04-22  Paolo Bacchilega  <paobac@svn.gnome.org>
 
+	* src/actions.c: use gdk_spawn_on_screen instead of g_spawn_async.
+
+2008-04-22  Paolo Bacchilega  <paobac@svn.gnome.org>
+
 	* src/goo-window.c: update the sensitivity of the EjectToolBar
 	command as well.
 

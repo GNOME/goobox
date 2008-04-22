@@ -283,7 +283,8 @@ external_app_watch_func (GPid     pid,
 
 
 static gboolean
-exec_external_app (const char  *command_line,
+exec_external_app (GdkScreen   *screen,
+		   const char  *command_line,
 	 	   GError     **error,
 	 	   gpointer     data)
 {
@@ -296,14 +297,15 @@ exec_external_app (const char  *command_line,
 	if (! g_shell_parse_argv (command_line, NULL, &argv, error))
 		return FALSE;
 
-	retval = g_spawn_async (NULL,
-				argv,
-				NULL,
-				G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
-				NULL,
-				NULL,
-				&child_pid,
-				error);
+	retval = gdk_spawn_on_screen (screen,
+				      NULL,
+				      argv,
+				      NULL,
+				      G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
+				      NULL,
+				      NULL,
+				      &child_pid,
+				      error);
 	g_strfreev (argv);
 	g_child_watch_add (child_pid, external_app_watch_func, data);
 
@@ -324,7 +326,11 @@ activate_action_copy_disc (GtkAction *action,
 			       NULL);
 
 	goo_window_set_hibernate (window, TRUE);
-	if (! exec_external_app (command, &error, data)) {
+	if (! exec_external_app (gtk_widget_get_screen (GTK_WIDGET (window)), 
+				 command, 
+				 &error, 
+				 data)) 
+	{
 		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
 						   _("Could not execute command"), 
 						   &error);
@@ -348,7 +354,11 @@ activate_action_extract (GtkAction *action,
 
 	goo_window_set_hibernate (window, TRUE);		
 
-	if (! exec_external_app ("sound-juicer", &error, data)) {
+	if (! exec_external_app (gtk_widget_get_screen (GTK_WIDGET (window)), 
+				 "sound-juicer", 
+				 &error, 
+				 data)) 
+	{
 		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
 						   _("Could not execute command"), 
 						   &error);
@@ -371,7 +381,11 @@ activate_action_extract_selected (GtkAction *action,
 		
 	goo_window_set_hibernate (window, TRUE);		
 
-	if (! exec_external_app ("sound-juicer", &error, data)) {
+	if (! exec_external_app (gtk_widget_get_screen (GTK_WIDGET (window)),
+				 "sound-juicer", 
+				 &error, 
+				 data)) 
+	{
 		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
 						   _("Could not execute command"), 
 						   &error);
