@@ -510,6 +510,7 @@ goo_window_update_titles (GooWindow *window)
 			track_info_ref (new_track);
 			priv->current_track = new_track;
 		}
+		track_info_unref (new_track);
 
 	} while (gtk_tree_model_iter_next (model, &iter));
 }
@@ -1445,7 +1446,7 @@ window_update_title (GooWindow *window)
 	else if (state == GOO_PLAYER_STATE_ERROR) {
 		GError *error = goo_player_get_error (priv->player);
 		
-		g_string_append (title, g_strdup (error->message));
+		g_string_append (title, error->message);
 		g_error_free (error);
 	} 
 	else if (state == GOO_PLAYER_STATE_NO_DISC) {
@@ -1566,6 +1567,7 @@ save_config_file (GKeyFile *kv_file,
 	else
 		g_error_free (error);
 
+	g_free (buffer);
 	gnome_vfs_close (handle);
 }
 
@@ -1659,7 +1661,7 @@ auto_fetch_cover_image (GooWindow *window)
 		g_free (filename);
 		return;
 	}
-
+	g_free (filename);
 	if (window->priv->album->asin != NULL) 
 		fetch_cover_image_from_asin (window, window->priv->album->asin);
 	else if ((window->priv->album->title != NULL) && (window->priv->album->artist != NULL))

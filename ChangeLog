@@ -1,3 +1,14 @@
+2008-04-22  Paolo Bacchilega  <paobac@svn.gnome.org>
+
+	* src/track-info.c: 
+	* src/goo-window.c: 
+	* src/goo-player-info.c: 
+	* src/gconf-utils.c: 
+	* src/dlg-cover-chooser.c: 
+	* src/album-info.c: 
+	
+	Fixed bug #478435 – several memory leaks.  Patch by Felix Riemann.
+
 2007-09-01  Paolo Bacchilega  <paobac@svn.gnome.org>
 
 	* MAINTAINERS: changed to comply with the new required format.

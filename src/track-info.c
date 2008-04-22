@@ -64,6 +64,7 @@ track_info_free (TrackInfo *track)
 {
 	g_free (track->title);
 	g_free (track->artist);
+	g_free (track->artist_id);
 	g_free (track);
 }
 

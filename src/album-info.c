@@ -51,12 +51,14 @@ album_info_new (void)
 static void
 album_info_free (AlbumInfo *album)
 {
+	g_free (album->id);
 	g_free (album->title);
 	g_free (album->artist);
 	g_free (album->artist_id);
 	g_free (album->genre);
 	g_free (album->asin);
 	g_date_free (album->release_date);
+	track_list_free (album->tracks);
 	g_free (album);
 }
 

@@ -764,7 +764,9 @@ auto_fetch__search_result_saved_cb (DialogData *data,
 		dest = g_build_filename (data->tmpdir, filename, NULL);
 		g_free (filename);
 
-		copy_file_from_url (data, url, dest, auto_fetch__image_saved_cb);
+		copy_file_from_url (data, url, dest, auto_fetch__image_saved_cb)
+;
+		g_free (dest);
 	} 
 	else
 		destroy_cb (NULL, data);
@@ -806,7 +808,7 @@ fetch_cover_image_from_name (GooWindow  *window,
 	data->max_images = 1;
 	data->autofetching = TRUE;
 
-	data->tmpdir = g_strdup (get_temp_work_dir ());
+	data->tmpdir = get_temp_work_dir ();
 	ensure_dir_exists (data->tmpdir, DIR_PERM);
 
 	data->load_id = g_idle_add (auto_fetch_from_name__start_searching, data);
