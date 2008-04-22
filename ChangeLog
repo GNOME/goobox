@@ -1,5 +1,14 @@
 2008-04-22  Paolo Bacchilega  <paobac@svn.gnome.org>
 
+	* src/goo-window.c: added some spaces.
+	
+	* src/goo-player-info.c: use a smaller width for the tray icon tooltip.
+	
+	* src/dlg-cover-chooser.c: update the cancel button sensitivity after
+	stopping the image loading.
+
+2008-04-22  Paolo Bacchilega  <paobac@svn.gnome.org>
+
 	* src/track-info.c: 
 	* src/goo-window.c: 
 	* src/goo-player-info.c: 

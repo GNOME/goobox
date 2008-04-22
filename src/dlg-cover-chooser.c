@@ -288,6 +288,19 @@ update_progress_label (DialogData *data)
 
 
 static void
+search_completed (DialogData *data)
+{
+	char *text;
+	
+	gtk_widget_set_sensitive (data->cc_cancel_search_button, FALSE);
+	
+	text = g_strdup_printf ("%u", data->urls);
+	gtk_label_set_text (GTK_LABEL (data->progress_label), text);
+	g_free (text);
+}
+
+
+static void
 load_current_url (DialogData *data)
 {
 	char *url, *dest;
@@ -295,8 +308,10 @@ load_current_url (DialogData *data)
 
 	update_progress_label (data);
 
-	if ((data->current == NULL) || (data->url >= data->max_images))
+	if ((data->current == NULL) || (data->url >= data->max_images)) {
+		search_completed (data);
 		return;
+	}
 
 	url = data->current->data;
 
@@ -609,15 +624,8 @@ static void
 cancel_search_button_clicked_cb (GtkWidget  *widget, 
        				 DialogData *data)
 {
-	char *text;
-	
 	cancel_search (data);
-	
-	text = g_strdup_printf ("%u", data->urls);
-	gtk_label_set_text (GTK_LABEL (data->progress_label), text);
-	g_free (text);
-	
-	gtk_widget_set_sensitive (widget, FALSE);
+	search_completed (data);	
 }
 
 

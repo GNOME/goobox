@@ -544,10 +544,12 @@ goo_window_finalize (GObject *object)
 			g_source_remove (priv->tray_tooltip_delay);
 			priv->tray_tooltip_delay = 0;
 		}
+		
 		if (priv->next_timeout_handle != 0) {
 			g_source_remove (priv->next_timeout_handle);
 			priv->next_timeout_handle = 0;
 		}
+		
 		if (priv->update_timeout_handle != 0) {
 			g_source_remove (priv->update_timeout_handle);
 			priv->update_timeout_handle = 0;
