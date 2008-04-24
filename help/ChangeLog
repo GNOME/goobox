@@ -1,3 +1,8 @@
+2008-04-24  Jens Seidel  <jseidel@svn.gnome.org>
+
+	* Makefile.am: Added de to DOC_LINGUAS.
+	* de/de.po: Added German translation.
+
 2008-03-18  Claude Paroz  <claude@2xlibre.net>
 
 	* Makefile.am: Added fr to DOC_LINGUAS.
