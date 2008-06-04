@@ -1,3 +1,8 @@
+2008-06-05  Petr Kovar  <pknbe@volny.cz>
+
+	* cs.po: Updated Czech translation by Adrian Gunis
+	(bug #536674).
+
 2008-04-22  Paolo Bacchilega  <paobac@svn.gnome.org>
 
 	* it.po: changed "<b>Estrazione di «%s»</b>" to 
