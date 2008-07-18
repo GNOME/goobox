@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-05 15:58+0200\n"
-"PO-Revision-Date: 2008-07-09 00:36+0200\n"
+"PO-Revision-Date: 2008-07-18 20:46+0200\n"
 "Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,15 +36,15 @@ msgstr "<b>Auslesen</b>"
 
 #: ../data/glade/extract_dialog.glade.h:3
 msgid "Extract Tracks"
-msgstr "Titel auslesen"
+msgstr "Stücke auslesen"
 
 #: ../data/glade/extract_dialog.glade.h:4
 msgid "_All tracks"
-msgstr "_Alle Titel"
+msgstr "_Alle Stücke"
 
 #: ../data/glade/extract_dialog.glade.h:5
 msgid "_Selected tracks"
-msgstr "Au_sgewählte Titel"
+msgstr "Au_sgewählte Stücke"
 
 #: ../data/glade/format_dialog.glade.h:1
 msgid "Format Properties"
@@ -132,7 +132,7 @@ msgstr ""
 
 #: ../data/glade/properties.glade.h:7
 msgid "T_racks:"
-msgstr "T_itel:"
+msgstr "_Stücke:"
 
 #: ../data/glade/properties.glade.h:8
 msgid "_Artist:"
@@ -148,11 +148,11 @@ msgstr "_Jahr:"
 
 #: ../data/glade/ripper_dialog.glade.h:1
 msgid "<big><b>Extracting tracks</b></big>"
-msgstr "<big><b>Titel werden ausgelesen</b></big>"
+msgstr "<big><b>Stücke werden ausgelesen</b></big>"
 
 #: ../data/glade/ripper_dialog.glade.h:2
 msgid "Extracting Tracks"
-msgstr "Titel werden ausgelesen"
+msgstr "Stücke werden ausgelesen"
 
 #: ../data/GNOME_Goobox.server.in.h:1
 msgid "Goobox Application"
@@ -199,7 +199,7 @@ msgstr "Copyright © 2004-2007 Free Software Foundation, Inc."
 
 #: ../src/actions.c:212 ../src/main.c:138
 msgid "Play CDs and save the tracks to disk as files"
-msgstr "CDs abspielen und die Titel als Dateien auf der Festplatte speichern"
+msgstr "CDs abspielen und die Stücke als Dateien auf der Festplatte speichern"
 
 #: ../src/actions.c:335 ../src/actions.c:363 ../src/actions.c:390
 #: ../src/gtk-utils.c:797
@@ -261,7 +261,7 @@ msgid ""
 "• %s → Waveform PCM"
 msgstr ""
 "Sie benötigen mindestens eine der folgenden GStreamer-Erweiterungen, um CD-"
-"Titel auszulesen:\n"
+"Stücke auszulesen:\n"
 "\n"
 "• %s → Ogg Vorbis\n"
 "• %s → FLAC\n"
@@ -371,11 +371,11 @@ msgstr "(%d:%02d verbleibend)"
 #: ../src/dlg-ripper.c:208
 #, c-format
 msgid "Extracting track: %d of %d %s"
-msgstr "Titel auslesen: %d von %d %s"
+msgstr "Stücke auslesen: %d von %d %s"
 
 #: ../src/dlg-ripper.c:245
 msgid "Could not extract the tracks"
-msgstr "Konnte die Titel nicht auslesen"
+msgstr "Konnte die Stücke nicht auslesen"
 
 #: ../src/dlg-ripper.c:410
 msgid "Could not display the destination folder"
@@ -383,7 +383,7 @@ msgstr "Der Zielordner konnte nicht angezeigt werden"
 
 #: ../src/dlg-ripper.c:556
 msgid "Tracks extracted successfully"
-msgstr "Titel wurden erfolgreich ausgelesen"
+msgstr "Stücke wurden erfolgreich ausgelesen"
 
 #: ../src/dlg-ripper.c:558
 msgid "_View destination folder"
@@ -396,7 +396,7 @@ msgstr "<i>Auslesen »%s«</i>"
 
 #: ../src/dlg-ripper.c:585
 msgid "Could not extract tracks"
-msgstr "Konnte Titel nicht auslesen"
+msgstr "Konnte Stücke nicht auslesen"
 
 #: ../src/dlg-ripper.c:586
 #, c-format
@@ -501,18 +501,18 @@ msgstr "_Lautstärke"
 
 #: ../src/goo-window.c:57
 msgid "Hide _tracks"
-msgstr "_Titel ausblenden"
+msgstr "Stücke _ausblenden"
 
 #: ../src/goo-window.c:58
 msgid "Show _tracks"
-msgstr "_Titel anzeigen"
+msgstr "Stücke a_nzeigen"
 
 #: ../src/goo-window.c:187
 #, c-format
 msgid "%d track"
 msgid_plural "%d tracks"
-msgstr[0] "%d Titel"
-msgstr[1] "%d Titel"
+msgstr[0] "%d Stück"
+msgstr[1] "%d Stücke"
 
 #: ../src/goo-window.c:672
 msgid "Length"
@@ -647,11 +647,11 @@ msgstr "Wiedergabe abbrechen"
 
 #: ../src/main.c:96 ../src/ui.h:74
 msgid "Play the next track"
-msgstr "Den nächsten Titel abspielen"
+msgstr "Das nächste Stück abspielen"
 
 #: ../src/main.c:99 ../src/ui.h:78
 msgid "Play the previous track"
-msgstr "Den vorhergehenden Titel abspielen"
+msgstr "Das vorhergehende Stück abspielen"
 
 #: ../src/main.c:102
 msgid "Eject the CD"
@@ -694,7 +694,7 @@ msgstr "Stopp"
 #: ../src/track-info.c:123
 #, c-format
 msgid "Track %u"
-msgstr "Titel %u"
+msgstr "Stück %u"
 
 #: ../src/ui.h:34
 msgid "_Disc"
@@ -730,7 +730,7 @@ msgstr "_Tastenkombinationen"
 
 #: ../src/ui.h:62
 msgid "Play this track"
-msgstr "Diesen Titel abspielen"
+msgstr "Dieses Stück abspielen"
 
 #: ../src/ui.h:69
 msgid "_Stop"
@@ -766,20 +766,20 @@ msgstr "Kopiere den Inhalt dieser CD auf eine andere CD"
 
 #: ../src/ui.h:97 ../src/ui.h:101
 msgid "E_xtract Tracks"
-msgstr "Titel aus_lesen"
+msgstr "Stücke aus_lesen"
 
 #: ../src/ui.h:98
 msgid "Save the tracks to disk as files"
-msgstr "Die Titel als Dateien auf der Festplatte speichern"
+msgstr "Die Stücke als Dateien auf der Festplatte speichern"
 
 #: ../src/ui.h:102
 msgid "Save the selected tracks to disk as files"
-msgstr "Die ausgewählten Titel als Dateien auf der Festplatte speichern"
+msgstr "Die ausgewählten Stücke als Dateien auf der Festplatte speichern"
 
 #: ../src/ui.h:106
 msgid "Edit the disc artist, album and the tracks titles"
 msgstr ""
-"Bearbeiten des CD-Künstlers, des CD-Albumnamens und der Titelnamen"
+"Bearbeiten des CD-Künstlers, des CD-Albumnamens und des Namens der Stücke"
 
 #: ../src/ui.h:113
 msgid "_Choose from Disk"
@@ -823,7 +823,7 @@ msgstr "_Alle abspielen"
 
 #: ../src/ui.h:149
 msgid "Play all tracks"
-msgstr "Alle Titel abspielen"
+msgstr "Alle Stücke abspielen"
 
 #: ../src/ui.h:153
 msgid "_Repeat"
@@ -839,7 +839,7 @@ msgstr "_Zufall"
 
 #: ../src/ui.h:159
 msgid "Play tracks in a random order"
-msgstr "Die Titel in zufälliger Reihenfolge abspielen"
+msgstr "Die Stücke in zufälliger Reihenfolge abspielen"
 
 #~ msgid "<b>FLAC</b>"
 #~ msgstr "<b>FLAC</b>"
