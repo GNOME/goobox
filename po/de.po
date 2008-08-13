@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-05 15:58+0200\n"
-"PO-Revision-Date: 2008-07-18 20:46+0200\n"
+"PO-Revision-Date: 2008-08-13 09:26+0200\n"
 "Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -779,7 +779,7 @@ msgstr "Die ausgewählten Stücke als Dateien auf der Festplatte speichern"
 #: ../src/ui.h:106
 msgid "Edit the disc artist, album and the tracks titles"
 msgstr ""
-"Bearbeiten des CD-Künstlers, des CD-Albumnamens und des Namens der Stücke"
+"Bearbeiten des CD-Künstlers, des CD-Albumnamens und der Namen der Stücke"
 
 #: ../src/ui.h:113
 msgid "_Choose from Disk"
