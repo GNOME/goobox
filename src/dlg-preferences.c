@@ -367,7 +367,7 @@ dlg_preferences (GooWindow *window)
 	}
 	
 	gtk_combo_box_set_active (GTK_COMBO_BOX (data->p_filetype_combobox), file_format);
-	gtk_notebook_set_current_page (GTK_NOTEBOOK (data->p_encoding_notebook), file_format);
+	filetype_combobox_changed_cb (NULL, data);
 
 	/**/
 	
@@ -583,7 +583,7 @@ dlg_format (DialogData    *preferences_data,
 		text = g_strdup_printf ("<big><b>%s</b></big>", _("FLAC"));
 		break;
 	default:
-		text = "";
+		text = g_strdup ("");
 		break;
 	}
 	gtk_label_set_markup (GTK_LABEL (f_title_label), text);
@@ -597,6 +597,7 @@ dlg_format (DialogData    *preferences_data,
 		text = _("Compression level:");
 		break;
 	default:
+		text = "";
 		break;
 	}
 	gtk_label_set_text (GTK_LABEL (data->f_quality_label), text);
@@ -612,6 +613,7 @@ dlg_format (DialogData    *preferences_data,
 		text = _("WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio.");
 		break;
 	default:
+		text = "";
 		break;
 	}
 	gtk_label_set_text (GTK_LABEL (f_description_label), text);

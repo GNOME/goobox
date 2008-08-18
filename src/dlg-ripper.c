@@ -401,7 +401,7 @@ done_dialog_response_cb (GtkDialog  *dialog,
 		char   *url    = NULL;
 		
 		scheme = gnome_vfs_get_uri_scheme (folder);
-		if ((scheme == NULL) || (scheme == ""))
+		if ((scheme == NULL) || (strcmp (scheme, "") == 0))
 			url = gnome_vfs_get_uri_from_local_path (folder);
 		else
 			url = g_strdup (folder);

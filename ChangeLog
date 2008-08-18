@@ -1,3 +1,13 @@
+2008-08-18  Paolo Bacchilega  <paobac@svn.gnome.org>
+
+	* src/dlg-ripper.c: use strcmp to check is scheme is void.
+	
+	* src/dlg-preferences.c: update the properties button sensitivity 
+	before showing the preferences dialog.
+	
+	Fixes bug: Debian#495491: goobox: preferences dialog crash.
+	Patch by Peter De Wachter.
+
 2008-04-23  Paolo Bacchilega  <paobac@svn.gnome.org>
 
 	[ version 2.0.0 released ]
