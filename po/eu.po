@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-21 18:52+0100\n"
-"PO-Revision-Date: 2008-02-21 18:52+0100\n"
+"POT-Creation-Date: 2008-08-26 12:47+0200\n"
+"PO-Revision-Date: 2008-08-26 12:48+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "\n"
 
 #: ../data/glade/cover_chooser.glade.h:1
@@ -98,7 +98,7 @@ msgstr "Erreproduzitu automatikoki sartu berri diren diskoak"
 
 #: ../data/glade/preferences.glade.h:9
 msgid "CD Player Preferences"
-msgstr "CD erreproduzigailuaren hobespenak"
+msgstr "CD erreproduzitzailearen hobespenak"
 
 #: ../data/glade/preferences.glade.h:10
 msgid "Choose destination folder"
@@ -169,9 +169,9 @@ msgid "Goobox Application Factory"
 msgstr "Goobox aplikazio fabrika"
 
 #: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:209
-#: ../src/goo-window.c:2603 ../src/main.c:148 ../src/main.c:234
+#: ../src/goo-window.c:2608 ../src/main.c:148 ../src/main.c:234
 msgid "CD Player"
-msgstr "CD erreproduzigailua"
+msgstr "CD erreproduzitzailea"
 
 #: ../data/goobox.desktop.in.in.h:2
 msgid "Play and extract CDs"
@@ -207,12 +207,12 @@ msgstr "Copyright-a © 2004-2007 Free Software Foundation, Inc."
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "Erreproduzitu CDak eta gorde pistak diskoan fitxategi bezala"
 
-#: ../src/actions.c:329 ../src/actions.c:353 ../src/actions.c:376
+#: ../src/actions.c:335 ../src/actions.c:363 ../src/actions.c:390
 #: ../src/gtk-utils.c:797
 msgid "Could not execute command"
 msgstr "Ezin izan da exekutatu komandoa"
 
-#: ../src/album-info.c:171
+#: ../src/album-info.c:173
 msgid "Various"
 msgstr "Hainbat"
 
@@ -234,25 +234,25 @@ msgstr "Fitxategi-irudia"
 msgid "%u, loading image: %u"
 msgstr "%u, irudia kargatzen: %u"
 
-#: ../src/dlg-cover-chooser.c:318
+#: ../src/dlg-cover-chooser.c:333
 msgid "Loading images"
 msgstr "Irudiak kargatzen"
 
-#: ../src/dlg-cover-chooser.c:432 ../src/goo-window.c:3167
+#: ../src/dlg-cover-chooser.c:447 ../src/goo-window.c:3172
 msgid "Could not search for a cover on Internet"
 msgstr "Ezin izan da azal bat bilatu interneten"
 
-#: ../src/dlg-cover-chooser.c:439
+#: ../src/dlg-cover-chooser.c:454
 msgid "No image found"
 msgstr "Ez da irudirik aurkitu"
 
-#: ../src/dlg-cover-chooser.c:503 ../src/dlg-extract.c:133
+#: ../src/dlg-cover-chooser.c:518 ../src/dlg-extract.c:133
 #: ../src/dlg-preferences.c:149 ../src/dlg-properties.c:155
 #, c-format
 msgid "Could not display help: %s"
 msgstr "Ezin izan da laguntza erakutsi: %s"
 
-#: ../src/dlg-cover-chooser.c:726
+#: ../src/dlg-cover-chooser.c:734
 msgid "Searching images..."
 msgstr "Irudiak bilatzen..."
 
@@ -289,7 +289,7 @@ msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:374 ../src/dlg-preferences.c:606
+#: ../src/dlg-preferences.c:374 ../src/dlg-preferences.c:607
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
@@ -298,7 +298,7 @@ msgstr ""
 "konparatuz tamaina txikiagoko eta kalitate altuagoko fixtategiak sortzen "
 "ditu."
 
-#: ../src/dlg-preferences.c:375 ../src/dlg-preferences.c:609
+#: ../src/dlg-preferences.c:375 ../src/dlg-preferences.c:610
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
@@ -306,7 +306,7 @@ msgstr ""
 "Galerarik gabeko Audiko Kodeka Librea (FLAC edo Free Lossless Audio Codec) "
 "iturburu irekiko kodeka da, audioa konprimitzen du kalitate galerarik gabe."
 
-#: ../src/dlg-preferences.c:376 ../src/dlg-preferences.c:612
+#: ../src/dlg-preferences.c:376 ../src/dlg-preferences.c:613
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
@@ -352,15 +352,15 @@ msgstr "Bilaketak huts egin du: %s\n"
 msgid "No album found"
 msgstr "Ez da albumik aurkitu"
 
-#: ../src/dlg-properties.c:345 ../src/goo-window.c:596
+#: ../src/dlg-properties.c:345 ../src/goo-window.c:600
 msgid "#"
 msgstr "#"
 
-#: ../src/dlg-properties.c:363 ../src/goo-window.c:621
+#: ../src/dlg-properties.c:363 ../src/goo-window.c:625
 msgid "Title"
 msgstr "Titulua"
 
-#: ../src/dlg-properties.c:396 ../src/goo-window.c:644
+#: ../src/dlg-properties.c:396 ../src/goo-window.c:648
 msgid "Artist"
 msgstr "Artista"
 
@@ -417,7 +417,7 @@ msgstr ""
 
 #: ../src/dlg-ripper.c:616
 msgid "Ripped with CD Player"
-msgstr "CD erreproduzigailuarekin erauzia"
+msgstr "CD erreproduzitzailearekin erauzia"
 
 #: ../src/eggtrayicon.c:118
 msgid "Orientation"
@@ -452,7 +452,7 @@ msgstr "Erretilua irekita"
 msgid "No disc"
 msgstr "Ez dago diskorik"
 
-#: ../src/goo-player.c:510 ../src/goo-window.c:1455
+#: ../src/goo-player.c:510 ../src/goo-window.c:1459
 msgid "Data Disc"
 msgstr "Datuen diskoa"
 
@@ -486,7 +486,7 @@ msgstr "CD unitatea egiaztatzen"
 msgid "Reading CD"
 msgstr "CDa irakurtzen"
 
-#: ../src/goo-player-info.c:797 ../src/goo-window.c:1459
+#: ../src/goo-player-info.c:797 ../src/goo-window.c:1463
 msgid "Audio CD"
 msgstr "CD audioa"
 
@@ -518,79 +518,79 @@ msgid_plural "%d tracks"
 msgstr[0] "Pista %d"
 msgstr[1] "%d pista"
 
-#: ../src/goo-window.c:668
+#: ../src/goo-window.c:672
 msgid "Length"
 msgstr "Luzera"
 
-#: ../src/goo-window.c:1318 ../src/ui.h:65
+#: ../src/goo-window.c:1322 ../src/ui.h:65
 msgid "_Pause"
 msgstr "_Pausarazi"
 
-#: ../src/goo-window.c:1319 ../src/ui.h:66
+#: ../src/goo-window.c:1323 ../src/ui.h:66
 msgid "Pause"
 msgstr "Pausarazi"
 
-#: ../src/goo-window.c:1452
+#: ../src/goo-window.c:1456
 msgid "No Disc"
 msgstr "Ez dago diskorik"
 
-#: ../src/goo-window.c:1737 ../src/goo-window.c:1758 ../src/ui.h:53
+#: ../src/goo-window.c:1742 ../src/goo-window.c:1763 ../src/ui.h:53
 #: ../src/ui.h:57 ../src/ui.h:61
 msgid "_Play"
 msgstr "_Erreproduzitu"
 
-#: ../src/goo-window.c:1738 ../src/goo-window.c:1759 ../src/ui.h:58
+#: ../src/goo-window.c:1743 ../src/goo-window.c:1764 ../src/ui.h:58
 msgid "Play"
 msgstr "Erreproduzitu"
 
-#: ../src/goo-window.c:2923
+#: ../src/goo-window.c:2928
 msgid "Could not eject the CD"
 msgstr "Ezin izan da CD egotzi"
 
-#: ../src/goo-window.c:2936
+#: ../src/goo-window.c:2941
 msgid "Could not read drive"
 msgstr "Ezin izan da unitatea irakurri"
 
-#: ../src/goo-window.c:3018
+#: ../src/goo-window.c:3023
 msgid "Could not load image"
 msgstr "Ezin izan da irudia kargatu"
 
-#: ../src/goo-window.c:3041
+#: ../src/goo-window.c:3046
 msgid "Could not save cover image"
 msgstr "Ezin izan da azalaren irudia gorde"
 
-#: ../src/goo-window.c:3107
+#: ../src/goo-window.c:3112
 msgid "Choose CD Cover Image"
 msgstr "Aukeratu CDaren azalaren irudia"
 
-#: ../src/goo-window.c:3126
+#: ../src/goo-window.c:3131
 msgid "Images"
 msgstr "Irudiak"
 
-#: ../src/goo-window.c:3134
+#: ../src/goo-window.c:3139
 msgid "All files"
 msgstr "Fitxategi guztiak"
 
-#: ../src/goo-window.c:3168
+#: ../src/goo-window.c:3173
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 msgstr "Artistaren eta albumaren izenak sartu behar dituzu albumaren azala bilatzeko."
 
-#: ../src/goo-window.c:3207
+#: ../src/goo-window.c:3212
 msgid "_Show Window"
 msgstr "_Erakutsi leihoa"
 
-#: ../src/goo-window.c:3208
+#: ../src/goo-window.c:3213
 msgid "Show the main window"
 msgstr "Erakutsi leiho nagusian"
 
-#: ../src/goo-window.c:3220 ../src/ui.h:125
+#: ../src/goo-window.c:3225 ../src/ui.h:125
 msgid "_Hide Window"
 msgstr "_Ezkutatu leihoa"
 
 #. "H"
-#: ../src/goo-window.c:3221 ../src/ui.h:126
+#: ../src/goo-window.c:3226 ../src/ui.h:126
 msgid "Hide the main window"
 msgstr "Ezkutatu leiho nagusia"
 
@@ -691,7 +691,7 @@ msgstr "Hurrengoa"
 msgid "Stop"
 msgstr "Gelditu"
 
-#: ../src/track-info.c:122
+#: ../src/track-info.c:123
 #, c-format
 msgid "Track %u"
 msgstr "%u pista"
