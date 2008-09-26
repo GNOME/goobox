@@ -1,3 +1,9 @@
+2008-09-26  Paolo Bacchilega  <paobac@svn.gnome.org>
+
+	* depcomp: removed.
+	
+	Fixed bug #553781 – remove depcomp from SVN
+
 2008-08-18  Paolo Bacchilega  <paobac@svn.gnome.org>
 
 	* src/dlg-ripper.c: use strcmp to check is scheme is void.
