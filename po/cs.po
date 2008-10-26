@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-05 00:11+0200\n"
-"PO-Revision-Date: 2008-06-05 00:06+0100\n"
-"Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
+"POT-Creation-Date: 2008-10-26 17:09+0100\n"
+"PO-Revision-Date: 2008-10-26 16:10+0100\n"
+"Last-Translator: Adrian Guniš <andygun696@gmail.com>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -149,11 +149,11 @@ msgstr "_Rok:"
 
 #: ../data/glade/ripper_dialog.glade.h:1
 msgid "<big><b>Extracting tracks</b></big>"
-msgstr "<big><b>Extrahuji stopy</b></big>"
+msgstr "<big><b>Extrahují se stopy</b></big>"
 
 #: ../data/glade/ripper_dialog.glade.h:2
 msgid "Extracting Tracks"
-msgstr "Extrahuji stopy"
+msgstr "Extrahují se stopy"
 
 #: ../data/GNOME_Goobox.server.in.h:1
 msgid "Goobox Application"
@@ -184,7 +184,7 @@ msgstr ""
 
 #: ../src/actions.c:140
 msgid "Could not display help"
-msgstr "Nemohu zobrazit nápovědu"
+msgstr "Nelze zobrazit nápovědu"
 
 #.
 #. const char     *documenters [] = {
@@ -194,7 +194,7 @@ msgstr "Nemohu zobrazit nápovědu"
 msgid "translator_credits"
 msgstr ""
 "Miloslav Trmač <mitr@volny.cz>\n"
-"Adrian Guniš <andygun@seznam.cz>"
+"Adrian Guniš <andygun696@gmail.com>"
 
 #: ../src/actions.c:211
 msgid "Copyright © 2004-2007 Free Software Foundation, Inc."
@@ -207,7 +207,7 @@ msgstr "Přehrávat CD a uložit stopy na disk jako soubory"
 #: ../src/actions.c:335 ../src/actions.c:363 ../src/actions.c:390
 #: ../src/gtk-utils.c:797
 msgid "Could not execute command"
-msgstr "Nemohu provést příkaz"
+msgstr "Nelze provést příkaz"
 
 #: ../src/album-info.c:173
 msgid "Various"
@@ -229,15 +229,15 @@ msgstr "Obraz souboru"
 #: ../src/dlg-cover-chooser.c:280
 #, c-format
 msgid "%u, loading image: %u"
-msgstr "%u, načítám obrázek: %u"
+msgstr "%u, načítá se obrázek: %u"
 
 #: ../src/dlg-cover-chooser.c:333
 msgid "Loading images"
-msgstr "Načítám obrázky"
+msgstr "Načítají se obrázky"
 
 #: ../src/dlg-cover-chooser.c:447 ../src/goo-window.c:3172
 msgid "Could not search for a cover on Internet"
-msgstr "Nemohu hledat obal na Internetu"
+msgstr "Nelze hledat obal na Internetu"
 
 #: ../src/dlg-cover-chooser.c:454
 msgid "No image found"
@@ -247,11 +247,11 @@ msgstr "Nenalezen žádný obrázek"
 #: ../src/dlg-preferences.c:149 ../src/dlg-properties.c:155
 #, c-format
 msgid "Could not display help: %s"
-msgstr "Nemohu zobrazit nápovědu: %s"
+msgstr "Nelze zobrazit nápovědu: %s"
 
 #: ../src/dlg-cover-chooser.c:734
 msgid "Searching images..."
-msgstr "Hledám obrázky..."
+msgstr "Hledají se obrázky..."
 
 #: ../src/dlg-extract.c:179
 #, c-format
@@ -263,8 +263,8 @@ msgid ""
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 msgstr ""
-"Pro extrakci stop CD potřebujete alespoň jeden z následujících zásuvných "
-"modulů GStreamer:\n"
+"Abyste mohli extrahovat stopy CD, potřebujete alespoň jeden z následujících "
+"zásuvných modulů GStreamer:\n"
 "\n"
 "• %s → Ogg Vorbis\n"
 "• %s → FLAC\n"
@@ -287,7 +287,7 @@ msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:374 ../src/dlg-preferences.c:606
+#: ../src/dlg-preferences.c:374 ../src/dlg-preferences.c:607
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
@@ -295,7 +295,7 @@ msgstr ""
 "Vorbis je ztrátový zvukový kodek s otevřeným zdrojovým kódem, s vysoce "
 "kvalitním výstupem a menší velikostí souboru než MP3."
 
-#: ../src/dlg-preferences.c:375 ../src/dlg-preferences.c:609
+#: ../src/dlg-preferences.c:375 ../src/dlg-preferences.c:610
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
@@ -303,7 +303,7 @@ msgstr ""
 "Svobodný bezeztrátový zvukový kodek (FLAC) je kodek s otevřeným zdrojovým "
 "kódem, který komprimuje, ale nesnižuje kvalitu zvuku."
 
-#: ../src/dlg-preferences.c:376 ../src/dlg-preferences.c:612
+#: ../src/dlg-preferences.c:376 ../src/dlg-preferences.c:613
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
@@ -374,15 +374,15 @@ msgstr "(Zbývá %d:%02d)"
 #: ../src/dlg-ripper.c:208
 #, c-format
 msgid "Extracting track: %d of %d %s"
-msgstr "Extrahuji stopu: %d z %d %s"
+msgstr "Extrahuje se stopa: %d z %d %s"
 
 #: ../src/dlg-ripper.c:245
 msgid "Could not extract the tracks"
-msgstr "Nemohu extrahovat stopy"
+msgstr "Nelze extrahovat stopy"
 
 #: ../src/dlg-ripper.c:410
 msgid "Could not display the destination folder"
-msgstr "Nemohu zobrazit cílový adresář"
+msgstr "Nelze zobrazit cílový adresář"
 
 #: ../src/dlg-ripper.c:556
 msgid "Tracks extracted successfully"
@@ -395,11 +395,11 @@ msgstr "_Zobrazit cílový adresář"
 #: ../src/dlg-ripper.c:572
 #, c-format
 msgid "<i>Extracting \"%s\"</i>"
-msgstr "<i>Extrahuji \"%s\"</i>"
+msgstr "<i>Extrahuje se \"%s\"</i>"
 
 #: ../src/dlg-ripper.c:585
 msgid "Could not extract tracks"
-msgstr "Nemohu extrahovat stopy"
+msgstr "Nelze extrahovat stopy"
 
 #: ../src/dlg-ripper.c:586
 #, c-format
@@ -408,7 +408,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Nemohu vytvořit adresář \"%s\"\n"
+"Nelze vytvořit adresář \"%s\"\n"
 "\n"
 "%s"
 
@@ -416,17 +416,18 @@ msgstr ""
 msgid "Ripped with CD Player"
 msgstr "Kopírováno pomocí Přehrávače CD"
 
-#: ../src/eggtrayicon.c:118
+#: ../src/eggtrayicon.c:133
 msgid "Orientation"
 msgstr "Orientace"
 
-#: ../src/eggtrayicon.c:119
+#: ../src/eggtrayicon.c:134
 msgid "The orientation of the tray."
 msgstr "Orientace oznamovací oblasti."
 
 #: ../src/file-utils.c:664
 msgid "Cannot find a terminal, using xterm, even if it may not work"
-msgstr "Nemohu najít terminál, používám xterm, i když to možná nebude fungovat"
+msgstr ""
+"Nelze najít terminál, použije se xterm, i když to možná nebude fungovat"
 
 #: ../src/goo-cdrom-bsd.c:140 ../src/goo-cdrom-linux.c:121
 #: ../src/goo-cdrom-solaris.c:123
@@ -439,7 +440,7 @@ msgstr "Zadané zařízení není platné"
 
 #: ../src/goo-player.c:497
 msgid "Drive not ready"
-msgstr "Zařízení není připraveno"
+msgstr "Mechanika není připravena"
 
 #: ../src/goo-player.c:501
 msgid "Tray open"
@@ -473,15 +474,15 @@ msgstr "Pozastaveno"
 
 #: ../src/goo-player-info.c:769
 msgid "Ejecting CD"
-msgstr "Vysunuji CD"
+msgstr "Vysunuje se CD"
 
 #: ../src/goo-player-info.c:773
 msgid "Checking CD drive"
-msgstr "Kontroluji mechaniku CD"
+msgstr "Kontroluje se mechanika CD"
 
 #: ../src/goo-player-info.c:777 ../src/goo-player-info.c:781
 msgid "Reading CD"
-msgstr "Čtu CD"
+msgstr "Probíhá čtení CD"
 
 #: ../src/goo-player-info.c:797 ../src/goo-window.c:1463
 msgid "Audio CD"
@@ -543,19 +544,19 @@ msgstr "Přehrávat"
 
 #: ../src/goo-window.c:2928
 msgid "Could not eject the CD"
-msgstr "Nemohu vysunout CD"
+msgstr "Nelze vysunout CD"
 
 #: ../src/goo-window.c:2941
 msgid "Could not read drive"
-msgstr "Nemohu číst ze zařízení"
+msgstr "Nelze číst z mechaniky"
 
 #: ../src/goo-window.c:3023
 msgid "Could not load image"
-msgstr "Nemohu načíst obrázek"
+msgstr "Nelze načíst obrázek"
 
 #: ../src/goo-window.c:3046
 msgid "Could not save cover image"
-msgstr "Nemohu uložit obrázek obalu"
+msgstr "Nelze uložit obrázek obalu"
 
 #: ../src/goo-window.c:3112
 msgid "Choose CD Cover Image"
@@ -573,7 +574,7 @@ msgstr "Všechny soubory"
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
-msgstr "Pro hledání obalu alba musíte zadat jména umělce a alba."
+msgstr "Abyste mohli vyhledat obal alba, musíte zadat jméno umělce a alba."
 
 #: ../src/goo-window.c:3212
 msgid "_Show Window"
@@ -627,7 +628,7 @@ msgstr "pixelů"
 
 #: ../src/main.c:84
 msgid "CD device to be used"
-msgstr "Zařízení CD, které používat"
+msgstr "Zařízení CD, které se má používat"
 
 #: ../src/main.c:85
 msgid "DEVICE_PATH"
@@ -643,7 +644,7 @@ msgstr "Přehrávat/pozastavit"
 
 #: ../src/main.c:93 ../src/ui.h:70
 msgid "Stop playing"
-msgstr "Přestat hrát"
+msgstr "Zastavit přehrávání"
 
 #: ../src/main.c:96 ../src/ui.h:74
 msgid "Play the next track"
@@ -675,11 +676,12 @@ msgstr "Ukončit aplikaci"
 
 #: ../src/main.c:347
 msgid "Cannot start the CD player"
-msgstr "Nemohu spustit přehrávač CD"
+msgstr "Nelze spustit přehrávač CD"
 
 #: ../src/main.c:348
 msgid "In order to read CDs you have to install the gstreamer base plugins"
-msgstr "Pro čtení CD musíte nainstalovat zásuvný modul gstreamer base"
+msgstr ""
+"Aby bylo možné číst CD, musíte nainstalovat zásuvné moduly gstreamer base"
 
 #: ../src/main.c:705
 msgid "Next"
@@ -687,7 +689,7 @@ msgstr "Následující"
 
 #: ../src/main.c:711
 msgid "Stop"
-msgstr "Stop"
+msgstr "Zastavit"
 
 #: ../src/track-info.c:123
 #, c-format
@@ -732,7 +734,7 @@ msgstr "Přehrávat tuto stopu"
 
 #: ../src/ui.h:69
 msgid "_Stop"
-msgstr "_Stop"
+msgstr "_Zastavit"
 
 #: ../src/ui.h:73
 msgid "_Next"
@@ -740,11 +742,11 @@ msgstr "_Následující"
 
 #: ../src/ui.h:77
 msgid "Pre_v"
-msgstr "_Předchozí"
+msgstr "Př_edchozí"
 
 #: ../src/ui.h:81 ../src/ui.h:85
 msgid "_Eject"
-msgstr "_Vysunout"
+msgstr "V_ysunout"
 
 #: ../src/ui.h:82 ../src/ui.h:86
 msgid "Eject the disc"
@@ -824,7 +826,7 @@ msgstr "Přehrávat všechny stopy"
 
 #: ../src/ui.h:153
 msgid "_Repeat"
-msgstr "_Opakovat"
+msgstr "O_pakovat"
 
 #: ../src/ui.h:154
 msgid "Restart playing when finished"

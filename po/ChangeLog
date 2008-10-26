@@ -1,3 +1,8 @@
+2008-10-26  Petr Kovar  <pknbe@volny.cz>
+
+	* cs.po: Fixed Czech translation by Adrian Gunis
+	(bug #536674).
+
 2008-08-26  Inaki Larranaga Murgoitio  <dooteo@euskalgnu.org>
 
 	* eu.po: Updated Basque translation.
