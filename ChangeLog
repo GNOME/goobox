@@ -1,3 +1,10 @@
+2009-02-02  Paolo Bacchilega  <paobac@svn.gnome.org>
+
+	* src/goo-window.c: use gtk_widget_get_action instead of 
+	g_object_get_data.
+	
+	Fixes bug #568896 – don't rely on GtkAction implementation details
+
 2008-10-04  Paolo Bacchilega  <paobac@svn.gnome.org>
 
 	* src/eggtrayicon.c: updated from libegg.
