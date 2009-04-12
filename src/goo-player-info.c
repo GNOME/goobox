@@ -77,7 +77,6 @@ enum {
         LAST_SIGNAL
 };
 
-static GtkHBoxClass *parent_class = NULL;
 static guint goo_player_info_signals[LAST_SIGNAL] = { 0 };
 
 enum { TARGET_URL };
@@ -86,38 +85,12 @@ static GtkTargetEntry target_table[] = {
 };
 static guint n_targets = sizeof (target_table) / sizeof (target_table[0]);
 
-static void goo_player_info_class_init  (GooPlayerInfoClass *class);
-static void goo_player_info_init        (GooPlayerInfo *player);
 static void goo_player_info_finalize    (GObject *object);
 
+#define GOO_PLAYER_INFO_GET_PRIVATE_DATA(object) \
+	(G_TYPE_INSTANCE_GET_PRIVATE ((object), GOO_TYPE_PLAYER_INFO, GooPlayerInfoPrivateData))
 
-GType
-goo_player_info_get_type ()
-{
-        static GType type = 0;
-
-        if (! type) {
-                GTypeInfo type_info = {
-			sizeof (GooPlayerInfoClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) goo_player_info_class_init,
-			NULL,
-			NULL,
-			sizeof (GooPlayerInfo),
-			0,
-			(GInstanceInitFunc) goo_player_info_init
-		};
-
-		type = g_type_register_static (GTK_TYPE_HBOX,
-					       "GooPlayerInfo",
-					       &type_info,
-					       0);
-	}
-
-        return type;
-}
-
+G_DEFINE_TYPE (GooPlayerInfo, goo_player_info, GTK_TYPE_HBOX)
 
 static void
 goo_player_info_size_request (GtkWidget      *widget,
@@ -125,8 +98,8 @@ goo_player_info_size_request (GtkWidget      *widget,
 {	
 	GooPlayerInfo *info;
 	
-	if (GTK_WIDGET_CLASS (parent_class)->size_request)
-		(* GTK_WIDGET_CLASS (parent_class)->size_request) (widget, requisition);
+	if (GTK_WIDGET_CLASS (goo_player_info_parent_class)->size_request)
+		(* GTK_WIDGET_CLASS (goo_player_info_parent_class)->size_request) (widget, requisition);
 	
 	info = (GooPlayerInfo *) widget;
 	if (info->priv->interactive)
@@ -141,8 +114,6 @@ goo_player_info_class_init (GooPlayerInfoClass *class)
 {
         GObjectClass   *gobject_class;
 	GtkWidgetClass *widget_class;
-
-        parent_class = g_type_class_peek_parent (class);
 
 	goo_player_info_signals[COVER_CLICKED] =
                 g_signal_new ("cover_clicked",
@@ -169,6 +140,8 @@ goo_player_info_class_init (GooPlayerInfoClass *class)
 
 	widget_class = GTK_WIDGET_CLASS (class);
 	widget_class->size_request = goo_player_info_size_request;
+
+	g_type_class_add_private (class, sizeof (GooPlayerInfoPrivateData));
 }
 
 
@@ -436,7 +409,7 @@ cover_button_drag_data_received  (GtkWidget          *widget,
 static void 
 goo_player_info_init (GooPlayerInfo *info)
 {
-	info->priv = g_new0 (GooPlayerInfoPrivateData, 1);
+	info->priv = GOO_PLAYER_INFO_GET_PRIVATE_DATA (info);
 }
 
 
@@ -623,11 +596,10 @@ goo_player_info_finalize (GObject *object)
 			info->priv->update_id = 0;
 		}
 		gtk_object_unref (GTK_OBJECT (info->priv->tips));
-		g_free (info->priv);
 		info->priv = NULL;
 	}
 
-	G_OBJECT_CLASS (parent_class)->finalize (object);
+	G_OBJECT_CLASS (goo_player_info_parent_class)->finalize (object);
 }
 
 

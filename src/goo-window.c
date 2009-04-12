@@ -130,7 +130,6 @@ enum {
 static guint goo_window_signals[LAST_SIGNAL] = { 0 };
 
 static int icon_size = 0;
-static GnomeAppClass *parent_class = NULL;
 GList *window_list = NULL;
 
 
@@ -144,6 +143,11 @@ enum {
 	NUMBER_OF_COLUMNS
 };
 
+#define GOO_WINDOW_GET_PRIVATE_DATA(object) \
+	(G_TYPE_INSTANCE_GET_PRIVATE ((object), GOO_TYPE_WINDOW, GooWindowPrivateData))
+
+
+G_DEFINE_TYPE (GooWindow, goo_window, GNOME_TYPE_APP)
 
 static void
 set_active (GooWindow  *window,
@@ -578,11 +582,10 @@ goo_window_finalize (GObject *object)
 		path_list_free (priv->url_list);
 		priv->url_list = NULL;
 
-		g_free (window->priv);
 		window->priv = NULL;
 	}
 
-	G_OBJECT_CLASS (parent_class)->finalize (object);
+	G_OBJECT_CLASS (goo_window_parent_class)->finalize (object);
 }
 
 
@@ -1033,7 +1036,7 @@ goo_window_unrealize (GtkWidget *widget)
 	preferences_set_sort_method (window->priv->sort_method);
 	preferences_set_sort_type (window->priv->sort_type);
 
-	GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+	GTK_WIDGET_CLASS (goo_window_parent_class)->unrealize (widget);
 }
 
 
@@ -1057,7 +1060,7 @@ goo_window_show (GtkWidget *widget)
 	gboolean   view_foobar;
 
 	if (! HideShow) 
-		GTK_WIDGET_CLASS (parent_class)->show (widget);
+		GTK_WIDGET_CLASS (goo_window_parent_class)->show (widget);
 	else
 		HideShow = FALSE;
 
@@ -1080,7 +1083,6 @@ goo_window_class_init (GooWindowClass *class)
 	GObjectClass   *gobject_class;
 	GtkWidgetClass *widget_class;
 
-	parent_class = g_type_class_peek_parent (class);
 	widget_class = (GtkWidgetClass*) class;
 	gobject_class = (GObjectClass*) class;
 
@@ -1097,6 +1099,7 @@ goo_window_class_init (GooWindowClass *class)
 			      goo_marshal_VOID__VOID,
 			      G_TYPE_NONE, 
 			      0);
+	g_type_class_add_private (class, sizeof (GooWindowPrivateData));
 }
 
 
@@ -2209,7 +2212,7 @@ volume_button_changed_cb (GooVolumeToolButton *button,
 static void
 goo_window_init (GooWindow *window)
 {
-	window->priv = g_new0 (GooWindowPrivateData, 1);
+	window->priv = GOO_WINDOW_GET_PRIVATE_DATA (window);
 	window->priv->exiting = FALSE;
 	window->priv->check_id = 0;
 	window->priv->url_list = NULL;
@@ -2649,35 +2652,6 @@ goo_window_construct (GooWindow  *window,
 					   pref_playlist_repeat_changed,
 					   window);
 }
-
-
-GType
-goo_window_get_type ()
-{
-        static GType type = 0;
-
-        if (! type) {
-                GTypeInfo type_info = {
-			sizeof (GooWindowClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) goo_window_class_init,
-			NULL,
-			NULL,
-			sizeof (GooWindow),
-			0,
-			(GInstanceInitFunc) goo_window_init
-		};
-
-		type = g_type_register_static (GNOME_TYPE_APP,
-					       "GooWindow",
-					       &type_info,
-					       0);
-	}
-
-        return type;
-}
-
 
 GtkWindow * 
 goo_window_new (const char *device)

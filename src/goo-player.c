@@ -86,40 +86,14 @@ enum {
         LAST_SIGNAL
 };
 
-static GObjectClass *parent_class = NULL;
 static guint goo_player_signals[LAST_SIGNAL] = { 0 };
 
-static void goo_player_class_init  (GooPlayerClass *class);
-static void goo_player_init        (GooPlayer *player);
 static void goo_player_finalize    (GObject *object);
 
+#define GOO_PLAYER_GET_PRIVATE_DATA(object) \
+	(G_TYPE_INSTANCE_GET_PRIVATE ((object), GOO_TYPE_PLAYER, GooPlayerPrivateData))
 
-GType
-goo_player_get_type (void)
-{
-        static GType type = 0;
-
-        if (! type) {
-                GTypeInfo type_info = {
-			sizeof (GooPlayerClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) goo_player_class_init,
-			NULL,
-			NULL,
-			sizeof (GooPlayer),
-			0,
-			(GInstanceInitFunc) goo_player_init
-		};
-
-		type = g_type_register_static (G_TYPE_OBJECT,
-					       "GooPlayer",
-					       &type_info,
-					       0);
-	}
-
-        return type;
-}
+G_DEFINE_TYPE (GooPlayer, goo_player, G_TYPE_OBJECT)
 
 
 static void
@@ -343,8 +317,6 @@ goo_player_class_init (GooPlayerClass *class)
 {
 	GObjectClass   *gobject_class = G_OBJECT_CLASS (class);
 
-        parent_class = g_type_class_peek_parent (class);
-
 	goo_player_signals[START] =
                 g_signal_new ("start",
 			      G_TYPE_FROM_CLASS (class),
@@ -393,6 +365,8 @@ goo_player_class_init (GooPlayerClass *class)
 			      G_TYPE_NONE, 0);
 
         gobject_class->finalize = goo_player_finalize;
+
+	g_type_class_add_private (class, sizeof (GooPlayerPrivateData));
 }
 
 
@@ -401,7 +375,7 @@ goo_player_init (GooPlayer *player)
 {
 	GooPlayerPrivateData *priv;
 
-	player->priv = g_new0 (GooPlayerPrivateData, 1);
+	player->priv = GOO_PLAYER_GET_PRIVATE_DATA (player);
 	priv = player->priv;
 
 	priv->state = GOO_PLAYER_STATE_STOPPED;
@@ -454,11 +428,10 @@ goo_player_finalize (GObject *object)
 		g_free (priv->discid);
 		album_info_unref (priv->album);
 
-		g_free (player->priv);
 		player->priv = NULL;
 	}
 
-	G_OBJECT_CLASS (parent_class)->finalize (object);
+	G_OBJECT_CLASS (goo_player_parent_class)->finalize (object);
 }
 
 

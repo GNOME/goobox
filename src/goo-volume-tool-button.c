@@ -86,9 +86,9 @@ enum {
         LAST_SIGNAL
 };
 
-static GObjectClass *parent_class = NULL;
 static guint goo_volume_tool_button_signals[LAST_SIGNAL] = { 0 };
 
+G_DEFINE_TYPE (GooVolumeToolButton, goo_volume_tool_button, GTK_TYPE_TOOL_BUTTON)
 
 static gboolean
 goo_volume_tool_button_set_tooltip (GtkToolItem *tool_item,
@@ -197,7 +197,7 @@ goo_volume_tool_button_toolbar_reconfigured (GtkToolItem *toolitem)
 	goo_volume_tool_button_construct_contents (GOO_VOLUME_TOOL_BUTTON (toolitem));
 	
 	/* chain up */
-	GTK_TOOL_ITEM_CLASS (parent_class)->toolbar_reconfigured (toolitem);
+	GTK_TOOL_ITEM_CLASS (goo_volume_tool_button_parent_class)->toolbar_reconfigured (toolitem);
 }
 
 
@@ -219,7 +219,7 @@ goo_volume_tool_button_finalize (GObject *object)
 
 	button = GOO_VOLUME_TOOL_BUTTON (object);
 	gtk_object_unref (GTK_OBJECT (button->priv->tips));
-	G_OBJECT_CLASS (parent_class)->finalize (object);
+	G_OBJECT_CLASS (goo_volume_tool_button_parent_class)->finalize (object);
 }
 
 
@@ -231,8 +231,6 @@ goo_volume_tool_button_class_init (GooVolumeToolButtonClass *klass)
 	GtkToolButtonClass *toolbutton_class;
 	GtkWidgetClass     *gtkwidget_class;
 	
-	parent_class = g_type_class_peek_parent (klass);
-  
 	object_class = (GObjectClass *) klass;
 	toolitem_class = (GtkToolItemClass *) klass;
 	toolbutton_class = (GtkToolButtonClass *) klass;
@@ -254,34 +252,6 @@ goo_volume_tool_button_class_init (GooVolumeToolButtonClass *klass)
 	
 	g_type_class_add_private (object_class, sizeof (GooVolumeToolButtonPrivate));
 }
-
-
-GType
-goo_volume_tool_button_get_type (void)
-{
-	static GType type = 0;
-
-	if (type == 0) {
-		static const GTypeInfo info = {
-			sizeof (GooVolumeToolButtonClass),
-			(GBaseInitFunc) 0,
-			(GBaseFinalizeFunc) 0,
-			(GClassInitFunc) goo_volume_tool_button_class_init,
-			(GClassFinalizeFunc) 0,
-			NULL,
-			sizeof (GooVolumeToolButton),
-			0, /* n_preallocs */
-			(GInstanceInitFunc) goo_volume_tool_button_init
-		};
-		
-		type = g_type_register_static (GTK_TYPE_TOOL_BUTTON,
-					       "GooVolumeToolButton",
-					       &info, 0);
-	}
-	
-	return type;
-}
-
 
 static void
 button_state_changed_cb (GtkWidget           *widget,

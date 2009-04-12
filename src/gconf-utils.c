@@ -106,6 +106,7 @@ eel_gconf_handle_error (GError **error)
 					       "GConf error:\n  %s\n"
 					       "All further errors "
 					       "shown only on terminal",
+					       "%s",
 					       (*error)->message);
 		}
 		g_error_free (*error);

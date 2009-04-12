@@ -1,5 +1,21 @@
 2009-04-12  Paolo Bacchilega  <paobac@svn.gnome.org>
 
+	* src/dlg-cover-chooser.c (search_result_saved_cb): 
+	* src/gconf-utils.c (eel_gconf_handle_error): added a format argument.
+
+2009-04-12  Paolo Bacchilega  <paobac@svn.gnome.org>
+	
+	* src/goo-window.c: 
+	* src/goo-volume-tool-button.c: 
+	* src/goo-player-info.c: 
+	* src/goo-player.c: 
+	* src/goo-cdrom.c: 
+
+	Fixed bug #572212 – use type macros to define types
+	Patch by Felix Riemann
+
+2009-04-12  Paolo Bacchilega  <paobac@svn.gnome.org>
+
 	* configure.in: added AC_PROG_CXX
 	
 	* src/main.c: 

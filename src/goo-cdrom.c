@@ -50,40 +50,15 @@ enum {
 	PROP_DEFAULT_DEVICE
 };
 
-static GObjectClass *parent_class = NULL;
 static guint goo_cdrom_signals[LAST_SIGNAL] = { 0 };
 
-static void goo_cdrom_class_init  (GooCdromClass *class);
-static void goo_cdrom_init        (GooCdrom *cdrom);
 static void goo_cdrom_finalize    (GObject *object);
 
+#define GOO_CDROM_GET_PRIVATE_DATA(object) \
+	(G_TYPE_INSTANCE_GET_PRIVATE ((object), GOO_TYPE_CDROM, GooCdromPrivateData))
 
-GType
-goo_cdrom_get_type ()
-{
-        static GType type = 0;
+G_DEFINE_TYPE (GooCdrom, goo_cdrom, G_TYPE_OBJECT)
 
-        if (! type) {
-                GTypeInfo type_info = {
-			sizeof (GooCdromClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) goo_cdrom_class_init,
-			NULL,
-			NULL,
-			sizeof (GooCdrom),
-			0,
-			(GInstanceInitFunc) goo_cdrom_init
-		};
-
-		type = g_type_register_static (G_TYPE_OBJECT,
-					       "GooCdrom",
-					       &type_info,
-					       0);
-	}
-
-        return type;
-}
 
 
 static gboolean
@@ -173,8 +148,6 @@ goo_cdrom_class_init (GooCdromClass *class)
 {
         GObjectClass *gobject_class = G_OBJECT_CLASS (class);
 
-        parent_class = g_type_class_peek_parent (class);
-
 	goo_cdrom_signals[STATE_CHANGED] =
                 g_signal_new ("state_changed",
 			      G_TYPE_FROM_CLASS (class),
@@ -202,6 +175,8 @@ goo_cdrom_class_init (GooCdromClass *class)
 	class->is_cdrom_device  = base_goo_cdrom_is_cdrom_device;
 
 	class->state_changed = NULL;
+
+	g_type_class_add_private (class, sizeof (GooCdromPrivateData));
 }
 
 
@@ -210,7 +185,7 @@ goo_cdrom_init (GooCdrom *cdrom)
 {
 	GooCdromPrivateData *priv;
 
-	cdrom->priv = g_new0 (GooCdromPrivateData, 1);
+	cdrom->priv = GOO_CDROM_GET_PRIVATE_DATA (cdrom);
 	priv = cdrom->priv;
 
 	priv->error = NULL;
@@ -237,11 +212,10 @@ goo_cdrom_finalize (GObject *object)
 		g_free (priv->device);
 		g_free (priv->default_device);
 
-		g_free (cdrom->priv);
 		cdrom->priv = NULL;
 	}
 
-	G_OBJECT_CLASS (parent_class)->finalize (object);
+	G_OBJECT_CLASS (goo_cdrom_parent_class)->finalize (object);
 }
 
 
