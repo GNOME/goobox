@@ -680,6 +680,9 @@ system_notify (GooWindow  *window,
         GtkWidget *tray_icon;
 	GdkScreen *screen = NULL;
 	int        x = -1, y = -1;
+	gboolean   supports_actions = FALSE;
+	GList     *caps = NULL;
+	GList     *c;
 
 	if (! notify_is_initted ())
 		return;
@@ -698,20 +701,36 @@ system_notify (GooWindow  *window,
 	}
 
 	if (notification == NULL) {
+		caps = notify_get_server_caps();
+		if (caps != NULL) {
+			for (c = caps; c != NULL; c = c->next) {
+				if (strcmp ((char*)c->data, "actions") == 0) {
+					supports_actions = TRUE;
+					break;
+				}
+			}
+
+			g_list_foreach (caps, (GFunc)g_free, NULL);
+			g_list_free (caps);
+		}
+
 		notification = notify_notification_new (title, msg, "goobox", NULL);
 		notify_notification_set_urgency (notification, NOTIFY_URGENCY_LOW);
-		notify_notification_add_action (notification,
-						GTK_STOCK_MEDIA_NEXT,
-						_("Next"),
-						notify_action_next_cb,
-						window,
-						NULL);
-		notify_notification_add_action (notification,
-						GTK_STOCK_MEDIA_STOP,
-						_("Stop"),
-						notify_action_stop_cb,
-						window,
-						NULL);		
+
+		if (supports_actions) {
+			notify_notification_add_action (notification,
+							GTK_STOCK_MEDIA_NEXT,
+							_("Next"),
+							notify_action_next_cb,
+							window,
+							NULL);
+			notify_notification_add_action (notification,
+							GTK_STOCK_MEDIA_STOP,
+							_("Stop"),
+							notify_action_stop_cb,
+							window,
+							NULL);
+		}
 	}
 	else
 		notify_notification_update (notification, title, msg, "goobox");

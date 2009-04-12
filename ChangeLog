@@ -1,3 +1,13 @@
+2009-04-12  Paolo Bacchilega  <paobac@svn.gnome.org>
+
+	* configure.in: added AC_PROG_CXX
+	
+	* src/main.c: 
+	
+	Fixed bug #571207 – Notification action buttons should be shown 
+	only if notification daemon supports actions.
+	Patch by Cody Russell
+
 2009-02-02  Paolo Bacchilega  <paobac@svn.gnome.org>
 
 	* src/goo-window.c: use gtk_widget_get_action instead of 
