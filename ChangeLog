@@ -1,7 +1,16 @@
 2009-04-12  Paolo Bacchilega  <paobac@svn.gnome.org>
 
+	* src/main.c: 
+	
+	Fixed bug #573162 – Reports "Invalid" device for all my 
+	CD drives
+	Patch by James Westby 
+
+2009-04-12  Paolo Bacchilega  <paobac@svn.gnome.org>
+
 	* src/dlg-cover-chooser.c (search_result_saved_cb): 
-	* src/gconf-utils.c (eel_gconf_handle_error): added a format argument.
+	* src/gconf-utils.c (eel_gconf_handle_error): added a format 
+	argument.
 
 2009-04-12  Paolo Bacchilega  <paobac@svn.gnome.org>
 	
