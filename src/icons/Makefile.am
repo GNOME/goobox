@@ -10,3 +10,5 @@ pixbufs.h: $(IMAGES)
 	gdk-pixbuf-csource --raw --build-list reset_24_rgba $(srcdir)/reset-24.png >> $(srcdir)/pixbufs.h
 
 EXTRA_DIST = $(IMAGES) pixbufs.h
+
+-include $(top_srcdir)/git.mk

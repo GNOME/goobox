@@ -9,3 +9,5 @@ glade_DATA = \
 gladedir = $(datadir)/goobox/glade
 
 EXTRA_DIST = $(glade_DATA)
+
+-include $(top_srcdir)/git.mk

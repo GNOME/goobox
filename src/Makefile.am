@@ -183,3 +183,5 @@ CLEANFILES = 					\
 	$(GTH_ENUMS)				\
 	$(gnome_goobox_idl_sources) 		\
 	gnome_goobox_idl_stamp
+
+-include $(top_srcdir)/git.mk

@@ -44,3 +44,5 @@ DISTCLEANFILES =                \
 	$(desktop_in_files)     \
 	$(desktop_DATA)		\
 	$(server_DATA)
+
+-include $(top_srcdir)/git.mk
