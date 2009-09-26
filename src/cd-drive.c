@@ -1065,12 +1065,12 @@ linux_scan (gboolean recorder_only)
 		device_str = read_lines ("/proc/scsi/sg/device_strs");
 		if (device_str == NULL) {
 			g_warning ("Can't read /proc/scsi/sg/device_strs");
-			g_strfreev (devices);
-			return NULL;
+			scsi_units = NULL;
+			n_scsi_units = 0;
+		} else {
+			scsi_units = g_new0 (struct scsi_unit, n_scsi_units);
+			get_scsi_units (device_str, devices, scsi_units);
 		}
-
-		scsi_units = g_new0 (struct scsi_unit, n_scsi_units);
-		get_scsi_units (device_str, devices, scsi_units);
 
 		g_strfreev (device_str);
 		g_strfreev (devices);
