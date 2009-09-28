@@ -1,3 +1,26 @@
+version 2.0.1
+-------------
+
+	Bugs fixed: 
+	
+	* Preferences dialog crash
+	* Support transparent tray icon (#554876)
+	* Notification action buttons are shown only if notification daemon 
+	  supports actions.
+	* Fixed bug #573162 – Reports "Invalid" device for all my CD drives
+
+        New or updated application translations:
+
+        * Arab (Djihed Afifi)
+        * Basque (Iñaki Larrañaga Murgoitio)
+        * Brazilian Portuguese (Djavan Fagundes)
+        * Czech (Adrian Guniš)
+        * German (Helge Kreutzmann)
+
+        New or updated manual translations:
+
+        * German (Helge Kreutzmann)
+
 version 2.0.0
 -------------
 
