@@ -396,7 +396,6 @@ msgstr "트랙 보이기(_T)"
 msgid "%d track"
 msgid_plural "%d tracks"
 msgstr[0] "%d번째 트랙"
-msgstr[1] "%d번째 트랙"
 
 #: src/goo-window.c:193
 #, c-format
