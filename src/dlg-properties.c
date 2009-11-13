@@ -3,7 +3,7 @@
 /*
  *  Goo
  *
- *  Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
+ *  Copyright (C) 2001-2009 Free Software Foundation, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,47 +21,42 @@
  */
 
 #include <config.h>
-
 #include <gtk/gtk.h>
-#include <libgnome/libgnome.h>
-#include <glade/glade.h>
-#include "goo-stock.h"
 #include "dlg-properties.h"
+#include "goo-stock.h"
+#include "gtk-utils.h"
 #include "metadata.h"
 
-#define GLADE_PREF_FILE "properties.glade"
 
-enum { NUMBER_COLUMN, TITLE_COLUMN, ARTIST_COLUMN, DATA_COLUMN, N_COLUMNS };
+#define GET_WIDGET(x) _gtk_builder_get_widget (data->builder, (x))
+
+
+enum {
+	NUMBER_COLUMN,
+	TITLE_COLUMN,
+	ARTIST_COLUMN,
+	DATA_COLUMN,
+	N_COLUMNS
+};
+
 
 typedef struct {
 	GooWindow         *window;
-	GladeXML          *gui;
 	GtkWidget         *dialog;
+	GtkBuilder        *builder;
 	GtkListStore      *list_store; 
 	GtkTreeViewColumn *author_column;
-	GtkWidget         *p_title_entry;
-	GtkWidget         *p_artist_entry;
-	GtkWidget         *p_artist_combobox;
-	GtkWidget         *p_year_spinbutton;
-	GtkWidget         *p_year_checkbutton;
-	GtkWidget         *p_info_label;
-	GtkWidget         *p_info_box;
-	GtkWidget         *p_navigation_box;
-	GtkWidget         *p_album_label;
-	GtkWidget         *p_track_treeview;
-	
 	GList             *albums;
 	int                n_albums, current_album;
 } DialogData;
 
 
-/* called when the main dialog is closed. */
 static void
-destroy_cb (GtkWidget  *widget, 
-	    DialogData *data)
+dialog_destroy_cb (GtkWidget  *widget,
+		   DialogData *data)
 {
 	data->window->properties_dialog = NULL;
-	g_object_unref (G_OBJECT (data->gui));
+	g_object_unref (G_OBJECT (data->builder));
 	g_free (data);
 }
 
@@ -74,15 +69,15 @@ set_album_from_data (DialogData *data)
 	GtkTreeIter  iter;
 		
 	album = album_info_copy (goo_window_get_album (data->window));
-	album_info_set_title (album, gtk_entry_get_text (GTK_ENTRY (data->p_title_entry)));
-	album_artist = gtk_entry_get_text (GTK_ENTRY (data->p_artist_entry));
+	album_info_set_title (album, gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("title_entry"))));
+	album_artist = gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("artist_entry")));
 	album_info_set_artist (album, album_artist, "");
-	album->various_artist = gtk_combo_box_get_active (GTK_COMBO_BOX (data->p_artist_combobox)) == 1;
+	album->various_artist = gtk_combo_box_get_active (GTK_COMBO_BOX (GET_WIDGET ("artist_combobox"))) == 1;
 	
-	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->p_year_checkbutton))) {
+	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("year_checkbutton")))) {
 		GDate *date;
 		
-		date = g_date_new_dmy (1, 1, gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (data->p_year_spinbutton)));
+		date = g_date_new_dmy (1, 1, gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (GET_WIDGET ("year_spinbutton"))));
 		album_info_set_release_date (album, date);
 		g_date_free (date);
 	}
@@ -128,8 +123,8 @@ set_album_from_data (DialogData *data)
 
 
 static void
-ok_cb (GtkWidget  *widget, 
-       DialogData *data)
+ok_button_clicked_cb (GtkWidget  *widget,
+		      DialogData *data)
 {
 	set_album_from_data (data);
 	gtk_widget_destroy (data->dialog);
@@ -137,34 +132,10 @@ ok_cb (GtkWidget  *widget,
 
 
 static void
-help_cb (GtkWidget  *widget, 
-	 DialogData *data)
+help_button_clicked_cb (GtkWidget  *widget,
+			DialogData *data)
 {
-	GError *err;
-
-	err = NULL;  
-	gnome_help_display ("goo", "properties", &err);
-	
-	if (err != NULL) {
-		GtkWidget *dialog;
-		
-		dialog = gtk_message_dialog_new (GTK_WINDOW (data->dialog),
-						 GTK_DIALOG_MODAL,
-						 GTK_MESSAGE_ERROR,
-						 GTK_BUTTONS_CLOSE,
-						 _("Could not display help: %s"),
-						 err->message);
-		
-		g_signal_connect (G_OBJECT (dialog), "response",
-				  G_CALLBACK (gtk_widget_destroy),
-				  NULL);
-		
-		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-		
-		gtk_widget_show (dialog);
-		
-		g_error_free (err);
-	}
+	show_help_dialog (GTK_WINDOW (data->window), "properties");
 }
 
 
@@ -174,17 +145,17 @@ set_data_from_album (DialogData *data,
 {
 	GList *scan;
 	
-	gtk_combo_box_set_active (GTK_COMBO_BOX (data->p_artist_combobox), album->various_artist ? 1 : 0);
+	gtk_combo_box_set_active (GTK_COMBO_BOX (GET_WIDGET ("artist_combobox")), album->various_artist ? 1 : 0);
 	
 	if (album->title != NULL)
-		gtk_entry_set_text (GTK_ENTRY (data->p_title_entry), album->title);
+		gtk_entry_set_text (GTK_ENTRY (GET_WIDGET ("title_entry")), album->title);
 	if (album->artist != NULL)
-		gtk_entry_set_text (GTK_ENTRY (data->p_artist_entry), album->artist);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->p_year_checkbutton), g_date_valid (album->release_date));
+		gtk_entry_set_text (GTK_ENTRY (GET_WIDGET ("artist_entry")), album->artist);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("year_checkbutton")), g_date_valid (album->release_date));
 	if (g_date_valid (album->release_date))
-		gtk_spin_button_set_value (GTK_SPIN_BUTTON (data->p_year_spinbutton), g_date_get_year (album->release_date));
+		gtk_spin_button_set_value (GTK_SPIN_BUTTON (GET_WIDGET ("year_spinbutton")), g_date_get_year (album->release_date));
 	else	
-		gtk_spin_button_set_value (GTK_SPIN_BUTTON (data->p_year_spinbutton), 0);
+		gtk_spin_button_set_value (GTK_SPIN_BUTTON (GET_WIDGET ("year_spinbutton")), 0);
 
 	gtk_list_store_clear (data->list_store);
 	for (scan = album->tracks; scan; scan = scan->next) {
@@ -212,11 +183,11 @@ show_album (DialogData *data,
 		return;
 	data->current_album = n;
 		
-	gtk_widget_hide (data->p_info_box);
-	gtk_widget_show (data->p_navigation_box);
+	gtk_widget_hide (GET_WIDGET ("info_box"));
+	gtk_widget_show (GET_WIDGET ("navigation_box"));
 		
 	s = g_strdup_printf (_("Album %d of %d"), data->current_album + 1, data->n_albums); 
-	gtk_label_set_text (GTK_LABEL (data->p_album_label), s);
+	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("album_label")), s);
 	g_free (s);
 	
 	set_data_from_album (data, g_list_nth (data->albums, n)->data);
@@ -264,7 +235,7 @@ search_cb (GtkWidget  *widget,
 	mb_SetDepth (mb, 4);
 	/*mb_SetMaxItems(mb, 10);*/
 	
-	mb_args[0] = (char*) gtk_entry_get_text (GTK_ENTRY (data->p_title_entry));
+	mb_args[0] = (char*) gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("title_entry")));
 	mb_args[1] = NULL;
 	if (! mb_QueryWithArgs (mb, MBQ_FindAlbumByName, mb_args)) {
 		char  mb_error[1024];
@@ -272,7 +243,7 @@ search_cb (GtkWidget  *widget,
 		
 	        mb_GetQueryError (mb, mb_error, sizeof (mb_error));
 	        s = g_strdup_printf (_("Search failed: %s\n"), mb_error);
-        	gtk_label_set_text (GTK_LABEL (data->p_info_label), s);
+        	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), s);
         	g_free (s);
 	}
 	else {	
@@ -281,9 +252,9 @@ search_cb (GtkWidget  *widget,
 		data->n_albums = g_list_length (data->albums);
 	
 		if (data->n_albums == 0) { 
-			gtk_label_set_text (GTK_LABEL (data->p_info_label), _("No album found"));
-			gtk_widget_show (data->p_info_box);
-			gtk_widget_hide (data->p_navigation_box);
+			gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), _("No album found"));
+			gtk_widget_show (GET_WIDGET ("info_box"));
+			gtk_widget_hide (GET_WIDGET ("navigation_box"));
 		} 
 		else 
 			show_album (data, 0);
@@ -431,11 +402,11 @@ artist_combobox_changed_cb (GtkComboBox *widget,
 {
 	gboolean single_artist = gtk_combo_box_get_active (widget) == 0;
 	gtk_tree_view_column_set_visible (data->author_column, ! single_artist);
-	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (data->p_track_treeview), ! single_artist);
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (GET_WIDGET ("track_treeview")), ! single_artist);
 	if (single_artist)
-		gtk_widget_show (data->p_artist_entry);
+		gtk_widget_show (GET_WIDGET ("artist_entry"));
 	else
-		gtk_widget_hide (data->p_artist_entry);
+		gtk_widget_hide (GET_WIDGET ("artist_entry"));
 }
 
 
@@ -456,11 +427,11 @@ next_album_button_clicked_cb (GtkButton  *button,
 
 
 static void
-reset_album_button_clicked_cb (GtkButton  *button,
-                               DialogData *data)
+undo_button_clicked_cb (GtkButton  *button,
+                        DialogData *data)
 {
-	gtk_widget_hide (data->p_info_box);
-	gtk_widget_hide (data->p_navigation_box);
+	gtk_widget_hide (GET_WIDGET ("info_box"));
+	gtk_widget_hide (GET_WIDGET ("navigation_box"));
 	set_data_from_album (data, goo_window_get_album (data->window));
 }
 
@@ -469,7 +440,7 @@ static void
 year_checkbutton_toggled_cb (GtkToggleButton *button,
                              DialogData      *data)
 {
-	gtk_widget_set_sensitive (data->p_year_spinbutton, gtk_toggle_button_get_active (button));
+	gtk_widget_set_sensitive (GET_WIDGET ("year_spinbutton"), gtk_toggle_button_get_active (button));
 }
 
 
@@ -477,13 +448,6 @@ void
 dlg_properties (GooWindow *window)
 {
 	DialogData *data;
-	GtkWidget  *btn_cancel;
-	GtkWidget  *btn_ok;
-	GtkWidget  *btn_help;
-	GtkWidget  *btn_search;
-        GtkWidget  *p_prev_album_button;
-        GtkWidget  *p_next_album_button;
-        GtkWidget  *p_reset_album_button;
         GtkWidget  *image;
         
         if (window->properties_dialog != NULL) {
@@ -493,42 +457,17 @@ dlg_properties (GooWindow *window)
         
 	data = g_new0 (DialogData, 1);
 	data->window = window;
-	data->gui = glade_xml_new (GOO_GLADEDIR "/" GLADE_PREF_FILE, NULL, NULL);
-        if (!data->gui) {
-                g_warning ("Could not find " GLADE_PREF_FILE "\n");
-		g_free (data);
-                return;
-        }
+	data->builder = _gtk_builder_new_from_file ("properties.ui", "");
 
 	/* Get the widgets. */
 
-	data->dialog = glade_xml_get_widget (data->gui, "properties_dialog");
+	data->dialog = GET_WIDGET ("properties_dialog");
 	window->properties_dialog = data->dialog;
 
-	data->p_artist_entry = glade_xml_get_widget (data->gui, "p_artist_entry");
-	data->p_artist_combobox = glade_xml_get_widget (data->gui, "p_artist_combobox");
-	data->p_title_entry = glade_xml_get_widget (data->gui, "p_title_entry");
-	data->p_info_box = glade_xml_get_widget (data->gui, "p_info_box");
-	data->p_info_label = glade_xml_get_widget (data->gui, "p_info_label");
-	data->p_navigation_box = glade_xml_get_widget (data->gui, "p_navigation_box");
-	data->p_album_label = glade_xml_get_widget (data->gui, "p_album_label");
-	data->p_year_spinbutton = glade_xml_get_widget (data->gui, "p_year_spinbutton");
-	data->p_year_checkbutton = glade_xml_get_widget (data->gui, "p_year_checkbutton");
-	
-	btn_ok = glade_xml_get_widget (data->gui, "p_okbutton");
-	btn_cancel = glade_xml_get_widget (data->gui, "p_cancelbutton");
-	btn_help = glade_xml_get_widget (data->gui, "p_helpbutton");
-	btn_search = glade_xml_get_widget (data->gui, "p_search_button");
-	data->p_track_treeview = glade_xml_get_widget (data->gui, "p_track_treeview");
-	
-	p_prev_album_button = glade_xml_get_widget (data->gui, "p_prev_album_button");
-	p_next_album_button = glade_xml_get_widget (data->gui, "p_next_album_button");
-	p_reset_album_button = glade_xml_get_widget (data->gui, "p_undobutton");
-	
-	/**/
+	/* Set widgets data. */
 	
 	image = gtk_image_new_from_stock (GOO_STOCK_RESET, GTK_ICON_SIZE_BUTTON);
-	g_object_set (p_reset_album_button, 
+	g_object_set (GET_WIDGET ("undo_button"),
 		      "use_stock", TRUE,
 		      "label", GOO_STOCK_RESET,
 		      "image", image,
@@ -539,48 +478,48 @@ dlg_properties (GooWindow *window)
 					       G_TYPE_STRING,
 					       G_TYPE_STRING,
 					       G_TYPE_POINTER);
-	gtk_tree_view_set_model (GTK_TREE_VIEW (data->p_track_treeview), GTK_TREE_MODEL (data->list_store));
-	add_columns (data, GTK_TREE_VIEW (data->p_track_treeview));
+	gtk_tree_view_set_model (GTK_TREE_VIEW (GET_WIDGET ("track_treeview")), GTK_TREE_MODEL (data->list_store));
+	add_columns (data, GTK_TREE_VIEW (GET_WIDGET ("track_treeview")));
 	
 	/* Set the signals handlers. */
 
 	g_signal_connect (G_OBJECT (data->dialog), 
 			  "destroy",
-			  G_CALLBACK (destroy_cb),
+			  G_CALLBACK (dialog_destroy_cb),
 			  data);
-	g_signal_connect_swapped (G_OBJECT (btn_cancel), 
+	g_signal_connect_swapped (GET_WIDGET ("cancel_button"),
 			  	  "clicked",
 			  	  G_CALLBACK (gtk_widget_destroy),
 			  	  data->dialog);
-	g_signal_connect (G_OBJECT (btn_ok), 
+	g_signal_connect (GET_WIDGET ("ok_button"),
 			  "clicked",
-			  G_CALLBACK (ok_cb),
+			  G_CALLBACK (ok_button_clicked_cb),
 			  data);
-	g_signal_connect (G_OBJECT (btn_help), 
+	g_signal_connect (GET_WIDGET ("help_button"),
 			  "clicked",
-			  G_CALLBACK (help_cb),
+			  G_CALLBACK (help_button_clicked_cb),
 			  data);
-	g_signal_connect (G_OBJECT (btn_search), 
+	g_signal_connect (GET_WIDGET ("search_button"),
 			  "clicked",
 			  G_CALLBACK (search_cb),
 			  data);
-	g_signal_connect (G_OBJECT (data->p_artist_combobox), 
+	g_signal_connect (GET_WIDGET ("artist_combobox"),
 			  "changed",
 			  G_CALLBACK (artist_combobox_changed_cb),
 			  data);
-	g_signal_connect (G_OBJECT (p_prev_album_button), 
+	g_signal_connect (GET_WIDGET ("prev_album_button"),
 			  "clicked",
 			  G_CALLBACK (prev_album_button_clicked_cb),
 			  data);
-	g_signal_connect (G_OBJECT (p_next_album_button), 
+	g_signal_connect (GET_WIDGET ("next_album_button"),
 			  "clicked",
 			  G_CALLBACK (next_album_button_clicked_cb),
 			  data);
-	g_signal_connect (G_OBJECT (p_reset_album_button), 
+	g_signal_connect (GET_WIDGET ("undo_button"),
 			  "clicked",
-			  G_CALLBACK (reset_album_button_clicked_cb),
+			  G_CALLBACK (undo_button_clicked_cb),
 			  data);
-	g_signal_connect (G_OBJECT (data->p_year_checkbutton), 
+	g_signal_connect (GET_WIDGET ("year_checkbutton"),
 			  "toggled",
                           G_CALLBACK (year_checkbutton_toggled_cb), 
                           data);

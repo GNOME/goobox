@@ -21,32 +21,26 @@
  */
 
 #include <config.h>
-#include <gnome.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <gnome.h>
-#include <libbonobo.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
 #include "actions.h"
-#include "main.h"
-#include "gtk-utils.h"
-#include "goo-window.h"
-#include "file-utils.h"
-#include "gconf-utils.h"
-#include "preferences.h"
 #include "dlg-extract.h"
 #include "dlg-preferences.h"
 #include "dlg-properties.h"
+#include "gtk-utils.h"
+#include "goo-window.h"
+#include "gconf-utils.h"
+#include "main.h"
+#include "preferences.h"
 
 
 void
 activate_action_play (GtkAction *action, 
 		      gpointer   data)
 {
-	GooWindow *window = data;
-	goo_window_play (window);
+	goo_window_play (GOO_WINDOW (data));
 }
 
 
@@ -54,8 +48,7 @@ void
 activate_action_play_selected (GtkAction *action, 
 			       gpointer   data)
 {
-	GooWindow *window = data;
-	goo_window_play_selected (window);
+	goo_window_play_selected (GOO_WINDOW (data));
 }
 
 
@@ -63,8 +56,7 @@ void
 activate_action_pause (GtkAction *action,
 		       gpointer   data)
 {
-	GooWindow *window = data;
-	goo_window_pause (window);
+	goo_window_pause (GOO_WINDOW (data));
 }
 
 
@@ -72,8 +64,7 @@ void
 activate_action_toggle_play (GtkAction *action, 
 			     gpointer   data)
 {
-	GooWindow *window = data;
-	goo_window_toggle_play (window);
+	goo_window_toggle_play (GOO_WINDOW (data));
 }
 
 
@@ -81,8 +72,7 @@ void
 activate_action_stop (GtkAction *action, 
 		      gpointer   data)
 {
-	GooWindow *window = data;
-	goo_window_stop (window);
+	goo_window_stop (GOO_WINDOW (data));
 }
 
 
@@ -90,8 +80,7 @@ void
 activate_action_next (GtkAction *action, 
 		      gpointer   data)
 {
-	GooWindow *window = data;
-	goo_window_next (window);
+	goo_window_next (GOO_WINDOW (data));
 }
 
 
@@ -99,8 +88,7 @@ void
 activate_action_prev (GtkAction *action, 
 		      gpointer   data)
 {
-	GooWindow *window = data;
-	goo_window_prev (window);
+	goo_window_prev (GOO_WINDOW (data));
 }
 
 
@@ -108,8 +96,7 @@ void
 activate_action_eject (GtkAction *action, 
 		       gpointer   data)
 {
-	GooWindow *window = data;
-	goo_window_eject (window);
+	goo_window_eject (GOO_WINDOW (data));
 }
 
 
@@ -117,41 +104,7 @@ void
 activate_action_reload (GtkAction *action, 
 			gpointer   data)
 {
-	GooWindow *window = data;
-	goo_window_update (window);
-}
-
-
-
-static void
-show_help (GooWindow  *window,
-	   const char *section)
-{
-	GError *err = NULL;  
-
-        gnome_help_display ("goobox", section, &err);
-        
-        if (err != NULL) {
-                GtkWidget *dialog;
-                
-                dialog = _gtk_message_dialog_new (GTK_WINDOW (window),
-						  GTK_DIALOG_DESTROY_WITH_PARENT, 
-						  GTK_STOCK_DIALOG_ERROR,
-						  _("Could not display help"),
-						  err->message,
-						  GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
-						  NULL);
-                gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-                g_signal_connect (G_OBJECT (dialog), "response",
-                                  G_CALLBACK (gtk_widget_destroy),
-                                  NULL);
-                
-                gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-                
-                gtk_widget_show (dialog);
-                
-                g_error_free (err);
-        }
+	goo_window_update (GOO_WINDOW (data));
 }
 
 
@@ -159,8 +112,7 @@ void
 activate_action_manual (GtkAction *action, 
 			gpointer   data)
 {
-	GooWindow *window = data;
-	show_help (window, NULL);
+	show_help_dialog (GTK_WINDOW (data), NULL);
 }
 
 
@@ -168,8 +120,7 @@ void
 activate_action_shortcuts (GtkAction *action, 
 			   gpointer   data)
 {
-	GooWindow *window = data;
-	show_help (window, "goobox-shortcuts");
+	show_help_dialog (GTK_WINDOW (data), "goobox-shortcuts");
 }
 
 
@@ -275,10 +226,8 @@ external_app_watch_func (GPid     pid,
 	       	         gint     status,
 	                 gpointer data)
 {
-	GooWindow *window = data;
-	
 	g_spawn_close_pid (pid);
-	goo_window_set_hibernate (window, FALSE);
+	goo_window_set_hibernate (GOO_WINDOW (data), FALSE);
 }
 
 
@@ -321,7 +270,7 @@ activate_action_copy_disc (GtkAction *action,
 	char      *command;
 	GError    *error = NULL;
 
-	command = g_strconcat ("nautilus-cd-burner --source-device=", 
+	command = g_strconcat ("brasero --copy=",
 			       goo_player_get_device (goo_window_get_player (window)), 
 			       NULL);
 
@@ -336,6 +285,7 @@ activate_action_copy_disc (GtkAction *action,
 						   &error);
 		goo_window_set_hibernate (window, FALSE);
 	}
+
 	g_free (command);
 }
 

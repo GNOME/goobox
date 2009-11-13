@@ -21,11 +21,12 @@
  */
 
 #include <config.h>
-#include <gnome.h>
+#include <glib/gi18n.h>
 #include <gst/gst.h>
 #include "album-info.h"
 #include "glib-utils.h"
-#include "file-utils.h"
+#include "gth-user-dir.h"
+
 
 #define MBI_VARIOUS_ARTIST_ID  "89ad4ac3-39f7-470e-963a-56509c546377"
 
@@ -276,7 +277,8 @@ album_info_copy_metadata (AlbumInfo *to_album,
 
 	for (scan_to = to_album->tracks, scan_from = from_album->tracks; 
 	     scan_to && scan_from; 
-	     scan_to = scan_to->next, scan_from = scan_from->next) {
+	     scan_to = scan_to->next, scan_from = scan_from->next)
+	{
 		TrackInfo *to_track = scan_to->data;
 		TrackInfo *from_track = scan_from->data;
 		
@@ -289,18 +291,10 @@ static char *
 get_cache_path (AlbumInfo  *album,
 		const char *disc_id)
 {
-	char *path = NULL;
-	char *dir;
-	
 	if (disc_id == NULL)
 		return NULL;
-		
-	dir = g_build_filename (g_get_home_dir (), ".gnome2", "goobox.d", "albums", NULL);
-	if (ensure_dir_exists (dir, 0700) == GNOME_VFS_OK) 
-		path = g_build_filename (dir, disc_id, NULL);
-	g_free (dir);
-	
-	return path;
+	else
+		return gth_user_dir_get_file (GTH_DIR_DATA, "goobox", "albums", disc_id, NULL);
 }
 
 

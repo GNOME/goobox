@@ -21,34 +21,17 @@
  */
 
 #include <config.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include <math.h>
-
+#include <brasero/brasero-drive.h>
 #include <gtk/gtk.h>
-#include <libgnome/libgnome.h>
-#include <libgnomeui/gnome-dialog.h>
-#include <libgnomeui/gnome-dialog-util.h>
-#include <libgnomeui/gnome-propertybox.h>
-#include <libgnomeui/gnome-pixmap.h>
-#include <libgnomevfs/gnome-vfs-ops.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
-#include <glade/glade.h>
 #include <gst/gst.h>
-#include "typedefs.h"
-#include "main.h"
 #include "gconf-utils.h"
+#include "glib-utils.h"
 #include "gtk-utils.h"
-#include "file-utils.h"
-#include "typedefs.h"
-#include "goo-window.h"
+#include "main.h"
 #include "preferences.h"
-#include "track-info.h"
-#include "goo-player.h"
-#include "goo-cdrom.h"
+#include "typedefs.h"
+
 
 #define TOC_OFFSET 150
 #define GLADE_RIPPER_FILE "ripper_dialog.glade"
@@ -58,10 +41,11 @@
 #define DEFAULT_OGG_QUALITY 0.5
 #define DEFAULT_FLAC_COMPRESSION 5
 #define BUFFER_SIZE 1024
+#define GET_WIDGET(x) _gtk_builder_get_widget (data->builder, (x))
+
 
 typedef struct {
 	GooWindow     *window;
-	char          *device;
 	char          *destination;
 	GooFileFormat  format;
 	GList         *tracks;
@@ -69,7 +53,7 @@ typedef struct {
 	GList         *current_track;
 	int            current_track_n;
 	char          *ext;
-	GooCdrom      *cdrom;
+	BraseroDrive  *drive;
 	AlbumInfo     *album;
 
 	GstElement    *pipeline;
@@ -83,35 +67,31 @@ typedef struct {
 	int            total_sectors;
 	int            current_track_sectors;
 	int            prev_tracks_sectors;
-	char          *current_file;
+	GFile         *current_file;
 	gboolean       ripping;
 	GTimer        *timer;
 	double         prev_remaining_time;
 
-	GladeXML      *gui;
-
+	GtkBuilder    *builder;
 	GtkWidget     *dialog;
-	GtkWidget     *r_progress_progressbar;
-	GtkWidget     *r_track_label;
 } DialogData;
 
 
 /* From lame.h */
 typedef enum vbr_mode_e {
-  vbr_off=0,
-  vbr_mt,               /* obsolete, same as vbr_mtrh */
-  vbr_rh,
-  vbr_abr,
-  vbr_mtrh,
-  vbr_max_indicator,    /* Don't use this! It's used for sanity checks.       */  
-  vbr_default=vbr_rh    /* change this to change the default VBR mode of LAME */
+	vbr_off=0,
+	vbr_mt,               /* obsolete, same as vbr_mtrh */
+	vbr_rh,
+	vbr_abr,
+	vbr_mtrh,
+	vbr_max_indicator,    /* Don't use this! It's used for sanity checks.       */
+	vbr_default=vbr_rh    /* change this to change the default VBR mode of LAME */
 } vbr_mode;
 
 
-/* called when the main dialog is closed. */
 static void
-destroy_cb (GtkWidget  *widget, 
-	    DialogData *data)
+dialog_destroy_cb (GtkWidget  *widget,
+		   DialogData *data)
 {
 	if (data->update_handle != 0) {
 		g_source_remove (data->update_handle);
@@ -119,7 +99,7 @@ destroy_cb (GtkWidget  *widget,
 	}
 
 	if (data->ripping && (data->current_file != NULL))
-		gnome_vfs_unlink (data->current_file);
+		g_file_delete (data->current_file, NULL, NULL);
 
 	if (data->pipeline != NULL) {
 		gst_element_set_state (data->pipeline, GST_STATE_NULL);
@@ -129,15 +109,12 @@ destroy_cb (GtkWidget  *widget,
 	if (data->timer != NULL)
 		g_timer_destroy (data->timer);
 
-	goo_cdrom_unlock_tray (data->cdrom);
-	g_object_unref (data->cdrom);
-	
-	g_free (data->device);
+	brasero_drive_unlock (data->drive);
+	g_object_unref (data->drive);
 	g_free (data->destination);
-	g_free (data->current_file);
+	_g_object_unref (data->current_file);
 	track_list_free (data->tracks);
-
-	g_object_unref (data->gui);
+	g_object_unref (data->builder);
 	g_free (data);
 }
 
@@ -151,7 +128,7 @@ rip_next_track (gpointer callback_data)
 	DialogData *data = callback_data;
 	TrackInfo  *track;
 
-	g_free (data->current_file);
+	_g_object_unref (data->current_file);
 	data->current_file = NULL;
 
 	gst_element_set_state (data->encoder, GST_STATE_NULL);
@@ -178,7 +155,7 @@ update_ui (gpointer callback_data)
 
 	ripped_tracks = data->current_track_sectors + data->prev_tracks_sectors;
 	fraction = (double) ripped_tracks / data->total_sectors;
-	gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (data->r_progress_progressbar), fraction);
+	gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (GET_WIDGET ("progress_progressbar")), fraction);
 
 	/* wait a bit before predicting the remaining time. */
 	if ((fraction < 10e-3) || (ripped_tracks < 250)) {
@@ -206,7 +183,7 @@ update_ui (gpointer callback_data)
 	}
 	
 	msg = g_strdup_printf (_("Extracting track: %d of %d %s"), data->current_track_n, data->n_tracks, (time_left != NULL ? time_left : ""));
-	gtk_progress_bar_set_text  (GTK_PROGRESS_BAR (data->r_progress_progressbar), msg);
+	gtk_progress_bar_set_text  (GTK_PROGRESS_BAR (GET_WIDGET ("progress_progressbar")), msg);
 
 	g_free (msg);
 	g_free (time_left);
@@ -283,10 +260,9 @@ create_pipeline (DialogData *data)
 	
 	data->pipeline = gst_pipeline_new ("pipeline");
 	
-	/*data->source = gst_element_make_from_uri (GST_URI_SRC, "cdda://1", "source");*/
 	data->source = gst_element_factory_make ("cdparanoiasrc", "source");
 	g_object_set (G_OBJECT (data->source), 
-		      "device", data->device, 
+		      "device", brasero_drive_get_device (data->drive),
 		      "read-speed", G_MAXINT,
 		      NULL);
 
@@ -299,19 +275,16 @@ create_pipeline (DialogData *data)
 	switch (data->format) {
 	case GOO_FILE_FORMAT_OGG:	
 		data->ext = "ogg";
-		
 		data->encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
 		ogg_quality = eel_gconf_get_float (PREF_ENCODER_OGG_QUALITY, DEFAULT_OGG_QUALITY);
 		g_object_set (data->encoder,
 			      "quality", ogg_quality,
 			      NULL);
-		
 		data->container = gst_element_factory_make ("oggmux", "container");
 		break;
 
 	case GOO_FILE_FORMAT_FLAC:
 		data->ext = "flac";
-		
 		data->encoder = data->container = gst_element_factory_make (FLAC_ENCODER, "encoder");
 		flac_compression = eel_gconf_get_integer (PREF_ENCODER_FLAC_COMPRESSION, DEFAULT_FLAC_COMPRESSION);
 		g_object_set (data->encoder,
@@ -321,12 +294,11 @@ create_pipeline (DialogData *data)
 
 	case GOO_FILE_FORMAT_WAVE:
 		data->ext = "wav";
-		
 		data->encoder = data->container = gst_element_factory_make (WAVE_ENCODER, "encoder");
 		break;
 	}
 
-	data->sink = gst_element_factory_make ("gnomevfssink", "sink");
+	data->sink = gst_element_factory_make ("giosink", "sink");
 
 	if (data->encoder == data->container) {
 		gst_bin_add_many (GST_BIN (data->pipeline), data->source, queue, 
@@ -362,25 +334,102 @@ create_pipeline (DialogData *data)
 }
 
 
-static char*
+static gboolean
+valid_filename_char (char c)
+{
+	/* "$\'`\"\\!?* ()[]<>&|@#:;" */
+	return strchr ("/\\!?*:;'`\"", c) == NULL;
+}
+
+
+/* Remove special characters from a track title in order to make it a
+ * valid filename. */
+char*
+tracktitle_to_filename (const char *trackname,
+			gboolean    escape)
+{
+	char       *filename, *f, *f2;
+	const char *t;
+	gboolean    add_space;
+
+	if (trackname == NULL)
+		return NULL;
+
+	filename = g_new (char, strlen (trackname) + 1);
+
+	/* Substitute invalid characters with spaces. */
+
+	f = filename;
+	t = trackname;
+	while (*t != 0) {
+		gboolean invalid_char = FALSE;
+
+		while ((*t != 0) && ! valid_filename_char (*t)) {
+			invalid_char = TRUE;
+			t++;
+		}
+
+		if (invalid_char)
+			*f++ = ' ';
+
+		*f = *t;
+
+		if (*t != 0) {
+			f++;
+			t++;
+		}
+	}
+	*f = 0;
+
+	/* Remove double spaces. */
+	add_space = FALSE;
+	for (f = f2 = filename; *f != 0; f++)
+		if (*f != ' ') {
+			if (add_space) {
+				*f2++ = ' ';
+				add_space = FALSE;
+			}
+			*f2 = *f;
+			f2++;
+		} else
+			add_space = TRUE;
+	*f2 = 0;
+
+	if (escape) {
+		char *escaped;
+
+		escaped = g_uri_escape_string (filename, G_URI_RESERVED_CHARS_ALLOWED_IN_PATH, TRUE);
+		g_free (filename);
+		filename = escaped;
+	}
+
+	return filename;
+}
+
+
+static GFile *
 get_destination_folder (DialogData *data)
 {
-	char *artist_filename;
-	char *album_filename;
-	char *result;
+	char  *artist_filename;
+	char  *album_filename;
+	char  *uri;
+	GFile *folder;
 
-	artist_filename = tracktitle_to_filename (data->album->artist);
-	album_filename = tracktitle_to_filename (data->album->title);
-	
-	result = g_strconcat (data->destination, G_DIR_SEPARATOR_S,
-			      artist_filename, G_DIR_SEPARATOR_S,
-			      album_filename,
-			      NULL);
+	artist_filename = tracktitle_to_filename (data->album->artist, TRUE);
+	album_filename = tracktitle_to_filename (data->album->title, TRUE);
+	uri = g_strconcat (data->destination,
+			   G_DIR_SEPARATOR_S,
+			   artist_filename,
+			   G_DIR_SEPARATOR_S,
+			   album_filename,
+			   NULL);
+	folder = g_file_new_for_uri (uri);
 
+	g_free (uri);
 	g_free (artist_filename);
 	g_free (album_filename);
 
-	return result;
+	return folder;
 }
 
 
@@ -393,25 +442,18 @@ done_dialog_response_cb (GtkDialog  *dialog,
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 	
-	if ((button_number == GTK_RESPONSE_OK)
-	    && eel_gconf_get_boolean (PREF_RIPPER_VIEW_DISTINATION, FALSE)) {
-		GError *error  = NULL;
-		char   *folder = get_destination_folder (data);
-		char   *scheme = NULL;
-		char   *url    = NULL;
+	if ((button_number == GTK_RESPONSE_OK) && eel_gconf_get_boolean (PREF_RIPPER_VIEW_DISTINATION, FALSE)) {
+		GFile  *folder;
+		char   *uri;
+		GError *error = NULL;
 		
-		scheme = gnome_vfs_get_uri_scheme (folder);
-		if ((scheme == NULL) || (strcmp (scheme, "") == 0))
-			url = gnome_vfs_get_uri_from_local_path (folder);
-		else
-			url = g_strdup (folder);
-
-		if (! gnome_url_show (url, &error))
+		folder = get_destination_folder (data);
+		uri = g_file_get_uri (folder);
+		if (! gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (dialog)), uri, GDK_CURRENT_TIME, &error))
 			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (data->window), _("Could not display the destination folder"), &error);
 
-		g_free (scheme);
-		g_free (url);
-		g_free (folder);
+		g_free (uri);
+		g_object_unref (folder);
 	}
 
 	gtk_widget_destroy (data->dialog);
@@ -439,8 +481,8 @@ get_track_filename (TrackInfo  *track,
 {
 	char *filename, *track_filename;
 
-	filename = tracktitle_to_filename (track->title);
-	track_filename = g_strdup_printf ("%s.%%20%s.%s", zero_padded (track->number + 1), filename, ext);
+	filename = tracktitle_to_filename (track->title, FALSE);
+	track_filename = g_strdup_printf ("%s. %s.%s", zero_padded (track->number + 1), filename, ext);
 	g_free (filename);
 
 	return track_filename;
@@ -450,46 +492,33 @@ get_track_filename (TrackInfo  *track,
 static void
 save_playlist (DialogData *data)
 {
-	char           *folder;
-	char           *filename, *album_filename;
-	GnomeVFSResult  result;
-	GnomeVFSHandle *handle;
+	GFile         *folder;
+	char          *album_filename;
+	char          *playlist_filename;
+	GFile         *file;
+	GOutputStream *stream;
 
 	folder = get_destination_folder (data);
-	album_filename = tracktitle_to_filename (data->album->title);
-	filename = g_strconcat ("file://", folder, "/", album_filename, ".pls", NULL);
-	g_free (album_filename);
+	album_filename = tracktitle_to_filename (data->album->title, FALSE);
+	playlist_filename = g_strconcat (album_filename, ".pls", NULL);
+	file = g_file_get_child (folder, playlist_filename);
 
-	gnome_vfs_unlink (filename);
+	g_file_delete (file, NULL, NULL);
 
-	result = gnome_vfs_create (&handle,
-				   filename,
-				   GNOME_VFS_OPEN_WRITE,
-				   TRUE,
-				   PLS_PERMISSIONS);
-
-	if (result == GNOME_VFS_OK) {
-		GList *scan;
+	stream = (GOutputStream *) g_file_create (file, G_FILE_CREATE_NONE, NULL, NULL);
+	if (stream != NULL) {
 		char   buffer[BUFFER_SIZE];
+		GList *scan;
 		int    n = 0;
 
 		strcpy (buffer, "[playlist]\n");
-		gnome_vfs_write (handle,
-				 buffer,
-				 strlen (buffer),
-				 NULL);
+		g_output_stream_write (stream, buffer, strlen (buffer), NULL, NULL);
 
 		sprintf (buffer, "NumberOfEntries=%d\n", data->n_tracks);
-		gnome_vfs_write (handle,
-				 buffer,
-				 strlen (buffer),
-				 NULL);
+		g_output_stream_write (stream, buffer, strlen (buffer), NULL, NULL);
 
 		strcpy (buffer, "Version=2\n");
-		gnome_vfs_write (handle,
-				 buffer,
-				 strlen (buffer),
-				 NULL);
+		g_output_stream_write (stream, buffer, strlen (buffer), NULL, NULL);
 		
 		for (scan = data->tracks; scan; scan = scan->next) {
 			TrackInfo *track = scan->data;
@@ -499,47 +528,40 @@ save_playlist (DialogData *data)
 			n++;
 
 			track_filename = get_track_filename (track, data->ext);
-			unescaped = gnome_vfs_unescape_string (track_filename, "");
+			unescaped = g_uri_unescape_string (track_filename, "");
 			
 			sprintf (buffer, "File%d=%s\n", n, unescaped);
-			gnome_vfs_write (handle,
-					 buffer,
-					 strlen (buffer),
-					 NULL);
+			g_output_stream_write (stream, buffer, strlen (buffer), NULL, NULL);
 			
 			g_free (unescaped);		 
 			g_free (track_filename);
 
 			sprintf (buffer, "Title%d=%s - %s\n", n, data->album->artist, track->title);
-			gnome_vfs_write (handle,
-					 buffer,
-					 strlen (buffer),
-					 NULL);
+			g_output_stream_write (stream, buffer, strlen (buffer), NULL, NULL);
 
 			sprintf (buffer, "Length%d=%d\n", n, track->min * 60 + track->sec);
-			gnome_vfs_write (handle,
-					 buffer,
-					 strlen (buffer),
-					 NULL);
+			g_output_stream_write (stream, buffer, strlen (buffer), NULL, NULL);
 		}
 
-		gnome_vfs_close (handle);
+		g_object_unref (stream);
 	}
 
-	g_free (filename);
-	g_free (folder);
+	g_object_unref (file);
+	g_free (playlist_filename);
+	g_free (album_filename);
+	g_object_unref (folder);
 }
 
 
 static void
 rip_current_track (DialogData *data)
 {
-	TrackInfo      *track;
-	char           *msg;
-	char           *filename;
-	char           *folder;
-	GstEvent       *event;
-	GnomeVFSResult  result;
+	TrackInfo *track;
+	char      *msg;
+	GFile     *folder;
+	GError    *error = NULL;
+	char      *filename;
+	GstEvent  *event;
 
 	if (data->current_track == NULL) {
 		GtkWidget *d;
@@ -570,37 +592,33 @@ rip_current_track (DialogData *data)
 	track = data->current_track->data;
 
 	msg = g_markup_printf_escaped (_("<i>Extracting \"%s\"</i>"), track->title); 
-	gtk_label_set_markup (GTK_LABEL (data->r_track_label), msg);
+	gtk_label_set_markup (GTK_LABEL (GET_WIDGET ("track_label")), msg);
 	g_free (msg);
 
-	/* Set the filename */
+	/* Set the destination file */
 
 	folder = get_destination_folder (data);
-	
-	if ((result = ensure_dir_exists (folder, DESTINATION_PERMISSIONS)) != GNOME_VFS_OK) {
-		char *utf8_folder;
-
-		utf8_folder = g_locale_to_utf8 (folder, -1, 0, 0, 0);
-		_gtk_error_dialog_run (GTK_WINDOW (data->window),
-				       _("Could not extract tracks"),
-				       _("Could not create folder \"%s\"\n\n%s"),
-				       utf8_folder,
-				       gnome_vfs_result_to_string (result));
-		g_free (utf8_folder);
-		gtk_widget_destroy (data->dialog);
-		return;
+	if (! g_file_make_directory_with_parents (folder, NULL, &error)) {
+		if (! g_error_matches (error, G_IO_ERROR, G_IO_ERROR_EXISTS)) {
+			_gtk_error_dialog_from_gerror_show (GTK_WINDOW (data->window),
+							    _("Could not extract tracks"),
+							    &error);
+			gtk_widget_destroy (data->dialog);
+			return;
+		}
 	}
 
-	g_free (data->current_file);
+	_g_object_unref (data->current_file);
 	filename = get_track_filename (track, data->ext);
-	data->current_file = g_strconcat (folder, G_DIR_SEPARATOR_S, filename, NULL);
-	g_free (filename);
-	g_free (folder);
+	data->current_file = g_file_get_child (folder, filename);
 
-	gnome_vfs_unlink (data->current_file);
+	g_free (filename);
+	g_object_unref (folder);
+
+	g_file_delete (data->current_file, NULL, NULL);
 
 	gst_element_set_state (data->sink, GST_STATE_NULL);
-	g_object_set (G_OBJECT (data->sink), "location", data->current_file, NULL);
+	g_object_set (G_OBJECT (data->sink), "file", data->current_file, NULL);
 
 	/* Set track tags. */
 
@@ -659,15 +677,13 @@ start_ripper (DialogData *data)
 	GList *scan;
 
 	data->ripping = TRUE;
+	brasero_drive_lock (data->drive, _("Extracting disc tracks"), NULL);
 
-	goo_cdrom_lock_tray (data->cdrom);
 	create_pipeline (data);
-
 	data->prev_tracks_sectors = 0;
 	data->total_sectors = 0;
 	for (scan = data->tracks; scan; scan = scan->next) {
 		TrackInfo *track = scan->data;
-		
 		data->total_sectors += track->sectors;
 	}
 	data->current_track_n = 1;
@@ -678,67 +694,45 @@ start_ripper (DialogData *data)
 }
 
 
-/* create the main dialog. */
 void
 dlg_ripper (GooWindow *window,
 	    GList     *tracks)
 {
-	DialogData  *data;
-	GtkWidget   *btn_cancel;
-	GooPlayer   *player;
+	GooPlayer  *player;
+	DialogData *data;
 	
-	data = g_new0 (DialogData, 1);
-	data->window = window;
-	data->gui = glade_xml_new (GOO_GLADEDIR "/" GLADE_RIPPER_FILE, NULL, NULL);
-        if (!data->gui) {
-		g_warning ("Could not find " GLADE_RIPPER_FILE "\n");
-		g_free (data);
-                return;
-        }
-
 	goo_window_stop (window);
 	player = goo_window_get_player (window);
 
-	data->destination = eel_gconf_get_path (PREF_EXTRACT_DESTINATION, "");
-	if ((data->destination == NULL) || (strcmp (data->destination, "") == 0)) { 
-		char *tmp;
-		
-		tmp = xdg_user_dir_lookup ("MUSIC");
-		data->destination = get_uri_from_local_path (tmp);
-		g_free (tmp);
-	}
-	data->device = g_strdup (goo_player_get_device (player));
+	data = g_new0 (DialogData, 1);
+	data->window = window;
+	data->builder = _gtk_builder_new_from_file ("ripper.ui", "");
+	data->dialog = GET_WIDGET ("ripper_dialog");
+	data->destination = eel_gconf_get_uri (PREF_EXTRACT_DESTINATION, "");
+	if ((data->destination == NULL) || (strcmp (data->destination, "") == 0))
+		data->destination = g_filename_to_uri (g_get_user_special_dir (G_USER_DIRECTORY_MUSIC), NULL, NULL);
+	data->drive = g_object_ref (goo_player_get_drive (player));
 	data->format = pref_get_file_format ();
 	data->album = goo_player_get_album (player);
-	if (tracks == NULL)
-		data->tracks = track_list_dup (data->album->tracks);
-	else
+	if (tracks != NULL)
 		data->tracks = track_list_dup (tracks);
+	else
+		data->tracks = track_list_dup (data->album->tracks);
 	data->n_tracks = g_list_length (data->tracks);
-	
 	data->update_handle = 0;
 	data->timer = g_timer_new ();
-	data->cdrom = goo_cdrom_new (data->device);
-
-	/* Get the widgets. */
-
-	data->dialog = glade_xml_get_widget (data->gui, "ripper_dialog");
-	data->r_progress_progressbar = glade_xml_get_widget (data->gui, "r_progress_progressbar");
-	data->r_track_label = glade_xml_get_widget (data->gui, "r_track_label");
-	btn_cancel = glade_xml_get_widget (data->gui, "r_cancelbutton");
 
 	/* Set widgets data. */
 
-	gtk_label_set_ellipsize (GTK_LABEL (data->r_track_label),
-				 PANGO_ELLIPSIZE_END);
+	gtk_label_set_ellipsize (GTK_LABEL (GET_WIDGET ("track_label")), PANGO_ELLIPSIZE_END);
 
 	/* Set the signals handlers. */
 
-	g_signal_connect (G_OBJECT (data->dialog), 
+	g_signal_connect (data->dialog,
 			  "destroy",
-			  G_CALLBACK (destroy_cb),
+			  G_CALLBACK (dialog_destroy_cb),
 			  data);
-	g_signal_connect_swapped (G_OBJECT (btn_cancel), 
+	g_signal_connect_swapped (GET_WIDGET ("cancel_button"),
 				  "clicked",
 				  G_CALLBACK (gtk_widget_destroy),
 				  data->dialog);

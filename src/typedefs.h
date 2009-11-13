@@ -41,5 +41,12 @@ typedef enum {
 } WindowSortMethod;
 
 
+typedef void (*DataFunc)         (gpointer    user_data);
+typedef void (*ReadyFunc)        (GError     *error,
+			 	  gpointer    user_data);
+typedef void (*ReadyCallback)    (GObject    *object,
+				  GError     *error,
+			   	  gpointer    user_data);
+
 #endif /* TYPEDEFS_H */
 

@@ -3,7 +3,7 @@
 /*
  *  Goo
  *
- *  Copyright (C) 2004 Free Software Foundation, Inc.
+ *  Copyright (C) 2004-2009 Free Software Foundation, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@
 #define GOO_PLAYER_H
 
 #include <glib.h>
-#include "cd-drive.h"
+#include <gio/gio.h>
+#include <brasero/brasero-drive.h>
 #include "track-info.h"
 #include "album-info.h"
 
@@ -35,9 +36,9 @@
 #define GOO_IS_PLAYER_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), GOO_TYPE_PLAYER))
 #define GOO_PLAYER_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS((obj), GOO_TYPE_PLAYER, GooPlayerClass))
 
-typedef struct _GooPlayer            GooPlayer;
-typedef struct _GooPlayerClass       GooPlayerClass;
-typedef struct _GooPlayerPrivateData GooPlayerPrivateData;
+typedef struct _GooPlayer        GooPlayer;
+typedef struct _GooPlayerClass   GooPlayerClass;
+typedef struct _GooPlayerPrivate GooPlayerPrivate;
 
 typedef enum {
 	GOO_PLAYER_ACTION_NONE,
@@ -68,7 +69,7 @@ typedef enum {
 struct _GooPlayer
 {
 	GObject __parent;
-	GooPlayerPrivateData *priv;
+	GooPlayerPrivate *priv;
 };
 
 struct _GooPlayerClass
@@ -90,8 +91,10 @@ struct _GooPlayerClass
 };
 
 GType            goo_player_get_type            (void);
-GooPlayer *      goo_player_new                 (const char      *device);
-CDDrive *        goo_player_get_drive           (GooPlayer       *player);
+GooPlayer *      goo_player_new                 (BraseroDrive    *drive);
+BraseroDrive *   goo_player_get_drive           (GooPlayer       *player);
+const char *     goo_player_get_device          (GooPlayer       *player);
+gboolean         goo_player_is_audio_cd         (GooPlayer       *player);
 void             goo_player_update              (GooPlayer       *player);
 void             goo_player_list                (GooPlayer       *player);
 void             goo_player_seek_track          (GooPlayer       *player,
@@ -102,20 +105,18 @@ void             goo_player_skip_to             (GooPlayer       *player,
 void             goo_player_play                (GooPlayer       *player);
 void             goo_player_pause               (GooPlayer       *player);
 void             goo_player_stop                (GooPlayer       *player);
-gboolean         goo_player_eject               (GooPlayer       *player);
-GError *         goo_player_get_error           (GooPlayer       *player);
+void             goo_player_eject               (GooPlayer       *player);
 GooPlayerAction  goo_player_get_action          (GooPlayer       *player);
 GooPlayerState   goo_player_get_state           (GooPlayer       *player);
 gboolean         goo_player_set_device          (GooPlayer       *player,
 						 const char      *device);
-const char *     goo_player_get_device          (GooPlayer       *player);
 const char *     goo_player_get_discid          (GooPlayer       *player);
 void             goo_player_set_album           (GooPlayer       *player,
 						 AlbumInfo       *album);
 AlbumInfo *      goo_player_get_album           (GooPlayer       *player);
-void             goo_player_set_volume          (GooPlayer       *player,
+void             goo_player_set_audio_volume    (GooPlayer       *player,
 						 double           vol);
-double           goo_player_get_volume          (GooPlayer       *player);
+double           goo_player_get_audio_volume    (GooPlayer       *player);
 gboolean         goo_player_get_is_busy         (GooPlayer       *player);
 
 #endif /* GOO_PLAYER_H */

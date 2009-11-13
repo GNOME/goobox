@@ -22,13 +22,12 @@
 
 #include <config.h>
 #include <string.h>
-#include <gnome.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
+#include <glib/gi18n.h>
 #include "goo-player-info.h"
 #include "goo-marshal.h"
-#include "glib-utils.h"
 #include "goo-stock.h"
-#include "file-utils.h"
+#include "goo-window.h"
+#include "glib-utils.h"
 
 #define SPACING 0
 #define TITLE1_FORMAT "<span size='large' weight='bold'>%s</span>"
@@ -60,8 +59,8 @@ struct _GooPlayerInfoPrivateData {
 	GtkWidget   *status_image;
 	GtkWidget   *notebook;
 	GtkTooltips *tips;
-	char         current_time[64];
-	char         total_time[64];
+	char        *current_time;
+	char        *total_time;
 	char         time[64];
 	gint64       track_length;
 	gboolean     dragging;
@@ -216,7 +215,8 @@ time_scale_value_changed_cb (GtkRange      *range,
 	
 	new_value = gtk_range_get_value (range);
 	current_time = info->priv->track_length * (new_value / 100.0);
-	set_time_string (info->priv->current_time, current_time);
+	g_free (info->priv->current_time);
+	info->priv->current_time = _g_format_duration_for_display (current_time * 1000);
 	sprintf (info->priv->time, _("%s / %s"), info->priv->total_time, info->priv->current_time);
 	set_time (info, info->priv->time);
 
@@ -243,7 +243,8 @@ update_time_label_cb (gpointer data)
 	}
 	
 	current_time = priv->track_length * new_value;
-	set_time_string (priv->current_time, current_time);
+	g_free (info->priv->current_time);
+	info->priv->current_time = _g_format_duration_for_display (current_time * 1000);
 	sprintf (priv->time, _("%s / %s"), priv->current_time, priv->total_time);
 	set_time (info, priv->time);
 
@@ -294,82 +295,6 @@ cover_button_clicked_cb (GtkWidget     *button,
 /* -- drag and drop -- */
 
 
-static char *
-get_path_from_url (char *url)
-{
-	GnomeVFSURI *uri;
-	char        *escaped;
-	char        *path;
-
-	if (url == NULL)
-		return NULL;
-
-	uri = gnome_vfs_uri_new (url);
-	escaped = gnome_vfs_uri_to_string (uri, GNOME_VFS_URI_HIDE_TOPLEVEL_METHOD);
-	path = gnome_vfs_unescape_string (escaped, NULL);
-
-	gnome_vfs_uri_unref (uri);
-	g_free (escaped);
-
-	return path;
-}
-
-
-static GList *
-get_file_list_from_dnd_data (gchar *url_list)
-{
-	GList    *list = NULL;
-	int       i;
-	char     *url_start, *url_end;
-	gboolean  dnd_valid = FALSE;
-
-	i = 0;
-	url_start = url_list;
-	while (url_list[i] != '\0')	{
-		char *url;
-
-		while ((url_list[i] != '\0')
-		       && (url_list[i] != '\r')
-		       && (url_list[i] != '\n')) i++;
-
-		url_end = url_list + i;
-		if (strncmp (url_start, "file:", 5) == 0) {
-			url_start += 5;
-			if ((url_start[0] == '/') 
-			    && (url_start[1] == '/')) url_start += 2;
-
-			dnd_valid = TRUE;
-
-			url = g_strndup (url_start, url_end - url_start);
-			list = g_list_prepend (list, get_path_from_url (url));
-			g_free (url);
-
-			while ((url_list[i] != '\0')
-			       && ((url_list[i] == '\r') 
-				   || (url_list[i] == '\n'))) i++;
-			url_start = url_list + i;
-
-		} else {
-			while ((url_list[i] != '\0')
-			       && ((url_list[i] == '\r') 
-				   || (url_list[i] == '\n'))) i++;
-			url_start = url_list + i;
-			if (url_list[i] == '\0' && !dnd_valid) {
-				path_list_free (list);
-				return NULL;
-			}
-		}
-	}
-	
-	if (!dnd_valid) {
-		path_list_free (list);
-		return NULL;
-	}
-
-	return g_list_reverse (list);
-}
-
-
 void  
 cover_button_drag_data_received  (GtkWidget          *widget,
 				  GdkDragContext     *context,
@@ -380,9 +305,8 @@ cover_button_drag_data_received  (GtkWidget          *widget,
 				  guint               time,
 				  gpointer            extra_data)
 {
-	GooPlayerInfo *info = extra_data;
-	GList         *list;
-	char          *cover_filename;
+	GooPlayerInfo  *info = extra_data;
+	char          **uris;
 
 	if (! ((data->length >= 0) && (data->format == 8))) {
 		gtk_drag_finish (context, FALSE, FALSE, time);
@@ -391,18 +315,20 @@ cover_button_drag_data_received  (GtkWidget          *widget,
 
 	gtk_drag_finish (context, TRUE, FALSE, time);
 
-	list = get_file_list_from_dnd_data ((char *)data->data);
-	if (list == NULL)
-		return;
+	uris = gtk_selection_data_get_uris (data);
+	if (uris[0] != NULL) {
+		GFile *file;
+		char  *cover_filename;
 
-	cover_filename = list->data;
-	if (cover_filename == NULL)
-		return;
+		file = g_file_new_for_uri (uris[0]);
+		cover_filename = g_file_get_path (file);
+		goo_window_set_cover_image (info->priv->window, cover_filename);
 
-	goo_window_set_cover_image (info->priv->window, cover_filename);
+		g_free (cover_filename);
+		g_object_unref (file);
+	}
 
-	if (list != NULL) 
-		path_list_free (list);
+	g_strfreev (uris);
 }
 
 
@@ -411,6 +337,9 @@ goo_player_info_init (GooPlayerInfo *info)
 {
 	info->priv = GOO_PLAYER_INFO_GET_PRIVATE_DATA (info);
 }
+
+
+static void goo_player_info_update_state (GooPlayerInfo *info);
 
 
 static void 
@@ -422,8 +351,8 @@ goo_player_info_construct (GooPlayerInfo *info)
 	priv = info->priv;
 
 	priv->dragging = FALSE;
-	priv->current_time[0] = '\0';
-	priv->total_time[0] = '\0';
+	priv->current_time = NULL;
+	priv->total_time = NULL;
 	priv->update_id = 0;
 
 	GTK_WIDGET_UNSET_FLAGS (info, GTK_CAN_FOCUS);
@@ -578,6 +507,8 @@ goo_player_info_construct (GooPlayerInfo *info)
 			  "button_release_event",
 			  G_CALLBACK (time_scale_button_release_cb), 
 			  info);
+
+	goo_player_info_update_state (info);
 }
 
 
@@ -591,6 +522,8 @@ goo_player_info_finalize (GObject *object)
   
 	info = GOO_PLAYER_INFO (object);
 	if (info->priv != NULL) {
+		g_free (info->priv->current_time);
+		g_free (info->priv->total_time);
 		if (info->priv->update_id != 0) {
 			g_source_remove (info->priv->update_id);
 			info->priv->update_id = 0;
@@ -612,7 +545,8 @@ goo_player_info_set_time (GooPlayerInfo  *info,
 	if (priv->dragging) 
 		return;
 
-	set_time_string (priv->current_time, current_time);
+	g_free (priv->current_time);
+	priv->current_time = _g_format_duration_for_display (current_time * 1000);
 	sprintf (priv->time, _("%s / %s"), priv->current_time, priv->total_time);
 	set_time (info, priv->time);
 
@@ -662,7 +596,8 @@ update_subtitle (GooPlayerInfo *info,
 	album = goo_window_get_album (info->priv->window);
 	
 	if ((album->title == NULL) || (album->artist == NULL)) {
-		set_time_string (info->priv->total_time, track->length);
+		g_free (info->priv->total_time);
+		info->priv->total_time = _g_format_duration_for_display (track->length * 1000);
 		set_title2 (info, info->priv->total_time);
 	} 
 	else {
@@ -675,7 +610,7 @@ update_subtitle (GooPlayerInfo *info,
 
 
 static void
-goo_player_info_update_state (GooPlayerInfo  *info)
+goo_player_info_update_state (GooPlayerInfo *info)
 {
 	GooPlayerInfoPrivateData *priv = info->priv;
 	GooPlayerState  state;
@@ -708,16 +643,17 @@ goo_player_info_update_state (GooPlayerInfo  *info)
 	gtk_label_set_selectable (GTK_LABEL (priv->title2_label), FALSE);
 	gtk_label_set_selectable (GTK_LABEL (priv->title3_label), FALSE);
 
-	if ((state == GOO_PLAYER_STATE_ERROR)
-	    || (state == GOO_PLAYER_STATE_NO_DISC)
-	    || (state == GOO_PLAYER_STATE_DATA_DISC)) {
-		GError *error = goo_player_get_error (player);
-		
-		set_title1 (info, error->message);
+	if ((state == GOO_PLAYER_STATE_ERROR) || (state == GOO_PLAYER_STATE_NO_DISC))
+	{
+		set_title1 (info, _("No disc"));
 		set_title2 (info, "");
 		set_title3 (info, "");
-		g_error_free (error);
 	} 
+	else if (state == GOO_PLAYER_STATE_DATA_DISC) {
+		set_title1 (info, _("Data disc"));
+		set_title2 (info, "");
+		set_title3 (info, "");
+	}
 	else {
 		TrackInfo *track;
 		
@@ -816,7 +752,8 @@ goo_player_info_set_total_time (GooPlayerInfo  *info,
 {
 	GooPlayerInfoPrivateData *priv = info->priv;
 
-	set_time_string (priv->total_time, total_time);
+	g_free (priv->total_time);
+	priv->total_time = _g_format_duration_for_display (total_time * 1000);
 	goo_player_info_update_state (info);
 }
 

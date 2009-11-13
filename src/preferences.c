@@ -21,12 +21,10 @@
  */
 
 #include <string.h>
-#include <libgnome/libgnome.h>
 #include <gconf/gconf-client.h>
 #include "typedefs.h"
 #include "preferences.h"
 #include "main.h"
-#include "file-utils.h"
 #include "gconf-utils.h"
 #include "goo-window.h"
 
@@ -251,5 +249,16 @@ preferences_set_sort_type (GtkSortType i_value)
 gboolean
 preferences_get_use_sound_juicer (void)
 {
-	return eel_gconf_get_boolean (PREF_GENERAL_USE_SJ, FALSE) && is_program_in_path (SOUND_JUICER_EXE);
+	char     *path;
+	gboolean  result;
+
+	if (! eel_gconf_get_boolean (PREF_GENERAL_USE_SJ, FALSE))
+		return FALSE;
+
+	path = g_find_program_in_path (SOUND_JUICER_EXE);
+	result = path != NULL;
+
+	g_free (path);
+
+	return result;
 }

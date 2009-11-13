@@ -3,7 +3,7 @@
 /*
  *  Goo
  *
- *  Copyright (C) 2004 Free Software Foundation, Inc.
+ *  Copyright (C) 2004-2009 Free Software Foundation, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,39 +21,44 @@
  */
 
 #include <config.h>
-#include <gnome.h>
-#include <libbonobo.h>
-#include <libgnomeui/gnome-window-icon.h>
-#include <libgnomevfs/gnome-vfs-init.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
-#include <glade/glade.h>
+#include <brasero/brasero-medium-monitor.h>
 #include <gst/gst.h>
-#include "file-utils.h"
+#include <glib.h>
+#include <unique/unique.h>
+#include "eggsmclient.h"
 #include "goo-stock.h"
 #include "gconf-utils.h"
 #include "goo-window.h"
 #include "typedefs.h"
 #include "preferences.h"
 #include "main.h"
-#include "goo-application.h"
 #include "gtk-utils.h"
 #include "glib-utils.h"
-#include "cd-drive.h"
 
-#ifdef HAVE_MMKEYS
-#include <X11/Xlib.h>
-#include <X11/XF86keysym.h>
-#include <gdk/gdkx.h>
-#endif /* HAVE_MMKEYS */
-
-#ifdef HAVE_LIBNOTIFY
-
+#ifdef ENABLE_NOTIFICATION
 #include <libnotify/notify.h>
 static NotifyNotification *notification = NULL;
+#endif /* ENABLE_NOTIFICATION */
 
-#endif /* HAVE_LIBNOTIFY */
+#define VOLUME_STEP 10 /* FIXME */
 
-GtkWindow *main_window = NULL;
+enum {
+	COMMAND_UNUSED,
+	COMMAND_PLAY,
+	COMMAND_PLAY_PAUSE,
+	COMMAND_STOP,
+	COMMAND_NEXT_TRACK,
+	COMMAND_PREVIOUS_TRACK,
+	COMMAND_EJECT_DISK,
+	COMMAND_HIDE_SHOW,
+	COMMAND_VOLUME_UP,
+	COMMAND_vOLUME_DOWN,
+	COMMAND_QUIT,
+	COMMAND_PRESENT,
+	COMMAND_SET_DEVICE
+};
+
+GtkWidget *main_window = NULL;
 int        AutoPlay = FALSE;
 int        PlayPause = FALSE;
 int        Stop = FALSE;
@@ -64,20 +69,13 @@ int        HideShow = FALSE;
 int        VolumeUp = FALSE;
 int        VolumeDown = FALSE;
 int        Quit = FALSE;
-GList     *Drives = NULL;
 
-static void     prepare_app         (void);
-static void     initialize_data     (void);
-static void     release_data        (void);
+static void release_data (void);
 
-static void     init_session        (char **argv);
-static gboolean session_is_restored (void);
-static gboolean load_session        (void);
-static void     init_mmkeys         (void);
-
-static char           *default_device = NULL;
-static BonoboObject   *goo_application = NULL;
-static GOptionContext *context = NULL;
+static UniqueApp  *application = NULL;
+static const char *program_argv0; /* argv[0] from main(); used as the command to restart the program */
+static char       *default_device = NULL;
+static gboolean    version = FALSE;
 
 static const GOptionEntry options[] = {
 	{ "device", 'd',  0, G_OPTION_ARG_STRING, &default_device, 
@@ -113,23 +111,308 @@ static const GOptionEntry options[] = {
 	{ "quit", '\0', 0, G_OPTION_ARG_NONE, &Quit,
           N_("Quit the application"),
           0 },
-          
+
+          { "version", 'v', 0, G_OPTION_ARG_NONE, &version,
+  	  N_("Show version"), NULL },
+
 	{ NULL }
 };
 
 
-/* -- Main -- */
+/* session management */
 
 
-int main (int    argc, 
-	  char **argv)
+static void
+goo_save_state (EggSMClient *client,
+		GKeyFile    *state,
+		gpointer     user_data)
 {
-	GnomeProgram *program;
-	char         *description;
-	CORBA_Object  factory;
+	const char *argv[2] = { NULL };
 
-	if (! g_thread_supported ()) 
+	argv[0] = program_argv0;
+	argv[1] = NULL;
+	egg_sm_client_set_restart_command (client, 1, argv);
+
+	g_key_file_set_string (state, "Session", "/device", goo_player_get_device (goo_window_get_player (GOO_WINDOW (main_window))));
+}
+
+
+static void
+goo_session_manager_init (void)
+{
+	EggSMClient *client = NULL;
+
+	client = egg_sm_client_get ();
+	g_signal_connect (client, "save-state", G_CALLBACK (goo_save_state), NULL);
+}
+
+
+static void
+goo_restore_session (EggSMClient *client)
+{
+	GKeyFile     *state = NULL;
+	char         *device;
+	BraseroDrive *drive;
+
+	state = egg_sm_client_get_state_file (client);
+
+	device = g_key_file_get_string (state, "Session", "device", NULL);
+	drive = main_get_drive_for_device (device);
+	main_window = goo_window_new (drive);
+	gtk_widget_show (main_window);
+
+	g_object_unref (drive);
+	g_free (device);
+}
+
+
+static UniqueResponse
+unique_app_message_received_cb (UniqueApp         *unique_app,
+				UniqueCommand      command,
+				UniqueMessageData *message,
+				guint              time_,
+				gpointer           user_data)
+{
+	UniqueResponse  res;
+
+	res = UNIQUE_RESPONSE_OK;
+
+	switch (command) {
+	case UNIQUE_OPEN:
+	case UNIQUE_NEW:
+		/* FIXME */
+		break;
+
+	case COMMAND_PLAY:
+		goo_window_play (GOO_WINDOW (main_window));
+		break;
+
+	case COMMAND_PLAY_PAUSE:
+		goo_window_toggle_play (GOO_WINDOW (main_window));
+		break;
+
+	case COMMAND_STOP:
+		goo_window_stop (GOO_WINDOW (main_window));
+		break;
+
+	case COMMAND_NEXT_TRACK:
+		goo_window_next (GOO_WINDOW (main_window));
+		break;
+
+	case COMMAND_PREVIOUS_TRACK:
+		goo_window_prev (GOO_WINDOW (main_window));
+		break;
+
+	case COMMAND_EJECT_DISK:
+		goo_window_eject (GOO_WINDOW (main_window));
+		break;
+
+	case COMMAND_HIDE_SHOW:
+		goo_window_toggle_visibility (GOO_WINDOW (main_window));
+		break;
+
+	case COMMAND_VOLUME_UP:
+		{
+			int volume;
+
+			volume = goo_window_get_volume (GOO_WINDOW (main_window));
+			goo_window_set_volume (GOO_WINDOW (main_window), volume + VOLUME_STEP);
+		}
+		break;
+
+	case COMMAND_vOLUME_DOWN:
+		{
+			int volume;
+
+			volume = goo_window_get_volume (GOO_WINDOW (main_window));
+			goo_window_set_volume (GOO_WINDOW (main_window), volume - VOLUME_STEP);
+		}
+		break;
+
+	case COMMAND_QUIT:
+		goo_window_close (GOO_WINDOW (main_window));
+		break;
+
+	case COMMAND_PRESENT:
+		if (GTK_WIDGET_VISIBLE (main_window))
+			gtk_window_present (GTK_WINDOW (main_window));
+		else
+			goo_window_toggle_visibility (GOO_WINDOW (main_window));
+		break;
+
+	case COMMAND_SET_DEVICE:
+		{
+			char *device;
+
+			device = unique_message_data_get_text (message);
+			if (*device == '\0')
+				device = NULL;
+
+			if (device != NULL) {
+				/* FIXME
+				GooPlayer *player;
+				CDDrive   *current_drive;
+
+				player = goo_window_get_player (GOO_WINDOW (main_window));
+				current_drive = goo_player_get_drive (player);
+
+				if (current_drive == NULL) {
+					main_window = get_window_from_device (device);
+					if (main_window == NULL)
+						main_window = goo_window_new (device);
+				}
+				else
+					goo_window_set_device (GOO_WINDOW (main_window), device);
+				*/
+			}
+		}
+		break;
+
+	default:
+		res = UNIQUE_RESPONSE_PASSTHROUGH;
+		break;
+	}
+
+	return res;
+}
+
+
+static gboolean
+required_gstreamer_plugins_available (void)
+{
+	char *required_plugins[] = { "cdparanoiasrc", "audioconvert", "volume", "giosink" };
+	int   i;
+
+	for (i = 0; i < G_N_ELEMENTS (required_plugins); i++) {
+		GstElement *element;
+		gboolean    present;
+
+		element = gst_element_factory_make (required_plugins[i], NULL);
+		present = (element != NULL);
+		if (element != NULL)
+			gst_object_unref (GST_OBJECT (element));
+
+		if (! present)
+			return FALSE;
+	}
+
+	return TRUE;
+}
+
+
+static void
+release_data (void)
+{
+	_g_object_unref (application);
+	eel_global_client_free ();
+}
+
+
+static void
+prepare_application (void)
+{
+	EggSMClient *client = NULL;
+
+	if (! required_gstreamer_plugins_available ()) {
+		GtkWidget *d;
+		d = _gtk_message_dialog_new (NULL,
+					     0,
+					     GTK_STOCK_DIALOG_ERROR,
+					     _("Cannot start the CD player"),
+					     _("In order to read CDs you have to install the gstreamer base plugins"),
+					     GTK_STOCK_OK, GTK_RESPONSE_OK,
+					     NULL);
+		g_signal_connect (G_OBJECT (d), "response",
+				  G_CALLBACK (gtk_main_quit),
+				  NULL);
+		gtk_widget_show (d);
+
+		return;
+	}
+
+	application = unique_app_new_with_commands ("org.gnome.goobox", NULL,
+						    "auto-play", COMMAND_PLAY,
+						    "play-pause", COMMAND_PLAY_PAUSE,
+						    "stop", COMMAND_STOP,
+						    "next", COMMAND_NEXT_TRACK,
+						    "prev", COMMAND_PREVIOUS_TRACK,
+						    "eject", COMMAND_EJECT_DISK,
+						    "hide-show", COMMAND_HIDE_SHOW,
+						    "volume-up", COMMAND_VOLUME_UP,
+						    "volume-down", COMMAND_vOLUME_DOWN,
+						    "quit", COMMAND_QUIT,
+						    "present", COMMAND_PRESENT,
+						    "set-device", COMMAND_SET_DEVICE,
+						    NULL);
+
+	if (unique_app_is_running (application)) {
+		if (default_device != NULL) {
+			UniqueMessageData *data;
+
+			data = unique_message_data_new ();
+			unique_message_data_set_text (data, default_device, -1);
+			unique_app_send_message (application, COMMAND_SET_DEVICE, data);
+
+			unique_message_data_free (data);
+		}
+
+		if (AutoPlay)
+			unique_app_send_message (application, COMMAND_PLAY, NULL);
+		else if (PlayPause)
+			unique_app_send_message (application, COMMAND_PLAY_PAUSE, NULL);
+		else if (Stop)
+			unique_app_send_message (application, COMMAND_STOP, NULL);
+		else if (Next)
+			unique_app_send_message (application, COMMAND_NEXT_TRACK, NULL);
+		else if (Prev)
+			unique_app_send_message (application, COMMAND_PREVIOUS_TRACK, NULL);
+		else if (Eject)
+			unique_app_send_message (application, COMMAND_EJECT_DISK, NULL);
+		else if (HideShow)
+			unique_app_send_message (application, COMMAND_HIDE_SHOW, NULL);
+		else if (VolumeUp)
+			unique_app_send_message (application, COMMAND_VOLUME_UP, NULL);
+		else if (VolumeDown)
+			unique_app_send_message (application, COMMAND_vOLUME_DOWN, NULL);
+		else if (Quit)
+			unique_app_send_message (application, COMMAND_QUIT, NULL);
+
+		return;
+	}
+
+	if (! unique_app_is_running (application)) {
+	        g_set_application_name (_("CD Player"));
+	        gtk_window_set_default_icon_name ("goobox");
+	        goo_stock_init ();
+		eel_gconf_monitor_add ("/apps/goobox");
+		g_signal_connect (application,
+				  "message-received",
+				  G_CALLBACK (unique_app_message_received_cb),
+				  NULL);
+	}
+
+	client = egg_sm_client_get ();
+	if (egg_sm_client_is_resumed (client)) {
+		goo_restore_session (client);
+		return;
+	}
+
+	gtk_widget_show (goo_window_new (NULL));
+}
+
+
+int main (int argc, char **argv)
+{
+	char           *description;
+	GOptionContext *context = NULL;
+	GError         *error = NULL;
+
+	program_argv0 = argv[0];
+
+	if (! g_thread_supported ()) {
 		g_thread_init (NULL);
+		gdk_threads_init ();
+	}
 
 	bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -138,123 +421,45 @@ int main (int    argc,
         description = g_strdup_printf ("- %s", _("Play CDs and save the tracks to disk as files"));
         context = g_option_context_new (description);
         g_free (description);
+        g_option_context_set_translation_domain (context, GETTEXT_PACKAGE);
         g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
+	g_option_context_add_group (context, gtk_get_option_group (TRUE));
+	g_option_context_add_group (context, egg_sm_client_get_option_group ());
 	g_option_context_add_group (context, gst_init_get_option_group ());
   	g_option_context_set_ignore_unknown_options (context, TRUE);
-  
-	program = gnome_program_init ("goobox", VERSION,
-			              LIBGNOMEUI_MODULE, argc, argv,
-			              GNOME_PARAM_GOPTION_CONTEXT, context,
-			              GNOME_PARAM_HUMAN_READABLE_NAME, _("CD Player"),
-				      GNOME_PARAM_APP_PREFIX, GOO_PREFIX,
-                                      GNOME_PARAM_APP_SYSCONFDIR, GOO_SYSCONFDIR,
-                                      GNOME_PARAM_APP_DATADIR, GOO_DATADIR,
-                                      GNOME_PARAM_APP_LIBDIR, GOO_LIBDIR,
-				      NULL);
+	if (! g_option_context_parse (context, &argc, &argv, &error)) {
+		g_critical ("Failed to parse arguments: %s", error->message);
+		g_error_free (error);
+		g_option_context_free (context);
+		return EXIT_FAILURE;
+	}
+	g_option_context_free (context);
 
-        if (! g_thread_supported ()) {
-                g_thread_init (NULL);
-                gdk_threads_init ();
-        }
-
-	if (! gnome_vfs_init ()) 
-                g_error ("Cannot initialize the Virtual File System.");
-	gnome_authentication_manager_init ();
-	glade_gnome_init ();
-	
-#ifdef HAVE_LIBNOTIFY
-
-	if (! notify_init ("goobox")) 
-                g_warning ("Cannot initialize notification system.");
-                
-#endif /* HAVE_LIBNOTIFY */
-
-	factory = bonobo_activation_activate_from_id ("OAFIID:GNOME_Goobox_Application_Factory",
-						      Bonobo_ACTIVATION_FLAG_EXISTING_ONLY,
-						      NULL, NULL);
-
-	if (factory != NULL) {
-		CORBA_Environment        env;
-		GNOME_Goobox_Application app;
-		
-		CORBA_exception_init (&env);
-
-		app = bonobo_activation_activate_from_id ("OAFIID:GNOME_Goobox_Application", 0, NULL, &env);
-
-                if (AutoPlay)
-                	GNOME_Goobox_Application_play (app, &env);
-		else if (PlayPause)
-                	GNOME_Goobox_Application_play_pause (app, &env);
-                else if (Stop)
-                	GNOME_Goobox_Application_stop (app, &env);
-		else if (Next)
-                	GNOME_Goobox_Application_next (app, &env);
-		else if (Prev)
-                	GNOME_Goobox_Application_prev (app, &env);
-		else if (Eject)
-                	GNOME_Goobox_Application_eject (app, &env);
-		else if (HideShow)
-                	GNOME_Goobox_Application_hide_show (app, &env);
-		else if (VolumeUp)
-                	GNOME_Goobox_Application_volume_up (app, &env);
-		else if (VolumeDown)
-                	GNOME_Goobox_Application_volume_down (app, &env);
-		else if (Quit)
-                	GNOME_Goobox_Application_quit (app, &env);
-		else
-			GNOME_Goobox_Application_present (app, &env);
-
-		bonobo_object_release_unref (app, &env);
-		CORBA_exception_free (&env);
-
-		gdk_notify_startup_complete ();
-
-		exit (0);
+	if (version) {
+		g_print ("%s %s, Copyright (C) 2004-2009 Free Software Foundation, Inc.\n", PACKAGE_NAME, PACKAGE_VERSION);
+		return 0;
 	}
 
-	goo_stock_init ();
-	init_session (argv);
-	initialize_data ();
-	prepare_app ();
+#ifdef ENABLE_NOTIFICATION
+	if (! notify_init ("goobox"))
+                g_warning ("Cannot initialize notification system.");
+#endif /* ENABLE_NOTIFICATION */
+	goo_session_manager_init ();
+	prepare_application ();
 
-	bonobo_main ();
+	if (! unique_app_is_running (application)) {
+		gdk_threads_enter ();
+		gtk_main ();
+		gdk_threads_leave ();
+	}
 
 	release_data ();
-
+	
 	return 0;
 }
 
 
-/* Initialize application data. */
-
-
-static void 
-initialize_data (void)
-{
-        g_set_application_name (_("CD Player"));
-        gtk_window_set_default_icon_name ("goobox");
-
-	eel_gconf_monitor_add ("/apps/goobox");
-	
-	Drives = scan_for_cdroms (FALSE, FALSE);
-}
-
-
-static void 
-release_data (void)
-{
-	if (goo_application != NULL)
-		bonobo_object_unref (goo_application);
-	eel_global_client_free ();
-	
-	if (Drives != NULL) {
-		g_list_foreach (Drives, (GFunc) cd_drive_free, NULL);
-		g_list_free (Drives);
-		Drives = NULL;
-	}
-}
-
-
+/*
 CDDrive * 
 get_drive_from_device (const char *device)
 {
@@ -313,330 +518,46 @@ get_window_from_device (const char *device)
 	
 	return NULL;
 }
+*/
 
 
-/* Create the windows. */
-
-
-static gboolean
-check_plugins (void)
+BraseroDrive *
+main_get_most_likely_drive (void)
 {
-	char *required_plugins[] = { "cdparanoiasrc", "gnomevfssink", "audioconvert", "volume" };
-	int   i;
+	BraseroDrive         *result;
+	BraseroMediumMonitor *monitor;
+	GSList               *drivers;
 
-	for (i = 0; i < G_N_ELEMENTS (required_plugins); i++) {
-		GstElement *element;
-		gboolean    present;
-		
-		element = gst_element_factory_make (required_plugins[i], NULL);
-		present = (element != NULL);
-		if (element != NULL) 
-			gst_object_unref (GST_OBJECT (element));
-	
-		if (! present)
-			return FALSE;
-	}	
+	monitor = brasero_medium_monitor_get_default ();
+	drivers = brasero_medium_monitor_get_drives (monitor, BRASERO_MEDIA_TYPE_AUDIO | BRASERO_MEDIA_TYPE_CD);
+	if (drivers != NULL)
+		result = g_object_ref ((BraseroDrive *) drivers->data);
+	else
+		result = NULL;
 
-	return TRUE;
+	g_slist_foreach (drivers, (GFunc) g_object_unref, NULL);
+	g_slist_free (drivers);
+	g_object_unref (monitor);
+
+	return result;
 }
 
 
-static void 
-prepare_app (void)
+BraseroDrive *
+main_get_drive_for_device (const char *device)
 {
-	if (! check_plugins ()) {
-		GtkWidget *d;
-		d = _gtk_message_dialog_new (NULL,
-					     0,
-					     GTK_STOCK_DIALOG_ERROR,
-					     _("Cannot start the CD player"),
-					     _("In order to read CDs you have to install the gstreamer base plugins"),
-					     GTK_STOCK_OK, GTK_RESPONSE_OK,
-					     NULL);
-		g_signal_connect (G_OBJECT (d), "response",
-				  G_CALLBACK (bonobo_main_quit),
-				  NULL);
-		gtk_widget_show (d);
+	BraseroDrive         *result = NULL;
+	BraseroMediumMonitor *monitor;
 
-		return;
-	}
-	
-	if (session_is_restored ()) 
-		load_session ();
-	else 
-		main_window = goo_window_new (default_device);
-	gtk_widget_show (GTK_WIDGET (main_window));
+	monitor = brasero_medium_monitor_get_default ();
+	result = brasero_medium_monitor_get_drive (monitor, device);
+	g_object_unref (monitor);
 
-	goo_application = goo_application_new (gdk_screen_get_default ());
-
-#ifdef HAVE_MMKEYS
-	init_mmkeys ();
-#endif /* HAVE_MMKEYS */
+	return result;
 }
 
 
-/* SM support */
-
-
-/* The master client we use for SM */
-static GnomeClient *master_client = NULL;
-
-/* argv[0] from main(); used as the command to restart the program */
-static const char *program_argv0 = NULL;
-
-
-static void
-save_session (GnomeClient *client)
-{
-	const char  *prefix;
-
-	prefix = gnome_client_get_config_prefix (client);
-	gnome_config_push_prefix (prefix);
-
-	gnome_config_set_string ("Session/device", goo_player_get_device (goo_window_get_player (GOO_WINDOW (main_window))));
-
-	gnome_config_pop_prefix ();
-	gnome_config_sync ();
-}
-
-
-/* save_yourself handler for the master client */
-static gboolean
-client_save_yourself_cb (GnomeClient *client,
-			 gint phase,
-			 GnomeSaveStyle save_style,
-			 gboolean shutdown,
-			 GnomeInteractStyle interact_style,
-			 gboolean fast,
-			 gpointer data)
-{
-	const char *prefix;
-	char       *argv[4] = { NULL };
-
-	save_session (client);
-
-	prefix = gnome_client_get_config_prefix (client);
-
-	/* Tell the session manager how to discard this save */
-
-	argv[0] = "rm";
-	argv[1] = "-rf";
-	argv[2] = gnome_config_get_real_path (prefix);
-	argv[3] = NULL;
-	gnome_client_set_discard_command (client, 3, argv);
-
-	/* Tell the session manager how to clone or restart this instance */
-
-	argv[0] = (char *) program_argv0;
-	argv[1] = NULL; /* "--debug-session"; */
-	
-	gnome_client_set_clone_command (client, 1, argv);
-	gnome_client_set_restart_command (client, 1, argv);
-
-	return TRUE;
-}
-
-/* die handler for the master client */
-static void
-client_die_cb (GnomeClient *client, gpointer data)
-{
-	if (! client->save_yourself_emitted)
-		save_session (client);
-	if (goo_application != NULL)
-		bonobo_object_unref (goo_application);
-	bonobo_main_quit ();
-}
-
-
-static void
-init_session (char **argv)
-{
-	if (master_client != NULL)
-		return;
-
-	program_argv0 = argv[0];
-
-	master_client = gnome_master_client ();
-
-	g_signal_connect (master_client, "save_yourself",
-			  G_CALLBACK (client_save_yourself_cb),
-			  NULL);
-
-	g_signal_connect (master_client, "die",
-			  G_CALLBACK (client_die_cb),
-			  NULL);
-}
-
-
-gboolean
-session_is_restored (void)
-{
-	gboolean restored;
-	
-	if (! master_client)
-		return FALSE;
-
-	restored = (gnome_client_get_flags (master_client) & GNOME_CLIENT_RESTORED) != 0;
-
-	return restored;
-}
-
-
-gboolean
-load_session (void)
-{
-	char *device;
-
-	gnome_config_push_prefix (gnome_client_get_config_prefix (master_client));
-
-	device = gnome_config_get_string ("Session/device");
-	main_window = goo_window_new (device);
-	g_free (device);
-
-	gnome_config_pop_prefix ();
-
-	return TRUE;
-}
-
-
-/* From rhythmbox/shell/rb-shell-player.c
- *
- *  Copyright (C) 2002, 2003 Jorn Baayen <jorn@nl.linux.org>
- *  Copyright (C) 2002,2003 Colin Walters <walters@debian.org>
- *
- *  Modified by Paolo Bacchilega for Goobox
- *
- *  Copyright (C) 2005 Paolo Bacchilega <paobac@cvs.gnome.org>
- */
-
-#ifdef HAVE_MMKEYS
-
-static void
-grab_mmkey (int        key_code, 
-	    GdkWindow *root)
-{
-	gdk_error_trap_push ();
-
-	XGrabKey (GDK_DISPLAY (), key_code,
-		  0,
-		  GDK_WINDOW_XID (root), True,
-		  GrabModeAsync, GrabModeAsync);
-	XGrabKey (GDK_DISPLAY (), key_code,
-		  Mod2Mask,
-		  GDK_WINDOW_XID (root), True,
-		  GrabModeAsync, GrabModeAsync);
-	XGrabKey (GDK_DISPLAY (), key_code,
-		  Mod5Mask,
-		  GDK_WINDOW_XID (root), True,
-		  GrabModeAsync, GrabModeAsync);
-	XGrabKey (GDK_DISPLAY (), key_code,
-		  LockMask,
-		  GDK_WINDOW_XID (root), True,
-		  GrabModeAsync, GrabModeAsync);
-	XGrabKey (GDK_DISPLAY (), key_code,
-		  Mod2Mask | Mod5Mask,
-		  GDK_WINDOW_XID (root), True,
-		  GrabModeAsync, GrabModeAsync);
-	XGrabKey (GDK_DISPLAY (), key_code,
-		  Mod2Mask | LockMask,
-		  GDK_WINDOW_XID (root), True,
-		  GrabModeAsync, GrabModeAsync);
-	XGrabKey (GDK_DISPLAY (), key_code,
-		  Mod5Mask | LockMask,
-		  GDK_WINDOW_XID (root), True,
-		  GrabModeAsync, GrabModeAsync);
-	XGrabKey (GDK_DISPLAY (), key_code,
-		  Mod2Mask | Mod5Mask | LockMask,
-		  GDK_WINDOW_XID (root), True,
-		  GrabModeAsync, GrabModeAsync);
-	
-	gdk_flush ();
-        if (gdk_error_trap_pop ()) 
-		debug (DEBUG_INFO, "Error grabbing key");
-}
-
-
-static GdkFilterReturn
-filter_mmkeys (GdkXEvent *xevent, 
-	       GdkEvent  *event, 
-	       gpointer   data)
-{
-	XEvent    *xev;
-	XKeyEvent *key;
-
-	xev = (XEvent *) xevent;
-	if (xev->type != KeyPress) 
-		return GDK_FILTER_CONTINUE;
-
-	key = (XKeyEvent *) xevent;
-
-	if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPlay) == key->keycode) {	
-		goo_window_toggle_play (GOO_WINDOW (main_window));
-		return GDK_FILTER_REMOVE;
-	} 
-	else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPause) == key->keycode) {	
-		goo_window_pause (GOO_WINDOW (main_window));
-		return GDK_FILTER_REMOVE;
-	} 
-	else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioStop) == key->keycode) {
-		goo_window_stop (GOO_WINDOW (main_window));
-		return GDK_FILTER_REMOVE;		
-	} 
-	else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPrev) == key->keycode) {
-		goo_window_prev (GOO_WINDOW (main_window));
-		return GDK_FILTER_REMOVE;		
-	} 
-	else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioNext) == key->keycode) {
-		goo_window_next (GOO_WINDOW (main_window));
-		return GDK_FILTER_REMOVE;
-	} 
-	else if (XKeysymToKeycode (GDK_DISPLAY (), XF86XK_Eject) == key->keycode) {
-		goo_window_eject (GOO_WINDOW (main_window));
-		return GDK_FILTER_REMOVE;
-	} 
-	else 
-		return GDK_FILTER_CONTINUE;
-}
-
-
-static void
-init_mmkeys (void)
-{
-	gint        keycodes[] = {0, 0, 0, 0, 0, 0};
-	GdkDisplay *display;
-	GdkScreen  *screen;
-	GdkWindow  *root;
-	guint       i, j;
-
-	keycodes[0] = XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPlay);
-	keycodes[1] = XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioStop);
-	keycodes[2] = XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPrev);
-	keycodes[3] = XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioNext);
-	keycodes[4] = XKeysymToKeycode (GDK_DISPLAY (), XF86XK_AudioPause);
-	keycodes[5] = XKeysymToKeycode (GDK_DISPLAY (), XF86XK_Eject);
-
-	display = gdk_display_get_default ();
-
-	for (i = 0; i < gdk_display_get_n_screens (display); i++) {
-		screen = gdk_display_get_screen (display, i);
-
-		if (screen != NULL) {
-			root = gdk_screen_get_root_window (screen);
-
-			for (j = 0; j < G_N_ELEMENTS (keycodes) ; j++) {
-				if (keycodes[j] != 0)
-					grab_mmkey (keycodes[j], root);
-			}
-
-			gdk_window_add_filter (root, filter_mmkeys, NULL);
-		}
-	}
-}
-
-#endif /* HAVE_MMKEYS */
-
-
-#ifdef HAVE_LIBNOTIFY
+#ifdef ENABLE_NOTIFICATION
 
 
 static gboolean
@@ -673,7 +594,7 @@ notify_action_stop_cb (NotifyNotification *notification,
 }
 
 
-#endif /* HAVE_LIBNOTIFY */
+#endif /* ENABLE_NOTIFICATION */
 
 
 void 
@@ -681,7 +602,7 @@ system_notify (GooWindow  *window,
 	       const char *title,
 	       const char *msg)
 {
-#ifdef HAVE_LIBNOTIFY
+#ifdef ENABLE_NOTIFICATION
         GtkWidget *tray_icon;
 	GdkScreen *screen = NULL;
 	int        x = -1, y = -1;
@@ -706,7 +627,7 @@ system_notify (GooWindow  *window,
 	}
 
 	if (notification == NULL) {
-		caps = notify_get_server_caps();
+		caps = notify_get_server_caps ();
 		if (caps != NULL) {
 			for (c = caps; c != NULL; c = c->next) {
 				if (strcmp ((char*)c->data, "actions") == 0) {
@@ -747,5 +668,5 @@ system_notify (GooWindow  *window,
 
 	notify_notification_show (notification, NULL);
 	
-#endif /* HAVE_LIBNOTIFY */
+#endif /* ENABLE_NOTIFICATION */
 }

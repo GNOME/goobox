@@ -25,7 +25,6 @@
 
 
 #include <config.h>
-#include <gnome.h>
 #include "actions.h"
 #include "goo-stock.h"
 
@@ -37,7 +36,7 @@ static GtkActionEntry action_entries[] = {
 	{ "HelpMenu", NULL, N_("_Help") },
 	{ "CDCoverMenu", NULL, N_("C_over") },
 
-	{ "About", GNOME_STOCK_ABOUT,
+	{ "About", GTK_STOCK_ABOUT,
 	  NULL, NULL,
 	  N_("Information about the program"),
 	  G_CALLBACK (activate_action_about) },

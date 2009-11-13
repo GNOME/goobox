@@ -1,6 +1,0 @@
-goobox
-	command=goobox
-	name=Goobox
-	can_open_multiple_files=true
-	expects_uris=true
-	requires_terminal=false

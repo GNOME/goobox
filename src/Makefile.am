@@ -1,77 +1,33 @@
 SUBDIRS=icons
-DIST_SUBDIRS=icons
-
-gladedir = $(datadir)/goobox/glade
 
 bin_PROGRAMS = goobox
 
-if ENABLE_DEPRECATIONS
-DISABLE_DEPRECATED = -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGNOME_VFS_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED -DBONOBO_DISABLE_DEPRECATED
+if RUN_IN_PLACE
+uidir = $(abs_top_srcdir)/data/ui
 else
-DISABLE_DEPRECATED =
+uidir = $(datadir)/goobox/ui
 endif
 
 INCLUDES =						\
 	-I$(top_srcdir)					\
 	-I$(top_builddir)				\
+	-I$(top_srcdir)/copy-n-paste/ 			\
 	-DGOO_PREFIX=\"$(prefix)\"           		\
         -DGOO_SYSCONFDIR=\"$(sysconfdir)\"   		\
         -DGOO_DATADIR=\"$(datadir)\"     	    	\
         -DGOO_LIBDIR=\"$(libdir)\"  	         	\
-	-DGLADEDIR=\""$(gladedir)"\" 			\
-	-DGOO_GLADEDIR=\""$(gladedir)"\"     		\
+	-DGOO_UIDIR=\""$(uidir)"\"     			\
 	$(DISABLE_DEPRECATED)				\
+	$(DBUS_CFLAGS)					\
 	$(GOO_CFLAGS)					\
-	$(LIBNOTIFY_CFLAGS)				\
-	$(HAL_CFLAGS)
-
-gnome_goobox_idl_sources =           	\
-	GNOME_Goobox-stubs.c         	\
-	GNOME_Goobox-skels.c         	\
-	GNOME_Goobox.h         		\
-	GNOME_Goobox-common.c
-
-$(gnome_goobox_idl_sources): gnome_goobox_idl_stamp
-gnome_goobox_idl_stamp: GNOME_Goobox.idl $(ORBIT_IDL)
-	$(ORBIT_IDL) $(IDL_INCLUDES) $<
-	touch $@
+	$(LIBNOTIFY_CFLAGS)
 
 BUILT_SOURCES =				\
 	goo-marshal.c			\
 	goo-marshal.h
 
-GTH_MARSHALLERS =			\
-	gthumb-marshal.c		\
-	gthumb-marshal.h
-
-GTH_ENUMS =				\
-	gthumb-enum-types.h		\
-	gthumb-enum-types.c
-
-GTH_HEADER_FILES =			\
-	gth-image-list.h		
-
-GTH_SOURCES = 				\
-	$(GTH_HEADER_FILES)		\
-	$(GTH_MARSHALLERS)		\
-	$(GTH_ENUMS)			\
-	gth-image-list.c		\
-	gthumb-slide.c			\
-	gthumb-slide.h
-
-BACON_SOURCES = 			\
-	cd-drive.c			\
-	cd-drive.h			\
-	bacon-cd-selection.c		\
-	bacon-cd-selection.h		\
-	dvd_plus_rw_utils.cpp		\
-	transport.hxx
-
 goobox_SOURCES = 				\
 	$(BUILT_SOURCES)			\
-	$(BACON_SOURCES)			\
-	$(GTH_SOURCES)				\
-	$(gnome_goobox_idl_sources)		\
 	actions.c				\
 	actions.h				\
 	album-info.c				\
@@ -86,36 +42,31 @@ goobox_SOURCES = 				\
 	dlg-properties.h			\
 	dlg-ripper.c				\
 	dlg-ripper.h				\
-	eggtrayicon.c				\
-	eggtrayicon.h				\
-	file-utils.c				\
-	file-utils.h				\
 	gconf-utils.c				\
 	gconf-utils.h				\
+	gio-utils.c				\
+	gio-utils.h				\
 	glib-utils.c				\
 	glib-utils.h				\
-	goo-application.c			\
-	goo-application.h			\
-	goo-cdrom.c				\
-	goo-cdrom.h				\
-	goo-cdrom-bsd.c				\
-	goo-cdrom-bsd.h				\
-	goo-cdrom-linux.c			\
-	goo-cdrom-linux.h			\
-	goo-cdrom-solaris.c			\
-	goo-cdrom-solaris.h			\
+	gnome-desktop-thumbnail.c		\
+	gnome-desktop-thumbnail.h		\
+	gnome-thumbnail-pixbuf-utils.c		\
 	goo-error.c				\
 	goo-error.h				\
 	goo-player.c				\
 	goo-player.h				\
 	goo-player-info.c			\
 	goo-player-info.h			\
+	goo-stock.c				\
+	goo-stock.h				\
 	goo-volume-tool-button.c		\
 	goo-volume-tool-button.h		\
 	goo-window.c				\
 	goo-window.h				\
-	goo-stock.c				\
-	goo-stock.h				\
+	gth-user-dir.c				\
+	gth-user-dir.h				\
+	gth-window.c				\
+	gth-window.h				\
 	gtk-file-chooser-preview.c		\
 	gtk-file-chooser-preview.h		\
 	gtk-utils.c				\
@@ -138,50 +89,20 @@ goo-marshal.c: goo-marshal.list $(GLIB_GENMARSHAL)
 	echo "#include \"goo-marshal.h\"" > $@ && \
 	$(GLIB_GENMARSHAL) $< --body --prefix=goo_marshal >> $@
 
-gthumb-marshal.h: gthumb-marshal.list $(GLIB_GENMARSHAL)
-	$(GLIB_GENMARSHAL) $< --header --prefix=gthumb_marshal > $@
-
-gthumb-marshal.c: gthumb-marshal.list gthumb-marshal.h  $(GLIB_GENMARSHAL)
-	echo "#include \"gthumb-marshal.h\"" > $@ && \
-	$(GLIB_GENMARSHAL) $< --body --prefix=gthumb_marshal >> $@
-
-gthumb-enum-types.h: $(GTH_HEADER_FILES) $(GLIB_MKENUMS)
-	$(GLIB_MKENUMS) \
-		--fhead "#ifndef GTHUMB_ENUM__TYPES_H\n#define GTHUMB_ENUM_TYPES_H\n\n#include <glib-object.h>\n\nG_BEGIN_DECLS\n" \
-		--fprod "/* enumerations from \"@filename@\" */\n" \
-		--vhead "GType @enum_name@_get_type (void);\n#define GTH_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
-		--ftail "G_END_DECLS\n\n#endif /* GTHUMB_ENUM_TYPES_H */" \
-		$^> xgen-$(@F) \
-	&& (cmp -s xgen-$(@F) gthumb-enum-types.h || cp xgen-$(@F) gthumb-enum-types.h ) \
-        && rm -f xgen-$(@F)
-
-gthumb-enum-types.c: $(GTH_HEADER_FILES) gthumb-enum-types.h
-	$(GLIB_MKENUMS) \
-		--fhead "#include <glib-object.h>\n" \
-		--fprod "\n/* enumerations from \"@filename@\" */\n#include \"@filename@\"" \
-		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static GType etype = 0;\n  if (etype == 0) {\n    static const G@Type@Value values[] = {" \
-		--vprod "      { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
-		--vtail "      { 0, NULL, NULL }\n    };\n    etype = g_@type@_register_static (\"@EnumName@\", values);\n  }\n  return etype;\n}\n" \
-		$^> xgen-$(@F) \
-	&& (cmp -s xgen-$(@F) gthumb-enum-types.c || cp xgen-$(@F) gthumb-enum-types.c ) \
-	&& rm -f xgen-$(@F)
-
-goobox_LDADD = 					\
-	$(GOO_LIBS) 				\
-	$(LIBNOTIFY_LIBS)			\
-	$(HAL_LIBS)				\
+goobox_LDADD = 				\
+	$(top_builddir)/copy-n-paste/libeggsmclient.la  \
+	$(DBUS_LIBS)			\
+	$(GOO_LIBS) 			\
+	$(LIBNOTIFY_LIBS)		\
 	$(SYSTEM_LIBS)
 
-EXTRA_DIST = 					\
-	goo-marshal.list 			\
-	gthumb-marshal.list 			\
-	GNOME_Goobox.idl
+EXTRA_DIST = 				\
+	goo-marshal.list 		\
+	gthumb-marshal.list
 
-CLEANFILES = 					\
-	$(BUILT_SOURCES) 			\
-	$(GTH_MARSHALLERS) 			\
-	$(GTH_ENUMS)				\
-	$(gnome_goobox_idl_sources) 		\
-	gnome_goobox_idl_stamp
+CLEANFILES = $(BUILT_SOURCES)
+
+dist-hook:
+	cd $(distdir); rm -f $(CLEANFILES)
 
 -include $(top_srcdir)/git.mk

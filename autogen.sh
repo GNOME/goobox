@@ -6,9 +6,7 @@ test -z "$srcdir" && srcdir=.
 
 PKG_NAME="Goobox"
 
-(test -f $srcdir/configure.in \
-  && test -f $srcdir/ChangeLog \
-  && test -d $srcdir/src) || {
+(test -f $srcdir/configure.ac && test -d $srcdir/src) || {
     echo -n "**Error**: Directory "\`$srcdir\'" does not look like the"
     echo " top-level $PKG_NAME directory"
     exit 1

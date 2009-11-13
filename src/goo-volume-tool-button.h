@@ -64,8 +64,6 @@ typedef struct _GooVolumeToolButtonPrivate GooVolumeToolButtonPrivate;
 
 struct _GooVolumeToolButton {
 	GtkToolButton parent;
-	
-	/*< private >*/
 	GooVolumeToolButtonPrivate *priv;
 };
 

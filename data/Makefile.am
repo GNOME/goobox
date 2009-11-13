@@ -1,7 +1,4 @@
-SUBDIRS = glade icons
-
-applicationsdir = $(datadir)/application-registry
-applications_DATA = goobox.applications
+SUBDIRS = ui icons
 
 desktop_in_in_files = goobox.desktop.in.in
 desktop_in_files = $(desktop_in_in_files:.desktop.in.in=.desktop.in) 
@@ -21,28 +18,18 @@ install-data-local:
 	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/data/$(schema_DATA)
 endif
 
-bonobodir       = $(libdir)/bonobo
-serverdir       = $(libdir)/bonobo/servers
-server_in_files = GNOME_Goobox.server.in
-server_DATA     = $(server_in_files:.server.in=.server)
-
-@INTLTOOL_SERVER_RULE@
-
 EXTRA_DIST = 			\
 	goobox.schemas		\
 	goobox.schemas.in	\
-	$(applications_DATA)	\
 	$(desktop_in_in_files)	\
 	$(desktop_in_files)	\
 	$(desktop_DATA)		\
-	$(icon_DATA)		\
-	$(server_in_files)
+	$(icon_DATA)
 
 
 DISTCLEANFILES =                \
 	$(schema_DATA)		\
 	$(desktop_in_files)     \
-	$(desktop_DATA)		\
-	$(server_DATA)
+	$(desktop_DATA)
 
 -include $(top_srcdir)/git.mk

@@ -1,9 +1,9 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *  Goo
+ *  gThumb
  *
- *  Copyright (C) 2004 Free Software Foundation, Inc.
+ *  Copyright (C) 2001, 2002 The Free Software Foundation, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -46,13 +46,16 @@
 
 #include <config.h>
 #include <string.h>
-#include <gnome.h>
+#include <errno.h>
 #include <gconf/gconf-client.h>
 #include <gconf/gconf.h>
 #include "gconf-utils.h"
 #include "gtk-utils.h"
 #include "goo-error.h"
 #include "glib-utils.h"
+
+#define HOME_DIR "~"
+
 
 static GConfClient *global_gconf_client = NULL;
 
@@ -106,7 +109,6 @@ eel_gconf_handle_error (GError **error)
 					       "GConf error:\n  %s\n"
 					       "All further errors "
 					       "shown only on terminal",
-					       "%s",
 					       (*error)->message);
 		}
 		g_error_free (*error);
@@ -231,6 +233,37 @@ eel_gconf_get_integer (const char *key,
 }
 
 
+int
+eel_gconf_get_enum (const char *key,
+		    GType       enum_type,
+		    int         def_val)
+{
+	GEnumValue *def_enum_val;
+	char       *value_nick;
+	GEnumValue *value;
+	
+	def_enum_val = _g_enum_type_get_value (enum_type, def_val);
+	value_nick = eel_gconf_get_string (key, def_enum_val->value_nick);
+	value = _g_enum_type_get_value_by_nick (enum_type, value_nick);	
+	g_free (value_nick);
+	
+	return (value != NULL) ? value->value : 0;	
+}
+
+
+void
+eel_gconf_set_enum (const char *key,
+		    GType       enum_type,
+		    int         value)
+{
+	GEnumValue *enum_value;
+	
+	enum_value = _g_enum_type_get_value (enum_type, value);
+	if (enum_value != NULL)
+		eel_gconf_set_string (key, enum_value->value_nick);
+}
+
+
 void
 eel_gconf_set_float (const char *key,
 		     float       float_value)
@@ -316,15 +349,16 @@ eel_gconf_get_string (const char *key,
 	
 	val = gconf_client_get_string (client, key, &error);
 
-	if (val != NULL) {
+	/* Return the default value if the key does not exist,
+	   or if it is empty. */
+	if (val != NULL && strcmp (val, "")) {
 		g_return_val_if_fail (error == NULL, result);
 		g_free (result);
 		result = g_strdup (val);
-		g_free (val);
 
 	} else if (error != NULL)
 		eel_gconf_handle_error (&error);
-	
+
 	return result;
 }
 
@@ -416,7 +450,7 @@ eel_gconf_get_path_list (const char *key)
 	slist = NULL;
 	for (scan = str_slist; scan; scan = scan->next) {
 		char *str = scan->data;
-		char *path = _g_substitute (str, '~', g_get_home_dir ());
+		char *path = _g_replace (str, HOME_DIR, g_get_home_dir ());
 		slist = g_slist_prepend (slist, path);
 	}
 
@@ -424,53 +458,6 @@ eel_gconf_get_path_list (const char *key)
 	g_slist_free (str_slist);
 
 	return g_slist_reverse (slist);
-}
-
-
-static char *
-tilde_compress (const char *path)
-{
-	const char *home_dir = g_get_home_dir();
-	int         home_dir_l = strlen (home_dir);
-	int         ntilde = 0;
-	const char *scan;
-	int         path_l, result_l;
-	char       *result, *scan2;
-
-	if (path == NULL)
-		return NULL;
-
-	path_l = strlen (path);
-	for (scan = path; scan != NULL; scan++) {
-		if (path_l - (scan - path) < home_dir_l)
-			break;
-		if (strncmp (scan, home_dir, home_dir_l) == 0)
-			ntilde++;
-	}
-	
-	if (ntilde == 0)
-		return g_strdup (path);
-	
-	result_l = strlen (path) + ntilde - (ntilde * home_dir_l);
-	result = g_new (char, result_l + 1);
-
-	for (scan = path, scan2 = result; scan != NULL; scan2++) {
-		if (path_l - (scan - path) < home_dir_l) {
-			strcpy (scan2, scan);
-			scan2 += strlen (scan);
-			break;
-		}
-		if (strncmp (scan, home_dir, home_dir_l) == 0) {
-			*scan2 = '~';
-			scan += home_dir_l;
-		} else {
-			*scan2 = *scan;
-			scan++;
-		} 
-	}
-	*scan2 = 0;
-
-	return result;
 }
 
 
@@ -484,7 +471,7 @@ eel_gconf_set_path_list (const char    *key,
 	path_slist = NULL;
 	for (scan = string_list_value; scan; scan = scan->next) {
 		char *value = scan->data;
-		char *path = tilde_compress (value);
+		char *path = _g_replace (value, g_get_home_dir (), HOME_DIR);
 		path_slist = g_slist_prepend (path_slist, path);
 	}
 	path_slist = g_slist_reverse (path_slist);
@@ -544,26 +531,67 @@ char *
 eel_gconf_get_path (const char *key,
 		    const char *def_val)
 {
+	char *value;
 	char *path;
-	char *no_tilde_path;
+	
+	value = eel_gconf_get_string (key, def_val);
+	path = _g_replace (value, HOME_DIR, g_get_home_dir ());
+	g_free (value);
 
-	path = eel_gconf_get_string (key, def_val);
-	no_tilde_path = _g_substitute (path, '~', g_get_home_dir ());
-	g_free (path);
-
-	return no_tilde_path;
+	return path;
 }
 
 
 void
 eel_gconf_set_path (const char *key,
-		    const char *value)
+		    const char *path)
 {
-	char *tilde_path;
+	char *value;
 
-	tilde_path = tilde_compress (value);
-	eel_gconf_set_string (key, tilde_path);
-	g_free (tilde_path);
+	value = _g_replace (path, g_get_home_dir (), HOME_DIR);
+	eel_gconf_set_string (key, value);
+	g_free (value);
+}
+
+
+char *
+eel_gconf_get_uri (const char *key,
+	           const char *def_val)
+{
+	GRegex *regex;
+	char   *s;
+	char   *home;
+	char   *uri;
+
+	regex = g_regex_new ("~", 0, 0, NULL);
+	s = eel_gconf_get_string (key, def_val);
+	home = g_uri_escape_string (g_get_home_dir (), G_URI_RESERVED_CHARS_ALLOWED_IN_PATH, TRUE);
+	uri = g_regex_replace_literal (regex, s, -1, 0, home, 0, NULL);
+
+	g_free (home);
+	g_free (s);
+	g_regex_unref (regex);
+
+	return uri;
+}
+
+
+void
+eel_gconf_set_uri (const char *key,
+		   const char *value)
+{
+	char   *home;
+	GRegex *regex;
+	char   *s;
+
+	home = g_uri_escape_string (g_get_home_dir (), G_URI_RESERVED_CHARS_ALLOWED_IN_PATH, TRUE);
+	regex = g_regex_new (home, 0, 0, NULL);
+	s = g_regex_replace_literal (regex, value, -1, 0, "~", 0, NULL);
+	eel_gconf_set_string (key, s);
+
+	g_free (s);
+	g_regex_unref (regex);
+	g_free (home);
 }
 
 

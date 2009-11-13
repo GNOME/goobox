@@ -1,14 +1,5 @@
-## Process this file with automake to produce Makefile.in.
-SUBDIRS =		\
-	data		\
-	help		\
-	src		\
-	po
-
-
-distcleancheck_listfiles = find . -type f -print | grep -v 'omf\.out'
-
-distuninstallcheck_listfiles = find . -type f -print | grep -v '^\./var/scrollkeeper' | grep -v 'omf' | grep -v 'figures'
+SUBDIRS = copy-n-paste data help src po
+ACLOCAL_AMFLAGS = -I m4
 
 
 EXTRA_DIST = 			\

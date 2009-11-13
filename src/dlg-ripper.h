@@ -23,7 +23,6 @@
 #ifndef DLG_RIPPER_H
 #define DLG_RIPPER_H
 
-#include "typedefs.h"
 #include "goo-window.h"
 
 void   dlg_ripper (GooWindow *window,

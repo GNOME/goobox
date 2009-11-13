@@ -22,338 +22,67 @@
 
 
 #include <config.h>
-
 #include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-
 #include <gtk/gtk.h>
-#include <libgnome/libgnome.h>
-#include <libgnomevfs/gnome-vfs-ops.h>
-#include <libgnomevfs/gnome-vfs-async-ops.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
-#include <glade/glade.h>
-#include "typedefs.h"
-#include "main.h"
-#include "file-utils.h"
+#include "gio-utils.h"
 #include "glib-utils.h"
 #include "gtk-utils.h"
 #include "goo-window.h"
 #include "goo-stock.h"
-#include "gth-image-list.h"
-#include "preferences.h"
-#include "gconf-utils.h"
 
-#define GLADE_CHOOSER_FILE "cover_chooser.glade"
+#define BUFFER_SIZE 4096
+#define COVER_BACKUP_FILENAME "original_cover.png"
 #define MAX_IMAGES 20
-#define READ_TIMEOUT 20
-#define BUFFER_SIZE 612
-#define IMG_PERM 0600
-#define DIR_PERM 0700
-#define THUMB_SIZE 100
-#define THUMB_BORDER 14
-#define QUERY_RESULT "result.html"
-#define ORIGINAL_COVER "original_cover.png"
+#define GET_WIDGET(x) _gtk_builder_get_widget (data->builder, (x))
 
-typedef struct _DialogData DialogData;
 
-typedef void (*FileSavedFunc) (DialogData *data, const char *filename, gboolean success);
-
-struct _DialogData {
-	GooWindow           *window;
-	char                *artist;
-	char                *album;
-	GList               *url_list;
-	GList               *current;
-	guint                load_id, urls, url;
-	char                *tmpdir;
-	GList               *tmpfiles;
-	char                *cover_backup;
-	int                  max_images;
-	gboolean             autofetching;
-
-	FileSavedFunc        file_saved_func;
-	char                *source;
-	char                *dest;
-
-	GnomeVFSAsyncHandle *vfs_handle;
-	GnomeVFSResult       vfs_result;
-
-	GladeXML            *gui;
-
-	GtkWidget           *dialog;
-	GtkWidget           *image_list;
-	GtkWidget           *progress_label;
-	GtkWidget           *ok_button;
-	GtkWidget           *revert_button;
-	GtkWidget           *cc_cancel_search_button;
+enum {
+	URL_COLUMN,
+	IMAGE_COLUMN,
+	N_COLUMNS
 };
 
 
-static void
-cancel_search (DialogData *data)
+typedef struct {
+	GooWindow    *window;
+	char         *artist;
+	char         *album;
+	GtkBuilder   *builder;
+	GtkWidget    *dialog;
+	GtkWidget    *icon_view;
+	GdkPixbuf    *cover_backup;
+	GList        *file_list;
+	int           total_files;
+	GList        *current_file;
+	int           loaded_files;
+	GCancellable *cancellable;
+	gboolean      searching;
+	gboolean      destroy;
+} DialogData;
+
+
+static GList *
+make_file_list_from_search_result (void  *buffer,
+				   gsize  count,
+				   int    max_files)
 {
-	if (data->vfs_handle != NULL) {
-		gnome_vfs_async_cancel (data->vfs_handle);
-		data->vfs_handle = NULL;
-	}
+	GList        *list = NULL;
+	int           n_files = 0;
+	gboolean      done = FALSE;
+	GInputStream *stream;
+	gssize        n;
+	char          buf[BUFFER_SIZE];
+	int           buf_offset = 0;
+	GString      *partial_url;
 
-	if (data->load_id != 0) {
-		g_source_remove (data->load_id);
-		data->load_id = 0;
-	}
-}
-
-
-static void
-destroy_cb (GtkWidget  *widget, 
-	    DialogData *data)
-{
-	cancel_search (data);
-	
-	if (data->tmpdir != NULL) {
-		g_list_foreach (data->tmpfiles, (GFunc) gnome_vfs_unlink, NULL);
-		path_list_free (data->tmpfiles);
-
-		gnome_vfs_remove_directory (data->tmpdir);
-		g_free (data->tmpdir);
-	}
-
-	g_free (data->dest);
-	g_free (data->source);
-	g_free (data->album);
-	g_free (data->artist);
-	path_list_free (data->url_list);
-	if (data->gui != NULL)
-		g_object_unref (data->gui);
-	g_free (data);
-}
-
-
-/* -- copy_file_from_url() -- */
-
-
-static int
-copy_progress_update_cb (GnomeVFSAsyncHandle      *handle,
-			 GnomeVFSXferProgressInfo *info,
-			 gpointer                  callback_data)
-{
-	DialogData *data = callback_data;
-
-	if (info->status != GNOME_VFS_XFER_PROGRESS_STATUS_OK) {
-		data->vfs_result = info->status;
-		return FALSE;
-	} 
-	if (info->phase == GNOME_VFS_XFER_PHASE_COMPLETED) {
-		debug (DEBUG_INFO, "COMPLETED");
-	
-		if (data->file_saved_func != NULL)
-			(*data->file_saved_func) (data, data->dest, (data->vfs_result == GNOME_VFS_OK));
-	}
-
-	return TRUE;
-}
-
-
-static void
-copy_file_from_url (DialogData    *data,
-		    const char    *uri_source,
-		    const char    *uri_dest,
-		    FileSavedFunc  file_saved_func)
-{
-	GList                     *src_uri_list, *dest_uri_list;
-	GnomeVFSXferOptions        xfer_options;
-	GnomeVFSXferErrorMode      xfer_error_mode;
-	GnomeVFSXferOverwriteMode  overwrite_mode;
-	GnomeVFSResult             result;
-
-	data->file_saved_func = file_saved_func;
-	
-	g_free (data->dest);
-	data->dest = g_strdup (uri_dest);
-
-	src_uri_list = g_list_prepend (NULL, gnome_vfs_uri_new (uri_source));
-	dest_uri_list = g_list_prepend (NULL, gnome_vfs_uri_new (uri_dest));
-
-	xfer_options    = GNOME_VFS_XFER_DEFAULT;
-	xfer_error_mode = GNOME_VFS_XFER_ERROR_MODE_ABORT;
-	overwrite_mode  = GNOME_VFS_XFER_OVERWRITE_MODE_REPLACE;
-
-	data->vfs_result = GNOME_VFS_OK;
-
-	result = gnome_vfs_async_xfer (&data->vfs_handle,
-				       src_uri_list,
-				       dest_uri_list,
-				       xfer_options,
-				       xfer_error_mode,
-				       overwrite_mode,
-				       GNOME_VFS_PRIORITY_DEFAULT,
-				       copy_progress_update_cb,
-				       data,
-				       NULL,
-				       NULL);
-
-	g_list_foreach (src_uri_list, (GFunc) gnome_vfs_uri_unref, NULL);
-	g_list_free (src_uri_list);
-
-	g_list_foreach (dest_uri_list, (GFunc) gnome_vfs_uri_unref, NULL);
-	g_list_free (dest_uri_list);
-
-	/**/
-
-	if (result != GNOME_VFS_OK) {
-		if (file_saved_func != NULL)
-			(*file_saved_func) (data, uri_dest, FALSE);
-	}
-}
-
-
-static void load_current_url (DialogData *data);
-
-
-static gboolean
-load_next_url (gpointer callback_data)
-{
-	DialogData *data = callback_data;
-
-	g_source_remove (data->load_id);
-	data->load_id = 0;
-
-	data->current = data->current->next;
-	load_current_url (data);
-
-	return FALSE;
-}
-
-
-static void
-append_image (DialogData *data,
-	      const char *filename)
-{
-	GdkPixbuf *image;
-	int        pos;
-
-	image = gdk_pixbuf_new_from_file_at_size (filename, 
-						  THUMB_SIZE, THUMB_SIZE, 
-						  NULL);
-	if (image == NULL)
-		return;
-
-	pos = gth_image_list_append (GTH_IMAGE_LIST (data->image_list),
-				     image,
-				     filename,
-				     NULL);
-	gth_image_list_set_image_data_full (GTH_IMAGE_LIST (data->image_list),
-					    pos,
-					    g_strdup (filename),
-					    g_free);
-	g_object_unref (image);
-}
-
-
-static void
-image_saved_cb (DialogData *data,
-		const char *filename,
-		gboolean    success)
-{
-	if (success) {
-		char *tmpfile = g_strdup (filename);
-
-		debug (DEBUG_INFO, "LOAD IMAGE: %s\n", tmpfile);
-
-		data->tmpfiles = g_list_prepend (data->tmpfiles, tmpfile);
-		append_image (data, tmpfile);
-	}
-
-	data->load_id = g_idle_add (load_next_url, data);
-}
-
-
-static void
-update_progress_label (DialogData *data)
-{
-	char *text;
-
-	if (data->url < data->urls)
-		text = g_strdup_printf (_("%u, loading image: %u"), 
-					data->urls, 
-					data->url + 1);
-	else
-		text = g_strdup_printf ("%u", data->urls);
-	gtk_label_set_text (GTK_LABEL (data->progress_label), text);
-	g_free (text);
-}
-
-
-static void
-search_completed (DialogData *data)
-{
-	char *text;
-	
-	gtk_widget_set_sensitive (data->cc_cancel_search_button, FALSE);
-	
-	text = g_strdup_printf ("%u", data->urls);
-	gtk_label_set_text (GTK_LABEL (data->progress_label), text);
-	g_free (text);
-}
-
-
-static void
-load_current_url (DialogData *data)
-{
-	char *url, *dest;
-	char *filename;
-
-	update_progress_label (data);
-
-	if ((data->current == NULL) || (data->url >= data->max_images)) {
-		search_completed (data);
-		return;
-	}
-
-	url = data->current->data;
-
-	debug (DEBUG_INFO, "LOAD %s\n", url);
-
-	filename = g_strdup_printf ("%d.png", data->url);
-	dest = g_build_filename (data->tmpdir, filename, NULL);
-	g_free (filename);
-
-	copy_file_from_url (data, url, dest, image_saved_cb);
-	data->url++;
-}
-
-
-static void
-start_loading_images (DialogData *data)
-{
-	gth_image_list_set_no_image_text (GTH_IMAGE_LIST (data->image_list),
-					  _("Loading images"));
-
-	data->current = data->url_list;
-	load_current_url (data);
-}
-
-
-static gboolean
-make_file_list_from_search_result (DialogData *data,
-				   const char *filename)
-{
-	int       fd, n;
-	char      buf[BUFFER_SIZE];
-	int       buf_offset = 0;
-	GString  *partial_url;
-	gboolean  done = FALSE;
-	int       urls = 0;
-
-	fd = open (filename, O_RDONLY);
-	if (fd == 0) 
-		return FALSE;
-	
+	stream = g_memory_input_stream_new_from_data (buffer, count, NULL);
 	partial_url = NULL;
-	while ((n = read (fd, buf + buf_offset, BUFFER_SIZE - buf_offset - 1)) > 0) {
+	while ((n = g_input_stream_read (stream,
+					 buf + buf_offset,
+					 BUFFER_SIZE - buf_offset - 1,
+					 NULL,
+					 NULL)) > 0)
+	{
 		const char *prefix = "/images?q=tbn:";
 		int         prefix_len = strlen (prefix);
 		char       *url_start;
@@ -361,20 +90,20 @@ make_file_list_from_search_result (DialogData *data,
 
 		buf[buf_offset+n] = 0;
 
-		if (partial_url == NULL) 
+		if (partial_url == NULL)
 			url_start = strstr (buf, prefix);
 		else
 			url_start = buf;
 
 		while (url_start != NULL) {
 			char *url_end;
-			
+
 			url_end = strstr (url_start, " ");
-		
+
 			if (url_end == NULL) {
 				if (partial_url == NULL)
 					partial_url = g_string_new (url_start);
-				else 
+				else
 					g_string_append (partial_url, url_start);
 				url_start = NULL;
 				copy_tail = FALSE;
@@ -383,24 +112,23 @@ make_file_list_from_search_result (DialogData *data,
 				char *url_tail = g_strndup (url_start, url_end - url_start);
 				char *url;
 				char *complete_url;
-				
+
 				if (partial_url != NULL) {
 					g_string_append (partial_url, url_tail);
 					g_free (url_tail);
 					url = partial_url->str;
 					g_string_free (partial_url, FALSE);
 					partial_url = NULL;
-				} 
-				else 
+				}
+				else
 					url = url_tail;
-					
+
 				complete_url = g_strconcat ("http://images.google.com", url, NULL);
 				g_free (url);
 
-				data->url_list = g_list_prepend (data->url_list, complete_url);
-				urls++;
-				
-				if (urls >= data->max_images) {
+				list = g_list_prepend (list, complete_url);
+				n_files++;
+				if (n_files >= max_files) {
 					done = TRUE;
 					break;
 				}
@@ -414,219 +142,318 @@ make_file_list_from_search_result (DialogData *data,
 
 		if (copy_tail) {
 			prefix_len = MIN (prefix_len, buf_offset + n);
-			strncpy (buf, 
-				 buf + buf_offset + n - prefix_len, 
+			strncpy (buf,
+				 buf + buf_offset + n - prefix_len,
 				 prefix_len);
 			buf_offset = prefix_len;
-		} 
-		else 
+		}
+		else
 			buf_offset = 0;
 	}
 
 	if (partial_url != NULL)
 		g_string_free (partial_url, TRUE);
 
-	close (fd);
-	data->tmpfiles = g_list_prepend (data->tmpfiles, g_strdup (filename));
+	g_object_unref (stream);
 
-	data->url_list = g_list_reverse (data->url_list);
-	data->urls = urls;
-	data->url = 0;
-
-	return (data->url_list != NULL);
+	return g_list_reverse (list);
 }
 
 
-static void
-search_result_saved_cb (DialogData *data,
-			const char *filename,
-			gboolean    success)
-{
-	if (! success) {
-		_gtk_error_dialog_run (GTK_WINDOW (data->dialog),
-				       _("Could not search for a cover on Internet"),
-				       "%s",
-				       gnome_vfs_result_to_string (data->vfs_result));
-		return;
-	}
-
-	if (! make_file_list_from_search_result (data, filename)) {
-		gth_image_list_set_no_image_text (GTH_IMAGE_LIST (data->image_list),
-						  _("No image found"));
-		return;
-	}
-
-	start_loading_images (data);
-}
-
-
-static char*
-get_query (DialogData *data)
+static char *
+get_query (const char *album,
+	   const char *artist)
 {
 	char *s, *e, *q;
 
-	s = g_strdup_printf ("%s %s", data->album, data->artist);
-	e = gnome_vfs_escape_string (s);
+	s = g_strdup_printf ("%s %s", album, artist);
+	e = g_uri_escape_string (s, G_URI_RESERVED_CHARS_ALLOWED_IN_PATH, FALSE);
 	q = g_strconcat ("http://images.google.com/images?q=", e, NULL);
+
 	g_free (e);
 	g_free (s);
-	
+
 	return q;
 }
 
 
-static gboolean
-start_searching (gpointer callback_data)
-{
-	DialogData *data = callback_data;
-	char       *query;
-	char       *dest;
-
-	g_source_remove (data->load_id);
-	data->load_id = 0;
-
-	query = get_query (data);
-	dest = g_build_filename (data->tmpdir, QUERY_RESULT, NULL);
-	copy_file_from_url (data, query, dest, search_result_saved_cb);
-
-	g_free (dest);
-	g_free (query);
-
-	return FALSE;
-}
+/* -- dlg_cover_chooser -- */
 
 
-/* callbacks */
-
-
-/* called when the "help" button is clicked. */
 static void
-help_cb (GtkWidget  *widget, 
-	 DialogData *data)
+destroy_cb (GtkWidget  *widget, 
+	    DialogData *data)
 {
-	GError *err;
-
-	err = NULL;  
-	gnome_help_display ("goobox", "search_cover_on_internet", &err);
+	if (data->searching) {
+		data->destroy = TRUE;
+		g_cancellable_cancel (data->cancellable);
+		return;
+	}
 	
-	if (err != NULL) {
-		GtkWidget *dialog;
-		
-		dialog = gtk_message_dialog_new (GTK_WINDOW (data->dialog),
-						 0,
-						 GTK_MESSAGE_ERROR,
-						 GTK_BUTTONS_CLOSE,
-						 _("Could not display help: %s"),
-						 err->message);
-		
-		g_signal_connect (G_OBJECT (dialog), "response",
-				  G_CALLBACK (gtk_widget_destroy),
-				  NULL);
-		
-		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-		
-		gtk_widget_show (dialog);
-		
-		g_error_free (err);
-	}
+	g_object_unref (data->cancellable);
+	_g_string_list_free (data->file_list);
+	_g_object_unref (data->cover_backup);
+	g_object_unref (data->builder);
+	g_free (data->album);
+	g_free (data->artist);
+	g_free (data);
 }
 
 
 static void
-revert_cb (GtkWidget  *widget, 
-	   DialogData *data)
+search_completed (DialogData *data)
 {
-	char *original_cover;
+	char *text;
+	
+	data->searching = FALSE;
+	gtk_widget_set_sensitive (GET_WIDGET ("cancel_search_button"), FALSE);
+	text = g_strdup_printf ("%u", data->total_files);
+	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("progress_label")), text);
 
-	if (data->cover_backup == NULL) 
-		return;
+	g_free (text);
 
-	original_cover = goo_window_get_cover_filename (data->window);
-	file_copy (data->cover_backup, original_cover);
-	goo_window_update_cover (data->window);
+	if (data->destroy)
+		destroy_cb (NULL, data);
 }
 
 
-/* called when the "ok" button is clicked. */
-static void
-ok_cb (GtkWidget  *widget, 
-       DialogData *data)
-{
-	GthImageList *list = GTH_IMAGE_LIST (data->image_list);
-	GList        *selection;
-
-	selection =  gth_image_list_get_selection (list);
-	if (selection != NULL) {
-		char *src = selection->data;
-
-		debug (DEBUG_INFO, "SET COVER: %s\n", src);
-
-		if (! data->autofetching 
-		    || goo_window_get_current_cd_autofetch (data->window))
-			goo_window_set_cover_image (data->window, src);
-
-		g_list_free (selection);
-	}
-}
+static void load_current_file (DialogData *data);
 
 
 static void
-image_list_selection_changed_cb (GthImageList *list,
-				 DialogData   *data)
+search_image_data_ready_cb (void     *buffer,
+			    gsize     count,
+			    GError   *error,
+			    gpointer  user_data)
 {
-	GList *selection;
+	DialogData *data = user_data;
 
-	selection = gth_image_list_get_selection (list);
-	gtk_widget_set_sensitive (data->ok_button, selection != NULL);
-	g_list_free (selection);
-}
-
-
-static void
-image_list_item_activated_cb (GthImageList *list,
-			      int           pos,
-			      DialogData   *data)
-{
-	ok_cb (NULL, data);
-}
-
-
-static void
-backup_cover_image (DialogData   *data)
-{
-	GnomeVFSURI *uri;
-	char        *original_cover;
-	char        *cover_backup;
-
-	original_cover = goo_window_get_cover_filename (data->window);
-	if (original_cover == NULL) {	
-		gtk_widget_set_sensitive (data->revert_button, FALSE);
+	if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
+		search_completed (data);
 		return;
 	}
 
-	uri = new_uri_from_path (original_cover);
-	if (uri == NULL) {
-		gtk_widget_set_sensitive (data->revert_button, FALSE);
-		return;
+	if (error == NULL) {
+		GInputStream *stream;
+		GdkPixbuf    *image;
+
+		stream = g_memory_input_stream_new_from_data (buffer, count, NULL);
+		image = gdk_pixbuf_new_from_stream (stream, NULL, &error);
+		if (image != NULL) {
+			GtkTreeModel *model;
+			GtkTreeIter   iter;
+			char         *url;
+
+			model = gtk_icon_view_get_model (GTK_ICON_VIEW (data->icon_view));
+			gtk_list_store_append (GTK_LIST_STORE (model), &iter);
+			url = (char *) data->current_file->data;
+			gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+					    URL_COLUMN, url,
+					    IMAGE_COLUMN, image,
+					    -1);
+
+			g_object_unref (image);
+		}
 	}
-	gtk_widget_set_sensitive (data->revert_button, gnome_vfs_uri_exists (uri));
-	gnome_vfs_uri_unref (uri);
 
-	cover_backup = g_build_filename (data->tmpdir, ORIGINAL_COVER, NULL);
-	file_copy (original_cover, cover_backup);
-	g_free (original_cover);
-
-	data->tmpfiles = g_list_prepend (data->tmpfiles, cover_backup);
-	data->cover_backup = cover_backup;
+	data->loaded_files++;
+	data->current_file = data->current_file->next;
+	load_current_file (data);
 }
 
 
 static void
-cancel_search_button_clicked_cb (GtkWidget  *widget, 
+update_progress_label (DialogData *data)
+{
+	char *text;
+
+	if (data->loaded_files < data->total_files)
+		text = g_strdup_printf (_("%u, loading image: %u"),
+					data->total_files,
+					data->loaded_files + 1);
+	else
+		text = g_strdup_printf ("%u", data->total_files);
+	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("progress_label")), text);
+
+	g_free (text);
+}
+
+
+static void
+load_current_file (DialogData *data)
+{
+	char  *url;
+	GFile *source;
+
+	update_progress_label (data);
+
+	if (data->current_file == NULL) {
+		search_completed (data);
+		return;
+	}
+
+	url = data->current_file->data;
+
+	debug (DEBUG_INFO, "LOADING %s\n", url);
+
+	source = g_file_new_for_uri (url);
+	g_load_file_async (source,
+			   G_PRIORITY_DEFAULT,
+			   data->cancellable,
+			   search_image_data_ready_cb,
+			   data);
+
+	g_object_unref (source);
+}
+
+
+static void
+start_loading_files (DialogData *data)
+{
+	gtk_list_store_clear (GTK_LIST_STORE (gtk_icon_view_get_model (GTK_ICON_VIEW (data->icon_view))));
+	data->total_files = g_list_length (data->file_list);
+	data->current_file = data->file_list;
+	data->loaded_files = 0;
+	load_current_file (data);
+}
+
+
+static void
+search_query_ready_cb (void     *buffer,
+		       gsize     count,
+		       GError   *error,
+		       gpointer  user_data)
+{
+	DialogData *data = user_data;
+
+	if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
+		search_completed (data);
+		return;
+	}
+
+	if (error != NULL) {
+		_gtk_error_dialog_from_gerror_show (GTK_WINDOW (data->dialog),
+						    _("Could not search for a cover on Internet"),
+						    &error);
+		search_completed (data);
+		return;
+	}
+
+	data->file_list = make_file_list_from_search_result (buffer, count, MAX_IMAGES);
+	start_loading_files (data);
+}
+
+
+static void
+start_searching (DialogData *data)
+{
+	char  *query;
+	GFile *file;
+
+	data->searching = TRUE;
+	g_cancellable_reset (data->cancellable);
+	gtk_widget_set_sensitive (GET_WIDGET ("cancel_search_button"), TRUE);
+
+	query = get_query (data->album, data->artist);
+	file = g_file_new_for_uri (query);
+	g_load_file_async (file,
+			   G_PRIORITY_DEFAULT,
+			   data->cancellable,
+			   search_query_ready_cb,
+			   data);
+
+	g_object_unref (file);
+	g_free (query);
+}
+
+
+static void
+help_button_clicked_cb (GtkWidget  *widget,
+			DialogData *data)
+{
+	show_help_dialog (GTK_WINDOW (data->window), "search_cover_on_internet");
+}
+
+
+static void
+revert_button_clicked_cb (GtkWidget  *widget,
+			  DialogData *data)
+{
+	goo_window_set_cover_image_from_pixbuf (data->window, data->cover_backup);
+}
+
+
+static void
+ok_button_clicked_cb (GtkWidget  *widget,
+		      DialogData *data)
+{
+	GList *list;
+
+	list = gtk_icon_view_get_selected_items (GTK_ICON_VIEW (data->icon_view));
+	if (list != NULL) {
+		GtkTreePath  *path;
+		GtkTreeModel *model;
+		GtkTreeIter   iter;
+
+		path = list->data;
+		model = gtk_icon_view_get_model (GTK_ICON_VIEW (data->icon_view));
+		if (gtk_tree_model_get_iter (model, &iter, path)) {
+			GdkPixbuf *image;
+
+			gtk_tree_model_get (model, &iter, IMAGE_COLUMN, &image, -1);
+			goo_window_set_cover_image_from_pixbuf (data->window, image);
+
+			g_object_unref (image);
+		}
+
+		g_list_foreach (list, (GFunc) gtk_tree_path_free, NULL);
+		g_list_free (list);
+	}
+}
+
+
+static void
+icon_view_selection_changed_cb (GtkIconView *icon_view,
+				DialogData  *data)
+{
+	GList *list;
+
+	list = gtk_icon_view_get_selected_items (GTK_ICON_VIEW (data->icon_view));
+	gtk_widget_set_sensitive (GET_WIDGET ("ok_button"), list != NULL);
+
+	g_list_foreach (list, (GFunc) gtk_tree_path_free, NULL);
+	g_list_free (list);
+}
+
+
+static void
+icon_view_item_activated_cb (GtkIconView *icon_view,
+			     GtkTreePath *path,
+			     DialogData  *data)
+{
+	ok_button_clicked_cb (NULL, data);
+}
+
+
+static void
+cancel_search_button_clicked_cb (GtkWidget  *widget,
        				 DialogData *data)
 {
-	cancel_search (data);
-	search_completed (data);	
+	g_cancellable_cancel (data->cancellable);
+}
+
+
+static void
+backup_cover_image (DialogData *data)
+{
+	char *cover_filename;
+
+	cover_filename = goo_window_get_cover_filename (data->window);
+	gtk_widget_set_sensitive (GET_WIDGET ("revert_button"), cover_filename != NULL);
+	if (cover_filename != NULL)
+		data->cover_backup = gdk_pixbuf_new_from_file (cover_filename, NULL);
+
+	g_free (cover_filename);
 }
 
 
@@ -635,50 +462,49 @@ dlg_cover_chooser (GooWindow  *window,
 		   const char *album,
 		   const char *artist)
 {
-	DialogData *data;
-	GtkWidget  *scrolled_window;
-	GtkWidget  *btn_cancel;
-	GtkWidget  *btn_help;
-	GtkWidget  *image;
+	DialogData      *data;
+	GtkListStore    *model;
+	GtkCellRenderer *renderer;
+	GtkWidget       *image;
 
 	data = g_new0 (DialogData, 1);
 	data->window = window;
-	data->gui = glade_xml_new (GOO_GLADEDIR "/" GLADE_CHOOSER_FILE, NULL, NULL);
-        if (!data->gui) {
-		g_warning ("Could not find " GLADE_CHOOSER_FILE "\n");
-		g_free (data);
-                return;
-        }
-
+	data->builder = _gtk_builder_new_from_file ("cover-chooser.ui", "");
 	data->album = g_strdup (album);
 	data->artist = g_strdup (artist);
-	data->max_images = MAX_IMAGES;
+	data->cancellable = g_cancellable_new ();
 
 	/* Get the widgets. */
 
-	data->dialog = glade_xml_get_widget (data->gui, "cover_chooser_dialog");
-	scrolled_window = glade_xml_get_widget (data->gui, "image_list_scrolledwindow");
-	data->progress_label = glade_xml_get_widget (data->gui, "progress_label");
-	data->ok_button = glade_xml_get_widget (data->gui, "cc_okbutton");
-	data->revert_button = glade_xml_get_widget (data->gui, "cc_revertbutton");
-	btn_cancel = glade_xml_get_widget (data->gui, "cc_cancelbutton");
-	btn_help = glade_xml_get_widget (data->gui, "cc_helpbutton");
+	data->dialog = GET_WIDGET ("cover_chooser_dialog");
 
-	data->cc_cancel_search_button = glade_xml_get_widget (data->gui, "cc_cancel_search_button");
+	model = gtk_list_store_new (N_COLUMNS,
+				    G_TYPE_STRING,
+				    GDK_TYPE_PIXBUF);
+	data->icon_view = gtk_icon_view_new_with_model (GTK_TREE_MODEL (model));
+	g_object_unref (model);
 
-	data->image_list = gth_image_list_new (THUMB_SIZE + THUMB_BORDER);
-	gth_image_list_set_view_mode (GTH_IMAGE_LIST (data->image_list),
-				      GTH_VIEW_MODE_VOID);
-	gth_image_list_set_selection_mode (GTH_IMAGE_LIST (data->image_list),
-					   GTK_SELECTION_SINGLE);
-	gtk_container_add (GTK_CONTAINER (scrolled_window), data->image_list);
+	renderer = gtk_cell_renderer_pixbuf_new ();
+	g_object_set (renderer, "follow-state", TRUE, NULL);
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (data->icon_view),
+				    renderer,
+				    TRUE);
+	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (data->icon_view),
+					renderer,
+					"pixbuf", IMAGE_COLUMN,
+					NULL);
+
+	gtk_widget_show (data->icon_view);
+	gtk_container_add (GTK_CONTAINER (GET_WIDGET ("icon_view_scrolledwindow")), data->icon_view);
 
 	/* Set widgets data. */
 
-	gtk_widget_set_sensitive (data->ok_button, FALSE);
+	backup_cover_image (data);
+
+	gtk_widget_set_sensitive (GET_WIDGET ("ok_button"), FALSE);
 
 	image = gtk_image_new_from_stock (GOO_STOCK_RESET, GTK_ICON_SIZE_BUTTON);
-	g_object_set (data->revert_button, 
+	g_object_set (GET_WIDGET ("revert_button"),
 		      "use_stock", TRUE,
 		      "label", GOO_STOCK_RESET,
 		      "image", image,
@@ -690,31 +516,31 @@ dlg_cover_chooser (GooWindow  *window,
 			  "destroy",
 			  G_CALLBACK (destroy_cb),
 			  data);
-	g_signal_connect_swapped (G_OBJECT (btn_cancel), 
+	g_signal_connect_swapped (GET_WIDGET ("cancel_button"),
 				  "clicked",
 				  G_CALLBACK (gtk_widget_destroy),
 				  G_OBJECT (data->dialog));
-	g_signal_connect (G_OBJECT (btn_help), 
+	g_signal_connect (GET_WIDGET ("help_button"),
 			  "clicked",
-			  G_CALLBACK (help_cb),
+			  G_CALLBACK (help_button_clicked_cb),
 			  data);
-	g_signal_connect (G_OBJECT (data->ok_button), 
+	g_signal_connect (GET_WIDGET ("ok_button"),
 			  "clicked",
-			  G_CALLBACK (ok_cb),
+			  G_CALLBACK (ok_button_clicked_cb),
 			  data);
-	g_signal_connect (G_OBJECT (data->revert_button), 
+	g_signal_connect (GET_WIDGET ("revert_button"),
 			  "clicked",
-			  G_CALLBACK (revert_cb),
+			  G_CALLBACK (revert_button_clicked_cb),
 			  data);
-	g_signal_connect (G_OBJECT (data->image_list), 
-			  "selection_changed",
-			  G_CALLBACK (image_list_selection_changed_cb),
+	g_signal_connect (G_OBJECT (data->icon_view),
+			  "selection-changed",
+			  G_CALLBACK (icon_view_selection_changed_cb),
 			  data);
-	g_signal_connect (G_OBJECT (data->image_list), 
-			  "item_activated",
-			  G_CALLBACK (image_list_item_activated_cb),
+	g_signal_connect (G_OBJECT (data->icon_view),
+			  "item-activated",
+			  G_CALLBACK (icon_view_item_activated_cb),
 			  data);
-	g_signal_connect (G_OBJECT (data->cc_cancel_search_button), 
+	g_signal_connect (GET_WIDGET ("cancel_search_button"),
 			  "clicked",
 			  G_CALLBACK (cancel_search_button_clicked_cb),
 			  data);
@@ -723,83 +549,72 @@ dlg_cover_chooser (GooWindow  *window,
 
 	gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
 	gtk_window_set_modal (GTK_WINDOW (data->dialog), TRUE);
-	gtk_widget_show_all (data->dialog);
+	gtk_widget_show (data->dialog);
 
-	/**/
+	start_searching (data);
+}
 
-	data->tmpdir = g_strdup (get_temp_work_dir ());
-	ensure_dir_exists (data->tmpdir, DIR_PERM);
-	backup_cover_image (data);
 
-	gth_image_list_set_no_image_text (GTH_IMAGE_LIST (data->image_list),
-					  _("Searching images..."));
+/* -- auto fetch functions -- */
 
-	data->load_id = g_idle_add (start_searching, data);
+
+typedef struct {
+	GooWindow *window;
+} FetchData;
+
+
+static void
+fetch_data_free (FetchData *data)
+{
+	g_free (data);
 }
 
 
 static void
-auto_fetch__image_saved_cb (DialogData *data,
-			    const char *filename,
-			    gboolean    success)
+fetch_image_data_ready_cb (void     *buffer,
+			   gsize     count,
+			   GError   *error,
+			   gpointer  user_data)
 {
-	if (success) {
-		char *tmpfile = g_strdup (filename);
-		
-		debug (DEBUG_INFO, "LOAD IMAGE: %s\n", tmpfile);
-		data->tmpfiles = g_list_prepend (data->tmpfiles, tmpfile);
+	FetchData *data = user_data;
 
-		goo_window_set_cover_image (data->window, get_path_from_uri (filename));
+	if (error == NULL)
+		goo_window_set_cover_image_from_data (data->window, buffer, count);
+	fetch_data_free (data);
+}
+
+
+static void
+query_ready_cb (void     *buffer,
+		gsize     count,
+		GError   *error,
+		gpointer  user_data)
+{
+	FetchData *data = user_data;
+	GList     *list;
+
+	if (error != NULL) {
+		fetch_data_free (data);
+		return;
 	}
 
-	destroy_cb (NULL, data);
-}
+	list = make_file_list_from_search_result (buffer, count, 1);
+	if (list != NULL) {
+		GFile *file;
 
+		file = g_file_new_for_uri ((char *) list->data);
+		g_load_file_async (file,
+				   G_PRIORITY_DEFAULT,
+				   NULL,
+				   fetch_image_data_ready_cb,
+				   data);
 
-static void
-auto_fetch__search_result_saved_cb (DialogData *data,
-				    const char *filename,
-				    gboolean    success)
-{
-	if (! success || ! make_file_list_from_search_result (data, filename))
-		return;
-
-	if (data->url_list != NULL) {
-		char *filename, *url, *dest;
-
-		url = (char*) data->url_list->data;
-
-		filename = g_strdup_printf ("%d.png", data->url);
-		dest = g_build_filename (data->tmpdir, filename, NULL);
-		g_free (filename);
-
-		copy_file_from_url (data, url, dest, auto_fetch__image_saved_cb)
-;
-		g_free (dest);
-	} 
+		g_object_unref (file);
+	}
 	else
-		destroy_cb (NULL, data);
-}
+		fetch_data_free (data);
 
-
-static gboolean
-auto_fetch_from_name__start_searching (gpointer callback_data)
-{
-	DialogData *data = callback_data;
-	char       *query;
-	char       *dest;
-
-	g_source_remove (data->load_id);
-	data->load_id = 0;
-
-	query = get_query (data);
-	dest = g_build_filename (data->tmpdir, QUERY_RESULT, NULL);
-	copy_file_from_url (data, query, dest, auto_fetch__search_result_saved_cb);
-
-	g_free (dest);
-	g_free (query);
-
-	return FALSE;
+	_g_string_list_free (list);
 }
 
 
@@ -808,36 +623,23 @@ fetch_cover_image_from_name (GooWindow  *window,
 		             const char *album,
 		             const char *artist)
 {
-	DialogData *data;
+	FetchData *data;
+	char      *url;
+	GFile     *file;
 	
-	data = g_new0 (DialogData, 1);
+	data = g_new0 (FetchData, 1);
 	data->window = window;
-	data->album = g_strdup (album);
-	data->artist = g_strdup (artist);
-	data->max_images = 1;
-	data->autofetching = TRUE;
 
-	data->tmpdir = get_temp_work_dir ();
-	ensure_dir_exists (data->tmpdir, DIR_PERM);
+	url = get_query (album, artist);
+	file = g_file_new_for_uri (url);
+	g_load_file_async (file,
+			   G_PRIORITY_DEFAULT,
+			   NULL,
+			   query_ready_cb,
+			   data);
 
-	data->load_id = g_idle_add (auto_fetch_from_name__start_searching, data);
-}
-
-
-static gboolean
-auto_fetch_from_asin__start_searching (gpointer callback_data)
-{
-	DialogData *data = callback_data;
-	char       *dest;
-
-	g_source_remove (data->load_id);
-	data->load_id = 0;
-
-	dest = g_strconcat ("file://", data->tmpdir, "/1.jpg", NULL);
-	copy_file_from_url (data, data->source, dest, auto_fetch__image_saved_cb);
-	g_free (dest);
-
-	return FALSE;
+	g_object_unref (file);
+	g_free (url);
 }
 
 
@@ -845,16 +647,20 @@ void
 fetch_cover_image_from_asin (GooWindow  *window,
 		             const char *asin)
 {
-	DialogData *data;
+	FetchData *data;
+	char      *url;
+	GFile     *file;
 	
-	data = g_new0 (DialogData, 1);
+	data = g_new0 (FetchData, 1);
 	data->window = window;
-	data->max_images = 1;
-	data->autofetching = TRUE;
+	url = g_strdup_printf ("http://images.amazon.com/images/P/%s.01._SCLZZZZZZZ_.jpg", asin);
+	file = g_file_new_for_uri (url);
+	g_load_file_async (file,
+			   G_PRIORITY_DEFAULT,
+			   NULL,
+			   fetch_image_data_ready_cb,
+			   data);
 
-	data->tmpdir = g_strdup (get_temp_work_dir ());
-	ensure_dir_exists (data->tmpdir, DIR_PERM);
-
-	data->source = g_strdup_printf ("http://images.amazon.com/images/P/%s.01._SCLZZZZZZZ_.jpg", asin);
-	data->load_id = g_idle_add (auto_fetch_from_asin__start_searching, data);
+	g_object_unref (file);
+	g_free (url);
 }

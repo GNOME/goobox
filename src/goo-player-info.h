@@ -23,8 +23,7 @@
 #ifndef GOO_PLAYER_INFO_H
 #define GOO_PLAYER_INFO_H
 
-#include <glib-object.h>
-#include <gtk/gtkhbox.h>
+#include <gtk/gtk.h>
 #include "goo-window.h"
 
 #define GOO_TYPE_PLAYER_INFO              (goo_player_info_get_type ())
