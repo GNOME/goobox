@@ -5,6 +5,7 @@ Categories=GNOME;GTK;AudioVideo;
 Encoding=UTF-8
 Exec=goobox
 Icon=goobox
+MimeType=x-content/audio-cdda;
 StartupNotify=true
 Terminal=false
 Type=Application
