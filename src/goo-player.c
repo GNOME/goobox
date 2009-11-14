@@ -364,6 +364,7 @@ goo_player_finalize (GObject *object)
 	self->priv->exiting = TRUE;
         g_mutex_unlock (self->priv->yes_or_no);
 
+        brasero_drive_unlock (self->priv->drive);
         if (self->priv->medium_added_event != 0)
 		g_signal_handler_disconnect (self->priv->drive, self->priv->medium_added_event);
 	if (self->priv->medium_removed_event != 0)
