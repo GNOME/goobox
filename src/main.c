@@ -439,6 +439,7 @@ int main (int argc, char **argv)
 	if (! notify_init ("goobox"))
                 g_warning ("Cannot initialize notification system.");
 #endif /* ENABLE_NOTIFICATION */
+
 	goo_session_manager_init ();
 	prepare_application ();
 
@@ -593,7 +594,7 @@ system_notify (GooWindow  *window,
 			g_list_free (caps);
 		}
 
-		notification = notify_notification_new (title, msg, "goobox", NULL);
+		notification = notify_notification_new_with_status_icon (title, msg, "goobox", status_icon);
 		notify_notification_set_urgency (notification, NOTIFY_URGENCY_LOW);
 
 		if (supports_actions) {
