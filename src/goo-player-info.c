@@ -540,19 +540,21 @@ static void
 goo_player_info_set_time (GooPlayerInfo  *info,
 			  gint64          current_time)
 {
-	GooPlayerInfoPrivateData *priv = info->priv;
-
-	if (priv->dragging) 
+	if (info->priv->dragging)
 		return;
 
-	g_free (priv->current_time);
-	priv->current_time = _g_format_duration_for_display (current_time * 1000);
-	sprintf (priv->time, _("%s / %s"), priv->current_time, priv->total_time);
-	set_time (info, priv->time);
+	g_free (info->priv->current_time);
+	info->priv->current_time = _g_format_duration_for_display (current_time * 1000);
+	sprintf (info->priv->time, _("%s / %s"), info->priv->current_time, info->priv->total_time);
+	set_time (info, info->priv->time);
 
-	g_signal_handlers_block_by_data (priv->time_scale, info);
-	gtk_range_set_value (GTK_RANGE (priv->time_scale), (double) current_time / priv->track_length);
-	g_signal_handlers_unblock_by_data (priv->time_scale, info);
+	g_signal_handlers_block_by_data (info->priv->time_scale, info);
+	gtk_range_set_value (GTK_RANGE (info->priv->time_scale), (double) current_time / info->priv->track_length);
+	g_signal_handlers_unblock_by_data (info->priv->time_scale, info);
+
+	/* FIXME: this doesn't update the tooltip
+	gtk_tooltip_trigger_tooltip_query (gdk_screen_get_display (gtk_status_icon_get_screen (goo_window_get_status_icon (info->priv->window))));
+	*/
 }
 
 
@@ -908,4 +910,14 @@ goo_player_info_new (GooWindow *window,
 			  info);
 
 	return GTK_WIDGET (info);
+}
+
+
+GdkPixbuf *
+goo_player_info_get_cover (GooPlayerInfo *info)
+{
+	if (gtk_image_get_storage_type (GTK_IMAGE (info->priv->cover_image)) == GTK_IMAGE_PIXBUF)
+		return gtk_image_get_pixbuf (GTK_IMAGE (info->priv->cover_image));
+	else
+		return NULL;
 }

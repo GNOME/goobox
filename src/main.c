@@ -40,7 +40,7 @@
 static NotifyNotification *notification = NULL;
 #endif /* ENABLE_NOTIFICATION */
 
-#define VOLUME_STEP 10 /* FIXME */
+#define VOLUME_STEP 0.10 /* FIXME */
 
 enum {
 	COMMAND_UNUSED,
@@ -213,7 +213,7 @@ unique_app_message_received_cb (UniqueApp         *unique_app,
 
 	case COMMAND_VOLUME_UP:
 		{
-			int volume;
+			double volume;
 
 			volume = goo_window_get_volume (GOO_WINDOW (main_window));
 			goo_window_set_volume (GOO_WINDOW (main_window), volume + VOLUME_STEP);
@@ -222,7 +222,7 @@ unique_app_message_received_cb (UniqueApp         *unique_app,
 
 	case COMMAND_vOLUME_DOWN:
 		{
-			int volume;
+			double volume;
 
 			volume = goo_window_get_volume (GOO_WINDOW (main_window));
 			goo_window_set_volume (GOO_WINDOW (main_window), volume - VOLUME_STEP);
@@ -397,7 +397,8 @@ prepare_application (void)
 		return;
 	}
 
-	gtk_widget_show (goo_window_new (NULL));
+	main_window = goo_window_new (NULL);
+	gtk_widget_show (main_window);
 }
 
 
@@ -603,32 +604,33 @@ system_notify (GooWindow  *window,
 	       const char *msg)
 {
 #ifdef ENABLE_NOTIFICATION
-        GtkWidget *tray_icon;
-	GdkScreen *screen = NULL;
-	int        x = -1, y = -1;
-	gboolean   supports_actions = FALSE;
-	GList     *caps = NULL;
-	GList     *c;
+
+	GtkStatusIcon *status_icon;
+	GdkScreen     *screen = NULL;
+	int            x = -1, y = -1;
 
 	if (! notify_is_initted ())
 		return;
 
-	tray_icon = goo_window_get_tray_icon (window);
-	if (tray_icon != NULL) {
-		GdkWindow *win = tray_icon->window;
-		int        w, h;
-				
-		gdk_window_get_origin (win, &x, &y);
-		gdk_window_get_geometry (win, NULL, NULL, &w, &h, NULL);
-		y += h;
-		x += (w / 2);
-		
-		screen = gtk_widget_get_screen (tray_icon);
+	status_icon = goo_window_get_status_icon (window);
+	if (status_icon != NULL) {
+		GdkRectangle area;
+
+		if (gtk_status_icon_get_geometry (status_icon, &screen, &area, NULL)) {
+			y = area.y + area.height;
+			x = area.x + (area.width / 2);
+		}
 	}
 
 	if (notification == NULL) {
+		gboolean  supports_actions;
+		GList    *caps;
+
+		supports_actions = FALSE;
 		caps = notify_get_server_caps ();
 		if (caps != NULL) {
+			GList *c;
+
 			for (c = caps; c != NULL; c = c->next) {
 				if (strcmp ((char*)c->data, "actions") == 0) {
 					supports_actions = TRUE;
@@ -661,7 +663,7 @@ system_notify (GooWindow  *window,
 	else
 		notify_notification_update (notification, title, msg, "goobox");
 
-	/*if ((x >= 0) && (y >= 0)) 
+	/*if ((x >= 0) && (y >= 0))
 		notify_notification_set_geometry_hints (notification,
 							screen,
 							x, y);*/

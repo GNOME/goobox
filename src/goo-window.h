@@ -100,6 +100,7 @@ void        goo_window_set_hibernate             (GooWindow    *window,
 void        goo_window_set_current_cd_autofetch  (GooWindow    *window,
 						  gboolean      autofetch);
 gboolean    goo_window_get_current_cd_autofetch  (GooWindow    *window);
-GtkWidget * goo_window_get_tray_icon             (GooWindow    *window);
+GtkStatusIcon *
+	    goo_window_get_status_icon           (GooWindow    *window);
 
 #endif /* GOO_WINDOW_H */

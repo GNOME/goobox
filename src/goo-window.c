@@ -80,18 +80,14 @@ struct _GooWindowPrivate {
 
 	GtkWidget         *statusbar;
 	GtkWidget         *file_popup_menu;
-	GtkWidget         *tray_popup_menu;
 	GtkWidget         *cover_popup_menu;
+	GtkWidget         *status_icon_popup_menu;
 
 	GtkWidget         *info;
-	GtkWidget         *info_popup;
 	GtkWidget         *volume_button;
 
-	GtkWidget         *tray;
-	GtkWidget         *tray_box;
-	GtkWidget         *tray_icon;
-	GtkTooltips       *tray_tips;
-	guint              tray_tooltip_delay;
+	GtkStatusIcon     *status_icon;
+	GtkWidget         *status_tooltip_content;
 
 	GtkTooltips       *tooltips;
 	guint              help_message_cid;
@@ -479,11 +475,6 @@ goo_window_finalize (GObject *object)
 
 		gtk_object_destroy (GTK_OBJECT (window->priv->tooltips));
 		g_object_unref (window->priv->list_store);
-			
-		if (window->priv->tray_tooltip_delay != 0) {
-			g_source_remove (window->priv->tray_tooltip_delay);
-			window->priv->tray_tooltip_delay = 0;
-		}
 		
 		if (window->priv->next_timeout_handle != 0) {
 			g_source_remove (window->priv->next_timeout_handle);
@@ -506,6 +497,11 @@ goo_window_finalize (GObject *object)
 		if (window->priv->cover_popup_menu != NULL) {
 			gtk_widget_destroy (window->priv->cover_popup_menu);
 			window->priv->cover_popup_menu = NULL;
+		}
+
+		if (window->priv->status_icon_popup_menu != NULL) {
+			gtk_widget_destroy (window->priv->status_icon_popup_menu);
+			window->priv->status_icon_popup_menu = NULL;
 		}
 
 		g_signal_handlers_disconnect_by_data (window->priv->player, window);
@@ -980,8 +976,6 @@ first_time_idle (gpointer callback_data)
 	GooWindow *window = callback_data;
 
 	g_source_remove (window->priv->first_time_event);
-	window->priv->first_time_event = 0;
-
 	goo_player_update (window->priv->player);
 
 	return FALSE;
@@ -1443,13 +1437,6 @@ window_update_title (GooWindow *window)
 
 	gtk_window_set_title (GTK_WINDOW (window), title->str);
 
-	/* FIXME if (window->priv->tray_tips != NULL) {
-		gtk_tooltips_set_tip (GTK_TOOLTIPS (window->priv->tray_tips),
-				      window->priv->tray_box,
-				      title->str,
-				      NULL);
-	}*/
-
 	g_string_free (title, TRUE);
 }
 
@@ -1575,10 +1562,10 @@ goo_window_get_current_cd_autofetch (GooWindow *window)
 }
 
 
-GtkWidget *
-goo_window_get_tray_icon (GooWindow *window)
+GtkStatusIcon *
+goo_window_get_status_icon (GooWindow *window)
 {
-	return window->priv->tray_icon;
+	return window->priv->status_icon;
 }
  
 
@@ -1988,150 +1975,105 @@ window_key_press_cb (GtkWidget   *widget,
 }
 
 
-#if 0
 static void
-tray_object_destroyed (GooWindow *window)
+status_icon_activate_cb (GtkStatusIcon *status_icon,
+		         GooWindow     *window)
 {
-
-
-	gtk_object_unref (GTK_OBJECT (window->priv->tray_tips));
-	window->priv->tray_tips = NULL;
-
-	if (window->priv->tray_popup_menu != NULL) {
-		gtk_widget_destroy (window->priv->file_popup_menu);
-		window->priv->file_popup_menu = NULL;
-	}
-
-	window->priv->tray = NULL;
+	goo_window_toggle_visibility (window);
 }
 
 
 static gboolean
-tray_icon_clicked (GtkWidget      *widget, 
-		   GdkEventButton *event,
-		   GooWindow      *window)
+status_icon_query_tooltip_cb (GtkStatusIcon *status_icon,
+			      int            x,
+			      int            y,
+			      gboolean       keyboard_mode,
+			      GtkTooltip    *tooltip,
+			      gpointer       user_data)
 {
-	if (event->button == 3) 
-		return FALSE;
+	GooWindow *window = user_data;
+	GdkPixbuf *image;
+	GooPlayer *player;
+	AlbumInfo *album;
+	TrackInfo *track;
 
-	goo_window_toggle_visibility (window);
+	/*if (keyboard_mode)
+		return FALSE;*/
+
+	image = goo_player_info_get_cover (GOO_PLAYER_INFO (window->priv->info));
+	if (image != NULL)
+		gtk_tooltip_set_icon (tooltip, image);
+	else
+		gtk_tooltip_set_icon_from_stock (tooltip, GOO_STOCK_NO_DISC, GTK_ICON_SIZE_DIALOG);
+
+	player = goo_window_get_player (window);
+	album = goo_window_get_album (window);
+	track = album_info_get_track (album, goo_player_get_current_track (player));
+
+	if (track != NULL) {
+		char *current_time;
+		char *markup;
+
+		current_time = _g_format_duration_for_display (track->length * 1000 * goo_player_info_get_progress (GOO_PLAYER_INFO (window->priv->info)));
+		markup = g_markup_printf_escaped ("<b>%s</b>\n<i>%s</i>\n%s", track->title, track->artist, current_time);
+		gtk_tooltip_set_markup (tooltip, markup);
+
+		g_free (markup);
+		g_free (current_time);
+	}
+	else if (album != NULL) {
+		char *markup;
+
+		markup = g_markup_printf_escaped ("<b>%s</b>\n<i>%s</i>\n", album->title, album->artist);
+		gtk_tooltip_set_markup (tooltip, markup);
+
+		g_free (markup);
+	}
 
 	return TRUE;
 }
 
 
-static gboolean
-tray_icon_pressed (GtkWidget   *widget, 
-		   GdkEventKey *event, 
-		   GooWindow   *window)
+static void
+status_icon_popup_menu_position_cb (GtkMenu  *menu,
+				    int      *x,
+				    int      *y,
+				    gboolean *push_in,
+				    gpointer  user_data)
 {
-	if ((event->keyval == GDK_space) 
-	    || (event->keyval == GDK_KP_Space) 
-	    || (event->keyval == GDK_Return)
-	    || (event->keyval == GDK_KP_Enter))
-	{
-		goo_window_toggle_visibility (window);
-		return TRUE;
+	GooWindow      *window = user_data;
+	GdkRectangle    area;
+	GtkOrientation  orientation;
+
+	gtk_status_icon_get_geometry (window->priv->status_icon, NULL, &area, &orientation);
+	if (orientation == GTK_ORIENTATION_HORIZONTAL) {
+		*x = area.x;
+		*y = area.y + area.height;
 	}
-	else
-		return FALSE;
-}
-
-
-static gboolean
-show_tray_icon_tooltip_cb (gpointer user_data)
-{
-	GooWindow *window = user_data;
-	GtkWidget *widget = window->priv->tray_box;
-	GdkScreen *screen;
-	int        tray_icon_x, tray_icon_y;
-	int        tray_icon_w, tray_icon_h;
-	int        popup_x, popup_y;
-	int        popup_w, popup_h;
-	
-	screen = gtk_widget_get_screen (widget);
-	gtk_window_set_screen (GTK_WINDOW (window->priv->info_popup), screen);
-	
-	gdk_window_get_origin (widget->window, &tray_icon_x, &tray_icon_y);
-	gdk_window_get_geometry (widget->window, NULL, NULL, &tray_icon_w, &tray_icon_h, NULL);
-	
-	gtk_widget_show (window->priv->info_popup);
-	gdk_window_get_geometry (window->priv->info_popup->window, NULL, NULL, &popup_w, &popup_h, NULL);
-	
-	popup_x = tray_icon_x - (tray_icon_w / 2) - (popup_w / 2);
-	popup_y = tray_icon_y + tray_icon_h + 10;
-	
-	if (popup_x + popup_w + 10 > gdk_screen_get_width (screen))
-		popup_x = gdk_screen_get_width (screen) - popup_w - 10;
-	if (popup_y + popup_h + 30 > gdk_screen_get_height (screen))
-		popup_y = gdk_screen_get_height (screen) - popup_h - 30;
-
-	gtk_window_move (GTK_WINDOW (window->priv->info_popup), 
-			 popup_x, 
-			 popup_y);
-	
-	return FALSE;
-}
-
-
-static gboolean
-tray_icon_enter_notify_event_cb (GtkWidget        *widget,
-                                 GdkEventCrossing *event,
-                                 gpointer          user_data)
-{
-	GooWindow *window = user_data;
-	
-	if (window->priv->tray_tooltip_delay == 0)
-		window->priv->tray_tooltip_delay = g_timeout_add (TRAY_TOOLTIP_DELAY,
-							  	  show_tray_icon_tooltip_cb,
-							  	  window);
-	return FALSE;
-}
-
-
-static gboolean
-tray_icon_leave_notify_event_cb (GtkWidget        *widget,
-                                 GdkEventCrossing *event,
-                                 gpointer          user_data)
-{
-	GooWindow *window = user_data;
-	
-	gtk_widget_hide (window->priv->info_popup);
-	if (window->priv->tray_tooltip_delay != 0) {
-		g_source_remove (window->priv->tray_tooltip_delay);
-		window->priv->tray_tooltip_delay = 0;
+	else {
+		*x = area.x + area.width;
+		*y = area.y;
 	}
-	
-	return FALSE;
+
+	*push_in = TRUE;
 }
 
 
-static int
-tray_icon_expose (GtkWidget      *widget,
-		  GdkEventExpose *event)
+static void
+status_icon_popup_menu_cb (GtkStatusIcon *status_icon,
+			   guint          button,
+			   guint          activate_time,
+			   gpointer       user_data)
 {
-	int focus_width, focus_pad;
-	int x, y, width, height;
+	GooWindow *window = user_data;
 
-	if (! GTK_WIDGET_HAS_FOCUS (gtk_widget_get_parent (widget)))
-		return FALSE;
-	
-	gtk_widget_style_get (widget,
-			      "focus-line-width", &focus_width,
-			      "focus-padding", &focus_pad,
-			      NULL);
-	x = widget->allocation.x + focus_pad;
-	y = widget->allocation.y + focus_pad;
-	width = widget->allocation.width - 2 * focus_pad;
-	height = widget->allocation.height - 2 * focus_pad;
-	gtk_paint_focus (widget->style, widget->window,
-			 GTK_STATE_NORMAL,
-			 &event->area, widget, "button",
-			 x, y, width, height);
-
-	return FALSE;
+	gtk_menu_popup (GTK_MENU (window->priv->status_icon_popup_menu),
+			NULL, NULL,
+			status_icon_popup_menu_position_cb,
+			window,
+			button,
+			activate_time);
 }
-#endif
 
 
 static void
@@ -2536,86 +2478,30 @@ goo_window_construct (GooWindow    *window,
 					   eel_gconf_get_integer (PREF_GENERAL_VOLUME, DEFAULT_VOLUME) / 100.0,
 					   TRUE);
 
-	/* The tray icon. */
+	/* The status icon. */
 	
-#if 0
-	window->priv->tray = GTK_WIDGET (egg_tray_icon_new ("Goobox"));
-	window->priv->tray_box = gtk_event_box_new ();
+	window->priv->status_icon = gtk_status_icon_new_from_icon_name ("goobox");
+	gtk_status_icon_set_has_tooltip (window->priv->status_icon, TRUE);
+	gtk_status_icon_set_title (window->priv->status_icon, _("CD Player"));
 	
-	window->priv->info_popup = gtk_window_new (GTK_WINDOW_POPUP);
+	window->priv->status_tooltip_content = goo_player_info_new (window, FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (window->priv->status_tooltip_content), 0);
 	
-	/* FIXME
-	{
-		GtkWidget *out_frame;
-		GtkWidget *info;
-		
-		out_frame = gtk_frame_new (NULL);
-		gtk_frame_set_shadow_type (GTK_FRAME (out_frame), GTK_SHADOW_OUT);
-		gtk_widget_show (out_frame);
-		gtk_container_add (GTK_CONTAINER (window->priv->info_popup), out_frame);
-		
-		info = goo_player_info_new (window, FALSE);
-		gtk_container_set_border_width (GTK_CONTAINER (info), 0);
-		gtk_widget_show_all (info);
-		g_signal_connect (info,
-				  "skip_to",
-				  G_CALLBACK (player_info_skip_to_cb), 
-				  window);
-		g_signal_connect (info,
-				  "cover_clicked",
-				  G_CALLBACK (player_info_cover_clicked_cb), 
-				  window);
-		gtk_container_add (GTK_CONTAINER (out_frame), info);
-	}
-	*/
-	
-	g_signal_connect (G_OBJECT (window->priv->tray_box),
-			  "button_press_event",
-			  G_CALLBACK (tray_icon_clicked), 
+	g_signal_connect (G_OBJECT (window->priv->status_icon),
+			  "activate",
+			  G_CALLBACK (status_icon_activate_cb),
 			  window);
-	g_signal_connect (G_OBJECT (window->priv->tray_box),
-			  "key_press_event",
-			  G_CALLBACK (tray_icon_pressed),
+	g_signal_connect (G_OBJECT (window->priv->status_icon),
+			  "query-tooltip",
+			  G_CALLBACK (status_icon_query_tooltip_cb),
 			  window);
-	g_signal_connect (G_OBJECT (window->priv->tray_box),
-			  "enter_notify_event",
-			  G_CALLBACK (tray_icon_enter_notify_event_cb),
-			  window);
-	g_signal_connect (G_OBJECT (window->priv->tray_box),
-			  "leave_notify_event",
-			  G_CALLBACK (tray_icon_leave_notify_event_cb),
+	g_signal_connect (G_OBJECT (window->priv->status_icon),
+			  "popup-menu",
+			  G_CALLBACK (status_icon_popup_menu_cb),
 			  window);
 
-	g_object_set_data_full (G_OBJECT (window->priv->tray),
-				"tray-action-data", 
-				window,
-				(GDestroyNotify) tray_object_destroyed);
+	window->priv->status_icon_popup_menu = gtk_ui_manager_get_widget (ui, "/TrayPopupMenu");
 
-	gtk_container_add (GTK_CONTAINER (window->priv->tray), window->priv->tray_box);
-	window->priv->tray_icon = gtk_image_new_from_icon_name ("goobox", GTK_ICON_SIZE_BUTTON);
-
-	g_signal_connect (G_OBJECT (window->priv->tray_icon),
-			  "expose_event",
-			  G_CALLBACK (tray_icon_expose), 
-			  window);
-
-	GTK_WIDGET_SET_FLAGS (window->priv->tray_box, GTK_CAN_FOCUS);
-	atk_object_set_name (gtk_widget_get_accessible (window->priv->tray_box), _("CD Player"));
-	
-	gtk_container_add (GTK_CONTAINER (window->priv->tray_box), window->priv->tray_icon);
-	window->priv->tray_tips = gtk_tooltips_new ();
-	gtk_object_ref (GTK_OBJECT (window->priv->tray_tips));
-	gtk_object_sink (GTK_OBJECT (window->priv->tray_tips));
-	/* gtk_tooltips_set_tip (GTK_TOOLTIPS (window->priv->tray_tips),
-			      window->priv->tray_box,
-			      _("CD Player"), 
-			      NULL); */
-
-	window->priv->tray_popup_menu = gtk_ui_manager_get_widget (ui, "/TrayPopupMenu");
-	gnome_popup_menu_attach (window->priv->tray_popup_menu, window->priv->tray_box, NULL);
-	gtk_widget_show_all (window->priv->tray);
-#endif
-	
 	/* Add notification callbacks. */
 
 	i = 0;
@@ -3193,6 +3079,7 @@ goo_window_toggle_visibility (GooWindow *window)
 					 &window->priv->pos_x,
 					 &window->priv->pos_y);
 		gtk_widget_hide (GTK_WIDGET (window));
+
 		set_action_label_and_icon (window,
 					   "ToggleVisibility", 
 					   _("_Show Window"), 
@@ -3206,6 +3093,7 @@ goo_window_toggle_visibility (GooWindow *window)
 				 window->priv->pos_x,
 				 window->priv->pos_y);
 		gtk_window_present (GTK_WINDOW (window));
+
 		set_action_label_and_icon (window,
 					   "ToggleVisibility", 
 					   _("_Hide Window"), 
