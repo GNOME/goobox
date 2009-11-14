@@ -1997,16 +1997,21 @@ status_icon_query_tooltip_cb (GtkStatusIcon *status_icon,
 	AlbumInfo *album;
 	TrackInfo *track;
 
-	/*if (keyboard_mode)
-		return FALSE;*/
+	if (keyboard_mode)
+		return FALSE;
+
+	player = goo_window_get_player (window);
 
 	image = goo_player_info_get_cover (GOO_PLAYER_INFO (window->priv->info));
 	if (image != NULL)
 		gtk_tooltip_set_icon (tooltip, image);
+	else if (goo_player_is_audio_cd (player))
+		gtk_tooltip_set_icon_from_stock (tooltip, GOO_STOCK_AUDIO_CD, GTK_ICON_SIZE_DIALOG);
+	else if (goo_player_get_state (player) == GOO_PLAYER_STATE_DATA_DISC)
+		gtk_tooltip_set_icon_from_stock (tooltip, GOO_STOCK_DATA_DISC, GTK_ICON_SIZE_DIALOG);
 	else
 		gtk_tooltip_set_icon_from_stock (tooltip, GOO_STOCK_NO_DISC, GTK_ICON_SIZE_DIALOG);
 
-	player = goo_window_get_player (window);
 	album = goo_window_get_album (window);
 	track = album_info_get_track (album, goo_player_get_current_track (player));
 
@@ -2021,7 +2026,7 @@ status_icon_query_tooltip_cb (GtkStatusIcon *status_icon,
 		g_free (markup);
 		g_free (current_time);
 	}
-	else if (album != NULL) {
+	else if ((album != NULL) && (album->title != NULL)) {
 		char *markup;
 
 		markup = g_markup_printf_escaped ("<b>%s</b>\n<i>%s</i>\n", album->title, album->artist);
@@ -2029,6 +2034,8 @@ status_icon_query_tooltip_cb (GtkStatusIcon *status_icon,
 
 		g_free (markup);
 	}
+	else
+		gtk_tooltip_set_text (tooltip, _("CD Player"));
 
 	return TRUE;
 }
