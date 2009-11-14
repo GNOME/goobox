@@ -40,7 +40,7 @@
 static NotifyNotification *notification = NULL;
 #endif /* ENABLE_NOTIFICATION */
 
-#define VOLUME_STEP 0.10 /* FIXME */
+#define VOLUME_STEP 0.10
 
 enum {
 	COMMAND_UNUSED,
@@ -247,23 +247,17 @@ unique_app_message_received_cb (UniqueApp         *unique_app,
 			device = unique_message_data_get_text (message);
 			if (*device == '\0')
 				device = NULL;
-
 			if (device != NULL) {
-				/* FIXME
-				GooPlayer *player;
-				CDDrive   *current_drive;
+				BraseroDrive *drive;
 
-				player = goo_window_get_player (GOO_WINDOW (main_window));
-				current_drive = goo_player_get_drive (player);
-
-				if (current_drive == NULL) {
-					main_window = get_window_from_device (device);
-					if (main_window == NULL)
-						main_window = goo_window_new (device);
-				}
+				drive = main_get_drive_for_device (device);
+				main_window = main_get_window_from_device (device);
+				if (main_window == NULL)
+					main_window = goo_window_new (drive);
 				else
-					goo_window_set_device (GOO_WINDOW (main_window), device);
-				*/
+					goo_window_set_drive (GOO_WINDOW (main_window), drive);
+
+				g_object_unref (drive);
 			}
 		}
 		break;
@@ -460,66 +454,23 @@ int main (int argc, char **argv)
 }
 
 
-/*
-CDDrive * 
-get_drive_from_device (const char *device)
+GtkWidget *
+main_get_window_from_device (const char *device)
 {
-	CDDrive    *result = NULL;
-	char       *resolved_device = NULL;
-	char       *resolved_real_device = NULL;
-	const char *real_device = NULL;
-	GList      *scan;
+	GList *scan;
 	
 	if (device == NULL)
-		return NULL;
-	
-	if (resolve_all_symlinks (device, &resolved_device) != GNOME_VFS_OK)
-		resolved_device = NULL;
-
-	if (resolved_device == NULL)
-		return NULL;
-	
-	device = get_path_from_uri (resolved_device);
-	for (scan = Drives; scan; scan = scan->next) {
-		CDDrive *drive = scan->data;
-		
-		if (drive->device == NULL)
-			continue;
-		if (resolve_all_symlinks (drive->device, &resolved_real_device) != GNOME_VFS_OK)
-			continue;
-		real_device = get_path_from_uri (resolved_real_device);
-		if (strcmp (real_device, device) == 0) {
-			result = drive;
-			break;
-		}
-	}
-	
-	g_free (resolved_device);
-	
-	return result;
-}
-
-
-GtkWindow *
-get_window_from_device (const char *device)
-{
-	CDDrive *device_drive;
-	GList   *scan;
-	
-	device_drive = get_drive_from_device (device);
-	if (device_drive == NULL)
 		return NULL;
 		
 	for (scan = window_list; scan; scan = scan->next) {
 		GooWindow *window = scan->data;
 
-		if (goo_player_get_drive (goo_window_get_player (window)) == device_drive)
-			return (GtkWindow *) window;
+		if (g_strcmp0 (goo_player_get_device (goo_window_get_player (window)), device) == 0)
+			return (GtkWidget *) window;
 	}
 	
 	return NULL;
 }
-*/
 
 
 BraseroDrive *

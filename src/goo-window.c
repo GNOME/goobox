@@ -2762,12 +2762,10 @@ goo_window_eject (GooWindow *window)
 
 
 void
-goo_window_set_device (GooWindow  *window,
-		       const char *device)
+goo_window_set_drive (GooWindow    *window,
+		      BraseroDrive *drive)
 {
-	goo_player_set_device (window->priv->player, device);
-	if (device == NULL)
-		window_update_sensitivity (window);
+	goo_player_set_drive (window->priv->player, drive);
 }
 
 
@@ -3135,17 +3133,7 @@ goo_window_set_hibernate (GooWindow *window,
 			  gboolean   hibernate)
 {
 	window->priv->hibernate = hibernate;
-
-	if (hibernate) {
-		goo_window_set_device (window, NULL);
-	} 
-	else {
-		char *device;
-
-		device = eel_gconf_get_string (PREF_GENERAL_DEVICE, NULL);
-		goo_window_set_device (window, device);
-		g_free (device);
-		
+	goo_player_hibernate (window->priv->player, hibernate);
+	if (! hibernate)
 		goo_window_update (window);
-	}
 }

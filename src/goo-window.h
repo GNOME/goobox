@@ -73,8 +73,8 @@ void        goo_window_pause                     (GooWindow    *window);
 void        goo_window_prev                      (GooWindow    *window);
 void        goo_window_next                      (GooWindow    *window);
 void        goo_window_eject                     (GooWindow    *window);
-void        goo_window_set_device                (GooWindow    *window,
-						  const char   *device);
+void        goo_window_set_drive                 (GooWindow    *window,
+						  BraseroDrive *drive);
 AlbumInfo * goo_window_get_album                 (GooWindow    *window);
 GList *     goo_window_get_tracks                (GooWindow    *window,
 						  gboolean      selection);

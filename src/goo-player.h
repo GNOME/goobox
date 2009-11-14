@@ -92,9 +92,14 @@ struct _GooPlayerClass
 
 GType            goo_player_get_type            (void);
 GooPlayer *      goo_player_new                 (BraseroDrive    *drive);
+void             goo_player_set_drive           (GooPlayer       *player,
+						 BraseroDrive    *drive);
 BraseroDrive *   goo_player_get_drive           (GooPlayer       *player);
 const char *     goo_player_get_device          (GooPlayer       *player);
 gboolean         goo_player_is_audio_cd         (GooPlayer       *player);
+void             goo_player_hibernate           (GooPlayer       *player,
+						 gboolean         hibernate);
+gboolean         goo_player_is_hibernate        (GooPlayer       *player);
 void             goo_player_update              (GooPlayer       *player);
 void             goo_player_list                (GooPlayer       *player);
 void             goo_player_seek_track          (GooPlayer       *player,
@@ -108,8 +113,6 @@ void             goo_player_stop                (GooPlayer       *player);
 void             goo_player_eject               (GooPlayer       *player);
 GooPlayerAction  goo_player_get_action          (GooPlayer       *player);
 GooPlayerState   goo_player_get_state           (GooPlayer       *player);
-gboolean         goo_player_set_device          (GooPlayer       *player,
-						 const char      *device);
 const char *     goo_player_get_discid          (GooPlayer       *player);
 void             goo_player_set_album           (GooPlayer       *player,
 						 AlbumInfo       *album);

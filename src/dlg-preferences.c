@@ -64,8 +64,7 @@ apply_button_clicked_cb (GtkWidget  *widget,
 			 DialogData *data)
 {
 	const char   *destination;
-	BraseroDrive *br_drive;
-	const char   *device;
+	BraseroDrive *drive;
 
 	destination = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (GET_WIDGET ("destination_filechooserbutton")));
 	eel_gconf_set_uri (PREF_EXTRACT_DESTINATION, destination);
@@ -76,16 +75,14 @@ apply_button_clicked_cb (GtkWidget  *widget,
 	
 	/**/
 
-	br_drive = brasero_drive_selection_get_active (BRASERO_DRIVE_SELECTION (data->drive_selector));
-	if (br_drive == NULL)
+	drive = brasero_drive_selection_get_active (BRASERO_DRIVE_SELECTION (data->drive_selector));
+	if (drive == NULL)
 		return;
 
-	device = brasero_drive_get_device (br_drive);
-	eel_gconf_set_string (PREF_GENERAL_DEVICE, device);
-	goo_window_set_device (data->window, device);
-	goo_window_update (data->window);
+	eel_gconf_set_string (PREF_GENERAL_DEVICE, brasero_drive_get_device (drive));
+	goo_window_set_drive (data->window, drive);
 
-	g_object_unref (br_drive);
+	g_object_unref (drive);
 }
 
 

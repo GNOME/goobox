@@ -31,14 +31,11 @@ extern GList     *window_list;
 extern int        AutoPlay;
 extern int        HideShow;
 
-/*
-CDDrive *   get_drive_from_device  (const char *device);
-GtkWindow * get_window_from_device (const char *device);
-*/
-BraseroDrive *  main_get_most_likely_drive (void);
-BraseroDrive *  main_get_drive_for_device  (const char *device);
-void            system_notify              (GooWindow  *window,
-	       			            const char *title,
-	       			            const char *msg);
+GtkWidget *     main_get_window_from_device (const char *device);
+BraseroDrive *  main_get_most_likely_drive  (void);
+BraseroDrive *  main_get_drive_for_device   (const char *device);
+void            system_notify               (GooWindow  *window,
+	       			             const char *title,
+	       			             const char *msg);
 
 #endif /* MAIN_H */

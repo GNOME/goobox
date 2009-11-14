@@ -51,6 +51,7 @@ struct _GooPlayerPrivate {
 	double           volume_value;
 	gboolean         is_busy;
 	gboolean         audio_cd;
+	gboolean         hibernate;
 	
 	GstElement      *pipeline;
 	GstElement      *source;
@@ -194,9 +195,6 @@ create_pipeline (GooPlayer *self)
 
 	destroy_pipeline (self, FALSE);
 
-	/*remove_state_polling (self);
-	 goo_cdrom_lock_tray (self->priv->cdrom); FIXME */
-
 	self->priv->pipeline = gst_pipeline_new ("pipeline");
 
 	/*self->priv->source = gst_element_make_from_uri (GST_URI_SRC, "cdda://1", "source");*/
@@ -260,11 +258,10 @@ goo_player_set_state (GooPlayer       *self,
 		      GooPlayerState   state,
 		      gboolean         notify)
 {
-	/* FIXME
 	if (state == GOO_PLAYER_STATE_PLAYING)
 		brasero_drive_lock (self->priv->drive, _("Playing CD"), NULL);
 	else
-		brasero_drive_unlock (self->priv->drive);*/
+		brasero_drive_unlock (self->priv->drive);
 
 	self->priv->state = state;
 	if (notify)
@@ -341,6 +338,7 @@ goo_player_init (GooPlayer *self)
 	self->priv->state = GOO_PLAYER_STATE_LISTING;
 	self->priv->action = GOO_PLAYER_ACTION_NONE;
 	self->priv->is_busy = FALSE;
+	self->priv->hibernate = FALSE;
 	self->priv->yes_or_no = g_mutex_new ();
 	self->priv->check_id = 0;
 	self->priv->exiting = FALSE,
@@ -399,9 +397,7 @@ drive_medium_removed_cb (BraseroDrive  *drive,
 		         BraseroMedium *medium,
 		         gpointer       user_data)
 {
-	GooPlayer *self = user_data;
-
-	goo_player_update (self);
+	goo_player_update ((GooPlayer *) user_data);
 }
 
 
@@ -413,17 +409,7 @@ goo_player_new (BraseroDrive *drive)
 	g_return_val_if_fail (drive != NULL, NULL);
 
 	self = GOO_PLAYER (g_object_new (GOO_TYPE_PLAYER, NULL));
-	self->priv->drive = g_object_ref (drive);
-	self->priv->medium_added_event =
-			g_signal_connect (self->priv->drive,
-					  "medium-added",
-					  G_CALLBACK (drive_medium_added_cb),
-					  self);
-	self->priv->medium_removed_event =
-			g_signal_connect (self->priv->drive,
-					  "medium-removed",
-					  G_CALLBACK (drive_medium_removed_cb),
-					  self);
+	goo_player_set_drive (self, drive);
 
 	return self;
 }
@@ -766,9 +752,27 @@ goo_player_is_audio_cd (GooPlayer *self)
 
 
 void
+goo_player_hibernate (GooPlayer *self,
+		      gboolean   hibernate)
+{
+	self->priv->hibernate = hibernate;
+}
+
+
+gboolean
+goo_player_is_hibernate (GooPlayer *self)
+{
+	return self->priv->hibernate;
+}
+
+
+void
 goo_player_update (GooPlayer *self)
 {
 	BraseroMedium *medium;
+
+	if (self->priv->hibernate)
+		return;
 
 	self->priv->audio_cd = FALSE;
 
@@ -916,31 +920,31 @@ goo_player_skip_to (GooPlayer *player,
 }
 
 
-gboolean
-goo_player_set_device (GooPlayer  *player,
-		       const char *device)
+void
+goo_player_set_drive (GooPlayer    *self,
+		      BraseroDrive *drive)
 {
-	/* FIXME
-	if (goo_player_get_is_busy (player))
-		return TRUE;
+	g_return_if_fail (drive != NULL);
 
-	debug (DEBUG_INFO, "DEVICE: %s\n", device);
-
-	destroy_pipeline (player, FALSE);
-	remove_state_polling (player);
-
-	player->priv->drive = get_drive_from_device (device);
-	if (player->priv->drive != NULL) {
-		create_cdrom (player);
-		goo_cdrom_set_device (player->priv->cdrom, player->priv->device);
+	if (self->priv->drive != NULL) {
+		if (self->priv->medium_added_event != 0)
+			g_signal_handler_disconnect (self->priv->drive, self->priv->medium_added_event);
+		if (self->priv->medium_removed_event != 0)
+			g_signal_handler_disconnect (self->priv->drive, self->priv->medium_removed_event);
+		g_object_unref (self->priv->drive);
 	}
-	else
-		goo_player_set_state (player, GOO_PLAYER_STATE_ERROR, FALSE);
-		
-	return TRUE;
-	*/
 
-	return TRUE;
+	self->priv->drive = g_object_ref (drive);
+	self->priv->medium_added_event =
+			g_signal_connect (self->priv->drive,
+					  "medium-added",
+					  G_CALLBACK (drive_medium_added_cb),
+					  self);
+	self->priv->medium_removed_event =
+			g_signal_connect (self->priv->drive,
+					  "medium-removed",
+					  G_CALLBACK (drive_medium_removed_cb),
+					  self);
 }
 
 
@@ -1047,7 +1051,7 @@ goo_player_eject (GooPlayer *self)
 {
 	GDrive *gdrive;
 
-	if (self->priv->drive == NULL)
+	if (self->priv->hibernate)
 		return;
 
 	g_signal_emit_by_name (G_OBJECT (self), "start", GOO_PLAYER_ACTION_EJECT);
@@ -1099,9 +1103,9 @@ goo_player_set_audio_volume (GooPlayer *player,
 
 
 gboolean
-goo_player_get_is_busy (GooPlayer *player)
+goo_player_get_is_busy (GooPlayer *self)
 {
-	return player->priv->is_busy;
+	return self->priv->is_busy || self->priv->hibernate;
 }
 
 
