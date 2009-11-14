@@ -140,17 +140,17 @@ activate_action_about (GtkAction *action,
 	const char *translator_credits = _("translator_credits");
         char       *license_text;
         const char *license[] = {
-                "CD Player is free software; you can redistribute it and/or modify"
+                N_("CD Player is free software; you can redistribute it and/or modify"
                 "it under the terms of the GNU General Public License as published by "
                 "the Free Software Foundation; either version 2 of the License, or "
-                "(at your option) any later version.",
-                "CD Player is distributed in the hope that it will be useful, "
+                "(at your option) any later version."),
+                N_("CD Player is distributed in the hope that it will be useful, "
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "
                 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "
-                "GNU General Public License for more details.",
-                "You should have received a copy of the GNU General Public License "
+                "GNU General Public License for more details."),
+                N_("You should have received a copy of the GNU General Public License "
                 "along with CD Player; if not, write to the Free Software Foundation, Inc., "
-                "51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA"
+                "51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA")
         };
 
         license_text = g_strconcat (license[0], "\n\n", license[1], "\n\n",
@@ -159,7 +159,7 @@ activate_action_about (GtkAction *action,
         gtk_show_about_dialog (GTK_WINDOW (window),
         		       "name", _("CD Player"),
                                "version", VERSION,
-                               "copyright", _("Copyright \xc2\xa9 2004-2007 Free Software Foundation, Inc."),
+                               "copyright", _("Copyright \xc2\xa9 2004-2009 Free Software Foundation, Inc."),
                                "comments", _("Play CDs and save the tracks to disk as files"),
                                "authors", authors,
                                /*"documenters", documenters,*/
