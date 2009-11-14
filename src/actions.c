@@ -130,13 +130,13 @@ activate_action_about (GtkAction *action,
 {
 	GooWindow  *window = data;
 	const char *authors[] = {
-		"Paolo Bacchilega <paolo.bacchilega@libero.it>", 
+		"Paolo Bacchilega <paobac@src.gnome.org>",
 		NULL
 	};
-	/*
-	  const char     *documenters [] = {
-	  NULL
-	  };*/
+	const char *documenters [] = {
+		"Paolo Bacchilega <paobac@src.gnome.org>",
+		NULL
+	};
 	const char *translator_credits = _("translator_credits");
         char       *license_text;
         const char *license[] = {
@@ -162,7 +162,7 @@ activate_action_about (GtkAction *action,
                                "copyright", _("Copyright \xc2\xa9 2004-2009 Free Software Foundation, Inc."),
                                "comments", _("Play CDs and save the tracks to disk as files"),
                                "authors", authors,
-                               /*"documenters", documenters,*/
+                               "documenters", documenters,
                                "translator_credits", strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
                                "logo-icon-name", "goobox",
                                "license", license_text,
