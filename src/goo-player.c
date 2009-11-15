@@ -785,6 +785,8 @@ goo_player_update (GooPlayer *self)
 		action_done (self, GOO_PLAYER_ACTION_LIST);
 	}
 	else if ((BRASERO_MEDIUM_IS (brasero_medium_get_status (medium), BRASERO_MEDIUM_CD | BRASERO_MEDIUM_HAS_AUDIO))) {
+		if (self->priv->state == GOO_PLAYER_STATE_NO_DISC)
+			action_done (self, GOO_PLAYER_ACTION_EJECT); /* fake EJECT signal to update the window state correctly */
 		self->priv->audio_cd = TRUE;
 		goo_player_set_state (self, GOO_PLAYER_STATE_STOPPED, TRUE);
 		goo_player_list (self);
