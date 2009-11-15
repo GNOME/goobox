@@ -116,7 +116,6 @@ struct _GooWindowPrivate {
 	int                pos_x, pos_y;
 	gboolean           hibernate;
 	gboolean           notify_action;
-	gboolean           ejected;
 
 #ifdef ENABLE_MEDIA_KEYS
 	DBusGProxy        *media_keys_proxy;
@@ -395,6 +394,7 @@ goo_window_update_list (GooWindow *window)
 	}
 
 	window_update_sensitivity (window);
+	window_update_statusbar_list_info (window);
 
 	g_object_unref (icon);
 }
@@ -976,7 +976,7 @@ first_time_idle (gpointer callback_data)
 	GooWindow *window = callback_data;
 
 	g_source_remove (window->priv->first_time_event);
-	goo_player_update (window->priv->player);
+	/*goo_player_update (window->priv->player); FIXME */
 
 	return FALSE;
 }
@@ -1231,8 +1231,11 @@ get_action_name (GooPlayerAction action)
 	case GOO_PLAYER_ACTION_STOP:
 		name = "STOP";
 		break;
-	case GOO_PLAYER_ACTION_EJECT:
-		name = "EJECT";
+	case GOO_PLAYER_ACTION_MEDIUM_ADDED:
+		name = "MEDIUM ADDED";
+		break;
+	case GOO_PLAYER_ACTION_MEDIUM_REMOVED:
+		name = "MEDIUM REMOVED";
 		break;
 	case GOO_PLAYER_ACTION_UPDATE:
 		name = "UPDATE";
@@ -1636,12 +1639,10 @@ player_done_cb (GooPlayer       *player,
 		goo_window_update_cover (window);
 		window_update_title (window);
 		set_current_track_icon (window, NULL);
-		if (AutoPlay || (window->priv->ejected && eel_gconf_get_boolean (PREF_GENERAL_AUTOPLAY, TRUE))) {
+		if (AutoPlay || eel_gconf_get_boolean (PREF_GENERAL_AUTOPLAY, TRUE)) {
 			AutoPlay = FALSE;
 			g_timeout_add (AUTOPLAY_DELAY, autoplay_cb, window);
 		}
-		if (goo_player_get_state (player) >= GOO_PLAYER_STATE_NO_DISC)
-			window->priv->ejected = FALSE;
 		break;
 
 	case GOO_PLAYER_ACTION_METADATA:
@@ -1660,7 +1661,7 @@ player_done_cb (GooPlayer       *player,
 		
 	case GOO_PLAYER_ACTION_PLAY:
 	case GOO_PLAYER_ACTION_STOP:
-	case GOO_PLAYER_ACTION_EJECT:
+	case GOO_PLAYER_ACTION_MEDIUM_REMOVED:
 		set_action_label_and_icon (window,
 					   "TogglePlay", 
 					   _("_Play"), 
@@ -1674,8 +1675,7 @@ player_done_cb (GooPlayer       *player,
 		} 
 		else if (action == GOO_PLAYER_ACTION_STOP) 
 			set_current_track_icon (window, GTK_STOCK_MEDIA_STOP);
-		else if (action == GOO_PLAYER_ACTION_EJECT)
-			window->priv->ejected = TRUE;
+
 		break;
 		
 	case GOO_PLAYER_ACTION_PAUSE:

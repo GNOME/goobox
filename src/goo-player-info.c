@@ -785,7 +785,7 @@ player_done_cb (GooPlayer       *player,
 		break;
 	case GOO_PLAYER_ACTION_PLAY:
 	case GOO_PLAYER_ACTION_STOP:
-	case GOO_PLAYER_ACTION_EJECT:
+	case GOO_PLAYER_ACTION_MEDIUM_REMOVED:
 		goo_player_info_set_time (info, 0);
 		break;
 	default:

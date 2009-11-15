@@ -335,7 +335,7 @@ static void
 goo_player_init (GooPlayer *self)
 {
 	self->priv = GOO_PLAYER_GET_PRIVATE_DATA (self);
-	self->priv->state = GOO_PLAYER_STATE_LISTING;
+	self->priv->state = GOO_PLAYER_STATE_NO_DISC;
 	self->priv->action = GOO_PLAYER_ACTION_NONE;
 	self->priv->is_busy = FALSE;
 	self->priv->hibernate = FALSE;
@@ -389,7 +389,10 @@ drive_medium_added_cb (BraseroDrive  *drive,
 		       BraseroMedium *medium,
 		       gpointer       user_data)
 {
-	goo_player_update ((GooPlayer *) user_data);
+	GooPlayer *self = user_data;
+
+	action_done (self, GOO_PLAYER_ACTION_MEDIUM_ADDED);
+	goo_player_update (self);
 }
 
 
@@ -398,7 +401,10 @@ drive_medium_removed_cb (BraseroDrive  *drive,
 		         BraseroMedium *medium,
 		         gpointer       user_data)
 {
-	goo_player_update ((GooPlayer *) user_data);
+	GooPlayer *self = user_data;
+
+	action_done (self, GOO_PLAYER_ACTION_MEDIUM_REMOVED);
+	goo_player_update (self);
 }
 
 
@@ -785,8 +791,6 @@ goo_player_update (GooPlayer *self)
 		action_done (self, GOO_PLAYER_ACTION_LIST);
 	}
 	else if ((BRASERO_MEDIUM_IS (brasero_medium_get_status (medium), BRASERO_MEDIUM_CD | BRASERO_MEDIUM_HAS_AUDIO))) {
-		if (self->priv->state == GOO_PLAYER_STATE_NO_DISC)
-			action_done (self, GOO_PLAYER_ACTION_EJECT); /* fake EJECT signal to update the window state correctly */
 		self->priv->audio_cd = TRUE;
 		goo_player_set_state (self, GOO_PLAYER_STATE_STOPPED, TRUE);
 		goo_player_list (self);
@@ -1041,9 +1045,9 @@ eject_ready_cb (GObject      *source_object,
 	GError    *error = NULL;
 
 	if (! g_drive_eject_with_operation_finish (G_DRIVE (source_object), result, &error))
-		g_signal_emit_by_name (G_OBJECT (self), "done", GOO_PLAYER_ACTION_EJECT, error);
+		g_signal_emit_by_name (G_OBJECT (self), "done", GOO_PLAYER_ACTION_MEDIUM_REMOVED, error);
 	else
-		g_signal_emit_by_name (G_OBJECT (self), "done", GOO_PLAYER_ACTION_EJECT, NULL);
+		g_signal_emit_by_name (G_OBJECT (self), "done", GOO_PLAYER_ACTION_MEDIUM_REMOVED, NULL);
 
 	goo_player_set_state (self, GOO_PLAYER_STATE_STOPPED, TRUE);
 }
@@ -1057,7 +1061,7 @@ goo_player_eject (GooPlayer *self)
 	if (self->priv->hibernate)
 		return;
 
-	g_signal_emit_by_name (G_OBJECT (self), "start", GOO_PLAYER_ACTION_EJECT);
+	g_signal_emit_by_name (G_OBJECT (self), "start", GOO_PLAYER_ACTION_MEDIUM_REMOVED);
 
 	gdrive = brasero_drive_get_gdrive (self->priv->drive);
 	g_drive_eject_with_operation (gdrive,
