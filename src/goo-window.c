@@ -2017,13 +2017,19 @@ status_icon_query_tooltip_cb (GtkStatusIcon *status_icon,
 
 	if (track != NULL) {
 		char *current_time;
+		char *total_time;
+		char *time;
 		char *markup;
 
 		current_time = _g_format_duration_for_display (track->length * 1000 * goo_player_info_get_progress (GOO_PLAYER_INFO (window->priv->info)));
-		markup = g_markup_printf_escaped ("<b>%s</b>\n<i>%s</i>\n%s", track->title, track->artist, current_time);
+		total_time = _g_format_duration_for_display (track->length * 1000);
+		time = g_strdup_printf (_("%s / %s"), current_time, total_time);
+		markup = g_markup_printf_escaped ("<b>%s</b>\n<i>%s</i>\n%s", track->title, track->artist, time);
 		gtk_tooltip_set_markup (tooltip, markup);
 
 		g_free (markup);
+		g_free (time);
+		g_free (total_time);
 		g_free (current_time);
 	}
 	else if ((album != NULL) && (album->title != NULL)) {

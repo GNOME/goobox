@@ -217,6 +217,7 @@ time_scale_value_changed_cb (GtkRange      *range,
 	current_time = info->priv->track_length * (new_value / 100.0);
 	g_free (info->priv->current_time);
 	info->priv->current_time = _g_format_duration_for_display (current_time * 1000);
+	/* translators: this is the current_time / total_time label */
 	sprintf (info->priv->time, _("%s / %s"), info->priv->total_time, info->priv->current_time);
 	set_time (info, info->priv->time);
 
