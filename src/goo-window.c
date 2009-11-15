@@ -2999,7 +2999,7 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 
 	goo_window_set_current_cd_autofetch (window, FALSE);
 
-	file_sel = gtk_file_chooser_dialog_new (_("Choose CD Cover Image"),
+	file_sel = gtk_file_chooser_dialog_new (_("Choose Disc Cover Image"),
 						GTK_WINDOW (window),
 						GTK_FILE_CHOOSER_ACTION_OPEN,
 						GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, 
