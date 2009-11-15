@@ -1636,7 +1636,7 @@ player_done_cb (GooPlayer       *player,
 		goo_window_update_cover (window);
 		window_update_title (window);
 		set_current_track_icon (window, NULL);
-		if (AutoPlay || (window->priv->ejected && eel_gconf_get_boolean (PREF_GENERAL_AUTOPLAY, TRUE))) {
+		if (AutoPlay || eel_gconf_get_boolean (PREF_GENERAL_AUTOPLAY, TRUE)) {
 			AutoPlay = FALSE;
 			g_timeout_add (AUTOPLAY_DELAY, autoplay_cb, window);
 		}
