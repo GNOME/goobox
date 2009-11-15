@@ -1867,22 +1867,36 @@ update_ui_from_expander_state (GooWindow *window)
 	GtkExpander *expander = GTK_EXPANDER (window->priv->list_expander);
 
 	if (gtk_expander_get_expanded (expander)) {
+		GdkGeometry hints;
+
 		gtk_expander_set_label (expander, _(HIDE_TRACK_LIST));
 		if (GTK_WIDGET_REALIZED (window))
 			gtk_window_resize (GTK_WINDOW (window), 
 					   eel_gconf_get_integer (PREF_UI_WINDOW_WIDTH, DEFAULT_WIN_WIDTH),
 					   eel_gconf_get_integer (PREF_UI_WINDOW_HEIGHT, DEFAULT_WIN_HEIGHT));
 		gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (window->priv->statusbar), TRUE);
-		/*gtk_widget_show (window->priv->list_view->parent);*/
-		gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
+
+		hints.max_height = -1;
+		hints.max_width = G_MAXINT;
+		gtk_window_set_geometry_hints (GTK_WINDOW (window),
+					       GTK_WIDGET (window),
+					       &hints,
+					       GDK_HINT_MAX_SIZE);
 	} 
 	else {
+		GdkGeometry hints;
+
 		if (GTK_WIDGET_REALIZED (window))
 			save_window_size (window);
 		gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (window->priv->statusbar), FALSE);
 		gtk_expander_set_label (expander, _(SHOW_TRACK_LIST));
-		/*gtk_widget_hide (window->priv->list_view->parent);*/
-		gtk_window_set_resizable (GTK_WINDOW (window), FALSE);
+
+		hints.max_height = -1;
+		hints.max_width = -1;
+		gtk_window_set_geometry_hints (GTK_WINDOW (window),
+					       GTK_WIDGET (window),
+					       &hints,
+					       GDK_HINT_MAX_SIZE);
 	}
 }
 
