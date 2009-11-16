@@ -1,3 +1,13 @@
+version 2.1.1
+-------------
+
+	New features and user visible changes
+
+	* Ported to modern libraries, removed use of deprecated functions.
+	* Always show the whole track list, without scrollbars.
+	* Respect the autoplay setting even at start up time.
+	* Added documentation for the preferences dialog.
+	
 version 2.0.1
 -------------
 

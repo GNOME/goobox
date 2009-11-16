@@ -1,4 +1,4 @@
-AC_INIT([goobox], [2.1.0], [http://bugzilla.gnome.org/enter_bug.cgi?product=goobox])
+AC_INIT([goobox], [2.1.1], [http://bugzilla.gnome.org/enter_bug.cgi?product=goobox])
 
 GNOME_COMMON_INIT
 

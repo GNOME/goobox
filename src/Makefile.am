@@ -97,8 +97,7 @@ goobox_LDADD = 				\
 	$(SYSTEM_LIBS)
 
 EXTRA_DIST = 				\
-	goo-marshal.list 		\
-	gthumb-marshal.list
+	goo-marshal.list 
 
 CLEANFILES = $(BUILT_SOURCES)
 
