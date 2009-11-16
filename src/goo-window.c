@@ -1533,9 +1533,9 @@ goo_window_set_current_cd_autofetch (GooWindow *window,
 gboolean
 goo_window_get_current_cd_autofetch (GooWindow *window)
 {
+	gboolean  autofetch = TRUE;
 	GKeyFile *kv_file;
 	char     *config_filename;
-	gboolean  autofetch = FALSE;
 
 	kv_file = g_key_file_new ();
 	config_filename = gth_user_dir_get_file (GTH_DIR_CONFIG, "goobox", "config", NULL);
