@@ -164,7 +164,7 @@
         <listitem>
           <para>The audio files format to use.  
           Some formats allow you to set the quality of the file, this can be
-          usefull because usually there is a trade-off between audio quality 
+          useful because usually there is a trade-off between audio quality 
           and file size.
           Use the <guilabel>Properties</guilabel> button to set the file 
           format properties.
