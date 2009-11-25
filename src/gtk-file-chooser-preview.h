@@ -25,7 +25,7 @@
 #ifndef GTK_FILE_CHOOSER_PREVIEW_H
 #define GTK_FILE_CHOOSER_PREVIEW_H
 
-#include <gtk/gtkframe.h>
+#include <gtk/gtk.h>
 
 #define GTK_TYPE_FILE_CHOOSER_PREVIEW              (gtk_file_chooser_preview_get_type ())
 #define GTK_FILE_CHOOSER_PREVIEW(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_FILE_CHOOSER_PREVIEW, GtkFileChooserPreview))

@@ -23,7 +23,7 @@
 #ifndef ACTIONS_H
 #define ACTIONS_H
 
-#include <gtk/gtkaction.h>
+#include <gtk/gtk.h>
 
 void activate_action_play (GtkAction *action, gpointer data);
 void activate_action_play_selected (GtkAction *action, gpointer data);

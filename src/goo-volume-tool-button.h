@@ -47,7 +47,7 @@
 #ifndef __GOO_VOLUME_TOOL_BUTTON_H__
 #define __GOO_VOLUME_TOOL_BUTTON_H__
 
-#include <gtk/gtktoolbutton.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
