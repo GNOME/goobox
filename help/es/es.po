@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: help.HEAD.es\n"
-"POT-Creation-Date: 2007-07-20 10:34+0100\n"
+"POT-Creation-Date: 2009-11-21 19:42+0000\n"
 "PO-Revision-Date: 2007-09-23 20:14+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -18,7 +18,9 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: C/goobox.xml:18(title)
-msgid "<application>CD Player</application> Manual V1.0"
+#, fuzzy
+#| msgid "<application>CD Player</application> Manual V1.0"
+msgid "<application>CD Player</application> Manual V2.0"
 msgstr "Manual del <application>Reproductor de cd</application> V1.0"
 
 #: C/goobox.xml:20(para)
@@ -26,8 +28,10 @@ msgid "User manual for Goobox the CD player."
 msgstr "Manual del usuario para el reproductor de CD Goobox"
 
 #: C/goobox.xml:24(year)
-msgid "2005"
-msgstr "2005"
+#, fuzzy
+#| msgid "2005-01-20"
+msgid "2005, 2009"
+msgstr "2005-01-20"
 
 #: C/goobox.xml:25(holder)
 msgid "Paolo Bacchilega"
@@ -152,8 +156,8 @@ msgid "Bacchilega"
 msgstr "Bacchilega"
 
 #: C/goobox.xml:51(email)
-msgid "paolo.bacchilega@libero.it"
-msgstr "paolo.bacchilega@libero.it"
+msgid "paobac@src.gnome.org"
+msgstr ""
 
 #: C/goobox.xml:61(revnumber)
 msgid "1.0"
@@ -167,28 +171,48 @@ msgstr "2005-01-20"
 msgid "First version, program version 0.7.1"
 msgstr "Primera version, version del programa 0.7.1"
 
+#: C/goobox.xml:68(revnumber)
+#, fuzzy
+#| msgid "1.0"
+msgid "2.0"
+msgstr "1.0"
+
+#: C/goobox.xml:69(date)
+#, fuzzy
+#| msgid "2005-01-20"
+msgid "2009-11-14"
+msgstr "2005-01-20"
+
+#: C/goobox.xml:71(para)
+#, fuzzy
+#| msgid "First version, program version 0.7.1"
+msgid "Second version, program version 2.1.0"
+msgstr "Primera version, version del programa 0.7.1"
+
 #. this is version of manual, not application
-#: C/goobox.xml:69(releaseinfo)
-msgid "This is manual describes version 0.7.1 of Goobox"
+#: C/goobox.xml:76(releaseinfo)
+#, fuzzy
+#| msgid "This is manual describes version 0.7.1 of Goobox"
+msgid "This is manual describes version 2.1.0 of Goobox"
 msgstr "Este manual describe la versión 0.7.1 de Goobox"
 
-#: C/goobox.xml:75(primary)
+#: C/goobox.xml:82(primary)
 msgid "goobox"
 msgstr "goobox"
 
-#: C/goobox.xml:78(primary)
+#: C/goobox.xml:85(primary)
 msgid "CD Player"
 msgstr "Reproductor de CD"
 
-#: C/goobox.xml:81(secondary)
+#: C/goobox.xml:88(secondary)
 msgid "CD Ripper"
 msgstr "Extractor de audio"
 
-#: C/goobox.xml:89(title)
+#: C/goobox.xml:96(title)
 msgid "Introduction"
 msgstr "Introducción"
 
-#: C/goobox.xml:90(para)
+#: C/goobox.xml:97(para)
 msgid ""
 "With <application>CD Player</application> you can play audio Compact Discs "
 "(CDs) and save the CD tracks as audio files."
@@ -197,11 +221,88 @@ msgstr ""
 "audio de sus discos compactos (CD) y guadar las pistas del mismo como "
 "archivos de audio."
 
-#: C/goobox.xml:97(title)
+#: C/goobox.xml:105(title)
+msgid "Preferences"
+msgstr ""
+
+#: C/goobox.xml:106(para)
+msgid ""
+"To configure <application>CD Player</application>, open the "
+"<guilabel>Preferences</guilabel> dialog by choosing "
+"<menuchoice><guimenu>Edit</guimenu><guisubmenu>Preferences</guisubmenu></"
+"menuchoice>."
+msgstr ""
+
+#: C/goobox.xml:112(para)
+msgid ""
+"This dialog contains two tabs described in detail below. At the bottom of "
+"the dialog window, you'll find the following buttons:"
+msgstr ""
+
+#: C/goobox.xml:118(para)
+msgid "<guibutton>Help</guibutton>: shows this manual."
+msgstr ""
+
+#: C/goobox.xml:122(para)
+msgid "<guibutton>Close</guibutton>: closes the dialog."
+msgstr ""
+
+#: C/goobox.xml:126(para)
+msgid ""
+"Keep in mind that when you change an option it will automatically applied. "
+"This is why there is no <guibutton>Ok</guibutton> or <guibutton>Apply</"
+"guibutton> button."
+msgstr ""
+
+#: C/goobox.xml:135(title)
+msgid "General Tab"
+msgstr ""
+
+#: C/goobox.xml:136(para)
+msgid "This tab allows you to set the following options:"
+msgstr ""
+
+#: C/goobox.xml:141(para)
+msgid "Select the device to use."
+msgstr ""
+
+#: C/goobox.xml:145(para)
+msgid "Whether to automatically play a newly inserted disk."
+msgstr ""
+
+#: C/goobox.xml:154(title)
+msgid "Extraction Tab"
+msgstr ""
+
+#: C/goobox.xml:155(para)
+msgid "This tab allows you to set the extraction options:"
+msgstr ""
+
+#: C/goobox.xml:160(para)
+msgid ""
+"The destination folder. Files are saved in a subfolder of the destination "
+"folder, following the scheme Artist/Album/track."
+msgstr ""
+
+#: C/goobox.xml:165(para)
+msgid ""
+"The audio files format to use. Some formats allow you to set the quality of "
+"the file, this can be useful because usually there is a trade-off between "
+"audio quality and file size. Use the <guilabel>Properties</guilabel> button "
+"to set the file format properties."
+msgstr ""
+
+#: C/goobox.xml:174(para)
+msgid ""
+"Whether to save a playlist file in PLS format that contains the list of the "
+"extracted files. The playlist is saved in the same folder of the audio files."
+msgstr ""
+
+#: C/goobox.xml:186(title)
 msgid "Quick Reference: Keyboard Shortcuts"
 msgstr "Referencia rápida: Atajos de teclado"
 
-#: C/goobox.xml:98(para)
+#: C/goobox.xml:187(para)
 msgid ""
 "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> provide a quick reference "
 "for all of the <application>CD Player</application> keyword shortcuts. Look "
@@ -212,150 +313,155 @@ msgstr ""
 "<application>Reproductor de CD</application>. Mire en los menús para otros "
 "atajos."
 
-#: C/goobox.xml:103(title)
+#: C/goobox.xml:192(title)
 msgid "Keyboard shortcuts"
 msgstr "Atajos de teclado"
 
-#: C/goobox.xml:111(para)
+#: C/goobox.xml:200(para)
 msgid "Keyboard Shortcut"
 msgstr "Atajo de teclado"
 
-#: C/goobox.xml:113(para)
+#: C/goobox.xml:202(para)
 msgid "Description"
 msgstr "Descripción"
 
-#: C/goobox.xml:120(keycap)
+#: C/goobox.xml:209(keycap)
 msgid "1"
 msgstr "1"
 
-#: C/goobox.xml:124(para)
+#: C/goobox.xml:213(para)
 msgid "Play the 1st track"
 msgstr "Reproducir la primera pista"
 
-#: C/goobox.xml:130(keycap)
+#: C/goobox.xml:219(keycap)
 msgid "2"
 msgstr "2"
 
-#: C/goobox.xml:134(para)
+#: C/goobox.xml:223(para)
 msgid "Play the 2nd track"
 msgstr "Reproducir la segunda pista"
 
-#: C/goobox.xml:140(keycap)
+#: C/goobox.xml:229(keycap)
 msgid "3"
 msgstr "3"
 
-#: C/goobox.xml:144(para)
+#: C/goobox.xml:233(para)
 msgid "Play the 3rd track"
 msgstr "Reproducir la tercera pista"
 
-#: C/goobox.xml:150(keycap)
+#: C/goobox.xml:239(keycap)
 msgid "4"
 msgstr "4"
 
-#: C/goobox.xml:154(para)
+#: C/goobox.xml:243(para)
 msgid "Play the 4th track"
 msgstr "Reproducir la cuarta pista"
 
-#: C/goobox.xml:160(keycap)
+#: C/goobox.xml:249(keycap)
 msgid "5"
 msgstr "5"
 
-#: C/goobox.xml:164(para)
+#: C/goobox.xml:253(para)
 msgid "Play the 5th track"
 msgstr "Reproducir la quinta pista"
 
-#: C/goobox.xml:170(keycap)
+#: C/goobox.xml:259(keycap)
 msgid "6"
 msgstr "6"
 
-#: C/goobox.xml:174(para)
+#: C/goobox.xml:263(para)
 msgid "Play the 6th track"
 msgstr "Reproducir la sexta pista"
 
-#: C/goobox.xml:180(keycap)
+#: C/goobox.xml:269(keycap)
 msgid "7"
 msgstr "7"
 
-#: C/goobox.xml:184(para)
+#: C/goobox.xml:273(para)
 msgid "Play the 7th track"
 msgstr "Reproducir la séptima pista"
 
-#: C/goobox.xml:190(keycap)
+#: C/goobox.xml:279(keycap)
 msgid "8"
 msgstr "8"
 
-#: C/goobox.xml:194(para)
+#: C/goobox.xml:283(para)
 msgid "Play the 8th track"
 msgstr "Reproducir la octava pista"
 
-#: C/goobox.xml:200(keycap)
+#: C/goobox.xml:289(keycap)
 msgid "9"
 msgstr "9"
 
-#: C/goobox.xml:204(para)
+#: C/goobox.xml:293(para)
 msgid "Play the 9th track"
 msgstr "Reproducir la novena pista"
 
-#: C/goobox.xml:210(keycap)
+#: C/goobox.xml:299(keycap)
 msgid "0"
 msgstr "0"
 
-#: C/goobox.xml:214(para)
+#: C/goobox.xml:303(para)
 msgid "Play the 10th track"
 msgstr "Reproduccir la decima pista"
 
-#: C/goobox.xml:220(keycap)
+#: C/goobox.xml:309(keycap)
 msgid "Space"
 msgstr "Espacio"
 
-#: C/goobox.xml:224(para)
+#: C/goobox.xml:313(para)
 msgid "Play/Pause the current track"
 msgstr "Reproducir/pausar la pista actual"
 
-#: C/goobox.xml:230(keycap)
+#: C/goobox.xml:319(keycap)
 msgid "Escape"
 msgstr "Escape"
 
-#: C/goobox.xml:234(para)
+#: C/goobox.xml:323(para)
 msgid "Stop playing the current track"
 msgstr "Pausar la reproducción"
 
-#: C/goobox.xml:240(keycap)
+#: C/goobox.xml:329(keycap)
 msgid "N"
 msgstr "N"
 
-#: C/goobox.xml:244(para)
+#: C/goobox.xml:333(para)
 msgid "Play the next track"
 msgstr "Saltar a la siguiente pista"
 
-#: C/goobox.xml:250(keycap)
+#: C/goobox.xml:339(keycap)
 msgid "P"
 msgstr "P"
 
-#: C/goobox.xml:254(para)
+#: C/goobox.xml:343(para)
 msgid "Play the previous track"
 msgstr "Saltar a la pista anterior"
 
-#: C/goobox.xml:260(keycap)
+#: C/goobox.xml:349(keycap)
 msgid "J"
 msgstr "J"
 
-#: C/goobox.xml:264(para)
+#: C/goobox.xml:353(para)
 msgid "Eject the CD from the tray"
 msgstr "Expulsar CD"
 
-#: C/goobox.xml:270(keycap)
+#: C/goobox.xml:359(keycap)
 msgid "E"
 msgstr "E"
 
-#: C/goobox.xml:274(para)
+#: C/goobox.xml:363(para)
 msgid "Open the <interface>Extract</interface> dialog"
 msgstr "Abrir la ventana del diálogo de <interface>Extracción</interface>"
 
-#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2.
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: C/goobox.xml:0(None)
 msgid "translator-credits"
 msgstr ""
 "José Sánchez Moreno <jose@oxigenow.com>, 2007\n"
 "QA: Jorge González <jorgegonz@svn.gnome.org>, 2007"
 
+#~ msgid "2005"
+#~ msgstr "2005"
+
+#~ msgid "paolo.bacchilega@libero.it"
+#~ msgstr "paolo.bacchilega@libero.it"
