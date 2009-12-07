@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: goobox 2.1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-11-21 15:06+0000\n"
-"PO-Revision-Date: 2009-12-07 16:57+0100\n"
+"PO-Revision-Date: 2009-12-07 22:10+0100\n"
 "Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgstr "Angabe der Datei, die gespeicherte Konfiguration enthält"
 
 #: ../copy-n-paste/eggsmclient.c:228
 msgid "FILE"
-msgstr ""
+msgstr "DATEI"
 
 #: ../copy-n-paste/eggsmclient.c:231
 msgid "Specify session management ID"
@@ -71,7 +71,7 @@ msgstr "Angabe der Sitzungsmanagement-ID"
 
 #: ../copy-n-paste/eggsmclient.c:231
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../copy-n-paste/eggsmclient.c:252
 msgid "Session management options:"
@@ -84,7 +84,7 @@ msgstr "Zeige Sitzungsmanagement-Optionen"
 #: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:160
 #: ../src/goo-window.c:2058 ../src/goo-window.c:2512 ../src/main.c:378
 msgid "CD Player"
-msgstr "CD-Player"
+msgstr "CD-Spieler"
 
 #: ../data/goobox.desktop.in.in.h:2
 msgid "Play and extract CDs"
@@ -243,11 +243,15 @@ msgstr ""
 
 #: ../src/actions.c:143
 msgid ""
-"CD Player is free software; you can redistribute it and/or modifyit under "
+"CD Player is free software; you can redistribute it and/or modify it under "
 "the terms of the GNU General Public License as published by the Free "
 "Software Foundation; either version 2 of the License, or (at your option) "
 "any later version."
 msgstr ""
+"CD-Spieler ist Freie Software; Sie können ihn unter den Bedingungen der "
+"»GNU General Public License«, wie sie von der »Free Software Foundation« "
+"veröffentlicht wurde, entweder Version 2 oder (nach Ihrer Wahl) jeder neueren "
+"Version, verteilen und/oder bearbeiten."
 
 #: ../src/actions.c:147
 msgid ""
@@ -256,12 +260,16 @@ msgid ""
 "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
 "details."
 msgstr ""
+"CD-Spieler wird in der Hoffnung des Nutzens vertrieben, aber OHNE JEDE "
+"HAFTUNG; ohne die möglicherweise implizite Garantie der GEBRAUCHSTAUGLICHKEIT "
+"oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. Lesen Sie die »GNU General Public "
+"License« für weitere Details."
 
 #: ../src/actions.c:151
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "CD Player; if not, write to the Free Software Foundation, Inc., 51 Franklin "
-"St, Fifth Floor, Boston, MA  02110-1301 USA"
+"St, Fifth Floor, Boston, MA 02110-1301 USA"
 msgstr ""
 "Sie sollten eine Kopie der »GNU General Public License« zusammen mit dem CD-"
 "Spieler erhalten haben; falls nicht, schreiben Sie (auf Englisch) an Free "
