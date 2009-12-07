@@ -1,80 +1,120 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox 1.9.2\n"
-"POT-Creation-Date: 2008-04-16 13:55+0900\n"
-"PO-Revision-Date: 2008-04-17 21:38+0900\n"
+"POT-Creation-Date: 2009-11-21 16:22+0100\n"
+"PO-Revision-Date: 2009-12-07 21:08+0100\n"
 "Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: goobox.xml:18(title) 
-msgid "<application>CD Player</application> Manual V1.0"
-msgstr "<application>CD-Spieler</application>-Handbuch V1.0"
+#: C/goobox.xml:18(title)
+msgid "<application>CD Player</application> Manual V2.0"
+msgstr "<application>CD-Spieler</application>-Handbuch V2.0"
 
-#: goobox.xml:20(para) 
+#: C/goobox.xml:20(para)
 msgid "User manual for Goobox the CD player."
 msgstr "Benutzerhandbuch für den Goobox CD-Spieler."
 
-#: goobox.xml:24(year) 
-msgid "2005"
-msgstr "2005"
+#: C/goobox.xml:24(year)
+msgid "2005, 2009"
+msgstr "2005, 2009"
 
-#: goobox.xml:25(holder) 
+#: C/goobox.xml:25(holder)
 msgid "Paolo Bacchilega"
 msgstr "Paolo Bacchilega"
 
-#: goobox.xml:41(publishername) 
+#: C/goobox.xml:41(publishername)
 msgid "GNOME Documentation Project"
 msgstr "GNOME-Dokumentationsprojekt"
 
-#: goobox.xml:2(para) 
-msgid "Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License (GFDL), Version 1.1 or any later version published by the Free Software Foundation with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. You can find a copy of the GFDL at this <ulink type=\"help\" url=\"ghelp:fdl\">link</ulink> or in the file COPYING-DOCS distributed with this manual."
+#: C/goobox.xml:2(para)
+msgid ""
+"Permission is granted to copy, distribute and/or modify this document under "
+"the terms of the GNU Free Documentation License (GFDL), Version 1.1 or any "
+"later version published by the Free Software Foundation with no Invariant "
+"Sections, no Front-Cover Texts, and no Back-Cover Texts. You can find a copy "
+"of the GFDL at this <ulink type=\"help\" url=\"ghelp:fdl\">link</ulink> or "
+"in the file COPYING-DOCS distributed with this manual."
 msgstr ""
-"Es wird die Erlaubnis erteilt, dieses Dokument gemäß den Bedingungen der GNU Free Documentation-"
-"Lizenz (GFDL), Version 1.1 oder jeder neueren Version, wie diese von der Free Software Foundation "
-"veröffentlicht wurden, zu kopieren, verteilen oder verändern. Hierbei gibt es keine invarianten "
-"Abschnitte, keine Deckblatt-Texte und keine Rückseiten-Texte. Sie können eine Kopie der GFDL unter "
-"<ulink type=\"help\" url=\"ghelp:fdl\">link</ulink> oder in der Datei COPYING-DOCS, die zusammen mit "
-"diesem Handbuch vertrieben wird, finden."
+"Es wird die Erlaubnis erteilt, dieses Dokument gemäß den Bedingungen der GNU "
+"Free Documentation-Lizenz (GFDL), Version 1.1 oder jeder neueren Version, "
+"wie diese von der Free Software Foundation veröffentlicht wurden, zu "
+"kopieren, verteilen oder verändern. Hierbei gibt es keine invarianten "
+"Abschnitte, keine Deckblatt-Texte und keine Rückseiten-Texte. Sie können "
+"eine Kopie der GFDL unter <ulink type=\"help\" url=\"ghelp:fdl\">link</"
+"ulink> oder in der Datei COPYING-DOCS, die zusammen mit diesem Handbuch "
+"vertrieben wird, finden."
 
-#: goobox.xml:12(para) 
-msgid "This manual is part of a collection of GNOME manuals distributed under the GFDL. If you want to distribute this manual separately from the collection, you can do so by adding a copy of the license to the manual, as described in section 6 of the license."
+#: C/goobox.xml:12(para)
+msgid ""
+"This manual is part of a collection of GNOME manuals distributed under the "
+"GFDL. If you want to distribute this manual separately from the collection, "
+"you can do so by adding a copy of the license to the manual, as described in "
+"section 6 of the license."
 msgstr ""
-"Dieses Handbuch ist Teil einer Sammlung von GNOME-Handbüchern, die unter der GFDL vertrieben werden. "
-"Falls Sie das Handbuch unabhängig von der Sammlung vertreiben wollen, können Sie dies machen, indem "
-"Sie eine Kopie der Lizenz zu dem Handbuch hinzufügen, wie dies in Abschnitt 6 der Lizenz beschrieben "
+"Dieses Handbuch ist Teil einer Sammlung von GNOME-Handbüchern, die unter der "
+"GFDL vertrieben werden. Falls Sie das Handbuch unabhängig von der Sammlung "
+"vertreiben wollen, können Sie dies machen, indem Sie eine Kopie der Lizenz "
+"zu dem Handbuch hinzufügen, wie dies in Abschnitt 6 der Lizenz beschrieben "
 "ist."
 
-#: goobox.xml:19(para) 
-msgid "Many of the names used by companies to distinguish their products and services are claimed as trademarks. Where those names appear in any GNOME documentation, and the members of the GNOME Documentation Project are made aware of those trademarks, then the names are in capital letters or initial capital letters."
+#: C/goobox.xml:19(para)
+msgid ""
+"Many of the names used by companies to distinguish their products and "
+"services are claimed as trademarks. Where those names appear in any GNOME "
+"documentation, and the members of the GNOME Documentation Project are made "
+"aware of those trademarks, then the names are in capital letters or initial "
+"capital letters."
 msgstr ""
-"Für viele der Namen, die von Firmen zur Unterscheidung Ihrer Produkte und Dienste verwandt werden, sind "
-"Markenrechte angemeldet. Wenn solche Namen in irgendwelchen GNOME-Dokumentationen auftauchen und diese "
-"Rechte den Mitglieder des GNOME-Dokumentationsteams mitgeteilt wurde, dann werden die Namen komplett "
-"oder der erste Buchstabe davon in Großbuchstaben geschrieben."
+"Für viele der Namen, die von Firmen zur Unterscheidung Ihrer Produkte und "
+"Dienste verwandt werden, sind Markenrechte angemeldet. Wenn solche Namen in "
+"irgendwelchen GNOME-Dokumentationen auftauchen und diese Rechte den "
+"Mitglieder des GNOME-Dokumentationsteams mitgeteilt wurde, dann werden die "
+"Namen komplett oder der erste Buchstabe davon in Großbuchstaben geschrieben."
 
-#: goobox.xml:35(para) 
-msgid "DOCUMENT IS PROVIDED ON AN \"AS IS\" BASIS, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES THAT THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS FREE OF DEFECTS MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE RISK AS TO THE QUALITY, ACCURACY, AND PERFORMANCE OF THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS WITH YOU. SHOULD ANY DOCUMENT OR MODIFIED VERSION PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT THE INITIAL WRITER, AUTHOR OR ANY CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY SERVICING, REPAIR OR CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF THIS LICENSE. NO USE OF ANY DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER; AND"
+#: C/goobox.xml:35(para)
+msgid ""
+"DOCUMENT IS PROVIDED ON AN \"AS IS\" BASIS, WITHOUT WARRANTY OF ANY KIND, "
+"EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES THAT "
+"THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS FREE OF DEFECTS "
+"MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE "
+"RISK AS TO THE QUALITY, ACCURACY, AND PERFORMANCE OF THE DOCUMENT OR "
+"MODIFIED VERSION OF THE DOCUMENT IS WITH YOU. SHOULD ANY DOCUMENT OR "
+"MODIFIED VERSION PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT THE INITIAL "
+"WRITER, AUTHOR OR ANY CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY "
+"SERVICING, REPAIR OR CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES AN "
+"ESSENTIAL PART OF THIS LICENSE. NO USE OF ANY DOCUMENT OR MODIFIED VERSION "
+"OF THE DOCUMENT IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER; AND"
 msgstr ""
-"DAS DOKUMENT WIRD »WIE VORLIEGEND« GELIEFERT, OHNE JEGLICHE "
-"GEWÄHRLEISTUNG, WEDER AUSDRÜCKLICH NOCH STILLSCHWEIGEND, EINSCHLIESSLICH, "
-"ABER NICHT BESCHRÄNKT AUF, GEWÄHRLEISTUNGEN, DASS DAS DOKUMENT ODER EINE "
-"MODIFIZIERTE VERSION DES DOKUMENTS FREI VON HANDELSÜBLICHEN FEHLERN UND FÜR "
-"EINEN BESTIMMTEN ZWECK GEEIGNET IST UND KEINE RECHTE DRITTER VERLETZT. "
-"JEGLICHES RISIKO IN BEZUG AUF DIE QUALITÄT, GENAUIGKEIT UND LEISTUNG DES "
-"DOKUMENTS ODER EINER MODIFIZIERTEN VERSION DES DOKUMENTS TRAGEN SIE. SOLLTE "
-"SICH EIN DOKUMENT ODER EINE MODIFIZIERTE VERSION DAVON IN IRGENDEINER WEISE "
-"ALS FEHLERHAFT ERWEISEN, TRAGEN SIE (NICHT DER URSPRÜNGLICHE VERFASSER, "
-"AUTOR ODER EIN MITWIRKENDER) DIE KOSTEN FÜR JEGLICHE ERFORDERLICHE SERVICE-, "
+"DAS DOKUMENT WIRD »WIE VORLIEGEND« GELIEFERT, OHNE JEGLICHE GEWÄHRLEISTUNG, "
+"WEDER AUSDRÜCKLICH NOCH STILLSCHWEIGEND, EINSCHLIESSLICH, ABER NICHT "
+"BESCHRÄNKT AUF, GEWÄHRLEISTUNGEN, DASS DAS DOKUMENT ODER EINE MODIFIZIERTE "
+"VERSION DES DOKUMENTS FREI VON HANDELSÜBLICHEN FEHLERN UND FÜR EINEN "
+"BESTIMMTEN ZWECK GEEIGNET IST UND KEINE RECHTE DRITTER VERLETZT. JEGLICHES "
+"RISIKO IN BEZUG AUF DIE QUALITÄT, GENAUIGKEIT UND LEISTUNG DES DOKUMENTS "
+"ODER EINER MODIFIZIERTEN VERSION DES DOKUMENTS TRAGEN SIE. SOLLTE SICH EIN "
+"DOKUMENT ODER EINE MODIFIZIERTE VERSION DAVON IN IRGENDEINER WEISE ALS "
+"FEHLERHAFT ERWEISEN, TRAGEN SIE (NICHT DER URSPRÜNGLICHE VERFASSER, AUTOR "
+"ODER EIN MITWIRKENDER) DIE KOSTEN FÜR JEGLICHE ERFORDERLICHE SERVICE-, "
 "REPARATUR- UND KORREKTURMASSNAHMEN: DIESE BESCHRÄNKUNG DER GEWÄHRLEISTUNG "
 "IST WESENTLICHER BESTANDTEIL DIESER LIZENZ. JEDE VERWENDUNG EINES DOKUMENTS "
 "ODER EINER MODIFIZIERTEN VERSION DES DOKUMENTS UNTERLIEGT DIESER "
 "BESCHRÄNKUNG; UND"
 
-#: goobox.xml:55(para) 
-msgid "UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE AUTHOR, INITIAL WRITER, ANY CONTRIBUTOR, OR ANY DISTRIBUTOR OF THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT, OR ANY SUPPLIER OF ANY OF SUCH PARTIES, BE LIABLE TO ANY PERSON FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER DAMAGES OR LOSSES ARISING OUT OF OR RELATING TO USE OF THE DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT, EVEN IF SUCH PARTY SHALL HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGES."
+#: C/goobox.xml:55(para)
+msgid ""
+"UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING "
+"NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE AUTHOR, INITIAL WRITER, ANY "
+"CONTRIBUTOR, OR ANY DISTRIBUTOR OF THE DOCUMENT OR MODIFIED VERSION OF THE "
+"DOCUMENT, OR ANY SUPPLIER OF ANY OF SUCH PARTIES, BE LIABLE TO ANY PERSON "
+"FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF "
+"ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, "
+"WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER DAMAGES "
+"OR LOSSES ARISING OUT OF OR RELATING TO USE OF THE DOCUMENT AND MODIFIED "
+"VERSIONS OF THE DOCUMENT, EVEN IF SUCH PARTY SHALL HAVE BEEN INFORMED OF THE "
+"POSSIBILITY OF SUCH DAMAGES."
 msgstr ""
 "UNTER KEINEN UMSTÄNDEN UND GEMÄSS KEINER RECHTSLEHRE, WEDER AUFGRUND VON "
 "UNERLAUBTEN HANDLUNGEN (EINSCHLIESSLICH FAHRLÄSSIGKEIT), VERTRÄGEN ODER "
@@ -90,216 +130,337 @@ msgstr ""
 "PARTEI ÜBER MÖGLICHE SCHÄDEN INFORMIERT WORDEN SEIN SOLLTE, HAFTBAR GEMACHT "
 "WERDEN."
 
-#: goobox.xml:28(para) 
-msgid "DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE TERMS OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER UNDERSTANDING THAT: <placeholder-1/>"
+#: C/goobox.xml:28(para)
+msgid ""
+"DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE TERMS "
+"OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER UNDERSTANDING THAT: "
+"<placeholder-1/>"
 msgstr ""
-"DAS DOKUMENT UND VERÄNDERTE VERSIONEN DES DOKUMENTS WERDEN UNTER DEN BEDINGUNGEN DER GNU FREE "
-"DOKUCUMENTATION-LIZENZ VERTRIEBEN. HIERUNTER WIRD AUCH FOLGENDES VERSTANDEN: <placeholder-1/>"
+"DAS DOKUMENT UND VERÄNDERTE VERSIONEN DES DOKUMENTS WERDEN UNTER DEN "
+"BEDINGUNGEN DER GNU FREE DOKUCUMENTATION-LIZENZ VERTRIEBEN. HIERUNTER WIRD "
+"AUCH FOLGENDES VERSTANDEN: <placeholder-1/>"
 
-#: goobox.xml:48(firstname) 
+#: C/goobox.xml:48(firstname)
 msgid "Paolo"
 msgstr "Paolo"
 
-#: goobox.xml:49(surname) 
+#: C/goobox.xml:49(surname)
 msgid "Bacchilega"
 msgstr "Bacchilega"
 
-#: goobox.xml:51(email) 
-msgid "paolo.bacchilega@libero.it"
-msgstr "paolo.bacchilega@libero.it"
+#: C/goobox.xml:51(email)
+msgid "paobac@src.gnome.org"
+msgstr "paobac@src.gnome.org"
 
-#: goobox.xml:61(revnumber) 
+#: C/goobox.xml:61(revnumber)
 msgid "1.0"
 msgstr "1.0"
 
-#: goobox.xml:62(date) 
+#: C/goobox.xml:62(date)
 msgid "2005-01-20"
 msgstr "2005-01-20"
 
-#: goobox.xml:64(para) 
+#: C/goobox.xml:64(para)
 msgid "First version, program version 0.7.1"
 msgstr "Erste Version, Programmversion 0.7.1"
 
-#. this is version of manual, not application
-#: goobox.xml:69(releaseinfo) 
-msgid "This is manual describes version 0.7.1 of Goobox"
-msgstr "Dieses Handbuch beschreibt Version 0.7.1 von Goobox"
+#: C/goobox.xml:68(revnumber)
+msgid "2.0"
+msgstr "2.0"
 
-#: goobox.xml:75(primary) 
+#: C/goobox.xml:69(date)
+msgid "2009-11-14"
+msgstr "2009-11-14"
+
+#: C/goobox.xml:71(para)
+msgid "Second version, program version 2.1.0"
+msgstr "Zweite Version, Programmversion 2.1.0"
+
+#. this is version of manual, not application
+#: C/goobox.xml:76(releaseinfo)
+msgid "This is manual describes version 2.1.0 of Goobox"
+msgstr "Dieses Handbuch beschreibt Version 2.1.0 von Goobox"
+
+#: C/goobox.xml:82(primary)
 msgid "goobox"
 msgstr "goobox"
 
-#: goobox.xml:78(primary) 
+#: C/goobox.xml:85(primary)
 msgid "CD Player"
 msgstr "CD-Spieler"
 
-#: goobox.xml:81(secondary) 
+#: C/goobox.xml:88(secondary)
 msgid "CD Ripper"
 msgstr "CD-Extrahierer"
 
-#: goobox.xml:89(title) 
+#: C/goobox.xml:96(title)
 msgid "Introduction"
 msgstr "Einleitung"
 
-#: goobox.xml:90(para) 
-msgid "With <application>CD Player</application> you can play audio Compact Discs (CDs) and save the CD tracks as audio files."
+#: C/goobox.xml:97(para)
+msgid ""
+"With <application>CD Player</application> you can play audio Compact Discs "
+"(CDs) and save the CD tracks as audio files."
 msgstr ""
-"Mit dem <application>CD-Spieler</application> können Sie Compact Discs (CDs) abspielen und die CD-Stücke "
-"als Audiodateien abspeichern."
+"Mit dem <application>CD-Spieler</application> können Sie Compact Discs (CDs) "
+"abspielen und die CD-Stücke als Audiodateien abspeichern."
 
-#: goobox.xml:97(title) 
+#: C/goobox.xml:105(title)
+msgid "Preferences"
+msgstr "Einstellungen"
+
+#: C/goobox.xml:106(para)
+msgid ""
+"To configure <application>CD Player</application>, open the "
+"<guilabel>Preferences</guilabel> dialog by choosing "
+"<menuchoice><guimenu>Edit</guimenu><guisubmenu>Preferences</guisubmenu></"
+"menuchoice>."
+msgstr ""
+"Um <application>CD-Spieler</application> zu konfigurieren, öffnen Sie den "
+"Dialog <guilabel>Einstellungen</guilabel> durch Auswahl von <menuchoice>"
+"<guimenu>Bearbeiten</guimenu><guisubmenu>Einstellungen</guisubmenu></"
+"menuchoice>."
+
+#: C/goobox.xml:112(para)
+msgid ""
+"This dialog contains two tabs described in detail below. At the bottom of "
+"the dialog window, you'll find the following buttons:"
+msgstr ""
+"Dieser Dialog enthält zwei Reiter, die weiter unten im Detail beschrieben "
+"werden. Unten finden Sie im Dialog die folgenden zwei Knöpfe:"
+
+#: C/goobox.xml:118(para)
+msgid "<guibutton>Help</guibutton>: shows this manual."
+msgstr "<guibutton>Hilfe</guibutton>: zeigt dieses Handbuch."
+
+#: C/goobox.xml:122(para)
+msgid "<guibutton>Close</guibutton>: closes the dialog."
+msgstr "<guibutton>Schließen</guibutton>: schließt den Dialog."
+
+#: C/goobox.xml:126(para)
+msgid ""
+"Keep in mind that when you change an option it will automatically applied. "
+"This is why there is no <guibutton>Ok</guibutton> or <guibutton>Apply</"
+"guibutton> button."
+msgstr ""
+"Beachten Sie, dass geänderte Optionen sofort effektiv werden. Daher gibt es "
+"auch keinen Knopf <guibutton>Ok</guibutton> oder <guibutton>Anwenden"
+"</guibutton>."
+
+#: C/goobox.xml:135(title)
+msgid "General Tab"
+msgstr "Reiter »Allgemein«"
+
+#: C/goobox.xml:136(para)
+msgid "This tab allows you to set the following options:"
+msgstr "Dieser Reiter erlaubt es Ihnen, die folgenden Optionen zu setzen:"
+
+#: C/goobox.xml:141(para)
+msgid "Select the device to use."
+msgstr "Wählt das zu verwendende Gerät aus."
+
+#: C/goobox.xml:145(para)
+msgid "Whether to automatically play a newly inserted disk."
+msgstr "Ob eine neu eingelegte Platte automatisch abgespielt werden soll."
+
+#: C/goobox.xml:154(title)
+msgid "Extraction Tab"
+msgstr "Reiter »Auslesen«"
+
+#: C/goobox.xml:155(para)
+msgid "This tab allows you to set the extraction options:"
+msgstr "Dieser Reiter erlaubt es Ihnen, die Auslese-Optionen zu setzen:"
+
+#: C/goobox.xml:160(para)
+msgid ""
+"The destination folder. Files are saved in a subfolder of the destination "
+"folder, following the scheme Artist/Album/track."
+msgstr ""
+"Der Zielordner. Dateien werden im Unterordner des Zielordners gespeichert und "
+"folgen dem Muster Künstler/Album/Stück."
+
+#: C/goobox.xml:165(para)
+msgid ""
+"The audio files format to use. Some formats allow you to set the quality of "
+"the file, this can be usefull because usually there is a trade-off between "
+"audio quality and file size. Use the <guilabel>Properties</guilabel> button "
+"to set the file format properties."
+msgstr ""
+"Das zu verwendende Audioformat. Einige Formate erlauben es Ihnen, die "
+"Qualität der Datei zu setzen, da es typischerweise einen Konflikt zwischen "
+"Audioqualität und Dateigröße gibt. Verwenden Sie den Knopf <guilabel>"
+"Eigenschaften</guilabel>, um die Dateiformateigenschaften zu setzen."
+
+#: C/goobox.xml:174(para)
+msgid ""
+"Whether to save a playlist file in PLS format that contains the list of the "
+"extracted files. The playlist is saved in the same folder of the audio files."
+msgstr ""
+"Ob Abspiellisten im Format PLS, das eine Liste der ausgelesenen Dateien "
+"enthält, gespeichert werden sollen. Die Abspielliste wird im gleichen Ordner "
+"wie die Audiodateien gespeichert."
+
+#: C/goobox.xml:186(title)
 msgid "Quick Reference: Keyboard Shortcuts"
 msgstr "Schnellreferenz: Tastatur-Abkürzungen"
 
-#: goobox.xml:98(para) 
-msgid "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> provide a quick reference for all of the <application>CD Player</application> keyword shortcuts. Look in the menus for other shortcuts."
+#: C/goobox.xml:187(para)
+msgid ""
+"<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> provide a quick reference "
+"for all of the <application>CD Player</application> keyword shortcuts. Look "
+"in the menus for other shortcuts."
 msgstr ""
-"<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> stellt eine Schnellreferenz für alle Tastatur-"
-"Abkürzungen vom <application>CD-Spieler</application> bereit. Schauen Sie in die Menüs für weitere "
-"Abkürzungen."
+"<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> stellt eine Schnellreferenz "
+"für alle Tastatur-Abkürzungen vom <application>CD-Spieler</application> "
+"bereit. Schauen Sie in die Menüs für weitere Abkürzungen."
 
-#: goobox.xml:103(title) 
+#: C/goobox.xml:192(title)
 msgid "Keyboard shortcuts"
 msgstr "Tastaturabkürzungen"
 
-#: goobox.xml:111(para) 
+#: C/goobox.xml:200(para)
 msgid "Keyboard Shortcut"
 msgstr "Tastaturabkürzung"
 
-#: goobox.xml:113(para) 
+#: C/goobox.xml:202(para)
 msgid "Description"
 msgstr "Beschreibung"
 
-#: goobox.xml:120(keycap) 
+#: C/goobox.xml:209(keycap)
 msgid "1"
 msgstr "1"
 
-#: goobox.xml:124(para) 
+#: C/goobox.xml:213(para)
 msgid "Play the 1st track"
 msgstr "Spiele das erste Stück"
 
-#: goobox.xml:130(keycap) 
+#: C/goobox.xml:219(keycap)
 msgid "2"
 msgstr "2"
 
-#: goobox.xml:134(para) 
+#: C/goobox.xml:223(para)
 msgid "Play the 2nd track"
 msgstr "Spiele das zweite Stück"
 
-#: goobox.xml:140(keycap) 
+#: C/goobox.xml:229(keycap)
 msgid "3"
 msgstr "3"
 
-#: goobox.xml:144(para) 
+#: C/goobox.xml:233(para)
 msgid "Play the 3rd track"
 msgstr "Spiele das dritte Stück"
 
-#: goobox.xml:150(keycap) 
+#: C/goobox.xml:239(keycap)
 msgid "4"
 msgstr "4"
 
-#: goobox.xml:154(para) 
+#: C/goobox.xml:243(para)
 msgid "Play the 4th track"
 msgstr "Spiele das vierte Stück"
 
-#: goobox.xml:160(keycap) 
+#: C/goobox.xml:249(keycap)
 msgid "5"
 msgstr "5"
 
-#: goobox.xml:164(para) 
+#: C/goobox.xml:253(para)
 msgid "Play the 5th track"
 msgstr "Spiele das fünfte Stück"
 
-#: goobox.xml:170(keycap) 
+#: C/goobox.xml:259(keycap)
 msgid "6"
 msgstr "6"
 
-#: goobox.xml:174(para) 
+#: C/goobox.xml:263(para)
 msgid "Play the 6th track"
 msgstr "Spiele das sechste Stück"
 
-#: goobox.xml:180(keycap) 
+#: C/goobox.xml:269(keycap)
 msgid "7"
 msgstr "7"
 
-#: goobox.xml:184(para) 
+#: C/goobox.xml:273(para)
 msgid "Play the 7th track"
 msgstr "Spiele das siebte Stück"
 
-#: goobox.xml:190(keycap) 
+#: C/goobox.xml:279(keycap)
 msgid "8"
 msgstr "8"
 
-#: goobox.xml:194(para) 
+#: C/goobox.xml:283(para)
 msgid "Play the 8th track"
 msgstr "Spiele das achte Stück"
 
-#: goobox.xml:200(keycap) 
+#: C/goobox.xml:289(keycap)
 msgid "9"
 msgstr "9"
 
-#: goobox.xml:204(para) 
+#: C/goobox.xml:293(para)
 msgid "Play the 9th track"
 msgstr "Spiele das neunte Stück"
 
-#: goobox.xml:210(keycap) 
+#: C/goobox.xml:299(keycap)
 msgid "0"
 msgstr "0"
 
-#: goobox.xml:214(para) 
+#: C/goobox.xml:303(para)
 msgid "Play the 10th track"
 msgstr "Spiele das zehnte Stück"
 
-#: goobox.xml:220(keycap) 
+#: C/goobox.xml:309(keycap)
 msgid "Space"
 msgstr "Leertaste"
 
-#: goobox.xml:224(para) 
+#: C/goobox.xml:313(para)
 msgid "Play/Pause the current track"
 msgstr "Spiele/Pausiere das aktuelle Stück"
 
-#: goobox.xml:230(keycap) 
+#: C/goobox.xml:319(keycap)
 msgid "Escape"
 msgstr "Escape"
 
-#: goobox.xml:234(para) 
+#: C/goobox.xml:323(para)
 msgid "Stop playing the current track"
 msgstr "Abspielen des aktuellen Stücks abbrechen"
 
-#: goobox.xml:240(keycap) 
+#: C/goobox.xml:329(keycap)
 msgid "N"
 msgstr "N"
 
-#: goobox.xml:244(para) 
+#: C/goobox.xml:333(para)
 msgid "Play the next track"
 msgstr "Spiele das nächste Stück"
 
-#: goobox.xml:250(keycap) 
+#: C/goobox.xml:339(keycap)
 msgid "P"
 msgstr "P"
 
-#: goobox.xml:254(para) 
+#: C/goobox.xml:343(para)
 msgid "Play the previous track"
 msgstr "Spiele das vorherige Stück"
 
-#: goobox.xml:260(keycap) 
+#: C/goobox.xml:349(keycap)
 msgid "J"
 msgstr "J"
 
-#: goobox.xml:264(para) 
+#: C/goobox.xml:353(para)
 msgid "Eject the CD from the tray"
 msgstr "CD auswerfen"
 
-#: goobox.xml:270(keycap) 
+#: C/goobox.xml:359(keycap)
 msgid "E"
 msgstr "E"
 
-#: goobox.xml:274(para) 
+#: C/goobox.xml:363(para)
 msgid "Open the <interface>Extract</interface> dialog"
 msgstr "Öffne den Dialog <interface>Extrahieren</interface>"
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2.
-#: goobox.xml:0(None) 
+#: C/goobox.xml:0(None)
 msgid "translator-credits"
 msgstr "Helge Kreutzmann <debian@helgefjell.de>, 2008"
 
+#~ msgid "2005"
+#~ msgstr "2005"
+
+#~ msgid "paolo.bacchilega@libero.it"
+#~ msgstr "paolo.bacchilega@libero.it"
