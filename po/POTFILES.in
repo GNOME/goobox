@@ -58,7 +58,6 @@ src/gtk-file-chooser-preview.c
 src/gtk-file-chooser-preview.h
 src/gtk-utils.c
 src/gtk-utils.h
-src/icons/pixbufs.h
 src/main.c
 src/main.h
 src/metadata.c
