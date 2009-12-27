@@ -1,9 +1,14 @@
+# German translation of the goobox manual.
+# Helge Kreutzmann <debian@helgefjell.de>, 2008, 2009.
+# Mario Blättermann <mariobl@gnome.org>, 2009.
+# Christian Kirbach <Christian.Kirbach@googlemail.com>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox 1.9.2\n"
-"POT-Creation-Date: 2009-11-21 16:22+0100\n"
-"PO-Revision-Date: 2009-12-07 21:54+0100\n"
-"Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-12-17 08:29+0000\n"
+"PO-Revision-Date: 2009-12-19 13:15+0100\n"
+"Last-Translator: Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,14 +43,13 @@ msgid ""
 "of the GFDL at this <ulink type=\"help\" url=\"ghelp:fdl\">link</ulink> or "
 "in the file COPYING-DOCS distributed with this manual."
 msgstr ""
-"Es wird die Erlaubnis erteilt, dieses Dokument gemäß den Bedingungen der GNU "
-"Free Documentation-Lizenz (GFDL), Version 1.1 oder jeder neueren Version, "
-"wie diese von der Free Software Foundation veröffentlicht wurden, zu "
-"kopieren, verteilen oder verändern. Hierbei gibt es keine invarianten "
-"Abschnitte, keine Deckblatt-Texte und keine Rückseiten-Texte. Sie können "
-"eine Kopie der GFDL unter <ulink type=\"help\" url=\"ghelp:fdl\">link</"
-"ulink> oder in der Datei COPYING-DOCS, die zusammen mit diesem Handbuch "
-"vertrieben wird, finden."
+"Das vorliegende Dokument kann gemäß den Bedingungen der GNU Free "
+"Documentation License (GFDL), Version 1.1 oder jeder späteren, von der Free "
+"Software Foundation veröffentlichten Version ohne unveränderbare Abschnitte "
+"sowie ohne Texte auf dem vorderen und hinteren Buchdeckel kopiert, verteilt "
+"und/oder modifiziert werden. Eine Kopie der GFDL finden Sie unter diesem "
+"<ulink type=\"help\" url=\"ghelp:fdl\">Link</ulink> oder in der mit diesem "
+"Handbuch gelieferten Datei COPYING-DOCS."
 
 #: C/goobox.xml:12(para)
 msgid ""
@@ -54,11 +58,10 @@ msgid ""
 "you can do so by adding a copy of the license to the manual, as described in "
 "section 6 of the license."
 msgstr ""
-"Dieses Handbuch ist Teil einer Sammlung von GNOME-Handbüchern, die unter der "
-"GFDL vertrieben werden. Falls Sie das Handbuch unabhängig von der Sammlung "
-"vertreiben wollen, können Sie dies machen, indem Sie eine Kopie der Lizenz "
-"zu dem Handbuch hinzufügen, wie dies in Abschnitt 6 der Lizenz beschrieben "
-"ist."
+"Das vorliegende Handbuch ist Teil einer Reihe von GNOME-Handbüchern, die "
+"unter der GFDL verteilt werden. Wenn Sie dieses Handbuch separat verteilen "
+"möchten, können Sie dies tun, indem Sie dem Handbuch eine Kopie der Lizenz, "
+"wie in Abschnitt 6 der Lizenz beschrieben, hinzufügen."
 
 #: C/goobox.xml:19(para)
 msgid ""
@@ -68,11 +71,12 @@ msgid ""
 "aware of those trademarks, then the names are in capital letters or initial "
 "capital letters."
 msgstr ""
-"Für viele der Namen, die von Firmen zur Unterscheidung Ihrer Produkte und "
-"Dienste verwandt werden, sind Markenrechte angemeldet. Wenn solche Namen in "
-"irgendwelchen GNOME-Dokumentationen auftauchen und diese Rechte den "
-"Mitglieder des GNOME-Dokumentationsteams mitgeteilt wurde, dann werden die "
-"Namen komplett oder der erste Buchstabe davon in Großbuchstaben geschrieben."
+"Bei vielen der von Firmen zur Unterscheidung ihrer Produkte und "
+"Dienstleistungen verwendeten Namen handelt es sich um Marken. An den "
+"Stellen, an denen derartige Namen in einer GNOME-Dokumentation vorkommen und "
+"wenn die Mitglieder des GNOME-Dokumentationsprojekts über diese Marken "
+"informiert wurden, sind die Namen in Großbuchstaben oder mit großen "
+"Anfangsbuchstaben geschrieben."
 
 #: C/goobox.xml:35(para)
 msgid ""
@@ -123,10 +127,10 @@ msgstr ""
 "DOKUMENTS ODER EIN LIEFERANT EINER DIESER PARTEIEN VON EINER PERSON FÜR "
 "DIREKTE, INDIREKTE, BESONDERE, ZUFÄLLIGE ODER ALS FOLGE AUFGETRETENE SCHÄDEN "
 "IRGENDEINER ART, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF, SCHÄDEN DURCH "
-"GESCHÄFTSWERTVERLUSTE, ARBEITSAUSFÄLLE, COMPUTERAUSFÄLLE ODER -"
+"GESCHÄFTSWERTVERLUSTE, ARBEITSAUSFÄLLE, COMPUTERAUSFÄLLE ODER "
 "FUNKTIONSSTÖRUNGEN ODER JEGLICHE ANDERE SCHÄDEN ODER VERLUSTE, DIE DURCH "
 "ODER IM ZUSAMMENHANG MIT DER VERWENDUNG DES DOKUMENTS ODER EINER "
-"MODIFIZIERTEN VERSION DES DOKUMENTS ENTSTANDEN SIND, SELBST FALLS DIESE "
+"MODIFIZIERTEN VERSION DES DOKUMENTS ENTSTANDEN SIND, SELBST WENN DIESE "
 "PARTEI ÜBER MÖGLICHE SCHÄDEN INFORMIERT WORDEN SEIN SOLLTE, HAFTBAR GEMACHT "
 "WERDEN."
 
@@ -136,9 +140,9 @@ msgid ""
 "OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER UNDERSTANDING THAT: "
 "<placeholder-1/>"
 msgstr ""
-"DAS DOKUMENT UND VERÄNDERTE VERSIONEN DES DOKUMENTS WERDEN UNTER DEN "
-"BEDINGUNGEN DER GNU FREE DOKUCUMENTATION-LIZENZ VERTRIEBEN. HIERUNTER WIRD "
-"AUCH FOLGENDES VERSTANDEN: <placeholder-1/>"
+"DAS DOKUMENT UND MODIFIZIERTE VERSIONEN DES DOKUMENTS WERDEN GEMÄSS DEN "
+"BEDINGUNGEN DER GNU FREE DOCUMENTATION LICENSE MIT DER FOLGENDEN "
+"VEREINBARUNG BEREITGESTELLT: <placeholder-1/>"
 
 #: C/goobox.xml:48(firstname)
 msgid "Paolo"
@@ -158,7 +162,7 @@ msgstr "1.0"
 
 #: C/goobox.xml:62(date)
 msgid "2005-01-20"
-msgstr "2005-01-20"
+msgstr "20. Januar 2005"
 
 #: C/goobox.xml:64(para)
 msgid "First version, program version 0.7.1"
@@ -170,7 +174,7 @@ msgstr "2.0"
 
 #: C/goobox.xml:69(date)
 msgid "2009-11-14"
-msgstr "2009-11-14"
+msgstr "14. November 2009"
 
 #: C/goobox.xml:71(para)
 msgid "Second version, program version 2.1.0"
@@ -191,7 +195,7 @@ msgstr "CD-Spieler"
 
 #: C/goobox.xml:88(secondary)
 msgid "CD Ripper"
-msgstr "CD-Extrahierer"
+msgstr "CD-Ausleser"
 
 #: C/goobox.xml:96(title)
 msgid "Introduction"
@@ -217,9 +221,9 @@ msgid ""
 "menuchoice>."
 msgstr ""
 "Um <application>CD-Spieler</application> zu konfigurieren, öffnen Sie den "
-"Dialog <guilabel>Einstellungen</guilabel> durch Auswahl von <menuchoice>"
-"<guimenu>Bearbeiten</guimenu><guisubmenu>Einstellungen</guisubmenu></"
-"menuchoice>."
+"Dialog <guilabel>Einstellungen</guilabel> durch Auswahl von "
+"<menuchoice><guimenu>Bearbeiten</guimenu><guisubmenu>Einstellungen</"
+"guisubmenu></menuchoice>."
 
 #: C/goobox.xml:112(para)
 msgid ""
@@ -243,9 +247,9 @@ msgid ""
 "This is why there is no <guibutton>Ok</guibutton> or <guibutton>Apply</"
 "guibutton> button."
 msgstr ""
-"Beachten Sie, dass geänderte Optionen sofort effektiv werden. Daher gibt es "
-"auch keinen Knopf <guibutton>Ok</guibutton> oder <guibutton>Anwenden"
-"</guibutton>."
+"Beachten Sie, dass geänderte Optionen sofort angewendet werden. Daher gibt "
+"es auch keinen Knopf <guibutton>Ok</guibutton> oder <guibutton>Anwenden</"
+"guibutton>."
 
 #: C/goobox.xml:135(title)
 msgid "General Tab"
@@ -261,7 +265,9 @@ msgstr "Wählt das zu verwendende Gerät aus."
 
 #: C/goobox.xml:145(para)
 msgid "Whether to automatically play a newly inserted disk."
-msgstr "Ob eine neu eingelegte Platte automatisch abgespielt werden soll."
+msgstr ""
+"Legt fest, ob eine neu eingelegte Medien automatisch abgespielt werden "
+"sollen."
 
 #: C/goobox.xml:154(title)
 msgid "Extraction Tab"
@@ -276,8 +282,8 @@ msgid ""
 "The destination folder. Files are saved in a subfolder of the destination "
 "folder, following the scheme Artist/Album/track."
 msgstr ""
-"Der Zielordner. Dateien werden im Unterordner des Zielordners gespeichert und "
-"folgen dem Muster Künstler/Album/Stück."
+"Der Zielordner. Dateien werden im Unterordner des Zielordners gespeichert "
+"und folgen dem Muster Künstler/Album/Stück."
 
 #: C/goobox.xml:165(para)
 msgid ""
@@ -288,21 +294,22 @@ msgid ""
 msgstr ""
 "Das zu verwendende Audioformat. Einige Formate erlauben es Ihnen, die "
 "Qualität der Datei zu setzen, da es typischerweise einen Konflikt zwischen "
-"Audioqualität und Dateigröße gibt. Verwenden Sie den Knopf <guilabel>"
-"Eigenschaften</guilabel>, um die Dateiformateigenschaften zu setzen."
+"Audioqualität und Dateigröße gibt. Verwenden Sie den Knopf "
+"<guilabel>Eigenschaften</guilabel>, um die Dateiformateigenschaften zu "
+"setzen."
 
 #: C/goobox.xml:174(para)
 msgid ""
 "Whether to save a playlist file in PLS format that contains the list of the "
 "extracted files. The playlist is saved in the same folder of the audio files."
 msgstr ""
-"Ob Abspiellisten im Format PLS, das eine Liste der ausgelesenen Dateien "
-"enthält, gespeichert werden sollen. Die Abspielliste wird im gleichen Ordner "
-"wie die Audiodateien gespeichert."
+"Legt fest, ob Abspiellisten im Format PLS gespeichert werden sollen, welches "
+"eine Liste der ausgelesenen Dateien enthält. Die Abspielliste wird im "
+"gleichen Ordner wie die Audiodateien gespeichert."
 
 #: C/goobox.xml:186(title)
 msgid "Quick Reference: Keyboard Shortcuts"
-msgstr "Schnellreferenz: Tastatur-Abkürzungen"
+msgstr "Schnellreferenz: Tastenkombinationen"
 
 #: C/goobox.xml:187(para)
 msgid ""
@@ -316,11 +323,11 @@ msgstr ""
 
 #: C/goobox.xml:192(title)
 msgid "Keyboard shortcuts"
-msgstr "Tastaturabkürzungen"
+msgstr "Tastenkombinationen"
 
 #: C/goobox.xml:200(para)
 msgid "Keyboard Shortcut"
-msgstr "Tastaturabkürzung"
+msgstr "Tastenkombination"
 
 #: C/goobox.xml:202(para)
 msgid "Description"
@@ -332,7 +339,7 @@ msgstr "1"
 
 #: C/goobox.xml:213(para)
 msgid "Play the 1st track"
-msgstr "Spiele das erste Stück"
+msgstr "Das erste Stück abspielen"
 
 #: C/goobox.xml:219(keycap)
 msgid "2"
@@ -340,7 +347,7 @@ msgstr "2"
 
 #: C/goobox.xml:223(para)
 msgid "Play the 2nd track"
-msgstr "Spiele das zweite Stück"
+msgstr "Das zweite Stück abspielen"
 
 #: C/goobox.xml:229(keycap)
 msgid "3"
@@ -348,7 +355,7 @@ msgstr "3"
 
 #: C/goobox.xml:233(para)
 msgid "Play the 3rd track"
-msgstr "Spiele das dritte Stück"
+msgstr "Das dritte Stück abspielen"
 
 #: C/goobox.xml:239(keycap)
 msgid "4"
@@ -356,7 +363,7 @@ msgstr "4"
 
 #: C/goobox.xml:243(para)
 msgid "Play the 4th track"
-msgstr "Spiele das vierte Stück"
+msgstr "Das vierte Stück abspielen"
 
 #: C/goobox.xml:249(keycap)
 msgid "5"
@@ -364,7 +371,7 @@ msgstr "5"
 
 #: C/goobox.xml:253(para)
 msgid "Play the 5th track"
-msgstr "Spiele das fünfte Stück"
+msgstr "Das fünfte Stück abspielen"
 
 #: C/goobox.xml:259(keycap)
 msgid "6"
@@ -372,7 +379,7 @@ msgstr "6"
 
 #: C/goobox.xml:263(para)
 msgid "Play the 6th track"
-msgstr "Spiele das sechste Stück"
+msgstr "Das sechste Stück abspielen"
 
 #: C/goobox.xml:269(keycap)
 msgid "7"
@@ -380,7 +387,7 @@ msgstr "7"
 
 #: C/goobox.xml:273(para)
 msgid "Play the 7th track"
-msgstr "Spiele das siebte Stück"
+msgstr "Das siebte Stück abspielen"
 
 #: C/goobox.xml:279(keycap)
 msgid "8"
@@ -388,7 +395,7 @@ msgstr "8"
 
 #: C/goobox.xml:283(para)
 msgid "Play the 8th track"
-msgstr "Spiele das achte Stück"
+msgstr "Das achte Stück abspielen"
 
 #: C/goobox.xml:289(keycap)
 msgid "9"
@@ -396,7 +403,7 @@ msgstr "9"
 
 #: C/goobox.xml:293(para)
 msgid "Play the 9th track"
-msgstr "Spiele das neunte Stück"
+msgstr "Das neunte Stück abspielen"
 
 #: C/goobox.xml:299(keycap)
 msgid "0"
@@ -404,7 +411,7 @@ msgstr "0"
 
 #: C/goobox.xml:303(para)
 msgid "Play the 10th track"
-msgstr "Spiele das zehnte Stück"
+msgstr "Das zehnte Stück abspielen"
 
 #: C/goobox.xml:309(keycap)
 msgid "Space"
@@ -412,7 +419,7 @@ msgstr "Leertaste"
 
 #: C/goobox.xml:313(para)
 msgid "Play/Pause the current track"
-msgstr "Spiele/Pausiere das aktuelle Stück"
+msgstr "Das aktuelle Stück abspielen oder pausieren"
 
 #: C/goobox.xml:319(keycap)
 msgid "Escape"
@@ -428,7 +435,7 @@ msgstr "N"
 
 #: C/goobox.xml:333(para)
 msgid "Play the next track"
-msgstr "Spiele das nächste Stück"
+msgstr "Das nächste Stück abspielen"
 
 #: C/goobox.xml:339(keycap)
 msgid "P"
@@ -436,7 +443,7 @@ msgstr "P"
 
 #: C/goobox.xml:343(para)
 msgid "Play the previous track"
-msgstr "Spiele das vorherige Stück"
+msgstr "Das vorherige Stück abspielen"
 
 #: C/goobox.xml:349(keycap)
 msgid "J"
@@ -452,12 +459,14 @@ msgstr "E"
 
 #: C/goobox.xml:363(para)
 msgid "Open the <interface>Extract</interface> dialog"
-msgstr "Öffne den Dialog <interface>Extrahieren</interface>"
+msgstr "Den Dialog <interface>Auslesen</interface> öffnen"
 
-#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2.
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: C/goobox.xml:0(None)
 msgid "translator-credits"
-msgstr "Helge Kreutzmann <debian@helgefjell.de>, 2008, 2009"
+msgstr ""
+"Helge Kreutzmann <debian@helgefjell.de>, 2008, 2009\n"
+"Mario Blättermann <mariobl@gnome.org>, 2009"
 
 #~ msgid "2005"
 #~ msgstr "2005"
