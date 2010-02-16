@@ -3,35 +3,33 @@
 # This file is distributed under the same license as the Goobox package.
 #
 # José Sánchez Moreno <jose@oxigenow.com>, 2007.
-# Jorge González <jorgegonz@svn.gnome.org>, 2007.
+# Jorge González <jorgegonz@svn.gnome.org>, 2007, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: help.HEAD.es\n"
-"POT-Creation-Date: 2009-11-21 19:42+0000\n"
-"PO-Revision-Date: 2007-09-23 20:14+0200\n"
+"POT-Creation-Date: 2009-11-29 22:49+0000\n"
+"PO-Revision-Date: 2010-02-16 18:54+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
-"Language-Team: Spanish <traductores@es.gnome.org>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: C/goobox.xml:18(title)
-#, fuzzy
 #| msgid "<application>CD Player</application> Manual V1.0"
 msgid "<application>CD Player</application> Manual V2.0"
-msgstr "Manual del <application>Reproductor de cd</application> V1.0"
+msgstr "Manual del <application>Reproductor de CD</application> V2.0"
 
 #: C/goobox.xml:20(para)
 msgid "User manual for Goobox the CD player."
 msgstr "Manual del usuario para el reproductor de CD Goobox"
 
 #: C/goobox.xml:24(year)
-#, fuzzy
 #| msgid "2005-01-20"
 msgid "2005, 2009"
-msgstr "2005-01-20"
+msgstr "2005, 2009"
 
 #: C/goobox.xml:25(holder)
 msgid "Paolo Bacchilega"
@@ -157,7 +155,7 @@ msgstr "Bacchilega"
 
 #: C/goobox.xml:51(email)
 msgid "paobac@src.gnome.org"
-msgstr ""
+msgstr "paobac@src.gnome.org"
 
 #: C/goobox.xml:61(revnumber)
 msgid "1.0"
@@ -172,29 +170,25 @@ msgid "First version, program version 0.7.1"
 msgstr "Primera version, version del programa 0.7.1"
 
 #: C/goobox.xml:68(revnumber)
-#, fuzzy
 #| msgid "1.0"
 msgid "2.0"
-msgstr "1.0"
+msgstr "2.0"
 
 #: C/goobox.xml:69(date)
-#, fuzzy
 #| msgid "2005-01-20"
 msgid "2009-11-14"
-msgstr "2005-01-20"
+msgstr "2009-11-14"
 
 #: C/goobox.xml:71(para)
-#, fuzzy
 #| msgid "First version, program version 0.7.1"
 msgid "Second version, program version 2.1.0"
-msgstr "Primera version, version del programa 0.7.1"
+msgstr "Segunda versión, versión del programa 2.1.0"
 
 #. this is version of manual, not application
 #: C/goobox.xml:76(releaseinfo)
-#, fuzzy
 #| msgid "This is manual describes version 0.7.1 of Goobox"
 msgid "This is manual describes version 2.1.0 of Goobox"
-msgstr "Este manual describe la versión 0.7.1 de Goobox"
+msgstr "Este manual describe la versión 2.1.0 de Goobox"
 
 #: C/goobox.xml:82(primary)
 msgid "goobox"
@@ -223,7 +217,7 @@ msgstr ""
 
 #: C/goobox.xml:105(title)
 msgid "Preferences"
-msgstr ""
+msgstr "Preferencias"
 
 #: C/goobox.xml:106(para)
 msgid ""
@@ -232,20 +226,26 @@ msgid ""
 "<menuchoice><guimenu>Edit</guimenu><guisubmenu>Preferences</guisubmenu></"
 "menuchoice>."
 msgstr ""
+"Para configurar el <application>Reproductor de CD</application> abra el "
+"diálogo <guilabel>Preferencias</guilabel> eligiendo "
+"<menuchoice><guimenu>Editar</guimenu><guisubmenu>Preferencias</guisubmenu></"
+"menuchoice>."
 
 #: C/goobox.xml:112(para)
 msgid ""
 "This dialog contains two tabs described in detail below. At the bottom of "
 "the dialog window, you'll find the following buttons:"
 msgstr ""
+"Este diálogo contiene dos solapas descritas en detalle más adelante. En la "
+"parte inferior la ventana del diálogo encontrará los siguientes botones:"
 
 #: C/goobox.xml:118(para)
 msgid "<guibutton>Help</guibutton>: shows this manual."
-msgstr ""
+msgstr "<guibutton>Ayuda</guibutton>: muestra este manual."
 
 #: C/goobox.xml:122(para)
 msgid "<guibutton>Close</guibutton>: closes the dialog."
-msgstr ""
+msgstr "<guibutton>Cerrar</guibutton>: cierra el diálogo."
 
 #: C/goobox.xml:126(para)
 msgid ""
@@ -253,36 +253,42 @@ msgid ""
 "This is why there is no <guibutton>Ok</guibutton> or <guibutton>Apply</"
 "guibutton> button."
 msgstr ""
+"Tenga en cuenta que cuando cambia una opción, se aplica automáticamente. "
+"Esto es porque no hay botón <guibutton>Aceptar</guibutton> o "
+"<guibutton>Aplicar</guibutton>."
 
 #: C/goobox.xml:135(title)
 msgid "General Tab"
-msgstr ""
+msgstr "Solapa General"
 
 #: C/goobox.xml:136(para)
 msgid "This tab allows you to set the following options:"
-msgstr ""
+msgstr "Esta solapa le permite configurar las siguientes opciones:"
 
 #: C/goobox.xml:141(para)
 msgid "Select the device to use."
-msgstr ""
+msgstr "Seleccione el dispositivo para usar."
 
 #: C/goobox.xml:145(para)
 msgid "Whether to automatically play a newly inserted disk."
 msgstr ""
+"Indica si se debe reproducir automáticamente un disco nuevo al insertarlo."
 
 #: C/goobox.xml:154(title)
 msgid "Extraction Tab"
-msgstr ""
+msgstr "Solapa Extracción"
 
 #: C/goobox.xml:155(para)
 msgid "This tab allows you to set the extraction options:"
-msgstr ""
+msgstr "Esta solapa le permite configurar las opciones de extracción:"
 
 #: C/goobox.xml:160(para)
 msgid ""
 "The destination folder. Files are saved in a subfolder of the destination "
 "folder, following the scheme Artist/Album/track."
 msgstr ""
+"La carpeta de destino. Los archivos se guardan en una subcarpeta en la "
+"carpeta de destino, siguiendo el esquema Artista/Álbum/pista."
 
 #: C/goobox.xml:165(para)
 msgid ""
@@ -291,12 +297,20 @@ msgid ""
 "audio quality and file size. Use the <guilabel>Properties</guilabel> button "
 "to set the file format properties."
 msgstr ""
+"El formato de archivos de sonido que usar. Algunos formatos le permiten "
+"establecer la calidad para el archivo, puede ser útil porque generalmente "
+"existe un sacrificio entre calidad y tamaño de archivo. Use el botón "
+"<guilabel>Propiedades</guilabel> para establecer las propiedades del formato "
+"de archivo."
 
 #: C/goobox.xml:174(para)
 msgid ""
 "Whether to save a playlist file in PLS format that contains the list of the "
 "extracted files. The playlist is saved in the same folder of the audio files."
 msgstr ""
+"Indica si se debe guardar una lista de reproducción en formato PLS que "
+"contenga la lista de los archivos extraídos. La lista se guarda en la misma "
+"carpeta que los archivos de sonido."
 
 #: C/goobox.xml:186(title)
 msgid "Quick Reference: Keyboard Shortcuts"
@@ -457,6 +471,7 @@ msgstr "Abrir la ventana del diálogo de <interface>Extracción</interface>"
 #: C/goobox.xml:0(None)
 msgid "translator-credits"
 msgstr ""
+"Jorge González <jorgegonz@svn.gnome.org>, 2010\n"
 "José Sánchez Moreno <jose@oxigenow.com>, 2007\n"
 "QA: Jorge González <jorgegonz@svn.gnome.org>, 2007"
 
