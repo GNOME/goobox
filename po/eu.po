@@ -1,175 +1,91 @@
 # translation of eu.po to Basque
 # This file is distributed under the same license as the goobox package.
-# Copyright (C) 2004-2006, 2007, 2008 Free Software Foundation, Inc.
+# Copyright (C) 2004-2006, 2007, 2008, 2010 Free Software Foundation, Inc.
 #
 # Mikel Olasagasti <hey_neken@mundurat.net>, 2004, 2005.
 # Iñaki Larrañaga  <dooteo@euskalgnu.org>, 2005, 2006.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007.
-# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-26 12:47+0200\n"
-"PO-Revision-Date: 2008-08-26 12:48+0200\n"
+"POT-Creation-Date: 2010-03-18 18:16+0100\n"
+"PO-Revision-Date: 2010-03-18 18:33+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\n"
 
-#: ../data/glade/cover_chooser.glade.h:1
-msgid "Choose a CD Cover"
-msgstr "Aukeratu CD azala"
+#: ../copy-n-paste/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "Fitxategia ez da baliozko .desktop fitxategia"
 
-#: ../data/glade/cover_chooser.glade.h:2
-msgid "Found images:"
-msgstr "Aurkitutako irudiak:"
+#: ../copy-n-paste/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Mahaigaineko fitxategiaren '%s' bertsioa ezezaguna"
 
-#: ../data/glade/extract_dialog.glade.h:1 ../data/glade/preferences.glade.h:1
-msgid "    "
-msgstr "    "
+#: ../copy-n-paste/eggdesktopfile.c:958
+#, c-format
+msgid "Starting %s"
+msgstr "%s hasieratzen"
 
-#: ../data/glade/extract_dialog.glade.h:2
-msgid "<b>Extract</b>"
-msgstr "<b>Erauzi</b>"
+#: ../copy-n-paste/eggdesktopfile.c:1100
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "Aplikazioak ez du dokumenturik onartzen komando-lerroan"
 
-#: ../data/glade/extract_dialog.glade.h:3
-msgid "Extract Tracks"
-msgstr "Atera pistak"
+#: ../copy-n-paste/eggdesktopfile.c:1168
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Abiarazteko aukera ezezaguna: %d"
 
-#: ../data/glade/extract_dialog.glade.h:4
-msgid "_All tracks"
-msgstr "_Pista guztiak"
+#: ../copy-n-paste/eggdesktopfile.c:1373
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr "Ezin zaizkie dokumentuen URIak mahaigaineko 'Type=Link' sarrerari igaro"
 
-#: ../data/glade/extract_dialog.glade.h:5
-msgid "_Selected tracks"
-msgstr "_Hautatutako pistak"
+#: ../copy-n-paste/eggdesktopfile.c:1392
+#, c-format
+msgid "Not a launchable item"
+msgstr "Ez dago abiaraz daitekeen elementurik"
 
-#: ../data/glade/format_dialog.glade.h:1
-msgid "Format Properties"
-msgstr "Formatuaren propietateak"
+#: ../copy-n-paste/eggsmclient.c:225
+msgid "Disable connection to session manager"
+msgstr "Desgaitu saio-kudeatzailearen konexioa"
 
-#: ../data/glade/preferences.glade.h:2
-msgid "<b>CD Drive</b>"
-msgstr "<b>CD unitatea</b>"
+#: ../copy-n-paste/eggsmclient.c:228
+msgid "Specify file containing saved configuration"
+msgstr "Zehaztu konfigurazioa gordeta duen fitxategia"
 
-#: ../data/glade/preferences.glade.h:3
-msgid "<b>Destination folder</b>"
-msgstr "<b>Helburuko karpeta</b>"
+#: ../copy-n-paste/eggsmclient.c:228
+msgid "FILE"
+msgstr "FITXATEGIA"
 
-#: ../data/glade/preferences.glade.h:4
-msgid "<b>Output format</b>"
-msgstr "<b>Irteerako formatua</b>"
+#: ../copy-n-paste/eggsmclient.c:231
+msgid "Specify session management ID"
+msgstr "Zehaztu saio-kudeatzailearen IDa"
 
-#: ../data/glade/preferences.glade.h:5
-msgid ""
-"<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
-"compresses but does not degrade audio quality.</i></small>"
-msgstr ""
-"<small><i>Galerarik gabeko Audiko Kodeka Librea (FLAC edo Free Lossless "
-"Audio Codec) iturburu irekiko kodeka da, audioa konprimitzen du kalitate "
-"galerarik gabe.</i></small>"
+#: ../copy-n-paste/eggsmclient.c:231
+msgid "ID"
+msgstr "IDa"
 
-#: ../data/glade/preferences.glade.h:6
-msgid ""
-"<small><i>Vorbis is an open source, lossy audio codec with high quality "
-"output at a lower file size than MP3.</i></small>"
-msgstr ""
-"<small><i>Vorbis iturburu irekiko kodeka da, audioaren kalitatea galdu arren "
-"MP3rekin konparatuz tamaina txikiagoko eta kalitate altuagoko fixtategiak "
-"sortzen ditu.</i></small>"
+#: ../copy-n-paste/eggsmclient.c:252
+msgid "Session management options:"
+msgstr "Saio-kudeatzailearen aukerak:"
 
-#: ../data/glade/preferences.glade.h:7
-msgid ""
-"<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
-"code modulated (PCM) audio.</i></small>"
-msgstr ""
-"<small><i>WAV+PCM kalitatearen galerarik gabeko formatua da, audioa "
-"konprimitu gabe mantentzen du, audioaren pultsu-kode modulatu gordina "
-"darabilena.</i></small>"
+#: ../copy-n-paste/eggsmclient.c:253
+msgid "Show session management options"
+msgstr "Erakutsi saio-kudeatzailearen aukerak"
 
-#: ../data/glade/preferences.glade.h:8
-msgid "Automatically play newly inserted discs"
-msgstr "Erreproduzitu automatikoki sartu berri diren diskoak"
-
-#: ../data/glade/preferences.glade.h:9
-msgid "CD Player Preferences"
-msgstr "CD erreproduzitzailearen hobespenak"
-
-#: ../data/glade/preferences.glade.h:10
-msgid "Choose destination folder"
-msgstr "Aukeratu helburuko karpeta"
-
-#: ../data/glade/preferences.glade.h:11
-msgid "Extraction"
-msgstr "Erauzi"
-
-#: ../data/glade/preferences.glade.h:12
-msgid "General"
-msgstr "Orokorra"
-
-#: ../data/glade/preferences.glade.h:13
-msgid "_Save playlist"
-msgstr "_Gorde erreprodukzio-zerrenda"
-
-#: ../data/glade/properties.glade.h:1
-msgid "No album found."
-msgstr "Ez da albumik aurkitu"
-
-#: ../data/glade/properties.glade.h:2
-msgid "Properties"
-msgstr "Propietateak"
-
-#: ../data/glade/properties.glade.h:3
-msgid "Search for the remaining data"
-msgstr "Bilatu falta diren datuak"
-
-#: ../data/glade/properties.glade.h:4
-msgid ""
-"Single artist\n"
-"Various artists\n"
-msgstr ""
-"Artista bakarra\n"
-"Hainbat artista\n"
-
-#: ../data/glade/properties.glade.h:7
-msgid "T_racks:"
-msgstr "_Pistak:"
-
-#: ../data/glade/properties.glade.h:8
-msgid "_Artist:"
-msgstr "_Artista:"
-
-#: ../data/glade/properties.glade.h:9
-msgid "_Title:"
-msgstr "_Titulua:"
-
-#: ../data/glade/properties.glade.h:10
-msgid "_Year:"
-msgstr "_Urtea:"
-
-#: ../data/glade/ripper_dialog.glade.h:1
-msgid "<big><b>Extracting tracks</b></big>"
-msgstr "<big><b>Pistak erauzten</b></big>"
-
-#: ../data/glade/ripper_dialog.glade.h:2
-msgid "Extracting Tracks"
-msgstr "Pistak erauzten"
-
-#: ../data/GNOME_Goobox.server.in.h:1
-msgid "Goobox Application"
-msgstr "Goobox aplikazioa"
-
-#: ../data/GNOME_Goobox.server.in.h:2
-msgid "Goobox Application Factory"
-msgstr "Goobox aplikazio fabrika"
-
-#: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:209
-#: ../src/goo-window.c:2608 ../src/main.c:148 ../src/main.c:234
+#: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:160
+#: ../src/goo-window.c:2058 ../src/goo-window.c:2512 ../src/main.c:378
 msgid "CD Player"
 msgstr "CD erreproduzitzailea"
 
@@ -185,78 +101,210 @@ msgstr "Balio posibleak: ogg, flac, mp3, wave."
 msgid "Possible values are: system, text_below, text_beside, text_only, icons_only."
 msgstr "Balio posibleak: system, text_below, text_beside, text_only, icons_only."
 
-#: ../src/actions.c:140
-msgid "Could not display help"
-msgstr "Ezin izan da laguntza erakutsi"
+#: ../data/ui/cover-chooser.ui.h:1
+msgid "Choose a CD Cover"
+msgstr "Aukeratu CD azala"
 
-#.
-#. const char     *documenters [] = {
-#. NULL
-#. };
-#: ../src/actions.c:189
+#: ../data/ui/cover-chooser.ui.h:2
+msgid "Found images:"
+msgstr "Aurkitutako irudiak:"
+
+#: ../data/ui/extract.ui.h:1 ../data/ui/preferences.ui.h:1
+msgid "    "
+msgstr "    "
+
+#: ../data/ui/extract.ui.h:2
+msgid "<b>Extract</b>"
+msgstr "<b>Erauzi</b>"
+
+#: ../data/ui/extract.ui.h:3
+msgid "Extract Tracks"
+msgstr "Atera pistak"
+
+#: ../data/ui/extract.ui.h:4
+msgid "_All tracks"
+msgstr "_Pista guztiak"
+
+#: ../data/ui/extract.ui.h:5
+msgid "_Selected tracks"
+msgstr "_Hautatutako pistak"
+
+#: ../data/ui/format-options.ui.h:1
+msgid "Format Properties"
+msgstr "Formatuaren propietateak"
+
+#: ../data/ui/preferences.ui.h:2
+msgid "<b>CD Drive</b>"
+msgstr "<b>CD unitatea</b>"
+
+#: ../data/ui/preferences.ui.h:3
+msgid "<b>Destination folder</b>"
+msgstr "<b>Helburuko karpeta</b>"
+
+#: ../data/ui/preferences.ui.h:4
+msgid "<b>Output format</b>"
+msgstr "<b>Irteerako formatua</b>"
+
+#: ../data/ui/preferences.ui.h:5
+msgid ""
+"<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
+"compresses but does not degrade audio quality.</i></small>"
+msgstr ""
+"<small><i>Galerarik gabeko Audiko Kodeka Librea (FLAC edo Free Lossless "
+"Audio Codec) iturburu irekiko kodeka da, audioa konprimitzen du kalitate "
+"galerarik gabe.</i></small>"
+
+#: ../data/ui/preferences.ui.h:6
+msgid ""
+"<small><i>Vorbis is an open source, lossy audio codec with high quality "
+"output at a lower file size than MP3.</i></small>"
+msgstr ""
+"<small><i>Vorbis iturburu irekiko kodeka da, audioaren kalitatea galdu arren "
+"MP3rekin konparatuz tamaina txikiagoko eta kalitate altuagoko fixtategiak "
+"sortzen ditu.</i></small>"
+
+#: ../data/ui/preferences.ui.h:7
+msgid ""
+"<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
+"code modulated (PCM) audio.</i></small>"
+msgstr ""
+"<small><i>WAV+PCM kalitatearen galerarik gabeko formatua da, audioa "
+"konprimitu gabe mantentzen du, audioaren pultsu-kode modulatu gordina "
+"darabilena.</i></small>"
+
+#: ../data/ui/preferences.ui.h:8
+msgid "Automatically play newly inserted discs"
+msgstr "Erreproduzitu automatikoki sartu berri diren diskoak"
+
+#: ../data/ui/preferences.ui.h:9
+msgid "CD Player Preferences"
+msgstr "CD erreproduzitzailearen hobespenak"
+
+#: ../data/ui/preferences.ui.h:10
+msgid "Choose destination folder"
+msgstr "Aukeratu helburuko karpeta"
+
+#: ../data/ui/preferences.ui.h:11
+msgid "Extraction"
+msgstr "Erauzi"
+
+#: ../data/ui/preferences.ui.h:12
+msgid "General"
+msgstr "Orokorra"
+
+#: ../data/ui/preferences.ui.h:13
+msgid "_Save playlist"
+msgstr "_Gorde erreprodukzio-zerrenda"
+
+#: ../data/ui/properties.ui.h:1
+msgid "No album found."
+msgstr "Ez da albumik aurkitu"
+
+#: ../data/ui/properties.ui.h:2
+msgid "Properties"
+msgstr "Propietateak"
+
+#: ../data/ui/properties.ui.h:3
+msgid "Search for the remaining data"
+msgstr "Bilatu falta diren datuak"
+
+#: ../data/ui/properties.ui.h:4
+msgid "Single artist"
+msgstr "Artista bakarra"
+
+#: ../data/ui/properties.ui.h:5
+msgid "T_racks:"
+msgstr "_Pistak:"
+
+#: ../data/ui/properties.ui.h:6
+msgid "Various artists"
+msgstr "Hainbat artista"
+
+#: ../data/ui/properties.ui.h:7
+msgid "_Artist:"
+msgstr "_Artista:"
+
+#: ../data/ui/properties.ui.h:8
+msgid "_Title:"
+msgstr "_Titulua:"
+
+#: ../data/ui/properties.ui.h:9
+msgid "_Year:"
+msgstr "_Urtea:"
+
+#: ../data/ui/ripper.ui.h:1
+msgid "<big><b>Extracting tracks</b></big>"
+msgstr "<big><b>Pistak erauzten</b></big>"
+
+#: ../data/ui/ripper.ui.h:2
+msgid "Extracting Tracks"
+msgstr "Pistak erauzten"
+
+#: ../src/actions.c:140
 msgid "translator_credits"
 msgstr ""
 "Mikel Olasagasti <hey_neken@mundurat.net>\n"
 "Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>"
 
-#: ../src/actions.c:211
-msgid "Copyright © 2004-2007 Free Software Foundation, Inc."
-msgstr "Copyright-a © 2004-2007 Free Software Foundation, Inc."
+#: ../src/actions.c:143
+msgid ""
+"CD Player is free software; you can redistribute it and/or modify it under "
+"the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version."
+msgstr ""
+"CD PLayer software librea da; birbana eta/edo alda dezakezu Software "
+"Foundation-ek argitaratutako GNU Lizentzia Publiko Orokorraren 2. bertsioan, "
+"edo (nahiago baduzu) beste berriago batean, jasotako baldintzak betez gero."
 
-#: ../src/actions.c:212 ../src/main.c:138
+#: ../src/actions.c:147
+msgid ""
+"CD Player is distributed in the hope that it will be useful, but WITHOUT ANY "
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details."
+msgstr ""
+"CD Player erabilgarria izango delakoan banatzen da, baina, INOLAKO "
+"BERMERIK GABE; era berean, ez da bermatzen beraren EGOKITASUNA "
+"MERKATURATZEKO edo HELBURU PARTIKULARRETARAKO ERABILTZEKO. Argibide gehiago "
+"nahi izanez gero, ikus GNU Lizentzia Publiko Orokorra."
+
+#: ../src/actions.c:151
+msgid ""
+"You should have received a copy of the GNU General Public License along with "
+"CD Player; if not, write to the Free Software Foundation, Inc., 51 Franklin "
+"St, Fifth Floor, Boston, MA 02110-1301 USA"
+msgstr ""
+"Programa honekin batera GNU Lizentzia Publiko Orokorraren kopia bat jasoko "
+"zenuen; hala ez bada, idatzi hona: Free Software Foundation, Inc., 51 Franklin "
+"St, Fifth Floor, Boston, MA 02110-1301 USA"
+
+#: ../src/actions.c:162
+msgid "Copyright © 2004-2009 Free Software Foundation, Inc."
+msgstr "Copyright-a © 2004-2009 Free Software Foundation, Inc."
+
+#: ../src/actions.c:163 ../src/main.c:416
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "Erreproduzitu CDak eta gorde pistak diskoan fitxategi bezala"
 
-#: ../src/actions.c:335 ../src/actions.c:363 ../src/actions.c:390
-#: ../src/gtk-utils.c:797
+#: ../src/actions.c:284 ../src/actions.c:313 ../src/actions.c:340
 msgid "Could not execute command"
 msgstr "Ezin izan da exekutatu komandoa"
 
-#: ../src/album-info.c:173
+#: ../src/album-info.c:174
 msgid "Various"
 msgstr "Hainbat"
 
-#: ../src/bacon-cd-selection.c:194
-msgid "Unnamed CDROM"
-msgstr "Izenik gabeko CD-ROMa"
-
-#: ../src/cd-drive.c:835
-#, c-format
-msgid "Unnamed SCSI Drive (%s)"
-msgstr "Izenik gabeko SCSI gailua (%s)"
-
-#: ../src/cd-drive.c:1395
-msgid "File image"
-msgstr "Fitxategi-irudia"
-
-#: ../src/dlg-cover-chooser.c:280
+#: ../src/dlg-cover-chooser.c:271
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, irudia kargatzen: %u"
 
-#: ../src/dlg-cover-chooser.c:333
-msgid "Loading images"
-msgstr "Irudiak kargatzen"
-
-#: ../src/dlg-cover-chooser.c:447 ../src/goo-window.c:3172
+#: ../src/dlg-cover-chooser.c:336 ../src/goo-window.c:3064
 msgid "Could not search for a cover on Internet"
 msgstr "Ezin izan da azal bat bilatu interneten"
 
-#: ../src/dlg-cover-chooser.c:454
-msgid "No image found"
-msgstr "Ez da irudirik aurkitu"
-
-#: ../src/dlg-cover-chooser.c:518 ../src/dlg-extract.c:133
-#: ../src/dlg-preferences.c:149 ../src/dlg-properties.c:155
-#, c-format
-msgid "Could not display help: %s"
-msgstr "Ezin izan da laguntza erakutsi: %s"
-
-#: ../src/dlg-cover-chooser.c:734
-msgid "Searching images..."
-msgstr "Irudiak bilatzen..."
-
-#: ../src/dlg-extract.c:179
+#: ../src/dlg-extract.c:119
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -272,24 +320,24 @@ msgstr ""
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 
-#: ../src/dlg-extract.c:190
+#: ../src/dlg-extract.c:130
 msgid "No encoder available."
 msgstr "Ez dago kodetzailerik eskuragarri."
 
-#: ../src/dlg-preferences.c:323 ../src/dlg-preferences.c:580
+#: ../src/dlg-preferences.c:241 ../src/dlg-preferences.c:468
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:335 ../src/dlg-preferences.c:583
+#: ../src/dlg-preferences.c:253 ../src/dlg-preferences.c:471
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:347
+#: ../src/dlg-preferences.c:265
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:374 ../src/dlg-preferences.c:607
+#: ../src/dlg-preferences.c:292 ../src/dlg-preferences.c:495
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
@@ -298,7 +346,7 @@ msgstr ""
 "konparatuz tamaina txikiagoko eta kalitate altuagoko fixtategiak sortzen "
 "ditu."
 
-#: ../src/dlg-preferences.c:375 ../src/dlg-preferences.c:610
+#: ../src/dlg-preferences.c:293 ../src/dlg-preferences.c:498
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
@@ -306,7 +354,7 @@ msgstr ""
 "Galerarik gabeko Audiko Kodeka Librea (FLAC edo Free Lossless Audio Codec) "
 "iturburu irekiko kodeka da, audioa konprimitzen du kalitate galerarik gabe."
 
-#: ../src/dlg-preferences.c:376 ../src/dlg-preferences.c:613
+#: ../src/dlg-preferences.c:294 ../src/dlg-preferences.c:501
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
@@ -314,179 +362,144 @@ msgstr ""
 "WAV+PCM kalitatearen galerarik gabeko formatua da, audioa konprimitu gabe "
 "mantentzen du, audioaren pultsu-kode modulatu gordina darabilena."
 
-#: ../src/dlg-preferences.c:560
+#: ../src/dlg-preferences.c:448
 msgid "Faster compression"
 msgstr "Konpresio azkarragoa"
 
-#: ../src/dlg-preferences.c:564
+#: ../src/dlg-preferences.c:452
 msgid "Higher compression"
 msgstr "Konpresio altuagoa"
 
-#: ../src/dlg-preferences.c:569
+#: ../src/dlg-preferences.c:457
 msgid "Smaller size"
 msgstr "Tamaina txikiagoa"
 
-#: ../src/dlg-preferences.c:573
+#: ../src/dlg-preferences.c:461
 msgid "Higher quality"
 msgstr "Kalitate altuagoa"
 
-#: ../src/dlg-preferences.c:594
+#: ../src/dlg-preferences.c:482
 msgid "Quality:"
 msgstr "Kalitatea:"
 
-#: ../src/dlg-preferences.c:597
+#: ../src/dlg-preferences.c:485
 msgid "Compression level:"
 msgstr "Konpresio maila:"
 
-#: ../src/dlg-properties.c:218
+#: ../src/dlg-properties.c:189
 #, c-format
 msgid "Album %d of %d"
 msgstr "%d. albuma / %d"
 
-#: ../src/dlg-properties.c:274
+#: ../src/dlg-properties.c:245
 #, c-format
 msgid "Search failed: %s\n"
 msgstr "Bilaketak huts egin du: %s\n"
 
-#: ../src/dlg-properties.c:284
+#: ../src/dlg-properties.c:255
 msgid "No album found"
 msgstr "Ez da albumik aurkitu"
 
-#: ../src/dlg-properties.c:345 ../src/goo-window.c:600
+#: ../src/dlg-properties.c:316 ../src/goo-window.c:534
 msgid "#"
 msgstr "#"
 
-#: ../src/dlg-properties.c:363 ../src/goo-window.c:625
+#: ../src/dlg-properties.c:334 ../src/goo-window.c:559
 msgid "Title"
 msgstr "Titulua"
 
-#: ../src/dlg-properties.c:396 ../src/goo-window.c:648
+#: ../src/dlg-properties.c:367 ../src/goo-window.c:582
 msgid "Artist"
 msgstr "Artista"
 
-#: ../src/dlg-ripper.c:201
+#: ../src/dlg-ripper.c:178
 #, c-format
 msgid "(%d:%02d:%02d Remaining)"
 msgstr "(%d:%02d:%02d falta da)"
 
-#: ../src/dlg-ripper.c:203
+#: ../src/dlg-ripper.c:180
 #, c-format
 msgid "(%d:%02d Remaining)"
 msgstr "(%d:%02d falta da)"
 
-#: ../src/dlg-ripper.c:208
+#: ../src/dlg-ripper.c:185
 #, c-format
 msgid "Extracting track: %d of %d %s"
 msgstr "Pista erauzten: %d / %d %s"
 
-#: ../src/dlg-ripper.c:245
+#: ../src/dlg-ripper.c:222
 msgid "Could not extract the tracks"
 msgstr "Ezin izan dira pistak erauzi"
 
-#: ../src/dlg-ripper.c:410
+#: ../src/dlg-ripper.c:453
 msgid "Could not display the destination folder"
 msgstr "Ezin izan da helburuko karpeta erakutsi"
 
-#: ../src/dlg-ripper.c:556
+#: ../src/dlg-ripper.c:578
 msgid "Tracks extracted successfully"
 msgstr "Pista ongi erauzi da"
 
-#: ../src/dlg-ripper.c:558
+#: ../src/dlg-ripper.c:580
 msgid "_View destination folder"
 msgstr "_Ikusi helburuko karpeta"
 
-#: ../src/dlg-ripper.c:572
+#: ../src/dlg-ripper.c:594
 #, c-format
 msgid "<i>Extracting \"%s\"</i>"
 msgstr "<i>\"%s\" erauzten</i>"
 
-#: ../src/dlg-ripper.c:585
+#: ../src/dlg-ripper.c:604
 msgid "Could not extract tracks"
 msgstr "Ezin izan dira pistak erauzi"
 
-#: ../src/dlg-ripper.c:586
-#, c-format
-msgid ""
-"Could not create folder \"%s\"\n"
-"\n"
-"%s"
-msgstr ""
-"Ezin izan da \"%s\" karpeta sortu\n"
-"\n"
-"%s"
-
-#: ../src/dlg-ripper.c:616
+#: ../src/dlg-ripper.c:634
 msgid "Ripped with CD Player"
 msgstr "CD erreproduzitzailearekin erauzia"
 
-#: ../src/eggtrayicon.c:118
-msgid "Orientation"
-msgstr "Orientazioa"
+#: ../src/dlg-ripper.c:680
+msgid "Extracting disc tracks"
+msgstr "Diskoko pistak erauzten"
 
-#: ../src/eggtrayicon.c:119
-msgid "The orientation of the tray."
-msgstr "Erretiluaren orientazioa."
+#: ../src/goo-player.c:262
+msgid "Playing CD"
+msgstr "CDa erreproduzitzen"
 
-#: ../src/file-utils.c:664
-msgid "Cannot find a terminal, using xterm, even if it may not work"
-msgstr "Ezin da terminala aurkitu; xterm erabiliko da, nahiz eta agian funtzionatu ez"
-
-#: ../src/goo-cdrom-bsd.c:140 ../src/goo-cdrom-linux.c:121
-#: ../src/goo-cdrom-solaris.c:123
-msgid "Error reading CD"
-msgstr "Errorea CDa irakurtzean"
-
-#: ../src/goo-cdrom.c:323
-msgid "The specified device is not valid"
-msgstr "Zehaztutako gailua baliogabea da"
-
-#: ../src/goo-player.c:497
-msgid "Drive not ready"
-msgstr "Unitatea ez dago prest"
-
-#: ../src/goo-player.c:501
-msgid "Tray open"
-msgstr "Erretilua irekita"
-
-#: ../src/goo-player.c:502 ../src/goo-player.c:506
-msgid "No disc"
-msgstr "Ez dago diskorik"
-
-#: ../src/goo-player.c:510 ../src/goo-window.c:1459
-msgid "Data Disc"
-msgstr "Datuen diskoa"
-
-#: ../src/goo-player.c:610
-msgid "Invalid device"
-msgstr "Gailu baliogabea"
-
-#: ../src/goo-player-info.c:247 ../src/goo-player-info.c:274
-#: ../src/goo-player-info.c:644
+#. translators: this is the current_time / total_time label
+#: ../src/goo-player-info.c:221 ../src/goo-player-info.c:249
+#: ../src/goo-player-info.c:549 ../src/goo-window.c:2040
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
-#: ../src/goo-player-info.c:520
+#: ../src/goo-player-info.c:423
 msgid "Click here to choose a cover for this CD"
 msgstr "Egin klik hemen CDaren azala aukeratzeko"
 
-#: ../src/goo-player-info.c:760
+#: ../src/goo-player-info.c:651
+msgid "No disc"
+msgstr "Ez dago diskorik"
+
+#: ../src/goo-player-info.c:656
+msgid "Data disc"
+msgstr "Datuen diskoa"
+
+#: ../src/goo-player-info.c:671 ../src/goo-window.c:1423
 msgid "Paused"
 msgstr "Pausarazita"
 
-#: ../src/goo-player-info.c:769
+#: ../src/goo-player-info.c:680
 msgid "Ejecting CD"
 msgstr "Egotzi CDa"
 
-#: ../src/goo-player-info.c:773
+#: ../src/goo-player-info.c:684
 msgid "Checking CD drive"
 msgstr "CD unitatea egiaztatzen"
 
-#: ../src/goo-player-info.c:777 ../src/goo-player-info.c:781
+#: ../src/goo-player-info.c:688 ../src/goo-player-info.c:692
 msgid "Reading CD"
 msgstr "CDa irakurtzen"
 
-#: ../src/goo-player-info.c:797 ../src/goo-window.c:1463
+#: ../src/goo-player-info.c:708 ../src/goo-window.c:1433
 msgid "Audio CD"
 msgstr "CD audioa"
 
@@ -503,191 +516,195 @@ msgstr "_Berrasieratu"
 msgid "V_olume"
 msgstr "B_olumena"
 
-#: ../src/goo-window.c:57
+#: ../src/goo-volume-tool-button.c:182
+#, c-format
+msgid "Volume level: %3.0f%%"
+msgstr "Bolumen maila: %%%3.0f"
+
+#: ../src/goo-volume-tool-button.c:671
+msgid "+"
+msgstr "+"
+
+#: ../src/goo-volume-tool-button.c:713
+msgid "-"
+msgstr "-"
+
+#: ../src/goo-volume-tool-button.c:762
+msgid "Change the volume level"
+msgstr "Aldatu bolumen-maila"
+
+#: ../src/goo-volume-tool-button.c:797
+msgid "Volume"
+msgstr "Bolumena"
+
+#: ../src/goo-window.c:58
 msgid "Hide _tracks"
 msgstr "Ezkutatu pis_tak"
 
-#: ../src/goo-window.c:58
+#: ../src/goo-window.c:59
 msgid "Show _tracks"
 msgstr "Erakutsi pis_tak"
 
-#: ../src/goo-window.c:187
+#: ../src/goo-window.c:190
 #, c-format
 msgid "%d track"
 msgid_plural "%d tracks"
 msgstr[0] "Pista %d"
 msgstr[1] "%d pista"
 
-#: ../src/goo-window.c:672
+#: ../src/goo-window.c:606
 msgid "Length"
 msgstr "Luzera"
 
-#: ../src/goo-window.c:1322 ../src/ui.h:65
+#: ../src/goo-window.c:1301 ../src/ui.h:64
 msgid "_Pause"
 msgstr "_Pausarazi"
 
-#: ../src/goo-window.c:1323 ../src/ui.h:66
+#: ../src/goo-window.c:1302 ../src/ui.h:65
 msgid "Pause"
 msgstr "Pausarazi"
 
-#: ../src/goo-window.c:1456
+#: ../src/goo-window.c:1426
 msgid "No Disc"
 msgstr "Ez dago diskorik"
 
-#: ../src/goo-window.c:1742 ../src/goo-window.c:1763 ../src/ui.h:53
-#: ../src/ui.h:57 ../src/ui.h:61
+#: ../src/goo-window.c:1429
+msgid "Data Disc"
+msgstr "Datuen diskoa"
+
+#: ../src/goo-window.c:1667 ../src/goo-window.c:1685 ../src/ui.h:52
+#: ../src/ui.h:56 ../src/ui.h:60
 msgid "_Play"
 msgstr "_Erreproduzitu"
 
-#: ../src/goo-window.c:1743 ../src/goo-window.c:1764 ../src/ui.h:58
+#: ../src/goo-window.c:1668 ../src/goo-window.c:1686 ../src/ui.h:57
 msgid "Play"
 msgstr "Erreproduzitu"
 
-#: ../src/goo-window.c:2928
-msgid "Could not eject the CD"
-msgstr "Ezin izan da CD egotzi"
-
-#: ../src/goo-window.c:2941
-msgid "Could not read drive"
-msgstr "Ezin izan da unitatea irakurri"
-
-#: ../src/goo-window.c:3023
-msgid "Could not load image"
-msgstr "Ezin izan da irudia kargatu"
-
-#: ../src/goo-window.c:3046
+#: ../src/goo-window.c:2882
 msgid "Could not save cover image"
 msgstr "Ezin izan da azalaren irudia gorde"
 
-#: ../src/goo-window.c:3112
-msgid "Choose CD Cover Image"
-msgstr "Aukeratu CDaren azalaren irudia"
+#: ../src/goo-window.c:2907 ../src/goo-window.c:2933
+msgid "Could not load image"
+msgstr "Ezin izan da irudia kargatu"
 
-#: ../src/goo-window.c:3131
+#: ../src/goo-window.c:3002
+msgid "Choose Disc Cover Image"
+msgstr "Aukeratu diskoaren azalaren irudia"
+
+#: ../src/goo-window.c:3021
 msgid "Images"
 msgstr "Irudiak"
 
-#: ../src/goo-window.c:3139
+#: ../src/goo-window.c:3029
 msgid "All files"
 msgstr "Fitxategi guztiak"
 
-#: ../src/goo-window.c:3173
+#: ../src/goo-window.c:3065
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 msgstr "Artistaren eta albumaren izenak sartu behar dituzu albumaren azala bilatzeko."
 
-#: ../src/goo-window.c:3212
+#: ../src/goo-window.c:3110
 msgid "_Show Window"
 msgstr "_Erakutsi leihoa"
 
-#: ../src/goo-window.c:3213
+#: ../src/goo-window.c:3111
 msgid "Show the main window"
 msgstr "Erakutsi leiho nagusian"
 
-#: ../src/goo-window.c:3225 ../src/ui.h:125
+#: ../src/goo-window.c:3124 ../src/ui.h:124
 msgid "_Hide Window"
 msgstr "_Ezkutatu leihoa"
 
 #. "H"
-#: ../src/goo-window.c:3226 ../src/ui.h:126
+#: ../src/goo-window.c:3125 ../src/ui.h:125
 msgid "Hide the main window"
 msgstr "Ezkutatu leiho nagusia"
 
-#: ../src/goo-volume-tool-button.c:185
-#, c-format
-msgid "Volume level: %3.0f%%"
-msgstr "Bolumen maila: %%%3.0f"
-
-#: ../src/goo-volume-tool-button.c:747
-msgid "+"
-msgstr "+"
-
-#: ../src/goo-volume-tool-button.c:789
-msgid "-"
-msgstr "-"
-
-#: ../src/goo-volume-tool-button.c:838
-msgid "Change the volume level"
-msgstr "Aldatu bolumen-maila"
-
-#: ../src/goo-volume-tool-button.c:882
-msgid "Volume"
-msgstr "Bolumena"
-
-#: ../src/gth-image-list.c:3520
-msgid "No image"
-msgstr "Irudirik ez"
-
-#: ../src/gtk-file-chooser-preview.c:203
+#: ../src/gtk-file-chooser-preview.c:189
 msgid "Preview"
 msgstr "Aurrebista"
 
-#: ../src/gtk-file-chooser-preview.c:328
+#: ../src/gtk-file-chooser-preview.c:290
 msgid "pixels"
 msgstr "pixel"
 
-#: ../src/main.c:84
+#: ../src/gtk-utils.c:944
+msgid "Could not display help"
+msgstr "Ezin izan da laguntza erakutsi"
+
+#: ../src/gtk-utils.c:1208 ../src/gtk-utils.c:1216
+msgid "Could not launch the application"
+msgstr "Ezin izan da aplikazioa abiarazi"
+
+#: ../src/main.c:82
 msgid "CD device to be used"
 msgstr "Erabiliko den CD gailua"
 
-#: ../src/main.c:85
+#: ../src/main.c:83
 msgid "DEVICE_PATH"
 msgstr "DEVICE_PATH"
 
-#: ../src/main.c:87
+#: ../src/main.c:85
 msgid "Play the CD on startup"
 msgstr "Erreproduzitu CDa abiatzean"
 
-#: ../src/main.c:90 ../src/ui.h:54
+#: ../src/main.c:88 ../src/ui.h:53
 msgid "Play/Pause"
 msgstr "Erreproduzitu/Pausarazi"
 
-#: ../src/main.c:93 ../src/ui.h:70
+#: ../src/main.c:91 ../src/ui.h:69
 msgid "Stop playing"
 msgstr "Gelditu erreprodukzioa"
 
-#: ../src/main.c:96 ../src/ui.h:74
+#: ../src/main.c:94 ../src/ui.h:73
 msgid "Play the next track"
 msgstr "Erreproduzitu hurrengo pista"
 
-#: ../src/main.c:99 ../src/ui.h:78
+#: ../src/main.c:97 ../src/ui.h:77
 msgid "Play the previous track"
 msgstr "Erreproduzitu aurreko pista"
 
-#: ../src/main.c:102
+#: ../src/main.c:100
 msgid "Eject the CD"
 msgstr "Egotzi CDa"
 
-#: ../src/main.c:105
+#: ../src/main.c:103
 msgid "Hide/Show the main window"
 msgstr "Ezkutatu/Erakutsi leiho nagusia"
 
-#: ../src/main.c:108
+#: ../src/main.c:106
 msgid "Volume Up"
 msgstr "Igo bolumena"
 
-#: ../src/main.c:111
+#: ../src/main.c:109
 msgid "Volume Down"
 msgstr "Jeitsi bolumena"
 
-#: ../src/main.c:114 ../src/ui.h:110
+#: ../src/main.c:112 ../src/ui.h:109
 msgid "Quit the application"
 msgstr "Irten aplikaziotik"
 
-#: ../src/main.c:347
+#: ../src/main.c:116
+msgid "Show version"
+msgstr "Erakutsi bertsioa"
+
+#: ../src/main.c:315
 msgid "Cannot start the CD player"
 msgstr "Ezin da CD erreproduzitzailea abiarazi"
 
-#: ../src/main.c:348
+#: ../src/main.c:316
 msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgstr "CDak irakurtzeko gstreamer oinarriaren plugin-ak instalatu behar dituzu"
 
-#: ../src/main.c:705
+#: ../src/main.c:603
 msgid "Next"
 msgstr "Hurrengoa"
 
-#: ../src/main.c:711
+#: ../src/main.c:609
 msgid "Stop"
 msgstr "Gelditu"
 
@@ -696,147 +713,147 @@ msgstr "Gelditu"
 msgid "Track %u"
 msgstr "%u pista"
 
-#: ../src/ui.h:34
+#: ../src/ui.h:33
 msgid "_Disc"
 msgstr "_Diskoa"
 
-#: ../src/ui.h:35
+#: ../src/ui.h:34
 msgid "_Edit"
 msgstr "_Editatu"
 
-#: ../src/ui.h:36
+#: ../src/ui.h:35
 msgid "_View"
 msgstr "_Ikusi"
 
-#: ../src/ui.h:37
+#: ../src/ui.h:36
 msgid "_Help"
 msgstr "_Laguntza"
 
-#: ../src/ui.h:38
+#: ../src/ui.h:37
 msgid "C_over"
 msgstr "A_zala"
 
-#: ../src/ui.h:42
+#: ../src/ui.h:41
 msgid "Information about the program"
 msgstr "Programari buruzko informazioa"
 
-#: ../src/ui.h:46
+#: ../src/ui.h:45
 msgid "Display the manual"
 msgstr "Bistaratu eskuliburua"
 
-#: ../src/ui.h:49
+#: ../src/ui.h:48
 msgid "_Keyboard shortcuts"
 msgstr "_Lasterbideak"
 
-#: ../src/ui.h:62
+#: ../src/ui.h:61
 msgid "Play this track"
 msgstr "Erreproduzitu pista hau"
 
-#: ../src/ui.h:69
+#: ../src/ui.h:68
 msgid "_Stop"
 msgstr "_Gelditu"
 
-#: ../src/ui.h:73
+#: ../src/ui.h:72
 msgid "_Next"
 msgstr "_Hurrengoa"
 
-#: ../src/ui.h:77
+#: ../src/ui.h:76
 msgid "Pre_v"
 msgstr "Aurr_e."
 
-#: ../src/ui.h:81 ../src/ui.h:85
+#: ../src/ui.h:80 ../src/ui.h:84
 msgid "_Eject"
 msgstr "_Egotzi"
 
-#: ../src/ui.h:82 ../src/ui.h:86
+#: ../src/ui.h:81 ../src/ui.h:85
 msgid "Eject the disc"
 msgstr "Egotzi diskoa"
 
-#: ../src/ui.h:90
+#: ../src/ui.h:89
 msgid "Edit various preferences"
 msgstr "Editatu hainbat hobespen"
 
-#: ../src/ui.h:93
+#: ../src/ui.h:92
 msgid "_Copy Disc"
 msgstr "_Kopiatu diskoa"
 
-#: ../src/ui.h:94
+#: ../src/ui.h:93
 msgid "Copy the content of this disc on another disc"
 msgstr "Kopiatu diskoaren edukia beste diskora"
 
-#: ../src/ui.h:97 ../src/ui.h:101
+#: ../src/ui.h:96 ../src/ui.h:100
 msgid "E_xtract Tracks"
 msgstr "_Erauzi pistak"
 
-#: ../src/ui.h:98
+#: ../src/ui.h:97
 msgid "Save the tracks to disk as files"
 msgstr "Gorde pistak diskoan fitxategi bezala"
 
-#: ../src/ui.h:102
+#: ../src/ui.h:101
 msgid "Save the selected tracks to disk as files"
 msgstr "Gorde hautatutako pistak diskoan fitxategi bezala"
 
-#: ../src/ui.h:106
+#: ../src/ui.h:105
 msgid "Edit the disc artist, album and the tracks titles"
 msgstr "Editatu diskoaren artista, albuma eta pisten izenak"
 
+#: ../src/ui.h:112
+msgid "_Choose File..."
+msgstr "_Aukeratu fitxategia..."
+
 #: ../src/ui.h:113
-msgid "_Choose from Disk"
-msgstr "_Aukeratu diskotik:"
+msgid "Choose a file to use as disc cover"
+msgstr "Aukeratu fitxategi bat diskoaren azala bezala erabiltzeko"
 
-#: ../src/ui.h:114
-msgid "Choose a disc cover from the local disk"
-msgstr "Aukeratu diskoaren azal bat disko lokaletik"
-
-#: ../src/ui.h:117
+#: ../src/ui.h:116
 msgid "_Search on Internet"
 msgstr "_Bilatu interneten"
 
-#: ../src/ui.h:118
+#: ../src/ui.h:117
 msgid "Search for a disc cover on Internet"
 msgstr "Bilatu disko baten azala interneten"
 
-#: ../src/ui.h:122
+#: ../src/ui.h:121
 msgid "Remove current disc cover"
 msgstr "Kendu uneko diskoaren azala"
 
-#: ../src/ui.h:138
+#: ../src/ui.h:137
 msgid "_Toolbar"
 msgstr "_Tresna-barra"
 
-#: ../src/ui.h:139
+#: ../src/ui.h:138
 msgid "View the main toolbar"
 msgstr "Ikusi tresna-barra nagusia"
 
-#: ../src/ui.h:143
+#: ../src/ui.h:142
 msgid "Stat_usbar"
 msgstr "_Egoera-barra"
 
-#: ../src/ui.h:144
+#: ../src/ui.h:143
 msgid "View the statusbar"
 msgstr "Ikusi egoera-barra"
 
-#: ../src/ui.h:148
+#: ../src/ui.h:147
 msgid "Play _All"
 msgstr "Erreproduzitu denak"
 
-#: ../src/ui.h:149
+#: ../src/ui.h:148
 msgid "Play all tracks"
 msgstr "Erreproduzitu pista guztiak"
 
-#: ../src/ui.h:153
+#: ../src/ui.h:152
 msgid "_Repeat"
 msgstr "_Errepikatu"
 
-#: ../src/ui.h:154
+#: ../src/ui.h:153
 msgid "Restart playing when finished"
 msgstr "B_errabiarazi erreprodukzioa amaitzean"
 
-#: ../src/ui.h:158
+#: ../src/ui.h:157
 msgid "S_huffle"
 msgstr "Na_hasia"
 
-#: ../src/ui.h:159
+#: ../src/ui.h:158
 msgid "Play tracks in a random order"
 msgstr "Erreproduzitu pistak ausazko ordenean"
 
