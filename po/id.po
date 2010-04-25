@@ -1,6 +1,6 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Indonesian translation of goobox
+# Copyright (C) 2010 THE goobox'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the goobox package.
 # Imam Musthaqim <userindesign@gmail.com>, 2009.
 #
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=goobox&component=general\n"
 "POT-Creation-Date: 2010-03-18 17:27+0000\n"
-"PO-Revision-Date: 2010-04-14 11:32+0700\n"
+"PO-Revision-Date: 2010-04-26 05:46+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: INDONESIA <userindesign@gmail.com>\n"
 "MIME-Version: 1.0\n"
