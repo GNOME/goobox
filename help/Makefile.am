@@ -5,6 +5,6 @@ DOC_MODULE = goobox
 DOC_ENTITIES = legal.xml
 DOC_INCLUDES = 
 
-DOC_LINGUAS = ca de es fr oc sv
+DOC_LINGUAS = ca cs de es fr oc sv
 
 -include $(top_srcdir)/git.mk
