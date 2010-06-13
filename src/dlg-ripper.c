@@ -598,6 +598,15 @@ rip_current_track (DialogData *data)
 	/* Set the destination file */
 
 	folder = get_destination_folder (data);
+	if (folder == NULL) {
+		error = g_error_new (G_IO_ERROR, G_IO_ERROR_INVALID_FILENAME, "Invalid filename"); /* FIXME */
+		_gtk_error_dialog_from_gerror_show (GTK_WINDOW (data->window),
+						    _("Could not extract tracks"),
+						    &error);
+		gtk_widget_destroy (data->dialog);
+		return;
+	}
+
 	if (! g_file_make_directory_with_parents (folder, NULL, &error)) {
 		if (! g_error_matches (error, G_IO_ERROR, G_IO_ERROR_EXISTS)) {
 			_gtk_error_dialog_from_gerror_show (GTK_WINDOW (data->window),
