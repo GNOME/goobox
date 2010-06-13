@@ -443,7 +443,7 @@ int main (int argc, char **argv)
 	goo_session_manager_init ();
 	prepare_application ();
 
-	if (! unique_app_is_running (application)) {
+	if ((application == NULL) || ! unique_app_is_running (application)) {
 		gdk_threads_enter ();
 		gtk_main ();
 		gdk_threads_leave ();
