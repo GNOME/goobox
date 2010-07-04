@@ -732,6 +732,8 @@ dlg_ripper (GooWindow *window,
 	data->destination = eel_gconf_get_uri (PREF_EXTRACT_DESTINATION, "");
 	if ((data->destination == NULL) || (strcmp (data->destination, "") == 0))
 		data->destination = g_filename_to_uri (g_get_user_special_dir (G_USER_DIRECTORY_MUSIC), NULL, NULL);
+	if (data->destination == NULL)
+		data->destination = g_filename_to_uri (g_get_home_dir (), NULL, NULL);
 	data->drive = g_object_ref (goo_player_get_drive (player));
 	data->format = pref_get_file_format ();
 	data->album = goo_player_get_album (player);

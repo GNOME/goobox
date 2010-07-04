@@ -230,6 +230,8 @@ dlg_preferences (GooWindow *window)
 	destination = eel_gconf_get_uri (PREF_EXTRACT_DESTINATION, "");
 	if ((destination == NULL) || (strcmp (destination, "") == 0))
 		destination = g_filename_to_uri (g_get_user_special_dir (G_USER_DIRECTORY_MUSIC), NULL, NULL);
+	if (destination == NULL)
+		destination = g_filename_to_uri (g_get_home_dir (), NULL, NULL);
 	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (GET_WIDGET ("destination_filechooserbutton")), destination);
 	g_free (destination);
 
