@@ -408,7 +408,8 @@ tracktitle_to_filename (const char *trackname,
 
 
 static GFile *
-get_destination_folder (DialogData *data)
+get_destination_folder (DialogData  *data,
+		 	GError     **error)
 {
 	char  *artist_filename;
 	char  *album_filename;
@@ -424,6 +425,10 @@ get_destination_folder (DialogData *data)
 			   album_filename,
 			   NULL);
 	folder = g_file_new_for_uri (uri);
+	if (folder == NULL) {
+		if (error != NULL)
+			*error = g_error_new (G_IO_ERROR, G_IO_ERROR_INVALID_FILENAME, _("Invalid destination folder: %s"), uri);
+	}
 
 	g_free (uri);
 	g_free (artist_filename);
@@ -444,15 +449,20 @@ done_dialog_response_cb (GtkDialog  *dialog,
 	
 	if ((button_number == GTK_RESPONSE_OK) && eel_gconf_get_boolean (PREF_RIPPER_VIEW_DISTINATION, FALSE)) {
 		GFile  *folder;
-		char   *uri;
 		GError *error = NULL;
 		
-		folder = get_destination_folder (data);
-		uri = g_file_get_uri (folder);
-		if (! gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (dialog)), uri, GDK_CURRENT_TIME, &error))
+		folder = get_destination_folder (data, &error);
+		if (folder != NULL) {
+			char *uri;
+
+			uri = g_file_get_uri (folder);
+			if (! gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (dialog)), uri, GDK_CURRENT_TIME, &error))
+				_gtk_error_dialog_from_gerror_run (GTK_WINDOW (data->window), _("Could not display the destination folder"), &error);
+
+			g_free (uri);
+		}
 			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (data->window), _("Could not display the destination folder"), &error);
 
-		g_free (uri);
 		g_object_unref (folder);
 	}
 
@@ -498,7 +508,10 @@ save_playlist (DialogData *data)
 	GFile         *file;
 	GOutputStream *stream;
 
-	folder = get_destination_folder (data);
+	folder = get_destination_folder (data, NULL);
+	if (folder == NULL)
+		return;
+
 	album_filename = tracktitle_to_filename (data->album->title, FALSE);
 	playlist_filename = g_strconcat (album_filename, ".pls", NULL);
 	file = g_file_get_child (folder, playlist_filename);
@@ -597,9 +610,8 @@ rip_current_track (DialogData *data)
 
 	/* Set the destination file */
 
-	folder = get_destination_folder (data);
+	folder = get_destination_folder (data, &error);
 	if (folder == NULL) {
-		error = g_error_new (G_IO_ERROR, G_IO_ERROR_INVALID_FILENAME, "Invalid filename"); /* FIXME */
 		_gtk_error_dialog_from_gerror_show (GTK_WINDOW (data->window),
 						    _("Could not extract tracks"),
 						    &error);
