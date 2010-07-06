@@ -433,10 +433,17 @@ album_info_save_to_cache (AlbumInfo  *album,
 		
 		path = get_cache_path (album, disc_id);
 		if (path != NULL) {
+			char *dir;
+
+			dir = g_path_get_dirname (path);
+			g_mkdir_with_parents (dir, 0700);
+
 			if (! g_file_set_contents (path, data, length, &error)) {
 				debug (DEBUG_INFO, "%s\n", error->message);
 				g_clear_error (&error);
 			}
+
+			g_free (dir);
 			g_free (path);
 		}
 		g_free (data);

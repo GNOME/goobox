@@ -167,15 +167,16 @@ update_progress_cb (gpointer user_data)
 		self->priv->update_progress_id = 0;
 	}
 	
-	if (! gst_pad_query_position (self->priv->source_pad,
-				      &self->priv->sector_format,
-				      &sector))
+	if ((self->priv->current_track == NULL)
+	    || ! gst_pad_query_position (self->priv->source_pad,
+					 &self->priv->sector_format,
+					 &sector))
 	{
 		return FALSE;
 	}
 
 	g_signal_emit_by_name (G_OBJECT (self),
-			       "progress", 
+			       "progress",
 			       ((double) sector) / (double) self->priv->current_track->sectors,
 			       NULL);
 
@@ -488,10 +489,8 @@ set_cd_metadata_from_rdf (GooPlayer *self,
 static char *
 get_cached_rdf_path (GooPlayer *self)
 {
-	if (self->priv->discid != NULL) {
-		gth_user_dir_make_dir_for_file (GTH_DIR_CACHE, "goobox", self->priv->discid, NULL);
+	if (self->priv->discid != NULL)
 		return gth_user_dir_get_file (GTH_DIR_CACHE, "goobox", self->priv->discid, NULL);
-	}
 	else
 		return NULL;
 }
@@ -502,6 +501,7 @@ save_rdf_to_cache (GooPlayer  *player,
 	           const char *rdf)
 {
 	char   *path;
+	char   *dir;
 	GError *error = NULL;
 	 
 	if (rdf == NULL)
@@ -516,11 +516,15 @@ save_rdf_to_cache (GooPlayer  *player,
     		return;
 	}
 
+	dir = g_path_get_dirname (path);
+	g_mkdir_with_parents (dir, 0700);
+
 	if (! g_file_set_contents (path, rdf, strlen (rdf), &error)) {
 		debug (DEBUG_INFO, "%s\n", error->message);
 		g_clear_error (&error);
 	}
 	
+	g_free (dir);
 	g_free (path);
 }
 
