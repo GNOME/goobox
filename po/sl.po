@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Goobox\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=goobox&component=general\n"
-"POT-Creation-Date: 2009-12-27 20:32+0000\n"
-"PO-Revision-Date: 2009-12-28 11:39+0100\n"
+"POT-Creation-Date: 2010-07-06 08:02+0000\n"
+"PO-Revision-Date: 2010-07-10 11:05+0100\n"
 "Last-Translator: Andrej Žnidaršič <andrej.znidarsic@gmail.com>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgstr "URI naslova dokumenta ni mogoče poslati na vnos 'Vrsta=Povezava' predme
 #: ../copy-n-paste/eggdesktopfile.c:1392
 #, c-format
 msgid "Not a launchable item"
-msgstr "Ni izvedljiv predmet"
+msgstr "Predmet ni izvedljiv"
 
 #: ../copy-n-paste/eggsmclient.c:225
 msgid "Disable connection to session manager"
@@ -290,57 +290,57 @@ msgstr ""
 msgid "No encoder available."
 msgstr "Kodirnik ni na voljo."
 
-#: ../src/dlg-preferences.c:241
-#: ../src/dlg-preferences.c:468
+#: ../src/dlg-preferences.c:243
+#: ../src/dlg-preferences.c:470
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:253
-#: ../src/dlg-preferences.c:471
+#: ../src/dlg-preferences.c:255
+#: ../src/dlg-preferences.c:473
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:265
+#: ../src/dlg-preferences.c:267
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:292
-#: ../src/dlg-preferences.c:495
+#: ../src/dlg-preferences.c:294
+#: ../src/dlg-preferences.c:497
 msgid "Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3."
 msgstr "Vorbis je odprtokodni kodek za kodiranje izgubami, z visoko kakovostnim odvodom pri manjši velikosti datoteke kot MP3."
 
-#: ../src/dlg-preferences.c:293
-#: ../src/dlg-preferences.c:498
+#: ../src/dlg-preferences.c:295
+#: ../src/dlg-preferences.c:500
 msgid "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality."
 msgstr "Brezplačni kodek za kodiranje brez zvočnih izgub (FLAC) je odprtokodni kodek, ki zvok stisne, vendar ne poslabša njegove kakovosti."
 
-#: ../src/dlg-preferences.c:294
-#: ../src/dlg-preferences.c:501
+#: ../src/dlg-preferences.c:296
+#: ../src/dlg-preferences.c:503
 msgid "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio."
 msgstr "WAV+PCM je oblika zapisa kodirana brez zvočnih izgub, ki vsebuje nestisnjen, surov pulzirajoče-kodno moduliran (PCM) zvok."
 
-#: ../src/dlg-preferences.c:448
+#: ../src/dlg-preferences.c:450
 msgid "Faster compression"
 msgstr "Hitrejše stiskanje"
 
-#: ../src/dlg-preferences.c:452
+#: ../src/dlg-preferences.c:454
 msgid "Higher compression"
 msgstr "Višje stiskanje"
 
-#: ../src/dlg-preferences.c:457
+#: ../src/dlg-preferences.c:459
 msgid "Smaller size"
 msgstr "Manjša velikost"
 
-#: ../src/dlg-preferences.c:461
+#: ../src/dlg-preferences.c:463
 msgid "Higher quality"
 msgstr "Višja kakovost"
 
-#: ../src/dlg-preferences.c:482
+#: ../src/dlg-preferences.c:484
 msgid "Quality:"
 msgstr "Kakovost:"
 
-#: ../src/dlg-preferences.c:485
+#: ../src/dlg-preferences.c:487
 msgid "Compression level:"
 msgstr "Raven stiskanja:"
 
@@ -386,40 +386,47 @@ msgstr "(%d:%02d preostalo)"
 #: ../src/dlg-ripper.c:185
 #, c-format
 msgid "Extracting track: %d of %d %s"
-msgstr "Izvleka skladbe: %d od %d %s"
+msgstr "Pretvarjanje skladbe: %d od %d %s"
 
 #: ../src/dlg-ripper.c:222
 msgid "Could not extract the tracks"
-msgstr "Skladb ni mogoče izvleči"
+msgstr "Skladb ni mogoče pretvoriti"
 
-#: ../src/dlg-ripper.c:453
+#: ../src/dlg-ripper.c:430
+#, c-format
+msgid "Invalid destination folder: %s"
+msgstr "Neveljavna ciljna mapa: %s"
+
+#: ../src/dlg-ripper.c:460
+#: ../src/dlg-ripper.c:464
 msgid "Could not display the destination folder"
 msgstr "Ciljne mape ni mogoče prikazati"
 
-#: ../src/dlg-ripper.c:578
+#: ../src/dlg-ripper.c:591
 msgid "Tracks extracted successfully"
-msgstr "Skladbe so uspešno izvlečene"
+msgstr "Skladbe so uspešno pretvorjenje"
 
-#: ../src/dlg-ripper.c:580
+#: ../src/dlg-ripper.c:593
 msgid "_View destination folder"
-msgstr "_Ogled ciljne mape"
+msgstr "_Pogled ciljne mape"
 
-#: ../src/dlg-ripper.c:594
+#: ../src/dlg-ripper.c:607
 #, c-format
 msgid "<i>Extracting \"%s\"</i>"
-msgstr "<i>Izvleka \"%s\"</i>"
+msgstr "<i>Pretvarjanje \"%s\"</i>"
 
-#: ../src/dlg-ripper.c:604
+#: ../src/dlg-ripper.c:616
+#: ../src/dlg-ripper.c:625
 msgid "Could not extract tracks"
-msgstr "Skladb ni mogoče izvleči"
+msgstr "Skladb ni mogoče pretvoriti"
 
-#: ../src/dlg-ripper.c:634
+#: ../src/dlg-ripper.c:655
 msgid "Ripped with CD Player"
 msgstr "Zajeto s CD predvajalnikom"
 
-#: ../src/dlg-ripper.c:680
+#: ../src/dlg-ripper.c:701
 msgid "Extracting disc tracks"
-msgstr "Izvleka skladb diska"
+msgstr "pretvarjanje skladb diska"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -445,7 +452,7 @@ msgctxt "short time format"
 msgid "%d:%02d"
 msgstr "%d:%02d"
 
-#: ../src/goo-player.c:262
+#: ../src/goo-player.c:263
 msgid "Playing CD"
 msgstr "Predvajanje CD"
 
@@ -477,7 +484,7 @@ msgstr "Premor"
 
 #: ../src/goo-player-info.c:680
 msgid "Ejecting CD"
-msgstr "Izvrzi zvočni CD"
+msgstr "Izmetavanje CD nosilca"
 
 #: ../src/goo-player-info.c:684
 msgid "Checking CD drive"
@@ -495,7 +502,7 @@ msgstr "Zvočni CD"
 
 #: ../src/goo-stock.c:40
 msgid "_Extract"
-msgstr "Izvl_eci"
+msgstr "_Pretvori"
 
 #: ../src/goo-stock.c:41
 msgid "_Reset"
