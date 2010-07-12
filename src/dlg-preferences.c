@@ -44,7 +44,7 @@ enum {
 };
 
 
-static int flac_compression[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+static int flac_compression[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
 
 typedef struct {
@@ -443,10 +443,9 @@ dlg_format (DialogData    *preferences_data,
 	
 	/* Set widgets data. */		
 
-	data->value = get_current_value (format);
-	gtk_range_set_value (GTK_RANGE (GET_WIDGET ("quality_scale")), scale_value (data->value));
+	if (format == GOO_FILE_FORMAT_FLAC) {
+		gtk_adjustment_set_upper (GTK_ADJUSTMENT (GET_WIDGET ("quality_adjustment")), 9.0);
 
-	if (format == GOO_FILE_FORMAT_FLAC) {	
 		text = g_strdup_printf ("<small><i>%s</i></small>", _("Faster compression"));
 		gtk_label_set_markup (GTK_LABEL (GET_WIDGET ("smaller_value_label")), text);
 		g_free (text);
@@ -455,7 +454,9 @@ dlg_format (DialogData    *preferences_data,
 		gtk_label_set_markup (GTK_LABEL (GET_WIDGET ("bigger_value_label")), text);
 		g_free (text);
 	}
-	else {
+	else if (format == GOO_FILE_FORMAT_OGG) {
+		gtk_adjustment_set_upper (GTK_ADJUSTMENT (GET_WIDGET ("quality_adjustment")), 10.0);
+
 		text = g_strdup_printf ("<small><i>%s</i></small>", _("Smaller size"));
 		gtk_label_set_markup (GTK_LABEL (GET_WIDGET ("smaller_value_label")), text);
 		g_free (text);
@@ -464,6 +465,9 @@ dlg_format (DialogData    *preferences_data,
 		gtk_label_set_markup (GTK_LABEL (GET_WIDGET ("bigger_value_label")), text);
 		g_free (text);
 	}
+
+	data->value = get_current_value (format);
+	gtk_range_set_value (GTK_RANGE (GET_WIDGET ("quality_scale")), scale_value (data->value));
 
 	switch (format) {
 	case GOO_FILE_FORMAT_OGG:

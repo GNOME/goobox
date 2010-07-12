@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy toplevel-contextual -->
-  <object class="GtkAdjustment" id="adjustment1">
+  <object class="GtkAdjustment" id="quality_adjustment">
     <property name="upper">10</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
@@ -75,7 +75,7 @@
                                     <property name="width_request">250</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
-                                    <property name="adjustment">adjustment1</property>
+                                    <property name="adjustment">quality_adjustment</property>
                                     <property name="digits">0</property>
                                   </object>
                                   <packing>
