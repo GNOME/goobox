@@ -1,3 +1,33 @@
+version 2.1.2
+-------------
+
+        Bugs fixed:
+
+        * Flac quality level 9 does not work (#624188)
+        * Make sure the cache directory exists before saving the file (#623607)
+        * Save pixbufs.h in the build directory (#604437)
+	* Fixed error when a gstreamer plugin is not available.
+
+        New or updated application translations:
+
+        * Basque (Iñaki Larrañaga Murgoitio)
+        * Brazilian Portuguese (Djavan Fagundes)
+        * Czech (Adrian Guniš)
+        * Danish (Joe Hansen)
+        * Español (Jorge González)
+        * French (Claude Paroz)
+        * German (Mario Blättermann)
+        * INDONESIA (Andika Triwidada)
+        * Japanese (Takeshi AIHANA)
+        * Slovenian (Andrej Žnidaršič)
+
+        New or updated manual translations:
+
+        * Czech (Ondřej Pohl)
+        * Español (Jorge González)
+        * French (Julien Hardelin)
+        * German (Christian Kirbach)
+
 version 2.1.1
 -------------
 
