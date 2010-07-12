@@ -1,7 +1,7 @@
 # goobox ja.po.
-# Copyright (C) 2004,2005,2007,2009 Free Software Foundation, Inc.
+# Copyright (C) 2004,2005,2007,2009,2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the 'goobox' package.
-# Takeshi AIHANA <takeshi.aihana@gmail.com>, 2004,2005,2007,2009.
+# Takeshi AIHANA <takeshi.aihana@gmail.com>, 2004,2005,2007,2009,2010.
 #
 # *訳語の凡例*
 # (since 2006-06-24):
@@ -10,10 +10,10 @@
 # Extractor: 取り込み
 msgid ""
 msgstr ""
-"Project-Id-Version: goobox trunk\n"
+"Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-21 14:35+0900\n"
-"PO-Revision-Date: 2009-11-21 14:35+0900\n"
+"POT-Creation-Date: 2010-07-13 07:26+0900\n"
+"PO-Revision-Date: 2010-07-13 07:26+0900\n"
 "Last-Translator: Takeshi AIHANA <takeshi.aihana@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -246,7 +246,7 @@ msgstr ""
 
 #: ../src/actions.c:143
 msgid ""
-"CD Player is free software; you can redistribute it and/or modifyit under "
+"CD Player is free software; you can redistribute it and/or modify it under "
 "the terms of the GNU General Public License as published by the Free "
 "Software Foundation; either version 2 of the License, or (at your option) "
 "any later version."
@@ -270,7 +270,7 @@ msgstr ""
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "CD Player; if not, write to the Free Software Foundation, Inc., 51 Franklin "
-"St, Fifth Floor, Boston, MA  02110-1301 USA"
+"St, Fifth Floor, Boston, MA 02110-1301 USA"
 msgstr ""
 "あなたは本プログラムと一緒に GNU 一般公衆利用許諾契約書の写しを受け取っている"
 "はずです。そうでない場合は、Free Software Foundation, Inc., 51 Franklin "
@@ -322,20 +322,20 @@ msgstr ""
 msgid "No encoder available."
 msgstr "利用可能なエンコーダがありません"
 
-#: ../src/dlg-preferences.c:241 ../src/dlg-preferences.c:468
+#: ../src/dlg-preferences.c:243 ../src/dlg-preferences.c:474
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:253 ../src/dlg-preferences.c:471
+#: ../src/dlg-preferences.c:255 ../src/dlg-preferences.c:477
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:265
+#: ../src/dlg-preferences.c:267
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:292 ../src/dlg-preferences.c:495
+#: ../src/dlg-preferences.c:294 ../src/dlg-preferences.c:501
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
@@ -343,7 +343,7 @@ msgstr ""
 "Vorbis は高音質で MP3 よりもファイル・サイズを低く抑えることが可能ですが、劣"
 "化のあるオープン・ソースな音声コーディックです。"
 
-#: ../src/dlg-preferences.c:293 ../src/dlg-preferences.c:498
+#: ../src/dlg-preferences.c:295 ../src/dlg-preferences.c:504
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
@@ -351,7 +351,7 @@ msgstr ""
 "Free Lossless Audio Codec (FLAC) は圧縮されているものの、元の音声データからの"
 "音質の劣化が無いオープン・ソースなコーデックです。"
 
-#: ../src/dlg-preferences.c:294 ../src/dlg-preferences.c:501
+#: ../src/dlg-preferences.c:296 ../src/dlg-preferences.c:507
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
@@ -359,27 +359,27 @@ msgstr ""
 "WAV+PCM は非圧縮のパルス符号変調 (PCM: Pulse-Code Modulation) 化された劣化の"
 "無い音声フォーマットです。"
 
-#: ../src/dlg-preferences.c:448
+#: ../src/dlg-preferences.c:449
 msgid "Faster compression"
 msgstr "高速な圧縮"
 
-#: ../src/dlg-preferences.c:452
+#: ../src/dlg-preferences.c:453
 msgid "Higher compression"
 msgstr "高圧縮"
 
-#: ../src/dlg-preferences.c:457
+#: ../src/dlg-preferences.c:460
 msgid "Smaller size"
 msgstr "サイズを小さく"
 
-#: ../src/dlg-preferences.c:461
+#: ../src/dlg-preferences.c:464
 msgid "Higher quality"
 msgstr "高品質"
 
-#: ../src/dlg-preferences.c:482
+#: ../src/dlg-preferences.c:488
 msgid "Quality:"
 msgstr "品質:"
 
-#: ../src/dlg-preferences.c:485
+#: ../src/dlg-preferences.c:491
 msgid "Compression level:"
 msgstr "圧縮レベル:"
 
@@ -428,32 +428,37 @@ msgstr "トラック (%d / %d) の取り込み中: %s"
 msgid "Could not extract the tracks"
 msgstr "トラックを取り込めませんでした"
 
-#: ../src/dlg-ripper.c:453
+#: ../src/dlg-ripper.c:430
+#, c-format
+msgid "Invalid destination folder: %s"
+msgstr "取り込み先のフォルダが間違っています: %s"
+
+#: ../src/dlg-ripper.c:460 ../src/dlg-ripper.c:464
 msgid "Could not display the destination folder"
 msgstr "取り込み先のフォルダを表示できませんでした"
 
-#: ../src/dlg-ripper.c:578
+#: ../src/dlg-ripper.c:591
 msgid "Tracks extracted successfully"
 msgstr "トラックの取り込みが完了しました"
 
-#: ../src/dlg-ripper.c:580
+#: ../src/dlg-ripper.c:593
 msgid "_View destination folder"
 msgstr "取り込み先のフォルダ(_V)"
 
-#: ../src/dlg-ripper.c:594
+#: ../src/dlg-ripper.c:607
 #, c-format
 msgid "<i>Extracting \"%s\"</i>"
 msgstr "<i>\"%s\" の取り込み中</i>"
 
-#: ../src/dlg-ripper.c:604
+#: ../src/dlg-ripper.c:616 ../src/dlg-ripper.c:625
 msgid "Could not extract tracks"
 msgstr "トラックを取り込めませんでした"
 
-#: ../src/dlg-ripper.c:634
+#: ../src/dlg-ripper.c:655
 msgid "Ripped with CD Player"
 msgstr "CD プレイヤーで取り込む"
 
-#: ../src/dlg-ripper.c:680
+#: ../src/dlg-ripper.c:701
 msgid "Extracting disc tracks"
 msgstr "CD トラックの取り込み中"
 
@@ -481,7 +486,7 @@ msgctxt "short time format"
 msgid "%d:%02d"
 msgstr "%d:%02d"
 
-#: ../src/goo-player.c:262
+#: ../src/goo-player.c:263
 msgid "Playing CD"
 msgstr "CD の演奏中"
 
