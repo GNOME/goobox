@@ -1,14 +1,16 @@
+# Slovenian translations for goobox.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the goobox package.
-# Andrej Žnidaršič <andrej.znidarsic@gmail.com>, 2009.
+#
+# Andrej Žnidaršič <andrej.znidarsic@gmail.com>, 2009 - 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Goobox\n"
+"Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=goobox&component=general\n"
 "POT-Creation-Date: 2010-07-06 08:02+0000\n"
-"PO-Revision-Date: 2010-07-10 11:05+0100\n"
-"Last-Translator: Andrej Žnidaršič <andrej.znidarsic@gmail.com>\n"
+"PO-Revision-Date: 2010-07-13 20:41+0100\n"
+"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,7 +33,7 @@ msgstr "Neznana različica datoteke namizja '%s'"
 #: ../copy-n-paste/eggdesktopfile.c:958
 #, c-format
 msgid "Starting %s"
-msgstr "Zaganjanje %s"
+msgstr "Začenjanje %s"
 
 #: ../copy-n-paste/eggdesktopfile.c:1100
 #, c-format
@@ -46,7 +48,7 @@ msgstr "Nepoznana možnost zagona: %d"
 #: ../copy-n-paste/eggdesktopfile.c:1373
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "URI naslova dokumenta ni mogoče poslati na vnos 'Vrsta=Povezava' predmeta namizja"
+msgstr "Naslova URI dokumenta ni mogoče poslati na vnos 'Vrsta=Povezava' predmeta namizja"
 
 #: ../copy-n-paste/eggdesktopfile.c:1392
 #, c-format
@@ -87,11 +89,11 @@ msgstr "Pokaži možnosti upravljanja seje"
 #: ../src/goo-window.c:2512
 #: ../src/main.c:378
 msgid "CD Player"
-msgstr "CD predvajalnik"
+msgstr "Predvajalnik CD nosilcev"
 
 #: ../data/goobox.desktop.in.in.h:2
 msgid "Play and extract CDs"
-msgstr "Predvajanje in pretvarjanje CD-jev"
+msgstr "Predvajanje in pretvarjanje CD nosilcev"
 
 #: ../data/goobox.schemas.in.h:1
 msgid "Possible values are: ogg, flac, mp3, wave."
@@ -232,7 +234,7 @@ msgstr "Andrej Žnidaršič, <andrej.znidarsic@gmail.com>"
 
 #: ../src/actions.c:143
 msgid "CD Player is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
-msgstr "Ta program spada med prosto programsko opremo; lahko ga širite in/ali spreminjate pod pogoji Splošnega dovoljenja GNU (GNU General Public License), kot ga je objavila ustanova Free Software Foundation; bodisi različice 2 ali (po vaši izbiri) katerekoli poznejše različice."
+msgstr "Ta program spada med prosto programsko opremo; lahko ga širite in/ali spreminjate pod pogoji Splošnega javnega dovoljenja GNU (GNU General Public License), kot ga je objavila ustanova Free Software Foundation; bodisi različice 2 ali (po vaši izbiri) katerekoli poznejše različice."
 
 #: ../src/actions.c:147
 msgid "CD Player is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
@@ -249,7 +251,7 @@ msgstr "Avtorske pravice © 2004-2009 Free Software Foundation, Inc."
 #: ../src/actions.c:163
 #: ../src/main.c:416
 msgid "Play CDs and save the tracks to disk as files"
-msgstr "Predvajanje CD-jev in shranjevanje skladb na disk v obliki datotek"
+msgstr "Predvajanje CD nosilcev in shranjevanje skladb na disk v obliki datotek"
 
 #: ../src/actions.c:284
 #: ../src/actions.c:313
@@ -404,7 +406,7 @@ msgstr "Ciljne mape ni mogoče prikazati"
 
 #: ../src/dlg-ripper.c:591
 msgid "Tracks extracted successfully"
-msgstr "Skladbe so uspešno pretvorjenje"
+msgstr "Skladbe so uspešno pretvorjene"
 
 #: ../src/dlg-ripper.c:593
 msgid "_View destination folder"
@@ -422,11 +424,11 @@ msgstr "Skladb ni mogoče pretvoriti"
 
 #: ../src/dlg-ripper.c:655
 msgid "Ripped with CD Player"
-msgstr "Zajeto s CD predvajalnikom"
+msgstr "Pretvorjeno s CD predvajalnikom"
 
 #: ../src/dlg-ripper.c:701
 msgid "Extracting disc tracks"
-msgstr "pretvarjanje skladb diska"
+msgstr "Pretvarjanje skladb diska"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -467,7 +469,7 @@ msgstr "%s / %s"
 
 #: ../src/goo-player-info.c:423
 msgid "Click here to choose a cover for this CD"
-msgstr "Za izbor ovitka CD-ja kliknite sem"
+msgstr "Za izbor ovitka kliknite tu"
 
 #: ../src/goo-player-info.c:651
 msgid "No disc"
@@ -612,7 +614,7 @@ msgstr "Vse datoteke"
 
 #: ../src/goo-window.c:3065
 msgid "You have to enter the artist and album names in order to find the album cover."
-msgstr "Za iskanje ovitka albuma morate vnesti ime izvajalca in albuma"
+msgstr "Za iskanje ovitka albuma je treba vnesti ime izvajalca in albuma"
 
 #: ../src/goo-window.c:3110
 msgid "_Show Window"
@@ -631,7 +633,7 @@ msgstr "_Skrij okno"
 #: ../src/goo-window.c:3125
 #: ../src/ui.h:125
 msgid "Hide the main window"
-msgstr "Skritje glavnega okna"
+msgstr "Skrivanje glavnega okna"
 
 #: ../src/gtk-file-chooser-preview.c:189
 msgid "Preview"
@@ -652,7 +654,7 @@ msgstr "Programa ni mogoče zagnati"
 
 #: ../src/main.c:82
 msgid "CD device to be used"
-msgstr "CD naprava za uporabo"
+msgstr "Naprava CD za uporabo"
 
 #: ../src/main.c:83
 msgid "DEVICE_PATH"
@@ -713,7 +715,7 @@ msgstr "CD predvajalnika ni mogoče zagnati"
 
 #: ../src/main.c:316
 msgid "In order to read CDs you have to install the gstreamer base plugins"
-msgstr "Za branje CD-jev morate namestiti osnovne vstavke gstreamer"
+msgstr "Za branje CD nosilcev je treba namestiti osnovne vstavke GStreamer"
 
 #: ../src/main.c:603
 msgid "Next"
@@ -876,57 +878,23 @@ msgid "Play tracks in a random order"
 msgstr "Predvajanje skladb v naključnem vrstnem redu"
 
 #~ msgid "Goobox Application"
-#~ msgstr "Goobox program"
-#~ msgid "Goobox Application Factory"
-#~ msgstr "Goobox tovarna programov"
+#~ msgstr "Program Goobox"
 #~ msgid "Unnamed CDROM"
 #~ msgstr "Neimenovan CDROM"
 #~ msgid "Unnamed SCSI Drive (%s)"
 #~ msgstr "Neimenovan SCSI pogon (%s)"
 #~ msgid "File image"
 #~ msgstr "Datoteka odtisa"
-#~ msgid "Loading images"
-#~ msgstr "Nalaganje slik"
-#~ msgid "No image found"
-#~ msgstr "Slike ni mogoče najti"
-#~ msgid "Could not display help: %s"
-#~ msgstr "Pomoči ni mogoče prikazati: %s"
-#~ msgid "Searching images..."
-#~ msgstr "Iskanje slik ..."
-#~ msgid ""
-#~ "Could not create folder \"%s\"\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Mape \"%s\" ni mogoče ustvariti\n"
-#~ "\n"
-#~ "%s"
 #~ msgid "Orientation"
 #~ msgstr "Usmerjenost"
 #~ msgid "The orientation of the tray."
 #~ msgstr "Usmerjenost pladnja."
-#~ msgid "Cannot find a terminal, using xterm, even if it may not work"
-#~ msgstr ""
-#~ "Ni mogoče najti terminala, zato bo uporabljen xterm, čeprav morda ne bo "
-#~ "deloval"
 #~ msgid "Error reading CD"
-#~ msgstr "Napaka med branjem CD-ja"
+#~ msgstr "Napaka med branjem CD nosilca"
 #~ msgid "The specified device is not valid"
 #~ msgstr "Izbrana naprava ni veljavna"
 #~ msgid "Drive not ready"
 #~ msgstr "Pogon ni pripravljen"
-#~ msgid "Tray open"
-#~ msgstr "Odpri preko opravilne vrstice"
 #~ msgid "Invalid device"
 #~ msgstr "Neveljavna naprava"
-#~ msgid "Could not eject the CD"
-#~ msgstr "CD-ja ni mogoče izvreči"
-#~ msgid "Could not read drive"
-#~ msgstr "Pogona ni mogoče brati"
-#~ msgid "No image"
-#~ msgstr "Ni slike"
-#~ msgid "_Choose from Disk"
-#~ msgstr "_Izberi z diska"
-#~ msgid "Choose a disc cover from the local disk"
-#~ msgstr "Izbor ovitka diska na krajevnem disku"
 
