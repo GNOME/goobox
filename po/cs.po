@@ -3,15 +3,16 @@
 # Copyright (C) 2005 Miloslav Trmac <mitr@volny.cz>.
 # This file is distributed under the same license as the goobox package.
 # Miloslav Trmac <mitr@volny.cz>, 2005.
-# Adrian Guniš <andygun@seznam.cz>, 2008.
+# Adrian Guniš <andygun@seznam.cz>, 2008, 2010.
 # Petr Kovar <pknbe@volny.cz>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-17 22:24+0100\n"
-"PO-Revision-Date: 2010-01-07 19:20+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=goobox&component=general\n"
+"POT-Creation-Date: 2010-07-13 18:43+0000\n"
+"PO-Revision-Date: 2010-07-13 21:11+0100\n"
 "Last-Translator: Adrian Guniš <andygun696@gmail.com>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -139,7 +140,7 @@ msgstr "<b>Mechanika CD</b>"
 
 #: ../data/ui/preferences.ui.h:3
 msgid "<b>Destination folder</b>"
-msgstr "<b>Cílový adresář</b>"
+msgstr "<b>Cílová složka</b>"
 
 #: ../data/ui/preferences.ui.h:4
 msgid "<b>Output format</b>"
@@ -179,7 +180,7 @@ msgstr "Nastavení přehrávače CD"
 
 #: ../data/ui/preferences.ui.h:10
 msgid "Choose destination folder"
-msgstr "Zvolte cílový adresář"
+msgstr "Zvolte cílovou složku"
 
 #: ../data/ui/preferences.ui.h:11
 msgid "Extraction"
@@ -321,20 +322,20 @@ msgstr ""
 msgid "No encoder available."
 msgstr "Není k dispozici kodér."
 
-#: ../src/dlg-preferences.c:241 ../src/dlg-preferences.c:468
+#: ../src/dlg-preferences.c:243 ../src/dlg-preferences.c:474
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:253 ../src/dlg-preferences.c:471
+#: ../src/dlg-preferences.c:255 ../src/dlg-preferences.c:477
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:265
+#: ../src/dlg-preferences.c:267
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:292 ../src/dlg-preferences.c:495
+#: ../src/dlg-preferences.c:294 ../src/dlg-preferences.c:501
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
@@ -342,7 +343,7 @@ msgstr ""
 "Vorbis je ztrátový zvukový kodek s otevřeným zdrojovým kódem, s vysoce "
 "kvalitním výstupem a menší velikostí souboru než MP3."
 
-#: ../src/dlg-preferences.c:293 ../src/dlg-preferences.c:498
+#: ../src/dlg-preferences.c:295 ../src/dlg-preferences.c:504
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
@@ -350,7 +351,7 @@ msgstr ""
 "Svobodný bezeztrátový zvukový kodek (FLAC) je kodek s otevřeným zdrojovým "
 "kódem, který komprimuje, ale nesnižuje kvalitu zvuku."
 
-#: ../src/dlg-preferences.c:294 ../src/dlg-preferences.c:501
+#: ../src/dlg-preferences.c:296 ../src/dlg-preferences.c:507
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
@@ -358,27 +359,27 @@ msgstr ""
 "WAV+PCM je bezeztrátový formát, který uchovává nekomprimovaný, neupravený "
 "zvuk pulzně kódové modulace (PCM)."
 
-#: ../src/dlg-preferences.c:448
+#: ../src/dlg-preferences.c:449
 msgid "Faster compression"
 msgstr "Rychlejší komprese"
 
-#: ../src/dlg-preferences.c:452
+#: ../src/dlg-preferences.c:453
 msgid "Higher compression"
 msgstr "Lepší komprese"
 
-#: ../src/dlg-preferences.c:457
+#: ../src/dlg-preferences.c:460
 msgid "Smaller size"
 msgstr "Menší velikost"
 
-#: ../src/dlg-preferences.c:461
+#: ../src/dlg-preferences.c:464
 msgid "Higher quality"
 msgstr "Vyšší kvalita"
 
-#: ../src/dlg-preferences.c:482
+#: ../src/dlg-preferences.c:488
 msgid "Quality:"
 msgstr "Kvalita:"
 
-#: ../src/dlg-preferences.c:485
+#: ../src/dlg-preferences.c:491
 msgid "Compression level:"
 msgstr "Úroveň komprese:"
 
@@ -427,32 +428,37 @@ msgstr "Extrahuje se stopa: %d z %d %s"
 msgid "Could not extract the tracks"
 msgstr "Nelze extrahovat stopy"
 
-#: ../src/dlg-ripper.c:453
-msgid "Could not display the destination folder"
-msgstr "Nelze zobrazit cílový adresář"
+#: ../src/dlg-ripper.c:430
+#, c-format
+msgid "Invalid destination folder: %s"
+msgstr "Neplatná cílová složka: %s"
 
-#: ../src/dlg-ripper.c:578
+#: ../src/dlg-ripper.c:460 ../src/dlg-ripper.c:464
+msgid "Could not display the destination folder"
+msgstr "Nelze zobrazit cílovou složku"
+
+#: ../src/dlg-ripper.c:591
 msgid "Tracks extracted successfully"
 msgstr "Stopy úspěšně extrahovány"
 
-#: ../src/dlg-ripper.c:580
+#: ../src/dlg-ripper.c:593
 msgid "_View destination folder"
-msgstr "_Zobrazit cílový adresář"
+msgstr "_Zobrazit cílovou složku"
 
-#: ../src/dlg-ripper.c:594
+#: ../src/dlg-ripper.c:607
 #, c-format
 msgid "<i>Extracting \"%s\"</i>"
 msgstr "<i>Extrahuje se \"%s\"</i>"
 
-#: ../src/dlg-ripper.c:604
+#: ../src/dlg-ripper.c:616 ../src/dlg-ripper.c:625
 msgid "Could not extract tracks"
 msgstr "Nelze extrahovat stopy"
 
-#: ../src/dlg-ripper.c:634
+#: ../src/dlg-ripper.c:655
 msgid "Ripped with CD Player"
 msgstr "Kopírováno pomocí Přehrávače CD"
 
-#: ../src/dlg-ripper.c:680
+#: ../src/dlg-ripper.c:701
 msgid "Extracting disc tracks"
 msgstr "Extrahují se stopy disku"
 
@@ -480,7 +486,7 @@ msgctxt "short time format"
 msgid "%d:%02d"
 msgstr "%d:%02d"
 
-#: ../src/goo-player.c:262
+#: ../src/goo-player.c:263
 msgid "Playing CD"
 msgstr "Přehrávání CD"
 
@@ -879,78 +885,3 @@ msgstr "_Zamíchat"
 msgid "Play tracks in a random order"
 msgstr "Přehrávat stopy v náhodném pořadí"
 
-#~ msgid "Goobox Application"
-#~ msgstr "Aplikace Goobox"
-
-#~ msgid "Goobox Application Factory"
-#~ msgstr "Generátor aplikace Goobox"
-
-#~ msgid "Unnamed CDROM"
-#~ msgstr "Nepojmenované CDROM"
-
-#~ msgid "Unnamed SCSI Drive (%s)"
-#~ msgstr "Nepojmenovaná jednotka SCSI (%s)"
-
-#~ msgid "File image"
-#~ msgstr "Obraz souboru"
-
-#~ msgid "Loading images"
-#~ msgstr "Načítají se obrázky"
-
-#~ msgid "No image found"
-#~ msgstr "Nenalezen žádný obrázek"
-
-#~ msgid "Could not display help: %s"
-#~ msgstr "Nelze zobrazit nápovědu: %s"
-
-#~ msgid "Searching images..."
-#~ msgstr "Hledají se obrázky..."
-
-#~ msgid ""
-#~ "Could not create folder \"%s\"\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Nelze vytvořit adresář \"%s\"\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Orientation"
-#~ msgstr "Orientace"
-
-#~ msgid "The orientation of the tray."
-#~ msgstr "Orientace oznamovací oblasti."
-
-#~ msgid "Cannot find a terminal, using xterm, even if it may not work"
-#~ msgstr ""
-#~ "Nelze najít terminál, použije se xterm, i když to možná nebude fungovat"
-
-#~ msgid "Error reading CD"
-#~ msgstr "Chyba při čtení CD"
-
-#~ msgid "The specified device is not valid"
-#~ msgstr "Zadané zařízení není platné"
-
-#~ msgid "Drive not ready"
-#~ msgstr "Mechanika není připravena"
-
-#~ msgid "Tray open"
-#~ msgstr "Mechanika otevřena"
-
-#~ msgid "Invalid device"
-#~ msgstr "Neplatné zařízení"
-
-#~ msgid "Could not eject the CD"
-#~ msgstr "Nelze vysunout CD"
-
-#~ msgid "Could not read drive"
-#~ msgstr "Nelze číst z mechaniky"
-
-#~ msgid "No image"
-#~ msgstr "Žádný obrázek"
-
-#~ msgid "_Choose from Disk"
-#~ msgstr "_Vybrat z disku"
-
-#~ msgid "Choose a disc cover from the local disk"
-#~ msgstr "Vybrat obal disku z místního disku"
