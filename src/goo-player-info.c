@@ -58,7 +58,6 @@ struct _GooPlayerInfoPrivateData {
 	GtkWidget   *cover_button;
 	GtkWidget   *status_image;
 	GtkWidget   *notebook;
-	GtkTooltips *tips;
 	char        *current_time;
 	char        *total_time;
 	char         time[64];
@@ -360,10 +359,6 @@ goo_player_info_construct (GooPlayerInfo *info)
 	GTK_BOX (info)->spacing = SPACING;
 	GTK_BOX (info)->homogeneous = FALSE;
 
-	priv->tips = gtk_tooltips_new ();
-	gtk_object_ref (GTK_OBJECT (priv->tips));
-	gtk_object_sink (GTK_OBJECT (priv->tips));
-
 	/* Title and Artist */
 
 	priv->title1_label = gtk_label_new (NULL);
@@ -418,10 +413,9 @@ goo_player_info_construct (GooPlayerInfo *info)
 		gtk_button_set_relief (GTK_BUTTON (priv->cover_button),
 				       GTK_RELIEF_NONE);
 
-		gtk_tooltips_set_tip (priv->tips,
-				      GTK_WIDGET (priv->cover_button),
-				      _("Click here to choose a cover for this CD"),
-				      NULL);
+		gtk_widget_set_tooltip_text (GTK_WIDGET (priv->cover_button),
+					     _("Click here to choose a cover for this CD"));
+
 		g_signal_connect (G_OBJECT (priv->cover_button),
 				  "clicked",
 				  G_CALLBACK (cover_button_clicked_cb),
@@ -529,7 +523,6 @@ goo_player_info_finalize (GObject *object)
 			g_source_remove (info->priv->update_id);
 			info->priv->update_id = 0;
 		}
-		gtk_object_unref (GTK_OBJECT (info->priv->tips));
 		info->priv = NULL;
 	}
 

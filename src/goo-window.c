@@ -89,7 +89,6 @@ struct _GooWindowPrivate {
 	GtkStatusIcon     *status_icon;
 	GtkWidget         *status_tooltip_content;
 
-	GtkTooltips       *tooltips;
 	guint              help_message_cid;
 	guint              list_info_cid;
 	guint              progress_cid;
@@ -473,7 +472,6 @@ goo_window_finalize (GObject *object)
 
 		/**/
 
-		gtk_object_destroy (GTK_OBJECT (window->priv->tooltips));
 		g_object_unref (window->priv->list_store);
 		
 		if (window->priv->next_timeout_handle != 0) {
@@ -2276,8 +2274,6 @@ goo_window_construct (GooWindow    *window,
 	window->priv->playlist = NULL;
 
 	/* Create the widgets. */
-
-	window->priv->tooltips = gtk_tooltips_new ();
 
 	/* * File list. */
 

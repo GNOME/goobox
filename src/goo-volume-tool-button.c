@@ -62,7 +62,6 @@ struct _GooVolumeToolButtonPrivate {
 	GtkWidget   *popup_win;
 	GtkWidget   *volume_scale;
 	GtkWidget   *volume_label;
-	GtkTooltips *tips;
 	double       value;
 	double       from_value;
 	double       to_value;
@@ -88,23 +87,6 @@ static guint goo_volume_tool_button_signals[LAST_SIGNAL] = { 0 };
 
 
 G_DEFINE_TYPE (GooVolumeToolButton, goo_volume_tool_button, GTK_TYPE_TOOL_BUTTON)
-
-
-static gboolean
-goo_volume_tool_button_set_tooltip (GtkToolItem *tool_item,
-				    GtkTooltips *tooltips,
-				    const char  *tip_text,
-				    const char  *tip_private)
-{
-	GooVolumeToolButton *button;
-
-	g_return_val_if_fail (GOO_IS_VOLUME_TOOL_BUTTON (tool_item), FALSE);
-
-	button = GOO_VOLUME_TOOL_BUTTON (tool_item);
-	/* gtk_tooltips_set_tip (tooltips, button->priv->button, tip_text, tip_private);*/
-	
-	return TRUE;
-}
 
 
 static void
@@ -180,10 +162,8 @@ update_volume_label (GooVolumeToolButton *button)
 	g_free (text);
 
 	text = g_strdup_printf (_("Volume level: %3.0f%%"), value * 100.0);
-	gtk_tooltips_set_tip (button->priv->tips,
-			      button->priv->button,
-			      text,
-			      NULL);
+	gtk_widget_set_tooltip_text (button->priv->button, text);
+
 	g_free (text);
 }
 
@@ -215,7 +195,6 @@ goo_volume_tool_button_finalize (GObject *object)
 	GooVolumeToolButton *button;
 
 	button = GOO_VOLUME_TOOL_BUTTON (object);
-	gtk_object_unref (GTK_OBJECT (button->priv->tips));
 	G_OBJECT_CLASS (goo_volume_tool_button_parent_class)->finalize (object);
 }
 
@@ -223,15 +202,8 @@ goo_volume_tool_button_finalize (GObject *object)
 static void
 goo_volume_tool_button_class_init (GooVolumeToolButtonClass *klass)
 {
-	GObjectClass       *object_class;
-	GtkToolItemClass   *toolitem_class;
-	GtkToolButtonClass *toolbutton_class;
-	GtkWidgetClass     *gtkwidget_class;
-	
-	object_class = (GObjectClass *) klass;
-	toolitem_class = (GtkToolItemClass *) klass;
-	toolbutton_class = (GtkToolButtonClass *) klass;
-	gtkwidget_class = (GtkWidgetClass *) klass;
+	GObjectClass     *object_class;
+	GtkToolItemClass *toolitem_class;
 
 	goo_volume_tool_button_signals[CHANGED] =
                 g_signal_new ("changed",
@@ -243,8 +215,10 @@ goo_volume_tool_button_class_init (GooVolumeToolButtonClass *klass)
 			      G_TYPE_NONE, 
 			      0);
 
+	object_class = (GObjectClass *) klass;
 	object_class->finalize = goo_volume_tool_button_finalize;
-	toolitem_class->set_tooltip = goo_volume_tool_button_set_tooltip;
+
+	toolitem_class = (GtkToolItemClass *) klass;
 	toolitem_class->toolbar_reconfigured = goo_volume_tool_button_toolbar_reconfigured;
 	
 	g_type_class_add_private (object_class, sizeof (GooVolumeToolButtonPrivate));
@@ -644,10 +618,6 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 	GtkWidget *up_button;
 	GtkWidget *down_button;
 	
-	button->priv->tips = gtk_tooltips_new ();
-	gtk_object_ref (GTK_OBJECT (button->priv->tips));
-	gtk_object_sink (GTK_OBJECT (button->priv->tips));
-
 	/* Create the popup window. */
 
 	button->priv->popup_win = gtk_window_new (GTK_WINDOW_POPUP);
@@ -759,7 +729,7 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 	gtk_container_add (GTK_CONTAINER (arrow_button), arrow);
 	gtk_box_pack_end (GTK_BOX (box), arrow_button,
 			  FALSE, FALSE, 0);
-	gtk_tooltips_set_tip (button->priv->tips, arrow_button, _("Change the volume level"), NULL);
+	gtk_widget_set_tooltip_text (arrow_button, _("Change the volume level"));
 
 	gtk_widget_show_all (box);
 	gtk_widget_hide (button->priv->volume_label);
