@@ -234,7 +234,7 @@ unique_app_message_received_cb (UniqueApp         *unique_app,
 		break;
 
 	case COMMAND_PRESENT:
-		if (GTK_WIDGET_VISIBLE (main_window))
+		if (gtk_widget_get_visible (GTK_WIDGET (main_window)))
 			gtk_window_present (GTK_WINDOW (main_window));
 		else
 			goo_window_toggle_visibility (GOO_WINDOW (main_window));

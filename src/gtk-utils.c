@@ -507,8 +507,8 @@ _gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
 			    FALSE, FALSE, 0);
 	gtk_widget_show (check_button);
 
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
-				     eel_gconf_get_boolean (gconf_key, FALSE));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				      eel_gconf_get_boolean (gconf_key, FALSE));
 
 	gtk_widget_show_all (hbox);
 
@@ -1160,7 +1160,7 @@ _gtk_paned_get_position2 (GtkPaned *paned)
 	int            pos;
 	int            size;
 
-	if (! GTK_WIDGET_VISIBLE (paned))
+	if (! gtk_widget_get_visible (GTK_WIDGET (paned)))
 		return 0;
 
 	pos = gtk_paned_get_position (paned);

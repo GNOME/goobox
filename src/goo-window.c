@@ -353,7 +353,7 @@ goo_window_update_list (GooWindow *window)
 	GdkPixbuf *icon;
 	GList     *scan;
 
-	if (GTK_WIDGET_REALIZED (window->priv->list_view))
+	if (gtk_widget_get_realized (window->priv->list_view))
 		gtk_tree_view_scroll_to_point (GTK_TREE_VIEW (window->priv->list_view), 0, 0);
 
 	/**/
@@ -624,7 +624,7 @@ menu_item_select_cb (GtkMenuItem *proxy,
         GtkAction *action;
         char      *message;
 
-        action = gtk_widget_get_action (GTK_WIDGET (proxy));
+        action = gtk_activatable_get_related_action (GTK_ACTIVATABLE (proxy));
         g_return_if_fail (action != NULL);
 
         g_object_get (G_OBJECT (action), "tooltip", &message, NULL);
@@ -839,7 +839,7 @@ static void
 play_track (GooWindow *window,
 	    int        track_number)
 {
-	if (! GTK_WIDGET_VISIBLE (window))
+	if (! gtk_widget_get_visible (GTK_WIDGET (window)))
 		window->priv->notify_action = TRUE;
 	goo_player_seek_track (window->priv->player, track_number);
 }
@@ -1868,7 +1868,7 @@ update_ui_from_expander_state (GooWindow *window)
 		GdkGeometry hints;
 
 		gtk_expander_set_label (expander, _(HIDE_TRACK_LIST));
-		if (GTK_WIDGET_REALIZED (window))
+		if (gtk_widget_get_realized (GTK_WIDGET (window)))
 			gtk_window_resize (GTK_WINDOW (window), 
 					   eel_gconf_get_integer (PREF_UI_WINDOW_WIDTH, DEFAULT_WIN_WIDTH),
 					   eel_gconf_get_integer (PREF_UI_WINDOW_HEIGHT, DEFAULT_WIN_HEIGHT));
@@ -1884,7 +1884,7 @@ update_ui_from_expander_state (GooWindow *window)
 	else {
 		GdkGeometry hints;
 
-		if (GTK_WIDGET_REALIZED (window))
+		if (gtk_widget_get_realized (GTK_WIDGET (window)))
 			save_window_size (window);
 		gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (window->priv->statusbar), FALSE);
 		gtk_expander_set_label (expander, _(SHOW_TRACK_LIST));
@@ -3095,7 +3095,7 @@ goo_window_remove_cover (GooWindow *window)
 void
 goo_window_toggle_visibility (GooWindow *window)
 {
-	if (GTK_WIDGET_VISIBLE (window)) {
+	if (gtk_widget_get_visible (GTK_WIDGET (window))) {
 		gtk_window_get_position (GTK_WINDOW (window),
 					 &window->priv->pos_x,
 					 &window->priv->pos_y);

@@ -127,9 +127,9 @@ filetype_properties_clicked_cb (GtkWidget  *widget,
 
 
 static void
-drive_selector_device_changed_cb (GtkOptionMenu *option_menu,
-				  const char    *device_path,
-				  DialogData    *data)
+drive_selector_device_changed_cb (GtkWidget   *drive_selector,
+				  const char  *device_path,
+				  DialogData  *data)
 {
 	apply_button_clicked_cb (NULL, data);
 }
