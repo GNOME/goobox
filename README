@@ -7,20 +7,11 @@
 
   Goobox is a CD player and ripper well integrated with the GNOME environment.
 
-* Licensing
-
-  Goobox is released under the terms of the GNU General Public 
-  License (GNU GPL).  You can find a copy of the license in the file COPYING.
-
 * Dependencies
 
-  gtk+ 2.4.x
-  libgnome[ui] 2.16.x
-  libbonobo 2.6.x
-  gnome-vfs 2.18.0
-  libglade 2.6.x
-  gstreamer 0.10.x 
-  libmusicbrainz 2.1.0
+  gtk+ 2.18.0 or greater
+  gstreamer 0.10.12 or greater 
+  libmusicbrainz 2.1.0 or greater 
   libnotify 0.4.3 (optional)
 
   required gstreamer plugins:
@@ -32,4 +23,10 @@
   ./configure 
   make
   make install
-  
+
+* Licensing
+
+  Goobox is released under the terms of the GNU General Public 
+  License (GNU GPL) version 2 or greater.  You can find a copy of the license 
+  in the file COPYING.
+    
