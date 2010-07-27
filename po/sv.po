@@ -1,15 +1,15 @@
 # Swedish messages for goobox.
-# Copyright (C) 2004, 2005, 2006, 2007, 2009 Free Software Foundation, Inc.
+# Copyright (C) 2004, 2005, 2006, 2007, 2009, 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the goobox package.
 # Christian Rose <menthos@menthos.com>, 2004, 2005.
-# Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2009.
+# Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2009, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-13 23:34+0100\n"
-"PO-Revision-Date: 2009-11-13 23:37+0100\n"
+"POT-Creation-Date: 2010-07-27 12:01+0200\n"
+"PO-Revision-Date: 2010-07-27 12:05+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -20,12 +20,12 @@ msgstr ""
 #: ../copy-n-paste/eggdesktopfile.c:165
 #, c-format
 msgid "File is not a valid .desktop file"
-msgstr ""
+msgstr "Filen är inte en giltig .desktop-fil"
 
 #: ../copy-n-paste/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr ""
+msgstr "Okänd Version \"%s\" i skrivbordsfil"
 
 #: ../copy-n-paste/eggdesktopfile.c:958
 #, c-format
@@ -35,22 +35,22 @@ msgstr "Startar %s"
 #: ../copy-n-paste/eggdesktopfile.c:1100
 #, c-format
 msgid "Application does not accept documents on command line"
-msgstr ""
+msgstr "Programmet tar inte emot dokument på kommandoraden"
 
 #: ../copy-n-paste/eggdesktopfile.c:1168
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr ""
+msgstr "Okänd startflagga: %d"
 
 #: ../copy-n-paste/eggdesktopfile.c:1373
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
+msgstr "Kan inte skicka dokument-URI:er till ett skrivbordsobjekt med \"Type=Link\""
 
 #: ../copy-n-paste/eggdesktopfile.c:1392
 #, c-format
 msgid "Not a launchable item"
-msgstr ""
+msgstr "Inte ett startbart objekt"
 
 #: ../copy-n-paste/eggsmclient.c:225
 msgid "Disable connection to session manager"
@@ -58,7 +58,7 @@ msgstr "Inaktivera anslutning till sessionshanterare"
 
 #: ../copy-n-paste/eggsmclient.c:228
 msgid "Specify file containing saved configuration"
-msgstr ""
+msgstr "Ange fil som innehåller sparad konfiguration"
 
 #: ../copy-n-paste/eggsmclient.c:228
 msgid "FILE"
@@ -66,7 +66,7 @@ msgstr "FIL"
 
 #: ../copy-n-paste/eggsmclient.c:231
 msgid "Specify session management ID"
-msgstr ""
+msgstr "Ange ID för sessionshantering"
 
 #: ../copy-n-paste/eggsmclient.c:231
 msgid "ID"
@@ -82,8 +82,9 @@ msgstr "Visa flaggor för sessionshantering"
 
 #: ../data/goobox.desktop.in.in.h:1
 #: ../src/actions.c:160
-#: ../src/goo-window.c:2603
-#: ../src/main.c:384
+#: ../src/goo-window.c:2056
+#: ../src/goo-window.c:2508
+#: ../src/main.c:378
 msgid "CD Player"
 msgstr "Cd-spelare"
 
@@ -224,10 +225,6 @@ msgstr "<big><b>Extraherar spår</b></big>"
 msgid "Extracting Tracks"
 msgstr "Extraherar spår"
 
-#.
-#. const char     *documenters [] = {
-#. NULL
-#. };
 #: ../src/actions.c:140
 msgid "translator_credits"
 msgstr ""
@@ -237,12 +234,24 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
+#: ../src/actions.c:143
+msgid "CD Player is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
+msgstr "Cd-spelare är fri programvara. Du kan distribuera det och/eller modifiera det under villkoren i GNU General Public License, publicerad av Free Software Foundation, antingen version 2 eller (om du så vill) någon senare version."
+
+#: ../src/actions.c:147
+msgid "CD Player is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
+msgstr "Cd-spelare distribueras i hopp om att det ska vara användbart, men UTAN NÅGON SOM HELST GARANTI, även utan underförstådd garanti om SÄLJBARHET eller LÄMPLIGHET FÖR NÅGOT SPECIELLT ÄNDAMÅL. Se GNU General Public License för ytterligare information."
+
+#: ../src/actions.c:151
+msgid "You should have received a copy of the GNU General Public License along with CD Player; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA"
+msgstr "Du bör ha fått en kopia av GNU General Public License tillsammans med Cd-spelare. Om inte, skriv till Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+
 #: ../src/actions.c:162
-msgid "Copyright © 2004-2007 Free Software Foundation, Inc."
-msgstr "Copyright © 2004-2007 Free Software Foundation, Inc."
+msgid "Copyright © 2004-2009 Free Software Foundation, Inc."
+msgstr "Copyright © 2004-2009 Free Software Foundation, Inc."
 
 #: ../src/actions.c:163
-#: ../src/main.c:421
+#: ../src/main.c:416
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "Spela cd-skivor och spara spåren på disk som filer"
 
@@ -262,7 +271,7 @@ msgid "%u, loading image: %u"
 msgstr "%u, läser in bild: %u"
 
 #: ../src/dlg-cover-chooser.c:336
-#: ../src/goo-window.c:3153
+#: ../src/goo-window.c:3060
 msgid "Could not search for a cover on Internet"
 msgstr "Kunde inte söka efter ett omslag på Internet"
 
@@ -285,41 +294,41 @@ msgstr ""
 msgid "No encoder available."
 msgstr "Ingen kodare tillgänglig."
 
-#: ../src/dlg-preferences.c:244
-#: ../src/dlg-preferences.c:471
+#: ../src/dlg-preferences.c:243
+#: ../src/dlg-preferences.c:474
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:256
-#: ../src/dlg-preferences.c:474
+#: ../src/dlg-preferences.c:255
+#: ../src/dlg-preferences.c:477
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:268
+#: ../src/dlg-preferences.c:267
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:295
-#: ../src/dlg-preferences.c:498
+#: ../src/dlg-preferences.c:294
+#: ../src/dlg-preferences.c:501
 msgid "Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3."
 msgstr "Vorbis är en kodek med öppen källkod med högre kvalitet vid mindre filstorlekar än MP3."
 
-#: ../src/dlg-preferences.c:296
-#: ../src/dlg-preferences.c:501
+#: ../src/dlg-preferences.c:295
+#: ../src/dlg-preferences.c:504
 msgid "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality."
 msgstr "Free Lossless Audio Codec (FLAC) är en kodek med öppen källkod som komprimerar utan att försämra ljudkvaliteten."
 
-#: ../src/dlg-preferences.c:297
-#: ../src/dlg-preferences.c:504
+#: ../src/dlg-preferences.c:296
+#: ../src/dlg-preferences.c:507
 msgid "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio."
 msgstr "WAV+PCM är ett ickeförstörande format som innehåller okomprimerat, rått pulskodsmodulerat (PCM) ljud."
 
-#: ../src/dlg-preferences.c:451
+#: ../src/dlg-preferences.c:449
 msgid "Faster compression"
 msgstr "Snabbare komprimering"
 
-#: ../src/dlg-preferences.c:455
+#: ../src/dlg-preferences.c:453
 msgid "Higher compression"
 msgstr "Högre komprimering"
 
@@ -331,11 +340,11 @@ msgstr "Mindre storlek"
 msgid "Higher quality"
 msgstr "Högre kvalitet"
 
-#: ../src/dlg-preferences.c:485
+#: ../src/dlg-preferences.c:488
 msgid "Quality:"
 msgstr "Kvalitet:"
 
-#: ../src/dlg-preferences.c:488
+#: ../src/dlg-preferences.c:491
 msgid "Compression level:"
 msgstr "Komprimeringsnivå:"
 
@@ -354,17 +363,17 @@ msgid "No album found"
 msgstr "Inget album hittades"
 
 #: ../src/dlg-properties.c:316
-#: ../src/goo-window.c:538
+#: ../src/goo-window.c:532
 msgid "#"
 msgstr "Nr"
 
 #: ../src/dlg-properties.c:334
-#: ../src/goo-window.c:563
+#: ../src/goo-window.c:557
 msgid "Title"
 msgstr "Titel"
 
 #: ../src/dlg-properties.c:367
-#: ../src/goo-window.c:586
+#: ../src/goo-window.c:580
 msgid "Artist"
 msgstr "Artist"
 
@@ -387,32 +396,39 @@ msgstr "Extraherar spår: %d av %d %s"
 msgid "Could not extract the tracks"
 msgstr "Kunde inte extrahera spåren"
 
-#: ../src/dlg-ripper.c:453
+#: ../src/dlg-ripper.c:430
+#, c-format
+msgid "Invalid destination folder: %s"
+msgstr "Ogiltig målmapp: %s"
+
+#: ../src/dlg-ripper.c:460
+#: ../src/dlg-ripper.c:464
 msgid "Could not display the destination folder"
 msgstr "Kunde inte visa målmappen"
 
-#: ../src/dlg-ripper.c:578
+#: ../src/dlg-ripper.c:591
 msgid "Tracks extracted successfully"
 msgstr "Spåren har extraherats utan problem"
 
-#: ../src/dlg-ripper.c:580
+#: ../src/dlg-ripper.c:593
 msgid "_View destination folder"
 msgstr "_Visa målmappen"
 
-#: ../src/dlg-ripper.c:594
+#: ../src/dlg-ripper.c:607
 #, c-format
 msgid "<i>Extracting \"%s\"</i>"
 msgstr "<i>Extraherar \"%s\"</i>"
 
-#: ../src/dlg-ripper.c:604
+#: ../src/dlg-ripper.c:616
+#: ../src/dlg-ripper.c:625
 msgid "Could not extract tracks"
 msgstr "Kunde inte extrahera spår"
 
-#: ../src/dlg-ripper.c:634
+#: ../src/dlg-ripper.c:655
 msgid "Ripped with CD Player"
 msgstr "Rippad med Cd-spelare"
 
-#: ../src/dlg-ripper.c:680
+#: ../src/dlg-ripper.c:701
 msgid "Extracting disc tracks"
 msgstr "Extraherar skivspår"
 
@@ -440,45 +456,51 @@ msgctxt "short time format"
 msgid "%d:%02d"
 msgstr "%d:%02d"
 
+#: ../src/goo-player.c:263
+msgid "Playing CD"
+msgstr "Spelar upp cd"
+
+#. translators: this is the current_time / total_time label
 #: ../src/goo-player-info.c:220
 #: ../src/goo-player-info.c:248
-#: ../src/goo-player-info.c:550
+#: ../src/goo-player-info.c:542
+#: ../src/goo-window.c:2038
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
-#: ../src/goo-player-info.c:422
+#: ../src/goo-player-info.c:417
 msgid "Click here to choose a cover for this CD"
 msgstr "Klicka här för att välja ett omslag för denna cd"
 
-#: ../src/goo-player-info.c:648
+#: ../src/goo-player-info.c:644
 msgid "No disc"
 msgstr "Ingen skiva"
 
-#: ../src/goo-player-info.c:653
+#: ../src/goo-player-info.c:649
 msgid "Data disc"
 msgstr "Dataskiva"
 
-#: ../src/goo-player-info.c:668
-#: ../src/goo-window.c:1426
+#: ../src/goo-player-info.c:664
+#: ../src/goo-window.c:1421
 msgid "Paused"
 msgstr "Gör paus"
 
-#: ../src/goo-player-info.c:677
+#: ../src/goo-player-info.c:673
 msgid "Ejecting CD"
 msgstr "Matar ut cd"
 
-#: ../src/goo-player-info.c:681
+#: ../src/goo-player-info.c:677
 msgid "Checking CD drive"
 msgstr "Kontrollerar cd-enhet"
 
+#: ../src/goo-player-info.c:681
 #: ../src/goo-player-info.c:685
-#: ../src/goo-player-info.c:689
 msgid "Reading CD"
 msgstr "Läser cd"
 
-#: ../src/goo-player-info.c:705
-#: ../src/goo-window.c:1436
+#: ../src/goo-player-info.c:701
+#: ../src/goo-window.c:1431
 msgid "Audio CD"
 msgstr "Ljud-cd"
 
@@ -497,24 +519,24 @@ msgstr "_Återställ"
 msgid "V_olume"
 msgstr "V_olym"
 
-#: ../src/goo-volume-tool-button.c:182
+#: ../src/goo-volume-tool-button.c:164
 #, c-format
 msgid "Volume level: %3.0f%%"
 msgstr "Volymnivå: %3.0f%%"
 
-#: ../src/goo-volume-tool-button.c:671
+#: ../src/goo-volume-tool-button.c:641
 msgid "+"
 msgstr "+"
 
-#: ../src/goo-volume-tool-button.c:713
+#: ../src/goo-volume-tool-button.c:683
 msgid "-"
 msgstr "-"
 
-#: ../src/goo-volume-tool-button.c:762
+#: ../src/goo-volume-tool-button.c:732
 msgid "Change the volume level"
 msgstr "Ändra nivån på volymen"
 
-#: ../src/goo-volume-tool-button.c:797
+#: ../src/goo-volume-tool-button.c:767
 msgid "Volume"
 msgstr "Volym"
 
@@ -526,89 +548,89 @@ msgstr "Dölj _spår"
 msgid "Show _tracks"
 msgstr "Visa _spår"
 
-#: ../src/goo-window.c:195
+#: ../src/goo-window.c:189
 #, c-format
 msgid "%d track"
 msgid_plural "%d tracks"
 msgstr[0] "%d spår"
 msgstr[1] "%d spår"
 
-#: ../src/goo-window.c:610
+#: ../src/goo-window.c:604
 msgid "Length"
 msgstr "Längd"
 
-#: ../src/goo-window.c:1304
+#: ../src/goo-window.c:1299
 #: ../src/ui.h:64
 msgid "_Pause"
 msgstr "_Paus"
 
-#: ../src/goo-window.c:1305
+#: ../src/goo-window.c:1300
 #: ../src/ui.h:65
 msgid "Pause"
 msgstr "Paus"
 
-#: ../src/goo-window.c:1429
+#: ../src/goo-window.c:1424
 msgid "No Disc"
 msgstr "Ingen skiva"
 
-#: ../src/goo-window.c:1432
+#: ../src/goo-window.c:1427
 msgid "Data Disc"
 msgstr "Dataskiva"
 
-#: ../src/goo-window.c:1679
-#: ../src/goo-window.c:1698
+#: ../src/goo-window.c:1665
+#: ../src/goo-window.c:1683
 #: ../src/ui.h:52
 #: ../src/ui.h:56
 #: ../src/ui.h:60
 msgid "_Play"
 msgstr "_Spela"
 
-#: ../src/goo-window.c:1680
-#: ../src/goo-window.c:1699
+#: ../src/goo-window.c:1666
+#: ../src/goo-window.c:1684
 #: ../src/ui.h:57
 msgid "Play"
 msgstr "Spela"
 
-#: ../src/goo-window.c:2971
+#: ../src/goo-window.c:2878
 msgid "Could not save cover image"
 msgstr "Kunde inte spara omslagsbild"
 
-#: ../src/goo-window.c:2996
-#: ../src/goo-window.c:3022
+#: ../src/goo-window.c:2903
+#: ../src/goo-window.c:2929
 msgid "Could not load image"
 msgstr "Kunde inte läsa in bild"
 
-#: ../src/goo-window.c:3091
-msgid "Choose CD Cover Image"
-msgstr "Välj en cd-omslagsbild"
+#: ../src/goo-window.c:2998
+msgid "Choose Disc Cover Image"
+msgstr "Välj en skivomslagsbild"
 
-#: ../src/goo-window.c:3110
+#: ../src/goo-window.c:3017
 msgid "Images"
 msgstr "Bilder"
 
-#: ../src/goo-window.c:3118
+#: ../src/goo-window.c:3025
 msgid "All files"
 msgstr "Alla filer"
 
-#: ../src/goo-window.c:3154
+#: ../src/goo-window.c:3061
 msgid "You have to enter the artist and album names in order to find the album cover."
 msgstr "Du måste ange namnet på artisten och albumet för att kunna söka efter albumomslaget."
 
-#: ../src/goo-window.c:3198
+#: ../src/goo-window.c:3106
 msgid "_Show Window"
 msgstr "_Visa fönster"
 
-#: ../src/goo-window.c:3199
+#: ../src/goo-window.c:3107
 msgid "Show the main window"
 msgstr "Visa huvudfönstret"
 
-#: ../src/goo-window.c:3211
+#: ../src/goo-window.c:3120
 #: ../src/ui.h:124
 msgid "_Hide Window"
 msgstr "_Dölj fönster"
 
 #. "H"
-#: ../src/goo-window.c:3212
+#: ../src/goo-window.c:3121
 #: ../src/ui.h:125
 msgid "Hide the main window"
 msgstr "Dölj huvudfönstret"
@@ -687,19 +709,19 @@ msgstr "Avsluta programmet"
 msgid "Show version"
 msgstr "Visa version"
 
-#: ../src/main.c:321
+#: ../src/main.c:315
 msgid "Cannot start the CD player"
 msgstr "Kan inte starta cd-spelaren"
 
-#: ../src/main.c:322
+#: ../src/main.c:316
 msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgstr "För att kunna läsa cd-skivor måste du installera de grundläggande insticksmodulerna för gstreamer"
 
-#: ../src/main.c:649
+#: ../src/main.c:603
 msgid "Next"
 msgstr "Nästa"
 
-#: ../src/main.c:655
+#: ../src/main.c:609
 msgid "Stop"
 msgstr "Stoppa"
 
@@ -796,12 +818,12 @@ msgid "Edit the disc artist, album and the tracks titles"
 msgstr "Redigera titeln på artisten, albumet och spåren"
 
 #: ../src/ui.h:112
-msgid "_Choose from Disk"
-msgstr "_Välj från disk"
+msgid "_Choose File..."
+msgstr "_Välj fil..."
 
 #: ../src/ui.h:113
-msgid "Choose a disc cover from the local disk"
-msgstr "Välj ett skivomslag från den lokala disken"
+msgid "Choose a file to use as disc cover"
+msgstr "Välj en fil att använda som skivomslag"
 
 #: ../src/ui.h:116
 msgid "_Search on Internet"
@@ -855,6 +877,10 @@ msgstr "_Blanda"
 msgid "Play tracks in a random order"
 msgstr "Spela spår i slumpvis ordning"
 
+#~ msgid "_Choose from Disk"
+#~ msgstr "_Välj från disk"
+#~ msgid "Choose a disc cover from the local disk"
+#~ msgstr "Välj ett skivomslag från den lokala disken"
 #~ msgid "Goobox Application"
 #~ msgstr "Programmet Goobox"
 #~ msgid "Goobox Application Factory"
@@ -947,8 +973,6 @@ msgstr "Spela spår i slumpvis ordning"
 #~ msgstr "Använt: %s / Återstår: %s"
 #~ msgid "Pause playing"
 #~ msgstr "Gör paus i uppspelning"
-#~ msgid "Play CD"
-#~ msgstr "Spela cd"
 #~ msgid "_CD"
 #~ msgstr "_Cd"
 #~ msgid "_CD Properties"
