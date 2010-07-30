@@ -254,6 +254,7 @@ egg_sm_client_get_option_group (void)
 			      NULL, NULL);
   g_option_group_add_entries (group, entries);
   g_option_group_set_parse_hooks (group, NULL, sm_client_post_parse_func);
+  g_option_group_set_translation_domain (group, PACKAGE);
 
   return group;
 }
