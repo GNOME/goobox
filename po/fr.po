@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: goobox HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=goobox&component=general\n"
-"POT-Creation-Date: 2010-01-17 21:25+0000\n"
+"POT-Creation-Date: 2010-07-04 17:32+0000\n"
 "PO-Revision-Date: 2010-02-02 16:53+0100\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -438,32 +438,37 @@ msgstr "Extraction de la piste %d sur %d %s"
 msgid "Could not extract the tracks"
 msgstr "Impossible d'extraire les pistes"
 
-#: ../src/dlg-ripper.c:453
+#: ../src/dlg-ripper.c:430
+#, c-format
+msgid "Invalid destination folder: %s"
+msgstr "Répertoire de destination non valide : %s"
+
+#: ../src/dlg-ripper.c:460 ../src/dlg-ripper.c:464
 msgid "Could not display the destination folder"
 msgstr "Impossible d'afficher le répertoire de destination"
 
-#: ../src/dlg-ripper.c:578
+#: ../src/dlg-ripper.c:591
 msgid "Tracks extracted successfully"
 msgstr "Pistes extraites avec succés"
 
-#: ../src/dlg-ripper.c:580
+#: ../src/dlg-ripper.c:593
 msgid "_View destination folder"
 msgstr "_Voir le répertoire de destination"
 
-#: ../src/dlg-ripper.c:594
+#: ../src/dlg-ripper.c:607
 #, c-format
 msgid "<i>Extracting \"%s\"</i>"
 msgstr "<i>Extraction de « %s »</i>"
 
-#: ../src/dlg-ripper.c:604
+#: ../src/dlg-ripper.c:616 ../src/dlg-ripper.c:625
 msgid "Could not extract tracks"
 msgstr "Impossible d'extraire les pistes"
 
-#: ../src/dlg-ripper.c:634
+#: ../src/dlg-ripper.c:655
 msgid "Ripped with CD Player"
 msgstr "Extrait avec le lecteur CD Goobox"
 
-#: ../src/dlg-ripper.c:680
+#: ../src/dlg-ripper.c:701
 msgid "Extracting disc tracks"
 msgstr "Extraction des pistes du disque"
 
