@@ -1,3 +1,26 @@
+version 2.2.0
+-------------
+
+        Bugs fixed:
+
+        * Fixed translation of some strings on the command line help (#625669)
+	* Removed the use of glib/gtk+ deprecated functions.
+	* Updated the README file.
+	
+        New or updated application translations:
+
+        * Chinese (simplified) (du baodao)
+        * Czech (Adrian Guniš)
+        * French (Claude Paroz)
+        * Italian (Paolo Bacchilega)
+        * Japanese (Takeshi AIHANA)
+        * Slovenian (Matej Urbančič)
+        * Swedish (Daniel Nylander)
+
+        New or updated manual translations:
+
+        * Slovenian Translation (Matej Urbančič)
+
 version 2.1.2
 -------------
 
