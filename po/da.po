@@ -1,5 +1,5 @@
 # Danish translation of Goobox.
-# Copyright (C) Paolo Bacchilega
+# Copyright (C) Paolo Bacchilega & nedenstående oversættere.
 # This file is distributed under the same license as the goobox package.
 # Martin Willemoes Hansen <mwh@sysrq.dk>, 2005.
 # Joe Hansen (joedalton2@yahoo.dk), 2010.
@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-23 22:32+0100\n"
-"PO-Revision-Date: 2010-02-21 14:52+0000\n"
+"POT-Creation-Date: 2010-11-17 15:22+0100\n"
+"PO-Revision-Date: 2010-11-16 14:52+0000\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -88,7 +88,7 @@ msgid "Show session management options"
 msgstr "Vis sessionshåndteringstilvalg"
 
 #: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:160
-#: ../src/goo-window.c:2058 ../src/goo-window.c:2512 ../src/main.c:378
+#: ../src/goo-window.c:2056 ../src/goo-window.c:2508 ../src/main.c:378
 msgid "CD Player"
 msgstr "Cd-afspiller"
 
@@ -289,7 +289,7 @@ msgstr ""
 msgid "Copyright © 2004-2009 Free Software Foundation, Inc."
 msgstr "Ophavsret 2004-2009 Free Software Foundation, Inc."
 
-#: ../src/actions.c:163 ../src/main.c:416
+#: ../src/actions.c:163 ../src/main.c:415
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "Afspil cd'er og gem numrene på disken som filer"
 
@@ -306,7 +306,7 @@ msgstr "Forskellige"
 msgid "%u, loading image: %u"
 msgstr "%u, indlæser billede: %u"
 
-#: ../src/dlg-cover-chooser.c:336 ../src/goo-window.c:3064
+#: ../src/dlg-cover-chooser.c:336 ../src/goo-window.c:3060
 msgid "Could not search for a cover on Internet"
 msgstr "Kunne ikke søge efter et omslag på internettet"
 
@@ -331,20 +331,20 @@ msgstr ""
 msgid "No encoder available."
 msgstr "Ingen koder tilgængelig."
 
-#: ../src/dlg-preferences.c:241 ../src/dlg-preferences.c:468
+#: ../src/dlg-preferences.c:243 ../src/dlg-preferences.c:474
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:253 ../src/dlg-preferences.c:471
+#: ../src/dlg-preferences.c:255 ../src/dlg-preferences.c:477
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:265
+#: ../src/dlg-preferences.c:267
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:292 ../src/dlg-preferences.c:495
+#: ../src/dlg-preferences.c:294 ../src/dlg-preferences.c:501
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
@@ -352,7 +352,7 @@ msgstr ""
 "Vorbis er et åbent kildetekst lydcodec med kvalitetstab der har "
 "højkvalitetsuddata med en mindre filstørrelse end MP3."
 
-#: ../src/dlg-preferences.c:293 ../src/dlg-preferences.c:498
+#: ../src/dlg-preferences.c:295 ../src/dlg-preferences.c:504
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
@@ -360,7 +360,7 @@ msgstr ""
 "Free Lossless Audio Codec (FLAC) er et åbent kildetekst codec som "
 "komprimerer men ikke forringer lydkvalitet."
 
-#: ../src/dlg-preferences.c:294 ../src/dlg-preferences.c:501
+#: ../src/dlg-preferences.c:296 ../src/dlg-preferences.c:507
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
@@ -368,27 +368,27 @@ msgstr ""
 "WAV+PCM er et format uden kvalitetstab som indeholder ukomprimeret, rå "
 "pulskodet moduleret (PCM) lyd."
 
-#: ../src/dlg-preferences.c:448
+#: ../src/dlg-preferences.c:449
 msgid "Faster compression"
 msgstr "Hurtigere komprimering"
 
-#: ../src/dlg-preferences.c:452
+#: ../src/dlg-preferences.c:453
 msgid "Higher compression"
 msgstr "Højere komprimering"
 
-#: ../src/dlg-preferences.c:457
+#: ../src/dlg-preferences.c:460
 msgid "Smaller size"
 msgstr "Mindre størrelse"
 
-#: ../src/dlg-preferences.c:461
+#: ../src/dlg-preferences.c:464
 msgid "Higher quality"
 msgstr "Højere kvalitet"
 
-#: ../src/dlg-preferences.c:482
+#: ../src/dlg-preferences.c:488
 msgid "Quality:"
 msgstr "Kvalitet:"
 
-#: ../src/dlg-preferences.c:485
+#: ../src/dlg-preferences.c:491
 msgid "Compression level:"
 msgstr "Kompressionsniveau:"
 
@@ -406,15 +406,15 @@ msgstr "Søgning mislykkedes: %s\n"
 msgid "No album found"
 msgstr "Intet album fundet"
 
-#: ../src/dlg-properties.c:316 ../src/goo-window.c:534
+#: ../src/dlg-properties.c:316 ../src/goo-window.c:532
 msgid "#"
 msgstr "Nr"
 
-#: ../src/dlg-properties.c:334 ../src/goo-window.c:559
+#: ../src/dlg-properties.c:334 ../src/goo-window.c:557
 msgid "Title"
 msgstr "Titel"
 
-#: ../src/dlg-properties.c:367 ../src/goo-window.c:582
+#: ../src/dlg-properties.c:367 ../src/goo-window.c:580
 msgid "Artist"
 msgstr "Kunstner"
 
@@ -437,32 +437,37 @@ msgstr "Udtrækker numre: %d af %d %s"
 msgid "Could not extract the tracks"
 msgstr "Kunne ikke udtrække numrene"
 
-#: ../src/dlg-ripper.c:453
+#: ../src/dlg-ripper.c:430
+#, c-format
+msgid "Invalid destination folder: %s"
+msgstr "Ugyldig målmappe: %s"
+
+#: ../src/dlg-ripper.c:460 ../src/dlg-ripper.c:464
 msgid "Could not display the destination folder"
 msgstr "Kunne ikke vise målmappen"
 
-#: ../src/dlg-ripper.c:578
+#: ../src/dlg-ripper.c:591
 msgid "Tracks extracted successfully"
 msgstr "Numrene er udtrukket uden problemer"
 
-#: ../src/dlg-ripper.c:580
+#: ../src/dlg-ripper.c:593
 msgid "_View destination folder"
 msgstr "_Vis målmappen"
 
-#: ../src/dlg-ripper.c:594
+#: ../src/dlg-ripper.c:607
 #, c-format
 msgid "<i>Extracting \"%s\"</i>"
 msgstr "<i>Udtrækker \"%s\"</i>"
 
-#: ../src/dlg-ripper.c:604
+#: ../src/dlg-ripper.c:616 ../src/dlg-ripper.c:625
 msgid "Could not extract tracks"
 msgstr "Kunne ikke udtrække numre"
 
-#: ../src/dlg-ripper.c:634
+#: ../src/dlg-ripper.c:655
 msgid "Ripped with CD Player"
 msgstr "Rippet med cd-afspiller"
 
-#: ../src/dlg-ripper.c:680
+#: ../src/dlg-ripper.c:701
 msgid "Extracting disc tracks"
 msgstr "Udtrækker cd-numre"
 
@@ -490,46 +495,46 @@ msgctxt "short time format"
 msgid "%d:%02d"
 msgstr "%d:%02d"
 
-#: ../src/goo-player.c:262
+#: ../src/goo-player.c:263
 msgid "Playing CD"
 msgstr "Afspiller cd"
 
 #. translators: this is the current_time / total_time label
-#: ../src/goo-player-info.c:221 ../src/goo-player-info.c:249
-#: ../src/goo-player-info.c:549 ../src/goo-window.c:2040
+#: ../src/goo-player-info.c:220 ../src/goo-player-info.c:248
+#: ../src/goo-player-info.c:542 ../src/goo-window.c:2038
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
-#: ../src/goo-player-info.c:423
+#: ../src/goo-player-info.c:417
 msgid "Click here to choose a cover for this CD"
 msgstr "Klik her for at vælge et omslag for denne cd"
 
-#: ../src/goo-player-info.c:651
+#: ../src/goo-player-info.c:644
 msgid "No disc"
 msgstr "Ingen skive"
 
-#: ../src/goo-player-info.c:656
+#: ../src/goo-player-info.c:649
 msgid "Data disc"
 msgstr "Dataskive"
 
-#: ../src/goo-player-info.c:671 ../src/goo-window.c:1423
+#: ../src/goo-player-info.c:664 ../src/goo-window.c:1421
 msgid "Paused"
 msgstr "Pause"
 
-#: ../src/goo-player-info.c:680
+#: ../src/goo-player-info.c:673
 msgid "Ejecting CD"
 msgstr "Skubber cd ud"
 
-#: ../src/goo-player-info.c:684
+#: ../src/goo-player-info.c:677
 msgid "Checking CD drive"
 msgstr "Kontrollerer cd-drev"
 
-#: ../src/goo-player-info.c:688 ../src/goo-player-info.c:692
+#: ../src/goo-player-info.c:681 ../src/goo-player-info.c:685
 msgid "Reading CD"
 msgstr "Læser cd"
 
-#: ../src/goo-player-info.c:708 ../src/goo-window.c:1433
+#: ../src/goo-player-info.c:701 ../src/goo-window.c:1431
 msgid "Audio CD"
 msgstr "Lyd-cd"
 
@@ -546,24 +551,24 @@ msgstr "_Nulstil"
 msgid "V_olume"
 msgstr "_Lydstyrke"
 
-#: ../src/goo-volume-tool-button.c:182
+#: ../src/goo-volume-tool-button.c:164
 #, c-format
 msgid "Volume level: %3.0f%%"
 msgstr "Lydstyrkeniveau: %3.0f%%"
 
-#: ../src/goo-volume-tool-button.c:671
+#: ../src/goo-volume-tool-button.c:641
 msgid "+"
 msgstr "+"
 
-#: ../src/goo-volume-tool-button.c:713
+#: ../src/goo-volume-tool-button.c:683
 msgid "-"
 msgstr "-"
 
-#: ../src/goo-volume-tool-button.c:762
+#: ../src/goo-volume-tool-button.c:732
 msgid "Change the volume level"
 msgstr "Justér lydstyrkeniveauet"
 
-#: ../src/goo-volume-tool-button.c:797
+#: ../src/goo-volume-tool-button.c:767
 msgid "Volume"
 msgstr "Lydstyrke"
 
@@ -575,63 +580,63 @@ msgstr "Skjul _spor"
 msgid "Show _tracks"
 msgstr "Vis _spor"
 
-#: ../src/goo-window.c:190
+#: ../src/goo-window.c:189
 #, c-format
 msgid "%d track"
 msgid_plural "%d tracks"
 msgstr[0] "%d spor"
 msgstr[1] "%d spor"
 
-#: ../src/goo-window.c:606
+#: ../src/goo-window.c:604
 msgid "Length"
 msgstr "Længde"
 
-#: ../src/goo-window.c:1301 ../src/ui.h:64
+#: ../src/goo-window.c:1299 ../src/ui.h:64
 msgid "_Pause"
 msgstr "_Pause"
 
-#: ../src/goo-window.c:1302 ../src/ui.h:65
+#: ../src/goo-window.c:1300 ../src/ui.h:65
 msgid "Pause"
 msgstr "Pause"
 
-#: ../src/goo-window.c:1426
+#: ../src/goo-window.c:1424
 msgid "No Disc"
 msgstr "Ingen skive"
 
-#: ../src/goo-window.c:1429
+#: ../src/goo-window.c:1427
 msgid "Data Disc"
 msgstr "Dataskive"
 
-#: ../src/goo-window.c:1667 ../src/goo-window.c:1685 ../src/ui.h:52
+#: ../src/goo-window.c:1665 ../src/goo-window.c:1683 ../src/ui.h:52
 #: ../src/ui.h:56 ../src/ui.h:60
 msgid "_Play"
 msgstr "_Afspil"
 
-#: ../src/goo-window.c:1668 ../src/goo-window.c:1686 ../src/ui.h:57
+#: ../src/goo-window.c:1666 ../src/goo-window.c:1684 ../src/ui.h:57
 msgid "Play"
 msgstr "Afspil"
 
-#: ../src/goo-window.c:2882
+#: ../src/goo-window.c:2878
 msgid "Could not save cover image"
 msgstr "Kunne ikke gemme cd-omslaget"
 
-#: ../src/goo-window.c:2907 ../src/goo-window.c:2933
+#: ../src/goo-window.c:2903 ../src/goo-window.c:2929
 msgid "Could not load image"
 msgstr "Kunne ikke indlæse billede"
 
-#: ../src/goo-window.c:3002
+#: ../src/goo-window.c:2998
 msgid "Choose Disc Cover Image"
 msgstr "Vælg et cd-omslagsbillede"
 
-#: ../src/goo-window.c:3021
+#: ../src/goo-window.c:3017
 msgid "Images"
 msgstr "Billeder"
 
-#: ../src/goo-window.c:3029
+#: ../src/goo-window.c:3025
 msgid "All files"
 msgstr "Alle filer"
 
-#: ../src/goo-window.c:3065
+#: ../src/goo-window.c:3061
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -639,20 +644,20 @@ msgstr ""
 "Du skal angive navnet på kunstneren og albumet for at kunne søge efter "
 "albumsomslaget."
 
-#: ../src/goo-window.c:3110
+#: ../src/goo-window.c:3106
 msgid "_Show Window"
 msgstr "_Vis vindue"
 
-#: ../src/goo-window.c:3111
+#: ../src/goo-window.c:3107
 msgid "Show the main window"
 msgstr "Vis hovedvinduet"
 
-#: ../src/goo-window.c:3124 ../src/ui.h:124
+#: ../src/goo-window.c:3120 ../src/ui.h:124
 msgid "_Hide Window"
 msgstr "_Skjul vindue"
 
 #. "H"
-#: ../src/goo-window.c:3125 ../src/ui.h:125
+#: ../src/goo-window.c:3121 ../src/ui.h:125
 msgid "Hide the main window"
 msgstr "Skjul hovedvinduet"
 
@@ -734,11 +739,11 @@ msgstr ""
 "For at kunne læse cd'er skal du installere baseudvidelsesmodulet til "
 "gstreamer"
 
-#: ../src/main.c:603
+#: ../src/main.c:600
 msgid "Next"
 msgstr "Næste"
 
-#: ../src/main.c:609
+#: ../src/main.c:606
 msgid "Stop"
 msgstr "Stop"
 
