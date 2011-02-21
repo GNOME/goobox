@@ -4,12 +4,14 @@
 #
 # José Sánchez Moreno <jose@oxigenow.com>, 2007.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2010.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: help.HEAD.es\n"
-"POT-Creation-Date: 2009-11-29 22:49+0000\n"
-"PO-Revision-Date: 2010-02-16 18:54+0100\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"POT-Creation-Date: 2010-02-16 17:54+0000\n"
+"PO-Revision-Date: 2011-02-21 15:15+0100\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,7 +20,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: C/goobox.xml:18(title)
-#| msgid "<application>CD Player</application> Manual V1.0"
 msgid "<application>CD Player</application> Manual V2.0"
 msgstr "Manual del <application>Reproductor de CD</application> V2.0"
 
@@ -27,7 +28,6 @@ msgid "User manual for Goobox the CD player."
 msgstr "Manual del usuario para el reproductor de CD Goobox"
 
 #: C/goobox.xml:24(year)
-#| msgid "2005-01-20"
 msgid "2005, 2009"
 msgstr "2005, 2009"
 
@@ -170,23 +170,19 @@ msgid "First version, program version 0.7.1"
 msgstr "Primera version, version del programa 0.7.1"
 
 #: C/goobox.xml:68(revnumber)
-#| msgid "1.0"
 msgid "2.0"
 msgstr "2.0"
 
 #: C/goobox.xml:69(date)
-#| msgid "2005-01-20"
 msgid "2009-11-14"
 msgstr "2009-11-14"
 
 #: C/goobox.xml:71(para)
-#| msgid "First version, program version 0.7.1"
 msgid "Second version, program version 2.1.0"
 msgstr "Segunda versión, versión del programa 2.1.0"
 
 #. this is version of manual, not application
 #: C/goobox.xml:76(releaseinfo)
-#| msgid "This is manual describes version 0.7.1 of Goobox"
 msgid "This is manual describes version 2.1.0 of Goobox"
 msgstr "Este manual describe la versión 2.1.0 de Goobox"
 
@@ -236,7 +232,7 @@ msgid ""
 "This dialog contains two tabs described in detail below. At the bottom of "
 "the dialog window, you'll find the following buttons:"
 msgstr ""
-"Este diálogo contiene dos solapas descritas en detalle más adelante. En la "
+"Este diálogo contiene dos pestañas descritas en detalle más adelante. En la "
 "parte inferior la ventana del diálogo encontrará los siguientes botones:"
 
 #: C/goobox.xml:118(para)
@@ -259,11 +255,11 @@ msgstr ""
 
 #: C/goobox.xml:135(title)
 msgid "General Tab"
-msgstr "Solapa General"
+msgstr "Pestaña General"
 
 #: C/goobox.xml:136(para)
 msgid "This tab allows you to set the following options:"
-msgstr "Esta solapa le permite configurar las siguientes opciones:"
+msgstr "Esta pestaña le permite configurar las siguientes opciones:"
 
 #: C/goobox.xml:141(para)
 msgid "Select the device to use."
@@ -276,11 +272,11 @@ msgstr ""
 
 #: C/goobox.xml:154(title)
 msgid "Extraction Tab"
-msgstr "Solapa Extracción"
+msgstr "Pestaña Extracción"
 
 #: C/goobox.xml:155(para)
 msgid "This tab allows you to set the extraction options:"
-msgstr "Esta solapa le permite configurar las opciones de extracción:"
+msgstr "Esta pestaña le permite configurar las opciones de extracción:"
 
 #: C/goobox.xml:160(para)
 msgid ""
