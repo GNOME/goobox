@@ -23,7 +23,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <brasero/brasero-drive.h>
+#include <brasero3/brasero-drive.h>
 #include "goo-window.h"
 
 extern GtkWidget *main_window;

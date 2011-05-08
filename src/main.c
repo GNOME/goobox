@@ -21,13 +21,12 @@
  */
 
 #include <config.h>
-#include <brasero/brasero-medium-monitor.h>
+#include <brasero3/brasero-medium-monitor.h>
 #include <gst/gst.h>
 #include <glib.h>
 #include <unique/unique.h>
 #include "eggsmclient.h"
 #include "goo-stock.h"
-#include "gconf-utils.h"
 #include "goo-window.h"
 #include "typedefs.h"
 #include "preferences.h"
@@ -81,16 +80,16 @@ static char       *default_device = NULL;
 static gboolean    version = FALSE;
 
 static const GOptionEntry options[] = {
-	{ "device", 'd',  0, G_OPTION_ARG_STRING, &default_device, 
+	{ "device", 'd',  0, G_OPTION_ARG_STRING, &default_device,
 	  N_("CD device to be used"),
 	  N_("DEVICE_PATH") },
 	{ "play", '\0', 0, G_OPTION_ARG_NONE, &AutoPlay,
           N_("Play the CD on startup"),
           0 },
-	{ "play-pause", '\0', 0, G_OPTION_ARG_NONE, &PlayPause, 
+	{ "play-pause", '\0', 0, G_OPTION_ARG_NONE, &PlayPause,
           N_("Play/Pause"),
           0 },
-        { "stop", '\0', 0, G_OPTION_ARG_NONE, &Stop, 
+        { "stop", '\0', 0, G_OPTION_ARG_NONE, &Stop,
           N_("Stop playing"),
           0 },
 	{ "next", '\0', 0, G_OPTION_ARG_NONE, &Next,
@@ -414,7 +413,7 @@ int main (int argc, char **argv)
 	bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
-	
+
         context = g_option_context_new (N_("Play CDs and save the tracks to disk as files"));
         g_option_context_set_translation_domain (context, GETTEXT_PACKAGE);
         g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
@@ -450,7 +449,7 @@ int main (int argc, char **argv)
 	}
 
 	release_data ();
-	
+
 	return 0;
 }
 
@@ -459,17 +458,17 @@ GtkWidget *
 main_get_window_from_device (const char *device)
 {
 	GList *scan;
-	
+
 	if (device == NULL)
 		return NULL;
-		
+
 	for (scan = window_list; scan; scan = scan->next) {
 		GooWindow *window = scan->data;
 
 		if (g_strcmp0 (goo_player_get_device (goo_window_get_player (window)), device) == 0)
 			return (GtkWidget *) window;
 	}
-	
+
 	return NULL;
 }
 
@@ -517,7 +516,7 @@ static gboolean
 play_next (gpointer user_data)
 {
 	GooWindow *window = user_data;
-	
+
 	goo_window_next (window);
 	return FALSE;
 }
@@ -529,7 +528,7 @@ notify_action_next_cb (NotifyNotification *notification,
                        gpointer            user_data)
 {
 	GooWindow *window = user_data;
-	
+
 	notify_notification_close (notification, NULL);
 	g_idle_add (play_next, window);
 }
@@ -541,7 +540,7 @@ notify_action_stop_cb (NotifyNotification *notification,
                        gpointer            user_data)
 {
 	GooWindow *window = user_data;
-	
+
 	goo_window_stop (window);
 	notify_notification_close (notification, NULL);
 }
@@ -550,7 +549,7 @@ notify_action_stop_cb (NotifyNotification *notification,
 #endif /* ENABLE_NOTIFICATION */
 
 
-void 
+void
 system_notify (GooWindow  *window,
 	       const char *title,
 	       const char *msg)
@@ -625,6 +624,6 @@ system_notify (GooWindow  *window,
 							x, y);*/
 
 	notify_notification_show (notification, NULL);
-	
+
 #endif /* ENABLE_NOTIFICATION */
 }

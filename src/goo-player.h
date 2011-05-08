@@ -25,7 +25,7 @@
 
 #include <glib.h>
 #include <gio/gio.h>
-#include <brasero/brasero-drive.h>
+#include <brasero3/brasero-drive.h>
 #include "track-info.h"
 #include "album-info.h"
 
@@ -88,7 +88,7 @@ struct _GooPlayerClass
 					  double           fraction);
         void        (*message)           (GooPlayer       *player,
 					  const char      *msg);
-	void        (*state_changed)     (GooPlayer       *player);	
+	void        (*state_changed)     (GooPlayer       *player);
 };
 
 GType            goo_player_get_type            (void);

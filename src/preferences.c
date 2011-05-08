@@ -21,11 +21,9 @@
  */
 
 #include <string.h>
-#include <gconf/gconf-client.h>
 #include "typedefs.h"
 #include "preferences.h"
 #include "main.h"
-#include "gconf-utils.h"
 #include "goo-window.h"
 
 
@@ -46,14 +44,14 @@ get_enum_from_string (EnumStringTable *table,
 	int i;
 
 	/* return the first value if s_value is invalid */
-	
+
 	if (s_value == NULL)
-		return table[0].i_value; 
+		return table[0].i_value;
 
 	for (i = 0; table[i].s_value != NULL; i++)
 		if (strcmp (s_value, table[i].s_value) == 0)
 			return table[i].i_value;
-	
+
 	return table[0].i_value;
 }
 
@@ -67,7 +65,7 @@ get_string_from_enum (EnumStringTable *table,
 	for (i = 0; table[i].s_value != NULL; i++)
 		if (i_value == table[i].i_value)
 			return table[i].s_value;
-	
+
 	/* return the first value if i_value is invalid */
 
 	return table[0].s_value;
@@ -78,8 +76,8 @@ get_string_from_enum (EnumStringTable *table,
 
 
 static void
-set_dialog_property_int (const char *dialog, 
-			 const char *property, 
+set_dialog_property_int (const char *dialog,
+			 const char *property,
 			 int         value)
 {
 	char *key;
@@ -97,17 +95,17 @@ pref_util_save_window_geometry (GtkWindow  *window,
 	int x, y, width, height;
 
 	gtk_window_get_position (window, &x, &y);
-	set_dialog_property_int (dialog, "x", x); 
-	set_dialog_property_int (dialog, "y", y); 
+	set_dialog_property_int (dialog, "x", x);
+	set_dialog_property_int (dialog, "y", y);
 
 	gtk_window_get_size (window, &width, &height);
-	set_dialog_property_int (dialog, "width", width); 
-	set_dialog_property_int (dialog, "height", height); 
+	set_dialog_property_int (dialog, "width", width);
+	set_dialog_property_int (dialog, "height", height);
 }
 
 
 static int
-get_dialog_property_int (const char *dialog, 
+get_dialog_property_int (const char *dialog,
 			 const char *property)
 {
 	char *key;
@@ -132,7 +130,7 @@ pref_util_restore_window_geometry (GtkWindow  *window,
 	width = get_dialog_property_int (dialog, "width");
 	height = get_dialog_property_int (dialog, "height");
 
-	if (width != -1 && height != 1) 
+	if (width != -1 && height != 1)
 		gtk_window_set_default_size (window, width, height);
 
 	gtk_window_present (window);

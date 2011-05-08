@@ -23,7 +23,6 @@
 #include <config.h>
 #include <math.h>
 #include <string.h>
-#include "gconf-utils.h"
 #include "gtk-utils.h"
 
 #define REQUEST_ENTRY_WIDTH 220
@@ -60,7 +59,7 @@ create_button (const char *stock_id,
 	hbox = gtk_hbox_new (FALSE, 2);
 	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+	gtk_widget_set_can_default (button, TRUE);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), GTK_WIDGET (button));
 
 	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
@@ -465,11 +464,6 @@ _gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
 	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
 	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
 
-	gtk_dialog_set_has_separator (GTK_DIALOG (d), FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (d), 6);
-	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (d)->vbox), 6);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (d)->vbox), 8);
-
 	/* Add label and image */
 
 	image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
@@ -495,14 +489,14 @@ _gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
 	gtk_box_pack_start (GTK_BOX (hbox), label,
 			    TRUE, TRUE, 0);
 
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (d)->vbox),
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (d))),
 			    hbox,
 			    FALSE, FALSE, 0);
 
 	/* Add checkbutton */
 
 	check_button = gtk_check_button_new_with_mnemonic (check_button_label);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (d)->vbox),
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (d))),
 			    check_button,
 			    FALSE, FALSE, 0);
 	gtk_widget_show (check_button);
@@ -1137,7 +1131,7 @@ _gtk_widget_get_screen_size (GtkWidget *widget,
 
 	screen = gtk_widget_get_screen (widget);
 	gdk_screen_get_monitor_geometry (screen,
-					 gdk_screen_get_monitor_at_window (screen, widget->window),
+					 gdk_screen_get_monitor_at_window (screen, gtk_widget_get_window (widget)),
 					 &screen_geom);
 
 	*width = screen_geom.width;
@@ -1179,14 +1173,18 @@ void
 _gtk_paned_set_position2 (GtkPaned *paned,
 			  int       pos)
 {
-	GtkWidget *top_level;
-	int        size;
+	GtkWidget     *top_level;
+	GtkAllocation  allocation;
+	int            size;
 
 	top_level = gtk_widget_get_toplevel (GTK_WIDGET (paned));
+	if (! gtk_widget_is_toplevel (top_level))
+		return;
+	gtk_widget_get_allocation (top_level, &allocation);
 	if (gtk_orientable_get_orientation (GTK_ORIENTABLE (paned)) == GTK_ORIENTATION_HORIZONTAL)
-		size = top_level->allocation.width;
+		size = allocation.width;
 	else
-		size = top_level->allocation.height;
+		size = allocation.height;
 
 	if (pos > 0)
 		gtk_paned_set_position (paned, size - pos);

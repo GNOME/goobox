@@ -25,7 +25,6 @@
 #include <gst/gst.h>
 #include "dlg-extract.h"
 #include "dlg-ripper.h"
-#include "gconf-utils.h"
 #include "goo-player.h"
 #include "goo-stock.h"
 #include "gtk-utils.h"
@@ -73,7 +72,7 @@ ok_button_clicked_cb (GtkWidget  *widget,
 		tracks_to_rip = track_list_dup (goo_player_get_album (data->player)->tracks);
 
 	dlg_ripper (data->window, tracks_to_rip);
-	
+
 	track_list_free (tracks_to_rip);
 	gtk_widget_destroy (data->dialog);
 }
@@ -99,23 +98,23 @@ dlg_extract_ask (GooWindow *window)
 
 	encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
 	ogg_encoder = encoder != NULL;
-	if (encoder != NULL) 
+	if (encoder != NULL)
 		gst_object_unref (GST_OBJECT (encoder));
 
 	encoder = gst_element_factory_make (FLAC_ENCODER, "encoder");
 	flac_encoder = encoder != NULL;
-	if (encoder != NULL) 
+	if (encoder != NULL)
 		gst_object_unref (GST_OBJECT (encoder));
 
 	encoder = gst_element_factory_make (WAVE_ENCODER, "encoder");
 	wave_encoder = encoder != NULL;
-	if (encoder != NULL) 
+	if (encoder != NULL)
 		gst_object_unref (GST_OBJECT (encoder));
 
 	if (! ogg_encoder && ! flac_encoder && ! wave_encoder) {
 		GtkWidget *d;
 		char      *msg;
-		
+
 		msg = g_strdup_printf (_("You need at least one of the following GStreamer plugins in order to extract CD tracks:\n\n"
 					 "\342\200\242 %s \342\206\222 Ogg Vorbis\n"
 					 "\342\200\242 %s \342\206\222 FLAC\n"
@@ -198,7 +197,7 @@ void
 dlg_extract_selected (GooWindow *window)
 {
 	GList *tracks_to_rip;
-	
+
 	tracks_to_rip = goo_window_get_tracks (window, TRUE);
 	dlg_ripper (window, tracks_to_rip);
 
@@ -210,7 +209,7 @@ void
 dlg_extract (GooWindow *window)
 {
 	GList *selected_tracks;
-	
+
 	selected_tracks = goo_window_get_tracks (window, TRUE);
 	if (g_list_length (selected_tracks) < 1)
 		dlg_ripper (window, NULL);

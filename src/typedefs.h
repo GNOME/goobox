@@ -23,6 +23,8 @@
 #ifndef TYPEDEFS_H
 #define TYPEDEFS_H
 
+#include <glib.h>
+
 #define OGG_ENCODER "vorbisenc"
 #define FLAC_ENCODER "flacenc"
 #define WAVE_ENCODER "wavenc"

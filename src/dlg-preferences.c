@@ -21,10 +21,9 @@
  */
 
 #include <config.h>
-#include <brasero/brasero-drive-selection.h>
+#include <brasero3/brasero-drive-selection.h>
 #include <gtk/gtk.h>
 #include <gst/gst.h>
-#include "gconf-utils.h"
 #include "goo-window.h"
 #include "gtk-utils.h"
 #include "preferences.h"
@@ -72,7 +71,7 @@ apply_button_clicked_cb (GtkWidget  *widget,
 	pref_set_file_format (gtk_combo_box_get_active (GTK_COMBO_BOX (data->filetype_combobox)));
 	eel_gconf_set_boolean (PREF_EXTRACT_SAVE_PLAYLIST, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("save_playlist_checkbutton"))));
 	eel_gconf_set_boolean (PREF_GENERAL_AUTOPLAY, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("autoplay_checkbutton"))));
-	
+
 	/**/
 
 	drive = brasero_drive_selection_get_active (BRASERO_DRIVE_SELECTION (data->drive_selector));
@@ -140,7 +139,7 @@ filetype_combobox_changed_cb (GtkComboBox *widget,
                               DialogData  *data)
 {
 	int format;
-	
+
 	format = gtk_combo_box_get_active (GTK_COMBO_BOX (data->filetype_combobox));
 	gtk_notebook_set_current_page (GTK_NOTEBOOK (GET_WIDGET ("encoding_notebook")), format);
 	gtk_widget_set_sensitive (GET_WIDGET ("filetype_properties_button"), format != GOO_FILE_FORMAT_WAVE);
@@ -148,12 +147,12 @@ filetype_combobox_changed_cb (GtkComboBox *widget,
 
 
 static void
-set_description_label (DialogData *data, 
-		       const char *widget_name, 
+set_description_label (DialogData *data,
+		       const char *widget_name,
 		       const char *label_text)
 {
 	char *text;
-	
+
 	text = g_markup_printf_escaped ("<small><i>%s</i></small>", label_text);
 	gtk_label_set_markup (GTK_LABEL (GET_WIDGET (widget_name)), text);
 
@@ -172,12 +171,12 @@ dlg_preferences (GooWindow *window)
 	gboolean         find_first_available;
 	GtkTreeIter      iter;
         GtkCellRenderer *renderer;
-        
+
         if (window->preferences_dialog != NULL) {
         	gtk_window_present (GTK_WINDOW (window->preferences_dialog));
         	return;
         }
-        
+
 	data = g_new0 (DialogData, 1);
 	data->window = window;
 	data->builder = _gtk_builder_new_from_file ("preferences.ui", "");
@@ -206,13 +205,13 @@ dlg_preferences (GooWindow *window)
 	}
 
 	/* Extraction */
-	
+
 	data->filetype_model = GTK_TREE_MODEL (gtk_list_store_new (N_COLUMNS,
                                                                    G_TYPE_STRING,
                                                                    G_TYPE_INT,
                                                                    G_TYPE_BOOLEAN));
 	data->filetype_combobox = gtk_combo_box_new_with_model (data->filetype_model);
-	
+
 	renderer = gtk_cell_renderer_text_new ();
         gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (data->filetype_combobox),
                                     renderer,
@@ -226,7 +225,7 @@ dlg_preferences (GooWindow *window)
 	gtk_box_pack_start (GTK_BOX (GET_WIDGET ("filetype_combobox_box")), data->filetype_combobox, TRUE, TRUE, 0);
 
 	/**/
-	
+
 	destination = eel_gconf_get_uri (PREF_EXTRACT_DESTINATION, "");
 	if ((destination == NULL) || (strcmp (destination, "") == 0))
 		destination = g_filename_to_uri (g_get_user_special_dir (G_USER_DIRECTORY_MUSIC), NULL, NULL);
@@ -244,7 +243,7 @@ dlg_preferences (GooWindow *window)
                             DATA_COLUMN, GOO_FILE_FORMAT_OGG,
                             PRESENT_COLUMN, ogg_encoder,
                            -1);
-	if (encoder != NULL) 
+	if (encoder != NULL)
 		gst_object_unref (GST_OBJECT (encoder));
 
 	encoder = gst_element_factory_make (FLAC_ENCODER, "encoder");
@@ -256,7 +255,7 @@ dlg_preferences (GooWindow *window)
                             DATA_COLUMN, GOO_FILE_FORMAT_FLAC,
                             PRESENT_COLUMN, flac_encoder,
                            -1);
-	if (encoder != NULL) 
+	if (encoder != NULL)
 		gst_object_unref (GST_OBJECT (encoder));
 
 	encoder = gst_element_factory_make (WAVE_ENCODER, "encoder");
@@ -268,7 +267,7 @@ dlg_preferences (GooWindow *window)
                             DATA_COLUMN, GOO_FILE_FORMAT_WAVE,
                             PRESENT_COLUMN, wave_encoder,
                            -1);
-	if (encoder != NULL) 
+	if (encoder != NULL)
 		gst_object_unref (GST_OBJECT (encoder));
 
 	file_format = pref_get_file_format ();
@@ -285,19 +284,19 @@ dlg_preferences (GooWindow *window)
 		else if (wave_encoder)
 			file_format = GOO_FILE_FORMAT_WAVE;
 	}
-	
+
 	gtk_combo_box_set_active (GTK_COMBO_BOX (data->filetype_combobox), file_format);
 	filetype_combobox_changed_cb (NULL, data);
 
 	/**/
-	
+
 	set_description_label (data, "ogg_description_label", _("Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3."));
 	set_description_label (data, "flac_description_label", _("Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality."));
 	set_description_label (data, "wave_description_label", _("WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio."));
-		
+
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("save_playlist_checkbutton")), eel_gconf_get_boolean (PREF_EXTRACT_SAVE_PLAYLIST, TRUE));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("autoplay_checkbutton")), eel_gconf_get_boolean (PREF_GENERAL_AUTOPLAY, TRUE));
-	
+
 	/**/
 
 	data->drive_selector = brasero_drive_selection_new ();
@@ -322,7 +321,7 @@ dlg_preferences (GooWindow *window)
 			  "clicked",
 			  G_CALLBACK (filetype_properties_clicked_cb),
 			  data);
-	g_signal_connect (G_OBJECT (data->drive_selector), 
+	g_signal_connect (G_OBJECT (data->drive_selector),
 			  "changed",
 			  G_CALLBACK (drive_selector_device_changed_cb),
 			  data);
@@ -345,7 +344,7 @@ dlg_preferences (GooWindow *window)
 typedef struct {
 	GooFileFormat  format;
 	int            value;
-	
+
 	GtkBuilder    *builder;
 	GtkWidget     *dialog;
 	GtkWidget     *f_quality_label;
@@ -354,7 +353,7 @@ typedef struct {
 
 
 static void
-format_dialog_destroy_cb (GtkWidget        *widget, 
+format_dialog_destroy_cb (GtkWidget        *widget,
 	    		  FormatDialogData *data)
 {
 	g_object_unref (data->builder);
@@ -363,7 +362,7 @@ format_dialog_destroy_cb (GtkWidget        *widget,
 
 
 static void
-format_dialog_ok_button_clicked_cb (GtkWidget        *widget, 
+format_dialog_ok_button_clicked_cb (GtkWidget        *widget,
 	 			    FormatDialogData *data)
 {
 	switch (data->format) {
@@ -376,7 +375,7 @@ format_dialog_ok_button_clicked_cb (GtkWidget        *widget,
 	default:
 		break;
 	}
-	
+
 	gtk_widget_destroy (data->dialog);
 }
 
@@ -389,7 +388,7 @@ format_dialog_scale_value_changed_cb (GtkRange         *range,
 }
 
 
-static int 
+static int
 find_index (int a[], int v)
 {
 	int i;
@@ -435,13 +434,13 @@ dlg_format (DialogData    *preferences_data,
 {
 	FormatDialogData *data;
         char             *text;
-        
+
 	data = g_new0 (FormatDialogData, 1);
 	data->format = format;
 	data->builder = _gtk_builder_new_from_file ("format-options.ui", "");
 	data->dialog = GET_WIDGET ("format_dialog");
-	
-	/* Set widgets data. */		
+
+	/* Set widgets data. */
 
 	if (format == GOO_FILE_FORMAT_FLAC) {
 		gtk_adjustment_set_upper (GTK_ADJUSTMENT (GET_WIDGET ("quality_adjustment")), 9.0);

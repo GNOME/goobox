@@ -80,33 +80,15 @@ gtk_file_chooser_preview_get_type ()
 
 
 static void
-gtk_file_chooser_preview_size_request (GtkWidget      *widget,
-				       GtkRequisition *requisition)
-{	
-	if (GTK_WIDGET_CLASS (parent_class)->size_request)
-		(* GTK_WIDGET_CLASS (parent_class)->size_request) (widget, requisition);
-	requisition->width = MAX (requisition->width, MIN_WIDTH);
+gtk_file_chooser_preview_get_preferred_width (GtkWidget *widget,
+					      int       *minimal_width,
+					      int       *natural_width)
+{
+	*minimal_width = *natural_width = MIN_WIDTH;
 }
 
 
 static void
-gtk_file_chooser_preview_style_set (GtkWidget *widget,
-				    GtkStyle  *prev_style)
-{
-	GtkWidget *event_box;
-
-	GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
-
-	event_box = gtk_bin_get_child (GTK_BIN (widget));
-	
-	gtk_widget_modify_bg (event_box, GTK_STATE_NORMAL,
-			      &widget->style->base[GTK_STATE_NORMAL]);
-	gtk_widget_modify_bg (event_box, GTK_STATE_INSENSITIVE,
-			      &widget->style->base[GTK_STATE_NORMAL]);
-}
-
-
-static void 
 gtk_file_chooser_preview_class_init (GtkFileChooserPreviewClass *class)
 {
         GObjectClass   *gobject_class = G_OBJECT_CLASS (class);
@@ -117,12 +99,11 @@ gtk_file_chooser_preview_class_init (GtkFileChooserPreviewClass *class)
         gobject_class->finalize = gtk_file_chooser_preview_finalize;
 
 	widget_class = (GtkWidgetClass*) class;
-	widget_class->size_request = gtk_file_chooser_preview_size_request;
-	widget_class->style_set = gtk_file_chooser_preview_style_set;
+	widget_class->get_preferred_width = gtk_file_chooser_preview_get_preferred_width;
 }
 
 
-static void 
+static void
 gtk_file_chooser_preview_init (GtkFileChooserPreview *preview)
 {
 	GtkFileChooserPreviewPrivateData *priv;
@@ -135,7 +116,7 @@ gtk_file_chooser_preview_init (GtkFileChooserPreview *preview)
 }
 
 
-static void 
+static void
 gtk_file_chooser_preview_finalize (GObject *object)
 {
         GtkFileChooserPreview *preview;
@@ -161,7 +142,7 @@ set_void_preview (GtkFileChooserPreview *preview)
 {
 	gtk_widget_hide (preview->priv->image);
 	gtk_widget_hide (preview->priv->image_info);
-	gtk_widget_set_sensitive (GTK_BIN (preview)->child, FALSE);
+	gtk_widget_set_sensitive (gtk_bin_get_child (GTK_BIN (preview)), FALSE);
 }
 
 
@@ -228,8 +209,8 @@ gtk_file_chooser_preview_new (void)
 {
 	GtkFileChooserPreview  *preview;
 
-	preview = GTK_FILE_CHOOSER_PREVIEW (g_object_new (GTK_TYPE_FILE_CHOOSER_PREVIEW, 
-							  "shadow", GTK_SHADOW_IN, 
+	preview = GTK_FILE_CHOOSER_PREVIEW (g_object_new (GTK_TYPE_FILE_CHOOSER_PREVIEW,
+							  "shadow", GTK_SHADOW_IN,
 							  NULL));
 	gtk_file_chooser_preview_construct (preview);
 	return (GtkWidget*) preview;
@@ -281,11 +262,11 @@ gtk_file_chooser_preview_set_uri (GtkFileChooserPreview *preview,
 	if (pixbuf != NULL) {
 		const char *w, *h;
 		char       *size_text, *text;
-		
+
 		w = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Width");
 		h = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Height");
 		size_text = g_format_size_for_display (g_file_info_get_size (info));
-		text = g_strconcat (size_text, 
+		text = g_strconcat (size_text,
 				    ((w == NULL)?NULL:"\n"),
 				    w, " x ", h, " ", _("pixels"),
 				    NULL);
@@ -295,12 +276,12 @@ gtk_file_chooser_preview_set_uri (GtkFileChooserPreview *preview,
 		g_free (text);
 
 		gtk_image_set_from_pixbuf (GTK_IMAGE (preview->priv->image), pixbuf);
-		
+
 		g_object_unref (pixbuf);
 		gtk_widget_show (preview->priv->image);
 		gtk_widget_show (preview->priv->image_info);
 
-		gtk_widget_set_sensitive (GTK_BIN (preview)->child, TRUE);
+		gtk_widget_set_sensitive (gtk_bin_get_child (GTK_BIN (preview)), TRUE);
 	}
 	else
 		set_void_preview (preview);

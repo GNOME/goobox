@@ -64,7 +64,7 @@ struct _GooPlayerInfoPrivateData {
 	gint64       track_length;
 	gboolean     dragging;
 	guint        update_id;
-	
+
 	double       fraction;
 	guint        update_progress_timeout;
 };
@@ -91,23 +91,20 @@ static void goo_player_info_finalize    (GObject *object);
 G_DEFINE_TYPE (GooPlayerInfo, goo_player_info, GTK_TYPE_HBOX)
 
 static void
-goo_player_info_size_request (GtkWidget      *widget,
-			      GtkRequisition *requisition)
-{	
-	GooPlayerInfo *info;
-	
-	if (GTK_WIDGET_CLASS (goo_player_info_parent_class)->size_request)
-		(* GTK_WIDGET_CLASS (goo_player_info_parent_class)->size_request) (widget, requisition);
-	
-	info = (GooPlayerInfo *) widget;
+goo_player_info_get_preferred_width (GtkWidget *widget,
+				     int       *minimum_width,
+				     int       *natural_width)
+{
+	GooPlayerInfo *info = GOO_PLAYER_INFO (widget);
+
 	if (info->priv->interactive)
-		requisition->width = MAX (requisition->width, MIN_WIDTH);
+		minimum_width = natural_width = MIN_WIDTH;
 	else
-		requisition->width = MIN (MAX (requisition->width, MIN_TOOLTIP_WIDTH), MAX_TOOLTIP_WIDTH);
+		minimum_width = natural_width = MIN_TOOLTIP_WIDTH;
 }
 
 
-static void 
+static void
 goo_player_info_class_init (GooPlayerInfoClass *class)
 {
         GObjectClass   *gobject_class;
@@ -120,7 +117,7 @@ goo_player_info_class_init (GooPlayerInfoClass *class)
 			      G_STRUCT_OFFSET (GooPlayerInfoClass, cover_clicked),
 			      NULL, NULL,
 			      goo_marshal_VOID__VOID,
-			      G_TYPE_NONE, 
+			      G_TYPE_NONE,
 			      0);
 	goo_player_info_signals[SKIP_TO] =
                 g_signal_new ("skip_to",
@@ -129,7 +126,7 @@ goo_player_info_class_init (GooPlayerInfoClass *class)
 			      G_STRUCT_OFFSET (GooPlayerInfoClass, skip_to),
 			      NULL, NULL,
 			      goo_marshal_VOID__INT,
-			      G_TYPE_NONE, 
+			      G_TYPE_NONE,
 			      1,
 			      G_TYPE_INT);
 
@@ -137,7 +134,7 @@ goo_player_info_class_init (GooPlayerInfoClass *class)
         gobject_class->finalize = goo_player_info_finalize;
 
 	widget_class = GTK_WIDGET_CLASS (class);
-	widget_class->size_request = goo_player_info_size_request;
+	widget_class->get_preferred_width = goo_player_info_get_preferred_width;
 
 	g_type_class_add_private (class, sizeof (GooPlayerInfoPrivateData));
 }
@@ -159,7 +156,7 @@ set_label (GtkWidget     *label,
 	e_text = g_markup_escape_text (text, -1);
 	markup = g_strdup_printf (format, e_text);
 	g_free (e_text);
-	
+
 	gtk_label_set_markup (GTK_LABEL (label), markup);
 	g_free (markup);
 }
@@ -211,7 +208,7 @@ time_scale_value_changed_cb (GtkRange      *range,
 {
 	double new_value;
 	gint64 current_time;
-	
+
 	new_value = gtk_range_get_value (range);
 	current_time = info->priv->track_length * (new_value / 100.0);
 	g_free (info->priv->current_time);
@@ -222,7 +219,7 @@ time_scale_value_changed_cb (GtkRange      *range,
 
 	if (! info->priv->dragging) {
 		int seconds;
-		
+
 		seconds = (int) (new_value * info->priv->track_length);
 		g_signal_emit (info, goo_player_info_signals[SKIP_TO], 0, seconds);
 	}
@@ -241,7 +238,7 @@ update_time_label_cb (gpointer data)
 		g_source_remove (priv->update_id);
 		priv->update_id = 0;
 	}
-	
+
 	current_time = priv->track_length * new_value;
 	g_free (info->priv->current_time);
 	info->priv->current_time = _g_format_duration_for_display (current_time * 1000);
@@ -295,7 +292,7 @@ cover_button_clicked_cb (GtkWidget     *button,
 /* -- drag and drop -- */
 
 
-void  
+void
 cover_button_drag_data_received  (GtkWidget          *widget,
 				  GdkDragContext     *context,
 				  gint                x,
@@ -307,11 +304,6 @@ cover_button_drag_data_received  (GtkWidget          *widget,
 {
 	GooPlayerInfo  *info = extra_data;
 	char          **uris;
-
-	if (! ((data->length >= 0) && (data->format == 8))) {
-		gtk_drag_finish (context, FALSE, FALSE, time);
-		return;
-	}
 
 	gtk_drag_finish (context, TRUE, FALSE, time);
 
@@ -332,7 +324,7 @@ cover_button_drag_data_received  (GtkWidget          *widget,
 }
 
 
-static void 
+static void
 goo_player_info_init (GooPlayerInfo *info)
 {
 	info->priv = GOO_PLAYER_INFO_GET_PRIVATE_DATA (info);
@@ -342,7 +334,7 @@ goo_player_info_init (GooPlayerInfo *info)
 static void goo_player_info_update_state (GooPlayerInfo *info);
 
 
-static void 
+static void
 goo_player_info_construct (GooPlayerInfo *info)
 {
 	GooPlayerInfoPrivateData *priv;
@@ -355,9 +347,9 @@ goo_player_info_construct (GooPlayerInfo *info)
 	priv->total_time = NULL;
 	priv->update_id = 0;
 
-	GTK_WIDGET_UNSET_FLAGS (info, GTK_CAN_FOCUS);
-	GTK_BOX (info)->spacing = SPACING;
-	GTK_BOX (info)->homogeneous = FALSE;
+	gtk_widget_set_can_focus (info, FALSE);
+	gtk_box_set_spacing (GTK_BOX (info), SPACING);
+	gtk_box_set_homogeneous (GTK_BOX (info), FALSE);
 
 	/* Title and Artist */
 
@@ -379,7 +371,7 @@ goo_player_info_construct (GooPlayerInfo *info)
 	gtk_label_set_ellipsize (GTK_LABEL (priv->title2_label),
 				 PANGO_ELLIPSIZE_END);
 	gtk_label_set_width_chars (GTK_LABEL (priv->title2_label), MIN_CHARS);
-	
+
 	gtk_label_set_ellipsize (GTK_LABEL (priv->title3_label),
 				 PANGO_ELLIPSIZE_END);
 	gtk_label_set_width_chars (GTK_LABEL (priv->title3_label), MIN_CHARS);
@@ -392,7 +384,7 @@ goo_player_info_construct (GooPlayerInfo *info)
 	gtk_range_set_increments (GTK_RANGE (priv->time_scale), 0.01, 0.1);
 	gtk_scale_set_draw_value (GTK_SCALE (priv->time_scale), FALSE);
 	gtk_widget_set_size_request (priv->time_scale, SCALE_WIDTH, -1);
-	gtk_range_set_update_policy (GTK_RANGE (priv->time_scale), GTK_UPDATE_DISCONTINUOUS);
+	/* gtk_range_set_update_policy (GTK_RANGE (priv->time_scale), GTK_UPDATE_DISCONTINUOUS); FIXME */
 	gtk_widget_set_no_show_all (priv->time_scale, TRUE);
 
 	priv->time_label = gtk_label_new (NULL);
@@ -424,9 +416,9 @@ goo_player_info_construct (GooPlayerInfo *info)
 				   GTK_DEST_DEFAULT_ALL,
 				   target_table, n_targets,
 				   GDK_ACTION_COPY);
-		g_signal_connect (G_OBJECT (priv->cover_button), 
+		g_signal_connect (G_OBJECT (priv->cover_button),
 				  "drag_data_received",
-				  G_CALLBACK (cover_button_drag_data_received), 
+				  G_CALLBACK (cover_button_drag_data_received),
 				  info);
 	}
 
@@ -436,14 +428,14 @@ goo_player_info_construct (GooPlayerInfo *info)
 	else
 		gtk_widget_set_size_request (priv->cover_image, TRAY_COVER_SIZE, TRAY_COVER_SIZE);
 	gtk_widget_show (priv->cover_image);
-	
+
 	if (priv->interactive)
 		gtk_container_add (GTK_CONTAINER (priv->cover_button), priv->cover_image);
 	else
 		priv->cover_button = priv->cover_image;
 
 	/* Status image */
-	
+
 	priv->status_image = gtk_image_new_from_stock (GOO_STOCK_NO_DISC, GTK_ICON_SIZE_DIALOG);
 	if (priv->interactive)
 		gtk_widget_set_size_request (priv->status_image, COVER_SIZE, COVER_SIZE);
@@ -459,10 +451,10 @@ goo_player_info_construct (GooPlayerInfo *info)
 	gtk_notebook_set_show_tabs (GTK_NOTEBOOK (priv->notebook), FALSE);
 	gtk_notebook_set_show_border (GTK_NOTEBOOK (priv->notebook), FALSE);
 	gtk_widget_show (priv->notebook);
-	
+
 	gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook), priv->status_image, NULL);
 	gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook), priv->cover_button, NULL);
-	
+
 	priv->cover_frame = gtk_frame_new (NULL);
 	gtk_container_set_border_width (GTK_CONTAINER (priv->cover_frame), 6);
 	if (! priv->interactive)
@@ -471,7 +463,7 @@ goo_player_info_construct (GooPlayerInfo *info)
 	gtk_container_add (GTK_CONTAINER (priv->cover_frame), priv->notebook);
 
 	gtk_box_pack_start (GTK_BOX (info), priv->cover_frame, FALSE, FALSE, 0);
-		
+
 	/**/
 
 	vbox = gtk_vbox_new (FALSE, 0);
@@ -490,31 +482,31 @@ goo_player_info_construct (GooPlayerInfo *info)
 	set_title2 (info, "");
 	set_title3 (info, "");
 
-	g_signal_connect (priv->time_scale, 
+	g_signal_connect (priv->time_scale,
 			  "value_changed",
-			  G_CALLBACK (time_scale_value_changed_cb), 
+			  G_CALLBACK (time_scale_value_changed_cb),
 			  info);
-	g_signal_connect (priv->time_scale, 
+	g_signal_connect (priv->time_scale,
 			  "button_press_event",
-			  G_CALLBACK (time_scale_button_press_cb), 
+			  G_CALLBACK (time_scale_button_press_cb),
 			  info);
-	g_signal_connect (priv->time_scale, 
+	g_signal_connect (priv->time_scale,
 			  "button_release_event",
-			  G_CALLBACK (time_scale_button_release_cb), 
+			  G_CALLBACK (time_scale_button_release_cb),
 			  info);
 
 	goo_player_info_update_state (info);
 }
 
 
-static void 
+static void
 goo_player_info_finalize (GObject *object)
 {
         GooPlayerInfo *info;
 
         g_return_if_fail (object != NULL);
         g_return_if_fail (GOO_IS_PLAYER_INFO (object));
-  
+
 	info = GOO_PLAYER_INFO (object);
 	if (info->priv != NULL) {
 		g_free (info->priv->current_time);
@@ -561,7 +553,7 @@ update_progress_cb (gpointer data)
 		/* nothing */;
 	else
 		goo_player_info_set_time (info, info->priv->fraction * info->priv->track_length);
-	
+
 	return FALSE;
 }
 
@@ -588,14 +580,14 @@ update_subtitle (GooPlayerInfo *info,
 		 TrackInfo     *track)
 {
  	AlbumInfo *album;
-	
+
 	album = goo_window_get_album (info->priv->window);
-	
+
 	if ((album->title == NULL) || (album->artist == NULL)) {
 		g_free (info->priv->total_time);
 		info->priv->total_time = _g_format_duration_for_display (track->length * 1000);
 		set_title2 (info, info->priv->total_time);
-	} 
+	}
 	else {
 		set_title2 (info, album->title);
 		set_title3 (info, album->artist);
@@ -612,7 +604,7 @@ goo_player_info_update_state (GooPlayerInfo *info)
 	GooPlayerState  state;
 	AlbumInfo      *album;
 	GooPlayer      *player;
-	
+
 	if (info->priv->window == NULL)
 		return;
 	player = goo_window_get_player (info->priv->window);
@@ -622,13 +614,13 @@ goo_player_info_update_state (GooPlayerInfo *info)
 	state = goo_player_get_state (player);
 	album = goo_window_get_album (info->priv->window);
 
-	if ((state == GOO_PLAYER_STATE_PLAYING) 
+	if ((state == GOO_PLAYER_STATE_PLAYING)
 	    || (state == GOO_PLAYER_STATE_PAUSED)) {
 	    	if (info->priv->interactive)
 			gtk_widget_show (priv->time_scale);
 		gtk_widget_show (priv->time_label);
 		gtk_widget_show (priv->playing_label);
-	} 
+	}
 	else {
 		gtk_widget_hide (priv->time_scale);
 		gtk_widget_hide (priv->time_label);
@@ -644,7 +636,7 @@ goo_player_info_update_state (GooPlayerInfo *info)
 		set_title1 (info, _("No disc"));
 		set_title2 (info, "");
 		set_title3 (info, "");
-	} 
+	}
 	else if (state == GOO_PLAYER_STATE_DATA_DISC) {
 		set_title1 (info, _("Data disc"));
 		set_title2 (info, "");
@@ -652,7 +644,7 @@ goo_player_info_update_state (GooPlayerInfo *info)
 	}
 	else {
 		TrackInfo *track;
-		
+
 		track = album_info_get_track (album, goo_player_get_current_track (player));
 
 		if (track != NULL) {
@@ -668,26 +660,26 @@ goo_player_info_update_state (GooPlayerInfo *info)
 			gtk_label_set_selectable (GTK_LABEL (priv->title1_label), info->priv->interactive);
 
 			update_subtitle (info, track);
-		} 
+		}
 		else if (state == GOO_PLAYER_STATE_EJECTING) {
 			set_title1 (info, _("Ejecting CD"));
 			set_title2 (info, "");
-		} 
+		}
 		else if (state == GOO_PLAYER_STATE_UPDATING) {
 			set_title1 (info, _("Checking CD drive"));
 			set_title2 (info, "");
-		} 
+		}
 		else if (state == GOO_PLAYER_STATE_SEEKING) {
 			set_title1 (info, _("Reading CD"));
 			set_title2 (info, "");
-		} 
+		}
 		else if (state == GOO_PLAYER_STATE_LISTING) {
 			set_title1 (info, _("Reading CD"));
 			set_title2 (info, "");
-		} 
+		}
 		else {
 			char year[128];
-			
+
 			if (g_date_valid (album->release_date) != 0)
 				sprintf (year, "%u", g_date_get_year (album->release_date));
 			else
@@ -696,7 +688,7 @@ goo_player_info_update_state (GooPlayerInfo *info)
 			if (album->title != NULL) {
 				set_title1 (info, album->title);
 				gtk_label_set_selectable (GTK_LABEL (priv->title1_label), info->priv->interactive);
-			} 
+			}
 			else
 				set_title1 (info, _("Audio CD"));
 
@@ -704,13 +696,13 @@ goo_player_info_update_state (GooPlayerInfo *info)
 				set_title2 (info, album->artist);
 				set_title3 (info, year);
 				gtk_label_set_selectable (GTK_LABEL (priv->title2_label), info->priv->interactive);
-			} 
+			}
 			else {
 				set_title2 (info, year);
 				set_title3 (info, "");
 			}
 		}
-		
+
 		track_info_unref (track);
 	}
 }
@@ -761,7 +753,7 @@ player_done_cb (GooPlayer       *player,
 		GooPlayerInfo   *info)
 {
 	AlbumInfo *album;
-	
+
 	switch (action) {
 	case GOO_PLAYER_ACTION_LIST:
 		goo_player_info_update_state (info);
@@ -792,31 +784,31 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 			   const char    *cover)
 {
 	gboolean cover_set = FALSE;
-	
+
 	if (cover == NULL)
 		return;
-		
+
 	if (strcmp (cover, "no-disc") == 0) {
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 0);
-		gtk_image_set_from_stock (GTK_IMAGE (info->priv->status_image), 
-					  GOO_STOCK_NO_DISC, 
+		gtk_image_set_from_stock (GTK_IMAGE (info->priv->status_image),
+					  GOO_STOCK_NO_DISC,
 					  GTK_ICON_SIZE_DIALOG);
 	}
 	else if (strcmp (cover, "data-disc") == 0) {
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 0);
-		gtk_image_set_from_stock (GTK_IMAGE (info->priv->status_image), 
-					  GOO_STOCK_DATA_DISC, 
+		gtk_image_set_from_stock (GTK_IMAGE (info->priv->status_image),
+					  GOO_STOCK_DATA_DISC,
 					  GTK_ICON_SIZE_DIALOG);
 	}
 	else if (strcmp (cover, "audio-cd") == 0) {
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 1);
-		gtk_image_set_from_stock (GTK_IMAGE (info->priv->cover_image), 
-					  GOO_STOCK_AUDIO_CD, 
+		gtk_image_set_from_stock (GTK_IMAGE (info->priv->cover_image),
+					  GOO_STOCK_AUDIO_CD,
 					  GTK_ICON_SIZE_DIALOG);
 	}
 	else {
 		GdkPixbuf *image;
-			
+
 		image = gdk_pixbuf_new_from_file_at_size (cover, 80, 80, NULL);
 		if (image != NULL) {
 			gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 1);
@@ -824,10 +816,10 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 			cover_set = TRUE;
 			g_object_unref (image);
 		}
-		else 
+		else
 			goo_player_info_set_cover (info, "audio-cd");
 	}
-	
+
 	if (! info->priv->interactive)
 		gtk_frame_set_shadow_type (GTK_FRAME (info->priv->cover_frame), cover_set ? GTK_SHADOW_NONE : GTK_SHADOW_ETCHED_IN);
 }
@@ -839,7 +831,7 @@ window_update_cover_cb (GooWindow     *window,
 {
 	GooPlayerState  state;
 	char           *filename;
-	
+
 	state = goo_player_get_state (goo_window_get_player (window));
 
 	if ((state == GOO_PLAYER_STATE_ERROR) || (state == GOO_PLAYER_STATE_NO_DISC)) {
@@ -847,17 +839,17 @@ window_update_cover_cb (GooWindow     *window,
 	    	return;
 	}
 
-	if (state == GOO_PLAYER_STATE_DATA_DISC) { 
+	if (state == GOO_PLAYER_STATE_DATA_DISC) {
 	    	goo_player_info_set_cover (info, "data-disc");
 	    	return;
 	}
-	
+
 	filename = goo_window_get_cover_filename (window);
 	if (filename == NULL) {
-		goo_player_info_set_cover (info, "audio-cd"); 
+		goo_player_info_set_cover (info, "audio-cd");
 		return;
 	}
-	
+
 	goo_player_info_set_cover (info, filename);
 	g_free (filename);
 }
@@ -869,38 +861,38 @@ goo_player_info_new (GooWindow *window,
 {
 	GooPlayerInfo *info;
 	GooPlayer     *player;
-	
+
 	g_return_val_if_fail (window != NULL, NULL);
-	
+
 	player = goo_window_get_player (window);
 	g_return_val_if_fail (player != NULL, NULL);
-	
+
 	info = GOO_PLAYER_INFO (g_object_new (GOO_TYPE_PLAYER_INFO, NULL));
 
 	info->priv->window = window;
 	info->priv->interactive = interactive;
 	goo_player_info_construct (info);
-	
-	g_signal_connect (window, 
+
+	g_signal_connect (window,
 			  "update_cover",
-			  G_CALLBACK (window_update_cover_cb), 
+			  G_CALLBACK (window_update_cover_cb),
 			  info);
-	
-	g_signal_connect (player, 
+
+	g_signal_connect (player,
 			  "start",
-			  G_CALLBACK (player_start_cb), 
+			  G_CALLBACK (player_start_cb),
 			  info);
-	g_signal_connect (player, 
+	g_signal_connect (player,
 			  "done",
-			  G_CALLBACK (player_done_cb), 
-			  info);	
-	g_signal_connect (player, 
-			  "progress",
-			  G_CALLBACK (player_progress_cb), 
+			  G_CALLBACK (player_done_cb),
 			  info);
-	g_signal_connect (player, 
+	g_signal_connect (player,
+			  "progress",
+			  G_CALLBACK (player_progress_cb),
+			  info);
+	g_signal_connect (player,
 			  "state_changed",
-			  G_CALLBACK (player_state_changed_cb), 
+			  G_CALLBACK (player_state_changed_cb),
 			  info);
 
 	return GTK_WIDGET (info);

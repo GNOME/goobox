@@ -24,17 +24,17 @@
  */
 
 /* This file contains code taken from:
- * 
+ *
  * GTK - The GIMP Toolkit
  *
  * Copyright (C) 2003 Ricardo Fernandez Pascual
  * Copyright (C) 2004 Paolo Borelli
- * 
+ *
  * and:
- * 
+ *
  * Volume Button / popup widget
  * (c) copyright 2005 Ronald S. Bultje <rbultje@ronald.bitfreak.net>
- * 
+ *
  */
 
 #include <config.h>
@@ -68,10 +68,10 @@ struct _GooVolumeToolButtonPrivate {
 	double       step;
 	gboolean     mute;
 	double       mute_value;
-	
+
 	guint        timeout : 1;
 	guint32      pop_time;
-	
+
 	guint        down_button_scroll_id;
 	gboolean     down_button_pressed;
 	guint        up_button_scroll_id;
@@ -100,23 +100,23 @@ goo_volume_tool_button_construct_contents (GooVolumeToolButton *button)
 	if (orientation == GTK_ORIENTATION_HORIZONTAL) {
 		box = gtk_hbox_new (FALSE, 0);
 		gtk_arrow_set (GTK_ARROW (button->priv->arrow), GTK_ARROW_DOWN, GTK_SHADOW_NONE);
-	} 
+	}
 	else {
 		box = gtk_vbox_new (FALSE, 0);
 		gtk_arrow_set (GTK_ARROW (button->priv->arrow), GTK_ARROW_RIGHT, GTK_SHADOW_NONE);
 	}
 
-	if (button->priv->button && button->priv->button->parent) {
+	if (button->priv->button && gtk_widget_get_parent (button->priv->button)) {
 		g_object_ref (button->priv->button);
-		gtk_container_remove (GTK_CONTAINER (button->priv->button->parent),
+		gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (button->priv->button)),
 				      button->priv->button);
 		gtk_container_add (GTK_CONTAINER (box), button->priv->button);
 		g_object_unref (button->priv->button);
 	}
 
-	if (button->priv->arrow_button && button->priv->arrow_button->parent) {
+	if (button->priv->arrow_button && gtk_widget_get_parent (button->priv->arrow_button)) {
 		g_object_ref (button->priv->arrow_button);
-		gtk_container_remove (GTK_CONTAINER (button->priv->arrow_button->parent),
+		gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (button->priv->arrow_button)),
 				      button->priv->arrow_button);
 		gtk_box_pack_end (GTK_BOX (box), button->priv->arrow_button,
 				  FALSE, FALSE, 0);
@@ -156,7 +156,7 @@ update_volume_label (GooVolumeToolButton *button)
 		icon = GOO_STOCK_VOLUME_MAX;
 
 	gtk_tool_button_set_stock_id (GTK_TOOL_BUTTON (button), icon);
-	
+
 	text = g_strdup_printf ("<small>%3.0f%%</small>", value * 100.0);
 	gtk_label_set_markup (GTK_LABEL (button->priv->volume_label), text);
 	g_free (text);
@@ -172,7 +172,7 @@ static void
 goo_volume_tool_button_toolbar_reconfigured (GtkToolItem *toolitem)
 {
 	goo_volume_tool_button_construct_contents (GOO_VOLUME_TOOL_BUTTON (toolitem));
-	
+
 	/* chain up */
 	GTK_TOOL_ITEM_CLASS (goo_volume_tool_button_parent_class)->toolbar_reconfigured (toolitem);
 }
@@ -212,7 +212,7 @@ goo_volume_tool_button_class_init (GooVolumeToolButtonClass *klass)
 			      G_STRUCT_OFFSET (GooVolumeToolButtonClass, changed),
 			      NULL, NULL,
 			      goo_marshal_VOID__VOID,
-			      G_TYPE_NONE, 
+			      G_TYPE_NONE,
 			      0);
 
 	object_class = (GObjectClass *) klass;
@@ -220,7 +220,7 @@ goo_volume_tool_button_class_init (GooVolumeToolButtonClass *klass)
 
 	toolitem_class = (GtkToolItemClass *) klass;
 	toolitem_class->toolbar_reconfigured = goo_volume_tool_button_toolbar_reconfigured;
-	
+
 	g_type_class_add_private (object_class, sizeof (GooVolumeToolButtonPrivate));
 }
 
@@ -234,7 +234,7 @@ button_clicked_cb (GtkWidget           *widget,
 		goo_volume_tool_button_set_volume (button,
 						   0.0,
 						   TRUE);
-	} 
+	}
 	else {
 		if (FLOAT_EQUAL (button->priv->mute_value, 0.0))
 			button->priv->mute_value = DEFAULT_VOLUME;
@@ -254,66 +254,77 @@ arrow_button_press_cb (GtkToggleButton     *toggle_button,
 {
 	GtkWidget      *widget;
 	GtkAdjustment  *adj;
+	GtkAllocation   allocation;
+	GtkAllocation   allocation2;
   	int             x, y, m, dx, dy, sx, sy, ystartoff, mouse_y;
   	float           v;
   	GdkEventButton *e;
 
 	gtk_toggle_button_set_active (toggle_button, TRUE);
-	
+
 	widget = GTK_WIDGET (toggle_button);
 	adj = gtk_range_get_adjustment (GTK_RANGE (button->priv->volume_scale));
-	
+
 	button->priv->timeout = TRUE;
 
     	gtk_window_set_screen (GTK_WINDOW (button->priv->popup_win), gtk_widget_get_screen (widget));
-  
-  	gdk_window_get_origin (widget->window, &x, &y);
-  	x += widget->allocation.x;
-  	y += widget->allocation.y;
-  
+
+  	gdk_window_get_origin (gtk_widget_get_window (widget), &x, &y);
+  	gtk_widget_get_allocation (widget, &allocation);
+  	x += allocation.x;
+  	y += allocation.y;
+
 	gtk_window_move (GTK_WINDOW (button->priv->popup_win),
 			 x, y - (SCALE_HEIGHT / 2));
 	update_volume_label (button);
 	gtk_widget_show_all (button->priv->popup_win);
 
-	gdk_window_get_origin (button->priv->popup_win->window, &dx, &dy);
-  	dy += button->priv->popup_win->allocation.y;
-  	gdk_window_get_origin (button->priv->volume_scale->window, &sx, &sy);
-  	sy += button->priv->volume_scale->allocation.y;
+	gdk_window_get_origin (gtk_widget_get_window (button->priv->popup_win), &dx, &dy);
+	gtk_widget_get_allocation (button->priv->popup_win, &allocation);
+  	dy += allocation.y;
+
+  	gdk_window_get_origin (gtk_widget_get_window (button->priv->volume_scale), &sx, &sy);
+  	gtk_widget_get_allocation (button->priv->volume_scale, &allocation);
+  	sy += allocation.y;
+
   	ystartoff = sy - dy;
   	mouse_y = event->y;
 
-	v = gtk_range_get_value (GTK_RANGE (button->priv->volume_scale)) / (adj->upper - adj->lower);
-  	x += (widget->allocation.width - button->priv->popup_win->allocation.width) / 2;
+	v = gtk_range_get_value (GTK_RANGE (button->priv->volume_scale)) / (gtk_adjustment_get_upper (adj) - gtk_adjustment_get_lower (adj));
+	gtk_widget_get_allocation (widget, &allocation);
+	gtk_widget_get_allocation (button->priv->popup_win, &allocation2);
+  	x += (allocation.width - allocation2.width) / 2;
   	y -= ystartoff;
-  	y -= GTK_RANGE (button->priv->volume_scale)->min_slider_size / 2;
-  	m = button->priv->volume_scale->allocation.height - GTK_RANGE (button->priv->volume_scale)->min_slider_size;
+  	y -= gtk_range_get_min_slider_size (GTK_RANGE (button->priv->volume_scale)) / 2;
+  	gtk_widget_get_allocation (button->priv->volume_scale, &allocation);
+  	m = allocation.height - gtk_range_get_min_slider_size (GTK_RANGE (button->priv->volume_scale));
   	y -= m * (1.0 - v);
   	y += mouse_y;
   	gtk_window_move (GTK_WINDOW (button->priv->popup_win), x, y);
-  	gdk_window_get_origin (button->priv->volume_scale->window, &sx, &sy);
-	
-	gdk_pointer_grab (button->priv->popup_win->window,
+  	gdk_window_get_origin (gtk_widget_get_window (button->priv->volume_scale), &sx, &sy);
+
+	gdk_pointer_grab (gtk_widget_get_window (button->priv->popup_win),
 			  TRUE,
-			  (GDK_POINTER_MOTION_MASK 
-			   | GDK_BUTTON_PRESS_MASK 
+			  (GDK_POINTER_MOTION_MASK
+			   | GDK_BUTTON_PRESS_MASK
 			   | GDK_BUTTON_RELEASE_MASK),
-			  NULL, 
-			  NULL, 
+			  NULL,
+			  NULL,
 			  GDK_CURRENT_TIME);
-	gdk_keyboard_grab (button->priv->popup_win->window, TRUE, GDK_CURRENT_TIME);
+	gdk_keyboard_grab (gtk_widget_get_window (button->priv->popup_win), TRUE, GDK_CURRENT_TIME);
 	gtk_widget_grab_focus (button->priv->volume_scale);
 	gtk_grab_add (button->priv->popup_win);
 
 	/* forward event to the slider */
 	e = (GdkEventButton *) gdk_event_copy ((GdkEvent *) event);
-	e->window = button->priv->volume_scale->window;
-	e->x = button->priv->volume_scale->allocation.width / 2;
-	m = button->priv->volume_scale->allocation.height - GTK_RANGE (button->priv->volume_scale)->min_slider_size;
-	e->y = ((1.0 - v) * m) + GTK_RANGE (button->priv->volume_scale)->min_slider_size / 2 + 1;
+	e->window = gtk_widget_get_window (button->priv->volume_scale);
+	gtk_widget_get_allocation (button->priv->volume_scale, &allocation);
+	e->x = allocation.width / 2;
+	m = allocation.height - gtk_range_get_min_slider_size (GTK_RANGE (button->priv->volume_scale));
+	e->y = ((1.0 - v) * m) + gtk_range_get_min_slider_size (GTK_RANGE (button->priv->volume_scale)) / 2 + 1;
 	gtk_widget_event (button->priv->volume_scale, (GdkEvent *) e);
 	e->window = event->window;
-	gdk_event_free ((GdkEvent *) e);		
+	gdk_event_free ((GdkEvent *) e);
 
 	button->priv->pop_time = event->time;
 
@@ -328,7 +339,7 @@ ungrab (GooVolumeToolButton *button)
 	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
 	gtk_grab_remove (button->priv->popup_win);
 	gtk_widget_hide (button->priv->popup_win);
-	
+
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button->priv->arrow_button), FALSE);
 }
 
@@ -341,7 +352,7 @@ volume_scale_value_changed_cb (GtkRange            *range,
 	button->priv->mute = FLOAT_EQUAL (button->priv->value, 0.0);
 	update_volume_label (button);
 
-	g_signal_emit (G_OBJECT (button), 
+	g_signal_emit (G_OBJECT (button),
 		       goo_volume_tool_button_signals[CHANGED],
 		       0,
 		       NULL);
@@ -361,14 +372,14 @@ scale_button_release_cb (GtkToggleButton     *toggle_button,
 		}
 		button->priv->timeout = FALSE;
 	}
-	
+
 	return FALSE;
 }
 
 
 static int
-popup_win_event_cb (GtkWidget           *widget, 
-		    GdkEvent            *event, 
+popup_win_event_cb (GtkWidget           *widget,
+		    GdkEvent            *event,
 		    GooVolumeToolButton *button)
 {
 	GtkWidget *event_widget;
@@ -381,16 +392,16 @@ popup_win_event_cb (GtkWidget           *widget,
 		    || (event_widget == button->priv->arrow_button)) {
 			ungrab (button);
 			return TRUE;
-		} 
+		}
 		else {
 			int x, y, w, h;
-			
-			gdk_window_get_geometry (button->priv->popup_win->window,
+
+			gdk_window_get_geometry (gtk_widget_get_window (button->priv->popup_win),
 						 &x, &y, &w, &h, NULL);
 
-			if ((event->button.x < 0) 
+			if ((event->button.x < 0)
 			    || (event->button.x > w)
-			    || (event->button.y < 0) 
+			    || (event->button.y < 0)
 			    || (event->button.y > h)) {
 				ungrab (button);
 				return TRUE;
@@ -400,7 +411,7 @@ popup_win_event_cb (GtkWidget           *widget,
 
 	case GDK_KEY_PRESS:
 		switch (event->key.keyval) {
-		case GDK_Escape:
+		case GDK_KEY_Escape:
 			ungrab (button);
 			return TRUE;
 		default:
@@ -423,14 +434,14 @@ button_scroll_event_cb (GtkWidget           *widget,
 {
 	double direction = 1.0;
 
-	if (event->direction == GDK_SCROLL_UP) 
+	if (event->direction == GDK_SCROLL_UP)
 		direction = 1.0;
-	else if (event->direction == GDK_SCROLL_DOWN) 
+	else if (event->direction == GDK_SCROLL_DOWN)
 		direction = -1.0;
 	else
 		return FALSE;
 
-	goo_volume_tool_button_set_volume (button, 
+	goo_volume_tool_button_set_volume (button,
 					   button->priv->value + (direction * button->priv->step),
 					   TRUE);
 
@@ -446,7 +457,7 @@ down_button_scroll (gpointer data)
 {
 	GooVolumeToolButton *button = data;
 
-	goo_volume_tool_button_set_volume (button, 
+	goo_volume_tool_button_set_volume (button,
 					   button->priv->value - button->priv->step,
 					   TRUE);
 	return TRUE;
@@ -458,11 +469,11 @@ down_button_pressed_cb (GtkButton *gtk_button,
                         gpointer   user_data)
 {
 	GooVolumeToolButton *button = user_data;
-	
+
 	button->priv->down_button_pressed = TRUE;
 	if (button->priv->down_button_scroll_id != 0)
 		return;
-	button->priv->down_button_scroll_id = g_timeout_add (SCROLL_TIMEOUT, down_button_scroll, button); 
+	button->priv->down_button_scroll_id = g_timeout_add (SCROLL_TIMEOUT, down_button_scroll, button);
 }
 
 
@@ -471,7 +482,7 @@ down_button_released_cb (GtkButton *gtk_button,
                          gpointer   user_data)
 {
 	GooVolumeToolButton *button = user_data;
-	
+
 	button->priv->down_button_pressed = FALSE;
 	if (button->priv->down_button_scroll_id == 0)
 		return;
@@ -485,12 +496,12 @@ down_button_enter_cb (GtkButton *gtk_button,
                       gpointer   user_data)
 {
 	GooVolumeToolButton *button = user_data;
-	
+
 	if (! button->priv->down_button_pressed)
 		return;
 	if (button->priv->down_button_scroll_id != 0)
 		return;
-	button->priv->down_button_scroll_id = g_timeout_add (SCROLL_TIMEOUT, down_button_scroll, button); 
+	button->priv->down_button_scroll_id = g_timeout_add (SCROLL_TIMEOUT, down_button_scroll, button);
 }
 
 
@@ -499,8 +510,8 @@ down_button_leave_cb (GtkButton *gtk_button,
                       gpointer   user_data)
 {
 	GooVolumeToolButton *button = user_data;
-	
-	if (button->priv->down_button_scroll_id == 0) 
+
+	if (button->priv->down_button_scroll_id == 0)
 		return;
 	g_source_remove (button->priv->down_button_scroll_id);
 	button->priv->down_button_scroll_id = 0;
@@ -512,10 +523,10 @@ down_button_clicked_cb (GtkButton *gtk_button,
                         gpointer   user_data)
 {
 	GooVolumeToolButton *button = user_data;
-	
+
 	button->priv->down_button_pressed = FALSE;
 	down_button_scroll (button);
-	if (button->priv->down_button_scroll_id != 0) { 
+	if (button->priv->down_button_scroll_id != 0) {
 		g_source_remove (button->priv->down_button_scroll_id);
 		button->priv->down_button_scroll_id = 0;
 	}
@@ -529,8 +540,8 @@ static gboolean
 up_button_scroll (gpointer data)
 {
 	GooVolumeToolButton *button = data;
-	
-	goo_volume_tool_button_set_volume (button, 
+
+	goo_volume_tool_button_set_volume (button,
 					   button->priv->value + button->priv->step,
 					   TRUE);
 	return TRUE;
@@ -542,11 +553,11 @@ up_button_pressed_cb (GtkButton *gtk_button,
                       gpointer   user_data)
 {
 	GooVolumeToolButton *button = user_data;
-	
+
 	button->priv->up_button_pressed = TRUE;
 	if (button->priv->up_button_scroll_id != 0)
 		return;
-	button->priv->up_button_scroll_id = g_timeout_add (SCROLL_TIMEOUT, up_button_scroll, button); 
+	button->priv->up_button_scroll_id = g_timeout_add (SCROLL_TIMEOUT, up_button_scroll, button);
 }
 
 
@@ -555,7 +566,7 @@ up_button_released_cb (GtkButton *gtk_button,
                        gpointer   user_data)
 {
 	GooVolumeToolButton *button = user_data;
-	
+
 	button->priv->up_button_pressed = FALSE;
 	if (button->priv->up_button_scroll_id == 0)
 		return;
@@ -569,12 +580,12 @@ up_button_enter_cb (GtkButton *gtk_button,
                     gpointer   user_data)
 {
 	GooVolumeToolButton *button = user_data;
-	
+
 	if (! button->priv->up_button_pressed)
 		return;
 	if (button->priv->up_button_scroll_id != 0)
 		return;
-	button->priv->up_button_scroll_id = g_timeout_add (SCROLL_TIMEOUT, up_button_scroll, button); 
+	button->priv->up_button_scroll_id = g_timeout_add (SCROLL_TIMEOUT, up_button_scroll, button);
 }
 
 
@@ -583,8 +594,8 @@ up_button_leave_cb (GtkButton *gtk_button,
                     gpointer   user_data)
 {
 	GooVolumeToolButton *button = user_data;
-	
-	if (button->priv->up_button_scroll_id == 0) 
+
+	if (button->priv->up_button_scroll_id == 0)
 		return;
 	g_source_remove (button->priv->up_button_scroll_id);
 	button->priv->up_button_scroll_id = 0;
@@ -596,17 +607,17 @@ up_button_clicked_cb (GtkButton *gtk_button,
                       gpointer   user_data)
 {
 	GooVolumeToolButton *button = user_data;
-	
+
 	button->priv->up_button_pressed = FALSE;
 	up_button_scroll (button);
-	if (button->priv->up_button_scroll_id != 0) { 
+	if (button->priv->up_button_scroll_id != 0) {
 		g_source_remove (button->priv->up_button_scroll_id);
 		button->priv->up_button_scroll_id = 0;
 	}
 }
 
 
-static void 
+static void
 goo_volume_button_construct (GooVolumeToolButton *button)
 {
 	GtkWidget *box;
@@ -617,15 +628,15 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 	GtkWidget *volume_vbox;
 	GtkWidget *up_button;
 	GtkWidget *down_button;
-	
+
 	/* Create the popup window. */
 
 	button->priv->popup_win = gtk_window_new (GTK_WINDOW_POPUP);
 	gtk_window_set_wmclass (GTK_WINDOW (button->priv->popup_win), "", "goo_volume_button");
-	
+
 	g_signal_connect (G_OBJECT (button->priv->popup_win),
 			  "event",
-			  G_CALLBACK (popup_win_event_cb), 
+			  G_CALLBACK (popup_win_event_cb),
 			  button);
 
 	out_frame = gtk_frame_new (NULL);
@@ -640,25 +651,25 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 
 	up_button = gtk_button_new_with_label (_("+"));
 	gtk_button_set_relief (GTK_BUTTON (up_button), GTK_RELIEF_NONE);
-	g_signal_connect (up_button, 
+	g_signal_connect (up_button,
 			  "pressed",
-			  G_CALLBACK (up_button_pressed_cb), 
+			  G_CALLBACK (up_button_pressed_cb),
 			  button);
-	g_signal_connect (up_button, 
+	g_signal_connect (up_button,
 			  "released",
-			  G_CALLBACK (up_button_released_cb), 
+			  G_CALLBACK (up_button_released_cb),
 			  button);
-	g_signal_connect (up_button, 
+	g_signal_connect (up_button,
 			  "enter",
-			  G_CALLBACK (up_button_enter_cb), 
+			  G_CALLBACK (up_button_enter_cb),
 			  button);
-	g_signal_connect (up_button, 
+	g_signal_connect (up_button,
 			  "leave",
-			  G_CALLBACK (up_button_leave_cb), 
+			  G_CALLBACK (up_button_leave_cb),
 			  button);
-	g_signal_connect (up_button, 
+	g_signal_connect (up_button,
 			  "clicked",
-			  G_CALLBACK (up_button_clicked_cb), 
+			  G_CALLBACK (up_button_clicked_cb),
 			  button);
 	gtk_box_pack_start (GTK_BOX (volume_vbox), up_button, FALSE, FALSE, 0);
 
@@ -668,39 +679,39 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 	/*gtk_range_set_update_policy (GTK_RANGE (button->priv->volume_scale), GTK_UPDATE_DELAYED);*/
 	gtk_range_set_increments (GTK_RANGE (button->priv->volume_scale), 0.1, 0.1);
 	gtk_widget_set_size_request (button->priv->volume_scale, -1, SCALE_HEIGHT);
-	 
+
 	gtk_box_pack_start (GTK_BOX (volume_vbox), button->priv->volume_scale, TRUE, TRUE, 0);
 
 	g_signal_connect (button->priv->volume_scale,
 			  "value_changed",
-			  G_CALLBACK (volume_scale_value_changed_cb), 
+			  G_CALLBACK (volume_scale_value_changed_cb),
 			  button);
 	g_signal_connect (button->priv->volume_scale,
 			  "button_release_event",
-			  G_CALLBACK (scale_button_release_cb), 
+			  G_CALLBACK (scale_button_release_cb),
 			  button);
-			  
+
 	down_button = gtk_button_new_with_label (_("-"));
 	gtk_button_set_relief (GTK_BUTTON (down_button), GTK_RELIEF_NONE);
-	g_signal_connect (down_button, 
+	g_signal_connect (down_button,
 			  "pressed",
-			  G_CALLBACK (down_button_pressed_cb), 
+			  G_CALLBACK (down_button_pressed_cb),
 			  button);
-	g_signal_connect (down_button, 
+	g_signal_connect (down_button,
 			  "released",
-			  G_CALLBACK (down_button_released_cb), 
+			  G_CALLBACK (down_button_released_cb),
 			  button);
-	g_signal_connect (down_button, 
+	g_signal_connect (down_button,
 			  "enter",
-			  G_CALLBACK (down_button_enter_cb), 
+			  G_CALLBACK (down_button_enter_cb),
 			  button);
-	g_signal_connect (down_button, 
+	g_signal_connect (down_button,
 			  "leave",
-			  G_CALLBACK (down_button_leave_cb), 
+			  G_CALLBACK (down_button_leave_cb),
 			  button);
-	g_signal_connect (down_button, 
+	g_signal_connect (down_button,
 			  "clicked",
-			  G_CALLBACK (down_button_clicked_cb), 
+			  G_CALLBACK (down_button_clicked_cb),
 			  button);
 	gtk_box_pack_start (GTK_BOX (volume_vbox), down_button, FALSE, FALSE, 0);
 
@@ -716,8 +727,8 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 	gtk_tool_button_set_stock_id  (GTK_TOOL_BUTTON (button), GOO_STOCK_VOLUME_MAX);
 
 	box = gtk_hbox_new (FALSE, 0);
-	
-	real_button = GTK_BIN (button)->child;
+
+	real_button = gtk_bin_get_child (GTK_BIN (button));
 	g_object_ref (real_button);
 	gtk_container_remove (GTK_CONTAINER (button), real_button);
 	gtk_container_add (GTK_CONTAINER (box), real_button);
@@ -733,7 +744,7 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 
 	gtk_widget_show_all (box);
 	gtk_widget_hide (button->priv->volume_label);
-	
+
 	gtk_container_add (GTK_CONTAINER (button), box);
 
 	button->priv->button = real_button;
@@ -741,18 +752,18 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 	button->priv->arrow_button = arrow_button;
 	button->priv->box = box;
 
-	g_signal_connect (real_button, 
+	g_signal_connect (real_button,
 			  "clicked",
-			  G_CALLBACK (button_clicked_cb), 
+			  G_CALLBACK (button_clicked_cb),
 			  button);
-	g_signal_connect (arrow_button, 
+	g_signal_connect (arrow_button,
 			  "button_press_event",
-			  G_CALLBACK (arrow_button_press_cb), 
+			  G_CALLBACK (arrow_button_press_cb),
 			  button);
 
 	g_signal_connect (G_OBJECT (button->priv->button),
 			  "scroll_event",
-			  G_CALLBACK (button_scroll_event_cb), 
+			  G_CALLBACK (button_scroll_event_cb),
 			  button);
 }
 
@@ -791,8 +802,8 @@ goo_volume_tool_button_set_volume (GooVolumeToolButton *button,
 	g_signal_handlers_unblock_by_data (button->priv->volume_scale, button);
 
 	update_volume_label (button);
-	if (notify) 
-		g_signal_emit (G_OBJECT (button), 
+	if (notify)
+		g_signal_emit (G_OBJECT (button),
 			       goo_volume_tool_button_signals[CHANGED],
 			       0,
 			       NULL);

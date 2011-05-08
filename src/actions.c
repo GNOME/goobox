@@ -31,13 +31,12 @@
 #include "dlg-properties.h"
 #include "gtk-utils.h"
 #include "goo-window.h"
-#include "gconf-utils.h"
 #include "main.h"
 #include "preferences.h"
 
 
 void
-activate_action_play (GtkAction *action, 
+activate_action_play (GtkAction *action,
 		      gpointer   data)
 {
 	goo_window_play (GOO_WINDOW (data));
@@ -45,7 +44,7 @@ activate_action_play (GtkAction *action,
 
 
 void
-activate_action_play_selected (GtkAction *action, 
+activate_action_play_selected (GtkAction *action,
 			       gpointer   data)
 {
 	goo_window_play_selected (GOO_WINDOW (data));
@@ -61,7 +60,7 @@ activate_action_pause (GtkAction *action,
 
 
 void
-activate_action_toggle_play (GtkAction *action, 
+activate_action_toggle_play (GtkAction *action,
 			     gpointer   data)
 {
 	goo_window_toggle_play (GOO_WINDOW (data));
@@ -69,7 +68,7 @@ activate_action_toggle_play (GtkAction *action,
 
 
 void
-activate_action_stop (GtkAction *action, 
+activate_action_stop (GtkAction *action,
 		      gpointer   data)
 {
 	goo_window_stop (GOO_WINDOW (data));
@@ -77,7 +76,7 @@ activate_action_stop (GtkAction *action,
 
 
 void
-activate_action_next (GtkAction *action, 
+activate_action_next (GtkAction *action,
 		      gpointer   data)
 {
 	goo_window_next (GOO_WINDOW (data));
@@ -85,15 +84,15 @@ activate_action_next (GtkAction *action,
 
 
 void
-activate_action_prev (GtkAction *action, 
+activate_action_prev (GtkAction *action,
 		      gpointer   data)
 {
 	goo_window_prev (GOO_WINDOW (data));
 }
 
 
-void 
-activate_action_eject (GtkAction *action, 
+void
+activate_action_eject (GtkAction *action,
 		       gpointer   data)
 {
 	goo_window_eject (GOO_WINDOW (data));
@@ -101,7 +100,7 @@ activate_action_eject (GtkAction *action,
 
 
 void
-activate_action_reload (GtkAction *action, 
+activate_action_reload (GtkAction *action,
 			gpointer   data)
 {
 	goo_window_update (GOO_WINDOW (data));
@@ -109,7 +108,7 @@ activate_action_reload (GtkAction *action,
 
 
 void
-activate_action_manual (GtkAction *action, 
+activate_action_manual (GtkAction *action,
 			gpointer   data)
 {
 	show_help_dialog (GTK_WINDOW (data), NULL);
@@ -117,7 +116,7 @@ activate_action_manual (GtkAction *action,
 
 
 void
-activate_action_shortcuts (GtkAction *action, 
+activate_action_shortcuts (GtkAction *action,
 			   gpointer   data)
 {
 	show_help_dialog (GTK_WINDOW (data), "goobox-shortcuts");
@@ -125,7 +124,7 @@ activate_action_shortcuts (GtkAction *action,
 
 
 void
-activate_action_about (GtkAction *action, 
+activate_action_about (GtkAction *action,
 		       gpointer   data)
 {
 	GooWindow  *window = data;
@@ -168,13 +167,13 @@ activate_action_about (GtkAction *action,
                                "license", license_text,
                                "wrap-license", TRUE,
                                NULL);
-                               
+
 	g_free (license_text);
 }
 
 
 void
-activate_action_quit (GtkAction *action, 
+activate_action_quit (GtkAction *action,
 		      gpointer   data)
 {
 	goo_window_close (GOO_WINDOW (data));
@@ -182,7 +181,7 @@ activate_action_quit (GtkAction *action,
 
 
 void
-activate_action_view_toolbar (GtkAction *action, 
+activate_action_view_toolbar (GtkAction *action,
 			      gpointer   data)
 {
 	eel_gconf_set_boolean (PREF_UI_TOOLBAR, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
@@ -190,33 +189,33 @@ activate_action_view_toolbar (GtkAction *action,
 
 
 void
-activate_action_view_statusbar (GtkAction *action, 
+activate_action_view_statusbar (GtkAction *action,
 				gpointer   data)
-{	
+{
 	eel_gconf_set_boolean (PREF_UI_STATUSBAR, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
 }
 
 
 void
-activate_action_play_all (GtkAction *action, 
+activate_action_play_all (GtkAction *action,
 			  gpointer   data)
-{	
+{
 	eel_gconf_set_boolean (PREF_PLAYLIST_PLAYALL, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
 }
 
 
 void
-activate_action_repeat (GtkAction *action, 
+activate_action_repeat (GtkAction *action,
 			gpointer   data)
-{	
+{
 	eel_gconf_set_boolean (PREF_PLAYLIST_REPEAT, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
 }
 
 
 void
-activate_action_shuffle (GtkAction *action, 
+activate_action_shuffle (GtkAction *action,
 			 gpointer   data)
-{	
+{
 	eel_gconf_set_boolean (PREF_PLAYLIST_SHUFFLE, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
 }
 
@@ -242,7 +241,7 @@ exec_external_app (GdkScreen   *screen,
 	GPid       child_pid;
 
 	g_return_val_if_fail (command_line != NULL, FALSE);
-	
+
 	if (! g_shell_parse_argv (command_line, NULL, &argv, error))
 		return FALSE;
 
@@ -263,7 +262,7 @@ exec_external_app (GdkScreen   *screen,
 
 
 void
-activate_action_copy_disc (GtkAction *action, 
+activate_action_copy_disc (GtkAction *action,
 			   gpointer   data)
 {
 	GooWindow *window = data;
@@ -271,17 +270,17 @@ activate_action_copy_disc (GtkAction *action,
 	GError    *error = NULL;
 
 	command = g_strconcat ("brasero --copy=",
-			       goo_player_get_device (goo_window_get_player (window)), 
+			       goo_player_get_device (goo_window_get_player (window)),
 			       NULL);
 
 	goo_window_set_hibernate (window, TRUE);
-	if (! exec_external_app (gtk_widget_get_screen (GTK_WIDGET (window)), 
-				 command, 
-				 &error, 
-				 data)) 
+	if (! exec_external_app (gtk_widget_get_screen (GTK_WIDGET (window)),
+				 command,
+				 &error,
+				 data))
 	{
-		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
-						   _("Could not execute command"), 
+		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
+						   _("Could not execute command"),
 						   &error);
 		goo_window_set_hibernate (window, FALSE);
 	}
@@ -291,26 +290,26 @@ activate_action_copy_disc (GtkAction *action,
 
 
 void
-activate_action_extract (GtkAction *action, 
+activate_action_extract (GtkAction *action,
 			 gpointer   data)
 {
 	GooWindow *window = data;
 	GError    *error = NULL;
-	
+
 	if (! preferences_get_use_sound_juicer ()) {
 		dlg_extract (window);
 		return;
 	}
 
-	goo_window_set_hibernate (window, TRUE);		
+	goo_window_set_hibernate (window, TRUE);
 
-	if (! exec_external_app (gtk_widget_get_screen (GTK_WIDGET (window)), 
-				 "sound-juicer", 
-				 &error, 
-				 data)) 
+	if (! exec_external_app (gtk_widget_get_screen (GTK_WIDGET (window)),
+				 "sound-juicer",
+				 &error,
+				 data))
 	{
-		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
-						   _("Could not execute command"), 
+		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
+						   _("Could not execute command"),
 						   &error);
 		goo_window_set_hibernate (window, FALSE);
 	}
@@ -318,26 +317,26 @@ activate_action_extract (GtkAction *action,
 
 
 void
-activate_action_extract_selected (GtkAction *action, 
+activate_action_extract_selected (GtkAction *action,
 			 	  gpointer   data)
 {
 	GooWindow *window = data;
 	GError    *error = NULL;
-	
+
 	if (! preferences_get_use_sound_juicer ()) {
-		dlg_extract_selected (window);	
+		dlg_extract_selected (window);
 		return;
 	}
-		
-	goo_window_set_hibernate (window, TRUE);		
+
+	goo_window_set_hibernate (window, TRUE);
 
 	if (! exec_external_app (gtk_widget_get_screen (GTK_WIDGET (window)),
-				 "sound-juicer", 
-				 &error, 
-				 data)) 
+				 "sound-juicer",
+				 &error,
+				 data))
 	{
-		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window), 
-						   _("Could not execute command"), 
+		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
+						   _("Could not execute command"),
 						   &error);
 		goo_window_set_hibernate (window, FALSE);
 	}
@@ -345,7 +344,7 @@ activate_action_extract_selected (GtkAction *action,
 
 
 void
-activate_action_preferences (GtkAction *action, 
+activate_action_preferences (GtkAction *action,
 			     gpointer   data)
 {
 	dlg_preferences (GOO_WINDOW (data));
@@ -353,7 +352,7 @@ activate_action_preferences (GtkAction *action,
 
 
 void
-activate_action_pick_cover_from_disk (GtkAction *action, 
+activate_action_pick_cover_from_disk (GtkAction *action,
 				      gpointer   data)
 {
 	goo_window_pick_cover_from_disk (GOO_WINDOW (data));
@@ -361,7 +360,7 @@ activate_action_pick_cover_from_disk (GtkAction *action,
 
 
 void
-activate_action_remove_cover (GtkAction *action, 
+activate_action_remove_cover (GtkAction *action,
 			      gpointer   data)
 {
 	goo_window_remove_cover (GOO_WINDOW (data));
@@ -369,7 +368,7 @@ activate_action_remove_cover (GtkAction *action,
 
 
 void
-activate_action_search_cover_on_internet (GtkAction *action, 
+activate_action_search_cover_on_internet (GtkAction *action,
 					  gpointer   data)
 {
 	goo_window_search_cover_on_internet (GOO_WINDOW (data));
@@ -377,7 +376,7 @@ activate_action_search_cover_on_internet (GtkAction *action,
 
 
 void
-activate_action_toggle_visibility (GtkAction *action, 
+activate_action_toggle_visibility (GtkAction *action,
 				   gpointer   data)
 {
 	goo_window_toggle_visibility (GOO_WINDOW (data));
@@ -385,7 +384,7 @@ activate_action_toggle_visibility (GtkAction *action,
 
 
 void
-activate_action_properties (GtkAction *action, 
+activate_action_properties (GtkAction *action,
 		            gpointer   data)
 {
 	dlg_properties (GOO_WINDOW (data));

@@ -43,7 +43,6 @@
 #include "gtk-utils.h"
 #include "gtk-file-chooser-preview.h"
 #include "glib-utils.h"
-#include "gconf-utils.h"
 #include "main.h"
 #include "preferences.h"
 #include "typedefs.h"
@@ -100,7 +99,7 @@ struct _GooWindowPrivate {
 	GtkActionGroup    *actions;
 	guint              cnxn_id[GCONF_NOTIFICATIONS];
 
-	guint              update_timeout_handle;     /* update list timeout 
+	guint              update_timeout_handle;     /* update list timeout
 						       * handle. */
 
 	GooPlayer         *player;
@@ -151,11 +150,11 @@ G_DEFINE_TYPE (GooWindow, goo_window, GTH_TYPE_WINDOW)
 
 static void
 set_active (GooWindow  *window,
-	    const char *action_name, 
+	    const char *action_name,
 	    gboolean    is_active)
 {
 	GtkAction *action;
-	
+
 	action = gtk_action_group_get_action (window->priv->actions, action_name);
 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), is_active);
 }
@@ -163,11 +162,11 @@ set_active (GooWindow  *window,
 
 static void
 set_sensitive (GooWindow  *window,
-	       const char *action_name, 
+	       const char *action_name,
 	       gboolean    sensitive)
 {
 	GtkAction *action;
-	
+
 	action = gtk_action_group_get_action (window->priv->actions, action_name);
 	g_object_set (action, "sensitive", sensitive, NULL);
 }
@@ -188,7 +187,7 @@ window_update_statusbar_list_info (GooWindow *window)
 
 		tracks_s = g_strdup_printf (ngettext ("%d track", "%d tracks", window->priv->album->n_tracks), window->priv->album->n_tracks);
 		time_text = _g_format_duration_for_display (window->priv->album->total_length * 1000);
-		
+
 		status = g_string_new (NULL);
 		g_string_append (status, tracks_s);
 		g_string_append (status, ", ");
@@ -229,7 +228,7 @@ window_update_sensitivity (GooWindow *window)
 	stopped           = state == GOO_PLAYER_STATE_STOPPED;
 	play_all          = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
 	audio_cd          = (! error) && (goo_player_get_discid (window->priv->player) != NULL);
-	
+
 	set_sensitive (window, "Play", audio_cd && !playing);
 	set_sensitive (window, "PlaySelected", audio_cd && one_file_selected);
 	set_sensitive (window, "Pause", audio_cd && playing);
@@ -287,10 +286,10 @@ get_iter_from_track_number (GooWindow   *window,
 
 	if (! gtk_tree_model_get_iter_first (model, iter))
 		return FALSE;
-	
+
 	do {
 		TrackInfo *track;
-		
+
 		gtk_tree_model_get (model, iter, COLUMN_TRACK_INFO, &track, -1);
 		if (track->number == track_number) {
 			track_info_unref (track);
@@ -313,13 +312,13 @@ set_track_icon (GooWindow  *window,
 	GtkTreeIter           iter;
 	GdkPixbuf            *icon;
 
-	if (!get_iter_from_track_number (window, track_number, &iter)) 
+	if (!get_iter_from_track_number (window, track_number, &iter))
 		return;
 
 	if (stock_id != NULL)
-		icon = gtk_widget_render_icon (GTK_WIDGET (window), 
-					       stock_id, 
-					       GTK_ICON_SIZE_MENU, 
+		icon = gtk_widget_render_icon (GTK_WIDGET (window),
+					       stock_id,
+					       GTK_ICON_SIZE_MENU,
 					       NULL);
 	else
 		icon = create_void_icon (window);
@@ -368,7 +367,7 @@ goo_window_update_list (GooWindow *window)
 	/**/
 
 	gtk_expander_set_expanded (GTK_EXPANDER (window->priv->list_expander), (window->priv->album->tracks != NULL));
-		
+
 	/**/
 
 	icon = create_void_icon (window);
@@ -414,11 +413,11 @@ goo_window_update_titles (GooWindow *window)
 	do {
 		TrackInfo *track;
 		TrackInfo *new_track;
-		
+
 		gtk_tree_model_get (model, &iter, COLUMN_TRACK_INFO, &track, -1);
 		new_track = album_info_get_track (window->priv->album, track->number);
 		track_info_unref (track);
-		
+
 		if (new_track == NULL)
 			continue;
 
@@ -441,7 +440,7 @@ goo_window_update_titles (GooWindow *window)
 }
 
 
-static void 
+static void
 goo_window_finalize (GObject *object)
 {
 	GooWindow *window = GOO_WINDOW (object);
@@ -467,23 +466,23 @@ goo_window_finalize (GObject *object)
 #endif /* ENABLE_MEDIA_KEYS */
 
 		/* Save preferences */
-		
+
 		eel_gconf_set_integer (PREF_GENERAL_VOLUME, (int) (goo_player_get_audio_volume (window->priv->player) * 100.0));
 
 		/**/
 
 		g_object_unref (window->priv->list_store);
-		
+
 		if (window->priv->next_timeout_handle != 0) {
 			g_source_remove (window->priv->next_timeout_handle);
 			window->priv->next_timeout_handle = 0;
 		}
-		
+
 		if (window->priv->update_timeout_handle != 0) {
 			g_source_remove (window->priv->update_timeout_handle);
 			window->priv->update_timeout_handle = 0;
 		}
-	
+
 		if (window->priv->playlist != NULL)
 			g_list_free (window->priv->playlist);
 
@@ -552,54 +551,54 @@ add_columns (GooWindow   *window,
 	gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
 	/* Title */
-	
+
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Title"));
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 	gtk_tree_view_column_set_resizable (column, TRUE);
 	gtk_tree_view_column_set_expand (column, TRUE);
 	gtk_tree_view_column_set_sort_column_id (column, COLUMN_TITLE);
-	
+
 	renderer = gtk_cell_renderer_text_new ();
-	
+
 	g_value_init (&value, PANGO_TYPE_ELLIPSIZE_MODE);
 	g_value_set_enum (&value, PANGO_ELLIPSIZE_END);
 	g_object_set_property (G_OBJECT (renderer), "ellipsize", &value);
 	g_value_unset (&value);
-	
+
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
         gtk_tree_view_column_set_attributes (column, renderer,
                                              "text", COLUMN_TITLE,
                                              NULL);
-		
+
 	gtk_tree_view_append_column (treeview, column);
 
 	/* Author */
-	
+
 	window->priv->author_column = column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Artist"));
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 	gtk_tree_view_column_set_resizable (column, FALSE);
 	gtk_tree_view_column_set_expand (column, TRUE);
 	gtk_tree_view_column_set_sort_column_id (column, COLUMN_ARTIST);
-	
+
 	renderer = gtk_cell_renderer_text_new ();
-	
+
 	g_value_init (&value, PANGO_TYPE_ELLIPSIZE_MODE);
 	g_value_set_enum (&value, PANGO_ELLIPSIZE_END);
 	g_object_set_property (G_OBJECT (renderer), "ellipsize", &value);
 	g_value_unset (&value);
-	
+
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
         gtk_tree_view_column_set_attributes (column, renderer,
                                              "text", COLUMN_ARTIST,
                                              NULL);
-		
+
 	gtk_tree_view_append_column (treeview, column);
 	gtk_tree_view_column_set_visible (column, FALSE);
-	
+
 	/* Time */
-	
+
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Length"));
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
@@ -607,13 +606,13 @@ add_columns (GooWindow   *window,
 	gtk_tree_view_column_set_sort_column_id (column, COLUMN_TIME);
 
 	renderer = gtk_cell_renderer_text_new ();
-	
+
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
         gtk_tree_view_column_set_attributes (column, renderer,
                                              "text", COLUMN_TIME,
                                              NULL);
-                                             
-	gtk_tree_view_append_column (treeview, column);                                             	
+
+	gtk_tree_view_append_column (treeview, column);
 }
 
 
@@ -716,7 +715,7 @@ print_playlist (GooWindow *window)
 	GList *scan;
 
 	debug (DEBUG_INFO, "PLAYLIST: ");
-	for (scan = window->priv->playlist; scan; scan = scan->next) 
+	for (scan = window->priv->playlist; scan; scan = scan->next)
 		debug (DEBUG_INFO, "%d, ", GPOINTER_TO_INT (scan->data));
 	debug (DEBUG_INFO, "\n");
 }
@@ -733,7 +732,7 @@ get_track_number_from_position (GooWindow   *window,
 
 	if (! gtk_tree_model_get_iter_first (model, &iter))
 		return -1;
-	
+
 	do {
 		TrackInfo *track;
 		int       n;
@@ -761,7 +760,7 @@ get_position_from_track_number (GooWindow   *window,
 
 	if (! gtk_tree_model_get_iter_first (model, &iter))
 		return -1;
-	
+
 	do {
 		TrackInfo *track;
 		int       n;
@@ -793,7 +792,7 @@ create_playlist (GooWindow *window,
 		g_list_free (window->priv->playlist);
 	window->priv->playlist = NULL;
 
-	if (!play_all) 
+	if (!play_all)
 		return;
 
 	playlist = NULL;
@@ -803,7 +802,7 @@ create_playlist (GooWindow *window,
 
 	for (i = 0; i < window->priv->album->n_tracks; i++, pos = (pos + 1) % window->priv->album->n_tracks) {
 		int track_number;
-		
+
 		track_number = get_track_number_from_position (window, pos);
 		if ((window->priv->current_track != NULL)
 		    && (window->priv->current_track->number == track_number))
@@ -820,7 +819,7 @@ create_playlist (GooWindow *window,
 
 		while (playlist != NULL) {
 			GList *item;
-			
+
 			pos = g_rand_int_range (grand, 0, len--);
 			item = g_list_nth (playlist, pos);
 			playlist = g_list_remove_link (playlist, item);
@@ -829,7 +828,7 @@ create_playlist (GooWindow *window,
 		playlist = random_list;
 
 		g_rand_free (grand);
-	} 
+	}
 
 	window->priv->playlist = playlist;
 }
@@ -860,12 +859,12 @@ play_next_track_in_playlist (GooWindow *window)
 	next = window->priv->playlist;
 
 	if ((next == NULL) && repeat) {
-		track_info_unref (window->priv->current_track);	
+		track_info_unref (window->priv->current_track);
 		window->priv->current_track = NULL;
 		create_playlist (window, play_all, shuffle);
 		next = window->priv->playlist;
 	}
-	
+
 	print_playlist (window);
 
 	if (next == NULL)
@@ -940,13 +939,13 @@ save_window_size (GooWindow *window)
 {
 	int w, h;
 
-	gdk_drawable_get_size (GTK_WIDGET (window)->window, &w, &h);
+	gdk_drawable_get_size (gtk_widget_get_window (GTK_WIDGET (window)), &w, &h);
 	eel_gconf_set_integer (PREF_UI_WINDOW_WIDTH, w);
 	eel_gconf_set_integer (PREF_UI_WINDOW_HEIGHT, h);
 }
 
 
-static void 
+static void
 goo_window_unrealize (GtkWidget *widget)
 {
 	GooWindow *window;
@@ -980,13 +979,13 @@ first_time_idle (gpointer callback_data)
 }
 
 
-static void 
+static void
 goo_window_show (GtkWidget *widget)
 {
 	GooWindow *window = GOO_WINDOW (widget);
 	gboolean   view_foobar;
 
-	if (! HideShow) 
+	if (! HideShow)
 		GTK_WIDGET_CLASS (goo_window_parent_class)->show (widget);
 	else
 		HideShow = FALSE;
@@ -1060,7 +1059,7 @@ goo_window_class_init (GooWindowClass *class)
 	widget_class = (GtkWidgetClass*) class;
 	widget_class->unrealize = goo_window_unrealize;
 	widget_class->show = goo_window_show;
-	
+
 	window_class = (GthWindowClass *) class;
 	window_class->close = goo_window_real_close;
 
@@ -1071,7 +1070,7 @@ goo_window_class_init (GooWindowClass *class)
 			      G_STRUCT_OFFSET (GooWindowClass, update_cover),
 			      NULL, NULL,
 			      goo_marshal_VOID__VOID,
-			      G_TYPE_NONE, 
+			      G_TYPE_NONE,
 			      0);
 }
 
@@ -1093,7 +1092,7 @@ sort_by_number (int i1,
 		return 0;
 	else if (i1 > i2)
 		return 1;
-	else 
+	else
 		return -1;
 }
 
@@ -1108,15 +1107,15 @@ sort_by_name (const char *s1,
 		return 1;
 	else if (s2 == NULL)
 		return -1;
-	else 
+	else
 		return g_utf8_collate (s1, s2);
 }
 
 
 static int
-title_column_sort_func (GtkTreeModel *model, 
-			GtkTreeIter  *a, 
-			GtkTreeIter  *b, 
+title_column_sort_func (GtkTreeModel *model,
+			GtkTreeIter  *a,
+			GtkTreeIter  *b,
 			gpointer      user_data)
 {
 	TrackInfo *track1 = NULL, *track2 = NULL;
@@ -1142,9 +1141,9 @@ title_column_sort_func (GtkTreeModel *model,
 
 
 static int
-artist_column_sort_func (GtkTreeModel *model, 
-			 GtkTreeIter  *a, 
-			 GtkTreeIter  *b, 
+artist_column_sort_func (GtkTreeModel *model,
+			 GtkTreeIter  *a,
+			 GtkTreeIter  *b,
 			 gpointer      user_data)
 {
 	TrackInfo *track1 = NULL, *track2 = NULL;
@@ -1175,9 +1174,9 @@ artist_column_sort_func (GtkTreeModel *model,
 
 
 static int
-time_column_sort_func (GtkTreeModel *model, 
-		       GtkTreeIter  *a, 
-		       GtkTreeIter  *b, 
+time_column_sort_func (GtkTreeModel *model,
+		       GtkTreeIter  *a,
+		       GtkTreeIter  *b,
 		       gpointer      user_data)
 {
 	TrackInfo *track1 = NULL, *track2 = NULL;
@@ -1192,7 +1191,7 @@ time_column_sort_func (GtkTreeModel *model,
 		retval = 1;
 	else if (track2 == NULL)
 		retval = -1;
-	else 
+	else
 		retval = sort_by_number (track1->length, track2->length);
 
 	track_info_unref (track1);
@@ -1267,12 +1266,12 @@ set_action_label_and_icon (GooWindow  *window,
 	while (action_prefix != NULL) {
 		char      *path = g_strconcat (action_prefix, action_name, NULL);
 		GtkAction *action = gtk_ui_manager_get_action (window->priv->ui, path);
-		
+
 		if (action != NULL)
-			g_object_set (G_OBJECT (action), 
-				      "label", label, 
-				      "tooltip", tooltip, 
-				      "stock_id", stock_id, 
+			g_object_set (G_OBJECT (action),
+				      "label", label,
+				      "tooltip", tooltip,
+				      "stock_id", stock_id,
 				      NULL);
 		g_free (path);
 
@@ -1295,8 +1294,8 @@ player_start_cb (GooPlayer       *player,
 	switch (action) {
 	case GOO_PLAYER_ACTION_PLAY:
 		set_action_label_and_icon (window,
-					   "TogglePlay", 
-					   _("_Pause"), 
+					   "TogglePlay",
+					   _("_Pause"),
 					   _("Pause"),
 					   GTK_STOCK_MEDIA_PAUSE,
 					   "/MenuBar/CDMenu/",
@@ -1309,14 +1308,14 @@ player_start_cb (GooPlayer       *player,
 
 			if (window->priv->album->title != NULL) {
 				char *e_album = g_markup_escape_text (window->priv->album->title, -1);
-				
+
 				g_string_append_printf (info, "<i>%s</i>", e_album);
 				g_free (e_album);
 			}
 			g_string_append (info, "\n");
 			if (window->priv->album->artist != NULL) {
 				char *e_artist = g_markup_escape_text (window->priv->album->artist, -1);
-				
+
 				g_string_append_printf (info, "<big>%s</big>", e_artist);
 				g_free (e_artist);
 			}
@@ -1326,7 +1325,7 @@ player_start_cb (GooPlayer       *player,
 			g_string_free (info, TRUE);
 			window->priv->notify_action = FALSE;
 		}
-		
+
 #endif /* ENABLE_NOTIFICATION */
 
 		break;
@@ -1416,13 +1415,13 @@ window_update_title (GooWindow *window)
 					window->priv->current_track->number + 1,
 					window->priv->album->n_tracks);
 		if (paused)
-			g_string_append_printf (title, 
+			g_string_append_printf (title,
 						" [%s]",
 						_("Paused"));
-	} 
+	}
 	else if (state == GOO_PLAYER_STATE_NO_DISC) {
 		g_string_append (title, _("No Disc"));
-	} 
+	}
 	else if (state == GOO_PLAYER_STATE_DATA_DISC) {
 		g_string_append (title, _("Data Disc"));
 	}
@@ -1448,7 +1447,7 @@ goo_window_get_cover_filename (GooWindow *window)
 	const char *discid;
 	char       *filename;
 	char       *path;
-	
+
 	discid = goo_player_get_discid (window->priv->player);
 	if (discid == NULL)
 		return NULL;
@@ -1458,7 +1457,7 @@ goo_window_get_cover_filename (GooWindow *window)
 	path = gth_user_dir_get_file (GTH_DIR_CONFIG, "goobox", "covers", filename, NULL);
 
 	g_free (filename);
-	
+
 	return path;
 }
 
@@ -1466,8 +1465,8 @@ goo_window_get_cover_filename (GooWindow *window)
 void
 goo_window_update_cover (GooWindow *window)
 {
-	g_signal_emit (G_OBJECT (window), 
-		       goo_window_signals[UPDATE_COVER], 
+	g_signal_emit (G_OBJECT (window),
+		       goo_window_signals[UPDATE_COVER],
 		       0,
 		       NULL);
 }
@@ -1510,8 +1509,8 @@ goo_window_set_current_cd_autofetch (GooWindow *window,
 	kv_file = g_key_file_new ();
 
 	config_filename = gth_user_dir_get_file (GTH_DIR_CONFIG, "goobox", "config", NULL);
-	g_key_file_load_from_file (kv_file, 
-				   config_filename, 
+	g_key_file_load_from_file (kv_file,
+				   config_filename,
 				   G_KEY_FILE_NONE,
 				   NULL);
 	discid = goo_player_get_discid (window->priv->player);
@@ -1568,7 +1567,7 @@ goo_window_get_status_icon (GooWindow *window)
 {
 	return window->priv->status_icon;
 }
- 
+
 
 static void
 auto_fetch_cover_image (GooWindow *window)
@@ -1592,7 +1591,7 @@ auto_fetch_cover_image (GooWindow *window)
 	}
 	g_free (filename);
 
-	if (window->priv->album->asin != NULL) 
+	if (window->priv->album->asin != NULL)
 		fetch_cover_image_from_asin (window, window->priv->album->asin);
 	else if ((window->priv->album->title != NULL) && (window->priv->album->artist != NULL))
 		fetch_cover_image_from_name (window, window->priv->album->title, window->priv->album->artist);
@@ -1603,10 +1602,10 @@ static gboolean
 autoplay_cb (gpointer data)
 {
 	GooWindow *window = data;
-	
-	if (window->priv->album->n_tracks > 0) 
+
+	if (window->priv->album->n_tracks > 0)
 		goo_window_play (window);
-	
+
 	return FALSE;
 }
 
@@ -1616,7 +1615,7 @@ goo_window_update_album (GooWindow *window)
 {
 	album_info_unref (window->priv->album);
 	window->priv->album = album_info_copy (goo_player_get_album (window->priv->player));
-	
+
 	gtk_tree_view_column_set_visible (window->priv->author_column,
 					  window->priv->album->various_artist);
 }
@@ -1650,19 +1649,19 @@ player_done_cb (GooPlayer       *player,
 		window_update_statusbar_list_info (window);
 		auto_fetch_cover_image (window);
 		break;
-		
+
 	case GOO_PLAYER_ACTION_SEEK_SONG:
 		goo_window_set_current_track (window, goo_player_get_current_track (window->priv->player));
 		goo_window_select_current_track (window);
 		set_current_track_icon (window, GTK_STOCK_MEDIA_PLAY);
 		break;
-		
+
 	case GOO_PLAYER_ACTION_PLAY:
 	case GOO_PLAYER_ACTION_STOP:
 	case GOO_PLAYER_ACTION_MEDIUM_REMOVED:
 		set_action_label_and_icon (window,
-					   "TogglePlay", 
-					   _("_Play"), 
+					   "TogglePlay",
+					   _("_Play"),
 					   _("Play"),
 					   GTK_STOCK_MEDIA_PLAY,
 					   "/MenuBar/CDMenu/",
@@ -1670,23 +1669,23 @@ player_done_cb (GooPlayer       *player,
 		if (action == GOO_PLAYER_ACTION_PLAY) {
 			set_current_track_icon (window, GTK_STOCK_MEDIA_PLAY);
 			window->priv->next_timeout_handle = g_idle_add (next_time_idle, window);
-		} 
-		else if (action == GOO_PLAYER_ACTION_STOP) 
+		}
+		else if (action == GOO_PLAYER_ACTION_STOP)
 			set_current_track_icon (window, GTK_STOCK_MEDIA_STOP);
 
 		break;
-		
+
 	case GOO_PLAYER_ACTION_PAUSE:
 		set_current_track_icon (window, GTK_STOCK_MEDIA_PAUSE);
 		set_action_label_and_icon (window,
-					   "TogglePlay", 
-					   _("_Play"), 
+					   "TogglePlay",
+					   _("_Play"),
 					   _("Play"),
 					   GTK_STOCK_MEDIA_PLAY,
 					   "/MenuBar/CDMenu/",
 					   NULL);
 		break;
-		
+
 	default:
 		break;
 	}
@@ -1703,20 +1702,20 @@ player_state_changed_cb (GooPlayer *player,
 
 
 static void
-row_activated_cb (GtkTreeView       *tree_view, 
-		  GtkTreePath       *path, 
-		  GtkTreeViewColumn *column, 
+row_activated_cb (GtkTreeView       *tree_view,
+		  GtkTreePath       *path,
+		  GtkTreeViewColumn *column,
 		  gpointer           data)
 {
 	GooWindow   *window = data;
 	GtkTreeIter  iter;
 	TrackInfo    *track;
 
-	if (! gtk_tree_model_get_iter (GTK_TREE_MODEL (window->priv->list_store), 
-				       &iter, 
+	if (! gtk_tree_model_get_iter (GTK_TREE_MODEL (window->priv->list_store),
+				       &iter,
 				       path))
 		return;
-	
+
 	gtk_tree_model_get (GTK_TREE_MODEL (window->priv->list_store), &iter,
 			    COLUMN_TRACK_INFO, &track,
 			    -1);
@@ -1734,14 +1733,14 @@ selection_changed_cb (GtkTreeSelection *selection,
 		      gpointer          user_data)
 {
 	GooWindow *window = user_data;
-	
+
 	window_update_sensitivity (window);
 	window_update_title (window);
 }
 
 
 static int
-file_button_press_cb (GtkWidget      *widget, 
+file_button_press_cb (GtkWidget      *widget,
 		      GdkEventButton *event,
 		      gpointer        data)
 {
@@ -1768,7 +1767,7 @@ file_button_press_cb (GtkWidget      *widget,
 				return FALSE;
 			}
 			gtk_tree_path_free (path);
-			
+
 			if (! gtk_tree_selection_iter_is_selected (selection, &iter)) {
 				gtk_tree_selection_unselect_all (selection);
 				gtk_tree_selection_select_iter (selection, &iter);
@@ -1778,8 +1777,8 @@ file_button_press_cb (GtkWidget      *widget,
 			gtk_tree_selection_unselect_all (selection);
 
 		gtk_menu_popup (GTK_MENU (window->priv->file_popup_menu),
-				NULL, NULL, NULL, 
-				window, 
+				NULL, NULL, NULL,
+				window,
 				event->button,
 				event->time);
 		return TRUE;
@@ -1806,7 +1805,7 @@ get_column_from_sort_method (WindowSortMethod sort_method)
 	case WINDOW_SORT_BY_NUMBER: return COLUMN_NUMBER;
 	case WINDOW_SORT_BY_TIME: return COLUMN_TIME;
 	case WINDOW_SORT_BY_TITLE: return COLUMN_TITLE;
-	default: 
+	default:
 		break;
 	}
 
@@ -1821,7 +1820,7 @@ get_sort_method_from_column (int column_id)
 	case COLUMN_NUMBER: return WINDOW_SORT_BY_NUMBER;
 	case COLUMN_TIME: return WINDOW_SORT_BY_TIME;
 	case COLUMN_TITLE: return WINDOW_SORT_BY_TITLE;
-	default: 
+	default:
 		break;
 	}
 
@@ -1838,8 +1837,8 @@ sort_column_changed_cb (GtkTreeSortable *sortable,
 	int             column_id;
 	GooPlayerState  state;
 
-	if (! gtk_tree_sortable_get_sort_column_id (sortable, 
-						    &column_id, 
+	if (! gtk_tree_sortable_get_sort_column_id (sortable,
+						    &column_id,
 						    &order))
 	{
 		return;
@@ -1869,7 +1868,7 @@ update_ui_from_expander_state (GooWindow *window)
 
 		gtk_expander_set_label (expander, _(HIDE_TRACK_LIST));
 		if (gtk_widget_get_realized (GTK_WIDGET (window)))
-			gtk_window_resize (GTK_WINDOW (window), 
+			gtk_window_resize (GTK_WINDOW (window),
 					   eel_gconf_get_integer (PREF_UI_WINDOW_WIDTH, DEFAULT_WIN_WIDTH),
 					   eel_gconf_get_integer (PREF_UI_WINDOW_HEIGHT, DEFAULT_WIN_HEIGHT));
 		gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (window->priv->statusbar), TRUE);
@@ -1880,7 +1879,7 @@ update_ui_from_expander_state (GooWindow *window)
 					       GTK_WIDGET (window),
 					       &hints,
 					       GDK_HINT_MAX_SIZE);
-	} 
+	}
 	else {
 		GdkGeometry hints;
 
@@ -1925,8 +1924,8 @@ player_info_cover_clicked_cb (GooPlayerInfo *info,
 	debug (DEBUG_INFO, "[Window] cover clicked\n");
 
 	gtk_menu_popup (GTK_MENU (window->priv->cover_popup_menu),
-			NULL, NULL, NULL, 
-			window, 
+			NULL, NULL, NULL,
+			window,
 			3,
 			GDK_CURRENT_TIME);
 }
@@ -1944,7 +1943,7 @@ window_sync_ui_with_preferences (GooWindow *window)
 
 
 static gboolean
-window_key_press_cb (GtkWidget   *widget, 
+window_key_press_cb (GtkWidget   *widget,
 		     GdkEventKey *event,
 		     gpointer     data)
 {
@@ -1956,19 +1955,19 @@ window_key_press_cb (GtkWidget   *widget,
 		return FALSE;
 
 	switch (event->keyval) {
-	case GDK_1:
-	case GDK_2:
-	case GDK_3:
-	case GDK_4:
-	case GDK_5:
-	case GDK_6:
-	case GDK_7:
-	case GDK_8:
-	case GDK_9:
-		new_track = event->keyval - GDK_1;
+	case GDK_KEY_1:
+	case GDK_KEY_2:
+	case GDK_KEY_3:
+	case GDK_KEY_4:
+	case GDK_KEY_5:
+	case GDK_KEY_6:
+	case GDK_KEY_7:
+	case GDK_KEY_8:
+	case GDK_KEY_9:
+		new_track = event->keyval - GDK_KEY_1;
 		retval = TRUE;
 		break;
-	case GDK_0:
+	case GDK_KEY_0:
 		new_track = 10 - 1;
 		retval = TRUE;
 		break;
@@ -2237,13 +2236,13 @@ goo_window_construct (GooWindow    *window,
 	GtkUIManager     *ui;
 	GError           *error = NULL;
 
-	g_signal_connect (G_OBJECT (window), 
+	g_signal_connect (G_OBJECT (window),
 			  "delete_event",
 			  G_CALLBACK (window_delete_event_cb),
 			  window);
-	g_signal_connect (G_OBJECT (window), 
+	g_signal_connect (G_OBJECT (window),
 			  "key_press_event",
-			  G_CALLBACK (window_key_press_cb), 
+			  G_CALLBACK (window_key_press_cb),
 			  window);
 
 	if (icon_size == 0) {
@@ -2260,15 +2259,15 @@ goo_window_construct (GooWindow    *window,
 
 	g_signal_connect (window->priv->player,
 			  "start",
-			  G_CALLBACK (player_start_cb), 
+			  G_CALLBACK (player_start_cb),
 			  window);
 	g_signal_connect (window->priv->player,
 			  "done",
-			  G_CALLBACK (player_done_cb), 
+			  G_CALLBACK (player_done_cb),
 			  window);
 	g_signal_connect (window->priv->player,
 			  "state_changed",
-			  G_CALLBACK (player_state_changed_cb), 
+			  G_CALLBACK (player_state_changed_cb),
 			  window);
 
 	window->priv->playlist = NULL;
@@ -2305,7 +2304,7 @@ goo_window_construct (GooWindow    *window,
 	window->priv->sort_type = preferences_get_sort_type ();
 
 	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (window->priv->list_store), get_column_from_sort_method (window->priv->sort_method), window->priv->sort_type);
-	
+
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->priv->list_view));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 
@@ -2319,12 +2318,12 @@ goo_window_construct (GooWindow    *window,
                           window);
 	g_signal_connect (G_OBJECT (window->priv->list_view),
 			  "button_press_event",
-			  G_CALLBACK (file_button_press_cb), 
+			  G_CALLBACK (file_button_press_cb),
 			  window);
 
 	g_signal_connect (G_OBJECT (window->priv->list_store),
 			  "sort_column_changed",
-			  G_CALLBACK (sort_column_changed_cb), 
+			  G_CALLBACK (sort_column_changed_cb),
 			  window);
 
 	scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -2338,26 +2337,26 @@ goo_window_construct (GooWindow    *window,
 
 	window->priv->actions = actions = gtk_action_group_new ("Actions");
 	gtk_action_group_set_translation_domain (actions, NULL);
-	gtk_action_group_add_actions (actions, 
-				      action_entries, 
-				      n_action_entries, 
+	gtk_action_group_add_actions (actions,
+				      action_entries,
+				      n_action_entries,
 				      window);
-	gtk_action_group_add_toggle_actions (actions, 
-					     action_toggle_entries, 
-					     n_action_toggle_entries, 
+	gtk_action_group_add_toggle_actions (actions,
+					     action_toggle_entries,
+					     n_action_toggle_entries,
 					     window);
 
 	window->priv->ui = ui = gtk_ui_manager_new ();
-	
+
 	g_signal_connect (ui, "connect_proxy",
 			  G_CALLBACK (connect_proxy_cb), window);
 	g_signal_connect (ui, "disconnect_proxy",
 			  G_CALLBACK (disconnect_proxy_cb), window);
-	
+
 	gtk_ui_manager_insert_action_group (ui, actions, 0);
-	gtk_window_add_accel_group (GTK_WINDOW (window), 
+	gtk_window_add_accel_group (GTK_WINDOW (window),
 				    gtk_ui_manager_get_accel_group (ui));
-	
+
 	if (! gtk_ui_manager_add_ui_from_string (ui, ui_info, -1, &error)) {
 		g_message ("building menus failed: %s", error->message);
 		g_error_free (error);
@@ -2381,11 +2380,11 @@ goo_window_construct (GooWindow    *window,
 		action = gtk_ui_manager_get_action (ui, "/ToolBar/Play");
 		g_object_set (action, "is_important", TRUE, NULL);
 		g_object_unref (action);
-		
+
 		action = gtk_ui_manager_get_action (ui, "/ToolBar/Pause");
 		g_object_set (action, "is_important", TRUE, NULL);
 		g_object_unref (action);
-		
+
 		action = gtk_ui_manager_get_action (ui, "/ToolBar/Extract");
 		g_object_set (action, "is_important", TRUE, NULL);
 		g_object_unref (action);
@@ -2399,39 +2398,39 @@ goo_window_construct (GooWindow    *window,
 
 		toggle_play = gtk_ui_manager_get_widget (window->priv->ui, "/ToolBar/TogglePlay");
 		toggle_play = gtk_ui_manager_get_widget (window->priv->ui, "/ToolBar/TogglePlay");
-	
+
 		play_button = gtk_ui_manager_get_widget (window->priv->ui, "/ToolBar/Play");
 		gtk_tool_item_set_visible_horizontal (GTK_TOOL_ITEM (play_button), FALSE);
-	
+
 		pause_button = gtk_ui_manager_get_widget (window->priv->ui, "/ToolBar/Pause");
 		gtk_tool_item_set_visible_horizontal (GTK_TOOL_ITEM (pause_button), FALSE);
-	
+
 		size_group = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
-		
+
 		gtk_size_group_add_widget (size_group, toggle_play);
 		gtk_size_group_add_widget (size_group, play_button);
-		gtk_size_group_add_widget (size_group, pause_button);		
+		gtk_size_group_add_widget (size_group, pause_button);
 	}
 
 	window->priv->file_popup_menu = gtk_ui_manager_get_widget (ui, "/ListPopupMenu");
 	window->priv->cover_popup_menu = gtk_ui_manager_get_widget (ui, "/CoverPopupMenu");
 
 	/* Add the volume button to the toolbar. */
-	
+
 	{
 		GtkToolItem *sep;
-		
+
 		sep = gtk_separator_tool_item_new ();
-		gtk_widget_show (GTK_WIDGET (sep));	
+		gtk_widget_show (GTK_WIDGET (sep));
 		gtk_toolbar_insert (GTK_TOOLBAR (window->priv->toolbar),
 				    GTK_TOOL_ITEM (sep),
 				    VOLUME_BUTTON_POSITION);
 	}
-	
+
 	window->priv->volume_button = (GtkWidget*) goo_volume_tool_button_new ();
 	g_signal_connect (window->priv->volume_button,
 			  "changed",
-			  G_CALLBACK (volume_button_changed_cb), 
+			  G_CALLBACK (volume_button_changed_cb),
 			  window);
 	gtk_widget_show (GTK_WIDGET (window->priv->volume_button));
 	gtk_tool_item_set_is_important (GTK_TOOL_ITEM (window->priv->volume_button), FALSE);
@@ -2458,16 +2457,16 @@ goo_window_construct (GooWindow    *window,
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	{	
+	{
 		window->priv->info = goo_player_info_new (window, TRUE);
 		gtk_container_set_border_width (GTK_CONTAINER (window->priv->info), 0);
 		g_signal_connect (window->priv->info,
 				  "skip_to",
-				  G_CALLBACK (player_info_skip_to_cb), 
+				  G_CALLBACK (player_info_skip_to_cb),
 				  window);
 		g_signal_connect (window->priv->info,
 				  "cover_clicked",
-				  G_CALLBACK (player_info_cover_clicked_cb), 
+				  G_CALLBACK (player_info_cover_clicked_cb),
 				  window);
 		gtk_box_pack_start (GTK_BOX (hbox), window->priv->info, TRUE, TRUE, 0);
 	}
@@ -2479,11 +2478,11 @@ goo_window_construct (GooWindow    *window,
 	gtk_expander_set_expanded (GTK_EXPANDER (expander), FALSE /*eel_gconf_get_boolean (PREF_UI_PLAYLIST, TRUE)*/);
 	g_signal_connect (expander,
 			  "notify::expanded",
-			  G_CALLBACK (list_expander_expanded_cb), 
+			  G_CALLBACK (list_expander_expanded_cb),
 			  window);
 
-	gtk_box_pack_start (GTK_BOX (vbox), 
-			    expander, 
+	gtk_box_pack_start (GTK_BOX (vbox),
+			    expander,
 			    TRUE, TRUE, 0);
 
 	gtk_widget_show_all (vbox);
@@ -2493,7 +2492,7 @@ goo_window_construct (GooWindow    *window,
 
 	window_sync_ui_with_preferences (window);
 
-	gtk_window_set_default_size (GTK_WINDOW (window), 
+	gtk_window_set_default_size (GTK_WINDOW (window),
 				     eel_gconf_get_integer (PREF_UI_WINDOW_WIDTH, DEFAULT_WIN_WIDTH),
 				     eel_gconf_get_integer (PREF_UI_WINDOW_HEIGHT, DEFAULT_WIN_HEIGHT));
 
@@ -2502,14 +2501,14 @@ goo_window_construct (GooWindow    *window,
 					   TRUE);
 
 	/* The status icon. */
-	
+
 	window->priv->status_icon = gtk_status_icon_new_from_icon_name ("goobox");
 	gtk_status_icon_set_has_tooltip (window->priv->status_icon, TRUE);
 	gtk_status_icon_set_title (window->priv->status_icon, _("CD Player"));
-	
+
 	window->priv->status_tooltip_content = goo_player_info_new (window, FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (window->priv->status_tooltip_content), 0);
-	
+
 	g_signal_connect (G_OBJECT (window->priv->status_icon),
 			  "activate",
 			  G_CALLBACK (status_icon_activate_cb),
@@ -2598,15 +2597,15 @@ goo_window_close (GooWindow *window)
 
 
 void
-goo_window_set_toolbar_visibility (GooWindow   *window,
-				   gboolean     visible)
+goo_window_set_toolbar_visibility (GooWindow *window,
+				   gboolean   visible)
 {
 	g_return_if_fail (window != NULL);
 
 	if (visible)
-		gtk_widget_show (window->priv->toolbar->parent);
+		gtk_widget_show (gtk_widget_get_parent (window->priv->toolbar));
 	else
-		gtk_widget_hide (window->priv->toolbar->parent);
+		gtk_widget_hide (gtk_widget_get_parent (window->priv->toolbar));
 }
 
 
@@ -2616,7 +2615,7 @@ goo_window_set_statusbar_visibility (GooWindow *window,
 {
 	g_return_if_fail (window != NULL);
 
-	if (visible) 
+	if (visible)
 		gtk_widget_show (window->priv->statusbar);
 	else
 		gtk_widget_hide (window->priv->statusbar);
@@ -2628,7 +2627,7 @@ goo_window_play (GooWindow *window)
 {
 	if (window->priv->hibernate)
 		return;
-	
+
 	if (! goo_player_is_audio_cd (window->priv->player))
 		return;
 
@@ -2638,7 +2637,7 @@ goo_window_play (GooWindow *window)
 	if (goo_player_get_state (window->priv->player) != GOO_PLAYER_STATE_PAUSED) {
 		gboolean  play_all;
 		gboolean  shuffle;
-		
+
 		play_all = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
 		shuffle  = eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE);
 		create_playlist (window, play_all, shuffle);
@@ -2649,7 +2648,7 @@ goo_window_play (GooWindow *window)
 			play_next_track_in_playlist (window);
 		else
 			play_track (window, 0);
-	} 
+	}
 	else {
 		set_current_track_icon (window, GTK_STOCK_MEDIA_PLAY);
 		goo_player_play (window->priv->player);
@@ -2666,7 +2665,7 @@ goo_window_play_selected (GooWindow *window)
 
 	if (g_list_length (tracks) == 1) {
 		TrackInfo *track = tracks->data;
-		
+
 		goo_window_stop (window);
 		goo_window_set_current_track (window, track->number);
 		goo_window_play (window);
@@ -2729,10 +2728,10 @@ goo_window_next (GooWindow *window)
 			goo_window_set_current_track (window, new_track);
 
 			goo_window_play (window);
-		} 
+		}
 		else
 			play_next_track_in_playlist (window);
-	} 
+	}
 	else {
 		goo_window_stop (window);
 		goo_window_set_current_track (window, 0);
@@ -2756,17 +2755,17 @@ goo_window_prev (GooWindow *window)
 
 	if (window->priv->current_track != NULL) {
 		int current_track, current_pos;
-		
+
 		current_track = window->priv->current_track->number;
 		current_pos = get_position_from_track_number (window, current_track);
-		
+
 		/* FIXME
 		if (goo_player_info_get_progress (GOO_PLAYER_INFO (window->priv->info)) * window->priv->current_track->length > 4)
 			new_pos = current_pos;
 		else
 		*/
 			new_pos = MAX (current_pos - 1, 0);
-	} 
+	}
 	else
 		new_pos = window->priv->album->n_tracks - 1;
 
@@ -2822,8 +2821,8 @@ goo_window_get_tracks (GooWindow *window,
 
 	if (window->priv->album->tracks == NULL)
 		return NULL;
-	
-	if (! selection) 
+
+	if (! selection)
 		return track_list_dup (window->priv->album->tracks);
 
 	/* return selected track list */
@@ -2972,13 +2971,13 @@ open_response_cb (GtkDialog  *file_sel,
 	folder = gtk_file_chooser_get_current_folder (GTK_FILE_CHOOSER (file_sel));
 	eel_gconf_set_path (PREF_GENERAL_COVER_PATH, folder);
 	g_free (folder);
-	
+
 	/* Load the image. */
 
 	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_sel));
 	goo_window_set_cover_image (window, filename);
 	g_free (filename);
-	
+
 	gtk_widget_destroy (GTK_WIDGET (file_sel));
 }
 
@@ -2998,7 +2997,7 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 	file_sel = gtk_file_chooser_dialog_new (_("Choose Disc Cover Image"),
 						GTK_WINDOW (window),
 						GTK_FILE_CHOOSER_ACTION_OPEN,
-						GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, 
+						GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 						GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 						NULL);
 	gtk_window_set_modal (GTK_WINDOW (file_sel), TRUE);
@@ -3038,7 +3037,7 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 				  "close",
 				  G_CALLBACK (gtk_widget_destroy),
 				  GTK_WIDGET (file_sel));
-	
+
 	gtk_widget_show_all (GTK_WIDGET (file_sel));
 }
 
@@ -3078,7 +3077,7 @@ goo_window_remove_cover (GooWindow *window)
 		return;
 
 	goo_window_set_current_cd_autofetch (window, FALSE);
-		
+
 	cover_filename = goo_window_get_cover_filename (window);
 	if (cover_filename == NULL)
 		return;
@@ -3102,13 +3101,13 @@ goo_window_toggle_visibility (GooWindow *window)
 		gtk_widget_hide (GTK_WIDGET (window));
 
 		set_action_label_and_icon (window,
-					   "ToggleVisibility", 
-					   _("_Show Window"), 
+					   "ToggleVisibility",
+					   _("_Show Window"),
 					   _("Show the main window"),
 					   NULL,
 					   "/TrayPopupMenu/",
 					   NULL);
-	} 
+	}
 	else {
 		gtk_window_move (GTK_WINDOW (window),
 				 window->priv->pos_x,
@@ -3116,8 +3115,8 @@ goo_window_toggle_visibility (GooWindow *window)
 		gtk_window_present (GTK_WINDOW (window));
 
 		set_action_label_and_icon (window,
-					   "ToggleVisibility", 
-					   _("_Hide Window"), 
+					   "ToggleVisibility",
+					   _("_Hide Window"),
 					   _("Hide the main window"),
 					   NULL,
 					   /*"/MenuBar/View/", FIXME*/

@@ -41,8 +41,6 @@
 
 #define GNOME_DESKTOP_USE_UNSTABLE_API
 #include "gnome-desktop-thumbnail.h"
-#include <gconf/gconf.h>
-#include <gconf/gconf-client.h>
 #include <glib/gstdio.h>
 
 #define SECONDS_BETWEEN_STATS 10

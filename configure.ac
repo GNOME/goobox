@@ -15,27 +15,26 @@ GNOME_DOC_INIT
 GNOME_COMPILE_WARNINGS([maximum])
 GNOME_MAINTAINER_MODE_DEFINES
 
-GLIB_REQUIRED=2.22
-GTK_REQUIRED=2.18
+GLIB_REQUIRED=2.28
+GTK_REQUIRED=3.0.0
 GSTREAMER_REQUIRED=0.10.12
 LIBNOTIFY_REQUIRED=0.4.3
 LIBMUSICBRAINZ_REQUIRED=2.1.0
 
 dnl ===========================================================================
 
-PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= $GTK_REQUIRED])
+PKG_CHECK_MODULES(GTK, [gtk+-3.0 >= $GTK_REQUIRED])
 AC_SUBST([GTK_CFLAGS])
 AC_SUBST([GTK_LIBS])
 
 PKG_CHECK_MODULES(GOO, [
 	glib-2.0 >= $GLIB_REQUIRED
-	gthread-2.0				
-	gtk+-2.0 >= $GTK_REQUIRED
+	gthread-2.0
+	gtk+-3.0 >= $GTK_REQUIRED
 	gstreamer-0.10 >= $GSTREAMER_REQUIRED
-	libbrasero-media	
-	libmusicbrainz >= $LIBMUSICBRAINZ_REQUIRED 
-	gconf-2.0
-	unique-1.0
+	libbrasero-media3
+	libmusicbrainz >= $LIBMUSICBRAINZ_REQUIRED
+	unique-3.0
 ])
 AC_SUBST(GOO_CFLAGS)
 AC_SUBST(GOO_LIBS)

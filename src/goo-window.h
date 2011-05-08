@@ -24,7 +24,7 @@
 #define GOO_WINDOW_H
 
 #include <gtk/gtk.h>
-#include <brasero/brasero-drive.h>
+#include <brasero3/brasero-drive.h>
 #include "album-info.h"
 #include "goo-player.h"
 #include "gth-window.h"
@@ -51,7 +51,7 @@ struct _GooWindow
 struct _GooWindowClass
 {
 	GthWindowClass __parent_class;
-	
+
 	/*<signals>*/
 
 	void (*update_cover) (GooWindow *window);

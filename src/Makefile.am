@@ -42,8 +42,6 @@ goobox_SOURCES = 				\
 	dlg-properties.h			\
 	dlg-ripper.c				\
 	dlg-ripper.h				\
-	gconf-utils.c				\
-	gconf-utils.h				\
 	gio-utils.c				\
 	gio-utils.h				\
 	glib-utils.c				\
