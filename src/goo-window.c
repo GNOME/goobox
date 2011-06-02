@@ -250,20 +250,32 @@ window_update_sensitivity (GooWindow *window)
 }
 
 
-static GdkPixbuf *
-create_void_icon (GooWindow *window)
+static int
+get_icon_size_from_settings (GtkWidget   *widget,
+			     GtkIconSize  _gtk_icon_size)
 {
 	GtkSettings *settings;
-	int          width, height, icon_size;
-	GdkPixbuf   *icon;
+	int          width;
+	int          height;
+	int          icon_size;
 
-	settings = gtk_settings_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (window)));
-
-	if (gtk_icon_size_lookup_for_settings (settings, GTK_ICON_SIZE_MENU, &width, &height))
+	settings = gtk_settings_get_for_screen (gtk_widget_get_screen (widget));
+	if (gtk_icon_size_lookup_for_settings (settings, _gtk_icon_size, &width, &height))
 		icon_size = MAX (width, height);
 	else
 		icon_size = FALLBACK_ICON_SIZE;
 
+	return icon_size;
+}
+
+
+static GdkPixbuf *
+create_void_icon (GooWindow *window)
+{
+	int        icon_size;
+	GdkPixbuf *icon;
+
+	icon_size = get_icon_size_from_settings (GTK_WIDGET (window), GTK_ICON_SIZE_MENU);
 	icon = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, icon_size, icon_size);
 	gdk_pixbuf_fill (icon, 0x00000000);
 
@@ -300,8 +312,8 @@ get_iter_from_track_number (GooWindow   *window,
 
 static void
 set_track_icon (GooWindow  *window,
-	       int         track_number,
-	       const char *stock_id)
+	        int         track_number,
+	        const char *stock_id)
 {
 	GtkTreeIter  iter;
 	GdkPixbuf   *icon;
@@ -310,9 +322,11 @@ set_track_icon (GooWindow  *window,
 		return;
 
 	if (stock_id != NULL)
-		icon = gtk_widget_render_icon_pixbuf (GTK_WIDGET (window),
-						       stock_id,
-						       GTK_ICON_SIZE_MENU);
+		icon = gtk_icon_theme_load_icon (gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (window))),
+						 stock_id,
+						 get_icon_size_from_settings (GTK_WIDGET (window), GTK_ICON_SIZE_MENU),
+						 0,
+						 NULL);
 	else
 		icon = create_void_icon (window);
 	gtk_list_store_set (window->priv->list_store, &iter,
@@ -324,7 +338,7 @@ set_track_icon (GooWindow  *window,
 
 static void
 set_current_track_icon (GooWindow  *window,
-		       const char *stock_id)
+		        const char *stock_id)
 {
 	if (window->priv->current_track != NULL)
 		set_track_icon (window, window->priv->current_track->number, stock_id);
@@ -1262,7 +1276,7 @@ set_action_label_and_icon (GooWindow  *window,
 			g_object_set (G_OBJECT (action),
 				      "label", label,
 				      "tooltip", tooltip,
-				      "stock_id", stock_id,
+				      "icon-name", stock_id,
 				      NULL);
 		g_free (path);
 
@@ -1288,7 +1302,7 @@ player_start_cb (GooPlayer       *player,
 					   "TogglePlay",
 					   _("_Pause"),
 					   _("Pause"),
-					   GTK_STOCK_MEDIA_PAUSE,
+					   GOO_STOCK_PAUSE,
 					   "/MenuBar/CDMenu/",
 					   NULL);
 
@@ -1644,7 +1658,7 @@ player_done_cb (GooPlayer       *player,
 	case GOO_PLAYER_ACTION_SEEK_SONG:
 		goo_window_set_current_track (window, goo_player_get_current_track (window->priv->player));
 		goo_window_select_current_track (window);
-		set_current_track_icon (window, GTK_STOCK_MEDIA_PLAY);
+		set_current_track_icon (window, GOO_STOCK_PLAY);
 		break;
 
 	case GOO_PLAYER_ACTION_PLAY:
@@ -1654,25 +1668,25 @@ player_done_cb (GooPlayer       *player,
 					   "TogglePlay",
 					   _("_Play"),
 					   _("Play"),
-					   GTK_STOCK_MEDIA_PLAY,
+					   GOO_STOCK_PLAY,
 					   "/MenuBar/CDMenu/",
 					   NULL);
 		if (action == GOO_PLAYER_ACTION_PLAY) {
-			set_current_track_icon (window, GTK_STOCK_MEDIA_PLAY);
+			set_current_track_icon (window, GOO_STOCK_PLAY);
 			window->priv->next_timeout_handle = g_idle_add (next_time_idle, window);
 		}
 		else if (action == GOO_PLAYER_ACTION_STOP)
-			set_current_track_icon (window, GTK_STOCK_MEDIA_STOP);
+			set_current_track_icon (window, GOO_STOCK_STOP);
 
 		break;
 
 	case GOO_PLAYER_ACTION_PAUSE:
-		set_current_track_icon (window, GTK_STOCK_MEDIA_PAUSE);
+		set_current_track_icon (window, GOO_STOCK_PAUSE);
 		set_action_label_and_icon (window,
 					   "TogglePlay",
 					   _("_Play"),
 					   _("Play"),
-					   GTK_STOCK_MEDIA_PLAY,
+					   GOO_STOCK_PLAY,
 					   "/MenuBar/CDMenu/",
 					   NULL);
 		break;
@@ -2647,7 +2661,7 @@ goo_window_play (GooWindow *window)
 			play_track (window, 0);
 	}
 	else {
-		set_current_track_icon (window, GTK_STOCK_MEDIA_PLAY);
+		set_current_track_icon (window, GOO_STOCK_PLAY);
 		goo_player_play (window->priv->player);
 	}
 }

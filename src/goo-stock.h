@@ -23,16 +23,21 @@
 #ifndef GOO_STOCK_H
 #define GOO_STOCK_H
 
-#define GOO_STOCK_EJECT       "media-eject"
-#define GOO_STOCK_EXTRACT     "gtk-cdrom"
+#define GOO_STOCK_PLAY        "media-playback-start-symbolic"
+#define GOO_STOCK_PAUSE       "media-playback-pause-symbolic"
+#define GOO_STOCK_STOP        "media-playback-stop-symbolic"
+#define GOO_STOCK_NEXT        "media-skip-forward-symbolic"
+#define GOO_STOCK_PREV        "media-skip-backward-symbolic"
+#define GOO_STOCK_EJECT       "media-eject-symbolic"
+#define GOO_STOCK_EXTRACT     "document-save-symbolic"
 #define GOO_STOCK_RESET       "goo-reset"
-#define GOO_STOCK_NO_DISC     "gnome-dev-removable"
-#define GOO_STOCK_DATA_DISC   "gnome-dev-cdrom"
-#define GOO_STOCK_AUDIO_CD    "gnome-dev-cdrom-audio"
-#define GOO_STOCK_VOLUME_MAX  "audio-volume-high"
-#define GOO_STOCK_VOLUME_MED  "audio-volume-medium"
-#define GOO_STOCK_VOLUME_MIN  "audio-volume-low"
-#define GOO_STOCK_VOLUME_ZERO "audio-volume-muted"
+#define GOO_STOCK_NO_DISC     "media-optical-symbolic"
+#define GOO_STOCK_DATA_DISC   "drive-harddisk-symbolic"
+#define GOO_STOCK_AUDIO_CD    "media-optical-symbolic"
+#define GOO_STOCK_VOLUME_MAX  "audio-volume-high-symbolic"
+#define GOO_STOCK_VOLUME_MED  "audio-volume-medium-symbolic"
+#define GOO_STOCK_VOLUME_MIN  "audio-volume-low-symbolic"
+#define GOO_STOCK_VOLUME_ZERO "audio-volume-muted-symbolic"
 
 
 void goo_stock_init (void);

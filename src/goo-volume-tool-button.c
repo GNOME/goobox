@@ -155,7 +155,7 @@ update_volume_label (GooVolumeToolButton *button)
 	else
 		icon = GOO_STOCK_VOLUME_MAX;
 
-	gtk_tool_button_set_stock_id (GTK_TOOL_BUTTON (button), icon);
+	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (button), icon);
 
 	text = g_strdup_printf ("<small>%3.0f%%</small>", value * 100.0);
 	gtk_label_set_markup (GTK_LABEL (button->priv->volume_label), text);
@@ -727,7 +727,7 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 	/* Construct the toolbar button.  */
 
 	gtk_tool_item_set_homogeneous (GTK_TOOL_ITEM (button), FALSE);
-	gtk_tool_button_set_stock_id  (GTK_TOOL_BUTTON (button), GOO_STOCK_VOLUME_MAX);
+	gtk_tool_button_set_icon_name  (GTK_TOOL_BUTTON (button), GOO_STOCK_VOLUME_MAX);
 
 	box = gtk_hbox_new (FALSE, 0);
 
