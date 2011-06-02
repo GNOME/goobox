@@ -306,6 +306,7 @@ release_data (void)
 static void
 prepare_application (void)
 {
+	GtkSettings *gtk_settings;
 	EggSMClient *client = NULL;
 
 	if (! required_gstreamer_plugins_available ()) {
@@ -324,6 +325,9 @@ prepare_application (void)
 
 		return;
 	}
+
+        gtk_settings = gtk_settings_get_default ();
+        g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
 	application = unique_app_new_with_commands ("org.gnome.goobox", NULL,
 						    "auto-play", COMMAND_PLAY,
@@ -396,7 +400,8 @@ prepare_application (void)
 }
 
 
-int main (int argc, char **argv)
+int
+main (int argc, char **argv)
 {
 	GOptionContext *context = NULL;
 	GError         *error = NULL;
