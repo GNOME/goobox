@@ -293,29 +293,30 @@ arrow_button_press_cb (GtkToggleButton     *toggle_button,
 	v = gtk_range_get_value (GTK_RANGE (button->priv->volume_scale)) / (gtk_adjustment_get_upper (adj) - gtk_adjustment_get_lower (adj));
 	gtk_widget_get_allocation (widget, &allocation);
 	gtk_widget_get_allocation (button->priv->popup_win, &allocation2);
-  	x += (allocation.width - allocation2.width) / 2;
-  	y -= ystartoff;
-  	y -= gtk_range_get_min_slider_size (GTK_RANGE (button->priv->volume_scale)) / 2;
-  	gtk_widget_get_allocation (button->priv->volume_scale, &allocation);
-  	m = allocation.height - gtk_range_get_min_slider_size (GTK_RANGE (button->priv->volume_scale));
-  	y -= m * (1.0 - v);
-  	y += mouse_y;
-  	gtk_window_move (GTK_WINDOW (button->priv->popup_win), x, y);
-  	gdk_window_get_origin (gtk_widget_get_window (button->priv->volume_scale), &sx, &sy);
+	x += (allocation.width - allocation2.width) / 2;
+	y -= ystartoff;
+	y -= gtk_range_get_min_slider_size (GTK_RANGE (button->priv->volume_scale)) / 2;
+	gtk_widget_get_allocation (button->priv->volume_scale, &allocation);
+	m = allocation.height - gtk_range_get_min_slider_size (GTK_RANGE (button->priv->volume_scale));
+	y -= m * (1.0 - v);
+	y += mouse_y;
+	gtk_window_move (GTK_WINDOW (button->priv->popup_win), x, y);
+	gdk_window_get_origin (gtk_widget_get_window (button->priv->volume_scale), &sx, &sy);
 
-	gdk_pointer_grab (gtk_widget_get_window (button->priv->popup_win),
-			  TRUE,
-			  (GDK_POINTER_MOTION_MASK
-			   | GDK_BUTTON_PRESS_MASK
-			   | GDK_BUTTON_RELEASE_MASK),
-			  NULL,
-			  NULL,
-			  GDK_CURRENT_TIME);
-	gdk_keyboard_grab (gtk_widget_get_window (button->priv->popup_win), TRUE, GDK_CURRENT_TIME);
+	gdk_device_grab (gdk_event_get_device ((GdkEvent *) event),
+			 gtk_widget_get_window (button->priv->popup_win),
+			 GDK_OWNERSHIP_NONE,
+			 TRUE,
+			 (GDK_POINTER_MOTION_MASK
+			  | GDK_BUTTON_PRESS_MASK
+			  | GDK_BUTTON_RELEASE_MASK),
+			 NULL,
+			 gdk_event_get_time ((GdkEvent *) event));
 	gtk_widget_grab_focus (button->priv->volume_scale);
 	gtk_grab_add (button->priv->popup_win);
 
 	/* forward event to the slider */
+
 	e = (GdkEventButton *) gdk_event_copy ((GdkEvent *) event);
 	e->window = gtk_widget_get_window (button->priv->volume_scale);
 	gtk_widget_get_allocation (button->priv->volume_scale, &allocation);
@@ -333,10 +334,10 @@ arrow_button_press_cb (GtkToggleButton     *toggle_button,
 
 
 static void
-ungrab (GooVolumeToolButton *button)
+ungrab (GooVolumeToolButton *button,
+	GdkEvent            *event)
 {
-	gdk_pointer_ungrab (GDK_CURRENT_TIME);
-	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
+	gdk_device_ungrab (gdk_event_get_device (event), gdk_event_get_time (event));
 	gtk_grab_remove (button->priv->popup_win);
 	gtk_widget_hide (button->priv->popup_win);
 
@@ -367,7 +368,7 @@ scale_button_release_cb (GtkToggleButton     *toggle_button,
 	if (button->priv->timeout) {
 		/* if we did a quick click, leave the window open; else, hide it */
 		if (event->time > button->priv->pop_time + CLICK_TIMEOUT) {
-			ungrab (button);
+			ungrab (button, (GdkEvent *) event);
 			return FALSE;
 		}
 		button->priv->timeout = FALSE;
@@ -389,8 +390,9 @@ popup_win_event_cb (GtkWidget           *widget,
 		event_widget = gtk_get_event_widget ((GdkEvent *)event);
 
 		if ((event_widget == button->priv->button)
-		    || (event_widget == button->priv->arrow_button)) {
-			ungrab (button);
+		    || (event_widget == button->priv->arrow_button))
+		{
+			ungrab (button, event);
 			return TRUE;
 		}
 		else {
@@ -402,8 +404,9 @@ popup_win_event_cb (GtkWidget           *widget,
 			if ((event->button.x < 0)
 			    || (event->button.x > w)
 			    || (event->button.y < 0)
-			    || (event->button.y > h)) {
-				ungrab (button);
+			    || (event->button.y > h))
+			{
+				ungrab (button, event);
 				return TRUE;
 			}
 		}
@@ -412,7 +415,7 @@ popup_win_event_cb (GtkWidget           *widget,
 	case GDK_KEY_PRESS:
 		switch (event->key.keyval) {
 		case GDK_KEY_Escape:
-			ungrab (button);
+			ungrab (button, event);
 			return TRUE;
 		default:
 			break;

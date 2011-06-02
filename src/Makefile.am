@@ -18,7 +18,6 @@ INCLUDES =						\
         -DGOO_LIBDIR=\"$(libdir)\"  	         	\
 	-DGOO_UIDIR=\""$(uidir)"\"     			\
 	$(DISABLE_DEPRECATED)				\
-	$(DBUS_CFLAGS)					\
 	$(GOO_CFLAGS)					\
 	$(LIBNOTIFY_CFLAGS)
 
@@ -88,7 +87,6 @@ goo-marshal.c: goo-marshal.list $(GLIB_GENMARSHAL)
 
 goobox_LDADD = 				\
 	$(top_builddir)/copy-n-paste/libeggsmclient.la  \
-	$(DBUS_LIBS)			\
 	$(GOO_LIBS) 			\
 	$(LIBNOTIFY_LIBS)		\
 	$(SYSTEM_LIBS)

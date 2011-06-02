@@ -91,19 +91,9 @@ AM_CONDITIONAL(ENABLE_MEDIA_KEYS, test "x$enable_media_keys" = xyes)
 DBUS_LIBS=""
 DBUS_CFLAGS=""
 if test x"$enable_media_keys" = xyes; then
-   AC_MSG_CHECKING(for media keys support)
-
-   if pkg-config dbus-glib-1; then
-      DBUS_LIBS=`pkg-config --libs dbus-glib-1`
-      DBUS_CFLAGS=`pkg-config --cflags dbus-glib-1`
-      AC_DEFINE(ENABLE_MEDIA_KEYS, 1, [enable media keys support])
-   else
-      enable_media_keys=no
-   fi
+   AC_DEFINE(ENABLE_MEDIA_KEYS, 1, [enable media keys support])
 fi
 AC_MSG_RESULT($enable_media_keys)
-AC_SUBST(DBUS_LIBS)
-AC_SUBST(DBUS_CFLAGS)
 
 dnl ===========================================================================
 

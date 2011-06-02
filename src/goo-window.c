@@ -27,9 +27,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 #include <gst/gst.h>
-#ifdef ENABLE_MEDIA_KEYS
-#include <dbus/dbus-glib.h>
-#endif /* ENABLE_MEDIA_KEYS */
 #include "actions.h"
 #include "gio-utils.h"
 #include "dlg-cover-chooser.h"
@@ -114,10 +111,9 @@ struct _GooWindowPrivate {
 	gboolean           hibernate;
 	gboolean           notify_action;
 
-#ifdef ENABLE_MEDIA_KEYS
-	DBusGProxy        *media_keys_proxy;
+	GDBusProxy        *media_keys_proxy;
 	gulong             focus_in_event;
-#endif /* ENABLE_MEDIA_KEYS */
+	gulong             media_key_event;
 };
 
 enum {
@@ -445,17 +441,16 @@ goo_window_finalize (GObject *object)
 	debug (DEBUG_INFO, "[FINALIZE]\n");
 
 	if (window->priv != NULL) {
-#ifdef ENABLE_MEDIA_KEYS
 		if (window->priv->media_keys_proxy != NULL) {
-			dbus_g_proxy_call (window->priv->media_keys_proxy,
-					   "ReleaseMediaPlayerKeys",
-					   NULL,
-					   G_TYPE_STRING, "goobox",
-					   G_TYPE_INVALID,
-					   G_TYPE_INVALID);
+			g_dbus_proxy_call_sync (window->priv->media_keys_proxy,
+						"ReleaseMediaPlayerKeys",
+						g_variant_new ("(s)", g_get_application_name ()),
+						G_DBUS_CALL_FLAGS_NONE,
+						-1,
+						NULL,
+						NULL);
 			g_object_unref (window->priv->media_keys_proxy);
 		}
-#endif /* ENABLE_MEDIA_KEYS */
 
 		/* Save preferences */
 
@@ -969,7 +964,7 @@ first_time_idle (gpointer callback_data)
 	GooWindow *window = callback_data;
 
 	g_source_remove (window->priv->first_time_event);
-	/*goo_player_update (window->priv->player); FIXME */
+	/* goo_player_update (window->priv->player); FIXME */
 
 	return FALSE;
 }
@@ -2116,25 +2111,35 @@ goo_window_init (GooWindow *window)
 }
 
 
-#ifdef ENABLE_MEDIA_KEYS
-
-
 static void
-media_player_key_pressed_cb (DBusGProxy *proxy,
-			     const char *application,
-			     const char *key,
-			     GooWindow  *window)
+media_player_key_pressed_cb (GDBusProxy *proxy,
+			     char       *sender_name,
+			     char       *signal_name,
+			     GVariant   *parameters,
+			     gpointer    user_data)
 {
-        if (strcmp ("goobox", application) == 0) {
-                if (strcmp ("Play", key) == 0)
-                	goo_window_toggle_play (window);
-                else if (strcmp ("Previous", key) == 0)
-                	goo_window_prev (window);
-                else if (strcmp ("Next", key) == 0)
-                	goo_window_next (window);
-                else if (strcmp ("Stop", key) == 0)
-                	goo_window_stop (window);
-        }
+	GooWindow *window = user_data;
+	char      *application;
+	char      *key;
+
+	if (g_strcmp0 (signal_name, "MediaPlayerKeyPressed") != 0)
+		return;
+
+	g_variant_get (parameters, "(ss)", &application, &key);
+
+	if (g_strcmp0 (application, PACKAGE_NAME) == 0) {
+		if (g_strcmp0 (key, "Play") == 0)
+			goo_window_toggle_play (window);
+		else if (g_strcmp0 (key, "Previous") == 0)
+			goo_window_prev (window);
+		else if (g_strcmp0 (key, "Next") == 0)
+			goo_window_next (window);
+		else if (g_strcmp0 (key, "Stop") == 0)
+			goo_window_stop (window);
+	}
+
+	g_free (application);
+	g_free (key);
 }
 
 
@@ -2145,13 +2150,13 @@ window_focus_in_event_cb (GtkWidget     *widget,
 {
 	GooWindow *window = user_data;
 
-	dbus_g_proxy_call (window->priv->media_keys_proxy,
-			   "GrabMediaPlayerKeys",
-			   NULL,
-			   G_TYPE_STRING, "goobox",
-			   G_TYPE_UINT, 0,
-			   G_TYPE_INVALID,
-			   G_TYPE_INVALID);
+	g_dbus_proxy_call_sync (window->priv->media_keys_proxy,
+				"GrabMediaPlayerKeys",
+				g_variant_new ("(su)", PACKAGE_NAME, 0),
+				G_DBUS_CALL_FLAGS_NONE,
+				-1,
+				NULL,
+				NULL);
 
 	return FALSE;
 }
@@ -2160,60 +2165,51 @@ window_focus_in_event_cb (GtkWidget     *widget,
 static void
 _goo_window_enable_media_keys (GooWindow *window)
 {
-	DBusGConnection *connection;
+	GDBusConnection *connection;
 
-	connection = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+	connection = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL);
 	if (connection == NULL)
 		return;
 
-	window->priv->media_keys_proxy = dbus_g_proxy_new_for_name_owner (connection,
-									  "org.gnome.SettingsDaemon",
-									  "/org/gnome/SettingsDaemon/MediaKeys",
-									  "org.gnome.SettingsDaemon.MediaKeys",
-									  NULL);
+	window->priv->media_keys_proxy = g_dbus_proxy_new_sync (connection,
+								G_DBUS_PROXY_FLAGS_NONE,
+								NULL,
+								"org.gnome.SettingsDaemon",
+								"/org/gnome/SettingsDaemon/MediaKeys",
+								"org.gnome.SettingsDaemon.MediaKeys",
+								NULL,
+								NULL);
 	if (window->priv->media_keys_proxy == NULL)
-		window->priv->media_keys_proxy = dbus_g_proxy_new_for_name_owner (connection,
-		                                                                  "org.gnome.SettingsDaemon",
-		                                                                  "/org/gnome/SettingsDaemon",
-		                                                                  "org.gnome.SettingsDaemon",
-		                                                                  NULL);
-	dbus_g_connection_unref (connection);
+		window->priv->media_keys_proxy = g_dbus_proxy_new_sync (connection,
+									G_DBUS_PROXY_FLAGS_NONE,
+									NULL,
+									"org.gnome.SettingsDaemon",
+									"/org/gnome/SettingsDaemon",
+									"org.gnome.SettingsDaemon",
+									NULL,
+									NULL);
+	g_object_unref (connection);
 
 	if (window->priv->media_keys_proxy == NULL)
 		return;
 
-	dbus_g_proxy_call (window->priv->media_keys_proxy,
-			   "GrabMediaPlayerKeys",
-			   NULL,
-			   G_TYPE_STRING, "goobox",
-			   G_TYPE_UINT, 0,
-			   G_TYPE_INVALID,
-			   G_TYPE_INVALID);
+	g_dbus_proxy_call_sync (window->priv->media_keys_proxy,
+				"GrabMediaPlayerKeys",
+				g_variant_new ("(su)", PACKAGE_NAME, 0),
+				G_DBUS_CALL_FLAGS_NONE,
+				-1,
+				NULL,
+				NULL);
 
-        dbus_g_object_register_marshaller (goo_marshal_VOID__STRING_STRING,
-					   G_TYPE_NONE,
-					   G_TYPE_STRING,
-					   G_TYPE_STRING,
-					   G_TYPE_INVALID);
-        dbus_g_proxy_add_signal (window->priv->media_keys_proxy,
-				 "MediaPlayerKeyPressed",
-				 G_TYPE_STRING,
-				 G_TYPE_STRING,
-				 G_TYPE_INVALID);
-	dbus_g_proxy_connect_signal (window->priv->media_keys_proxy,
-				     "MediaPlayerKeyPressed",
-				     G_CALLBACK (media_player_key_pressed_cb),
-				     window,
-				     NULL);
-
+	window->priv->media_key_event = g_signal_connect (window->priv->media_keys_proxy,
+							  "g-signal",
+							  G_CALLBACK (media_player_key_pressed_cb),
+							  window);
 	window->priv->focus_in_event = g_signal_connect (window,
 							 "focus-in-event",
 							 G_CALLBACK (window_focus_in_event_cb),
 							 window);
 }
-
-
-#endif /* ENABLE_MEDIA_KEYS */
 
 
 static void
@@ -2554,9 +2550,7 @@ goo_window_construct (GooWindow    *window,
 
 	/* Media keys*/
 
-#ifdef ENABLE_MEDIA_KEYS
 	_goo_window_enable_media_keys (window);
-#endif /* ENABLE_MEDIA_KEYS */
 }
 
 
