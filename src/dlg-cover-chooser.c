@@ -98,7 +98,7 @@ make_file_list_from_search_result (void  *buffer,
 		while (url_start != NULL) {
 			char *url_end;
 
-			url_end = strstr (url_start, " ");
+			url_end = strstr (url_start, "\"");
 
 			if (url_end == NULL) {
 				if (partial_url == NULL)
@@ -181,7 +181,7 @@ get_query (const char *album,
 
 
 static void
-destroy_cb (GtkWidget  *widget, 
+destroy_cb (GtkWidget  *widget,
 	    DialogData *data)
 {
 	if (data->searching) {
@@ -189,7 +189,7 @@ destroy_cb (GtkWidget  *widget,
 		g_cancellable_cancel (data->cancellable);
 		return;
 	}
-	
+
 	g_object_unref (data->cancellable);
 	_g_string_list_free (data->file_list);
 	_g_object_unref (data->cover_backup);
@@ -204,7 +204,7 @@ static void
 search_completed (DialogData *data)
 {
 	char *text;
-	
+
 	data->searching = FALSE;
 	gtk_widget_set_sensitive (GET_WIDGET ("cancel_search_button"), FALSE);
 	text = g_strdup_printf ("%u", data->total_files);
@@ -512,7 +512,7 @@ dlg_cover_chooser (GooWindow  *window,
 
 	/* Set the signals handlers. */
 
-	g_signal_connect (G_OBJECT (data->dialog), 
+	g_signal_connect (G_OBJECT (data->dialog),
 			  "destroy",
 			  G_CALLBACK (destroy_cb),
 			  data);
@@ -548,7 +548,7 @@ dlg_cover_chooser (GooWindow  *window,
 	/* run dialog. */
 
 	gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
-	gtk_window_set_modal (GTK_WINDOW (data->dialog), TRUE);
+	gtk_window_set_modal (GTK_WINDOW (data->dialog), FALSE);
 	gtk_widget_show (data->dialog);
 
 	start_searching (data);
@@ -626,7 +626,7 @@ fetch_cover_image_from_name (GooWindow  *window,
 	FetchData *data;
 	char      *url;
 	GFile     *file;
-	
+
 	data = g_new0 (FetchData, 1);
 	data->window = window;
 
@@ -650,7 +650,7 @@ fetch_cover_image_from_asin (GooWindow  *window,
 	FetchData *data;
 	char      *url;
 	GFile     *file;
-	
+
 	data = g_new0 (FetchData, 1);
 	data->window = window;
 	url = g_strdup_printf ("http://images.amazon.com/images/P/%s.01._SCLZZZZZZZ_.jpg", asin);

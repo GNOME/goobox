@@ -282,7 +282,7 @@ debug (const char *file,
 
 	if (! first_time) {
 		first_time = 1;
-		if (g_getenv ("GTHUMB_DEBUG"))
+		if (g_getenv ("GOOBOX_DEBUG"))
 			print_debug_info = 1;
 	}
 
