@@ -24,6 +24,7 @@
 #define TYPEDEFS_H
 
 #include <glib.h>
+#include <glib-object.h>
 
 #define OGG_ENCODER "vorbisenc"
 #define FLAC_ENCODER "flacenc"

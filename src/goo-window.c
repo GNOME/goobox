@@ -50,13 +50,9 @@
 #include "icons/pixbufs.h"
 
 #define ICON_GTK_SIZE GTK_ICON_SIZE_LARGE_TOOLBAR
-#define GCONF_NOTIFICATIONS 6
 #define FILES_TO_PROCESS_AT_ONCE 500
-#define DEFAULT_WIN_WIDTH 200
-#define DEFAULT_WIN_HEIGHT 400
 #define HIDE_TRACK_LIST N_("Hide _tracks")
 #define SHOW_TRACK_LIST N_("Show _tracks")
-#define DEFAULT_VOLUME 100
 #define PLAYER_CHECK_RATE 100
 #define COVER_SIZE 80
 #define IDLE_TIMEOUT 200
@@ -97,7 +93,10 @@ struct _GooWindowPrivate {
 	gint               activity_ref;              /* when > 0 some activity
                                                        * is present. */
 	GtkActionGroup    *actions;
-	guint              cnxn_id[GCONF_NOTIFICATIONS];
+	GSettings         *settings_general;
+	GSettings         *settings_ui;
+	GSettings         *settings_playlist;
+	GSettings         *settings_encoder;
 
 	guint              update_timeout_handle;     /* update list timeout
 						       * handle. */
@@ -226,7 +225,7 @@ window_update_sensitivity (GooWindow *window)
 	playing           = state == GOO_PLAYER_STATE_PLAYING;
 	paused            = state == GOO_PLAYER_STATE_PAUSED;
 	stopped           = state == GOO_PLAYER_STATE_STOPPED;
-	play_all          = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
+	play_all          = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL);
 	audio_cd          = (! error) && (goo_player_get_discid (window->priv->player) != NULL);
 
 	set_sensitive (window, "Play", audio_cd && !playing);
@@ -308,18 +307,16 @@ set_track_icon (GooWindow  *window,
 	       int         track_number,
 	       const char *stock_id)
 {
-
-	GtkTreeIter           iter;
-	GdkPixbuf            *icon;
+	GtkTreeIter  iter;
+	GdkPixbuf   *icon;
 
 	if (!get_iter_from_track_number (window, track_number, &iter))
 		return;
 
 	if (stock_id != NULL)
-		icon = gtk_widget_render_icon (GTK_WIDGET (window),
-					       stock_id,
-					       GTK_ICON_SIZE_MENU,
-					       NULL);
+		icon = gtk_widget_render_icon_pixbuf (GTK_WIDGET (window),
+						       stock_id,
+						       GTK_ICON_SIZE_MENU);
 	else
 		icon = create_void_icon (window);
 	gtk_list_store_set (window->priv->list_store, &iter,
@@ -444,13 +441,8 @@ static void
 goo_window_finalize (GObject *object)
 {
 	GooWindow *window = GOO_WINDOW (object);
-	int        i;
 
 	debug (DEBUG_INFO, "[FINALIZE]\n");
-
-	for (i = 0; i < GCONF_NOTIFICATIONS; i++)
-		if (window->priv->cnxn_id[i] != -1)
-			eel_gconf_notification_remove (window->priv->cnxn_id[i]);
 
 	if (window->priv != NULL) {
 #ifdef ENABLE_MEDIA_KEYS
@@ -467,9 +459,14 @@ goo_window_finalize (GObject *object)
 
 		/* Save preferences */
 
-		eel_gconf_set_integer (PREF_GENERAL_VOLUME, (int) (goo_player_get_audio_volume (window->priv->player) * 100.0));
+		g_settings_set_int (window->priv->settings_general, PREF_GENERAL_VOLUME, (int) (goo_player_get_audio_volume (window->priv->player) * 100.0));
 
 		/**/
+
+		_g_object_unref (window->priv->settings_ui);
+		_g_object_unref (window->priv->settings_general);
+		_g_object_unref (window->priv->settings_playlist);
+		_g_object_unref (window->priv->settings_encoder);
 
 		g_object_unref (window->priv->list_store);
 
@@ -639,8 +636,8 @@ static void
 menu_item_deselect_cb (GtkMenuItem *proxy,
 		       GooWindow   *window)
 {
-        gtk_statusbar_pop (GTK_STATUSBAR (window->priv->statusbar),
-                           window->priv->help_message_cid);
+	gtk_statusbar_pop (GTK_STATUSBAR (window->priv->statusbar),
+			   window->priv->help_message_cid);
 }
 
 
@@ -661,8 +658,8 @@ disconnect_proxy_cb (GtkUIManager *manager,
 
 static void
 connect_proxy_cb (GtkUIManager *manager,
-                  GtkAction    *action,
-                  GtkWidget    *proxy,
+		  GtkAction    *action,
+		  GtkWidget    *proxy,
 		  GooWindow    *window)
 {
         if (GTK_IS_MENU_ITEM (proxy)) {
@@ -675,37 +672,38 @@ connect_proxy_cb (GtkUIManager *manager,
 
 
 static void
-pref_view_toolbar_changed (GConfClient *client,
-			   guint        cnxn_id,
-			   GConfEntry  *entry,
-			   gpointer     user_data)
+pref_view_toolbar_changed (GSettings  *settings,
+			   const char *key,
+			   gpointer    user_data)
 {
 	GooWindow *window = user_data;
+
 	g_return_if_fail (window != NULL);
-	goo_window_set_toolbar_visibility (window, gconf_value_get_bool (gconf_entry_get_value (entry)));
+	goo_window_set_toolbar_visibility (window, g_settings_get_boolean (settings, key));
 }
 
 
 static void
-pref_view_statusbar_changed (GConfClient *client,
-			     guint        cnxn_id,
-			     GConfEntry  *entry,
-			     gpointer     user_data)
+pref_view_statusbar_changed (GSettings  *settings,
+			     const char *key,
+			     gpointer    user_data)
 {
 	GooWindow *window = user_data;
-	goo_window_set_statusbar_visibility (window, gconf_value_get_bool (gconf_entry_get_value (entry)));
+
+	g_return_if_fail (window != NULL);
+	goo_window_set_statusbar_visibility (window, g_settings_get_boolean (settings, key));
 }
 
 
 static void
-pref_view_playlist_changed (GConfClient *client,
-			    guint        cnxn_id,
-			    GConfEntry  *entry,
-			    gpointer     user_data)
+pref_view_playlist_changed (GSettings  *settings,
+			    const char *key,
+			    gpointer    user_data)
 {
 	GooWindow *window = user_data;
+
 	g_return_if_fail (window != NULL);
-	gtk_expander_set_expanded (GTK_EXPANDER (window->priv->list_expander), eel_gconf_get_boolean (PREF_UI_PLAYLIST, TRUE));
+	gtk_expander_set_expanded (GTK_EXPANDER (window->priv->list_expander), g_settings_get_boolean (settings, key));
 }
 
 
@@ -852,9 +850,9 @@ play_next_track_in_playlist (GooWindow *window)
 	gboolean  repeat;
 	GList    *next = NULL;
 
-	play_all = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
-	shuffle  = eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE);
-	repeat = eel_gconf_get_boolean (PREF_PLAYLIST_REPEAT, FALSE);
+	play_all = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL);
+	shuffle = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_SHUFFLE);
+	repeat = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_REPEAT);
 
 	next = window->priv->playlist;
 
@@ -879,10 +877,9 @@ play_next_track_in_playlist (GooWindow *window)
 
 
 static void
-pref_playlist_playall_changed (GConfClient *client,
-			       guint        cnxn_id,
-			       GConfEntry  *entry,
-			       gpointer     user_data)
+pref_playlist_playall_changed (GSettings  *settings,
+	  	 	       const char *key,
+	  	 	       gpointer    user_data)
 {
 	GooWindow *window = user_data;
 	gboolean   play_all;
@@ -890,8 +887,8 @@ pref_playlist_playall_changed (GConfClient *client,
 
 	g_return_if_fail (window != NULL);
 
-	play_all = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
-	shuffle = eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE);
+	play_all = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL);
+	shuffle = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_SHUFFLE);
 	create_playlist (window, play_all, shuffle);
 
 	window_update_sensitivity (window);
@@ -901,24 +898,22 @@ pref_playlist_playall_changed (GConfClient *client,
 
 
 static void
-pref_playlist_repeat_changed (GConfClient *client,
-			      guint        cnxn_id,
-			      GConfEntry  *entry,
-			      gpointer     user_data)
+pref_playlist_repeat_changed (GSettings  *settings,
+	  	 	      const char *key,
+	  	 	      gpointer    user_data)
 {
 	GooWindow *window = user_data;
 
 	g_return_if_fail (window != NULL);
 
-	set_active (window, "Repeat", eel_gconf_get_boolean (PREF_PLAYLIST_REPEAT, FALSE));
+	set_active (window, "Repeat", g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_REPEAT));
 }
 
 
 static void
-pref_playlist_shuffle_changed (GConfClient *client,
-			       guint        cnxn_id,
-			       GConfEntry  *entry,
-			       gpointer     user_data)
+pref_playlist_shuffle_changed (GSettings  *settings,
+	  	 	       const char *key,
+	  	 	       gpointer    user_data)
 {
 	GooWindow *window = user_data;
 	gboolean   play_all;
@@ -926,8 +921,8 @@ pref_playlist_shuffle_changed (GConfClient *client,
 
 	g_return_if_fail (window != NULL);
 
-	play_all = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
-	shuffle = eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE);
+	play_all = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL);
+	shuffle = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_SHUFFLE);
 	create_playlist (window, play_all, shuffle);
 
 	set_active (window, "Shuffle", shuffle);
@@ -937,11 +932,11 @@ pref_playlist_shuffle_changed (GConfClient *client,
 static void
 save_window_size (GooWindow *window)
 {
-	int w, h;
+	GdkWindow *w;
 
-	gdk_drawable_get_size (gtk_widget_get_window (GTK_WIDGET (window)), &w, &h);
-	eel_gconf_set_integer (PREF_UI_WINDOW_WIDTH, w);
-	eel_gconf_set_integer (PREF_UI_WINDOW_HEIGHT, h);
+	w = gtk_widget_get_window (GTK_WIDGET (window));
+	g_settings_set_int (window->priv->settings_ui, PREF_UI_WINDOW_WIDTH, gdk_window_get_width (w));
+	g_settings_set_int (window->priv->settings_ui, PREF_UI_WINDOW_HEIGHT, gdk_window_get_height (w));
 }
 
 
@@ -956,12 +951,13 @@ goo_window_unrealize (GtkWidget *widget)
 	/* save ui preferences. */
 
 	playlist_visible = gtk_expander_get_expanded (GTK_EXPANDER (window->priv->list_expander));
-	eel_gconf_set_boolean (PREF_UI_PLAYLIST, playlist_visible);
+	g_settings_set_boolean (window->priv->settings_ui, PREF_UI_PLAYLIST, playlist_visible);
+
 	if (playlist_visible)
 		save_window_size (window);
 
-	preferences_set_sort_method (window->priv->sort_method);
-	preferences_set_sort_type (window->priv->sort_type);
+	g_settings_set_enum (window->priv->settings_playlist, PREF_PLAYLIST_SORT_METHOD, window->priv->sort_method);
+	g_settings_set_enum (window->priv->settings_playlist, PREF_PLAYLIST_SORT_TYPE, window->priv->sort_type);
 
 	GTK_WIDGET_CLASS (goo_window_parent_class)->unrealize (widget);
 }
@@ -990,11 +986,11 @@ goo_window_show (GtkWidget *widget)
 	else
 		HideShow = FALSE;
 
-	view_foobar = eel_gconf_get_boolean (PREF_UI_TOOLBAR, TRUE);
+	view_foobar = g_settings_get_boolean (window->priv->settings_ui, PREF_UI_TOOLBAR);
 	set_active (window, "ViewToolbar", view_foobar);
 	goo_window_set_toolbar_visibility (window, view_foobar);
 
-	view_foobar = eel_gconf_get_boolean (PREF_UI_STATUSBAR, FALSE);
+	view_foobar = g_settings_get_boolean (window->priv->settings_ui, PREF_UI_STATUSBAR);
 	set_active (window, "ViewStatusbar", view_foobar);
 	goo_window_set_statusbar_visibility (window, view_foobar);
 
@@ -1636,7 +1632,7 @@ player_done_cb (GooPlayer       *player,
 		goo_window_update_cover (window);
 		window_update_title (window);
 		set_current_track_icon (window, NULL);
-		if (AutoPlay || eel_gconf_get_boolean (PREF_GENERAL_AUTOPLAY, TRUE)) {
+		if (AutoPlay || g_settings_get_boolean (window->priv->settings_general, PREF_GENERAL_AUTOPLAY)) {
 			AutoPlay = FALSE;
 			g_timeout_add (AUTOPLAY_DELAY, autoplay_cb, window);
 		}
@@ -1852,8 +1848,8 @@ sort_column_changed_cb (GtkTreeSortable *sortable,
 	state = goo_player_get_state (window->priv->player);
 	if ((state != GOO_PLAYER_STATE_PLAYING) &&  (state != GOO_PLAYER_STATE_PAUSED))
 		create_playlist (window,
-				 eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE),
-				 eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE));
+				 g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL),
+				 g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_SHUFFLE));
 }
 
 
@@ -1869,9 +1865,9 @@ update_ui_from_expander_state (GooWindow *window)
 		gtk_expander_set_label (expander, _(HIDE_TRACK_LIST));
 		if (gtk_widget_get_realized (GTK_WIDGET (window)))
 			gtk_window_resize (GTK_WINDOW (window),
-					   eel_gconf_get_integer (PREF_UI_WINDOW_WIDTH, DEFAULT_WIN_WIDTH),
-					   eel_gconf_get_integer (PREF_UI_WINDOW_HEIGHT, DEFAULT_WIN_HEIGHT));
-		gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (window->priv->statusbar), TRUE);
+					   g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_WIDTH),
+					   g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_HEIGHT));
+		gtk_window_set_has_resize_grip (GTK_WINDOW (window), TRUE);
 
 		hints.max_height = -1;
 		hints.max_width = G_MAXINT;
@@ -1885,7 +1881,7 @@ update_ui_from_expander_state (GooWindow *window)
 
 		if (gtk_widget_get_realized (GTK_WIDGET (window)))
 			save_window_size (window);
-		gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (window->priv->statusbar), FALSE);
+		gtk_window_set_has_resize_grip (GTK_WINDOW (window), FALSE);
 		gtk_expander_set_label (expander, _(SHOW_TRACK_LIST));
 
 		hints.max_height = -1;
@@ -1904,7 +1900,7 @@ list_expander_expanded_cb (GtkExpander *expander,
 			   GooWindow   *window)
 {
 	update_ui_from_expander_state (window);
-	eel_gconf_set_boolean (PREF_UI_PLAYLIST, gtk_expander_get_expanded (expander));
+	g_settings_set_boolean (window->priv->settings_ui, PREF_UI_PLAYLIST, gtk_expander_get_expanded (expander));
 }
 
 static void
@@ -1934,9 +1930,9 @@ player_info_cover_clicked_cb (GooPlayerInfo *info,
 static void
 window_sync_ui_with_preferences (GooWindow *window)
 {
-	set_active (window, "PlayAll", eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE));
-	set_active (window, "Repeat", eel_gconf_get_boolean (PREF_PLAYLIST_REPEAT, FALSE));
-	set_active (window, "Shuffle", eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE));
+	set_active (window, "PlayAll", g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL));
+	set_active (window, "Repeat", g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_REPEAT));
+	set_active (window, "Shuffle", g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_SHUFFLE));
 
 	update_ui_from_expander_state (window);
 }
@@ -2231,7 +2227,6 @@ goo_window_construct (GooWindow    *window,
 	GtkWidget        *hbox;
 	GtkWidget        *expander;
 	GtkTreeSelection *selection;
-	int               i;
 	GtkActionGroup   *actions;
 	GtkUIManager     *ui;
 	GError           *error = NULL;
@@ -2272,6 +2267,13 @@ goo_window_construct (GooWindow    *window,
 
 	window->priv->playlist = NULL;
 
+	/* Create the settings objects */
+
+	window->priv->settings_general = g_settings_new (GOOBOX_SCHEMA_GENERAL);
+	window->priv->settings_ui = g_settings_new (GOOBOX_SCHEMA_UI);
+	window->priv->settings_playlist = g_settings_new (GOOBOX_SCHEMA_PLAYLIST);
+	window->priv->settings_encoder = g_settings_new (GOOBOX_SCHEMA_ENCODER);
+
 	/* Create the widgets. */
 
 	/* * File list. */
@@ -2300,8 +2302,8 @@ goo_window_construct (GooWindow    *window,
 					 COLUMN_TIME, time_column_sort_func,
 					 NULL, NULL);
 
-	window->priv->sort_method = preferences_get_sort_method ();
-	window->priv->sort_type = preferences_get_sort_type ();
+	window->priv->sort_method = g_settings_get_enum (window->priv->settings_playlist, PREF_PLAYLIST_SORT_METHOD);
+	window->priv->sort_type = g_settings_get_enum (window->priv->settings_playlist, PREF_PLAYLIST_SORT_TYPE);
 
 	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (window->priv->list_store), get_column_from_sort_method (window->priv->sort_method), window->priv->sort_type);
 
@@ -2348,10 +2350,8 @@ goo_window_construct (GooWindow    *window,
 
 	window->priv->ui = ui = gtk_ui_manager_new ();
 
-	g_signal_connect (ui, "connect_proxy",
-			  G_CALLBACK (connect_proxy_cb), window);
-	g_signal_connect (ui, "disconnect_proxy",
-			  G_CALLBACK (disconnect_proxy_cb), window);
+	g_signal_connect (ui, "connect_proxy", G_CALLBACK (connect_proxy_cb), window);
+	g_signal_connect (ui, "disconnect_proxy", G_CALLBACK (disconnect_proxy_cb), window);
 
 	gtk_ui_manager_insert_action_group (ui, actions, 0);
 	gtk_window_add_accel_group (GTK_WINDOW (window),
@@ -2441,12 +2441,12 @@ goo_window_construct (GooWindow    *window,
 	/* Create the statusbar. */
 
 	window->priv->statusbar = gtk_statusbar_new ();
-	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (window->priv->statusbar), TRUE);
+	gtk_window_set_has_resize_grip (GTK_WINDOW (window), TRUE);
 	window->priv->help_message_cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (window->priv->statusbar), "help_message");
 	window->priv->list_info_cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (window->priv->statusbar), "list_info");
 	window->priv->progress_cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (window->priv->statusbar), "progress");
 	gth_window_attach (GTH_WINDOW (window), window->priv->statusbar, GTH_WINDOW_STATUSBAR);
-	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (window->priv->statusbar), TRUE);
+	gtk_window_set_has_resize_grip (GTK_WINDOW (window), TRUE);
 
 	/**/
 
@@ -2475,7 +2475,7 @@ goo_window_construct (GooWindow    *window,
 
 	window->priv->list_expander = expander = gtk_expander_new_with_mnemonic (_(HIDE_TRACK_LIST));
 	gtk_container_add (GTK_CONTAINER (window->priv->list_expander), scrolled_window);
-	gtk_expander_set_expanded (GTK_EXPANDER (expander), FALSE /*eel_gconf_get_boolean (PREF_UI_PLAYLIST, TRUE)*/);
+	gtk_expander_set_expanded (GTK_EXPANDER (expander), FALSE /*g_settings_get_boolean (window->priv->settings_ui, PREF_UI_PLAYLIST)*/);
 	g_signal_connect (expander,
 			  "notify::expanded",
 			  G_CALLBACK (list_expander_expanded_cb),
@@ -2493,11 +2493,11 @@ goo_window_construct (GooWindow    *window,
 	window_sync_ui_with_preferences (window);
 
 	gtk_window_set_default_size (GTK_WINDOW (window),
-				     eel_gconf_get_integer (PREF_UI_WINDOW_WIDTH, DEFAULT_WIN_WIDTH),
-				     eel_gconf_get_integer (PREF_UI_WINDOW_HEIGHT, DEFAULT_WIN_HEIGHT));
+				     g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_WIDTH),
+				     g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_HEIGHT));
 
 	goo_volume_tool_button_set_volume (GOO_VOLUME_TOOL_BUTTON (window->priv->volume_button),
-					   eel_gconf_get_integer (PREF_GENERAL_VOLUME, DEFAULT_VOLUME) / 100.0,
+					   g_settings_get_int (window->priv->settings_general, PREF_GENERAL_VOLUME) / 100.0,
 					   TRUE);
 
 	/* The status icon. */
@@ -2526,32 +2526,30 @@ goo_window_construct (GooWindow    *window,
 
 	/* Add notification callbacks. */
 
-	i = 0;
-
-	window->priv->cnxn_id[i++] = eel_gconf_notification_add (
-					   PREF_UI_TOOLBAR,
-					   pref_view_toolbar_changed,
-					   window);
-	window->priv->cnxn_id[i++] = eel_gconf_notification_add (
-					   PREF_UI_STATUSBAR,
-					   pref_view_statusbar_changed,
-					   window);
-	window->priv->cnxn_id[i++] = eel_gconf_notification_add (
-					   PREF_UI_PLAYLIST,
-					   pref_view_playlist_changed,
-					   window);
-	window->priv->cnxn_id[i++] = eel_gconf_notification_add (
-					   PREF_PLAYLIST_PLAYALL,
-					   pref_playlist_playall_changed,
-					   window);
-	window->priv->cnxn_id[i++] = eel_gconf_notification_add (
-					   PREF_PLAYLIST_SHUFFLE,
-					   pref_playlist_shuffle_changed,
-					   window);
-	window->priv->cnxn_id[i++] = eel_gconf_notification_add (
-					   PREF_PLAYLIST_REPEAT,
-					   pref_playlist_repeat_changed,
-					   window);
+	g_signal_connect (window->priv->settings_ui,
+			  "changed::" PREF_UI_TOOLBAR,
+			  G_CALLBACK (pref_view_toolbar_changed),
+			  window);
+	g_signal_connect (window->priv->settings_ui,
+			  "changed::" PREF_UI_STATUSBAR,
+			  G_CALLBACK (pref_view_statusbar_changed),
+			  window);
+	g_signal_connect (window->priv->settings_ui,
+			  "changed::" PREF_UI_PLAYLIST,
+			  G_CALLBACK (pref_view_playlist_changed),
+			  window);
+	g_signal_connect (window->priv->settings_playlist,
+			  "changed::" PREF_PLAYLIST_PLAYALL,
+			  G_CALLBACK (pref_playlist_playall_changed),
+			  window);
+	g_signal_connect (window->priv->settings_playlist,
+			  "changed::" PREF_PLAYLIST_SHUFFLE,
+			  G_CALLBACK (pref_playlist_shuffle_changed),
+			  window);
+	g_signal_connect (window->priv->settings_playlist,
+			  "changed::" PREF_PLAYLIST_REPEAT,
+			  G_CALLBACK (pref_playlist_repeat_changed),
+			  window);
 
 	/* Media keys*/
 
@@ -2567,9 +2565,13 @@ goo_window_new (BraseroDrive *drive)
 	GooWindow *window;
 
 	if (drive == NULL) {
-		char *default_device;
+		GSettings *settings;
+		char      *default_device;
 
-		default_device = eel_gconf_get_string (PREF_GENERAL_DEVICE, NULL);
+		settings = g_settings_new (GOOBOX_SCHEMA_GENERAL);
+		default_device = g_settings_get_string (settings, PREF_GENERAL_DEVICE);
+		g_object_unref (settings);
+
 		if (default_device != NULL)
 			drive = main_get_drive_for_device (default_device);
 		if (drive == NULL)
@@ -2638,8 +2640,8 @@ goo_window_play (GooWindow *window)
 		gboolean  play_all;
 		gboolean  shuffle;
 
-		play_all = eel_gconf_get_boolean (PREF_PLAYLIST_PLAYALL, TRUE);
-		shuffle  = eel_gconf_get_boolean (PREF_PLAYLIST_SHUFFLE, FALSE);
+		play_all = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL);
+		shuffle  = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_SHUFFLE);
 		create_playlist (window, play_all, shuffle);
 
 		if (window->priv->current_track != NULL)
@@ -2969,7 +2971,7 @@ open_response_cb (GtkDialog  *file_sel,
 	/* Save the folder */
 
 	folder = gtk_file_chooser_get_current_folder (GTK_FILE_CHOOSER (file_sel));
-	eel_gconf_set_path (PREF_GENERAL_COVER_PATH, folder);
+	g_settings_set_string (window->priv->settings_general, PREF_GENERAL_COVER_PATH, folder);
 	g_free (folder);
 
 	/* Load the image. */
@@ -3008,7 +3010,7 @@ goo_window_pick_cover_from_disk (GooWindow *window)
 	gtk_file_chooser_set_use_preview_label (GTK_FILE_CHOOSER (file_sel), FALSE);
 	gtk_file_chooser_set_preview_widget_active (GTK_FILE_CHOOSER (file_sel), TRUE);
 
-	path = eel_gconf_get_path (PREF_GENERAL_COVER_PATH, "~");
+	path = g_settings_get_string (window->priv->settings_general, PREF_GENERAL_COVER_PATH);
 	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (file_sel), path);
 	g_free (path);
 

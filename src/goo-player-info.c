@@ -98,9 +98,9 @@ goo_player_info_get_preferred_width (GtkWidget *widget,
 	GooPlayerInfo *info = GOO_PLAYER_INFO (widget);
 
 	if (info->priv->interactive)
-		minimum_width = natural_width = MIN_WIDTH;
+		*minimum_width = *natural_width = MIN_WIDTH;
 	else
-		minimum_width = natural_width = MIN_TOOLTIP_WIDTH;
+		*minimum_width = *natural_width = MIN_TOOLTIP_WIDTH;
 }
 
 
@@ -347,7 +347,7 @@ goo_player_info_construct (GooPlayerInfo *info)
 	priv->total_time = NULL;
 	priv->update_id = 0;
 
-	gtk_widget_set_can_focus (info, FALSE);
+	gtk_widget_set_can_focus (GTK_WIDGET (info), FALSE);
 	gtk_box_set_spacing (GTK_BOX (info), SPACING);
 	gtk_box_set_homogeneous (GTK_BOX (info), FALSE);
 

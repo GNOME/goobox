@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Goobox
+
+  Copyright © 2011 Free Software Foundation, Inc.
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<schemalist>
+
+  <enum id="org.gnome.Goobox.ToolbarStyle">
+    <value nick="system" value="0"/>
+    <value nick="text-below" value="1"/>
+    <value nick="text-beside" value="2"/>
+    <value nick="icons-only" value="3"/>
+  </enum>
+
+  <enum id="org.gnome.Goobox.SortMethod">
+    <value nick="number" value="0"/>
+    <value nick="time" value="1"/>
+    <value nick="title" value="2"/>
+  </enum>
+
+  <enum id="org.gnome.Goobox.SortType">
+    <value nick="ascending" value="0"/>
+    <value nick="descending" value="1"/>
+  </enum>
+
+  <enum id="org.gnome.Goobox.FileFormat">
+    <value nick="ogg" value="0"/>
+    <value nick="flac" value="1"/>
+    <value nick="wave" value="2"/>
+  </enum>
+
+  <schema id="org.gnome.Goobox" path="/org/gnome/goobox/">
+    <child name="general" schema="org.gnome.Goobox.General"/>
+    <child name="ui" schema="org.gnome.Goobox.UI"/>
+    <child name="playlist" schema="org.gnome.Goobox.Playlist"/>
+    <child name="ripper" schema="org.gnome.Goobox.Ripper"/>
+    <child name="encoder" schema="org.gnome.Goobox.Encoder"/>
+  </schema>
+
+  <schema id="org.gnome.Goobox.General" path="/org/gnome/goobox/general/">
+    <key name="device" type="s">
+      <default>'/dev/cdrom'</default>
+      <_summary>Device path</_summary>
+    </key>
+    <key name="volume" type="i">
+      <default>100</default>
+      <_summary>Volume level</_summary>
+    </key>
+    <key name="cover-path" type="s">
+      <default>'~'</default>
+      <_summary>'Choose cover' location</_summary>
+      <_description>Default location for the 'Choose cover' dialog.</_description>
+    </key>
+    <key name="use-sound-juicer" type="b">
+      <default>false</default>
+      <_summary>Use Sound Juicer to rip discs</_summary>
+    </key>
+    <key name="autoplay" type="b">
+      <default>true</default>
+      <_summary>Autoplay</_summary>
+      <_description>Autoplay discs after insertion.</_description>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.Goobox.UI" path="/org/gnome/goobox/ui/">
+    <key name="toolbar-style" enum="org.gnome.Goobox.ToolbarStyle">
+      <default>'system'</default>
+      <_summary>Toolbar style</_summary>
+    </key>
+    <key name="window-width" type="i">
+      <default>200</default>
+      <_summary>Window width</_summary>
+    </key>
+    <key name="window-height" type="i">
+      <default>400</default>
+      <_summary>Window height</_summary>
+    </key>
+    <key name="toolbar-visible" type="b">
+      <default>true</default>
+      <_summary>Toolbar visibility</_summary>
+    </key>
+    <key name="statusbar-visible" type="b">
+      <default>false</default>
+      <_summary>Statusbar visibility</_summary>
+    </key>
+    <key name="playlist-visible" type="b">
+      <default>true</default>
+      <_summary>Playlist visibility</_summary>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.Goobox.Playlist" path="/org/gnome/goobox/playlist/">
+    <key name="play-all" type="b">
+      <default>true</default>
+      <_summary>Play all tracks</_summary>
+    </key>
+    <key name="shuffle" type="b">
+      <default>false</default>
+      <_summary>Shuffle playlist</_summary>
+    </key>
+    <key name="repeat" type="b">
+      <default>false</default>
+      <_summary>Restart when finished</_summary>
+    </key>
+    <key name="sort-method" enum="org.gnome.Goobox.SortMethod">
+      <default>'number'</default>
+      <_summary>Playlist sort method</_summary>
+    </key>
+    <key name="sort-type" enum="org.gnome.Goobox.SortType">
+      <default>'ascending'</default>
+      <_summary>Playlist sort type</_summary>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.Goobox.Ripper" path="/org/gnome/goobox/ripper/">
+    <key name="destination" type="s">
+      <default>''</default>
+      <_summary>Extraction folder</_summary>
+    </key>
+    <key name="file-type" enum="org.gnome.Goobox.FileFormat">
+      <default>'ogg'</default>
+      <_summary>File type</_summary>
+      <_description>Possible values are: ogg, flac, mp3, wave.</_description>
+    </key>
+    <key name="save-playlist" type="b">
+      <default>true</default>
+      <_summary>Save the playlist</_summary>
+      <_description>Save the playlist of the extracted tracks.</_description>
+    </key>
+    <key name="view-destination" type="b">
+      <default>false</default>
+      <_summary>View the destination</_summary>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.Goobox.Encoder" path="/org/gnome/goobox/encoder/">
+    <key name="ogg-quality" type="d">
+      <default>0.5</default>
+      <_summary>OGG files quality</_summary>
+    </key>
+    <key name="flac-compression" type="i">
+      <default>5</default>
+      <_summary>FLAC files quality</_summary>
+    </key>
+    <key name="mp3-quality" type="i">
+      <default>4</default>
+      <_summary>MP3 files quality</_summary>
+    </key>
+  </schema>
+
+</schemalist>

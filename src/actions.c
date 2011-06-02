@@ -184,7 +184,12 @@ void
 activate_action_view_toolbar (GtkAction *action,
 			      gpointer   data)
 {
-	eel_gconf_set_boolean (PREF_UI_TOOLBAR, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
+	GSettings *settings;
+
+	settings = g_settings_new (GOOBOX_SCHEMA_UI);
+	g_settings_set_boolean (settings, PREF_UI_TOOLBAR, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
+
+	g_object_unref (settings);
 }
 
 
@@ -192,7 +197,12 @@ void
 activate_action_view_statusbar (GtkAction *action,
 				gpointer   data)
 {
-	eel_gconf_set_boolean (PREF_UI_STATUSBAR, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
+	GSettings *settings;
+
+	settings = g_settings_new (GOOBOX_SCHEMA_UI);
+	g_settings_set_boolean (settings, PREF_UI_STATUSBAR, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
+
+	g_object_unref (settings);
 }
 
 
@@ -200,7 +210,12 @@ void
 activate_action_play_all (GtkAction *action,
 			  gpointer   data)
 {
-	eel_gconf_set_boolean (PREF_PLAYLIST_PLAYALL, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
+	GSettings *settings;
+
+	settings = g_settings_new (GOOBOX_SCHEMA_PLAYLIST);
+	g_settings_set_boolean (settings, PREF_PLAYLIST_PLAYALL, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
+
+	g_object_unref (settings);
 }
 
 
@@ -208,7 +223,12 @@ void
 activate_action_repeat (GtkAction *action,
 			gpointer   data)
 {
-	eel_gconf_set_boolean (PREF_PLAYLIST_REPEAT, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
+	GSettings *settings;
+
+	settings = g_settings_new (GOOBOX_SCHEMA_PLAYLIST);
+	g_settings_set_boolean (settings, PREF_PLAYLIST_REPEAT, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
+
+	g_object_unref (settings);
 }
 
 
@@ -216,7 +236,12 @@ void
 activate_action_shuffle (GtkAction *action,
 			 gpointer   data)
 {
-	eel_gconf_set_boolean (PREF_PLAYLIST_SHUFFLE, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
+	GSettings *settings;
+
+	settings = g_settings_new (GOOBOX_SCHEMA_PLAYLIST);
+	g_settings_set_boolean (settings, PREF_PLAYLIST_SHUFFLE, gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
+
+	g_object_unref (settings);
 }
 
 
@@ -245,17 +270,17 @@ exec_external_app (GdkScreen   *screen,
 	if (! g_shell_parse_argv (command_line, NULL, &argv, error))
 		return FALSE;
 
-	retval = gdk_spawn_on_screen (screen,
-				      NULL,
-				      argv,
-				      NULL,
-				      G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
-				      NULL,
-				      NULL,
-				      &child_pid,
-				      error);
-	g_strfreev (argv);
+	retval = g_spawn_async (NULL,
+				argv,
+				NULL,
+				G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
+				NULL,
+				NULL,
+				&child_pid,
+				error);
 	g_child_watch_add (child_pid, external_app_watch_func, data);
+
+	g_strfreev (argv);
 
 	return retval;
 }
@@ -294,9 +319,15 @@ activate_action_extract (GtkAction *action,
 			 gpointer   data)
 {
 	GooWindow *window = data;
+	GSettings *settings;
+	gboolean   use_sound_juicer;
 	GError    *error = NULL;
 
-	if (! preferences_get_use_sound_juicer ()) {
+	settings = g_settings_new (GOOBOX_SCHEMA_GENERAL);
+	use_sound_juicer = g_settings_get_boolean (settings, PREF_GENERAL_USE_SJ);
+	g_object_unref (settings);
+
+	if (! use_sound_juicer) {
 		dlg_extract (window);
 		return;
 	}
@@ -321,9 +352,15 @@ activate_action_extract_selected (GtkAction *action,
 			 	  gpointer   data)
 {
 	GooWindow *window = data;
+	GSettings *settings;
+	gboolean   use_sound_juicer;
 	GError    *error = NULL;
 
-	if (! preferences_get_use_sound_juicer ()) {
+	settings = g_settings_new (GOOBOX_SCHEMA_GENERAL);
+	use_sound_juicer = g_settings_get_boolean (settings, PREF_GENERAL_USE_SJ);
+	g_object_unref (settings);
+
+	if (! use_sound_juicer) {
 		dlg_extract_selected (window);
 		return;
 	}

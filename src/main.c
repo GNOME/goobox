@@ -54,7 +54,7 @@ enum {
 	COMMAND_EJECT_DISK,
 	COMMAND_HIDE_SHOW,
 	COMMAND_VOLUME_UP,
-	COMMAND_vOLUME_DOWN,
+	COMMAND_VOLUME_DOWN,
 	COMMAND_QUIT,
 	COMMAND_PRESENT,
 	COMMAND_SET_DEVICE
@@ -222,7 +222,7 @@ unique_app_message_received_cb (UniqueApp         *unique_app,
 		}
 		break;
 
-	case COMMAND_vOLUME_DOWN:
+	case COMMAND_VOLUME_DOWN:
 		{
 			double volume;
 
@@ -300,7 +300,6 @@ static void
 release_data (void)
 {
 	_g_object_unref (application);
-	eel_global_client_free ();
 }
 
 
@@ -335,7 +334,7 @@ prepare_application (void)
 						    "eject", COMMAND_EJECT_DISK,
 						    "hide-show", COMMAND_HIDE_SHOW,
 						    "volume-up", COMMAND_VOLUME_UP,
-						    "volume-down", COMMAND_vOLUME_DOWN,
+						    "volume-down", COMMAND_VOLUME_DOWN,
 						    "quit", COMMAND_QUIT,
 						    "present", COMMAND_PRESENT,
 						    "set-device", COMMAND_SET_DEVICE,
@@ -369,7 +368,7 @@ prepare_application (void)
 		else if (VolumeUp)
 			unique_app_send_message (application, COMMAND_VOLUME_UP, NULL);
 		else if (VolumeDown)
-			unique_app_send_message (application, COMMAND_vOLUME_DOWN, NULL);
+			unique_app_send_message (application, COMMAND_VOLUME_DOWN, NULL);
 		else if (Quit)
 			unique_app_send_message (application, COMMAND_QUIT, NULL);
 
@@ -380,7 +379,6 @@ prepare_application (void)
 	        g_set_application_name (_("CD Player"));
 	        gtk_window_set_default_icon_name ("goobox");
 	        goo_stock_init ();
-		eel_gconf_monitor_add ("/apps/goobox");
 		g_signal_connect (application,
 				  "message-received",
 				  G_CALLBACK (unique_app_message_received_cb),

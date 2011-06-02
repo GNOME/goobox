@@ -7,29 +7,34 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 @INTLTOOL_DESKTOP_RULE@
 
-schemadir = @GCONF_SCHEMA_FILE_DIR@
-schema_in_files = goobox.schemas.in
-schema_DATA = $(schema_in_files:.schemas.in=.schemas)
+gsettingsschema_in_files = org.gnome.Goobox.gschema.xml.in
+gsettings_SCHEMAS = $(gsettingsschema_in_files:.xml.in=.xml)
+.PRECIOUS: $(gsettings_SCHEMAS)
 
-@INTLTOOL_SCHEMAS_RULE@
+@INTLTOOL_XML_NOMERGE_RULE@
 
-if SCHEMAS_INSTALL
-install-data-local:
-	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/data/$(schema_DATA)
-endif
+@GSETTINGS_RULES@
 
-EXTRA_DIST = 			\
-	goobox.schemas		\
-	goobox.schemas.in	\
-	$(desktop_in_in_files)	\
-	$(desktop_in_files)	\
-	$(desktop_DATA)		\
+convertdir = $(datadir)/GConf/gsettings
+convert_DATA = goobox.convert
+
+EXTRA_DIST = 				\
+	$(gsettingsschema_in_files)	\
+	$(desktop_in_in_files)		\
+	$(desktop_in_files)		\
+	$(desktop_DATA)			\
 	$(icon_DATA)
 
 
-DISTCLEANFILES =                \
-	$(schema_DATA)		\
-	$(desktop_in_files)     \
+DISTCLEANFILES =			\
+	$(desktop_in_files)     	\
 	$(desktop_DATA)
+
+CLEANFILES = 				\
+	$(gsettings_SCHEMAS)		\
+	$(NULL)
+
+dist-hook:
+	cd $(distdir); rm -f $(CLEANFILES)
 
 -include $(top_srcdir)/git.mk

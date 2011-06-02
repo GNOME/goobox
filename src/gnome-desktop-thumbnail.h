@@ -75,14 +75,6 @@ gboolean               gnome_desktop_thumbnail_factory_can_thumbnail (GnomeDeskt
 GdkPixbuf *            gnome_desktop_thumbnail_factory_generate_thumbnail (GnomeDesktopThumbnailFactory *factory,
 									   const char            *uri,
 									   const char            *mime_type);
-gboolean               gnome_desktop_thumbnail_factory_generate_thumbnail_async (GnomeDesktopThumbnailFactory *factory,
-										 const char            *uri,
-										 const char            *mime_type,
-										 GPid                  *pid,
-										 char                 **tmpname,
-										 GError               **error);
-GdkPixbuf *            gnome_desktop_thumbnail_factory_load_from_tempfile (GnomeDesktopThumbnailFactory *factory,
-									   char **tmpname);
 void                   gnome_desktop_thumbnail_factory_save_thumbnail (GnomeDesktopThumbnailFactory *factory,
 								       GdkPixbuf             *thumbnail,
 								       const char            *uri,

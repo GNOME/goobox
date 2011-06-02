@@ -1,0 +1,32 @@
+[org.gnome.Goobox.General]
+device = /apps/goobox/general/device
+volume = /apps/goobox/general/volume
+cover-path = /apps/goobox/general/cover_path
+use-sound-juicer = /apps/goobox/general/use_sound_juicer
+autoplay = /apps/goobox/general/autoplay
+
+[org.gnome.Goobox.UI]
+toolbar-style = /apps/goobox/ui/toolbar_style
+window-width = /apps/goobox/ui/window_width
+window-height = /apps/goobox/ui/window_height
+toolbar-visible = /apps/goobox/ui/toolbar_visible
+statusbar-visible = /apps/goobox/ui/statusbar_visible
+playlist-visible = /apps/goobox/ui/playlist_visible
+
+[org.gnome.Goobox.Playlist]
+play-all = /apps/goobox/playlist/play_all
+shuffle = /apps/goobox/playlist/shuffle
+repeat = /apps/goobox/playlist/repeat
+sort-method = /apps/goobox/playlist/sort_method
+sort-type = /apps/goobox/playlist/sort_type
+
+[org.gnome.Goobox.Ripper]
+destination = /apps/goobox/dialogs/extract/destination
+file-type = /apps/goobox/dialogs/extract/file_type
+save-playlist = /apps/goobox/dialogs/extract/save_playlist
+view-destination = /apps/goobox/dialogs/ripper/view_destination
+
+[org.gnome.Goobox.Encoder]
+ogg-quality = /apps/goobox/encoder/ogg_quality
+flac-compression = /apps/goobox/encoder/flac_compression
+mp3-quality = /apps/goobox/encoder/mp3_quality

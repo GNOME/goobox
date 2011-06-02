@@ -25,13 +25,13 @@
 #include <gtk/gtk.h>
 #include <gst/gst.h>
 #include "goo-window.h"
+#include "glib-utils.h"
 #include "gtk-utils.h"
 #include "preferences.h"
 #include "typedefs.h"
 
+
 #define N_VALUES 10
-#define DEFAULT_OGG_QUALITY 0.5
-#define DEFAULT_FLAC_COMPRESSION 5
 #define GET_WIDGET(x) _gtk_builder_get_widget (data->builder, (x))
 
 
@@ -49,6 +49,8 @@ static int flac_compression[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 typedef struct {
 	GooWindow    *window;
 	GtkBuilder   *builder;
+	GSettings    *settings_general;
+	GSettings    *settings_ripper;
 	GtkWidget    *dialog;
 	GtkWidget    *drive_selector;
 	GtkWidget    *filetype_combobox;
@@ -66,11 +68,11 @@ apply_button_clicked_cb (GtkWidget  *widget,
 	BraseroDrive *drive;
 
 	destination = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (GET_WIDGET ("destination_filechooserbutton")));
-	eel_gconf_set_uri (PREF_EXTRACT_DESTINATION, destination);
+	g_settings_set_string (data->settings_ripper, PREF_RIPPER_DESTINATION, destination);
 
-	pref_set_file_format (gtk_combo_box_get_active (GTK_COMBO_BOX (data->filetype_combobox)));
-	eel_gconf_set_boolean (PREF_EXTRACT_SAVE_PLAYLIST, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("save_playlist_checkbutton"))));
-	eel_gconf_set_boolean (PREF_GENERAL_AUTOPLAY, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("autoplay_checkbutton"))));
+	g_settings_set_enum (data->settings_ripper, PREF_RIPPER_FILETYPE, gtk_combo_box_get_active (GTK_COMBO_BOX (data->filetype_combobox)));
+	g_settings_set_boolean (data->settings_ripper, PREF_RIPPER_SAVE_PLAYLIST, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("save_playlist_checkbutton"))));
+	g_settings_set_boolean (data->settings_general, PREF_GENERAL_AUTOPLAY, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("autoplay_checkbutton"))));
 
 	/**/
 
@@ -78,7 +80,7 @@ apply_button_clicked_cb (GtkWidget  *widget,
 	if (drive == NULL)
 		return;
 
-	eel_gconf_set_string (PREF_GENERAL_DEVICE, brasero_drive_get_device (drive));
+	g_settings_set_string (data->settings_general, PREF_GENERAL_DEVICE, brasero_drive_get_device (drive));
 	goo_window_set_drive (data->window, drive);
 
 	g_object_unref (drive);
@@ -92,6 +94,8 @@ dialog_destroy_cb (GtkWidget  *widget,
 	apply_button_clicked_cb (widget, data);
 	data->window->preferences_dialog = NULL;
 
+	_g_object_unref (data->settings_general);
+	_g_object_unref (data->settings_ripper);
 	g_object_unref (data->builder);
 	g_free (data);
 }
@@ -180,8 +184,8 @@ dlg_preferences (GooWindow *window)
 	data = g_new0 (DialogData, 1);
 	data->window = window;
 	data->builder = _gtk_builder_new_from_file ("preferences.ui", "");
-
-	eel_gconf_preload_cache ("/apps/goobox/general", GCONF_CLIENT_PRELOAD_ONELEVEL);
+	data->settings_general = g_settings_new (GOOBOX_SCHEMA_GENERAL);
+	data->settings_ripper = g_settings_new (GOOBOX_SCHEMA_RIPPER);
 
 	/* Get the widgets. */
 
@@ -190,7 +194,7 @@ dlg_preferences (GooWindow *window)
 
 	/* Set widgets data. */
 
-	if (preferences_get_use_sound_juicer ()) {
+	if (g_settings_get_boolean (data->settings_general, PREF_GENERAL_USE_SJ)) {
 		GtkWidget *notebook;
 		GtkWidget *encoder_page;
 
@@ -226,7 +230,7 @@ dlg_preferences (GooWindow *window)
 
 	/**/
 
-	destination = eel_gconf_get_uri (PREF_EXTRACT_DESTINATION, "");
+	destination = g_settings_get_string (data->settings_ripper, PREF_RIPPER_DESTINATION);
 	if ((destination == NULL) || (strcmp (destination, "") == 0))
 		destination = g_filename_to_uri (g_get_user_special_dir (G_USER_DIRECTORY_MUSIC), NULL, NULL);
 	if (destination == NULL)
@@ -270,8 +274,7 @@ dlg_preferences (GooWindow *window)
 	if (encoder != NULL)
 		gst_object_unref (GST_OBJECT (encoder));
 
-	file_format = pref_get_file_format ();
-
+	file_format = g_settings_get_enum (data->settings_ripper, PREF_RIPPER_FILETYPE);
 	find_first_available = (((file_format == GOO_FILE_FORMAT_OGG) && !ogg_encoder)
 				|| ((file_format == GOO_FILE_FORMAT_FLAC) && !flac_encoder)
 				|| ((file_format == GOO_FILE_FORMAT_WAVE) && !wave_encoder));
@@ -294,8 +297,8 @@ dlg_preferences (GooWindow *window)
 	set_description_label (data, "flac_description_label", _("Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality."));
 	set_description_label (data, "wave_description_label", _("WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio."));
 
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("save_playlist_checkbutton")), eel_gconf_get_boolean (PREF_EXTRACT_SAVE_PLAYLIST, TRUE));
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("autoplay_checkbutton")), eel_gconf_get_boolean (PREF_GENERAL_AUTOPLAY, TRUE));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("save_playlist_checkbutton")), g_settings_get_boolean (data->settings_ripper, PREF_RIPPER_SAVE_PLAYLIST));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("autoplay_checkbutton")), g_settings_get_boolean (data->settings_general, PREF_GENERAL_AUTOPLAY));
 
 	/**/
 
@@ -344,7 +347,7 @@ dlg_preferences (GooWindow *window)
 typedef struct {
 	GooFileFormat  format;
 	int            value;
-
+	GSettings     *settings_encoder;
 	GtkBuilder    *builder;
 	GtkWidget     *dialog;
 	GtkWidget     *f_quality_label;
@@ -356,6 +359,7 @@ static void
 format_dialog_destroy_cb (GtkWidget        *widget,
 	    		  FormatDialogData *data)
 {
+	g_object_unref (data->settings_encoder);
 	g_object_unref (data->builder);
 	g_free (data);
 }
@@ -367,10 +371,10 @@ format_dialog_ok_button_clicked_cb (GtkWidget        *widget,
 {
 	switch (data->format) {
 	case GOO_FILE_FORMAT_OGG:
-		eel_gconf_set_float (PREF_ENCODER_OGG_QUALITY, (float) data->value / 10.0);
+		g_settings_set_double (data->settings_encoder, PREF_ENCODER_OGG_QUALITY, (float) data->value / 10.0);
 		break;
 	case GOO_FILE_FORMAT_FLAC:
-		eel_gconf_set_integer (PREF_ENCODER_FLAC_COMPRESSION, flac_compression[data->value]);
+		g_settings_set_int (data->settings_encoder, PREF_ENCODER_FLAC_COMPRESSION, flac_compression[data->value]);
 		break;
 	default:
 		break;
@@ -400,17 +404,18 @@ find_index (int a[], int v)
 
 
 static int
-get_current_value (GooFileFormat format)
+get_current_value (FormatDialogData *data,
+		   GooFileFormat     format)
 {
-	int   index = 0;
-	int   value;
+	int index = 0;
+	int value;
 
 	switch (format) {
 	case GOO_FILE_FORMAT_OGG:
-		index = (int) (eel_gconf_get_float (PREF_ENCODER_OGG_QUALITY, DEFAULT_OGG_QUALITY) * 10.0 + 0.05);
+		index = (int) (g_settings_get_double (data->settings_encoder, PREF_ENCODER_OGG_QUALITY) * 10.0 + 0.05);
 		break;
 	case GOO_FILE_FORMAT_FLAC:
-		value = eel_gconf_get_integer (PREF_ENCODER_FLAC_COMPRESSION, DEFAULT_FLAC_COMPRESSION);
+		value = g_settings_get_int (data->settings_encoder, PREF_ENCODER_FLAC_COMPRESSION);
 		index = find_index (flac_compression, value);
 		break;
 	default:
@@ -437,6 +442,7 @@ dlg_format (DialogData    *preferences_data,
 
 	data = g_new0 (FormatDialogData, 1);
 	data->format = format;
+	data->settings_encoder = g_settings_new (GOOBOX_SCHEMA_ENCODER);
 	data->builder = _gtk_builder_new_from_file ("format-options.ui", "");
 	data->dialog = GET_WIDGET ("format_dialog");
 
@@ -465,7 +471,7 @@ dlg_format (DialogData    *preferences_data,
 		g_free (text);
 	}
 
-	data->value = get_current_value (format);
+	data->value = get_current_value (data, format);
 	gtk_range_set_value (GTK_RANGE (GET_WIDGET ("quality_scale")), scale_value (data->value));
 
 	switch (format) {

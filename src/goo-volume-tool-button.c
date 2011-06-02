@@ -397,7 +397,7 @@ popup_win_event_cb (GtkWidget           *widget,
 			int x, y, w, h;
 
 			gdk_window_get_geometry (gtk_widget_get_window (button->priv->popup_win),
-						 &x, &y, &w, &h, NULL);
+						 &x, &y, &w, &h);
 
 			if ((event->button.x < 0)
 			    || (event->button.x > w)

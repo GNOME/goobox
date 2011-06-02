@@ -149,8 +149,6 @@ dlg_extract_ask (GooWindow *window)
 	data->selected_tracks = goo_window_get_tracks (window, TRUE);
 	data->player = g_object_ref (goo_window_get_player (window));
 
-	eel_gconf_preload_cache ("/apps/goobox/dialogs/extract", GCONF_CLIENT_PRELOAD_ONELEVEL);
-
 	/* Get the widgets. */
 
 	data->dialog = GET_WIDGET ("extract_dialog");

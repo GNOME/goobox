@@ -3,7 +3,7 @@
 /*
  *  Goo
  *
- *  Copyright (C) 2004 Free Software Foundation, Inc.
+ *  Copyright (C) 2004-2011 Free Software Foundation, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,56 +24,39 @@
 #define PREFERENCES_H
 
 #include <gtk/gtk.h>
-#include "typedefs.h"
-#include "goo-window.h"
 
-#define PREF_GENERAL_DEVICE           "/apps/goobox/general/device"
-#define PREF_GENERAL_VOLUME           "/apps/goobox/general/volume"
-#define PREF_GENERAL_COVER_PATH       "/apps/goobox/general/cover_path"
-#define PREF_GENERAL_USE_SJ           "/apps/goobox/general/use_sound_juicer"
-#define PREF_GENERAL_AUTOPLAY         "/apps/goobox/general/autoplay"
+#define GOOBOX_SCHEMA                "org.gnome.Goobox"
+#define GOOBOX_SCHEMA_GENERAL        GOOBOX_SCHEMA ".General"
+#define GOOBOX_SCHEMA_UI             GOOBOX_SCHEMA ".UI"
+#define GOOBOX_SCHEMA_PLAYLIST       GOOBOX_SCHEMA ".Playlist"
+#define GOOBOX_SCHEMA_RIPPER         GOOBOX_SCHEMA ".Ripper"
+#define GOOBOX_SCHEMA_ENCODER        GOOBOX_SCHEMA ".Encoder"
 
-#define PREF_UI_TOOLBAR               "/apps/goobox/ui/toolbar_visible"
-#define PREF_UI_STATUSBAR             "/apps/goobox/ui/statusbar_visible"
-#define PREF_UI_PLAYLIST              "/apps/goobox/ui/playlist_visible"
-#define PREF_UI_WINDOW_WIDTH          "/apps/goobox/ui/window_width"
-#define PREF_UI_WINDOW_HEIGHT         "/apps/goobox/ui/window_height"
+#define PREF_GENERAL_DEVICE           "device"
+#define PREF_GENERAL_VOLUME           "volume"
+#define PREF_GENERAL_COVER_PATH       "cover-path"
+#define PREF_GENERAL_USE_SJ           "use-sound-juicer"
+#define PREF_GENERAL_AUTOPLAY         "autoplay"
 
-#define PREF_PLAYLIST_PLAYALL         "/apps/goobox/playlist/play_all"
-#define PREF_PLAYLIST_SHUFFLE         "/apps/goobox/playlist/shuffle"
-#define PREF_PLAYLIST_REPEAT          "/apps/goobox/playlist/repeat"
-#define PREF_PLAYLIST_SORT_METHOD     "/apps/goobox/playlist/sort_method"
-#define PREF_PLAYLIST_SORT_TYPE       "/apps/goobox/playlist/sort_type"
+#define PREF_UI_TOOLBAR               "toolbar-visible"
+#define PREF_UI_STATUSBAR             "statusbar-visible"
+#define PREF_UI_PLAYLIST              "playlist-visible"
+#define PREF_UI_WINDOW_WIDTH          "window-width"
+#define PREF_UI_WINDOW_HEIGHT         "window-height"
 
-#define PREF_EXTRACT_DESTINATION      "/apps/goobox/dialogs/extract/destination"
-#define PREF_EXTRACT_FILETYPE         "/apps/goobox/dialogs/extract/file_type"
-#define PREF_EXTRACT_SAVE_PLAYLIST    "/apps/goobox/dialogs/extract/save_playlist"
-#define PREF_RIPPER_VIEW_DISTINATION  "/apps/goobox/dialogs/ripper/view_destination"
+#define PREF_PLAYLIST_PLAYALL         "play-all"
+#define PREF_PLAYLIST_SHUFFLE         "shuffle"
+#define PREF_PLAYLIST_REPEAT          "repeat"
+#define PREF_PLAYLIST_SORT_METHOD     "sort-method"
+#define PREF_PLAYLIST_SORT_TYPE       "sort-type"
 
-#define PREF_ENCODER_OGG_QUALITY      "/apps/goobox/encoder/ogg_quality"
-#define PREF_ENCODER_FLAC_COMPRESSION "/apps/goobox/encoder/flac_compression"
-#
-#define PREF_DESKTOP_ICON_THEME         "/desktop/gnome/file_views/icon_theme"
-#define PREF_DESKTOP_MENUS_HAVE_TEAROFF "/desktop/gnome/interface/menus_have_tearoff"
-#define PREF_DESKTOP_MENUBAR_DETACHABLE "/desktop/gnome/interface/menubar_detachable"
-#define PREF_DESKTOP_TOOLBAR_DETACHABLE "/desktop/gnome/interface/toolbar_detachable"
+#define PREF_RIPPER_DESTINATION       "destination"
+#define PREF_RIPPER_FILETYPE          "file-type"
+#define PREF_RIPPER_SAVE_PLAYLIST     "save-playlist"
+#define PREF_RIPPER_VIEW_DISTINATION  "view-destination"
 
-void                pref_util_save_window_geometry    (GtkWindow  *window,
-						       const char *dialog);
-
-void                pref_util_restore_window_geometry (GtkWindow  *window,
-						       const char *dialog);
-
-GooFileFormat       pref_get_file_format              (void);
-void                pref_set_file_format              (GooFileFormat value);
-
-
-WindowSortMethod    preferences_get_sort_method       (void);
-void                preferences_set_sort_method       (WindowSortMethod i_value);
-
-GtkSortType         preferences_get_sort_type         (void);
-void                preferences_set_sort_type         (GtkSortType i_value);
-
-gboolean            preferences_get_use_sound_juicer  (void);
+#define PREF_ENCODER_OGG_QUALITY      "ogg-quality"
+#define PREF_ENCODER_FLAC_COMPRESSION "flac-compression"
+#define PREF_ENCODER_MP3_QUALITY      "mp3-quality"
 
 #endif /* PREFERENCES_H */

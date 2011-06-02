@@ -24,6 +24,8 @@
 #include <math.h>
 #include <string.h>
 #include "gtk-utils.h"
+#include "glib-utils.h"
+
 
 #define REQUEST_ENTRY_WIDTH 220
 
@@ -99,7 +101,6 @@ _gtk_message_dialog_new (GtkWindow        *parent,
 	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
 	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
 
-	gtk_dialog_set_has_separator (GTK_DIALOG (d), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (d), 6);
 	gtk_container_set_border_width (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (d))), 6);
 	gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (d))), 8);
@@ -191,7 +192,6 @@ _gtk_request_dialog_run (GtkWindow        *parent,
 	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
 	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
 
-	gtk_dialog_set_has_separator (GTK_DIALOG (d), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (d), 6);
 	gtk_container_set_border_width (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (d))), 6);
 	gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (d))), 12);
@@ -291,7 +291,6 @@ _gtk_yesno_dialog_new (GtkWindow        *parent,
 	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
 	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
 
-	gtk_dialog_set_has_separator (GTK_DIALOG (d), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (d), 6);
 	gtk_container_set_border_width (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (d))), 6);
 	gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (d))), 8);
@@ -342,105 +341,26 @@ _gtk_yesno_dialog_new (GtkWindow        *parent,
 }
 
 
+typedef struct {
+	GSettings *settings;
+	char      *key;
+} DialogWithButtonData;
+
+
 static void
-yesno__check_button_toggled_cb (GtkToggleButton *button,
-				const char      *gconf_key)
+dialog_with_button_data_free (DialogWithButtonData *data)
 {
-	eel_gconf_set_boolean (gconf_key,
-			       ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)));
-}
-
-
-GtkWidget*
-_gtk_yesno_dialog_with_checkbutton_new (GtkWindow        *parent,
-					GtkDialogFlags    flags,
-					const char       *message,
-					const char       *no_button_text,
-					const char       *yes_button_text,
-					const char       *check_button_label,
-					const char       *gconf_key)
-{
-	GtkWidget *d;
-	GtkWidget *label;
-	GtkWidget *image;
-	GtkWidget *hbox;
-	GtkWidget *button;
-	GtkWidget *check_button;
-	char      *stock_id = GTK_STOCK_DIALOG_QUESTION;
-
-	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
-	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
-
-	gtk_dialog_set_has_separator (GTK_DIALOG (d), FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (d), 6);
-	gtk_container_set_border_width (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (d))), 6);
-	gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (d))), 8);
-
-	/* Add label and image */
-
-	image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
-	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
-
-	label = gtk_label_new (message);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-
-	hbox = gtk_hbox_new (FALSE, 12);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-
-	gtk_box_pack_start (GTK_BOX (hbox), image,
-			    FALSE, FALSE, 0);
-
-	gtk_box_pack_start (GTK_BOX (hbox), label,
-			    TRUE, TRUE, 0);
-
-	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (d))),
-			    hbox,
-			    FALSE, FALSE, 0);
-
-	/* Add checkbutton */
-
-	check_button = gtk_check_button_new_with_mnemonic (check_button_label);
-	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (d))),
-			    check_button,
-			    FALSE, FALSE, 0);
-	gtk_widget_show (check_button);
-
-	gtk_widget_show_all (hbox);
-
-	/* Add buttons */
-
-	button = create_button (GTK_STOCK_CANCEL, no_button_text);
-	gtk_dialog_add_action_widget (GTK_DIALOG (d),
-				      button,
-				      GTK_RESPONSE_CANCEL);
-
-	/**/
-
-	button = create_button (GTK_STOCK_OK, yes_button_text);
-	gtk_dialog_add_action_widget (GTK_DIALOG (d),
-				      button,
-				      GTK_RESPONSE_YES);
-
-	/**/
-
-	gtk_dialog_set_default_response (GTK_DIALOG (d), GTK_RESPONSE_YES);
-
-	g_signal_connect (G_OBJECT (check_button),
-			  "toggled",
-			  G_CALLBACK (yesno__check_button_toggled_cb),
-			  (gpointer) gconf_key);
-
-	return d;
+	_g_object_unref (data->settings);
+	g_free (data->key);
+	g_free (data);
 }
 
 
 static void
-ok__check_button_toggled_cb (GtkToggleButton *button,
-				const char      *gconf_key)
+ok__check_button_toggled_cb (GtkToggleButton      *button,
+			     DialogWithButtonData *data)
 {
-	eel_gconf_set_boolean (gconf_key,
-			       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)));
+	g_settings_set_boolean (data->settings, data->key, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)));
 }
 
 
@@ -450,7 +370,8 @@ _gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
 				     const char       *message,
 				     const char       *ok_button_text,
 				     const char       *check_button_label,
-				     const char       *gconf_key)
+				     GSettings        *settings,
+				     const char       *key)
 {
 	GtkWidget *d;
 	GtkWidget *label;
@@ -460,6 +381,7 @@ _gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
 	GtkWidget *check_button;
 	char      *stock_id = GTK_STOCK_DIALOG_INFO;
 	char      *escaped_message, *markup_text;
+	DialogWithButtonData *data;
 
 	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
 	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
@@ -501,8 +423,7 @@ _gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
 			    FALSE, FALSE, 0);
 	gtk_widget_show (check_button);
 
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
-				      eel_gconf_get_boolean (gconf_key, FALSE));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), g_settings_get_boolean (settings, key));
 
 	gtk_widget_show_all (hbox);
 
@@ -517,122 +438,16 @@ _gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
 
 	gtk_dialog_set_default_response (GTK_DIALOG (d), GTK_RESPONSE_YES);
 
+	data = g_new0 (DialogWithButtonData, 1);
+	data->settings = g_object_ref (settings);
+	data->key = g_strdup (key);
+
+	g_object_set_data_full (G_OBJECT (d), "settings-data", data, (GDestroyNotify) dialog_with_button_data_free);
+
 	g_signal_connect (G_OBJECT (check_button),
 			  "toggled",
 			  G_CALLBACK (ok__check_button_toggled_cb),
-			  (gpointer) gconf_key);
-
-	return d;
-}
-
-
-GtkWidget*
-_gtk_message_dialog_with_checkbutton_new (GtkWindow        *parent,
-			 		  GtkDialogFlags    flags,
-			 		  const char       *stock_id,
-			 		  const char       *message,
-			 		  const char       *secondary_message,
-			 		  const char       *gconf_key,
-			 		  const char       *check_button_label,
-			 		  const char       *first_button_text,
-			 		  ...)
-{
-	GtkWidget  *d;
-	GtkWidget  *label;
-	GtkWidget  *image;
-	GtkWidget  *hbox;
-	GtkWidget  *check_button;
-	va_list     args;
-	const char *text;
-	int         response_id;
-	char       *escaped_message, *markup_text;
-
-	g_return_val_if_fail (message != NULL, NULL);
-
-	if (stock_id == NULL)
-		stock_id = GTK_STOCK_DIALOG_INFO;
-
-	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
-	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
-
-	gtk_dialog_set_has_separator (GTK_DIALOG (d), FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (d), 6);
-	gtk_container_set_border_width (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (d))), 6);
-	gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (d))), 8);
-
-	/* Add label and image */
-
-	image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
-	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
-
-	label = gtk_label_new ("");
-
-	escaped_message = g_markup_escape_text (message, -1);
-	if (secondary_message != NULL) {
-		char *escaped_secondary_message = g_markup_escape_text (secondary_message, -1);
-		markup_text = g_strdup_printf ("<span weight=\"bold\" size=\"larger\">%s</span>\n\n%s",
-					       escaped_message,
-					       escaped_secondary_message);
-		g_free (escaped_secondary_message);
-	} else
-		markup_text = g_strdup (escaped_message);
-	gtk_label_set_markup (GTK_LABEL (label), markup_text);
-	g_free (markup_text);
-	g_free (escaped_message);
-
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-
-	hbox = gtk_hbox_new (FALSE, 6);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-
-	gtk_box_pack_start (GTK_BOX (hbox), image,
-			    FALSE, FALSE, 0);
-
-	gtk_box_pack_start (GTK_BOX (hbox), label,
-			    TRUE, TRUE, 0);
-
-	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (d))),
-			    hbox,
-			    FALSE, FALSE, 0);
-
-	gtk_widget_show_all (hbox);
-
-	/* Add checkbutton */
-
-	check_button = gtk_check_button_new_with_mnemonic (check_button_label);
-	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (d))),
-			    check_button,
-			    FALSE, FALSE, 0);
-	gtk_widget_show (check_button);
-
-	/* Add buttons */
-
-	if (first_button_text == NULL)
-		return d;
-
-	va_start (args, first_button_text);
-
-	text = first_button_text;
-	response_id = va_arg (args, gint);
-
-	while (text != NULL) {
-		gtk_dialog_add_button (GTK_DIALOG (d), text, response_id);
-
-		text = va_arg (args, gchar*);
-		if (text == NULL)
-			break;
-		response_id = va_arg (args, int);
-	}
-
-	va_end (args);
-
-	gtk_dialog_set_default_response (GTK_DIALOG (d), GTK_RESPONSE_YES);
-
-	g_signal_connect (G_OBJECT (check_button),
-			  "toggled",
-			  G_CALLBACK (yesno__check_button_toggled_cb),
-			  (gpointer) gconf_key);
+			  data);
 
 	return d;
 }
@@ -1053,13 +868,13 @@ _gtk_combo_box_new_with_texts (const char *first_text,
 	va_list     args;
 	const char *text;
 
-	combo_box = gtk_combo_box_new_text ();
+	combo_box = gtk_combo_box_text_new ();
 
 	va_start (args, first_text);
 
 	text = first_text;
 	while (text != NULL) {
-		gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), text);
+		gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL, text);
 		text = va_arg (args, const char *);
 	}
 
@@ -1081,7 +896,7 @@ _gtk_combo_box_append_texts (GtkComboBox *combo_box,
 
 	text = first_text;
 	while (text != NULL) {
-		gtk_combo_box_append_text (combo_box, text);
+		gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL, text);
 		text = va_arg (args, const char *);
 	}
 
@@ -1207,14 +1022,13 @@ _g_launch_command (GtkWidget  *parent,
 		return;
 	}
 
-	launch_context = gdk_app_launch_context_new ();
-	gdk_app_launch_context_set_screen (launch_context, gtk_widget_get_screen (parent));
-
+	launch_context = gdk_display_get_app_launch_context (gtk_widget_get_display (parent));
 	if (! g_app_info_launch (app_info, files, G_APP_LAUNCH_CONTEXT (launch_context), &error)) {
 		_gtk_error_dialog_from_gerror_show(GTK_WINDOW (parent), _("Could not launch the application"), &error);
 		return;
 	}
 
+	g_object_unref (launch_context);
 	g_object_unref (app_info);
 }
 

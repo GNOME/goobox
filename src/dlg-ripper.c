@@ -33,12 +33,9 @@
 
 
 #define TOC_OFFSET 150
-#define GLADE_RIPPER_FILE "ripper_dialog.glade"
 #define DESTINATION_PERMISSIONS 0755
 #define PLS_PERMISSIONS 0644
 #define UPDATE_DELAY 400
-#define DEFAULT_OGG_QUALITY 0.5
-#define DEFAULT_FLAC_COMPRESSION 5
 #define BUFFER_SIZE 1024
 #define GET_WIDGET(x) _gtk_builder_get_widget (data->builder, (x))
 
@@ -72,6 +69,8 @@ typedef struct {
 	double         prev_remaining_time;
 
 	GtkBuilder    *builder;
+	GSettings     *settings_ripper;
+	GSettings     *settings_encoder;
 	GtkWidget     *dialog;
 } DialogData;
 
@@ -113,7 +112,9 @@ dialog_destroy_cb (GtkWidget  *widget,
 	g_free (data->destination);
 	_g_object_unref (data->current_file);
 	track_list_free (data->tracks);
-	g_object_unref (data->builder);
+	_g_object_unref (data->builder);
+	_g_object_unref (data->settings_encoder);
+	_g_object_unref (data->settings_ripper);
 	g_free (data);
 }
 
@@ -275,7 +276,7 @@ create_pipeline (DialogData *data)
 	case GOO_FILE_FORMAT_OGG:
 		data->ext = "ogg";
 		data->encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
-		ogg_quality = eel_gconf_get_float (PREF_ENCODER_OGG_QUALITY, DEFAULT_OGG_QUALITY);
+		ogg_quality = g_settings_get_double (data->settings_encoder, PREF_ENCODER_OGG_QUALITY);
 		g_object_set (data->encoder,
 			      "quality", ogg_quality,
 			      NULL);
@@ -285,7 +286,7 @@ create_pipeline (DialogData *data)
 	case GOO_FILE_FORMAT_FLAC:
 		data->ext = "flac";
 		data->encoder = data->container = gst_element_factory_make (FLAC_ENCODER, "encoder");
-		flac_compression = eel_gconf_get_integer (PREF_ENCODER_FLAC_COMPRESSION, DEFAULT_FLAC_COMPRESSION);
+		flac_compression = g_settings_get_double (data->settings_encoder, PREF_ENCODER_FLAC_COMPRESSION);
 		g_object_set (data->encoder,
 			      "quality", flac_compression,
 			      NULL);
@@ -446,7 +447,7 @@ done_dialog_response_cb (GtkDialog  *dialog,
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 
-	if ((button_number == GTK_RESPONSE_OK) && eel_gconf_get_boolean (PREF_RIPPER_VIEW_DISTINATION, FALSE)) {
+	if ((button_number == GTK_RESPONSE_OK) && g_settings_get_boolean (data->settings_ripper, PREF_RIPPER_VIEW_DISTINATION)) {
 		GFile  *folder;
 		GError *error = NULL;
 
@@ -578,7 +579,7 @@ rip_current_track (DialogData *data)
 	if (data->current_track == NULL) {
 		GtkWidget *d;
 
-		if (eel_gconf_get_boolean (PREF_EXTRACT_SAVE_PLAYLIST, TRUE))
+		if (g_settings_get_boolean (data->settings_ripper, PREF_RIPPER_SAVE_PLAYLIST))
 			save_playlist (data);
 
 		data->ripping = FALSE;
@@ -590,6 +591,7 @@ rip_current_track (DialogData *data)
 							 _("Tracks extracted successfully"),
 							 GTK_STOCK_OK,
 							 _("_View destination folder"),
+							 data->settings_ripper,
 							 PREF_RIPPER_VIEW_DISTINATION);
 
 		g_signal_connect (G_OBJECT (d), "response",
@@ -726,15 +728,17 @@ dlg_ripper (GooWindow *window,
 
 	data = g_new0 (DialogData, 1);
 	data->window = window;
+	data->settings_ripper = g_settings_new (GOOBOX_SCHEMA_RIPPER);
+	data->settings_encoder = g_settings_new (GOOBOX_SCHEMA_ENCODER);
 	data->builder = _gtk_builder_new_from_file ("ripper.ui", "");
 	data->dialog = GET_WIDGET ("ripper_dialog");
-	data->destination = eel_gconf_get_uri (PREF_EXTRACT_DESTINATION, "");
+	data->destination = g_settings_get_string (data->settings_ripper, PREF_RIPPER_DESTINATION);
 	if ((data->destination == NULL) || (strcmp (data->destination, "") == 0))
 		data->destination = g_filename_to_uri (g_get_user_special_dir (G_USER_DIRECTORY_MUSIC), NULL, NULL);
 	if (data->destination == NULL)
 		data->destination = g_filename_to_uri (g_get_home_dir (), NULL, NULL);
 	data->drive = g_object_ref (goo_player_get_drive (player));
-	data->format = pref_get_file_format ();
+	data->format = g_settings_get_enum (data->settings_ripper, PREF_RIPPER_FILETYPE);
 	data->album = goo_player_get_album (player);
 	if (tracks != NULL)
 		data->tracks = track_list_dup (tracks);

@@ -73,7 +73,6 @@ goobox_SOURCES = 				\
 	main.h					\
 	metadata.c				\
 	metadata.h				\
-	preferences.c				\
 	preferences.h				\
 	track-info.c				\
 	track-info.h				\

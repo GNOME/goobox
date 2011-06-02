@@ -8,7 +8,6 @@ copy-n-paste/eggsmclient.h
 copy-n-paste/eggsmclient-private.h
 copy-n-paste/eggsmclient-xsmp.c
 data/goobox.desktop.in.in
-data/goobox.schemas.in
 [type: gettext/glade]data/ui/cover-chooser.ui
 [type: gettext/glade]data/ui/extract.ui
 [type: gettext/glade]data/ui/format-options.ui
@@ -29,8 +28,6 @@ src/dlg-properties.c
 src/dlg-properties.h
 src/dlg-ripper.c
 src/dlg-ripper.h
-src/gconf-utils.c
-src/gconf-utils.h
 src/gio-utils.c
 src/gio-utils.h
 src/glib-utils.c
@@ -62,7 +59,6 @@ src/main.c
 src/main.h
 src/metadata.c
 src/metadata.h
-src/preferences.c
 src/preferences.h
 src/track-info.c
 src/track-info.h
