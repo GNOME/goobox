@@ -55,7 +55,7 @@
 #define IDLE_TIMEOUT 200
 #define FALLBACK_ICON_SIZE 16
 #define CONFIG_KEY_AUTOFETCH_GROUP "AutoFetch"
-#define VOLUME_BUTTON_POSITION 4
+#define VOLUME_BUTTON_POSITION 7
 #define TRAY_TOOLTIP_DELAY 500
 #define AUTOPLAY_DELAY 250
 
@@ -2432,6 +2432,8 @@ goo_window_construct (GooWindow    *window,
 		GtkToolItem *sep;
 
 		sep = gtk_separator_tool_item_new ();
+		gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (sep), FALSE);
+		gtk_tool_item_set_expand (GTK_TOOL_ITEM (sep), TRUE);
 		gtk_widget_show (GTK_WIDGET (sep));
 		gtk_toolbar_insert (GTK_TOOLBAR (window->priv->toolbar),
 				    GTK_TOOL_ITEM (sep),
