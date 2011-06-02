@@ -2367,6 +2367,7 @@ goo_window_construct (GooWindow    *window,
 	gth_window_attach (GTH_WINDOW (window), menubar, GTH_WINDOW_MENUBAR);
 
 	window->priv->toolbar = toolbar = gtk_ui_manager_get_widget (ui, "/ToolBar");
+	gtk_style_context_add_class (gtk_widget_get_style_context (window->priv->toolbar), GTK_STYLE_CLASS_PRIMARY_TOOLBAR);
 	gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), TRUE);
 	gth_window_attach_toolbar (GTH_WINDOW (window), 0, window->priv->toolbar);
 
