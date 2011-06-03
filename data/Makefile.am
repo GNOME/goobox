@@ -19,6 +19,7 @@ convertdir = $(datadir)/GConf/gsettings
 convert_DATA = goobox.convert
 
 EXTRA_DIST = 				\
+	$(convert_DATA)			\
 	$(gsettingsschema_in_files)	\
 	$(desktop_in_in_files)		\
 	$(desktop_in_files)		\

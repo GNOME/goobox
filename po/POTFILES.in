@@ -8,6 +8,7 @@ copy-n-paste/eggsmclient.h
 copy-n-paste/eggsmclient-private.h
 copy-n-paste/eggsmclient-xsmp.c
 data/goobox.desktop.in.in
+data/org.gnome.Goobox.gschema.xml.in
 [type: gettext/glade]data/ui/cover-chooser.ui
 [type: gettext/glade]data/ui/extract.ui
 [type: gettext/glade]data/ui/format-options.ui
