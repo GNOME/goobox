@@ -1,3 +1,3 @@
-SUBDIRS = 256x256 48x48
+SUBDIRS = apps	
 
 -include $(top_srcdir)/git.mk

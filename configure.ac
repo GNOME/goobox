@@ -166,6 +166,8 @@ data/Makefile
 data/goobox.desktop.in
 data/ui/Makefile
 data/icons/Makefile
+data/icons/256x256/Makefile
+data/icons/256x256/apps/Makefile
 data/icons/48x48/Makefile
 data/icons/48x48/apps/Makefile
 help/Makefile
