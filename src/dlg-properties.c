@@ -48,6 +48,7 @@ typedef struct {
 	GtkTreeViewColumn *author_column;
 	GList             *albums;
 	int                n_albums, current_album;
+	GCancellable      *cancellable;
 } DialogData;
 
 
@@ -56,7 +57,8 @@ dialog_destroy_cb (GtkWidget  *widget,
 		   DialogData *data)
 {
 	data->window->properties_dialog = NULL;
-	g_object_unref (G_OBJECT (data->builder));
+	g_object_unref (data->cancellable);
+	g_object_unref (data->builder);
 	g_free (data);
 }
 
@@ -224,33 +226,14 @@ remove_incompatible_albums (GList     *albums,
 
 
 static void
-search_cb (GtkWidget  *widget,
-	   DialogData *data)
+search_album_by_title_ready_cb (GObject      *source_object,
+			        GAsyncResult *result,
+				gpointer      user_data)
 {
-	MbReleaseFilter  filter;
-	MbQuery          query;
-	MbResultList     list;
+	DialogData *data = user_data;
+	GError     *error = NULL;
 
-	gtk_image_set_from_stock (GTK_IMAGE (GET_WIDGET ("info_icon")), GTK_STOCK_FIND, GTK_ICON_SIZE_BUTTON);
-	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), _("Searching disc info..."));
-	gtk_widget_show (GET_WIDGET ("info_box"));
-	gtk_widget_hide (GET_WIDGET ("navigation_box"));
-
-	/*
-	metadata_search_album_by_title (gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("title_entry"))),
-					data->cancellable,
-					G_CALLBACK (search_album_by_title_ready_cb),
-					data);
-	*/
-
-	filter = mb_release_filter_new ();
-	mb_release_filter_title (filter, gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("title_entry"))));
-
-	query = mb_query_new (NULL, NULL);
-	list = mb_query_get_releases (query, filter);
-
-	data->albums = get_album_list (list);
-	get_track_info_for_album_list (data->albums);
+	data->albums = metadata_search_album_by_title_finish (result, &error);
 	data->albums = remove_incompatible_albums (data->albums, goo_window_get_album (data->window));
 	data->n_albums = g_list_length (data->albums);
 
@@ -262,10 +245,24 @@ search_cb (GtkWidget  *widget,
 	}
 	else
 		show_album (data, 0);
+}
 
-	mb_result_list_free (list);
-	mb_query_free (query);
-	mb_release_filter_free (filter);
+
+static void
+search_cb (GtkWidget  *widget,
+	   DialogData *data)
+{
+
+
+	gtk_image_set_from_stock (GTK_IMAGE (GET_WIDGET ("info_icon")), GTK_STOCK_FIND, GTK_ICON_SIZE_BUTTON);
+	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), _("Searching disc info..."));
+	gtk_widget_show (GET_WIDGET ("info_box"));
+	gtk_widget_hide (GET_WIDGET ("navigation_box"));
+
+	metadata_search_album_by_title (gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("title_entry"))),
+					data->cancellable,
+					search_album_by_title_ready_cb,
+					data);
 }
 
 
@@ -463,6 +460,7 @@ dlg_properties (GooWindow *window)
 	data = g_new0 (DialogData, 1);
 	data->window = window;
 	data->builder = _gtk_builder_new_from_file ("properties.ui", "");
+	data->cancellable = g_cancellable_new ();
 
 	/* Get the widgets. */
 

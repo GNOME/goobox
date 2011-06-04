@@ -79,10 +79,11 @@ album_info_get_type (void)
 }
 
 
-void
+AlbumInfo *
 album_info_ref (AlbumInfo *album)
 {
 	album->ref++;
+	return album;
 }
 
 

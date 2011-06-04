@@ -50,7 +50,7 @@ typedef struct {
 
 GType           album_info_get_type         (void);
 AlbumInfo *     album_info_new              (void);
-void            album_info_ref              (AlbumInfo  *album);
+AlbumInfo *     album_info_ref              (AlbumInfo  *album);
 void            album_info_unref            (AlbumInfo  *album);
 AlbumInfo *     album_info_copy             (AlbumInfo  *album);
 void            album_info_set_id           (AlbumInfo  *album,
@@ -61,7 +61,7 @@ void            album_info_set_artist       (AlbumInfo  *album,
 					     const char *artist,
 					     const char *artist_id);
 void            album_info_set_genre        (AlbumInfo  *album,
-					     const char *genre);				 
+					     const char *genre);
 void            album_info_set_asin         (AlbumInfo  *album,
 					     const char *asin);
 void            album_info_set_release_date (AlbumInfo  *album,

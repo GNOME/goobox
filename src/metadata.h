@@ -24,9 +24,27 @@
 #define METADATA_H
 
 #include <glib.h>
-#include <musicbrainz3/mb_c.h>
+#include "album-info.h"
 
-GList * get_album_list (MbResultList list);
-void    get_track_info_for_album_list (GList *albums);
+void      metadata_get_cd_info_from_device            (const char           *device,
+					               GCancellable         *cancellable,
+					               GAsyncReadyCallback   callback,
+					               gpointer              user_data);
+gboolean  metadata_get_cd_info_from_device_finish     (GAsyncResult         *result,
+						       char                **disc_id,
+						       AlbumInfo           **album_info,
+                				       GError              **error);
+void      metadata_get_album_info_from_disc_id        (const char           *disc_id,
+						       GCancellable         *cancellable,
+						       GAsyncReadyCallback   callback,
+						       gpointer              user_data);
+GList *   metadata_get_album_info_from_disc_id_finish (GAsyncResult         *result,
+						       GError              **error);
+void      metadata_search_album_by_title              (const char           *title,
+						       GCancellable         *cancellable,
+						       GAsyncReadyCallback   callback,
+						       gpointer              user_data);
+GList *   metadata_search_album_by_title_finish       (GAsyncResult         *result,
+						       GError              **error);
 
 #endif /* METADATA_H */

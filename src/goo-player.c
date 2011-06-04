@@ -25,8 +25,6 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <gst/gst.h>
-#include <discid/discid.h>
-#include <musicbrainz3/mb_c.h>
 #include "goo-player.h"
 #include "goo-marshal.h"
 #include "glib-utils.h"
@@ -68,12 +66,9 @@ struct _GooPlayerPrivate {
 	guint            update_state_id;
 	guint            update_progress_id;
 
-	GThread         *thread;
 	GMutex          *yes_or_no;
-	guint            check_id;
 	gboolean         exiting;
-
-	char            *rdf;
+	GCancellable    *cancellable;
 	GList           *albums;
 };
 
@@ -342,7 +337,6 @@ goo_player_init (GooPlayer *self)
 	self->priv->is_busy = FALSE;
 	self->priv->hibernate = FALSE;
 	self->priv->yes_or_no = g_mutex_new ();
-	self->priv->check_id = 0;
 	self->priv->exiting = FALSE,
 	self->priv->discid = NULL;
 	self->priv->album = album_info_new ();
@@ -350,6 +344,7 @@ goo_player_init (GooPlayer *self)
 	self->priv->volume_value = 1.0;
 	self->priv->update_progress_id = 0;
 	self->priv->albums = NULL;
+	self->priv->cancellable = g_cancellable_new ();
 }
 
 
@@ -374,14 +369,17 @@ goo_player_finalize (GObject *object)
 		g_signal_handler_disconnect (self->priv->drive, self->priv->medium_removed_event);
 	g_object_unref (self->priv->drive);
 
-	if (self->priv->check_id != 0)
-		g_source_remove (self->priv->check_id);
+	if (self->priv->update_progress_id != 0) {
+		g_source_remove (self->priv->update_progress_id);
+		self->priv->update_progress_id = 0;
+	}
 
 	destroy_pipeline (self, FALSE);
 	g_mutex_free (self->priv->yes_or_no);
 	destroy_pipeline (self, FALSE);
 	g_free (self->priv->discid);
 	album_info_unref (self->priv->album);
+	g_object_unref (self->priv->cancellable);
 
 	G_OBJECT_CLASS (goo_player_parent_class)->finalize (object);
 }
@@ -459,315 +457,6 @@ goo_player_set_album (GooPlayer *self,
 }
 
 
-#if 0
-
-
-static void
-set_cd_metadata_from_rdf (GooPlayer *self,
-			  char      *rdf)
-{
-	musicbrainz_t  mb;
-	GList         *albums;
-
-	if (rdf == NULL)
-		return;
-
-	mb = mb_New ();
-	mb_UseUTF8 (mb, TRUE);
-	mb_SetResultRDF (mb, rdf);
-
-	albums = get_album_list (mb);
-	if (albums != NULL) {
-		AlbumInfo *first_album = albums->data;
-
-		/* FIXME: ask the user which album to use if the query
-		 * returned more than one album. */
-
-		goo_player_set_album (self, first_album);
-		album_list_free (albums);
-	}
-
-	mb_Delete (mb);
-}
-
-
-static char *
-get_cached_rdf_path (GooPlayer *self)
-{
-	if (self->priv->discid != NULL)
-		return gth_user_dir_get_file (GTH_DIR_CACHE, "goobox", self->priv->discid, NULL);
-	else
-		return NULL;
-}
-
-
-static void
-save_rdf_to_cache (GooPlayer  *player,
-	           const char *rdf)
-{
-	char   *path;
-	char   *dir;
-	GError *error = NULL;
-
-	if (rdf == NULL)
-		return;
-
-	path = get_cached_rdf_path (player);
-	if (path == NULL)
-		return;
-
-	if (g_file_test (path, G_FILE_TEST_EXISTS)) {
-		g_free (path);
-    		return;
-	}
-
-	dir = g_path_get_dirname (path);
-	g_mkdir_with_parents (dir, 0700);
-
-	if (! g_file_set_contents (path, rdf, strlen (rdf), &error)) {
-		debug (DEBUG_INFO, "%s\n", error->message);
-		g_clear_error (&error);
-	}
-
-	g_free (dir);
-	g_free (path);
-}
-
-
-static char *
-read_cached_rdf (GooPlayer *self)
-{
-	char   *path;
-	char   *rdf = NULL;
-	GError *error = NULL;
-
-	path = get_cached_rdf_path (self);
-	if (path == NULL)
-		return NULL;
-
-	if (! g_file_get_contents (path, &rdf, NULL, &error)) {
-		debug (DEBUG_INFO, "%s\n", error->message);
-		g_clear_error (&error);
-		rdf = NULL;
-	}
-
-	g_free (path);
-
-	return rdf;
-}
-
-
-#endif
-
-
-static int
-check_get_cd_metadata (gpointer data)
-{
-	GooPlayer *player = data;
-	gboolean   done, exiting;
-	GList     *albums;
-
-	/* Remove the check. */
-
-        g_source_remove (player->priv->check_id);
-        player->priv->check_id = 0;
-
-	/**/
-
-	g_mutex_lock (player->priv->yes_or_no);
-	done = player->priv->thread == NULL;
-	exiting = player->priv->exiting;
-        g_mutex_unlock (player->priv->yes_or_no);
-
-	if (exiting) {
-		goo_player_set_is_busy (player, FALSE);
-		destroy_pipeline (player, FALSE);
-		return FALSE;
-	}
-
-	if (! done) {
-		player->priv->check_id = g_timeout_add (REFRESH_RATE,
-						        check_get_cd_metadata,
-					 	        player);
-		return FALSE;
-	}
-
-	/**/
-
-	g_mutex_lock (player->priv->yes_or_no);
-	albums = player->priv->albums;
-	player->priv->albums = NULL;
-	g_mutex_unlock (player->priv->yes_or_no);
-
-	if (albums != NULL) {
-		AlbumInfo *first_album = albums->data;
-
-		/* FIXME: ask the user which album to use if the query
-		 * returned more than one album. */
-
-		goo_player_set_album (player, first_album);
-		album_info_save_to_cache (player->priv->album, player->priv->discid);
-
-		album_list_free (albums);
-	}
-
-	return FALSE;
-}
-
-
-static void *
-get_cd_metadata (void *thread_data)
-{
-	GooPlayer       *player = thread_data;
-	MbReleaseFilter  filter;
-	MbQuery          query;
-	MbResultList     list;
-
-	filter = mb_release_filter_new ();
-	mb_release_filter_disc_id (filter, player->priv->discid);
-	mb_release_filter_limit (filter, 1);
-
-	query = mb_query_new (NULL, NULL);
-	list = mb_query_get_releases (query, filter);
-
-	g_mutex_lock (player->priv->yes_or_no);
-	album_list_free (player->priv->albums);
-	player->priv->albums = get_album_list (list);
-	player->priv->thread = NULL;
-	g_mutex_unlock (player->priv->yes_or_no);
-
-	mb_result_list_free (list);
-	mb_query_free (query);
-	mb_release_filter_free (filter);
-
-	g_thread_exit (NULL);
-
-	return NULL;
-}
-
-
-static int
-check_get_cd_tracks (gpointer data)
-{
-	GooPlayer *player = data;
-	gboolean   done;
-	gboolean   exiting;
-
-	/* Remove the check. */
-
-        g_source_remove (player->priv->check_id);
-        player->priv->check_id = 0;
-
-	/**/
-
-	g_mutex_lock (player->priv->yes_or_no);
-	done = player->priv->thread == NULL;
-	exiting = player->priv->exiting;
-        g_mutex_unlock (player->priv->yes_or_no);
-
-	if (exiting) {
-		goo_player_set_is_busy (player, FALSE);
-		destroy_pipeline (player, TRUE);
-		return FALSE;
-	}
-
-	if (! done) {
-		player->priv->check_id = g_timeout_add (REFRESH_RATE,
-							check_get_cd_tracks,
-							player);
-		return FALSE;
-	}
-
-	/**/
-
-	goo_player_set_is_busy (player, FALSE);
-	gst_element_set_state (player->priv->pipeline, GST_STATE_NULL);
-	goo_player_set_state (player, GOO_PLAYER_STATE_STOPPED, TRUE);
-
-	action_done (player, GOO_PLAYER_ACTION_LIST);
-	destroy_pipeline (player, TRUE);
-
-	/**/
-
-	if (album_info_load_from_cache (player->priv->album, player->priv->discid)) {
-		action_done (player, GOO_PLAYER_ACTION_METADATA);
-		return FALSE;
-	}
-
-	/*
-	metadata_get_album_info_from_disc_id (player->priv->discid,
-					      data->cancellable,
-					      G_CALLBACK (album_info_from_disc_id_ready_cb),
-					      data);
-	*/
-
-	g_mutex_lock (player->priv->yes_or_no);
-	player->priv->thread = g_thread_create (get_cd_metadata, player, FALSE, NULL);
-	g_mutex_unlock (player->priv->yes_or_no);
-
-	player->priv->check_id = g_timeout_add (REFRESH_RATE, check_get_cd_metadata, player);
-
-	return FALSE;
-}
-
-
-static void *
-get_cd_tracks (void *thread_data)
-{
-	GooPlayer *player = thread_data;
-	GList     *tracks = NULL;
-	DiscId    *disc;
-
-	if (player->priv->pipeline != NULL)
-		gst_element_set_state (player->priv->pipeline, GST_STATE_PAUSED);
-
-	g_free (player->priv->discid);
-	player->priv->discid = NULL;
-
-	disc = discid_new ();
-	if (discid_read (disc, goo_player_get_device (player))) {
-		int first_track;
-		int last_track;
-		int i;
-
-		player->priv->discid = g_strdup (discid_get_id (disc));
-		debug (DEBUG_INFO, "==> [MB] DISC ID: %s\n", player->priv->discid);
-
-		first_track = discid_get_first_track_num (disc);
-		debug (DEBUG_INFO, "==> [MB] FIRST TRACK: %d\n", first_track);
-
-		last_track = discid_get_last_track_num (disc);
-		debug (DEBUG_INFO, "==> [MB] LAST TRACK: %d\n", last_track);
-
-		for (i = first_track; i <= last_track; i++) {
-			gint64 from_sector;
-			gint64 n_sectors;
-
-			from_sector = discid_get_track_offset (disc, i);
-			n_sectors = discid_get_track_length (disc, i);
-
-			debug (DEBUG_INFO, "==> [MB] Track %d: [%"G_GINT64_FORMAT", %"G_GINT64_FORMAT"]\n", i, from_sector, from_sector + n_sectors);
-
-			tracks = g_list_prepend (tracks, track_info_new (i - first_track, from_sector, from_sector + n_sectors));
-		}
-	}
-
-	discid_free (disc);
-
-	tracks = g_list_reverse (tracks);
-	album_info_set_tracks (player->priv->album, tracks);
-	track_list_free (tracks);
-
-	g_mutex_lock (player->priv->yes_or_no);
-	player->priv->thread = NULL;
-	g_mutex_unlock (player->priv->yes_or_no);
-
-	g_thread_exit (NULL);
-
-	return NULL;
-}
-
-
 gboolean
 goo_player_is_audio_cd (GooPlayer *self)
 {
@@ -821,6 +510,70 @@ goo_player_update (GooPlayer *self)
 }
 
 
+static void
+album_info_from_disc_id_ready_cb (GObject      *source_object,
+				  GAsyncResult *result,
+				  gpointer      user_data)
+{
+	GooPlayer *player = user_data;
+	GList     *albums;
+	GError    *error = NULL;
+
+	albums = metadata_get_album_info_from_disc_id_finish (result, &error);
+	if (albums != NULL) {
+		AlbumInfo *first_album = albums->data;
+
+		/* FIXME: ask the user which album to use if the query
+		 * returned more than one album. */
+
+		goo_player_set_album (player, first_album);
+		album_info_save_to_cache (player->priv->album, player->priv->discid);
+
+		album_list_free (albums);
+	}
+}
+
+
+static void
+get_cd_info_from_device_ready_cb (GObject      *source_object,
+				  GAsyncResult *result,
+				  gpointer      user_data)
+{
+	GooPlayer *player = user_data;
+	AlbumInfo *album;
+	GError    *error = NULL;
+
+	if (metadata_get_cd_info_from_device_finish (result,
+						     &player->priv->discid,
+						     &album,
+						     &error))
+	{
+		album_info_set_tracks (player->priv->album, album->tracks);
+	}
+
+	goo_player_set_is_busy (player, FALSE);
+	gst_element_set_state (player->priv->pipeline, GST_STATE_NULL);
+	goo_player_set_state (player, GOO_PLAYER_STATE_STOPPED, TRUE);
+	action_done (player, GOO_PLAYER_ACTION_LIST);
+	destroy_pipeline (player, TRUE);
+
+	if (player->priv->discid == NULL)
+		return;
+
+	if (album_info_load_from_cache (player->priv->album, player->priv->discid)) {
+		action_done (player, GOO_PLAYER_ACTION_METADATA);
+		return;
+	}
+
+	metadata_get_album_info_from_disc_id (player->priv->discid,
+					      player->priv->cancellable,
+					      album_info_from_disc_id_ready_cb,
+					      player);
+
+	album_info_unref (album);
+}
+
+
 void
 goo_player_list (GooPlayer *player)
 {
@@ -835,18 +588,16 @@ goo_player_list (GooPlayer *player)
 	goo_player_set_is_busy (player, TRUE);
 	create_pipeline (player);
 
-	/* FIXME
-	metadata_read_cd_info_from_device (goo_player_get_device (player),
-					   data->cancellable,
-					   G_CALLBACK (cd_info_from_device_ready_cb),
-					   data);
-	*/
+	if (player->priv->pipeline != NULL)
+		gst_element_set_state (player->priv->pipeline, GST_STATE_PAUSED);
 
-	g_mutex_lock (player->priv->yes_or_no);
-	player->priv->thread = g_thread_create (get_cd_tracks, player, FALSE, NULL);
-	g_mutex_unlock (player->priv->yes_or_no);
+	g_free (player->priv->discid);
+	player->priv->discid = NULL;
 
-	player->priv->check_id = g_timeout_add (REFRESH_RATE, check_get_cd_tracks, player);
+	metadata_get_cd_info_from_device (goo_player_get_device (player),
+					  player->priv->cancellable,
+					  get_cd_info_from_device_ready_cb,
+					  player);
 }
 
 
