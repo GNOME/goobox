@@ -22,124 +22,163 @@
 
 #include <config.h>
 #include <stdio.h>
-#include <musicbrainz/queries.h>
-#include <musicbrainz/mb_c.h>
+#include <string.h>
+#include <musicbrainz3/mb_c.h>
 #include "glib-utils.h"
 #include "metadata.h"
 #include "album-info.h"
 
 
-static AlbumInfo* 
-get_album_info (musicbrainz_t mb,
-		int           n_album)
+static TrackInfo *
+get_track_info (MbTrack mb_track,
+		int     n_track)
+{
+	TrackInfo *track;
+	char       data[1024];
+	char       data2[1024];
+	MbArtist   mb_artist;
+
+	track = track_info_new (n_track, 0, 0);
+
+	mb_track_get_title (mb_track, data, 1024);
+	track_info_set_title (track, data);
+
+	debug (DEBUG_INFO, "==> [MB] TRACK %d: %s\n", n_track, data);
+
+	mb_artist = mb_track_get_artist (mb_track);
+	if (mb_artist != NULL) {
+		mb_artist_get_unique_name (mb_artist, data, 1024);
+		mb_artist_get_id (mb_artist, data2, 1024);
+		track_info_set_artist (track, data, data2);
+	}
+
+	return track;
+}
+
+
+static AlbumInfo *
+get_album_info (MbRelease release)
 {
 	AlbumInfo *album;
 	char       data[1024];
-	int        n_track, n_tracks;   
-	GList     *tracks = NULL;       
-	
-	/*mb_Select (mb, MBS_Rewind);*/  
-	if (! mb_Select1 (mb, MBS_SelectAlbum, n_album))
-		return NULL;
+	int        i;
+	MbArtist   artist;
+	char       data2[1024];
+	GList     *tracks = NULL;
+	int        n_tracks;
 
 	album = album_info_new ();
-	
-	if (mb_GetResultData (mb, MBE_AlbumGetAlbumId, data, sizeof (data))) {
-		char data2[1024];
-		mb_GetIDFromURL (mb, data, data2, sizeof (data2));
-		debug (DEBUG_INFO, "==> [MB] ALBUM_ID: %s (%s)\n", data, data2);
-		album_info_set_id (album, data2);
-	}
-	else
-		return album;
-	
- 	if (mb_GetResultData (mb, MBE_AlbumGetAlbumName, data, sizeof (data))) {
-		album_info_set_title (album, data);
-		debug (DEBUG_INFO, "==> [MB] ALBUM NAME: %s\n", data);
- 	}
 
-	if (mb_GetResultData (mb, MBE_AlbumGetAmazonAsin, data, sizeof (data))) {
-		album_info_set_asin (album, data);
-		debug (DEBUG_INFO, "==> [MB] ASIN: %s\n", data);
-	}
-		
- 	if (mb_GetResultInt (mb, MBE_AlbumGetNumReleaseDates) >= 1) {
- 		int y = 0, m = 0, d = 0;
- 		
-		mb_Select1 (mb, MBS_SelectReleaseDate, 1);
- 		
-		mb_GetResultData (mb, MBE_ReleaseGetDate, data, sizeof (data));
+	mb_release_get_id (release, data, 1024);
+	debug (DEBUG_INFO, "==> [MB] ALBUM_ID: %s\n", data);
+	album_info_set_id (album, strrchr (data, '/') + 1);
+
+	mb_release_get_title (release, data, 1024);
+	debug (DEBUG_INFO, "==> [MB] ALBUM NAME: %s\n", data);
+	album_info_set_title (album, data);
+
+	mb_release_get_asin (release, data, 1024);
+	debug (DEBUG_INFO, "==> [MB] ASIN: %s\n", data);
+	album_info_set_asin (album, data);
+
+	for (i = 0; i < mb_release_get_num_release_events (release); i++) {
+		MbReleaseEvent event;
+		int            y = 0, m = 0, d = 0;
+
+		event = mb_release_get_release_event (release, i);
+		mb_release_event_get_date (event, data, 1024);
 		debug (DEBUG_INFO, "==> [MB] RELEASE DATE: %s\n", data);
 		if (sscanf (data, "%d-%d-%d", &y, &m, &d) > 0) {
 			GDate *date;
-		
+
 			date = g_date_new_dmy ((d > 0) ? d : 1, (m > 0) ? m : 1, (y > 0) ? y : 1);
 			album_info_set_release_date (album, date);
 			g_date_free (date);
 		}
- 		
-		mb_GetResultData (mb, MBE_ReleaseGetCountry, data, sizeof (data));
-		debug (DEBUG_INFO, "==> [MB] RELEASE COUNTRY: %s\n", data);
- 		
-		mb_Select (mb, MBS_Back);
- 	}
- 
-	if (mb_GetResultData (mb, MBE_AlbumGetAlbumArtistName, data, sizeof (data))) {
-		char data2[1024], data3[1024];
-		
-		mb_GetResultData (mb, MBE_AlbumGetArtistId, data2, sizeof (data2));
-		mb_GetIDFromURL (mb, data2, data3, sizeof (data3));
-		
-		debug (DEBUG_INFO, "==> [MB] ARTIST_ID: %s (%s)\n", data2, data3);
-		
-		album_info_set_artist (album, data, data3);
 	}
-	
+
+	artist = mb_release_get_artist (release);
+	mb_artist_get_unique_name (artist, data, 1024);
+	mb_artist_get_id (artist, data2, 1024);
+	album_info_set_artist (album, data, data2);
+
 	tracks = NULL;
-	n_tracks = mb_GetResultInt (mb, MBE_AlbumGetNumTracks);
+	n_tracks = mb_release_get_num_tracks (release);
 	debug (DEBUG_INFO, "==> [MB] N TRACKS: %d\n", n_tracks);
-	for (n_track = 1; n_track <= n_tracks; n_track++) {
+	for (i = 0; i < n_tracks; i++) {
+		MbTrack    mb_track;
 		TrackInfo *track;
-		
-		track = track_info_new (n_track - 1, 0, 0);
+
+		mb_track = mb_release_get_track (release, i);
+		track = get_track_info (mb_track, i);
+		if (album->artist == NULL)
+			album_info_set_artist (album, track->artist, KEEP_PREVIOUS_VALUE);
 		tracks = g_list_prepend (tracks, track);
-		
-		if (mb_GetResultData1 (mb, MBE_AlbumGetTrackName, data, sizeof (data), n_track))
-			track_info_set_title (track, data);
-		
-		debug (DEBUG_INFO, "==> [MB] TRACK %d: %s\n", n_track, data);
-			
-		if (mb_GetResultData1 (mb, MBE_AlbumGetArtistName, data, sizeof (data), n_track)) {
-		    	char data2[1024], data3[1024];
-		
-			mb_GetResultData1 (mb, MBE_AlbumGetArtistId, data2, sizeof (data2), n_track);
-			mb_GetIDFromURL (mb, data2, data3, sizeof (data3));
-			track_info_set_artist (track, data, data3);
-			
-			if (album->artist == NULL)
-				album_info_set_artist (album, data, KEEP_PREVIOUS_VALUE);
-		}
 	}
-	mb_Select (mb, MBS_Back);
-	
+
 	tracks = g_list_reverse (tracks);
 	album_info_set_tracks (album, tracks);
-	
+
 	return album;
 }
 
 
-GList* 
-get_album_list (musicbrainz_t mb)
+GList *
+get_album_list (MbResultList list)
 {
 	GList *albums = NULL;
-	int    n_albums, i;
-		
-	n_albums = mb_GetResultInt (mb, MBE_GetNumAlbums);
+	int    n_albums;
+	int    i;
+
+	n_albums = mb_result_list_get_size (list);
 	g_print ("[MB] Num Albums: %d\n", n_albums);
-	
-	for (i = 1; i <= n_albums; i++)
-		albums = g_list_prepend (albums, get_album_info (mb, i));
-	
+
+	for (i = 0; i < n_albums; i++) {
+		MbRelease release;
+
+		release = mb_result_list_get_release (list, i);
+		albums = g_list_prepend (albums, get_album_info (release));
+	}
+
 	return g_list_reverse (albums);
+}
+
+
+void
+get_track_info_for_album_list (GList *albums)
+{
+	GList *scan;
+
+	for (scan = albums; scan; scan = scan->next) {
+		AlbumInfo     *album = scan->data;
+		MbTrackFilter  filter;
+		GList         *tracks;
+		MbQuery        query;
+		MbResultList   list;
+		int            i;
+
+		filter = mb_track_filter_new ();
+		mb_track_filter_release_id (filter, album->id);
+		query = mb_query_new (NULL, NULL);
+		list = mb_query_get_tracks (query, filter);
+
+		tracks = NULL;
+		for (i = 0; i < mb_result_list_get_size (list); i++) {
+			MbTrack    mb_track;
+			TrackInfo *track;
+
+			mb_track = mb_result_list_get_track (list, i);
+			track = get_track_info (mb_track, i);
+			if ((album->artist == NULL) && (track->artist != NULL))
+				album_info_set_artist (album, track->artist, KEEP_PREVIOUS_VALUE);
+			tracks = g_list_prepend (tracks, track);
+		}
+
+		tracks = g_list_reverse (tracks);
+		album_info_set_tracks (album, tracks);
+
+		mb_result_list_free (list);
+		mb_query_free (query);
+		mb_track_filter_free (filter);
+	}
 }

@@ -44,7 +44,7 @@ typedef struct {
 	GooWindow         *window;
 	GtkWidget         *dialog;
 	GtkBuilder        *builder;
-	GtkListStore      *list_store; 
+	GtkListStore      *list_store;
 	GtkTreeViewColumn *author_column;
 	GList             *albums;
 	int                n_albums, current_album;
@@ -67,37 +67,37 @@ set_album_from_data (DialogData *data)
 	AlbumInfo   *album;
 	const char  *album_artist;
 	GtkTreeIter  iter;
-		
+
 	album = album_info_copy (goo_window_get_album (data->window));
 	album_info_set_title (album, gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("title_entry"))));
 	album_artist = gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("artist_entry")));
 	album_info_set_artist (album, album_artist, "");
 	album->various_artist = gtk_combo_box_get_active (GTK_COMBO_BOX (GET_WIDGET ("artist_combobox"))) == 1;
-	
+
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("year_checkbutton")))) {
 		GDate *date;
-		
+
 		date = g_date_new_dmy (1, 1, gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (GET_WIDGET ("year_spinbutton"))));
 		album_info_set_release_date (album, date);
 		g_date_free (date);
 	}
 	else {
 		GDate *date;
-		
+
 		date = g_date_new ();
 		album_info_set_release_date (album, date);
 		g_date_free (date);
 	}
-	
+
 	if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (data->list_store), &iter)) {
 		GList     *scan = album->tracks;
 		TrackInfo *track;
 		char      *title;
 		char      *artist;
-		
+
 		do {
 			track = scan->data;
-			gtk_tree_model_get (GTK_TREE_MODEL (data->list_store), 
+			gtk_tree_model_get (GTK_TREE_MODEL (data->list_store),
 					    &iter,
 					    TITLE_COLUMN, &title,
 					    ARTIST_COLUMN, &artist,
@@ -108,16 +108,16 @@ set_album_from_data (DialogData *data)
 				track_info_set_artist (track, artist, "");
 			else
 				track_info_set_artist (track, album_artist, "");
-					
+
 			g_free (title);
 			g_free (artist);
-			
+
 			scan = scan->next;
 		} while (gtk_tree_model_iter_next (GTK_TREE_MODEL (data->list_store), &iter));
 	}
 
 	goo_player_set_album (goo_window_get_player (data->window), album);
-	
+
 	album_info_unref (album);
 }
 
@@ -144,9 +144,9 @@ set_data_from_album (DialogData *data,
 		     AlbumInfo  *album)
 {
 	GList *scan;
-	
+
 	gtk_combo_box_set_active (GTK_COMBO_BOX (GET_WIDGET ("artist_combobox")), album->various_artist ? 1 : 0);
-	
+
 	if (album->title != NULL)
 		gtk_entry_set_text (GTK_ENTRY (GET_WIDGET ("title_entry")), album->title);
 	if (album->artist != NULL)
@@ -154,7 +154,7 @@ set_data_from_album (DialogData *data,
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("year_checkbutton")), g_date_valid (album->release_date));
 	if (g_date_valid (album->release_date))
 		gtk_spin_button_set_value (GTK_SPIN_BUTTON (GET_WIDGET ("year_spinbutton")), g_date_get_year (album->release_date));
-	else	
+	else
 		gtk_spin_button_set_value (GTK_SPIN_BUTTON (GET_WIDGET ("year_spinbutton")), 0);
 
 	gtk_list_store_clear (data->list_store);
@@ -178,38 +178,38 @@ show_album (DialogData *data,
 	    int         n)
 {
 	char *s;
-	
+
 	if ((n < 0) || (n >= data->n_albums))
 		return;
 	data->current_album = n;
-		
+
 	gtk_widget_hide (GET_WIDGET ("info_box"));
 	gtk_widget_show (GET_WIDGET ("navigation_box"));
-		
-	s = g_strdup_printf (_("Album %d of %d"), data->current_album + 1, data->n_albums); 
+
+	s = g_strdup_printf (_("Album %d of %d"), data->current_album + 1, data->n_albums);
 	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("album_label")), s);
 	g_free (s);
-	
+
 	set_data_from_album (data, g_list_nth (data->albums, n)->data);
 }
 
 
 static GList *
-remove_incompatible_albums (GList     *albums, 
+remove_incompatible_albums (GList     *albums,
 			    AlbumInfo *album)
 {
 	GList *scan;
-	
+
 	for (scan = albums; scan; /* nothing */) {
 		AlbumInfo *album2 = scan->data;
 		gboolean   incompatible = FALSE;
-		
+
 		if (album2->n_tracks != album->n_tracks)
 			incompatible = TRUE;
-			
+
 		if (incompatible) {
 			GList *tmp = scan;
-			
+
 			scan = scan->next;
 			albums = g_list_remove_link (albums, tmp);
 			album_info_unref (tmp->data);
@@ -218,49 +218,54 @@ remove_incompatible_albums (GList     *albums,
 		else
 			scan = scan->next;
 	}
-	
+
 	return albums;
 }
 
 
 static void
-search_cb (GtkWidget  *widget, 
+search_cb (GtkWidget  *widget,
 	   DialogData *data)
 {
-	musicbrainz_t  mb;
-	char          *mb_args[2];
-	
-	mb = mb_New ();
-	mb_UseUTF8 (mb, TRUE);
-	mb_SetDepth (mb, 4);
-	/*mb_SetMaxItems(mb, 10);*/
-	
-	mb_args[0] = (char*) gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("title_entry")));
-	mb_args[1] = NULL;
-	if (! mb_QueryWithArgs (mb, MBQ_FindAlbumByName, mb_args)) {
-		char  mb_error[1024];
-		char *s;
-		
-	        mb_GetQueryError (mb, mb_error, sizeof (mb_error));
-	        s = g_strdup_printf (_("Search failed: %s\n"), mb_error);
-        	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), s);
-        	g_free (s);
-	}
-	else {	
-		data->albums = get_album_list (mb);
-		data->albums = remove_incompatible_albums (data->albums, goo_window_get_album (data->window));
-		data->n_albums = g_list_length (data->albums);
-	
-		if (data->n_albums == 0) { 
-			gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), _("No album found"));
-			gtk_widget_show (GET_WIDGET ("info_box"));
-			gtk_widget_hide (GET_WIDGET ("navigation_box"));
-		} 
-		else 
-			show_album (data, 0);
-	}
+	MbReleaseFilter  filter;
+	MbQuery          query;
+	MbResultList     list;
 
-	mb_Delete (mb);
+	gtk_image_set_from_stock (GTK_IMAGE (GET_WIDGET ("info_icon")), GTK_STOCK_FIND, GTK_ICON_SIZE_BUTTON);
+	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), _("Searching disc info..."));
+	gtk_widget_show (GET_WIDGET ("info_box"));
+	gtk_widget_hide (GET_WIDGET ("navigation_box"));
+
+	/*
+	metadata_search_album_by_title (gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("title_entry"))),
+					data->cancellable,
+					G_CALLBACK (search_album_by_title_ready_cb),
+					data);
+	*/
+
+	filter = mb_release_filter_new ();
+	mb_release_filter_title (filter, gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("title_entry"))));
+
+	query = mb_query_new (NULL, NULL);
+	list = mb_query_get_releases (query, filter);
+
+	data->albums = get_album_list (list);
+	get_track_info_for_album_list (data->albums);
+	data->albums = remove_incompatible_albums (data->albums, goo_window_get_album (data->window));
+	data->n_albums = g_list_length (data->albums);
+
+	if (data->n_albums == 0) {
+		gtk_image_set_from_stock (GTK_IMAGE (GET_WIDGET ("info_icon")), GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_BUTTON);
+		gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), _("No album found"));
+		gtk_widget_show (GET_WIDGET ("info_box"));
+		gtk_widget_hide (GET_WIDGET ("navigation_box"));
+	}
+	else
+		show_album (data, 0);
+
+	mb_result_list_free (list);
+	mb_query_free (query);
+	mb_release_filter_free (filter);
 }
 
 
@@ -271,11 +276,11 @@ title_cell_edited_cb (GtkCellRendererText *renderer,
                       gpointer             user_data)
 {
 	DialogData  *data = user_data;
-	GtkTreePath *t_path; 
+	GtkTreePath *t_path;
 	GtkTreeIter  iter;
-	
+
 	t_path = gtk_tree_path_new_from_string (path);
-	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (data->list_store), &iter, t_path)) 
+	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (data->list_store), &iter, t_path))
 		gtk_list_store_set (data->list_store, &iter,
 				    TITLE_COLUMN, new_text,
 				    -1);
@@ -290,11 +295,11 @@ artist_cell_edited_cb (GtkCellRendererText *renderer,
                        gpointer             user_data)
 {
 	DialogData  *data = user_data;
-	GtkTreePath *t_path; 
+	GtkTreePath *t_path;
 	GtkTreeIter  iter;
-	
+
 	t_path = gtk_tree_path_new_from_string (path);
-	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (data->list_store), &iter, t_path)) 
+	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (data->list_store), &iter, t_path))
 		gtk_list_store_set (data->list_store, &iter,
 				    ARTIST_COLUMN, new_text,
 				    -1);
@@ -329,70 +334,70 @@ add_columns (DialogData  *data,
 	gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
 	/* Title */
-	
+
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Title"));
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 	gtk_tree_view_column_set_resizable (column, TRUE);
 	gtk_tree_view_column_set_expand (column, TRUE);
 	gtk_tree_view_column_set_sort_column_id (column, TITLE_COLUMN);
-	
+
 	renderer = gtk_cell_renderer_text_new ();
-	
+
 	g_value_init (&value, PANGO_TYPE_ELLIPSIZE_MODE);
 	g_value_set_enum (&value, PANGO_ELLIPSIZE_END);
 	g_object_set_property (G_OBJECT (renderer), "ellipsize", &value);
 	g_value_unset (&value);
-	
+
 	g_value_init (&value, G_TYPE_BOOLEAN);
 	g_value_set_boolean (&value, TRUE);
 	g_object_set_property (G_OBJECT (renderer), "editable", &value);
 	g_value_unset (&value);
-	
-	g_signal_connect (G_OBJECT (renderer), 
+
+	g_signal_connect (G_OBJECT (renderer),
 			  "edited",
 			  G_CALLBACK (title_cell_edited_cb),
 			  data);
-			  	
+
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
         gtk_tree_view_column_set_attributes (column, renderer,
                                              "text", TITLE_COLUMN,
                                              NULL);
-		
+
 	gtk_tree_view_append_column (treeview, column);
 
 	/* Author */
-	
+
 	data->author_column = column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Artist"));
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 	gtk_tree_view_column_set_resizable (column, FALSE);
 	gtk_tree_view_column_set_expand (column, TRUE);
 	gtk_tree_view_column_set_sort_column_id (column, ARTIST_COLUMN);
-	
+
 	renderer = gtk_cell_renderer_text_new ();
-	
+
 	g_value_init (&value, PANGO_TYPE_ELLIPSIZE_MODE);
 	g_value_set_enum (&value, PANGO_ELLIPSIZE_END);
 	g_object_set_property (G_OBJECT (renderer), "ellipsize", &value);
 	g_value_unset (&value);
-	
+
 	g_value_init (&value, G_TYPE_BOOLEAN);
 	g_value_set_boolean (&value, TRUE);
 	g_object_set_property (G_OBJECT (renderer), "editable", &value);
 	g_value_unset (&value);
-	
-	g_signal_connect (G_OBJECT (renderer), 
+
+	g_signal_connect (G_OBJECT (renderer),
 			  "edited",
 			  G_CALLBACK (artist_cell_edited_cb),
 			  data);
-	
+
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
         gtk_tree_view_column_set_attributes (column, renderer,
                                              "text", ARTIST_COLUMN,
                                              NULL);
-		
-	gtk_tree_view_append_column (treeview, column);   	
+
+	gtk_tree_view_append_column (treeview, column);
 }
 
 
@@ -449,12 +454,12 @@ dlg_properties (GooWindow *window)
 {
 	DialogData *data;
         GtkWidget  *image;
-        
+
         if (window->properties_dialog != NULL) {
         	gtk_window_present (GTK_WINDOW (window->properties_dialog));
         	return;
         }
-        
+
 	data = g_new0 (DialogData, 1);
 	data->window = window;
 	data->builder = _gtk_builder_new_from_file ("properties.ui", "");
@@ -465,14 +470,14 @@ dlg_properties (GooWindow *window)
 	window->properties_dialog = data->dialog;
 
 	/* Set widgets data. */
-	
+
 	image = gtk_image_new_from_stock (GOO_STOCK_RESET, GTK_ICON_SIZE_BUTTON);
 	g_object_set (GET_WIDGET ("undo_button"),
 		      "use_stock", TRUE,
 		      "label", GOO_STOCK_RESET,
 		      "image", image,
 		      NULL);
-	
+
 	data->list_store = gtk_list_store_new (N_COLUMNS,
 					       G_TYPE_INT,
 					       G_TYPE_STRING,
@@ -480,10 +485,10 @@ dlg_properties (GooWindow *window)
 					       G_TYPE_POINTER);
 	gtk_tree_view_set_model (GTK_TREE_VIEW (GET_WIDGET ("track_treeview")), GTK_TREE_MODEL (data->list_store));
 	add_columns (data, GTK_TREE_VIEW (GET_WIDGET ("track_treeview")));
-	
+
 	/* Set the signals handlers. */
 
-	g_signal_connect (G_OBJECT (data->dialog), 
+	g_signal_connect (G_OBJECT (data->dialog),
 			  "destroy",
 			  G_CALLBACK (dialog_destroy_cb),
 			  data);
@@ -521,14 +526,14 @@ dlg_properties (GooWindow *window)
 			  data);
 	g_signal_connect (GET_WIDGET ("year_checkbutton"),
 			  "toggled",
-                          G_CALLBACK (year_checkbutton_toggled_cb), 
+                          G_CALLBACK (year_checkbutton_toggled_cb),
                           data);
-                     	  
+
 	/* run dialog. */
 
 	gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
 	gtk_window_set_modal (GTK_WINDOW (data->dialog), FALSE);
 	gtk_widget_show (data->dialog);
-	
+
 	set_data_from_album (data, goo_window_get_album (data->window));
 }

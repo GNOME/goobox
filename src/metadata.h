@@ -24,8 +24,9 @@
 #define METADATA_H
 
 #include <glib.h>
-#include <musicbrainz/mb_c.h>
+#include <musicbrainz3/mb_c.h>
 
-GList* get_album_list (musicbrainz_t mb);
+GList * get_album_list (MbResultList list);
+void    get_track_info_for_album_list (GList *albums);
 
 #endif /* METADATA_H */
