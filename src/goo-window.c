@@ -2064,31 +2064,6 @@ status_icon_query_tooltip_cb (GtkStatusIcon *status_icon,
 
 
 static void
-status_icon_popup_menu_position_cb (GtkMenu  *menu,
-				    int      *x,
-				    int      *y,
-				    gboolean *push_in,
-				    gpointer  user_data)
-{
-	GooWindow      *window = user_data;
-	GdkRectangle    area;
-	GtkOrientation  orientation;
-
-	gtk_status_icon_get_geometry (window->priv->status_icon, NULL, &area, &orientation);
-	if (orientation == GTK_ORIENTATION_HORIZONTAL) {
-		*x = area.x;
-		*y = area.y + area.height;
-	}
-	else {
-		*x = area.x + area.width;
-		*y = area.y;
-	}
-
-	*push_in = TRUE;
-}
-
-
-static void
 status_icon_popup_menu_cb (GtkStatusIcon *status_icon,
 			   guint          button,
 			   guint          activate_time,
@@ -2098,8 +2073,8 @@ status_icon_popup_menu_cb (GtkStatusIcon *status_icon,
 
 	gtk_menu_popup (GTK_MENU (window->priv->status_icon_popup_menu),
 			NULL, NULL,
-			status_icon_popup_menu_position_cb,
-			window,
+			gtk_status_icon_position_menu,
+			window->priv->status_icon,
 			button,
 			activate_time);
 }
