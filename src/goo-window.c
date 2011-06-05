@@ -978,7 +978,7 @@ first_time_idle (gpointer callback_data)
 	GooWindow *window = callback_data;
 
 	g_source_remove (window->priv->first_time_event);
-	/* goo_player_update (window->priv->player); FIXME */
+	goo_player_update (window->priv->player);
 
 	return FALSE;
 }
@@ -990,10 +990,10 @@ goo_window_show (GtkWidget *widget)
 	GooWindow *window = GOO_WINDOW (widget);
 	gboolean   view_foobar;
 
-	if (! HideShow)
+	if (! arg_toggle_visibility)
 		GTK_WIDGET_CLASS (goo_window_parent_class)->show (widget);
 	else
-		HideShow = FALSE;
+		arg_toggle_visibility = FALSE;
 
 	view_foobar = g_settings_get_boolean (window->priv->settings_ui, PREF_UI_TOOLBAR);
 	set_active (window, "ViewToolbar", view_foobar);
@@ -1641,8 +1641,8 @@ player_done_cb (GooPlayer       *player,
 		goo_window_update_cover (window);
 		window_update_title (window);
 		set_current_track_icon (window, NULL);
-		if (AutoPlay || g_settings_get_boolean (window->priv->settings_general, PREF_GENERAL_AUTOPLAY)) {
-			AutoPlay = FALSE;
+		if (arg_auto_play || g_settings_get_boolean (window->priv->settings_general, PREF_GENERAL_AUTOPLAY)) {
+			arg_auto_play = FALSE;
 			g_timeout_add (AUTOPLAY_DELAY, autoplay_cb, window);
 		}
 		break;

@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 #include "gth-window.h"
 #include "gtk-utils.h"
+#include "main.h"
 
 
 #define GTH_WINDOW_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GTH_TYPE_WINDOW, GthWindowPrivate))
@@ -127,12 +128,9 @@ gth_window_finalize (GObject *object)
 	g_free (window->priv->toolbars);
 	g_free (window->priv->contents);
 
-	window_list = g_list_remove (window_list, window);
+	gtk_application_remove_window (main_application, GTK_WINDOW (window));
 
 	G_OBJECT_CLASS (parent_class)->finalize (object);
-
-	if (window_list == NULL)
-		gtk_main_quit ();
 }
 
 

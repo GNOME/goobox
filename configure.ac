@@ -35,7 +35,6 @@ PKG_CHECK_MODULES(GOO, [
 	libbrasero-media3
 	libmusicbrainz3 >= $LIBMUSICBRAINZ3_REQUIRED
 	libdiscid
-	unique-3.0
 ])
 AC_SUBST(GOO_CFLAGS)
 AC_SUBST(GOO_LIBS)
