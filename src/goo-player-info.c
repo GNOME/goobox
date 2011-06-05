@@ -31,8 +31,8 @@
 
 #define SPACING 0
 #define TITLE1_FORMAT "<span size='large' weight='bold'>%s</span>"
-#define TITLE2_FORMAT "<i>%s</i>"
-#define TITLE3_FORMAT "%s"
+#define TITLE2_FORMAT "%s"
+#define TITLE3_FORMAT "<i>%s</i>"
 #define TIME_FORMAT "%s"
 #define PLAYING_FORMAT "[ <small>%s</small> ]"
 #define SCALE_WIDTH 150
@@ -150,6 +150,7 @@ set_label (GtkWidget     *label,
 
 	if ((text == NULL) || (*text == '\0')) {
 		gtk_label_set_text (GTK_LABEL (label), "");
+		gtk_widget_hide (label);
 		return;
 	}
 
@@ -158,6 +159,8 @@ set_label (GtkWidget     *label,
 	g_free (e_text);
 
 	gtk_label_set_markup (GTK_LABEL (label), markup);
+	gtk_widget_show (label);
+
 	g_free (markup);
 }
 
@@ -468,19 +471,15 @@ goo_player_info_construct (GooPlayerInfo *info)
 
 	vbox = gtk_vbox_new (FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
-	gtk_box_pack_start (GTK_BOX (vbox), priv->title1_label, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), priv->title1_label, TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), priv->title2_label, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), priv->title3_label, FALSE, FALSE, 0);
 	gtk_box_pack_end (GTK_BOX (vbox), time_box, FALSE, FALSE, 0);
 
-	gtk_widget_show_all (vbox);
+	gtk_widget_show (vbox);
 	gtk_box_pack_start (GTK_BOX (info), vbox, TRUE, TRUE, 0);
 
 	/**/
-
-	set_title1 (info, "");
-	set_title2 (info, "");
-	set_title3 (info, "");
 
 	g_signal_connect (priv->time_scale,
 			  "value_changed",
@@ -494,8 +493,6 @@ goo_player_info_construct (GooPlayerInfo *info)
 			  "button_release_event",
 			  G_CALLBACK (time_scale_button_release_cb),
 			  info);
-
-	goo_player_info_update_state (info);
 }
 
 
@@ -589,11 +586,46 @@ update_subtitle (GooPlayerInfo *info,
 		set_title2 (info, info->priv->total_time);
 	}
 	else {
-		set_title2 (info, album->title);
-		set_title3 (info, album->artist);
+		set_title2 (info, album->artist);
+		set_title3 (info, album->title);
 		gtk_label_set_selectable (GTK_LABEL (info->priv->title2_label), info->priv->interactive);
 		gtk_label_set_selectable (GTK_LABEL (info->priv->title3_label), info->priv->interactive);
 	}
+}
+
+
+static void
+show_simple_text (GooPlayerInfo *info,
+		  const char     *text)
+{
+	set_title1 (info, text);
+	set_title2 (info, "");
+	set_title3 (info, "");
+
+	/* center vertically the only displayed label */
+
+	gtk_box_set_child_packing (GTK_BOX (gtk_widget_get_parent (info->priv->title1_label)),
+				   info->priv->title1_label,
+				   TRUE,
+				   TRUE,
+				   0,
+				   GTK_PACK_START);
+}
+
+
+static void
+show_all_labels (GooPlayerInfo *info)
+{
+	gtk_widget_show (info->priv->title1_label);
+	gtk_widget_show (info->priv->title2_label);
+	gtk_widget_show (info->priv->title3_label);
+
+	gtk_box_set_child_packing (GTK_BOX (gtk_widget_get_parent (info->priv->title1_label)),
+				   info->priv->title1_label,
+				   FALSE,
+				   FALSE,
+				   0,
+				   GTK_PACK_START);
 }
 
 
@@ -615,7 +647,8 @@ goo_player_info_update_state (GooPlayerInfo *info)
 	album = goo_window_get_album (info->priv->window);
 
 	if ((state == GOO_PLAYER_STATE_PLAYING)
-	    || (state == GOO_PLAYER_STATE_PAUSED)) {
+	    || (state == GOO_PLAYER_STATE_PAUSED))
+	{
 	    	if (info->priv->interactive)
 			gtk_widget_show (priv->time_scale);
 		gtk_widget_show (priv->time_label);
@@ -633,14 +666,10 @@ goo_player_info_update_state (GooPlayerInfo *info)
 
 	if ((state == GOO_PLAYER_STATE_ERROR) || (state == GOO_PLAYER_STATE_NO_DISC))
 	{
-		set_title1 (info, _("No disc"));
-		set_title2 (info, "");
-		set_title3 (info, "");
+		show_simple_text (info, _("No disc"));
 	}
 	else if (state == GOO_PLAYER_STATE_DATA_DISC) {
-		set_title1 (info, _("Data disc"));
-		set_title2 (info, "");
-		set_title3 (info, "");
+		show_simple_text (info, _("Data disc"));
 	}
 	else {
 		TrackInfo *track;
@@ -649,6 +678,8 @@ goo_player_info_update_state (GooPlayerInfo *info)
 
 		if (track != NULL) {
 			char *state_s = "";
+
+			show_all_labels (info);
 
 			priv->track_length = track->length;
 
@@ -662,35 +693,32 @@ goo_player_info_update_state (GooPlayerInfo *info)
 			update_subtitle (info, track);
 		}
 		else if (state == GOO_PLAYER_STATE_EJECTING) {
-			set_title1 (info, _("Ejecting CD"));
-			set_title2 (info, "");
+			show_simple_text (info, _("Ejecting CD"));
 		}
 		else if (state == GOO_PLAYER_STATE_UPDATING) {
-			set_title1 (info, _("Checking CD drive"));
-			set_title2 (info, "");
+			show_simple_text (info, _("Checking CD drive"));
 		}
 		else if (state == GOO_PLAYER_STATE_SEEKING) {
-			set_title1 (info, _("Reading CD"));
-			set_title2 (info, "");
+			show_simple_text (info, _("Reading CD"));
 		}
 		else if (state == GOO_PLAYER_STATE_LISTING) {
-			set_title1 (info, _("Reading CD"));
-			set_title2 (info, "");
+			show_simple_text (info, _("Reading CD"));
+		}
+		else if (album->title == NULL) {
+			show_simple_text (info, _("Audio CD"));
 		}
 		else {
 			char year[128];
+
+			show_all_labels (info);
 
 			if (g_date_valid (album->release_date) != 0)
 				sprintf (year, "%u", g_date_get_year (album->release_date));
 			else
 				year[0] = '\0';
 
-			if (album->title != NULL) {
-				set_title1 (info, album->title);
-				gtk_label_set_selectable (GTK_LABEL (priv->title1_label), info->priv->interactive);
-			}
-			else
-				set_title1 (info, _("Audio CD"));
+			set_title1 (info, album->title);
+			gtk_label_set_selectable (GTK_LABEL (priv->title1_label), info->priv->interactive);
 
 			if (album->artist != NULL) {
 				set_title2 (info, album->artist);
