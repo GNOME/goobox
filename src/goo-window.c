@@ -109,7 +109,6 @@ struct _GooWindowPrivate {
 	GtkWidget         *preview;
 	int                pos_x, pos_y;
 	gboolean           hibernate;
-	gboolean           notify_action;
 
 	GDBusProxy        *media_keys_proxy;
 	gulong             focus_in_event;
@@ -845,8 +844,6 @@ static void
 play_track (GooWindow *window,
 	    int        track_number)
 {
-	if (! gtk_widget_get_visible (GTK_WIDGET (window)))
-		window->priv->notify_action = TRUE;
 	goo_player_seek_track (window->priv->player, track_number);
 }
 
@@ -1080,12 +1077,17 @@ goo_window_class_init (GooWindowClass *class)
 }
 
 
-static void
+static gboolean
 window_delete_event_cb (GtkWidget  *caller,
 			GdkEvent   *event,
 			GooWindow  *window)
 {
-	activate_action_quit (NULL, window);
+	if (goo_player_get_state (window->priv->player) == GOO_PLAYER_STATE_PLAYING)
+		gtk_window_iconify (GTK_WINDOW (window));
+	else
+		activate_action_quit (NULL, window);
+
+	return TRUE;
 }
 
 
@@ -1290,6 +1292,48 @@ set_action_label_and_icon (GooWindow  *window,
 
 
 static void
+notify_current_state (GooWindow       *window,
+		      GooPlayerAction  action)
+{
+#ifdef ENABLE_NOTIFICATION
+
+	GString *info = g_string_new ("");
+
+	if ((window->priv->album == NULL) || (window->priv->current_track == NULL)) {
+		system_notify (window, GOO_PLAYER_ACTION_NONE, "", "");
+		return;
+	}
+
+	if (window->priv->album->artist != NULL) {
+		char *e_artist = g_markup_escape_text (window->priv->album->artist, -1);
+
+		g_string_append_printf (info, "%s", e_artist);
+		g_free (e_artist);
+	}
+
+	if (window->priv->album->title != NULL) {
+		char *e_album = g_markup_escape_text (window->priv->album->title, -1);
+
+		g_string_append (info, "\n");
+
+		g_string_append_printf (info, "<i>%s</i>", e_album);
+		g_free (e_album);
+	}
+
+	g_string_append (info, " ");
+
+	system_notify (window,
+		       action,
+		       window->priv->current_track->title,
+		       info->str);
+
+	g_string_free (info, TRUE);
+
+#endif /* ENABLE_NOTIFICATION */
+}
+
+
+static void
 player_start_cb (GooPlayer       *player,
 		 GooPlayerAction  action,
 		 GooWindow       *window)
@@ -1305,35 +1349,14 @@ player_start_cb (GooPlayer       *player,
 					   GOO_STOCK_PAUSE,
 					   "/MenuBar/CDMenu/",
 					   NULL);
-
-#ifdef ENABLE_NOTIFICATION
-
-		if (window->priv->notify_action) {
-			GString *info = g_string_new ("");
-
-			if (window->priv->album->title != NULL) {
-				char *e_album = g_markup_escape_text (window->priv->album->title, -1);
-
-				g_string_append_printf (info, "<i>%s</i>", e_album);
-				g_free (e_album);
-			}
-			g_string_append (info, "\n");
-			if (window->priv->album->artist != NULL) {
-				char *e_artist = g_markup_escape_text (window->priv->album->artist, -1);
-
-				g_string_append_printf (info, "<big>%s</big>", e_artist);
-				g_free (e_artist);
-			}
-			system_notify (window,
-				       window->priv->current_track->title,
-				       info->str);
-			g_string_free (info, TRUE);
-			window->priv->notify_action = FALSE;
-		}
-
-#endif /* ENABLE_NOTIFICATION */
-
+		notify_current_state (window, action);
 		break;
+
+	case GOO_PLAYER_ACTION_PAUSE:
+	case GOO_PLAYER_ACTION_STOP:
+		notify_current_state (window, action);
+		break;
+
 	default:
 		break;
 	}
@@ -1677,7 +1700,7 @@ player_done_cb (GooPlayer       *player,
 		}
 		else if (action == GOO_PLAYER_ACTION_STOP)
 			set_current_track_icon (window, GOO_STOCK_STOP);
-
+		notify_current_state (window, action);
 		break;
 
 	case GOO_PLAYER_ACTION_PAUSE:
@@ -1689,6 +1712,7 @@ player_done_cb (GooPlayer       *player,
 					   GOO_STOCK_PLAY,
 					   "/MenuBar/CDMenu/",
 					   NULL);
+		notify_current_state (window, action);
 		break;
 
 	default:
@@ -2490,27 +2514,29 @@ goo_window_construct (GooWindow    *window,
 
 	/* The status icon. */
 
-	window->priv->status_icon = gtk_status_icon_new_from_icon_name ("goobox");
-	gtk_status_icon_set_has_tooltip (window->priv->status_icon, TRUE);
-	gtk_status_icon_set_title (window->priv->status_icon, _("CD Player"));
+	if (! notification_has_persistence ()) {
+		window->priv->status_icon = gtk_status_icon_new_from_icon_name ("goobox");
+		gtk_status_icon_set_has_tooltip (window->priv->status_icon, TRUE);
+		gtk_status_icon_set_title (window->priv->status_icon, _("CD Player"));
 
-	window->priv->status_tooltip_content = goo_player_info_new (window, FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (window->priv->status_tooltip_content), 0);
+		window->priv->status_tooltip_content = goo_player_info_new (window, FALSE);
+		gtk_container_set_border_width (GTK_CONTAINER (window->priv->status_tooltip_content), 0);
 
-	g_signal_connect (G_OBJECT (window->priv->status_icon),
-			  "activate",
-			  G_CALLBACK (status_icon_activate_cb),
-			  window);
-	g_signal_connect (G_OBJECT (window->priv->status_icon),
-			  "query-tooltip",
-			  G_CALLBACK (status_icon_query_tooltip_cb),
-			  window);
-	g_signal_connect (G_OBJECT (window->priv->status_icon),
-			  "popup-menu",
-			  G_CALLBACK (status_icon_popup_menu_cb),
-			  window);
+		g_signal_connect (G_OBJECT (window->priv->status_icon),
+				  "activate",
+				  G_CALLBACK (status_icon_activate_cb),
+				  window);
+		g_signal_connect (G_OBJECT (window->priv->status_icon),
+				  "query-tooltip",
+				  G_CALLBACK (status_icon_query_tooltip_cb),
+				  window);
+		g_signal_connect (G_OBJECT (window->priv->status_icon),
+				  "popup-menu",
+				  G_CALLBACK (status_icon_popup_menu_cb),
+				  window);
 
-	window->priv->status_icon_popup_menu = gtk_ui_manager_get_widget (ui, "/TrayPopupMenu");
+		window->priv->status_icon_popup_menu = gtk_ui_manager_get_widget (ui, "/TrayPopupMenu");
+	}
 
 	/* Add notification callbacks. */
 
@@ -2830,6 +2856,13 @@ GooPlayer *
 goo_window_get_player (GooWindow *window)
 {
 	return window->priv->player;
+}
+
+
+GtkWidget *
+goo_window_get_player_info (GooWindow *window)
+{
+	return window->priv->info;
 }
 
 

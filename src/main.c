@@ -27,6 +27,7 @@
 #include <glib/gprintf.h>
 #include <gtk/gtk.h>
 #include "eggsmclient.h"
+#include "goo-player-info.h"
 #include "goo-stock.h"
 #include "goo-window.h"
 #include "typedefs.h"
@@ -40,6 +41,8 @@
 #define NOTIFY_CHECK_VERSION(x,y,z) 0
 #endif
 static NotifyNotification *notification = NULL;
+gboolean                   notification_supports_persistence = FALSE;
+gboolean                   notification_supports_actions = FALSE;
 #endif /* ENABLE_NOTIFICATION */
 
 
@@ -592,6 +595,7 @@ play_next (gpointer user_data)
 	GooWindow *window = user_data;
 
 	goo_window_next (window);
+
 	return FALSE;
 }
 
@@ -603,99 +607,142 @@ notify_action_next_cb (NotifyNotification *notification,
 {
 	GooWindow *window = user_data;
 
-	notify_notification_close (notification, NULL);
+	if (! notification_supports_persistence)
+		notify_notification_close (notification, NULL);
+
 	g_idle_add (play_next, window);
 }
 
 
-static void
-notify_action_stop_cb (NotifyNotification *notification,
-                       char               *action,
-                       gpointer            user_data)
+static gboolean
+toggle_play (gpointer user_data)
 {
 	GooWindow *window = user_data;
 
-	goo_window_stop (window);
-	notify_notification_close (notification, NULL);
+	goo_window_toggle_play (window);
+
+	return FALSE;
+}
+
+
+static void
+notify_action_toggle_play_cb (NotifyNotification *notification,
+			      char               *action,
+			      gpointer            user_data)
+{
+	GooWindow *window = user_data;
+
+	if (! notification_supports_persistence)
+		notify_notification_close (notification, NULL);
+
+	g_idle_add (toggle_play, window);
 }
 
 
 #endif /* ENABLE_NOTIFICATION */
 
 
-void
-system_notify (GooWindow  *window,
-	       const char *title,
-	       const char *msg)
+gboolean
+notification_has_persistence (void)
 {
 #ifdef ENABLE_NOTIFICATION
 
-	GtkStatusIcon *status_icon;
-	GdkScreen     *screen = NULL;
-	int            x = -1, y = -1;
+	gboolean  supports_persistence = FALSE;
+	GList    *caps;
+
+	caps = notify_get_server_caps ();
+	if (caps != NULL) {
+		supports_persistence = g_list_find_custom (caps, "persistence", (GCompareFunc) strcmp) != NULL;
+
+		g_list_foreach (caps, (GFunc)g_free, NULL);
+		g_list_free (caps);
+	}
+
+	return supports_persistence;
+
+#else
+
+	return false;
+
+#endif /* ENABLE_NOTIFICATION */
+}
+
+
+void
+system_notify (GooWindow       *window,
+	       GooPlayerAction  action,
+	       const char      *summary,
+	       const char      *body)
+{
+#ifdef ENABLE_NOTIFICATION
+
+	GdkPixbuf *cover;
 
 	if (! notify_is_initted ())
 		return;
 
-	status_icon = goo_window_get_status_icon (window);
-	if (status_icon != NULL) {
-		GdkRectangle area;
-
-		if (gtk_status_icon_get_geometry (status_icon, &screen, &area, NULL)) {
-			y = area.y + area.height;
-			x = area.x + (area.width / 2);
-		}
-	}
-
 	if (notification == NULL) {
-		gboolean  supports_actions;
-		GList    *caps;
+		GList *caps;
 
-		supports_actions = FALSE;
+		notification_supports_actions = FALSE;
+		notification_supports_persistence = FALSE;
+
 		caps = notify_get_server_caps ();
 		if (caps != NULL) {
-			GList *c;
-
-			for (c = caps; c != NULL; c = c->next) {
-				if (strcmp ((char*)c->data, "actions") == 0) {
-					supports_actions = TRUE;
-					break;
-				}
-			}
+			notification_supports_actions = g_list_find_custom (caps, "actions", (GCompareFunc) strcmp) != NULL;
+			notification_supports_persistence = g_list_find_custom (caps, "persistence", (GCompareFunc) strcmp) != NULL;
 
 			g_list_foreach (caps, (GFunc)g_free, NULL);
 			g_list_free (caps);
 		}
 
 #if NOTIFY_CHECK_VERSION (0, 7, 0)
-		notification = notify_notification_new (title, msg, "goobox");
+		notification = notify_notification_new (summary, body, "goobox");
 #else
-		notification = notify_notification_new_with_status_icon (title, msg, "goobox", status_icon);
+		notification = notify_notification_new_with_status_icon (summary, body, "goobox", status_icon);
 #endif
 		notify_notification_set_urgency (notification, NOTIFY_URGENCY_LOW);
-
-		if (supports_actions) {
-			notify_notification_add_action (notification,
-							GTK_STOCK_MEDIA_NEXT,
-							_("Next"),
-							notify_action_next_cb,
-							window,
-							NULL);
-			notify_notification_add_action (notification,
-							GTK_STOCK_MEDIA_STOP,
-							_("Stop"),
-							notify_action_stop_cb,
-							window,
-							NULL);
-		}
 	}
 	else
-		notify_notification_update (notification, title, msg, "goobox");
+		notify_notification_update (notification, summary, body, "goobox");
 
-	/*if ((x >= 0) && (y >= 0))
-		notify_notification_set_geometry_hints (notification,
-							screen,
-							x, y);*/
+	cover = goo_player_info_get_cover (GOO_PLAYER_INFO (goo_window_get_player_info (window)));
+	notify_notification_set_image_from_pixbuf (notification, cover);
+
+	if (notification_supports_actions) {
+		notify_notification_clear_actions (notification);
+
+		if (action == GOO_PLAYER_ACTION_PLAY)
+			notify_notification_add_action (notification,
+							GOO_STOCK_PAUSE,
+							_("Pause"),
+							notify_action_toggle_play_cb,
+							window,
+							NULL);
+		else
+			notify_notification_add_action (notification,
+							GOO_STOCK_PLAY,
+							_("Play"),
+							notify_action_toggle_play_cb,
+							window,
+							NULL);
+
+		notify_notification_add_action (notification,
+						GOO_STOCK_NEXT,
+						_("Next"),
+						notify_action_next_cb,
+						window,
+						NULL);
+
+		notify_notification_set_hint_byte (notification,
+						   "action-icons",
+						   TRUE);
+	}
+
+	if (notification_supports_persistence)
+		notify_notification_set_hint_byte (notification,
+						    "resident" /* "transient" */,
+						    TRUE);
 
 	notify_notification_show (notification, NULL);
 

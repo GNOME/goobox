@@ -79,6 +79,7 @@ AlbumInfo * goo_window_get_album                 (GooWindow    *window);
 GList *     goo_window_get_tracks                (GooWindow    *window,
 						  gboolean      selection);
 GooPlayer * goo_window_get_player                (GooWindow    *window);
+GtkWidget * goo_window_get_player_info           (GooWindow    *window);
 void        goo_window_update_cover              (GooWindow    *window);
 void        goo_window_set_cover_image_from_pixbuf (GooWindow  *window,
 					          GdkPixbuf    *image);
