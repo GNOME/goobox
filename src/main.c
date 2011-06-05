@@ -308,7 +308,7 @@ init_application (GApplication *application)
 	client = egg_sm_client_get ();
 	if (egg_sm_client_is_resumed (client)) {
 		goo_restore_session (client, application);
-		return TRUE;
+		return FALSE;
 	}
 
 	return TRUE;
