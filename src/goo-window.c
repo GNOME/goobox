@@ -981,6 +981,7 @@ first_time_idle (gpointer callback_data)
 	GooWindow *window = callback_data;
 
 	g_source_remove (window->priv->first_time_event);
+	window->priv->first_time_event = 0;
 	goo_player_update (window->priv->player);
 
 	return FALSE;
@@ -1309,10 +1310,31 @@ notify_current_state_cb (gpointer user_data)
 
 #ifdef ENABLE_NOTIFICATION
 
-	GString *info = g_string_new ("");
+	GString        *info = g_string_new ("");
+	GooPlayerState  state;
 
-	if ((window->priv->album == NULL) || (window->priv->current_track == NULL)) {
+	state = goo_player_get_state (window->priv->player);
+
+	if ((state == GOO_PLAYER_STATE_ERROR) || (state == GOO_PLAYER_STATE_NO_DISC)) {
+		system_notify (window, _("No disc"), "");
+		return FALSE;
+	}
+
+	if (state == GOO_PLAYER_STATE_DATA_DISC) {
+		system_notify (window, _("Data disc"), "");
+		return FALSE;
+	}
+
+	if (window->priv->album == NULL) {
 		system_notify (window, "", "");
+		return FALSE;
+	}
+
+	if (window->priv->current_track == NULL) {
+		if ((window->priv->album != NULL) && (window->priv->album->title != NULL))
+			system_notify (window, window->priv->album->title , "");
+		else
+			system_notify (window, _("Audio CD"), "");
 		return FALSE;
 	}
 
