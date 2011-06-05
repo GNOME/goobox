@@ -113,6 +113,7 @@ struct _GooWindowPrivate {
 	GDBusProxy        *media_keys_proxy;
 	gulong             focus_in_event;
 	gulong             media_key_event;
+	gulong             notify_event;
 };
 
 enum {
@@ -477,6 +478,11 @@ goo_window_finalize (GObject *object)
 		_g_object_unref (window->priv->settings_encoder);
 
 		g_object_unref (window->priv->list_store);
+
+		if (window->priv->notify_event != 0) {
+			g_source_remove (window->priv->notify_event);
+			window->priv->notify_event = 0;
+		}
 
 		if (window->priv->next_timeout_handle != 0) {
 			g_source_remove (window->priv->next_timeout_handle);
@@ -1291,17 +1297,23 @@ set_action_label_and_icon (GooWindow  *window,
 }
 
 
-static void
-notify_current_state (GooWindow       *window,
-		      GooPlayerAction  action)
+static gboolean
+notify_current_state_cb (gpointer user_data)
 {
+	GooWindow *window = user_data;
+
+	if (window->priv->notify_event != 0) {
+		g_source_remove (window->priv->notify_event);
+		window->priv->notify_event = 0;
+	}
+
 #ifdef ENABLE_NOTIFICATION
 
 	GString *info = g_string_new ("");
 
 	if ((window->priv->album == NULL) || (window->priv->current_track == NULL)) {
-		system_notify (window, GOO_PLAYER_ACTION_NONE, "", "");
-		return;
+		system_notify (window, "", "");
+		return FALSE;
 	}
 
 	if (window->priv->album->artist != NULL) {
@@ -1323,13 +1335,24 @@ notify_current_state (GooWindow       *window,
 	g_string_append (info, " ");
 
 	system_notify (window,
-		       action,
 		       window->priv->current_track->title,
 		       info->str);
 
 	g_string_free (info, TRUE);
 
 #endif /* ENABLE_NOTIFICATION */
+
+	return FALSE;
+}
+
+
+static void
+notify_current_state (GooWindow       *window,
+		      GooPlayerAction  action)
+{
+	if (window->priv->notify_event != 0)
+		g_source_remove (window->priv->notify_event);
+	window->priv->notify_event = g_idle_add (notify_current_state_cb, window);
 }
 
 
@@ -1349,11 +1372,6 @@ player_start_cb (GooPlayer       *player,
 					   GOO_STOCK_PAUSE,
 					   "/MenuBar/CDMenu/",
 					   NULL);
-		notify_current_state (window, action);
-		break;
-
-	case GOO_PLAYER_ACTION_PAUSE:
-	case GOO_PLAYER_ACTION_STOP:
 		notify_current_state (window, action);
 		break;
 

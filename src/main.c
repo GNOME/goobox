@@ -670,7 +670,6 @@ notification_has_persistence (void)
 
 void
 system_notify (GooWindow       *window,
-	       GooPlayerAction  action,
 	       const char      *summary,
 	       const char      *body)
 {
@@ -712,7 +711,7 @@ system_notify (GooWindow       *window,
 	if (notification_supports_actions) {
 		notify_notification_clear_actions (notification);
 
-		if (action == GOO_PLAYER_ACTION_PLAY)
+		if (goo_player_get_state (goo_window_get_player (window)) == GOO_PLAYER_STATE_PLAYING)
 			notify_notification_add_action (notification,
 							GOO_STOCK_PAUSE,
 							_("Pause"),

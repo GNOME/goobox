@@ -36,7 +36,6 @@ BraseroDrive *  main_get_most_likely_drive   (void);
 BraseroDrive *  main_get_drive_for_device    (const char      *device);
 gboolean        notification_has_persistence (void);
 void            system_notify                (GooWindow       *window,
-					      GooPlayerAction  action,
 					      const char      *title,
 					      const char      *msg);
 
