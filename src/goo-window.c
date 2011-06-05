@@ -1375,6 +1375,10 @@ player_start_cb (GooPlayer       *player,
 		notify_current_state (window, action);
 		break;
 
+	case GOO_PLAYER_ACTION_METADATA:
+		notify_current_state (window, action);
+		break;
+
 	default:
 		break;
 	}
