@@ -49,6 +49,8 @@ typedef struct {
 	GList             *albums;
 	int                n_albums, current_album;
 	GCancellable      *cancellable;
+	gboolean           searching;
+	gboolean           closing;
 } DialogData;
 
 
@@ -60,6 +62,37 @@ dialog_destroy_cb (GtkWidget  *widget,
 	g_object_unref (data->cancellable);
 	g_object_unref (data->builder);
 	g_free (data);
+}
+
+
+static void
+close_dialog (DialogData *data)
+{
+	if (data->searching) {
+		data->closing = TRUE;
+		g_cancellable_cancel (data->cancellable);
+		return;
+	}
+
+	gtk_widget_destroy (data->dialog);
+}
+
+
+static void
+close_button_clicked_cb (GtkButton *button,
+			 gpointer   user_data)
+{
+	close_dialog ((DialogData *) user_data);
+}
+
+
+static gboolean
+dialog_delete_event_cb (GtkWidget *widget,
+			GdkEvent  *event,
+			gpointer   user_data)
+{
+	close_dialog ((DialogData *) user_data);
+	return TRUE;
 }
 
 
@@ -233,6 +266,13 @@ search_album_by_title_ready_cb (GObject      *source_object,
 	DialogData *data = user_data;
 	GError     *error = NULL;
 
+	data->searching = FALSE;
+
+	if (data->closing) {
+		close_dialog (data);
+		return;
+	}
+
 	data->albums = metadata_search_album_by_title_finish (result, &error);
 	data->albums = remove_incompatible_albums (data->albums, goo_window_get_album (data->window));
 	data->n_albums = g_list_length (data->albums);
@@ -252,7 +292,10 @@ static void
 search_cb (GtkWidget  *widget,
 	   DialogData *data)
 {
+	if (data->searching)
+		return;
 
+	data->searching = TRUE;
 
 	gtk_image_set_from_stock (GTK_IMAGE (GET_WIDGET ("info_icon")), GTK_STOCK_FIND, GTK_ICON_SIZE_BUTTON);
 	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), _("Searching disc info..."));
@@ -461,6 +504,8 @@ dlg_properties (GooWindow *window)
 	data->window = window;
 	data->builder = _gtk_builder_new_from_file ("properties.ui", "");
 	data->cancellable = g_cancellable_new ();
+	data->searching = FALSE;
+	data->closing = FALSE;
 
 	/* Get the widgets. */
 
@@ -486,14 +531,18 @@ dlg_properties (GooWindow *window)
 
 	/* Set the signals handlers. */
 
+	g_signal_connect (data->dialog,
+			  "delete-event",
+			  G_CALLBACK (dialog_delete_event_cb),
+			  data);
 	g_signal_connect (G_OBJECT (data->dialog),
 			  "destroy",
 			  G_CALLBACK (dialog_destroy_cb),
 			  data);
-	g_signal_connect_swapped (GET_WIDGET ("cancel_button"),
-			  	  "clicked",
-			  	  G_CALLBACK (gtk_widget_destroy),
-			  	  data->dialog);
+	g_signal_connect (GET_WIDGET ("cancel_button"),
+			  "clicked",
+			  G_CALLBACK (close_button_clicked_cb),
+			  data);
 	g_signal_connect (GET_WIDGET ("ok_button"),
 			  "clicked",
 			  G_CALLBACK (ok_button_clicked_cb),
