@@ -275,11 +275,7 @@ required_gstreamer_plugins_available (void)
 static gboolean
 init_application (GApplication *application)
 {
-	GtkSettings *gtk_settings;
 	EggSMClient *client = NULL;
-
-        gtk_settings = gtk_settings_get_default ();
-        g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
         gtk_window_set_default_icon_name ("goobox");
         goo_stock_init ();
