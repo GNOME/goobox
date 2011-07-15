@@ -11,9 +11,9 @@ msgstr ""
 "Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=goobox&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-06-06 08:30+0000\n"
-"PO-Revision-Date: 2011-06-05 20:23+0200\n"
-"Last-Translator: Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
+"POT-Creation-Date: 2011-06-08 06:37+0000\n"
+"PO-Revision-Date: 2011-07-15 20:38+0100\n"
+"Last-Translator: Mario Blättermann <mariobl@freenet.de>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -265,8 +265,8 @@ msgid ""
 "<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
 "code modulated (PCM) audio.</i></small>"
 msgstr ""
-"<small><i>WAV+PCM ist ein verlustloses Format, das unkomprimierte Audio-"
-"Daten in roher puls-kodierter Modulation (PCM) enthält.</i></small>"
+"<small><i>WAV+PCM ist ein verlustloses Format, das unkomprimierte Audio-Daten "
+"in roher puls-kodierter Modulation (PCM) enthält.</i></small>"
 
 #: ../data/ui/preferences.ui.h:8
 msgid "Automatically play newly inserted discs"
@@ -346,26 +346,25 @@ msgstr ""
 #: ../src/actions.c:142
 msgid ""
 "CD Player is free software; you can redistribute it and/or modify it under "
-"the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version."
+"the terms of the GNU General Public License as published by the Free Software "
+"Foundation; either version 2 of the License, or (at your option) any later "
+"version."
 msgstr ""
 "CD-Spieler ist Freie Software; Sie können ihn unter den Bedingungen der »GNU "
 "General Public License«, wie sie von der »Free Software Foundation« "
-"veröffentlicht wurde, entweder Version 2 oder (nach Ihrer Wahl) jeder "
-"neueren Version, verteilen und/oder bearbeiten."
+"veröffentlicht wurde, entweder Version 2 oder (nach Ihrer Wahl) jeder neueren "
+"Version, verteilen und/oder bearbeiten."
 
 #: ../src/actions.c:146
 msgid ""
 "CD Player is distributed in the hope that it will be useful, but WITHOUT ANY "
-"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
-"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
-"details."
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR "
+"A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
 msgstr ""
 "CD-Spieler wird in der Hoffnung des Nutzens vertrieben, aber OHNE JEDE "
-"HAFTUNG; ohne die möglicherweise implizite Garantie der "
-"GEBRAUCHSTAUGLICHKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. Lesen Sie die "
-"»GNU General Public License« für weitere Details."
+"HAFTUNG; ohne die möglicherweise implizite Garantie der GEBRAUCHSTAUGLICHKEIT "
+"oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. Lesen Sie die »GNU General Public "
+"License« für weitere Details."
 
 #: ../src/actions.c:150
 msgid ""
@@ -375,8 +374,8 @@ msgid ""
 msgstr ""
 "Sie sollten eine Kopie der »GNU General Public License« zusammen mit dem CD-"
 "Spieler erhalten haben; falls nicht, schreiben Sie (auf Englisch) an Free "
-"Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-"
-"1301 USA."
+"Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 "
+"USA."
 
 #: ../src/actions.c:161
 msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
@@ -732,8 +731,7 @@ msgstr "Alle Dateien"
 
 #: ../src/goo-window.c:3125
 msgid ""
-"You have to enter the artist and album names in order to find the album "
-"cover."
+"You have to enter the artist and album names in order to find the album cover."
 msgstr ""
 "Bitte geben Sie die Namen des Künstlers und des Albums an, um nach dem Album-"
 "Hüllen-Bild zu suchen."
@@ -785,7 +783,7 @@ msgstr "CD beim Programmstart wiedergeben"
 
 #: ../src/main.c:79
 msgid "Toggle play"
-msgstr ""
+msgstr "Fenstersichtbarkeit"
 
 #: ../src/main.c:82 ../src/ui.h:69
 msgid "Stop playing"
@@ -804,10 +802,8 @@ msgid "Eject the CD"
 msgstr "Die CD auswerfen"
 
 #: ../src/main.c:94
-#, fuzzy
-#| msgid "Show the main window"
 msgid "Toggle the main window visibility"
-msgstr "Das Hauptfenster anzeigen"
+msgstr "Das Hauptfenster anzeigen/verbergen"
 
 #: ../src/main.c:97
 msgid "Volume Up"
