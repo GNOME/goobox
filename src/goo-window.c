@@ -203,24 +203,20 @@ static void
 window_update_sensitivity (GooWindow *window)
 {
 	int            n_selected;
-	gboolean       sel_not_null;
 	gboolean       one_file_selected;
 	GooPlayerState state;
 	gboolean       error;
 	gboolean       audio_cd;
 	gboolean       playing;
 	gboolean       paused;
-	gboolean       stopped;
 	gboolean       play_all;
 
 	n_selected        = _gtk_count_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (window->priv->list_view)));
-	sel_not_null      = n_selected > 0;
 	one_file_selected = n_selected == 1;
 	state             = goo_player_get_state (window->priv->player);
 	error             = ! goo_player_is_audio_cd (window->priv->player) || window->priv->hibernate;
 	playing           = state == GOO_PLAYER_STATE_PLAYING;
 	paused            = state == GOO_PLAYER_STATE_PAUSED;
-	stopped           = state == GOO_PLAYER_STATE_STOPPED;
 	play_all          = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL);
 	audio_cd          = (! error) && (goo_player_get_discid (window->priv->player) != NULL);
 
@@ -1464,15 +1460,11 @@ static void
 window_update_title (GooWindow *window)
 {
 	GooPlayerState  state;
-	gboolean        playing;
 	gboolean        paused;
-	gboolean        stopped;
 	GString        *title;
 
-	state   = goo_player_get_state (window->priv->player);
-	playing = state == GOO_PLAYER_STATE_PLAYING;
-	paused  = state == GOO_PLAYER_STATE_PAUSED;
-	stopped = state == GOO_PLAYER_STATE_STOPPED;
+	state = goo_player_get_state (window->priv->player);
+	paused = state == GOO_PLAYER_STATE_PAUSED;
 
 	title = g_string_new ("");
 

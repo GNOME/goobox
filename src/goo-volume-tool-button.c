@@ -192,9 +192,6 @@ goo_volume_tool_button_init (GooVolumeToolButton *button)
 static void
 goo_volume_tool_button_finalize (GObject *object)
 {
-	GooVolumeToolButton *button;
-
-	button = GOO_VOLUME_TOOL_BUTTON (object);
 	G_OBJECT_CLASS (goo_volume_tool_button_parent_class)->finalize (object);
 }
 

@@ -106,11 +106,7 @@ gtk_file_chooser_preview_class_init (GtkFileChooserPreviewClass *class)
 static void
 gtk_file_chooser_preview_init (GtkFileChooserPreview *preview)
 {
-	GtkFileChooserPreviewPrivateData *priv;
-
 	preview->priv = g_new0 (GtkFileChooserPreviewPrivateData, 1);
-	priv = preview->priv;
-
 	preview->priv->thumb_factory = gnome_desktop_thumbnail_factory_new (GNOME_DESKTOP_THUMBNAIL_SIZE_NORMAL);
 	preview->priv->uri = NULL;
 }
