@@ -219,7 +219,7 @@ get_cd_info_from_device_thread (GSimpleAsyncResult *result,
 	data->album_info = album_info_new ();
 	tracks = NULL;
 	disc = discid_new ();
-	if (discid_read (disc, data->disc_id)) {
+	if (discid_read (disc, data->device)) {
 		int first_track;
 		int last_track;
 		int i;
