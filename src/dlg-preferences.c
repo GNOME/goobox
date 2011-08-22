@@ -114,7 +114,7 @@ static void
 help_button_clicked_cb (GtkWidget  *widget,
 			DialogData *data)
 {
-	show_help_dialog (GTK_WINDOW (data->window), "preferences");
+	show_help_dialog (GTK_WINDOW (data->window), "goobox-preferences");
 }
 
 

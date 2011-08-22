@@ -1,0 +1,19 @@
+<page xmlns="http://projectmallard.org/1.0/" type="guide" id="index">
+  <info>
+    <credit type="author">
+      <name>Paolo Bacchilega</name>
+      <email>paobac@src.gnome.org</email>
+      <years>2005-2011</years>
+    </credit>
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude" />
+
+    <revision docversion="1.0" date="2005-01-20" status="final" pkgversion="0.7.1"/>
+    <revision docversion="2.0" date="2009-11-14" status="final" pkgversion="2.1.0"/>
+    <revision docversion="3.0" date="2011-08-22" status="review" pkgversion="3.0.0"/>
+  </info>
+
+  <title><app>CD Player</app> Help</title>
+  <p>
+  With <app>CD Player</app> you can play audio Compact Discs (CDs) and save the CD tracks as audio files.</p>
+
+</page>

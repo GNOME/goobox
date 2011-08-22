@@ -111,7 +111,7 @@ void
 activate_action_manual (GtkAction *action,
 			gpointer   data)
 {
-	show_help_dialog (GTK_WINDOW (data), NULL);
+	show_help_dialog (GTK_WINDOW (data), "");
 }
 
 
@@ -119,7 +119,7 @@ void
 activate_action_shortcuts (GtkAction *action,
 			   gpointer   data)
 {
-	show_help_dialog (GTK_WINDOW (data), "goobox-shortcuts");
+	show_help_dialog (GTK_WINDOW (data), "goobox-keyboard-shortcuts");
 }
 
 

@@ -1,0 +1,85 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic"
+      id="goobox-keyboard-shortcuts">
+  <info>
+    <link type="guide" xref="index" />
+    <title type="sort">1</title>
+  </info>
+  <title>Keyboard Shortcuts</title>
+  <p>Quick reference for some useful keyword shortcuts. Look in the menus for
+     other available shortcuts.</p>
+  <table shade="rows" frame="bottom" rules="groups">
+  <thead>
+    <tr>
+       <td><p>Keyboard Shortcut</p></td>
+       <td><p>Description</p></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+       <td><p><key>Space</key></p></td>
+       <td><p>Play/Pause the current track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>Escape</key></p></td>
+       <td><p>Stop playing the current track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>N</key></p></td>
+       <td><p>Play the next track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>P</key></p></td>
+       <td><p>Play the previous track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>J</key></p></td>
+       <td><p>Eject the CD from the tray</p></td>
+    </tr>
+    <tr>
+       <td><p><key>E</key></p></td>
+       <td><p>Open the <app>Extract</app> dialog</p></td>
+    </tr>
+    <tr>
+       <td><p><key>1</key></p></td>
+       <td><p>Play the 1st track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>2</key></p></td>
+       <td><p>Play the 2nd track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>3</key></p></td>
+       <td><p>Play the 3rd track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>4</key></p></td>
+       <td><p>Play the 4th track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>5</key></p></td>
+       <td><p>Play the 5th track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>6</key></p></td>
+       <td><p>Play the 6th track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>7</key></p></td>
+       <td><p>Play the 7th track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>8</key></p></td>
+       <td><p>Play the 8th track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>9</key></p></td>
+       <td><p>Play the 9th track</p></td>
+    </tr>
+    <tr>
+       <td><p><key>0</key></p></td>
+       <td><p>Play the 10th track</p></td>
+    </tr>
+  </tbody>
+  </table>
+</page>

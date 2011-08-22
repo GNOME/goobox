@@ -1,0 +1,63 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic"
+      id="goobox-preferences">
+  <info>
+    <link type="guide" xref="index" />
+    <title type="sort">0</title>
+  </info>
+  <title>Preferences</title>
+  <p>
+    To configure <app>CD Player</app> open the <app>Preferences</app> dialog
+    by choosing <guiseq><gui style="menu">Edit</gui><gui style="menuitem">Preferences</gui></guiseq>.
+  </p>
+  <p>
+    This dialog contains two tabs described in detail below.
+    At the bottom of the dialog window, you'll find the following buttons:
+  </p>
+  <terms>
+    <item>
+      <title><gui style="button">Help</gui></title>
+      <p>Shows this page.</p>
+    </item>
+    <item>
+      <title><gui style="button">Close</gui></title>
+      <p>Closes the dialog.</p>
+    </item>
+  </terms>
+  <p>
+    Keep in mind that when you change an option it will automatically
+    applied. This is why there is no <gui style="button">Ok</gui> or
+    <gui style="button">Apply</gui> button.
+  </p>
+
+  <section>
+    <title>General Tab</title>
+    <p>This tab allows you to set the following options:</p>
+    <list>
+      <item>
+          <p>Select the device to use.</p></item>
+      <item>
+          <p>Whether to automatically play a newly inserted disk.</p></item>
+    </list>
+  </section>
+
+
+  <section>
+    <title>Extraction Tab</title>
+    <p>This tab allows you to set the extraction options:</p>
+    <list>
+      <item><p>The destination folder.  Files are saved in a subfolder of
+          the destination folder, following the scheme Artist/Album/track. </p></item>
+      <item><p>The audio files format to use.
+          Some formats allow you to set the quality of the file, this can be
+          useful because usually there is a trade-off between audio quality
+          and file size.
+          Use the <gui style="button">Properties</gui> button to set the file
+          format properties.</p></item>
+      <item><p>Whether to save a playlist file in PLS format that contains
+          the list of the extracted files.  The playlist is saved in the same
+          folder of the audio files.</p></item>
+    </list>
+  </section>
+
+</page>
