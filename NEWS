@@ -1,3 +1,23 @@
+version 2.90.2
+--------------
+
+	Bugs fixed:
+
+	* Fixed loading of the CD when /dev/cdrom doesn't exits.
+	* Removed wrong use of the dark theme.
+
+	Internal code changes:
+
+	* The Documentation has been ported to Mallard.
+	* Fixed compilation warnings.
+
+        New or updated application translations:
+
+        * Czech (Adrian Guniš)
+        * Deutsch (Mario Blättermann)
+        * Japanese (Takeshi AIHANA)
+        * Slovenian Translation (Andrej Žnidaršič)
+
 version 2.90.1
 --------------
 
@@ -37,7 +57,7 @@ version 2.2.0
         * Fixed translation of some strings on the command line help (#625669)
 	* Removed the use of glib/gtk+ deprecated functions.
 	* Updated the README file.
-	
+
         New or updated application translations:
 
         * Chinese (simplified) (du baodao)
@@ -91,15 +111,15 @@ version 2.1.1
 	* Always show the whole track list, without scrollbars.
 	* Respect the autoplay setting even at start up time.
 	* Added documentation for the preferences dialog.
-	
+
 version 2.0.1
 -------------
 
-	Bugs fixed: 
-	
+	Bugs fixed:
+
 	* Preferences dialog crash
 	* Support transparent tray icon (#554876)
-	* Notification action buttons are shown only if notification daemon 
+	* Notification action buttons are shown only if notification daemon
 	  supports actions.
 	* Fixed bug #573162 – Reports "Invalid" device for all my CD drives
 
@@ -122,17 +142,17 @@ version 2.0.0
 
 	* Fixed bug #478435 – several memory leaks.
 	* Open the 'copy cd' dialog on the same screen of the main window.
-	
-	Updated translations: 
-	
-	Greek, Finnish, French, Basque, Nepali, Catalan, Occitan, Italian, 
+
+	Updated translations:
+
+	Greek, Finnish, French, Basque, Nepali, Catalan, Occitan, Italian,
 	Polish, Spanish, Japanese.
 
 version 1.9.2
 --------------
 
 	New features:
-	
+
 	* Added ability to copy a disc, using nautilus-cd-burner.
 	* Added option to automatically play after CD insertion.
 	* Hide the statusbar by default.
@@ -141,8 +161,8 @@ version 1.9.1
 --------------
 
 	New features:
-	
-	* Ported to GStreamer 0.10 and MusicBrainz 2.1.  Removed CDDBSlave 
+
+	* Ported to GStreamer 0.10 and MusicBrainz 2.1.  Removed CDDBSlave
 	  support.
 	* Moved the extraction options in the preferences dialog.
 	* Added next/stop actions in the notification window.
@@ -152,29 +172,29 @@ version 1.9.1
 	* Show the artist column in the track list when the CD is of variuos
 	  artists.
 	* Use a single window for each CD drive.
-	* Allow to extract the selected tracks from the track list context 
+	* Allow to extract the selected tracks from the track list context
 	  menu.
 	* Added a --stop command line option.
 	* Download the cover from amazon if the asin is available.
-		  
+
 	Notable bugfixes:
-	  
+
  	* More hig compliant menus.
-	* Use stock icons as much as possible.  Update the icons when the icon 
+	* Use stock icons as much as possible.  Update the icons when the icon
 	  theme changes.  Install a theme-friendly application icon.
  	* Do not allow to open more than one preferences dialog.
-	* Ported to GOption.  
-	* Save the cover at the original size, resize the cover before 
+	* Ported to GOption.
+	* Save the cover at the original size, resize the cover before
 	  displaying it.
 	* Read the list of available drives only at startup time to not stop
 	  playing the CD when the preferences dialog is opened.
 	* Fixed extraction of tracks with spacial characters.
 	* In the ripper dialog show the remaining time only when the forecast
 	  starts to stabilize.
-	
+
 version 0.9.93
 --------------
-	* Notify the playing track when the main window is hidden. Requires 
+	* Notify the playing track when the main window is hidden. Requires
           libnotify.
 	* Added the Quit command on the tray icon popup menu.
 	* Fixed bug #312657: all tracks have a length of 0:00.
@@ -197,16 +217,16 @@ version 0.9.92
 
 version 0.9.91
 --------------
-	* Added goobox/general/use_sound_juicer gconf preference to use 
+	* Added goobox/general/use_sound_juicer gconf preference to use
 	  Sound Juicer to extract tracks instead of the internal ripper.
 	* Fixed extraction to non-local folders.
-	* Use the filechooserbutton if gtk+ >= 2.5.0 is available.	
+	* Use the filechooserbutton if gtk+ >= 2.5.0 is available.
 	* Add ellipses to the track names if names do not fit in the
 	  track list.
 	* Get a valid filename from the track title when extracting.
 
 version 0.9.90
---------------	
+--------------
 	* Added multimedia keys support.
 	* Added a track status icon in the track number column.
 	* Allow the ripper to write to non-local destinations.
@@ -214,54 +234,54 @@ version 0.9.90
 	* Save and restore the track list sort method and order.
 
 version 0.7.2
--------------	
-	* Extract dialog: Added extraction folder to the advanced options, 
-          and make the advanced options visible the first time the dialog is 
+-------------
+	* Extract dialog: Added extraction folder to the advanced options,
+          and make the advanced options visible the first time the dialog is
           displayed.
 	* Added queue in the playing pipeline to cope with slow computers.
-	* Added manual support.  Written a simple manual with a small 
+	* Added manual support.  Written a simple manual with a small
 	  introduction and the keyword shortcuts reference.
 
 version 0.7.1
--------------	
+-------------
 	* Fixed compilation with gtk+ 2.4.x
 
 version 0.7.0
--------------	
+-------------
 	* Moved encoding options to the preferences dialog.
 	* Moved the volume button on the toolbar.
 	* Added ability to save the playlist of the extracted tracks.
 	* Added ability to control the player with the command line arguments,
-	  use 'goobox --help' for a complete list of all the available 
+	  use 'goobox --help' for a complete list of all the available
 	  commands.
-	* Added ellipsizing to the album and artist labels if gtk+ version is 
+	* Added ellipsizing to the album and artist labels if gtk+ version is
           2.5.0 or higher.
-	* Added ability to add/change the cover image dropping an image over 
+	* Added ability to add/change the cover image dropping an image over
 	  the cover button.
 	* Fixed statusbar text when no metadata is available.
 	* Other minor UI enhancements.
-	* Display play, pause and stop command labels on the toolbar when the 
+	* Display play, pause and stop command labels on the toolbar when the
 	  user uses the 'text beside icons' toolbar style.
 
 version 0.6.0
--------------	
+-------------
 	* Added total song time to the player info.
 	* Added CD year to the statubar if available.
-	* Restore the window position after clicking on the notification area 
+	* Restore the window position after clicking on the notification area
 	  icon.
 	* Use the 192 Kbps bitrate instead of the non-standard 196 Kbps.
 	* Fixed stock icons display.
 	* Added --play option to automatically play after startup.
 
 version 0.5.0
--------------	
+-------------
 	* Added ability to choose the bitrate when encoding.
 	* Fixed ui freeze after playing a song.
 	* Added preliminary FreeBSD support.
 	* Minor usability improvements.
 
 version 0.4.0
--------------	
+-------------
 	* Recognize mixed CDs as good CDs to play.
 	* Update the playlist on the fly when PlayAll or Shuffle options change.
 	* Make the track list insensitive if no CD is present.
@@ -275,7 +295,7 @@ version 0.4.0
 version 0.3.0
 -------------
 	* Added ability to associate a cover image to a CD, the image can
-	  be picked from the local disk or searched over Internet with 
+	  be picked from the local disk or searched over Internet with
 	  Google.
 	* Added ability to hide the main window leaving only the tray icon.
 	* Read CD tracks list asynchronously.
@@ -289,7 +309,7 @@ version 0.2.0
 	* Added a "play selected track" command in the context menu.
 	* Added a --device command line argument.
 	* Session support.
-	
+
 version 0.1.0
 -------------
 	* First public version.
