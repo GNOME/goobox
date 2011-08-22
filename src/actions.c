@@ -111,7 +111,7 @@ void
 activate_action_manual (GtkAction *action,
 			gpointer   data)
 {
-	show_help_dialog (GTK_WINDOW (data), "");
+	show_help_dialog (GTK_WINDOW (data), NULL);
 }
 
 
