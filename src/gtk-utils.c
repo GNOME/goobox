@@ -58,7 +58,7 @@ create_button (const char *stock_id,
 	else
 		image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
 	label = gtk_label_new_with_mnemonic (label_text);
-	hbox = gtk_hbox_new (FALSE, 2);
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 
 	gtk_widget_set_can_default (button, TRUE);
@@ -128,7 +128,7 @@ _gtk_message_dialog_new (GtkWindow        *parent,
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtk_label_set_selectable (GTK_LABEL (label), TRUE);
 
-	hbox = gtk_hbox_new (FALSE, 6);
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
 
 	gtk_box_pack_start (GTK_BOX (hbox), image,
@@ -212,8 +212,8 @@ _gtk_request_dialog_run (GtkWindow        *parent,
 	gtk_entry_set_text (GTK_ENTRY (entry), default_value);
 	gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
 
-	hbox = gtk_hbox_new (FALSE, 6);
-	vbox = gtk_vbox_new (FALSE, 6);
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
 	gtk_box_set_spacing (GTK_BOX (hbox), 12);
@@ -304,7 +304,7 @@ _gtk_yesno_dialog_new (GtkWindow        *parent,
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtk_label_set_selectable (GTK_LABEL (label), TRUE);
 
-	hbox = gtk_hbox_new (FALSE, 12);
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
 
 	gtk_box_pack_start (GTK_BOX (hbox), image,
@@ -402,7 +402,7 @@ _gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtk_label_set_selectable (GTK_LABEL (label), TRUE);
 
-	hbox = gtk_hbox_new (FALSE, 12);
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
 
 	gtk_box_pack_start (GTK_BOX (hbox), image,

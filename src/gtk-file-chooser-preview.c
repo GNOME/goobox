@@ -155,7 +155,7 @@ gtk_file_chooser_preview_construct (GtkFileChooserPreview  *preview)
 	gtk_container_add (GTK_CONTAINER (preview), event_box);
 	gtk_widget_show (event_box);
 
-	vbox = gtk_vbox_new (FALSE, 0);
+	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	gtk_container_add (GTK_CONTAINER (event_box), vbox);
 	gtk_widget_show (vbox);
 
@@ -182,7 +182,7 @@ gtk_file_chooser_preview_construct (GtkFileChooserPreview  *preview)
 			  G_CALLBACK (gtk_true),
 			  NULL);
 
-	vbox2 = gtk_vbox_new (FALSE, 6);
+	vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 	gtk_widget_show (vbox2);
 	gtk_box_pack_start (GTK_BOX (vbox), vbox2, TRUE, FALSE, 0);
 
@@ -261,7 +261,7 @@ gtk_file_chooser_preview_set_uri (GtkFileChooserPreview *preview,
 
 		w = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Width");
 		h = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Height");
-		size_text = g_format_size_for_display (g_file_info_get_size (info));
+		size_text = g_format_size (g_file_info_get_size (info));
 		text = g_strconcat (size_text,
 				    ((w == NULL)?NULL:"\n"),
 				    w, " x ", h, " ", _("pixels"),

@@ -39,13 +39,13 @@ typedef struct _GooPlayerInfoPrivateData GooPlayerInfoPrivateData;
 
 struct _GooPlayerInfo
 {
-	GtkHBox __parent;
+	GtkBox __parent;
 	GooPlayerInfoPrivateData *priv;
 };
 
 struct _GooPlayerInfoClass
 {
-	GtkHBoxClass __parent_class;
+	GtkBoxClass __parent_class;
 
 	/*<signals>*/
 

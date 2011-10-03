@@ -15,8 +15,8 @@ GNOME_COMPILE_WARNINGS([maximum])
 GNOME_MAINTAINER_MODE_DEFINES
 GLIB_GSETTINGS
 
-GLIB_REQUIRED=2.28
-GTK_REQUIRED=3.0.0
+GLIB_REQUIRED=2.30
+GTK_REQUIRED=3.2.0
 GSTREAMER_REQUIRED=0.10.12
 LIBNOTIFY_REQUIRED=0.4.3
 LIBMUSICBRAINZ3_REQUIRED=3.0.0
@@ -138,12 +138,15 @@ fi
 
 dnl ===========================================================================
 
-AC_ARG_ENABLE(deprecations,
-	      [AS_HELP_STRING([--enable-deprecations],[warn about deprecated usages])])
-if test "x$enable_deprecations" = "xyes"; then
-	DISABLE_DEPRECATED="-DGSEAL_ENABLE -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
+AC_ARG_ENABLE(deprecated,
+	      AS_HELP_STRING([--disable-deprecated], [do not use deprecated API]),
+	      disable_deprecated=yes,
+	      disable_deprecated=no)
+if test x$disable_deprecated = xyes; then
+	CFLAGS="$CFLAGS -DG_DISABLE_SINGLE_INCLUDES -DGDK_PIXBUF_DISABLE_SINGLE_INCLUDES -DGTK_DISABLE_SINGLE_INCLUDES"
+	CFLAGS="$CFLAGS -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
+	CFLAGS="$CFLAGS -DGSEAL_ENABLE"
 fi
-AC_SUBST(DISABLE_DEPRECATED)
 
 dnl ===========================================================================
 
@@ -182,9 +185,11 @@ echo "
 
 Configuration:
 
-	Source code location:   ${srcdir}
-	Compiler:               ${CC}
-	Run in place:           ${enable_run_in_place}
-	Enable notification:    ${enable_notification}
-	Enable media keys:      ${enable_media_keys}
+	Source code location : ${srcdir}
+	Compiler             : ${CC}
+	Prefix               : ${prefix}
+	CFLAGS		     : ${CFLAGS}
+	Run in place         : ${enable_run_in_place}
+	Enable notification  : ${enable_notification}
+	Enable media keys    : ${enable_media_keys}
 "

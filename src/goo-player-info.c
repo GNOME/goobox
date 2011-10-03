@@ -88,7 +88,7 @@ static void goo_player_info_finalize    (GObject *object);
 #define GOO_PLAYER_INFO_GET_PRIVATE_DATA(object) \
 	(G_TYPE_INSTANCE_GET_PRIVATE ((object), GOO_TYPE_PLAYER_INFO, GooPlayerInfoPrivateData))
 
-G_DEFINE_TYPE (GooPlayerInfo, goo_player_info, GTK_TYPE_HBOX)
+G_DEFINE_TYPE (GooPlayerInfo, goo_player_info, GTK_TYPE_BOX)
 
 static void
 goo_player_info_get_preferred_width (GtkWidget *widget,
@@ -330,6 +330,7 @@ cover_button_drag_data_received  (GtkWidget          *widget,
 static void
 goo_player_info_init (GooPlayerInfo *info)
 {
+	gtk_orientable_set_orientation (GTK_ORIENTABLE (info), GTK_ORIENTATION_HORIZONTAL);
 	info->priv = GOO_PLAYER_INFO_GET_PRIVATE_DATA (info);
 }
 
@@ -381,9 +382,9 @@ goo_player_info_construct (GooPlayerInfo *info)
 
 	/* Time */
 
-	time_box = gtk_hbox_new (FALSE, 6);
+	time_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
-	priv->time_scale = gtk_hscale_new_with_range (0.0, 1.0, 0.01);
+	priv->time_scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL, 0.0, 1.0, 0.01);
 	gtk_range_set_increments (GTK_RANGE (priv->time_scale), 0.01, 0.1);
 	gtk_scale_set_draw_value (GTK_SCALE (priv->time_scale), FALSE);
 	gtk_widget_set_size_request (priv->time_scale, SCALE_WIDTH, -1);
@@ -469,7 +470,7 @@ goo_player_info_construct (GooPlayerInfo *info)
 
 	/**/
 
-	vbox = gtk_vbox_new (FALSE, 0);
+	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 	gtk_box_pack_start (GTK_BOX (vbox), priv->title1_label, TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), priv->title2_label, FALSE, FALSE, 0);

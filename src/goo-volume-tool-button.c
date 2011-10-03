@@ -98,11 +98,11 @@ goo_volume_tool_button_construct_contents (GooVolumeToolButton *button)
 	orientation = gtk_tool_item_get_orientation (GTK_TOOL_ITEM (button));
 
 	if (orientation == GTK_ORIENTATION_HORIZONTAL) {
-		box = gtk_hbox_new (FALSE, 0);
+		box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 		gtk_arrow_set (GTK_ARROW (button->priv->arrow), GTK_ARROW_DOWN, GTK_SHADOW_NONE);
 	}
 	else {
-		box = gtk_vbox_new (FALSE, 0);
+		box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 		gtk_arrow_set (GTK_ARROW (button->priv->arrow), GTK_ARROW_RIGHT, GTK_SHADOW_NONE);
 	}
 
@@ -645,7 +645,7 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 
 	/**/
 
-	volume_vbox = gtk_vbox_new (FALSE, 0);
+	volume_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (volume_vbox), 0);
 	gtk_container_add (GTK_CONTAINER (out_frame), volume_vbox);
 
@@ -673,7 +673,7 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 			  button);
 	gtk_box_pack_start (GTK_BOX (volume_vbox), up_button, FALSE, FALSE, 0);
 
-	button->priv->volume_scale = gtk_vscale_new_with_range (0.0, 1.0, 0.1);
+	button->priv->volume_scale = gtk_scale_new_with_range (GTK_ORIENTATION_VERTICAL, 0.0, 1.0, 0.1);
 	gtk_range_set_inverted (GTK_RANGE (button->priv->volume_scale), TRUE);
 	gtk_scale_set_draw_value (GTK_SCALE (button->priv->volume_scale), FALSE);
 	/*gtk_range_set_update_policy (GTK_RANGE (button->priv->volume_scale), GTK_UPDATE_DELAYED);*/
@@ -717,7 +717,7 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 
 	/**/
 
-	gtk_box_pack_start (GTK_BOX (volume_vbox), gtk_hseparator_new (), FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (volume_vbox), gtk_separator_new (GTK_ORIENTATION_HORIZONTAL), FALSE, FALSE, 0);
 	button->priv->volume_label = gtk_label_new (NULL);
 	gtk_box_pack_start (GTK_BOX (volume_vbox), button->priv->volume_label, FALSE, FALSE, 3);
 
@@ -726,7 +726,7 @@ goo_volume_button_construct (GooVolumeToolButton *button)
 	gtk_tool_item_set_homogeneous (GTK_TOOL_ITEM (button), FALSE);
 	gtk_tool_button_set_icon_name  (GTK_TOOL_BUTTON (button), GOO_STOCK_VOLUME_MAX);
 
-	box = gtk_hbox_new (FALSE, 0);
+	box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
 	real_button = gtk_bin_get_child (GTK_BIN (button));
 	g_object_ref (real_button);

@@ -17,7 +17,6 @@ INCLUDES =						\
         -DGOO_DATADIR=\"$(datadir)\"     	    	\
         -DGOO_LIBDIR=\"$(libdir)\"  	         	\
 	-DGOO_UIDIR=\""$(uidir)"\"     			\
-	$(DISABLE_DEPRECATED)				\
 	$(GOO_CFLAGS)					\
 	$(LIBNOTIFY_CFLAGS)
 
