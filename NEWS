@@ -1,3 +1,14 @@
+version 3.0.0
+-------------
+
+ Internal code changes:
+
+  * Removed use of deprecated code.
+
+ New or updated manual translations:
+
+  * Español (Daniel Mustieles)
+
 version 2.90.2
 --------------
 
