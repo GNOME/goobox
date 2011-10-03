@@ -129,12 +129,13 @@ filetype_properties_clicked_cb (GtkWidget  *widget,
 }
 
 
-static void
+static gboolean
 drive_selector_device_changed_cb (GtkWidget   *drive_selector,
 				  const char  *device_path,
 				  DialogData  *data)
 {
 	apply_button_clicked_cb (NULL, data);
+	return FALSE;
 }
 
 
@@ -175,6 +176,7 @@ dlg_preferences (GooWindow *window)
 	gboolean         find_first_available;
 	GtkTreeIter      iter;
         GtkCellRenderer *renderer;
+        BraseroDrive    *drive;
 
         if (window->preferences_dialog != NULL) {
         	gtk_window_present (GTK_WINDOW (window->preferences_dialog));
@@ -303,6 +305,9 @@ dlg_preferences (GooWindow *window)
 	/**/
 
 	data->drive_selector = brasero_drive_selection_new ();
+	drive = goo_player_get_drive (goo_window_get_player (data->window));
+	if (drive != NULL)
+		brasero_drive_selection_set_active (BRASERO_DRIVE_SELECTION (data->drive_selector), drive);
 	gtk_widget_show (data->drive_selector);
 	gtk_box_pack_start (GTK_BOX (GET_WIDGET ("drive_selector_box")), data->drive_selector, TRUE, TRUE, 0);
 
@@ -324,10 +329,10 @@ dlg_preferences (GooWindow *window)
 			  "clicked",
 			  G_CALLBACK (filetype_properties_clicked_cb),
 			  data);
-	g_signal_connect (G_OBJECT (data->drive_selector),
-			  "changed",
-			  G_CALLBACK (drive_selector_device_changed_cb),
-			  data);
+	g_signal_connect_after (G_OBJECT (data->drive_selector),
+				"changed",
+				G_CALLBACK (drive_selector_device_changed_cb),
+				data);
 	g_signal_connect (data->filetype_combobox,
 			  "changed",
 			  G_CALLBACK (filetype_combobox_changed_cb),
