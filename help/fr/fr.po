@@ -3,279 +3,242 @@
 # This file is distributed under the same license as the goobox
 # documentation package.
 #
-# Bruno Brouard <annoa.b@gmail.com>, 2007
-# Julien Hardelin <jhardlin{AT}wanadoo{POINT}fr>, 2010
 #
+# Bruno Brouard <annoa.b@gmail.com>, 2007.
+# Julien Hardelin <jhardlin@orange.fr>, 2010, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox 1.0 fr\n"
-"POT-Creation-Date: 2010-01-17 21:25+0000\n"
-"PO-Revision-Date: 2010-02-02 17:10+0100\n"
-"Last-Translator: Julien Hardelin <jhardlin{AT}wanadoo{POINT}fr>\n"
-"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"POT-Creation-Date: 2011-10-18 19:52+0000\n"
+"PO-Revision-Date: 2011-11-24 13:47+0100\n"
+"Last-Translator: Julien Hardelin <jhardlin@orange.fr>\n"
+"Language-Team: French <GNOME French Team <gnomefr@traduc.org>>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: C/goobox.xml:18(title)
-msgid "<application>CD Player</application> Manual V2.0"
-msgstr "Manuel du <application>Lecteur de CD Goobox</application> v2.0"
+#: C/shortcuts.page:6(title) C/shortcuts.page:44(key)
+msgid "1"
+msgstr "1"
 
-#: C/goobox.xml:20(para)
-msgid "User manual for Goobox the CD player."
-msgstr "Manuel utilisateur du lecteur de CD Goobox."
+#: C/shortcuts.page:8(title)
+msgid "Keyboard Shortcuts"
+msgstr "Raccourcis clavier"
 
-#: C/goobox.xml:24(year)
-msgid "2005, 2009"
-msgstr "2005, 2009"
-
-#: C/goobox.xml:25(holder)
-msgid "Paolo Bacchilega"
-msgstr "Paolo Bacchilega"
-
-#: C/goobox.xml:41(publishername)
-msgid "GNOME Documentation Project"
-msgstr "Projet de documentation GNOME"
-
-#: C/goobox.xml:2(para)
+#: C/shortcuts.page:9(p)
 msgid ""
-"Permission is granted to copy, distribute and/or modify this document under "
-"the terms of the GNU Free Documentation License (GFDL), Version 1.1 or any "
-"later version published by the Free Software Foundation with no Invariant "
-"Sections, no Front-Cover Texts, and no Back-Cover Texts. You can find a copy "
-"of the GFDL at this <ulink type=\"help\" url=\"ghelp:fdl\">link</ulink> or "
-"in the file COPYING-DOCS distributed with this manual."
+"Quick reference for some useful keyword shortcuts. Look in the menus for "
+"other available shortcuts."
 msgstr ""
-"Permission vous est donnée de copier, distribuer et/ou modifier ce document "
-"selon les termes de la Licence GNU Free Documentation License, Version 1.1 "
-"ou ultérieure publiée par la Free Software Foundation sans section "
-"inaltérable, sans texte de première page de couverture ni texte de dernière "
-"page de couverture. Vous trouverez un exemplaire de cette licence en suivant "
-"ce <ulink type=\"help\" url=\"ghelp:fdl\">lien</ulink> ou dans le fichier "
-"COPYING-DOCS fourni avec le présent manuel."
+"Référence rapide pour quelques raccourcis clavier utiles. Reportez-vous aux "
+"menus pour les autres raccourcis clavier disponibles."
 
-#: C/goobox.xml:12(para)
-msgid ""
-"This manual is part of a collection of GNOME manuals distributed under the "
-"GFDL. If you want to distribute this manual separately from the collection, "
-"you can do so by adding a copy of the license to the manual, as described in "
-"section 6 of the license."
-msgstr ""
-"Ce manuel fait partie de la collection de manuels GNOME distribués selon les "
-"termes de la licence de documentation libre GNU. Si vous souhaitez "
-"distribuer ce manuel indépendamment de la collection, vous devez joindre un "
-"exemplaire de la licence au document, comme indiqué dans la section 6 de "
-"celle-ci."
+#: C/shortcuts.page:14(p)
+msgid "Keyboard Shortcut"
+msgstr "Raccourci clavier"
 
-#: C/goobox.xml:19(para)
-msgid ""
-"Many of the names used by companies to distinguish their products and "
-"services are claimed as trademarks. Where those names appear in any GNOME "
-"documentation, and the members of the GNOME Documentation Project are made "
-"aware of those trademarks, then the names are in capital letters or initial "
-"capital letters."
-msgstr ""
-"La plupart des noms utilisés par les entreprises pour distinguer leurs "
-"produits et services sont des marques déposées. Lorsque ces noms "
-"apparaissent dans la documentation GNOME et que les membres du projet de "
-"Documentation GNOME sont informés de l'existence de ces marques déposées, "
-"soit ces noms entiers, soit leur première lettre est en majuscule."
+#: C/shortcuts.page:15(p)
+msgid "Description"
+msgstr "Description"
 
-#: C/goobox.xml:35(para)
-msgid ""
-"DOCUMENT IS PROVIDED ON AN \"AS IS\" BASIS, WITHOUT WARRANTY OF ANY KIND, "
-"EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES THAT "
-"THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS FREE OF DEFECTS "
-"MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE "
-"RISK AS TO THE QUALITY, ACCURACY, AND PERFORMANCE OF THE DOCUMENT OR "
-"MODIFIED VERSION OF THE DOCUMENT IS WITH YOU. SHOULD ANY DOCUMENT OR "
-"MODIFIED VERSION PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT THE INITIAL "
-"WRITER, AUTHOR OR ANY CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY "
-"SERVICING, REPAIR OR CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES AN "
-"ESSENTIAL PART OF THIS LICENSE. NO USE OF ANY DOCUMENT OR MODIFIED VERSION "
-"OF THE DOCUMENT IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER; AND"
-msgstr ""
-"LE PRÉSENT DOCUMENT EST FOURNI « TEL QUEL », SANS AUCUNE GARANTIE, EXPRESSE "
-"OU IMPLICITE, Y COMPRIS, ET SANS LIMITATION, LES GARANTIES DE BONNE QUALITÉ "
-"MARCHANDE OU D'APTITUDE À UN EMPLOI PARTICULIER OU AUTORISÉ DU DOCUMENT OU "
-"DE SA VERSION MODIFIÉE. L'UTILISATEUR ASSUME TOUT RISQUE RELATIF À LA "
-"QUALITÉ, À LA PERTINENCE ET À LA PERFORMANCE DU DOCUMENT OU DE SA VERSION DE "
-"MISE À JOUR. SI LE DOCUMENT OU SA VERSION MODIFIÉE S'AVÉRAIT DÉFECTUEUSE, "
-"L'UTILISATEUR (ET NON LE RÉDACTEUR INITIAL, L'AUTEUR, NI TOUT AUTRE "
-"PARTICIPANT) ENDOSSERA LES COÛTS DE TOUTE INTERVENTION, RÉPARATION OU "
-"CORRECTION NÉCESSAIRE. CETTE DÉNÉGATION DE RESPONSABILITÉ CONSTITUE UNE "
-"PARTIE ESSENTIELLE DE CETTE LICENCE. AUCUNE UTILISATION DE CE DOCUMENT OU DE "
-"SA VERSION MODIFIÉE N'EST AUTORISÉE AUX TERMES DU PRÉSENT ACCORD, EXCEPTÉ "
-"SOUS CETTE DÉNÉGATION DE RESPONSABILITÉ ; ET"
+#: C/shortcuts.page:20(key)
+msgid "Space"
+msgstr "Espace"
 
-#: C/goobox.xml:55(para)
-msgid ""
-"UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING "
-"NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE AUTHOR, INITIAL WRITER, ANY "
-"CONTRIBUTOR, OR ANY DISTRIBUTOR OF THE DOCUMENT OR MODIFIED VERSION OF THE "
-"DOCUMENT, OR ANY SUPPLIER OF ANY OF SUCH PARTIES, BE LIABLE TO ANY PERSON "
-"FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF "
-"ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, "
-"WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER DAMAGES "
-"OR LOSSES ARISING OUT OF OR RELATING TO USE OF THE DOCUMENT AND MODIFIED "
-"VERSIONS OF THE DOCUMENT, EVEN IF SUCH PARTY SHALL HAVE BEEN INFORMED OF THE "
-"POSSIBILITY OF SUCH DAMAGES."
-msgstr ""
-"EN AUCUNE CIRCONSTANCE ET SOUS AUCUNE INTERPRÉTATION DE LA LOI, QU'IL "
-"S'AGISSE DE RESPONSABILITÉ CIVILE (Y COMPRIS LA NÉGLIGENCE), CONTRACTUELLE "
-"OU AUTRE, L'AUTEUR, LE RÉDACTEUR INITIAL, TOUT PARTICIPANT ET TOUT "
-"DISTRIBUTEUR DE CE DOCUMENTOU DE SA VERSION DE MISE À JOUR AINSI QUE TOUT "
-"FOURNISSEUR DE QUELQUE PARTIE QUE CE SOIT NE POURRONT ÊTRE TENUS "
-"RESPONSABLES À L'ÉGARD DE QUICONQUE POUR TOUT DOMMAGE DIRECT, INDIRECT, "
-"PARTICULIER OU ACCIDENTEL DE TOUT TYPE Y COMPRIS, SANS LIMITATION, LES "
-"DOMMAGES LIÉS À LA PERTE DE CLIENTÈLE, AUX ARRÊTS DE TRAVAIL, AUX "
-"DÉFAILLANCES ET AUX DYSFONCTIONNEMENTS INFORMATIQUES OU TOUT AUTRE DOMMAGE "
-"OU PERTE LIÉE À L'UTILISATION DU PRÉSENT DOCUMENT ET DE SES VERSIONS DE MISE "
-"À JOUR, ET CE MÊME SI CES PARTIES ONT ÉTÉ INFORMÉES DE LA POSSIBILITÉ DE "
-"TELS DOMMAGES."
+#: C/shortcuts.page:21(p)
+msgid "Play/Pause the current track"
+msgstr "Lecture/Pause de la piste actuelle"
 
-#: C/goobox.xml:28(para)
-msgid ""
-"DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE TERMS "
-"OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER UNDERSTANDING THAT: "
-"<placeholder-1/>"
-msgstr ""
-"LE PRÉSENT DOCUMENT ET SES VERSIONS MODIFIÉES SONT FOURNIS SELON LES TERMES "
-"DE LA LICENCE DE DOCUMENTATION LIBRE GNU SACHANT QUE : <placeholder-1/>"
+#: C/shortcuts.page:24(key)
+msgid "Escape"
+msgstr "Échap"
 
-#: C/goobox.xml:48(firstname)
-msgid "Paolo"
-msgstr "Paolo"
+#: C/shortcuts.page:25(p)
+msgid "Stop playing the current track"
+msgstr "Arrêt de la lecture de la piste actuelle"
 
-#: C/goobox.xml:49(surname)
-msgid "Bacchilega"
-msgstr "Bacchilega"
+#: C/shortcuts.page:28(key)
+msgid "N"
+msgstr "N"
 
-#: C/goobox.xml:51(email)
-msgid "paobac@src.gnome.org"
-msgstr "paobac@src.gnome.org"
+#: C/shortcuts.page:29(p)
+msgid "Play the next track"
+msgstr "Lecture de la piste suivante"
 
-#: C/goobox.xml:61(revnumber)
-msgid "1.0"
-msgstr "1.0"
+#: C/shortcuts.page:32(key)
+msgid "P"
+msgstr "P"
 
-#: C/goobox.xml:62(date)
-msgid "2005-01-20"
-msgstr "20/01/2005"
+#: C/shortcuts.page:33(p)
+msgid "Play the previous track"
+msgstr "Lecture de la piste précédente"
 
-#: C/goobox.xml:64(para)
-msgid "First version, program version 0.7.1"
-msgstr "Première version, version du programme 0.7.1"
+#: C/shortcuts.page:36(key)
+msgid "J"
+msgstr "J"
 
-#: C/goobox.xml:68(revnumber)
-msgid "2.0"
-msgstr "2.0"
+#: C/shortcuts.page:37(p)
+msgid "Eject the CD from the tray"
+msgstr "Éjection du CD"
 
-#: C/goobox.xml:69(date)
-msgid "2009-11-14"
-msgstr "14/11/2009"
+#: C/shortcuts.page:40(key)
+msgid "E"
+msgstr "E"
 
-#: C/goobox.xml:71(para)
-msgid "Second version, program version 2.1.0"
-msgstr "Deuxième version, version du programme 2.1.0"
+#: C/shortcuts.page:41(p)
+msgid "Open the <app>Extract</app> dialog"
+msgstr "Ouverture de la boite de dialogue <app>Extraction</app>"
 
-#. this is version of manual, not application
-#: C/goobox.xml:76(releaseinfo)
-msgid "This is manual describes version 2.1.0 of Goobox"
-msgstr "Ce manuel documente la version 2.1.0 de Goobox"
+#: C/shortcuts.page:45(p)
+msgid "Play the 1st track"
+msgstr "Lecture de la 1re piste"
 
-#: C/goobox.xml:82(primary)
-msgid "goobox"
-msgstr "goobox"
+#: C/shortcuts.page:48(key)
+msgid "2"
+msgstr "2"
 
-#: C/goobox.xml:85(primary)
-msgid "CD Player"
-msgstr "Lecteur de CD"
+#: C/shortcuts.page:49(p)
+msgid "Play the 2nd track"
+msgstr "Lecture de la 2e piste"
 
-#: C/goobox.xml:88(secondary)
-msgid "CD Ripper"
-msgstr "Extracteur de CD"
+#: C/shortcuts.page:52(key)
+msgid "3"
+msgstr "3"
 
-#: C/goobox.xml:96(title)
-msgid "Introduction"
-msgstr "Introduction"
+#: C/shortcuts.page:53(p)
+msgid "Play the 3rd track"
+msgstr "Lecture de la 3e piste"
 
-#: C/goobox.xml:97(para)
-msgid ""
-"With <application>CD Player</application> you can play audio Compact Discs "
-"(CDs) and save the CD tracks as audio files."
-msgstr ""
-"Grace au <application>lecteur de CD Goobox</application>, vous pouvez lire "
-"des disques compacts audio (CD) et enregistrer les pistes du CD sous la "
-"forme de fichiers audio."
+#: C/shortcuts.page:56(key)
+msgid "4"
+msgstr "4"
 
-#: C/goobox.xml:105(title)
+#: C/shortcuts.page:57(p)
+msgid "Play the 4th track"
+msgstr "Lecture de la 4e piste"
+
+#: C/shortcuts.page:60(key)
+msgid "5"
+msgstr "5"
+
+#: C/shortcuts.page:61(p)
+msgid "Play the 5th track"
+msgstr "Lecture de la 5e piste"
+
+#: C/shortcuts.page:64(key)
+msgid "6"
+msgstr "6"
+
+#: C/shortcuts.page:65(p)
+msgid "Play the 6th track"
+msgstr "Lecture de la 6e piste"
+
+#: C/shortcuts.page:68(key)
+msgid "7"
+msgstr "7"
+
+#: C/shortcuts.page:69(p)
+msgid "Play the 7th track"
+msgstr "Lecture de la 7e piste"
+
+#: C/shortcuts.page:72(key)
+msgid "8"
+msgstr "8"
+
+#: C/shortcuts.page:73(p)
+msgid "Play the 8th track"
+msgstr "Lecture de la 8e piste"
+
+#: C/shortcuts.page:76(key)
+msgid "9"
+msgstr "9"
+
+#: C/shortcuts.page:77(p)
+msgid "Play the 9th track"
+msgstr "Lecture de la 9e piste"
+
+#: C/shortcuts.page:80(key) C/preferences.page:6(title)
+msgid "0"
+msgstr "0"
+
+#: C/shortcuts.page:81(p)
+msgid "Play the 10th track"
+msgstr "Lecture de la 10e piste"
+
+#: C/preferences.page:8(title)
 msgid "Preferences"
 msgstr "Préférences"
 
-#: C/goobox.xml:106(para)
+#: C/preferences.page:9(p)
 msgid ""
-"To configure <application>CD Player</application>, open the "
-"<guilabel>Preferences</guilabel> dialog by choosing "
-"<menuchoice><guimenu>Edit</guimenu><guisubmenu>Preferences</guisubmenu></"
-"menuchoice>."
+"To configure <app>CD Player</app> open the <app>Preferences</app> dialog by "
+"choosing <guiseq><gui style=\"menu\">Edit</gui><gui style=\"menuitem"
+"\">Preferences</gui></guiseq>."
 msgstr ""
-"Pour configurer le lecteur de CD <application>Goobox</application>, ouvrez "
-"la boîte de dialogue <guilabel>Préférences</guilabel> en choisissant "
-"<menuchoice><guimenu>Édition</guimenu><guisubmenu>Préférences</guisubmenu></"
-"menuchoice>."
+"Pour configurer le <app>lecteur de CD Goobox</app>, ouvrez la boite de "
+"dialogue <app>Préférences</app> en choisissant <guiseq><gui style=\"menu"
+"\">Édition</gui><gui style=\"menuitem\">Préférences</gui></guiseq>."
 
-#: C/goobox.xml:112(para)
+#: C/preferences.page:13(p)
 msgid ""
 "This dialog contains two tabs described in detail below. At the bottom of "
 "the dialog window, you'll find the following buttons:"
 msgstr ""
-"Cette boîte de dialogue contient deux onglets décrits en détails ci-dessous. "
+"Cette boite de dialogue contient deux onglets décrits en détails ci-dessous. "
 "En bas de cette fenêtre se trouvent les boutons suivants :"
 
-#: C/goobox.xml:118(para)
-msgid "<guibutton>Help</guibutton>: shows this manual."
-msgstr "<guibutton>Aide</guibutton> : affiche ce manuel"
+#: C/preferences.page:19(gui)
+msgid "Help"
+msgstr "Manuel"
 
-#: C/goobox.xml:122(para)
-msgid "<guibutton>Close</guibutton>: closes the dialog."
-msgstr "<guibutton>Fermer</guibutton>: ferme la boîte de dialogue."
+#: C/preferences.page:20(p)
+msgid "Shows this page."
+msgstr "Affiche cette page."
 
-#: C/goobox.xml:126(para)
+#: C/preferences.page:23(gui)
+msgid "Close"
+msgstr "Fermer"
+
+#: C/preferences.page:24(p)
+msgid "Closes the dialog."
+msgstr "Ferme la boite de dialogue."
+
+#: C/preferences.page:27(p)
 msgid ""
 "Keep in mind that when you change an option it will automatically applied. "
-"This is why there is no <guibutton>Ok</guibutton> or <guibutton>Apply</"
-"guibutton> button."
+"This is why there is no <gui style=\"button\">Ok</gui> or <gui style=\"button"
+"\">Apply</gui> button."
 msgstr ""
 "Gardez à l'esprit que lorsque vous changez une option, elle est appliquée "
-"automatiquement. C'est pourquoi il n'y a pas de bouton <guibutton>Valider</"
-"guibutton> ou <guibutton>Appliquer</guibutton>."
+"automatiquement. C'est pourquoi il n'y a pas de bouton <gui style=\"button"
+"\">Valider</gui> ou <gui style>Appliquer</gui>."
 
-#: C/goobox.xml:135(title)
+#: C/preferences.page:34(title)
 msgid "General Tab"
 msgstr "Onglet Général"
 
-#: C/goobox.xml:136(para)
+#: C/preferences.page:35(p)
 msgid "This tab allows you to set the following options:"
 msgstr "Cet onglet vous permet de paramétrer les options suivantes :"
 
-#: C/goobox.xml:141(para)
+#: C/preferences.page:38(p)
 msgid "Select the device to use."
 msgstr "Choix du périphérique à utiliser"
 
-#: C/goobox.xml:145(para)
+#: C/preferences.page:40(p)
 msgid "Whether to automatically play a newly inserted disk."
 msgstr "Lecture automatique des disques nouvellement insérés"
 
-#: C/goobox.xml:154(title)
+#: C/preferences.page:46(title)
 msgid "Extraction Tab"
 msgstr "Onglet Extraction"
 
-#: C/goobox.xml:155(para)
+#: C/preferences.page:47(p)
 msgid "This tab allows you to set the extraction options:"
 msgstr "Cet onglet vous permet de paramétrer les options d'extraction :"
 
-#: C/goobox.xml:160(para)
+#: C/preferences.page:49(p)
 msgid ""
 "The destination folder. Files are saved in a subfolder of the destination "
 "folder, following the scheme Artist/Album/track."
@@ -283,185 +246,56 @@ msgstr ""
 "Dossier de destination. Les fichiers sont enregistrés dans un sous-dossier "
 "du dossier de destination, selon le schéma Artiste/Album/piste."
 
-#: C/goobox.xml:165(para)
+#: C/preferences.page:51(p)
 msgid ""
 "The audio files format to use. Some formats allow you to set the quality of "
 "the file, this can be useful because usually there is a trade-off between "
-"audio quality and file size. Use the <guilabel>Properties</guilabel> button "
-"to set the file format properties."
+"audio quality and file size. Use the <gui style=\"button\">Properties</gui> "
+"button to set the file format properties."
 msgstr ""
 "Format de fichier audio à utiliser. Certains formats vous permettent de "
 "paramétrer la qualité du fichier, ce qui peut être utile car il y a "
 "habituellement un compromis entre la qualité audio et la taille du fichier. "
-"Utilisez le bouton <guilabel>Propriétés</guilabel> pour paramétrer les "
-"propriétés du format de fichier."
+"Utilisez le bouton <gui style=\"button\">Propriétés</gui> pour paramétrer "
+"les propriétés du format de fichier."
 
-#: C/goobox.xml:174(para)
+#: C/preferences.page:57(p)
 msgid ""
 "Whether to save a playlist file in PLS format that contains the list of the "
 "extracted files. The playlist is saved in the same folder of the audio files."
 msgstr ""
-"Possibilité d'enregistrer dans le format PLS une liste de lecture "
-"contenant la liste des fichiers extraits. La liste de lecture est "
-"enregistrée dans le même dossier que les fichiers audio."
+"Possibilité d'enregistrer dans le format PLS une liste de lecture contenant "
+"la liste des fichiers extraits. La liste de lecture est enregistrée dans le "
+"même dossier que les fichiers audio."
 
-#: C/goobox.xml:186(title)
-msgid "Quick Reference: Keyboard Shortcuts"
-msgstr "Référence rapide : raccourcis clavier"
+#: C/index.page:4(name)
+msgid "Paolo Bacchilega"
+msgstr "Paolo Bacchilega"
 
-#: C/goobox.xml:187(para)
+#: C/index.page:5(email)
+msgid "paobac@src.gnome.org"
+msgstr "paobac@src.gnome.org"
+
+#: C/index.page:6(years)
+msgid "2005-2011"
+msgstr "2005-2011"
+
+#: C/index.page:15(title)
+msgid "<app>CD Player</app> Help"
+msgstr "Manuel du <app>Lecteur de CD Goobox</app> "
+
+#: C/index.page:16(p)
 msgid ""
-"<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> provide a quick reference "
-"for all of the <application>CD Player</application> keyword shortcuts. Look "
-"in the menus for other shortcuts."
+"With <app>CD Player</app> you can play audio Compact Discs (CDs) and save "
+"the CD tracks as audio files."
 msgstr ""
-"<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> fournit une référence "
-"rapide pour tous les raccourcis clavier de <application>CD Player</"
-"application>. Regardez dans les menus pour d'autres raccourcis."
-
-#: C/goobox.xml:192(title)
-msgid "Keyboard shortcuts"
-msgstr "Raccourcis clavier"
-
-#: C/goobox.xml:200(para)
-msgid "Keyboard Shortcut"
-msgstr "Raccourci clavier"
-
-#: C/goobox.xml:202(para)
-msgid "Description"
-msgstr "Description"
-
-#: C/goobox.xml:209(keycap)
-msgid "1"
-msgstr "1"
-
-#: C/goobox.xml:213(para)
-msgid "Play the 1st track"
-msgstr "Lecture de la 1re piste"
-
-#: C/goobox.xml:219(keycap)
-msgid "2"
-msgstr "2"
-
-#: C/goobox.xml:223(para)
-msgid "Play the 2nd track"
-msgstr "Lecture de la 2e piste"
-
-#: C/goobox.xml:229(keycap)
-msgid "3"
-msgstr "3"
-
-#: C/goobox.xml:233(para)
-msgid "Play the 3rd track"
-msgstr "Lecture de la 3e piste"
-
-#: C/goobox.xml:239(keycap)
-msgid "4"
-msgstr "4"
-
-#: C/goobox.xml:243(para)
-msgid "Play the 4th track"
-msgstr "Lecture de la 4e piste"
-
-#: C/goobox.xml:249(keycap)
-msgid "5"
-msgstr "5"
-
-#: C/goobox.xml:253(para)
-msgid "Play the 5th track"
-msgstr "Lecture de la 5e piste"
-
-#: C/goobox.xml:259(keycap)
-msgid "6"
-msgstr "6"
-
-#: C/goobox.xml:263(para)
-msgid "Play the 6th track"
-msgstr "Lecture de la 6e piste"
-
-#: C/goobox.xml:269(keycap)
-msgid "7"
-msgstr "7"
-
-#: C/goobox.xml:273(para)
-msgid "Play the 7th track"
-msgstr "Lecture de la 7e piste"
-
-#: C/goobox.xml:279(keycap)
-msgid "8"
-msgstr "8"
-
-#: C/goobox.xml:283(para)
-msgid "Play the 8th track"
-msgstr "Lecture de la 8e piste"
-
-#: C/goobox.xml:289(keycap)
-msgid "9"
-msgstr "9"
-
-#: C/goobox.xml:293(para)
-msgid "Play the 9th track"
-msgstr "Lecture de la 9e piste"
-
-#: C/goobox.xml:299(keycap)
-msgid "0"
-msgstr "0"
-
-#: C/goobox.xml:303(para)
-msgid "Play the 10th track"
-msgstr "Lecture de la 10e piste"
-
-#: C/goobox.xml:309(keycap)
-msgid "Space"
-msgstr "Espace"
-
-#: C/goobox.xml:313(para)
-msgid "Play/Pause the current track"
-msgstr "Lecture/Pause de la piste actuelle"
-
-#: C/goobox.xml:319(keycap)
-msgid "Escape"
-msgstr "Échap"
-
-#: C/goobox.xml:323(para)
-msgid "Stop playing the current track"
-msgstr "Arrêt de la lecture de la piste actuelle"
-
-#: C/goobox.xml:329(keycap)
-msgid "N"
-msgstr "N"
-
-#: C/goobox.xml:333(para)
-msgid "Play the next track"
-msgstr "Lecture de la piste suivante"
-
-#: C/goobox.xml:339(keycap)
-msgid "P"
-msgstr "P"
-
-#: C/goobox.xml:343(para)
-msgid "Play the previous track"
-msgstr "Lecture de la piste précédente"
-
-#: C/goobox.xml:349(keycap)
-msgid "J"
-msgstr "J"
-
-#: C/goobox.xml:353(para)
-msgid "Eject the CD from the tray"
-msgstr "Éjection du CD"
-
-#: C/goobox.xml:359(keycap)
-msgid "E"
-msgstr "E"
-
-#: C/goobox.xml:363(para)
-msgid "Open the <interface>Extract</interface> dialog"
-msgstr "Ouverture de la boîte de dialogue <interface>Extraction</interface>"
+"Grâce au <app>lecteur de CD Goobox</app>, vous pouvez lire des disques "
+"compacts audio (CD) et enregistrer les pistes du CD sous la forme de "
+"fichiers audio."
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
-#: C/goobox.xml:0(None)
+#: C/index.page:0(None)
 msgid "translator-credits"
 msgstr ""
 "Bruno Brouard <annoa.b@gmail.com>, 2007\n"
-"Julien Hardelin <jhardlin{AT}wanadoo{POINT}fr>, 2010"
+"Julien Hardelin <jhardlin{AT}orange{POINT}fr>, 2010, 2011"
