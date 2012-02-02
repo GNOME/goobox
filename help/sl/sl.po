@@ -7,10 +7,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox help master\n"
-"POT-Creation-Date: 2010-08-19 09:12+0000\n"
-"PO-Revision-Date: 2010-10-22 08:11+0100\n"
-"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
+"POT-Creation-Date: 2012-01-11 13:20+0000\n"
+"PO-Revision-Date: 2012-01-31 21:24+0200\n"
+"Last-Translator: Andrej Žnidaršič <andrej.znidarsic@gmail.com>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,321 +20,256 @@ msgstr ""
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: C/goobox.xml:18(title)
-msgid "<application>CD Player</application> Manual V2.0"
-msgstr ""
+#: C/shortcuts.page:6(title)
+#: C/shortcuts.page:44(key)
+msgid "1"
+msgstr "1"
 
-#: C/goobox.xml:20(para)
-msgid "User manual for Goobox the CD player."
-msgstr ""
+#: C/shortcuts.page:8(title)
+msgid "Keyboard Shortcuts"
+msgstr "Tipkovne bližnjice"
 
-#: C/goobox.xml:24(year)
-msgid "2005, 2009"
-msgstr "2005, 2009"
+#: C/shortcuts.page:9(p)
+msgid "Quick reference for some useful keyword shortcuts. Look in the menus for other available shortcuts."
+msgstr "Hiter pregled nekaterih uporabnih tipkovnih bližnjic. Za druge razpoložljive bližnjice si oglejte menije."
 
-#: C/goobox.xml:25(holder)
-msgid "Paolo Bacchilega"
-msgstr "Paolo Bacchilega"
+#: C/shortcuts.page:14(p)
+msgid "Keyboard Shortcut"
+msgstr "Tipkovna bližnjica"
 
-#: C/goobox.xml:41(publishername)
-msgid "GNOME Documentation Project"
-msgstr "Projekt dokumentacije GNOME"
+#: C/shortcuts.page:15(p)
+msgid "Description"
+msgstr "Opis"
 
-#: C/goobox.xml:2(para)
-msgid "Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License (GFDL), Version 1.1 or any later version published by the Free Software Foundation with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. You can find a copy of the GFDL at this <ulink type=\"help\" url=\"ghelp:fdl\">link</ulink> or in the file COPYING-DOCS distributed with this manual."
-msgstr ""
+#: C/shortcuts.page:20(key)
+msgid "Space"
+msgstr "Preslednica"
 
-#: C/goobox.xml:12(para)
-msgid "This manual is part of a collection of GNOME manuals distributed under the GFDL. If you want to distribute this manual separately from the collection, you can do so by adding a copy of the license to the manual, as described in section 6 of the license."
-msgstr ""
+#: C/shortcuts.page:21(p)
+msgid "Play/Pause the current track"
+msgstr "Premor/predvajanje trenutne skladbe"
 
-#: C/goobox.xml:19(para)
-msgid "Many of the names used by companies to distinguish their products and services are claimed as trademarks. Where those names appear in any GNOME documentation, and the members of the GNOME Documentation Project are made aware of those trademarks, then the names are in capital letters or initial capital letters."
-msgstr ""
+#: C/shortcuts.page:24(key)
+msgid "Escape"
+msgstr "Ubežna tipka"
 
-#: C/goobox.xml:35(para)
-msgid "DOCUMENT IS PROVIDED ON AN \"AS IS\" BASIS, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES THAT THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS FREE OF DEFECTS MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE RISK AS TO THE QUALITY, ACCURACY, AND PERFORMANCE OF THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS WITH YOU. SHOULD ANY DOCUMENT OR MODIFIED VERSION PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT THE INITIAL WRITER, AUTHOR OR ANY CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY SERVICING, REPAIR OR CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF THIS LICENSE. NO USE OF ANY DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER; AND"
-msgstr ""
+#: C/shortcuts.page:25(p)
+msgid "Stop playing the current track"
+msgstr "Zaustavi predvajanje trenutne skladbe"
 
-#: C/goobox.xml:55(para)
-msgid "UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE AUTHOR, INITIAL WRITER, ANY CONTRIBUTOR, OR ANY DISTRIBUTOR OF THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT, OR ANY SUPPLIER OF ANY OF SUCH PARTIES, BE LIABLE TO ANY PERSON FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER DAMAGES OR LOSSES ARISING OUT OF OR RELATING TO USE OF THE DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT, EVEN IF SUCH PARTY SHALL HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGES."
-msgstr ""
+#: C/shortcuts.page:28(key)
+msgid "N"
+msgstr "N"
 
-#: C/goobox.xml:28(para)
-msgid "DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE TERMS OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER UNDERSTANDING THAT: <placeholder-1/>"
-msgstr ""
+#: C/shortcuts.page:29(p)
+msgid "Play the next track"
+msgstr "Predvaja naslednjo skladbo"
 
-#: C/goobox.xml:48(firstname)
-msgid "Paolo"
-msgstr "Paolo"
+#: C/shortcuts.page:32(key)
+msgid "P"
+msgstr "P"
 
-#: C/goobox.xml:49(surname)
-msgid "Bacchilega"
-msgstr "Bacchilega"
+#: C/shortcuts.page:33(p)
+msgid "Play the previous track"
+msgstr "Predvaja predhodno skladbo"
 
-#: C/goobox.xml:51(email)
-msgid "paobac@src.gnome.org"
-msgstr "paobac@src.gnome.org"
+#: C/shortcuts.page:36(key)
+msgid "J"
+msgstr "J"
 
-#: C/goobox.xml:61(revnumber)
-msgid "1.0"
-msgstr "1.0"
+#: C/shortcuts.page:37(p)
+msgid "Eject the CD from the tray"
+msgstr "Izvrže CD iz pogona"
 
-#: C/goobox.xml:62(date)
-msgid "2005-01-20"
-msgstr ""
+#: C/shortcuts.page:40(key)
+msgid "E"
+msgstr "E"
 
-#: C/goobox.xml:64(para)
-msgid "First version, program version 0.7.1"
-msgstr ""
+#: C/shortcuts.page:41(p)
+msgid "Open the <app>Extract</app> dialog"
+msgstr "Odpre pogovorno okno <app>Pretvori</app>"
 
-#: C/goobox.xml:68(revnumber)
-msgid "2.0"
-msgstr "2.0"
+#: C/shortcuts.page:45(p)
+msgid "Play the 1st track"
+msgstr "Predvaja 1. skladbo"
 
-#: C/goobox.xml:69(date)
-msgid "2009-11-14"
-msgstr ""
+#: C/shortcuts.page:48(key)
+msgid "2"
+msgstr "2"
 
-#: C/goobox.xml:71(para)
-msgid "Second version, program version 2.1.0"
-msgstr ""
+#: C/shortcuts.page:49(p)
+msgid "Play the 2nd track"
+msgstr "Predvaja 2. skladbo"
 
-#. this is version of manual, not application
-#: C/goobox.xml:76(releaseinfo)
-msgid "This is manual describes version 2.1.0 of Goobox"
-msgstr ""
+#: C/shortcuts.page:52(key)
+msgid "3"
+msgstr "3"
 
-#: C/goobox.xml:82(primary)
-msgid "goobox"
-msgstr ""
+#: C/shortcuts.page:53(p)
+msgid "Play the 3rd track"
+msgstr "Predvaja 3. skladbo"
 
-#: C/goobox.xml:85(primary)
-msgid "CD Player"
-msgstr ""
+#: C/shortcuts.page:56(key)
+msgid "4"
+msgstr "4"
 
-#: C/goobox.xml:88(secondary)
-msgid "CD Ripper"
-msgstr ""
+#: C/shortcuts.page:57(p)
+msgid "Play the 4th track"
+msgstr "Predvaja 4. skladbo"
 
-#: C/goobox.xml:96(title)
-msgid "Introduction"
-msgstr ""
+#: C/shortcuts.page:60(key)
+msgid "5"
+msgstr "5"
 
-#: C/goobox.xml:97(para)
-msgid "With <application>CD Player</application> you can play audio Compact Discs (CDs) and save the CD tracks as audio files."
-msgstr ""
+#: C/shortcuts.page:61(p)
+msgid "Play the 5th track"
+msgstr "Predvaja 5. skladbo"
 
-#: C/goobox.xml:105(title)
+#: C/shortcuts.page:64(key)
+msgid "6"
+msgstr "6"
+
+#: C/shortcuts.page:65(p)
+msgid "Play the 6th track"
+msgstr "Predvaja 6. skladbo"
+
+#: C/shortcuts.page:68(key)
+msgid "7"
+msgstr "7"
+
+#: C/shortcuts.page:69(p)
+msgid "Play the 7th track"
+msgstr "Predvaja 7. skladbo"
+
+#: C/shortcuts.page:72(key)
+msgid "8"
+msgstr "8"
+
+#: C/shortcuts.page:73(p)
+msgid "Play the 8th track"
+msgstr "Predvaja 8. skladbo"
+
+#: C/shortcuts.page:76(key)
+msgid "9"
+msgstr "9"
+
+#: C/shortcuts.page:77(p)
+msgid "Play the 9th track"
+msgstr "Predvaja 9. skladbo"
+
+#: C/shortcuts.page:80(key)
+#: C/preferences.page:6(title)
+msgid "0"
+msgstr "0"
+
+#: C/shortcuts.page:81(p)
+msgid "Play the 10th track"
+msgstr "Predvaja 10. skladbo"
+
+#: C/preferences.page:8(title)
 msgid "Preferences"
 msgstr "Možnosti"
 
-#: C/goobox.xml:106(para)
-msgid "To configure <application>CD Player</application>, open the <guilabel>Preferences</guilabel> dialog by choosing <menuchoice><guimenu>Edit</guimenu><guisubmenu>Preferences</guisubmenu></menuchoice>."
-msgstr ""
+#: C/preferences.page:9(p)
+msgid "To configure <app>CD Player</app> open the <app>Preferences</app> dialog by choosing <guiseq><gui style=\"menu\">Edit</gui><gui style=\"menuitem\">Preferences</gui></guiseq>."
+msgstr "Za nastavitev <app>Predvajalnika CD-jev</app> odprite pogovorno okno <app>Možnosti</app> z izbiro <guiseq><gui style=\"menu\">Uredi</gui><gui style=\"menuitem\">Možnosti</gui></guiseq>."
 
-#: C/goobox.xml:112(para)
+#: C/preferences.page:13(p)
 msgid "This dialog contains two tabs described in detail below. At the bottom of the dialog window, you'll find the following buttons:"
-msgstr ""
+msgstr "To pogovorno okno vsebuje dva zavihka, ki sta podrobno opisana spodaj. Na dnu pogovornega okna boste našli naslednje gumbe:"
 
-#: C/goobox.xml:118(para)
-msgid "<guibutton>Help</guibutton>: shows this manual."
-msgstr ""
+#: C/preferences.page:19(gui)
+msgid "Help"
+msgstr "Pomoč"
 
-#: C/goobox.xml:122(para)
-msgid "<guibutton>Close</guibutton>: closes the dialog."
-msgstr ""
+#: C/preferences.page:20(p)
+msgid "Shows this page."
+msgstr "Pokaže to stran"
 
-#: C/goobox.xml:126(para)
-msgid "Keep in mind that when you change an option it will automatically applied. This is why there is no <guibutton>Ok</guibutton> or <guibutton>Apply</guibutton> button."
-msgstr ""
+#: C/preferences.page:23(gui)
+msgid "Close"
+msgstr "Zapri"
 
-#: C/goobox.xml:135(title)
+#: C/preferences.page:24(p)
+msgid "Closes the dialog."
+msgstr "Zapre pogovorno okno"
+
+#: C/preferences.page:27(p)
+msgid "Keep in mind that when you change an option it will automatically applied. This is why there is no <gui style=\"button\">Ok</gui> or <gui style=\"button\">Apply</gui> button."
+msgstr "Če možnost spremenite, bo samodejno uveljavljena. Zato ni gumba <gui style=\"button\">V redu</gui> ali <gui style=\"button\">Uveljavi</gui>."
+
+#: C/preferences.page:34(title)
 msgid "General Tab"
-msgstr ""
+msgstr "Zavihek splošno"
 
-#: C/goobox.xml:136(para)
+#: C/preferences.page:35(p)
 msgid "This tab allows you to set the following options:"
-msgstr ""
+msgstr "Ta zavihek vam omogoča nastavitev naslednjih možnosti:"
 
-#: C/goobox.xml:141(para)
+#: C/preferences.page:38(p)
 msgid "Select the device to use."
-msgstr ""
+msgstr "Izberite napravo za uporabo"
 
-#: C/goobox.xml:145(para)
+#: C/preferences.page:40(p)
 msgid "Whether to automatically play a newly inserted disk."
-msgstr ""
+msgstr "Ali naj bo novo vstavljen disk samodejno predvajan."
 
-#: C/goobox.xml:154(title)
+#: C/preferences.page:46(title)
 msgid "Extraction Tab"
-msgstr ""
+msgstr "Zavihek Pretvorba"
 
-#: C/goobox.xml:155(para)
+#: C/preferences.page:47(p)
 msgid "This tab allows you to set the extraction options:"
-msgstr ""
+msgstr "Ta zavihek vam omogoča nastavitev možnosti pretvorbe:"
 
-#: C/goobox.xml:160(para)
+#: C/preferences.page:49(p)
 msgid "The destination folder. Files are saved in a subfolder of the destination folder, following the scheme Artist/Album/track."
-msgstr ""
+msgstr "Ciljna mapa. Datoteke so shranjene v podmapo v ciljni mapi, pri čemer sledijo shemi Izvajalec/Album/skladba."
 
-#: C/goobox.xml:165(para)
-msgid "The audio files format to use. Some formats allow you to set the quality of the file, this can be useful because usually there is a trade-off between audio quality and file size. Use the <guilabel>Properties</guilabel> button to set the file format properties."
-msgstr ""
+#: C/preferences.page:51(p)
+msgid "The audio files format to use. Some formats allow you to set the quality of the file, this can be useful because usually there is a trade-off between audio quality and file size. Use the <gui style=\"button\">Properties</gui> button to set the file format properties."
+msgstr "Vrste zvočnih datotek za uporabo. Nekater vrste vam omgočajo nastavitev kakovosti datoteke. To je lahko uporabno, saj je običajno treba najti kompromis med kakovostjo zvoka in velikostjo datoteke. Uporabite gumb <gui style=\"button\">Lastnosti</gui> za nastavitev lastnosti vrste datoteke."
 
-#: C/goobox.xml:174(para)
+#: C/preferences.page:57(p)
 msgid "Whether to save a playlist file in PLS format that contains the list of the extracted files. The playlist is saved in the same folder of the audio files."
-msgstr ""
+msgstr "Ali naj bo shranjena datoteka seznama, ki vsebuje seznam pretvorjenih skladb shranjena v datoteki PLS. Seznam predvajanja je shranjen v isto mapo kot zvočne datoteke."
 
-#: C/goobox.xml:186(title)
-msgid "Quick Reference: Keyboard Shortcuts"
-msgstr ""
+#: C/index.page:4(name)
+msgid "Paolo Bacchilega"
+msgstr "Paolo Bacchilega"
 
-#: C/goobox.xml:187(para)
-msgid "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> provide a quick reference for all of the <application>CD Player</application> keyword shortcuts. Look in the menus for other shortcuts."
-msgstr ""
+#: C/index.page:5(email)
+msgid "paobac@src.gnome.org"
+msgstr "paobac@src.gnome.org"
 
-#: C/goobox.xml:192(title)
-msgid "Keyboard shortcuts"
-msgstr ""
+#: C/index.page:6(years)
+msgid "2005-2011"
+msgstr "2005-2011"
 
-#: C/goobox.xml:200(para)
-msgid "Keyboard Shortcut"
-msgstr ""
+#: C/index.page:15(title)
+msgid "<app>CD Player</app> Help"
+msgstr "<app>Predvajalnik CD-jev</app> Help"
 
-#: C/goobox.xml:202(para)
-msgid "Description"
-msgstr ""
-
-#: C/goobox.xml:209(keycap)
-msgid "1"
-msgstr ""
-
-#: C/goobox.xml:213(para)
-msgid "Play the 1st track"
-msgstr ""
-
-#: C/goobox.xml:219(keycap)
-msgid "2"
-msgstr ""
-
-#: C/goobox.xml:223(para)
-msgid "Play the 2nd track"
-msgstr ""
-
-#: C/goobox.xml:229(keycap)
-msgid "3"
-msgstr ""
-
-#: C/goobox.xml:233(para)
-msgid "Play the 3rd track"
-msgstr ""
-
-#: C/goobox.xml:239(keycap)
-msgid "4"
-msgstr ""
-
-#: C/goobox.xml:243(para)
-msgid "Play the 4th track"
-msgstr ""
-
-#: C/goobox.xml:249(keycap)
-msgid "5"
-msgstr ""
-
-#: C/goobox.xml:253(para)
-msgid "Play the 5th track"
-msgstr ""
-
-#: C/goobox.xml:259(keycap)
-msgid "6"
-msgstr ""
-
-#: C/goobox.xml:263(para)
-msgid "Play the 6th track"
-msgstr ""
-
-#: C/goobox.xml:269(keycap)
-msgid "7"
-msgstr ""
-
-#: C/goobox.xml:273(para)
-msgid "Play the 7th track"
-msgstr ""
-
-#: C/goobox.xml:279(keycap)
-msgid "8"
-msgstr ""
-
-#: C/goobox.xml:283(para)
-msgid "Play the 8th track"
-msgstr ""
-
-#: C/goobox.xml:289(keycap)
-msgid "9"
-msgstr ""
-
-#: C/goobox.xml:293(para)
-msgid "Play the 9th track"
-msgstr ""
-
-#: C/goobox.xml:299(keycap)
-msgid "0"
-msgstr ""
-
-#: C/goobox.xml:303(para)
-msgid "Play the 10th track"
-msgstr ""
-
-#: C/goobox.xml:309(keycap)
-msgid "Space"
-msgstr ""
-
-#: C/goobox.xml:313(para)
-msgid "Play/Pause the current track"
-msgstr ""
-
-#: C/goobox.xml:319(keycap)
-msgid "Escape"
-msgstr ""
-
-#: C/goobox.xml:323(para)
-msgid "Stop playing the current track"
-msgstr ""
-
-#: C/goobox.xml:329(keycap)
-msgid "N"
-msgstr ""
-
-#: C/goobox.xml:333(para)
-msgid "Play the next track"
-msgstr ""
-
-#: C/goobox.xml:339(keycap)
-msgid "P"
-msgstr ""
-
-#: C/goobox.xml:343(para)
-msgid "Play the previous track"
-msgstr ""
-
-#: C/goobox.xml:349(keycap)
-msgid "J"
-msgstr ""
-
-#: C/goobox.xml:353(para)
-msgid "Eject the CD from the tray"
-msgstr ""
-
-#: C/goobox.xml:359(keycap)
-msgid "E"
-msgstr ""
-
-#: C/goobox.xml:363(para)
-msgid "Open the <interface>Extract</interface> dialog"
-msgstr ""
+#: C/index.page:16(p)
+msgid "With <app>CD Player</app> you can play audio Compact Discs (CDs) and save the CD tracks as audio files."
+msgstr "S <app>Predvajalnikom CD-jev</app> lahko predvajate CD-je in shranite skladbe CD kot zvočne datoteke."
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
-#: C/goobox.xml:0(None)
+#: C/index.page:0(None)
 msgid "translator-credits"
-msgstr ""
+msgstr "Andrej Žnidaršič"
 
+#~ msgid "GNOME Documentation Project"
+#~ msgstr "Projekt dokumentacije GNOME"
+
+#~ msgid "Paolo"
+#~ msgstr "Paolo"
+
+#~ msgid "Bacchilega"
+#~ msgstr "Bacchilega"
+
+#~ msgid "1.0"
+#~ msgstr "1.0"
+
+#~ msgid "2.0"
+#~ msgstr "2.0"
