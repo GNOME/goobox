@@ -59,6 +59,16 @@ if test x$enable_run_in_place = xyes; then
 fi
 
 dnl ===========================================================================
+
+SAVE_CFLAGS="$CFLAGS"
+CFLAGS=""
+AC_CHECK_LIB(m, floor,, AC_MSG_ERROR([math library not found]))
+M_LIBS="-lm"
+CFLAGS="$SAVE_CFLAGS"
+unset SAVE_CFLAGS
+AC_SUBST(M_LIBS)
+
+dnl ===========================================================================
 dnl
 dnl libnotify
 dnl

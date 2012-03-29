@@ -87,6 +87,7 @@ goo-marshal.c: goo-marshal.list $(GLIB_GENMARSHAL)
 goobox_LDADD = 				\
 	$(top_builddir)/copy-n-paste/libeggsmclient.la  \
 	$(GOO_LIBS) 			\
+	$(M_LIBS)			\
 	$(LIBNOTIFY_LIBS)		\
 	$(SYSTEM_LIBS)
 
