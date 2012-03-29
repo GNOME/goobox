@@ -1,6 +1,10 @@
 version 3.0.1
 -------------
 
+ Bugs fixed:
+
+  * Fixed compilation linking explicitly to the math library.
+
  New or updated application translations:
 
   * French (Claude Paroz)
