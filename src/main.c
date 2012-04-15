@@ -729,15 +729,15 @@ system_notify (GooWindow       *window,
 						window,
 						NULL);
 
-		notify_notification_set_hint_byte (notification,
-						   "action-icons",
-						   TRUE);
+		notify_notification_set_hint (notification,
+					      "action-icons",
+					      g_variant_new_boolean (TRUE));
 	}
 
 	if (notification_supports_persistence)
-		notify_notification_set_hint_byte (notification,
-						    "resident" /* "transient" */,
-						    TRUE);
+		notify_notification_set_hint (notification,
+					      "resident" /* "transient" */,
+					      g_variant_new_boolean (TRUE));
 
 	notify_notification_show (notification, NULL);
 
