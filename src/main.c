@@ -658,7 +658,7 @@ notification_has_persistence (void)
 
 #else
 
-	return false;
+	return FALSE;
 
 #endif /* ENABLE_NOTIFICATION */
 }
