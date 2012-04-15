@@ -160,18 +160,6 @@ fi
 
 dnl ===========================================================================
 
-AC_ARG_ENABLE(schemas-install,[AC_HELP_STRING([--disable-schemas-install],
-					      [Disable installation of the gconf schemas])])
-AM_CONDITIONAL(SCHEMAS_INSTALL, test x$enable_schemas_install != xno)
-
-AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
-if test x"$GCONFTOOL" = xno; then
-	AC_MSG_ERROR([gconftool-2 executable not found in your path - should be installed with GConf])
-fi
-AM_GCONF_SOURCE_2
-
-dnl ===========================================================================
-
 AC_CONFIG_FILES([
 Makefile
 copy-n-paste/Makefile
