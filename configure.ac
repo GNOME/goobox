@@ -47,16 +47,16 @@ AC_PATH_PROG(GLIB_MKENUMS, glib-mkenums)
 dnl ===========================================================================
 
 AC_ARG_ENABLE(debug,
-              AS_HELP_STRING([--enable-debug], [enable compilation of debugging messages]),
-              case "${enableval}" in
+	      AS_HELP_STRING([--enable-debug], [enable compilation of debugging messages]),
+              [case "${enableval}" in
               yes) ENABLE_DEBUG=yes ;;
-              no) ENABLE_DEBUG=no ;;
-              *) AC_MSG_ERROR([bad value ${enableval} for --enable-debug]) ;;
-              esac],
-              [ENABLE_DEBUG=no])
+	      no) ENABLE_DEBUG=no ;;
+	      *) AC_MSG_ERROR([bad value ${enableval} for --enable-debug]) ;;
+	      esac],
+	      [ENABLE_DEBUG=no])
 if test x$ENABLE_DEBUG = xyes; then
-        AC_DEFINE(DEBUG, 1, [enable compilation of debugging messages])
-        CFLAGS="$CFLAGS -g -O0 -DDEBUG"
+	AC_DEFINE(DEBUG, 1, [enable compilation of debugging messages])
+	CFLAGS="$CFLAGS -g -O0 -DDEBUG"
 fi
 
 dnl ===========================================================================
