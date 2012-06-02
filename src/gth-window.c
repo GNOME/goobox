@@ -127,8 +127,6 @@ gth_window_finalize (GObject *object)
 	g_free (window->priv->toolbars);
 	g_free (window->priv->contents);
 
-	gtk_application_remove_window (main_application, GTK_WINDOW (window));
-
 	G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 

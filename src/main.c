@@ -52,7 +52,6 @@ gboolean                   notification_supports_actions = FALSE;
 /* -- command line arguments -- */
 
 
-GtkApplication        *main_application = NULL;
 int                    arg_auto_play = FALSE;
 int                    arg_toggle_visibility = FALSE;
 static int             arg_toggle_play = FALSE;
@@ -514,7 +513,7 @@ main (int argc, char *argv[])
 
 	/* run the main application */
 
-	application = main_application = goo_application_new ();
+	application = goo_application_new ();
 	gdk_threads_enter ();
 	status = g_application_run (G_APPLICATION (application), argc, argv);
 	gdk_threads_leave ();
@@ -535,7 +534,7 @@ main_get_window_from_device (const char *device)
 	if (device == NULL)
 		return NULL;
 
-	for (scan = gtk_application_get_windows (main_application); scan; scan = scan->next) {
+	for (scan = gtk_application_get_windows (GTK_APPLICATION (g_application_get_default ())); scan; scan = scan->next) {
 		GooWindow *window = scan->data;
 
 		if (g_strcmp0 (goo_player_get_device (goo_window_get_player (window)), device) == 0)
