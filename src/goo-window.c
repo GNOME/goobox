@@ -2630,7 +2630,9 @@ goo_window_new (BraseroDrive *drive)
 
 	g_return_val_if_fail (drive != NULL, NULL);
 
-	window = (GooWindow*) g_object_new (GOO_TYPE_WINDOW, NULL);
+	window = (GooWindow*) g_object_new (GOO_TYPE_WINDOW,
+					    "application", g_application_get_default (),
+					    NULL);
 	goo_window_construct (window, drive);
 
 	return (GtkWidget *) window;

@@ -221,7 +221,7 @@ gth_window_get_type (void)
 			(GInstanceInitFunc) gth_window_init
 		};
 
-		type = g_type_register_static (GTK_TYPE_WINDOW,
+		type = g_type_register_static (GTK_TYPE_APPLICATION_WINDOW,
 					       "GthWindow",
 					       &type_info,
 					       0);
