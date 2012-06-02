@@ -24,33 +24,74 @@
 #include <stdio.h>
 #include <string.h>
 #include <discid/discid.h>
-#include <musicbrainz3/mb_c.h>
+#include <musicbrainz4/mb4_c.h>
 #include "album-info.h"
 #include "glib-utils.h"
+#include "goo-error.h"
 #include "metadata.h"
 
 
+#define QUERY_AGENT (PACKAGE_NAME "-" PACKAGE_VERSION)
+
+
 static TrackInfo *
-get_track_info (MbTrack mb_track,
-		int     n_track)
+get_track_info (Mb4Track mb_track,
+		int      n_track)
 {
-	TrackInfo *track;
-	char       data[1024];
-	char       data2[1024];
-	MbArtist   mb_artist;
+	TrackInfo         *track;
+	Mb4Recording       recording;
+	int                required_size = 0;
+	char              *title = NULL;
+	Mb4ArtistCredit    artist_credit;
+	Mb4NameCreditList  name_credit_list;
+	int                i;
 
 	track = track_info_new (n_track, 0, 0);
 
-	mb_track_get_title (mb_track, data, 1024);
-	track_info_set_title (track, data);
+	/* title */
 
-	debug (DEBUG_INFO, "==> [MB] TRACK %d: %s\n", n_track, data);
+	recording = mb4_track_get_recording (mb_track);
+	if (recording != NULL) {
+		required_size = mb4_recording_get_title (recording, title, 0);
+		title = g_new (char, required_size + 1);
+		mb4_recording_get_title (recording, title, required_size + 1);
+	}
+	else {
+		required_size = mb4_track_get_title (mb_track, title, 0);
+		title = g_new (char, required_size + 1);
+		mb4_track_get_title (mb_track, title, required_size + 1);
+	}
+	track_info_set_title (track, title);
+	debug (DEBUG_INFO, "==> [MB] TRACK %d: %s\n", n_track, title);
 
-	mb_artist = mb_track_get_artist (mb_track);
-	if (mb_artist != NULL) {
-		mb_artist_get_unique_name (mb_artist, data, 1024);
-		mb_artist_get_id (mb_artist, data2, 1024);
-		track_info_set_artist (track, data, data2);
+	g_free (title);
+
+	/* artist */
+
+	artist_credit = mb4_track_get_artistcredit (mb_track);
+	name_credit_list = mb4_artistcredit_get_namecreditlist (artist_credit);
+	for (i = 0; i < mb4_namecredit_list_size (name_credit_list); i++) {
+		Mb4NameCredit  name_credit = mb4_namecredit_list_item (name_credit_list, i);
+		Mb4Artist      artist;
+		char          *artist_name = NULL;
+		char          *artist_id = NULL;
+
+		artist = mb4_namecredit_get_artist (name_credit);
+
+		required_size = mb4_artist_get_name (artist, artist_name, 0);
+		artist_name = g_new (char, required_size + 1);
+		mb4_artist_get_name (artist, artist_name, required_size + 1);
+		debug (DEBUG_INFO, "==> [MB] ARTIST NAME: %s\n", artist_name);
+
+		required_size = mb4_artist_get_id (artist, artist_id, 0);
+		artist_id = g_new (char, required_size + 1);
+		mb4_artist_get_id (artist, artist_id, required_size + 1);
+		debug (DEBUG_INFO, "==> [MB] ARTIST ID: %s\n", artist_id);
+
+		track_info_set_artist (track, artist_name, artist_id);
+
+		g_free (artist_name);
+		g_free (artist_id);
 	}
 
 	return track;
@@ -58,38 +99,74 @@ get_track_info (MbTrack mb_track,
 
 
 static AlbumInfo *
-get_album_info (MbRelease release)
+get_album_info (Mb4Release release,
+		Mb4Medium  medium)
 {
-	AlbumInfo *album;
-	char       data[1024];
-	int        i;
-	MbArtist   artist;
-	char       data2[1024];
-	GList     *tracks = NULL;
-	int        n_tracks;
+	AlbumInfo         *album;
+	char              *value;
+	int                required_size;
+	Mb4ReleaseGroup    release_group;
+	Mb4ArtistCredit    artist_credit;
+	Mb4NameCreditList  name_credit_list;
+	int                i;
+	GList             *tracks;
+	Mb4TrackList       track_list;
+	int                n_track;
 
 	album = album_info_new ();
 
-	mb_release_get_id (release, data, 1024);
-	debug (DEBUG_INFO, "==> [MB] ALBUM_ID: %s\n", data);
-	album_info_set_id (album, strrchr (data, '/') + 1);
+	/* id */
 
-	mb_release_get_title (release, data, 1024);
-	debug (DEBUG_INFO, "==> [MB] ALBUM NAME: %s\n", data);
-	album_info_set_title (album, data);
+	value = NULL;
+	required_size = mb4_release_get_id (release, value, 0);
+	value = g_new (char, required_size + 1);
+	mb4_release_get_id (release, value, required_size + 1);
+	debug (DEBUG_INFO, "==> [MB] ALBUM_ID: %s\n", value);
+	album_info_set_id (album, value);
+	g_free (value);
 
-	mb_release_get_asin (release, data, 1024);
-	debug (DEBUG_INFO, "==> [MB] ASIN: %s\n", data);
-	album_info_set_asin (album, data);
+	/* title */
 
-	for (i = 0; i < mb_release_get_num_release_events (release); i++) {
-		MbReleaseEvent event;
-		int            y = 0, m = 0, d = 0;
+	value = NULL;
+	required_size = mb4_medium_get_title  (medium, value, 0);
+	value = g_new (char, required_size + 1);
+	mb4_medium_get_title  (medium, value, required_size + 1);
+	debug (DEBUG_INFO, "==> [MB] MEDIUM NAME: %s\n", value);
+	album_info_set_title (album, value);
+	g_free (value);
 
-		event = mb_release_get_release_event (release, i);
-		mb_release_event_get_date (event, data, 1024);
-		debug (DEBUG_INFO, "==> [MB] RELEASE DATE: %s\n", data);
-		if (sscanf (data, "%d-%d-%d", &y, &m, &d) > 0) {
+	if ((album->title == NULL) || (album->title[0] == 0)) {
+		value = NULL;
+		required_size = mb4_release_get_title  (release, value, 0);
+		value = g_new (char, required_size + 1);
+		mb4_release_get_title  (release, value, required_size + 1);
+		debug (DEBUG_INFO, "==> [MB] RELEASE NAME: %s\n", value);
+		album_info_set_title (album, value);
+		g_free (value);
+	}
+
+	/* asin */
+
+	value = NULL;
+	required_size = mb4_release_get_asin (release, value, 0);
+	value = g_new (char, required_size + 1);
+	mb4_release_get_asin (release, value, required_size + 1);
+	debug (DEBUG_INFO, "==> [MB] ASIN: %s\n", value);
+	album_info_set_asin (album, value);
+	g_free (value);
+
+	/* release date */
+
+	release_group = mb4_release_get_releasegroup (release);
+	value = NULL;
+	required_size = mb4_releasegroup_get_firstreleasedate (release_group, value, 0);
+	value = g_new (char, required_size + 1);
+	mb4_releasegroup_get_firstreleasedate (release_group, value, required_size + 1);
+	debug (DEBUG_INFO, "==> [MB] RELEASE DATE: %s\n", value);
+	if (value != NULL) {
+		int y = 0, m = 0, d = 0;
+
+		if (sscanf (value, "%d-%d-%d", &y, &m, &d) > 0) {
 			GDate *date;
 
 			date = g_date_new_dmy ((d > 0) ? d : 1, (m > 0) ? m : 1, (y > 0) ? y : 1);
@@ -97,26 +174,51 @@ get_album_info (MbRelease release)
 			g_date_free (date);
 		}
 	}
+	g_free (value);
 
-	artist = mb_release_get_artist (release);
-	mb_artist_get_unique_name (artist, data, 1024);
-	mb_artist_get_id (artist, data2, 1024);
-	album_info_set_artist (album, data, data2);
+	/* artist */
+
+	artist_credit = mb4_release_get_artistcredit (release);
+	name_credit_list = mb4_artistcredit_get_namecreditlist (artist_credit);
+	for (i = 0; i < mb4_namecredit_list_size (name_credit_list); i++) {
+		Mb4NameCredit  name_credit = mb4_namecredit_list_item (name_credit_list, i);
+		Mb4Artist      artist;
+		char          *artist_name = NULL;
+		char          *artist_id = NULL;
+
+		artist = mb4_namecredit_get_artist (name_credit);
+
+		required_size = mb4_artist_get_name (artist, artist_name, 0);
+		artist_name = g_new (char, required_size + 1);
+		mb4_artist_get_name (artist, artist_name, required_size + 1);
+		debug (DEBUG_INFO, "==> [MB] ARTIST NAME: %s\n", artist_name);
+
+		required_size = mb4_artist_get_id (artist, artist_id, 0);
+		artist_id = g_new (char, required_size + 1);
+		mb4_artist_get_id (artist, artist_id, required_size + 1);
+		debug (DEBUG_INFO, "==> [MB] ARTIST ID: %s\n", artist_id);
+
+		album_info_set_artist (album, artist_name, artist_id);
+
+		g_free (artist_name);
+		g_free (artist_id);
+	}
+
+	/* tracks */
+
+	track_list = mb4_medium_get_tracklist (medium);
+
+	debug (DEBUG_INFO, "==> [MB] N TRACKS: %d\n", mb4_track_list_size (track_list));
 
 	tracks = NULL;
-	n_tracks = mb_release_get_num_tracks (release);
-	debug (DEBUG_INFO, "==> [MB] N TRACKS: %d\n", n_tracks);
-	for (i = 0; i < n_tracks; i++) {
-		MbTrack    mb_track;
+	for (n_track = 0; n_track < mb4_track_list_size (track_list); n_track++) {
 		TrackInfo *track;
 
-		mb_track = mb_release_get_track (release, i);
-		track = get_track_info (mb_track, i);
+		track = get_track_info (mb4_track_list_item (track_list, n_track), n_track);
 		if (album->artist == NULL)
 			album_info_set_artist (album, track->artist, KEEP_PREVIOUS_VALUE);
 		tracks = g_list_prepend (tracks, track);
 	}
-
 	tracks = g_list_reverse (tracks);
 	album_info_set_tracks (album, tracks);
 
@@ -125,63 +227,73 @@ get_album_info (MbRelease release)
 
 
 static GList *
-get_album_list (MbResultList list)
+get_album_list (Mb4ReleaseList   release_list,
+		const char      *disc_id,
+		Mb4Query         query,
+		GError         **error)
 {
 	GList *albums = NULL;
-	int    n_albums;
 	int    i;
 
-	n_albums = mb_result_list_get_size (list);
-	g_print ("[MB] Num Albums: %d\n", n_albums);
+	debug (DEBUG_INFO, "[MB] Num Albums: %d (Disc ID: %s)\n", mb4_release_list_size (release_list), disc_id);
 
-	for (i = 0; i < n_albums; i++) {
-		MbRelease release;
+	for (i = 0; i < mb4_release_list_size (release_list); i++) {
+		Mb4Release    release;
+		char        **param_names;
+		char        **param_values;
+		char          release_id[256];
+		Mb4Metadata   metadata;
 
-		release = mb_result_list_get_release (list, i);
-		albums = g_list_prepend (albums, get_album_info (release));
+		release = mb4_release_list_item (release_list, i);
+
+		/* query the full release info */
+
+		param_names = g_new (char *, 2);
+		param_values = g_new (char *, 2);
+		param_names[0] = g_strdup ("inc");
+		param_values[0] = g_strdup ("artists labels recordings release-groups url-rels discids artist-credits");
+		param_names[1] = NULL;
+		param_values[1] = NULL;
+		mb4_release_get_id (release, release_id, sizeof (release_id));
+
+		metadata = mb4_query_query (query, "release", release_id, "", 1, param_names, param_values);
+		if (metadata != NULL) {
+			Mb4Release    release_info;
+			Mb4MediumList medium_list;
+			int           n_medium;
+
+			release_info = mb4_metadata_get_release (metadata);
+			if (disc_id != NULL)
+				medium_list = mb4_release_media_matching_discid (release_info, disc_id);
+			else
+				medium_list = mb4_release_get_mediumlist (release_info);
+			for (n_medium = 0; n_medium <= mb4_medium_list_size (medium_list); n_medium++) {
+				Mb4Medium medium = mb4_medium_list_item (medium_list, n_medium);
+				albums = g_list_prepend (albums, get_album_info (release_info, medium));
+			}
+
+			if (disc_id != NULL)
+				mb4_medium_list_delete (medium_list);
+			mb4_metadata_delete (metadata);
+		}
+		else if (error != NULL) {
+			int   requested_size;
+			char *error_message;
+
+			requested_size = mb4_query_get_lasterrormessage (query, error_message, 0);
+			error_message = g_new (char, requested_size + 1);
+			mb4_query_get_lasterrormessage (query, error_message, requested_size + 1);
+			*error = g_error_new (GOO_ERROR, GOO_ERROR_METADATA, "%s", error_message);
+
+			g_free (error_message);
+
+		}
+
+		g_strfreev (param_names);
+		g_strfreev (param_values);
 	}
 
 	return g_list_reverse (albums);
-}
-
-
-static void
-get_track_info_for_album_list (GList *albums)
-{
-	GList *scan;
-
-	for (scan = albums; scan; scan = scan->next) {
-		AlbumInfo     *album = scan->data;
-		MbTrackFilter  filter;
-		GList         *tracks;
-		MbQuery        query;
-		MbResultList   list;
-		int            i;
-
-		filter = mb_track_filter_new ();
-		mb_track_filter_release_id (filter, album->id);
-		query = mb_query_new (NULL, NULL);
-		list = mb_query_get_tracks (query, filter);
-
-		tracks = NULL;
-		for (i = 0; i < mb_result_list_get_size (list); i++) {
-			MbTrack    mb_track;
-			TrackInfo *track;
-
-			mb_track = mb_result_list_get_track (list, i);
-			track = get_track_info (mb_track, i);
-			if ((album->artist == NULL) && (track->artist != NULL))
-				album_info_set_artist (album, track->artist, KEEP_PREVIOUS_VALUE);
-			tracks = g_list_prepend (tracks, track);
-		}
-
-		tracks = g_list_reverse (tracks);
-		album_info_set_tracks (album, tracks);
-
-		mb_result_list_free (list);
-		mb_query_free (query);
-		mb_track_filter_free (filter);
-	}
 }
 
 
@@ -332,22 +444,41 @@ get_album_info_from_disc_id_thread (GSimpleAsyncResult *result,
 				    GCancellable       *cancellable)
 {
 	AlbumFromIDData *data;
-	MbReleaseFilter  filter;
-	MbQuery          query;
-	MbResultList     list;
+	Mb4Query         query;
+	Mb4Metadata      metadata;
 
 	data = g_simple_async_result_get_op_res_gpointer (result);
 
-	filter = mb_release_filter_new ();
-	mb_release_filter_disc_id (filter, data->disc_id);
+	query = mb4_query_new (QUERY_AGENT, NULL, 0);
+	metadata = mb4_query_query (query, "discid", data->disc_id, "", 0, NULL, NULL);
+	if (metadata != NULL) {
+		Mb4Disc         disc;
+		Mb4ReleaseList  release_list;
+		GError         *error = NULL;
 
-	query = mb_query_new (NULL, NULL);
-	list = mb_query_get_releases (query, filter);
-	data->albums = get_album_list (list);
+		disc = mb4_metadata_get_disc (metadata);
+		release_list = mb4_disc_get_releaselist (disc);
+		data->albums = get_album_list (release_list, data->disc_id, query, &error);
+		if (error != NULL) {
+			g_simple_async_result_set_from_error (result, error);
+			g_clear_error (&error);
+		}
 
-	mb_result_list_free (list);
-	mb_query_free (query);
-	mb_release_filter_free (filter);
+		mb4_metadata_delete (metadata);
+	}
+	else {
+		int   requested_size;
+		char *error_message = NULL;
+
+		requested_size = mb4_query_get_lasterrormessage (query, error_message, 0);
+		error_message = g_new (char, requested_size + 1);
+		mb4_query_get_lasterrormessage (query, error_message, requested_size + 1);
+		g_simple_async_result_set_error (result, GOO_ERROR, GOO_ERROR_METADATA, "%s", error_message);
+
+		g_free (error_message);
+	}
+
+	mb4_query_delete (query);
 }
 
 
@@ -423,25 +554,54 @@ search_album_by_title_thread (GSimpleAsyncResult *result,
 			      GObject            *object,
 			      GCancellable       *cancellable)
 {
-	SearchByTitleData *data;
-	MbReleaseFilter    filter;
-	MbQuery            query;
-	MbResultList       list;
+	SearchByTitleData  *data;
+	Mb4Query            query;
+	char              **param_names;
+	char              **param_values;
+	Mb4Metadata         metadata;
+	Mb4ReleaseList 	    release_list;
 
 	data = g_simple_async_result_get_op_res_gpointer (result);
+	query = mb4_query_new (PACKAGE_NAME, NULL, 0);
 
-	filter = mb_release_filter_new ();
-	mb_release_filter_title (filter, data->title);
+	param_names = g_new (char *, 3);
+	param_values = g_new (char *, 3);
 
-	query = mb_query_new (NULL, NULL);
-	list = mb_query_get_releases (query, filter);
+	param_names[0] = g_strdup ("query");
+	param_values[0] = g_strdup_printf ("title:%s", data->title);
+	param_names[1] = g_strdup ("limit");
+	param_values[1] = g_strdup ("10");
+	param_names[2] = NULL;
+	param_values[2] = NULL;
 
-	data->albums = get_album_list (list);
-	get_track_info_for_album_list (data->albums);
+	metadata = mb4_query_query (query, "release", "", "", 2, param_names, param_values);
+	if (metadata != NULL) {
+		GError *error = NULL;
 
-	mb_result_list_free (list);
-	mb_query_free (query);
-	mb_release_filter_free (filter);
+		release_list = mb4_metadata_get_releaselist (metadata);
+		data->albums = get_album_list (release_list, NULL, query, &error);
+		if (error != NULL) {
+			g_simple_async_result_set_from_error (result, error);
+			g_clear_error (&error);
+		}
+
+		mb4_metadata_delete (metadata);
+	}
+	else {
+		int   requested_size;
+		char *error_message = NULL;
+
+		requested_size = mb4_query_get_lasterrormessage (query, error_message, 0);
+		error_message = g_new (char, requested_size + 1);
+		mb4_query_get_lasterrormessage (query, error_message, requested_size + 1);
+		g_simple_async_result_set_error (result, GOO_ERROR, GOO_ERROR_METADATA, "%s", error_message);
+
+		g_free (error_message);
+	}
+
+	g_strfreev (param_names);
+	g_strfreev (param_values);
+	mb4_query_delete (query);
 }
 
 

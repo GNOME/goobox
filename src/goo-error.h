@@ -23,11 +23,15 @@
 #ifndef __GOO_ERROR_H__
 #define __GOO_ERROR_H__
 
-
 #include <glib.h>
 
 #define GOO_ERROR goo_error_quark ()
-GQuark goo_error_quark (void);
 
+enum {
+	GOO_ERROR_GENERIC,
+	GOO_ERROR_METADATA
+};
+
+GQuark goo_error_quark (void);
 
 #endif /* __GOO_ERROR_H__ */

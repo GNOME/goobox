@@ -19,7 +19,7 @@ GLIB_REQUIRED=2.30
 GTK_REQUIRED=3.2.0
 GSTREAMER_REQUIRED=0.10.12
 LIBNOTIFY_REQUIRED=0.4.3
-LIBMUSICBRAINZ3_REQUIRED=3.0.0
+LIBMUSICBRAINZ4_REQUIRED=4.0.0
 
 dnl ===========================================================================
 
@@ -33,7 +33,7 @@ PKG_CHECK_MODULES(GOO, [
 	gtk+-3.0 >= $GTK_REQUIRED
 	gstreamer-0.10 >= $GSTREAMER_REQUIRED
 	libbrasero-media3
-	libmusicbrainz3 >= $LIBMUSICBRAINZ3_REQUIRED
+	libmusicbrainz4 >= $LIBMUSICBRAINZ4_REQUIRED
 	libdiscid
 ])
 AC_SUBST(GOO_CFLAGS)

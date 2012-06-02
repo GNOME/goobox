@@ -155,7 +155,7 @@ album_info_set_artist (AlbumInfo  *album,
 		       const char *artist,
 		       const char *artist_id)
 {
-	if (artist == NULL) {
+	if ((artist == NULL) || (artist[0] == 0)) {
 		g_free (album->artist);
 		album->artist = NULL /*g_strdup (_("Unknown Artist"))*/;
 		g_free (album->artist_id);
