@@ -36,7 +36,6 @@ enum  {
 
 
 static GtkWindowClass *parent_class = NULL;
-static GList *window_list = NULL;
 
 
 struct _GthWindowPrivate {
@@ -203,8 +202,6 @@ gth_window_init (GthWindow *window)
 	window->priv->menubar = NULL;
 	window->priv->toolbar = NULL;
 	window->priv->statusbar = NULL;
-
-	window_list = g_list_prepend (window_list, window);
 }
 
 
@@ -365,28 +362,4 @@ gth_window_show_only_content (GthWindow *window,
 		show_widget (window->priv->toolbar);
 		show_widget (window->priv->statusbar);
 	}
-}
-
-
-int
-gth_window_get_n_windows (void)
-{
-	return g_list_length (window_list);
-}
-
-
-GList *
-gth_window_get_window_list (void)
-{
-	return window_list;
-}
-
-
-GtkWidget *
-gth_window_get_current_window (void)
-{
-	if ((window_list == NULL) || (g_list_length (window_list) > 1))
-		return NULL;
-	else
-		return (GtkWidget *) window_list->data;
 }

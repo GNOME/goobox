@@ -123,7 +123,6 @@ enum {
 
 static guint goo_window_signals[LAST_SIGNAL] = { 0 };
 static int icon_size = 0;
-GList *window_list = NULL;
 
 
 enum {
@@ -2633,8 +2632,6 @@ goo_window_new (BraseroDrive *drive)
 
 	window = (GooWindow*) g_object_new (GOO_TYPE_WINDOW, NULL);
 	goo_window_construct (window, drive);
-
-	window_list = g_list_prepend (window_list, window);
 
 	return (GtkWidget *) window;
 }
