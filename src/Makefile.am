@@ -1,4 +1,4 @@
-SUBDIRS=icons
+SUBDIRS = icons ui
 
 bin_PROGRAMS = goobox
 
@@ -20,10 +20,13 @@ INCLUDES =						\
 	$(GOO_CFLAGS)					\
 	$(LIBNOTIFY_CFLAGS)
 
-BUILT_SOURCES =				\
-	goo-marshal.c			\
-	goo-marshal.h
-
+BUILT_SOURCES =			\
+	goo-marshal.c		\
+	goo-marshal.h		\
+	goo-resources.c		\
+	goo-resources.h		\
+	$(NULL)
+	
 goobox_SOURCES = 				\
 	$(BUILT_SOURCES)			\
 	actions.c				\
@@ -84,6 +87,12 @@ goo-marshal.c: goo-marshal.list $(GLIB_GENMARSHAL)
 	echo "#include \"goo-marshal.h\"" > $@ && \
 	$(GLIB_GENMARSHAL) $< --body --prefix=goo_marshal >> $@
 
+goo-resources.c: goobox.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies goobox.gresource.xml)
+	$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name goo $(srcdir)/goobox.gresource.xml
+
+goo-resources.h: goobox.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies goobox.gresource.xml)
+	$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name goo $(srcdir)/goobox.gresource.xml
+
 goobox_LDADD = 				\
 	$(top_builddir)/copy-n-paste/libeggsmclient.la  \
 	$(GOO_LIBS) 			\
@@ -92,6 +101,7 @@ goobox_LDADD = 				\
 	$(SYSTEM_LIBS)
 
 EXTRA_DIST = 				\
+	goobox.gresource.xml		\
 	goo-marshal.list 
 
 CLEANFILES = $(BUILT_SOURCES)

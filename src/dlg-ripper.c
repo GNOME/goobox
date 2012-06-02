@@ -730,7 +730,7 @@ dlg_ripper (GooWindow *window,
 	data->window = window;
 	data->settings_ripper = g_settings_new (GOOBOX_SCHEMA_RIPPER);
 	data->settings_encoder = g_settings_new (GOOBOX_SCHEMA_ENCODER);
-	data->builder = _gtk_builder_new_from_file ("ripper.ui", "");
+	data->builder = _gtk_builder_new_from_resource ("ripper.ui");
 	data->dialog = GET_WIDGET ("ripper_dialog");
 	data->destination = g_settings_get_string (data->settings_ripper, PREF_RIPPER_DESTINATION);
 	if ((data->destination == NULL) || (strcmp (data->destination, "") == 0))

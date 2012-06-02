@@ -144,7 +144,7 @@ dlg_extract_ask (GooWindow *window)
 
 	data = g_new0 (DialogData, 1);
 	data->window = window;
-	data->builder = _gtk_builder_new_from_file ("extract.ui", "");
+	data->builder = _gtk_builder_new_from_resource ("extract.ui");
 	data->tracks = goo_window_get_tracks (window, FALSE);
 	data->selected_tracks = goo_window_get_tracks (window, TRUE);
 	data->player = g_object_ref (goo_window_get_player (window));

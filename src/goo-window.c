@@ -2401,7 +2401,7 @@ goo_window_construct (GooWindow    *window,
 	gtk_window_add_accel_group (GTK_WINDOW (window),
 				    gtk_ui_manager_get_accel_group (ui));
 
-	if (! gtk_ui_manager_add_ui_from_string (ui, ui_info, -1, &error)) {
+	if (! gtk_ui_manager_add_ui_from_resource (ui, "/org/gnome/Goobox/ui/menu-toolbars.ui", &error)) {
 		g_message ("building menus failed: %s", error->message);
 		g_error_free (error);
 	}

@@ -185,7 +185,7 @@ dlg_preferences (GooWindow *window)
 
 	data = g_new0 (DialogData, 1);
 	data->window = window;
-	data->builder = _gtk_builder_new_from_file ("preferences.ui", "");
+	data->builder = _gtk_builder_new_from_resource ("preferences.ui");
 	data->settings_general = g_settings_new (GOOBOX_SCHEMA_GENERAL);
 	data->settings_ripper = g_settings_new (GOOBOX_SCHEMA_RIPPER);
 
@@ -448,7 +448,7 @@ dlg_format (DialogData    *preferences_data,
 	data = g_new0 (FormatDialogData, 1);
 	data->format = format;
 	data->settings_encoder = g_settings_new (GOOBOX_SCHEMA_ENCODER);
-	data->builder = _gtk_builder_new_from_file ("format-options.ui", "");
+	data->builder = _gtk_builder_new_from_resource ("format-options.ui");
 	data->dialog = GET_WIDGET ("format_dialog");
 
 	/* Set widgets data. */

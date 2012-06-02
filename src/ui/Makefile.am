@@ -1,12 +1,11 @@
-gladedir = $(datadir)/goobox/ui
-glade_DATA = \
+EXTRA_DIST = 			\
+	app-menu.ui		\
 	cover-chooser.ui	\
 	extract.ui		\
 	format-options.ui	\
+	menu-toolbars.ui	\
 	preferences.ui		\
 	properties.ui		\
 	ripper.ui
-
-EXTRA_DIST = $(glade_DATA)
 
 -include $(top_srcdir)/git.mk

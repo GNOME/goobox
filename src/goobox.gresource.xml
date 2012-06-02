@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/gnome/Goobox">
+    <file compressed="true">ui/cover-chooser.ui</file>
+    <file compressed="true">ui/extract.ui</file>
+    <file compressed="true">ui/format-options.ui</file>
+    <file compressed="true">ui/menu-toolbars.ui</file>
+    <file compressed="true">ui/preferences.ui</file>
+    <file compressed="true">ui/properties.ui</file>
+    <file compressed="true">ui/ripper.ui</file>
+  </gresource>
+</gresources>

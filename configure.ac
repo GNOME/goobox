@@ -16,7 +16,7 @@ GNOME_MAINTAINER_MODE_DEFINES
 GLIB_GSETTINGS
 
 GLIB_REQUIRED=2.30
-GTK_REQUIRED=3.2.0
+GTK_REQUIRED=3.4.0
 GSTREAMER_REQUIRED=0.10.12
 LIBNOTIFY_REQUIRED=0.4.3
 LIBMUSICBRAINZ4_REQUIRED=4.0.0
@@ -43,6 +43,7 @@ dnl ===========================================================================
 
 AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
 AC_PATH_PROG(GLIB_MKENUMS, glib-mkenums)
+AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
 
 dnl ===========================================================================
 
@@ -182,7 +183,6 @@ Makefile
 copy-n-paste/Makefile
 data/Makefile
 data/goobox.desktop.in
-data/ui/Makefile
 data/icons/Makefile
 data/icons/256x256/Makefile
 data/icons/256x256/apps/Makefile
@@ -191,6 +191,7 @@ data/icons/48x48/apps/Makefile
 help/Makefile
 src/Makefile
 src/icons/Makefile
+src/ui/Makefile
 po/Makefile.in
 ])
 

@@ -502,7 +502,7 @@ dlg_properties (GooWindow *window)
 
 	data = g_new0 (DialogData, 1);
 	data->window = window;
-	data->builder = _gtk_builder_new_from_file ("properties.ui", "");
+	data->builder = _gtk_builder_new_from_resource ("properties.ui");
 	data->cancellable = g_cancellable_new ();
 	data->searching = FALSE;
 	data->closing = FALSE;
