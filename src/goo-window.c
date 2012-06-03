@@ -1413,7 +1413,7 @@ player_start_cb (GooPlayer       *player,
 					   _("_Pause"),
 					   _("Pause"),
 					   GOO_STOCK_PAUSE,
-					   "/MenuBar/CDMenu/",
+					   "/ToolBar/",
 					   NULL);
 		notify_current_state (window, action);
 		break;
@@ -1734,7 +1734,7 @@ player_done_cb (GooPlayer       *player,
 					   _("_Play"),
 					   _("Play"),
 					   GOO_STOCK_PLAY,
-					   "/MenuBar/CDMenu/",
+					   "/ToolBar/",
 					   NULL);
 		if (action == GOO_PLAYER_ACTION_PLAY) {
 			set_current_track_icon (window, GOO_STOCK_PLAY);
@@ -1752,7 +1752,7 @@ player_done_cb (GooPlayer       *player,
 					   _("_Play"),
 					   _("Play"),
 					   GOO_STOCK_PLAY,
-					   "/MenuBar/CDMenu/",
+					   "/ToolBar/",
 					   NULL);
 		notify_current_state (window, action);
 		break;
