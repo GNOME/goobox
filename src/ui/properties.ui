@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="GtkAdjustment" id="adjustment1">
     <property name="upper">9999</property>
     <property name="value">2000</property>
@@ -41,6 +41,7 @@
             <child>
               <object class="GtkButton" id="help_button">
                 <property name="label">gtk-help</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -58,6 +59,7 @@
             <child>
               <object class="GtkButton" id="undo_button">
                 <property name="label">gtk-undo</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -74,6 +76,7 @@
             <child>
               <object class="GtkButton" id="cancel_button">
                 <property name="label">gtk-cancel</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -90,6 +93,7 @@
             <child>
               <object class="GtkButton" id="ok_button">
                 <property name="label">gtk-ok</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -243,12 +247,14 @@
                         <property name="spacing">6</property>
                         <child>
                           <object class="GtkCheckButton" id="year_checkbutton">
+                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
                             <property name="use_underline">True</property>
                             <property name="focus_on_click">False</property>
+                            <property name="xalign">0.5</property>
                             <property name="draw_indicator">True</property>
                           </object>
                           <packing>
@@ -300,12 +306,12 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="search_button">
+                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="tooltip_text" translatable="yes">Search for the remaining data</property>
                             <property name="use_action_appearance">False</property>
-                            <property name="relief">none</property>
                             <child>
                               <object class="GtkImage" id="image5">
                                 <property name="visible">True</property>
@@ -391,6 +397,7 @@
                                     <property name="spacing">12</property>
                                     <child>
                                       <object class="GtkButton" id="prev_album_button">
+                                        <property name="use_action_appearance">False</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">False</property>
@@ -424,6 +431,7 @@
                                     </child>
                                     <child>
                                       <object class="GtkButton" id="next_album_button">
+                                        <property name="use_action_appearance">False</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">False</property>

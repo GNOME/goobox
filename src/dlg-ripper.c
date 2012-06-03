@@ -571,6 +571,7 @@ rip_current_track (DialogData *data)
 {
 	TrackInfo *track;
 	char      *msg;
+	char      *escaped;
 	GFile     *folder;
 	GError    *error = NULL;
 	char      *filename;
@@ -605,8 +606,10 @@ rip_current_track (DialogData *data)
 
 	track = data->current_track->data;
 
-	msg = g_markup_printf_escaped (_("<i>Extracting \"%s\"</i>"), track->title);
-	gtk_label_set_markup (GTK_LABEL (GET_WIDGET ("track_label")), msg);
+	msg = g_strdup_printf (_("Extracting \"%s\""), track->title);
+	escaped = g_markup_printf_escaped ("<i>%s</i>", msg);
+	gtk_label_set_markup (GTK_LABEL (GET_WIDGET ("track_label")), escaped);
+	g_free (escaped);
 	g_free (msg);
 
 	/* Set the destination file */

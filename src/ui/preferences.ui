@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="GtkDialog" id="preferences_dialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -22,6 +22,7 @@
             <child>
               <object class="GtkButton" id="help_button">
                 <property name="label">gtk-help</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -39,6 +40,7 @@
             <child>
               <object class="GtkButton" id="close_button">
                 <property name="label">gtk-close</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -86,8 +88,10 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="xalign">0</property>
-                            <property name="label" translatable="yes">&lt;b&gt;CD Drive&lt;/b&gt;</property>
-                            <property name="use_markup">True</property>
+                            <property name="label" translatable="yes">CD Drive</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"/>
+                            </attributes>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -126,6 +130,7 @@
                     <child>
                       <object class="GtkCheckButton" id="autoplay_checkbutton">
                         <property name="label" translatable="yes">Automatically play newly inserted discs</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
@@ -168,8 +173,10 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="xalign">0</property>
-                            <property name="label" translatable="yes">&lt;b&gt;Destination folder&lt;/b&gt;</property>
-                            <property name="use_markup">True</property>
+                            <property name="label" translatable="yes">Destination folder</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"/>
+                            </attributes>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -242,8 +249,10 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="xalign">0</property>
-                            <property name="label" translatable="yes">&lt;b&gt;Output format&lt;/b&gt;</property>
-                            <property name="use_markup">True</property>
+                            <property name="label" translatable="yes">Output format</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"/>
+                            </attributes>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -288,6 +297,7 @@
                                         <child>
                                           <object class="GtkButton" id="filetype_properties_button">
                                             <property name="label">gtk-properties</property>
+                                            <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
@@ -324,9 +334,11 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="xalign">0</property>
-                                                <property name="label" translatable="yes">&lt;small&gt;&lt;i&gt;Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3.&lt;/i&gt;&lt;/small&gt;</property>
-                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
+                                                <attributes>
+                                                  <attribute name="style" value="italic"/>
+                                                  <attribute name="size" value="8500"/>
+                                                </attributes>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
@@ -355,9 +367,11 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="xalign">0</property>
-                                                <property name="label" translatable="yes">&lt;small&gt;&lt;i&gt;Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality.&lt;/i&gt;&lt;/small&gt;</property>
-                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
+                                                <attributes>
+                                                  <attribute name="style" value="italic"/>
+                                                  <attribute name="size" value="8500"/>
+                                                </attributes>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
@@ -389,9 +403,11 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="xalign">0</property>
-                                                <property name="label" translatable="yes">&lt;small&gt;&lt;i&gt;WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio.&lt;/i&gt;&lt;/small&gt;</property>
-                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
+                                                <attributes>
+                                                  <attribute name="style" value="italic"/>
+                                                  <attribute name="size" value="8500"/>
+                                                </attributes>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
@@ -452,6 +468,7 @@
                     <child>
                       <object class="GtkCheckButton" id="save_playlist_checkbutton">
                         <property name="label" translatable="yes">_Save playlist</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
