@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/org/gnome/Goobox">
+    <file compressed="true">ui/app-menu.ui</file>
     <file compressed="true">ui/cover-chooser.ui</file>
     <file compressed="true">ui/extract.ui</file>
     <file compressed="true">ui/format-options.ui</file>

@@ -26,6 +26,7 @@
 #include <glib.h>
 #include <glib/gprintf.h>
 #include <gtk/gtk.h>
+#include "actions.h"
 #include "eggsmclient.h"
 #include "goo-player-info.h"
 #include "goo-stock.h"
@@ -216,7 +217,12 @@ goo_restore_session (EggSMClient  *client,
 /* -- main application -- */
 
 
-typedef GtkApplication      GooApplication;
+typedef struct {
+	GtkApplication __parent;
+	GSettings *settings;
+} GooApplication;
+
+
 typedef GtkApplicationClass GooApplicationClass;
 
 
@@ -226,14 +232,19 @@ G_DEFINE_TYPE (GooApplication, goo_application, GTK_TYPE_APPLICATION)
 static void
 goo_application_finalize (GObject *object)
 {
+	GooApplication *self = (GooApplication *) object;
+
+	g_object_unref (self->settings);
 	G_OBJECT_CLASS (goo_application_parent_class)->finalize (object);
 }
 
 
 static void
-goo_application_init (GooApplication *app)
+goo_application_init (GooApplication *self)
 {
 	g_set_application_name (_("CD Player"));
+
+	self->settings = g_settings_new (GOOBOX_SCHEMA_PLAYLIST);
 }
 
 
@@ -464,6 +475,230 @@ goo_application_local_command_line (GApplication   *application,
 }
 
 
+/* -- application menu  -- */
+
+
+static void
+toggle_action_activated (GSimpleAction *action,
+                         GVariant      *parameter,
+                         gpointer       data)
+{
+	GVariant *state;
+
+	state = g_action_get_state (G_ACTION (action));
+	g_action_change_state (G_ACTION (action), g_variant_new_boolean (! g_variant_get_boolean (state)));
+
+	g_variant_unref (state);
+}
+
+
+static void
+update_app_menu_sensitivity (GooApplication *application)
+{
+	GVariant *state;
+	gboolean  play_all;
+
+	state = g_action_get_state (g_action_map_lookup_action (G_ACTION_MAP (application), PREF_PLAYLIST_PLAYALL));
+	play_all = g_variant_get_boolean (state);
+	g_variant_unref (state);
+
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (application), PREF_PLAYLIST_REPEAT)), play_all);
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (application), PREF_PLAYLIST_SHUFFLE)), play_all);
+}
+
+
+static void
+activate_play_all (GSimpleAction *action,
+		   GVariant      *parameter,
+		   gpointer       user_data)
+{
+	GooApplication *application = user_data;
+
+	g_simple_action_set_state (action, parameter);
+	g_settings_set_boolean (application->settings, PREF_PLAYLIST_PLAYALL, g_variant_get_boolean (parameter));
+	update_app_menu_sensitivity (application);
+}
+
+
+static void
+activate_repeat (GSimpleAction *action,
+		 GVariant      *parameter,
+		 gpointer       user_data)
+{
+	GooApplication *application = user_data;
+
+	g_simple_action_set_state (action, parameter);
+	g_settings_set_boolean (application->settings, PREF_PLAYLIST_REPEAT, g_variant_get_boolean (parameter));
+	update_app_menu_sensitivity (application);
+}
+
+
+static void
+activate_shuffle (GSimpleAction *action,
+		  GVariant      *parameter,
+		  gpointer       user_data)
+{
+	GooApplication *application = user_data;
+
+	g_simple_action_set_state (action, parameter);
+	g_settings_set_boolean (application->settings, PREF_PLAYLIST_SHUFFLE, g_variant_get_boolean (parameter));
+	update_app_menu_sensitivity (application);
+}
+
+
+static void
+activate_preferences (GSimpleAction *action,
+		      GVariant      *parameter,
+		      gpointer       user_data)
+{
+	GApplication *application = user_data;
+	GList        *windows;
+
+	windows = gtk_application_get_windows (GTK_APPLICATION (application));
+	if (windows != NULL)
+		activate_action_preferences (NULL, windows->data);
+}
+
+
+static void
+activate_help (GSimpleAction *action,
+               GVariant      *parameter,
+               gpointer       user_data)
+{
+	GApplication *application = user_data;
+	GList        *windows;
+
+	windows = gtk_application_get_windows (GTK_APPLICATION (application));
+	if (windows != NULL)
+		activate_action_manual (NULL, windows->data);
+}
+
+
+static void
+activate_about (GSimpleAction *action,
+		GVariant      *parameter,
+		gpointer       user_data)
+{
+	GApplication *application = user_data;
+	GList        *windows;
+
+	windows = gtk_application_get_windows (GTK_APPLICATION (application));
+	if (windows != NULL)
+		activate_action_about (NULL, windows->data);
+}
+
+
+static void
+activate_quit (GSimpleAction *action,
+               GVariant      *parameter,
+               gpointer       user_data)
+{
+	GApplication *application = user_data;
+	GList        *windows;
+
+	windows = gtk_application_get_windows (GTK_APPLICATION (application));
+	if (windows != NULL)
+		activate_action_quit (NULL, windows->data);
+}
+
+
+static void
+pref_playlist_playall_changed (GSettings  *settings,
+	  	 	       const char *key,
+	  	 	       gpointer    user_data)
+{
+	GooApplication *application = user_data;
+
+	g_simple_action_set_state (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (application), PREF_PLAYLIST_PLAYALL)),
+				   g_variant_new_boolean (g_settings_get_boolean (application->settings, PREF_PLAYLIST_PLAYALL)));
+	update_app_menu_sensitivity (application);
+}
+
+
+static void
+pref_playlist_repeat_changed (GSettings  *settings,
+	  	 	      const char *key,
+	  	 	      gpointer    user_data)
+{
+	GooApplication *application = user_data;
+
+	g_simple_action_set_state (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (application), PREF_PLAYLIST_REPEAT)),
+				   g_variant_new_boolean (g_settings_get_boolean (application->settings, PREF_PLAYLIST_REPEAT)));
+	update_app_menu_sensitivity (application);
+}
+
+
+static void
+pref_playlist_shuffle_changed (GSettings  *settings,
+	  	 	       const char *key,
+	  	 	       gpointer    user_data)
+{
+	GooApplication *application = user_data;
+
+	g_simple_action_set_state (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (application), PREF_PLAYLIST_SHUFFLE)),
+				   g_variant_new_boolean (g_settings_get_boolean (application->settings, PREF_PLAYLIST_SHUFFLE)));
+	update_app_menu_sensitivity (application);
+}
+
+
+static const GActionEntry app_menu_entries[] = {
+	{ "preferences",  activate_preferences },
+	{ PREF_PLAYLIST_PLAYALL, toggle_action_activated, NULL, "true", activate_play_all },
+	{ PREF_PLAYLIST_REPEAT, toggle_action_activated, NULL, "false", activate_repeat },
+	{ PREF_PLAYLIST_SHUFFLE, toggle_action_activated, NULL, "true", activate_shuffle },
+	{ "help",  activate_help },
+	{ "about", activate_about },
+	{ "quit",  activate_quit }
+};
+
+
+static void
+initialize_app_menu (GApplication *application)
+{
+	GooApplication *self = (GooApplication *) application;
+	GtkBuilder     *builder;
+
+	g_action_map_add_action_entries (G_ACTION_MAP (application),
+					 app_menu_entries,
+					 G_N_ELEMENTS (app_menu_entries),
+					 application);
+
+	builder = _gtk_builder_new_from_resource ("app-menu.ui");
+	gtk_application_set_app_menu (GTK_APPLICATION (application),
+				      G_MENU_MODEL (gtk_builder_get_object (builder, "app-menu")));
+
+	g_simple_action_set_state (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (application), PREF_PLAYLIST_PLAYALL)),
+				   g_variant_new_boolean (g_settings_get_boolean (self->settings, PREF_PLAYLIST_PLAYALL)));
+	g_simple_action_set_state (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (application), PREF_PLAYLIST_REPEAT)),
+				   g_variant_new_boolean (g_settings_get_boolean (self->settings, PREF_PLAYLIST_REPEAT)));
+	g_simple_action_set_state (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (application), PREF_PLAYLIST_SHUFFLE)),
+				   g_variant_new_boolean (g_settings_get_boolean (self->settings, PREF_PLAYLIST_SHUFFLE)));
+
+	g_signal_connect (self->settings,
+			  "changed::" PREF_PLAYLIST_PLAYALL,
+			  G_CALLBACK (pref_playlist_playall_changed),
+			  self);
+	g_signal_connect (self->settings,
+			  "changed::" PREF_PLAYLIST_SHUFFLE,
+			  G_CALLBACK (pref_playlist_shuffle_changed),
+			  self);
+	g_signal_connect (self->settings,
+			  "changed::" PREF_PLAYLIST_REPEAT,
+			  G_CALLBACK (pref_playlist_repeat_changed),
+			  self);
+
+	g_object_unref (builder);
+}
+
+
+static void
+goo_application_startup (GApplication *application)
+{
+	G_APPLICATION_CLASS (goo_application_parent_class)->startup (application);
+	initialize_app_menu (application);
+}
+
+
 static void
 goo_application_class_init (GooApplicationClass *klass)
 {
@@ -477,6 +712,7 @@ goo_application_class_init (GooApplicationClass *klass)
 	application_class->activate = goo_application_activate;
 	application_class->command_line = goo_application_command_line;
 	application_class->local_command_line = goo_application_local_command_line;
+	application_class->startup = goo_application_startup;
 }
 
 
