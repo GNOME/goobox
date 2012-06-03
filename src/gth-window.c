@@ -319,7 +319,7 @@ gth_window_attach_get_content (GthWindow *window,
 	g_return_if_fail (GTH_IS_WINDOW (window));
 	g_return_if_fail (page >= 0 && page < window->priv->n_pages);
 
-	children = gtk_container_get_children (window->priv->contents[page]);
+	children = gtk_container_get_children (GTK_CONTAINER (window->priv->contents[page]));
 	if (children != NULL)
 		return children->data;
 	else
