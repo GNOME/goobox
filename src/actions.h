@@ -39,8 +39,6 @@ void activate_action_shortcuts (GtkAction *action, gpointer data);
 void activate_action_about (GtkAction *action, gpointer data);
 void activate_action_close (GtkAction *action, gpointer data);
 void activate_action_quit (GtkAction *action, gpointer data);
-void activate_action_view_toolbar (GtkAction *action, gpointer data);
-void activate_action_view_statusbar (GtkAction *action, gpointer data);
 void activate_action_play_all (GtkAction *action, gpointer data);
 void activate_action_repeat (GtkAction *action, gpointer data);
 void activate_action_shuffle (GtkAction *action, gpointer data);

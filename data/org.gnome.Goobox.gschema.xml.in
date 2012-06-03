@@ -19,13 +19,6 @@
 -->
 <schemalist>
 
-  <enum id="org.gnome.Goobox.ToolbarStyle">
-    <value nick="system" value="0"/>
-    <value nick="text-below" value="1"/>
-    <value nick="text-beside" value="2"/>
-    <value nick="icons-only" value="3"/>
-  </enum>
-
   <enum id="org.gnome.Goobox.SortMethod">
     <value nick="number" value="0"/>
     <value nick="time" value="1"/>
@@ -77,10 +70,6 @@
   </schema>
 
   <schema id="org.gnome.Goobox.UI" path="/org/gnome/goobox/ui/">
-    <key name="toolbar-style" enum="org.gnome.Goobox.ToolbarStyle">
-      <default>'system'</default>
-      <_summary>Toolbar style</_summary>
-    </key>
     <key name="window-width" type="i">
       <default>200</default>
       <_summary>Window width</_summary>
@@ -88,14 +77,6 @@
     <key name="window-height" type="i">
       <default>400</default>
       <_summary>Window height</_summary>
-    </key>
-    <key name="toolbar-visible" type="b">
-      <default>true</default>
-      <_summary>Toolbar visibility</_summary>
-    </key>
-    <key name="statusbar-visible" type="b">
-      <default>false</default>
-      <_summary>Statusbar visibility</_summary>
     </key>
     <key name="playlist-visible" type="b">
       <default>true</default>

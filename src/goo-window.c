@@ -74,16 +74,14 @@ struct _GooWindowPrivate {
 	WindowSortMethod   sort_method;
 	GtkSortType        sort_type;
 
-	GtkWidget         *statusbar;
 	GtkWidget         *file_popup_menu;
 	GtkWidget         *cover_popup_menu;
 	GtkWidget         *status_icon_popup_menu;
+	GtkStatusIcon     *status_icon;
+	GtkWidget         *status_tooltip_content;
 
 	GtkWidget         *info;
 	GtkWidget         *volume_button;
-
-	GtkStatusIcon     *status_icon;
-	GtkWidget         *status_tooltip_content;
 
 	guint              help_message_cid;
 	guint              list_info_cid;
@@ -156,38 +154,6 @@ set_sensitive (GooWindow  *window,
 
 	action = gtk_action_group_get_action (window->priv->actions, action_name);
 	g_object_set (action, "sensitive", sensitive, NULL);
-}
-
-
-static void
-window_update_statusbar_list_info (GooWindow *window)
-{
-	if (window == NULL)
-		return;
-
-	gtk_statusbar_pop (GTK_STATUSBAR (window->priv->statusbar), window->priv->list_info_cid);
-
-	if (window->priv->album->n_tracks != 0) {
-		char    *time_text;
-		char    *tracks_s = NULL;
-		GString *status;
-
-		tracks_s = g_strdup_printf (ngettext ("%d track", "%d tracks", window->priv->album->n_tracks), window->priv->album->n_tracks);
-		time_text = _g_format_duration_for_display (window->priv->album->total_length * 1000);
-
-		status = g_string_new (NULL);
-		g_string_append (status, tracks_s);
-		g_string_append (status, ", ");
-		g_string_append (status, time_text);
-
-		gtk_statusbar_push (GTK_STATUSBAR (window->priv->statusbar),
-				    window->priv->list_info_cid,
-				    status->str);
-
-		g_string_free (status, TRUE);
-		g_free (time_text);
-		g_free (tracks_s);
-	}
 }
 
 
@@ -438,7 +404,6 @@ goo_window_update_list (GooWindow *window)
 	}
 
 	window_update_sensitivity (window);
-	window_update_statusbar_list_info (window);
 	window_update_size (window);
 
 	g_object_unref (icon);
@@ -664,88 +629,6 @@ add_columns (GooWindow   *window,
                                              NULL);
 
 	gtk_tree_view_append_column (treeview, column);
-}
-
-
-static void
-menu_item_select_cb (GtkMenuItem *proxy,
-                     GooWindow   *window)
-{
-        GtkAction *action;
-        char      *message;
-
-        action = gtk_activatable_get_related_action (GTK_ACTIVATABLE (proxy));
-        g_return_if_fail (action != NULL);
-
-        g_object_get (G_OBJECT (action), "tooltip", &message, NULL);
-        if (message) {
-		gtk_statusbar_push (GTK_STATUSBAR (window->priv->statusbar),
-				    window->priv->help_message_cid, message);
-		g_free (message);
-        }
-}
-
-
-static void
-menu_item_deselect_cb (GtkMenuItem *proxy,
-		       GooWindow   *window)
-{
-	gtk_statusbar_pop (GTK_STATUSBAR (window->priv->statusbar),
-			   window->priv->help_message_cid);
-}
-
-
-static void
-disconnect_proxy_cb (GtkUIManager *manager,
-                     GtkAction    *action,
-                     GtkWidget    *proxy,
-                     GooWindow    *window)
-{
-        if (GTK_IS_MENU_ITEM (proxy)) {
-                g_signal_handlers_disconnect_by_func
-                        (proxy, G_CALLBACK (menu_item_select_cb), window);
-                g_signal_handlers_disconnect_by_func
-                        (proxy, G_CALLBACK (menu_item_deselect_cb), window);
-        }
-}
-
-
-static void
-connect_proxy_cb (GtkUIManager *manager,
-		  GtkAction    *action,
-		  GtkWidget    *proxy,
-		  GooWindow    *window)
-{
-        if (GTK_IS_MENU_ITEM (proxy)) {
-		g_signal_connect (proxy, "select",
-				  G_CALLBACK (menu_item_select_cb), window);
-		g_signal_connect (proxy, "deselect",
-				  G_CALLBACK (menu_item_deselect_cb), window);
-	}
-}
-
-
-static void
-pref_view_toolbar_changed (GSettings  *settings,
-			   const char *key,
-			   gpointer    user_data)
-{
-	GooWindow *window = user_data;
-
-	g_return_if_fail (window != NULL);
-	goo_window_set_toolbar_visibility (window, g_settings_get_boolean (settings, key));
-}
-
-
-static void
-pref_view_statusbar_changed (GSettings  *settings,
-			     const char *key,
-			     gpointer    user_data)
-{
-	GooWindow *window = user_data;
-
-	g_return_if_fail (window != NULL);
-	goo_window_set_statusbar_visibility (window, g_settings_get_boolean (settings, key));
 }
 
 
@@ -1021,12 +904,6 @@ goo_window_show (GtkWidget *widget)
 		GTK_WIDGET_CLASS (goo_window_parent_class)->show (widget);
 	else
 		arg_toggle_visibility = FALSE;
-
-	view_foobar = g_settings_get_boolean (window->priv->settings_ui, PREF_UI_TOOLBAR);
-	goo_window_set_toolbar_visibility (window, view_foobar);
-
-	view_foobar = g_settings_get_boolean (window->priv->settings_ui, PREF_UI_STATUSBAR);
-	goo_window_set_statusbar_visibility (window, view_foobar);
 
 	if (window->priv->first_time_event == 0)
 		window->priv->first_time_event = g_timeout_add (IDLE_TIMEOUT, first_time_idle, window);
@@ -1716,7 +1593,6 @@ player_done_cb (GooPlayer       *player,
 		goo_window_update_album (window);
 		goo_window_update_titles (window);
 		window_update_title (window);
-		window_update_statusbar_list_info (window);
 		auto_fetch_cover_image (window);
 		break;
 
@@ -2395,9 +2271,6 @@ goo_window_construct (GooWindow    *window,
 
 	window->priv->ui = ui = gtk_ui_manager_new ();
 
-	g_signal_connect (ui, "connect_proxy", G_CALLBACK (connect_proxy_cb), window);
-	g_signal_connect (ui, "disconnect_proxy", G_CALLBACK (disconnect_proxy_cb), window);
-
 	gtk_ui_manager_insert_action_group (ui, actions, 0);
 	gtk_window_add_accel_group (GTK_WINDOW (window),
 				    gtk_ui_manager_get_accel_group (ui));
@@ -2504,16 +2377,6 @@ goo_window_construct (GooWindow    *window,
 			    GTK_TOOL_ITEM (window->priv->volume_button),
 			    VOLUME_BUTTON_POSITION + 1);
 
-	/* Create the statusbar. */
-
-	window->priv->statusbar = gtk_statusbar_new ();
-	gtk_window_set_has_resize_grip (GTK_WINDOW (window), TRUE);
-	window->priv->help_message_cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (window->priv->statusbar), "help_message");
-	window->priv->list_info_cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (window->priv->statusbar), "list_info");
-	window->priv->progress_cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (window->priv->statusbar), "progress");
-	gth_window_attach (GTH_WINDOW (window), window->priv->statusbar, GTH_WINDOW_STATUSBAR);
-	gtk_window_set_has_resize_grip (GTK_WINDOW (window), TRUE);
-
 	/**/
 
 	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
@@ -2596,14 +2459,6 @@ goo_window_construct (GooWindow    *window,
 	/* Add notification callbacks. */
 
 	g_signal_connect (window->priv->settings_ui,
-			  "changed::" PREF_UI_TOOLBAR,
-			  G_CALLBACK (pref_view_toolbar_changed),
-			  window);
-	g_signal_connect (window->priv->settings_ui,
-			  "changed::" PREF_UI_STATUSBAR,
-			  G_CALLBACK (pref_view_statusbar_changed),
-			  window);
-	g_signal_connect (window->priv->settings_ui,
 			  "changed::" PREF_UI_PLAYLIST,
 			  G_CALLBACK (pref_view_playlist_changed),
 			  window);
@@ -2658,32 +2513,6 @@ void
 goo_window_close (GooWindow *window)
 {
 	gth_window_close (GTH_WINDOW (window));
-}
-
-
-void
-goo_window_set_toolbar_visibility (GooWindow *window,
-				   gboolean   visible)
-{
-	g_return_if_fail (window != NULL);
-
-	if (visible)
-		gtk_widget_show (gtk_widget_get_parent (window->priv->toolbar));
-	else
-		gtk_widget_hide (gtk_widget_get_parent (window->priv->toolbar));
-}
-
-
-void
-goo_window_set_statusbar_visibility (GooWindow *window,
-				     gboolean   visible)
-{
-	g_return_if_fail (window != NULL);
-
-	if (visible)
-		gtk_widget_show (window->priv->statusbar);
-	else
-		gtk_widget_hide (window->priv->statusbar);
 }
 
 
