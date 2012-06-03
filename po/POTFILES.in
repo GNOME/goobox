@@ -9,12 +9,6 @@ copy-n-paste/eggsmclient-private.h
 copy-n-paste/eggsmclient-xsmp.c
 data/goobox.desktop.in.in
 data/org.gnome.Goobox.gschema.xml.in
-[type: gettext/glade]data/ui/cover-chooser.ui
-[type: gettext/glade]data/ui/extract.ui
-[type: gettext/glade]data/ui/format-options.ui
-[type: gettext/glade]data/ui/preferences.ui
-[type: gettext/glade]data/ui/properties.ui
-[type: gettext/glade]data/ui/ripper.ui
 src/actions.c
 src/actions.h
 src/album-info.c
@@ -64,4 +58,11 @@ src/preferences.h
 src/track-info.c
 src/track-info.h
 src/typedefs.h
+[type: gettext/glade]src/ui/app-menu.ui
+[type: gettext/glade]src/ui/cover-chooser.ui
+[type: gettext/glade]src/ui/extract.ui
+[type: gettext/glade]src/ui/format-options.ui
 src/ui.h
+[type: gettext/glade]src/ui/preferences.ui
+[type: gettext/glade]src/ui/properties.ui
+[type: gettext/glade]src/ui/ripper.ui
