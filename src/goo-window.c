@@ -2520,6 +2520,7 @@ goo_window_construct (GooWindow    *window,
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
 
 	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	gtk_widget_set_vexpand (hbox, FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
