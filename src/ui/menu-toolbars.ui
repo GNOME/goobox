@@ -1,5 +1,5 @@
 <ui>
-  <toolbar  name="ToolBar">
+  <toolbar name="ToolBar">
     <toolitem action="TogglePlay"/>
     <toolitem action="Play"/>
     <toolitem action="Pause"/>
@@ -10,6 +10,8 @@
   <popup name="ListPopupMenu">
     <menuitem action="PlaySelected"/>
     <menuitem action="ExtractSelected"/>
+    <separator />
+    <menuitem action="Properties"/>
   </popup>
   <popup name="TrayPopupMenu">
     <menuitem action="TogglePlay"/>
@@ -32,4 +34,13 @@
     <separator />
     <menuitem action="Close"/>
   </popup>
+  <accelerator action="TogglePlayAccel" />
+  <accelerator action="StopAccel" />
+  <accelerator action="NextAccel" />
+  <accelerator action="PrevAccel" />
+  <accelerator action="EjectAccel" />
+  <accelerator action="CopyDiscAccel" />
+  <accelerator action="ExtractAccel" />
+  <accelerator action="PropertiesAccel" />
+  <accelerator action="CloseAccel" />
 </ui>

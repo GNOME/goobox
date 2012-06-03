@@ -25,8 +25,8 @@
       <item>
         <attribute name="action">app.help</attribute>
         <attribute name="label" translatable="yes">_Help</attribute>
-      </item>
-    
+        <attribute name="accel">F1</attribute>
+      </item>    
       <item>
         <attribute name="action">app.about</attribute>
         <attribute name="label" translatable="yes">_About CD Player</attribute>
@@ -34,6 +34,7 @@
       <item>
         <attribute name="action">app.quit</attribute>
         <attribute name="label" translatable="yes">_Quit</attribute>
+        <attribute name="accel">&lt;Primary&gt;q</attribute>
       </item>
     </section>
   </menu>
