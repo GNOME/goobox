@@ -1,14 +1,11 @@
-include $(top_srcdir)/gnome-doc-utils.make
-dist-hook: doc-dist-hook
+@YELP_HELP_RULES@
 
-DOC_ID = goobox
-DOC_INCLUDES = legal.xml
-
-DOC_PAGES = \
-	index.page \
-	preferences.page \
+HELP_ID = goobox
+HELP_FILES = 			\
+	index.page		\
+	legal.xml		\
+	preferences.page	\
 	shortcuts.page
-
-DOC_LINGUAS = ca cs de es fr oc sl sv
+HELP_LINGUAS = ca cs de es fr oc sl sv
 
 -include $(top_srcdir)/git.mk

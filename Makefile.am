@@ -10,12 +10,9 @@ EXTRA_DIST = 			\
 	add-include-prefix	\
 	intltool-merge.in	\
 	intltool-update.in	\
-	intltool-extract.in	\
-	gnome-doc-utils.make
-
+	intltool-extract.in
 
 DISTCLEANFILES =                        \
-	gnome-doc-utils.make		\
 	po/.intltool-merge-cache        \
 	intltool-extract                \
 	intltool-merge                  \
