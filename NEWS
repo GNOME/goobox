@@ -1,3 +1,23 @@
+version 3.1.1
+-------------
+
+ New features and user visible changes:
+
+  * Added an application menu.
+  * Removed the menubar, added a menu button on the toolbar.
+  * Show a scrollbar if the playlist is too long.
+
+ Bugs fixed:
+
+  * Fixed skipping to a specific position.
+
+ Internal code changes:
+
+  * Ported to libmusicbrainz 4.
+  * Use GResource to store ui files.
+  * Ported to the new documentation infrastructure.
+  * Removed markup from translatable messages.
+
 version 3.0.1
 -------------
 
