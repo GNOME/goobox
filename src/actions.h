@@ -37,6 +37,7 @@ void activate_action_reload (GtkAction *action, gpointer data);
 void activate_action_manual (GtkAction *action, gpointer data);
 void activate_action_shortcuts (GtkAction *action, gpointer data);
 void activate_action_about (GtkAction *action, gpointer data);
+void activate_action_close (GtkAction *action, gpointer data);
 void activate_action_quit (GtkAction *action, gpointer data);
 void activate_action_view_toolbar (GtkAction *action, gpointer data);
 void activate_action_view_statusbar (GtkAction *action, gpointer data);

@@ -31,23 +31,8 @@
 
 static GtkActionEntry action_entries[] = {
 	{ "CDMenu", NULL, N_("_Disc") },
-	{ "EditMenu", NULL, N_("_Edit") },
-	{ "ViewMenu", NULL, N_("_View") },
-	{ "HelpMenu", NULL, N_("_Help") },
 	{ "CDCoverMenu", NULL, N_("C_over") },
 
-	{ "About", GTK_STOCK_ABOUT,
-	  NULL, NULL,
-	  N_("Information about the program"),
-	  G_CALLBACK (activate_action_about) },
-	{ "Contents", GTK_STOCK_HELP,
-	  NULL, "F1",
-	  N_("Display the manual"),
-	  G_CALLBACK (activate_action_manual) },
-	{ "Shortcuts", NULL,
-	  N_("_Keyboard shortcuts"), "",
-	  " ",
-	  G_CALLBACK (activate_action_shortcuts) },
 	{ "TogglePlay", GOO_STOCK_PLAY,
 	  N_("_Play"), "space",
 	  N_("Play/Pause"),
@@ -84,11 +69,7 @@ static GtkActionEntry action_entries[] = {
 	  N_("_Eject"), "J",
 	  N_("Eject the disc"),
 	  G_CALLBACK (activate_action_eject) },
-	{ "Preferences", GTK_STOCK_PREFERENCES,
-	  NULL, NULL,
-	  N_("Edit various preferences"),
-	  G_CALLBACK (activate_action_preferences) },
-	{ "CopyDisc", NULL,
+	{ "CopyDisc", GTK_STOCK_COPY,
 	  N_("_Copy Disc"), "C",
 	  N_("Copy the content of this disc on another disc"),
 	  G_CALLBACK (activate_action_copy_disc) },
@@ -104,6 +85,10 @@ static GtkActionEntry action_entries[] = {
 	  NULL, "<Ctrl>Return",
 	  N_("Edit the disc artist, album and the tracks titles"),
 	  G_CALLBACK (activate_action_properties) },
+	{ "Close", GTK_STOCK_CLOSE,
+	  NULL, NULL,
+	  NULL,
+	  G_CALLBACK (activate_action_close) },
 	{ "Quit", GTK_STOCK_QUIT,
 	  NULL, NULL,
 	  N_("Quit the application"),
@@ -130,35 +115,5 @@ static GtkActionEntry action_entries[] = {
 	  G_CALLBACK (activate_action_reload) }
 };
 static guint n_action_entries = G_N_ELEMENTS (action_entries);
-
-
-static GtkToggleActionEntry action_toggle_entries[] = {
-	{ "ViewToolbar", NULL,
-	  N_("_Toolbar"), NULL,
-	  N_("View the main toolbar"),
-	  G_CALLBACK (activate_action_view_toolbar),
-	  TRUE },
-	{ "ViewStatusbar", NULL,
-	  N_("Stat_usbar"), NULL,
-	  N_("View the statusbar"),
-	  G_CALLBACK (activate_action_view_statusbar),
-	  TRUE },
-	{ "PlayAll", NULL,
-	  N_("Play _All"), NULL,
-	  N_("Play all tracks"),
-	  G_CALLBACK (activate_action_play_all),
-	  TRUE },
-	{ "Repeat", NULL,
-	  N_("_Repeat"), NULL,
-	  N_("Restart playing when finished"),
-	  G_CALLBACK (activate_action_repeat),
-	  FALSE },
-	{ "Shuffle", NULL,
-	  N_("S_huffle"), NULL,
-	  N_("Play tracks in a random order"),
-	  G_CALLBACK (activate_action_shuffle),
-	  FALSE },
-};
-static guint n_action_toggle_entries = G_N_ELEMENTS (action_toggle_entries);
 
 #endif /* UI_H */

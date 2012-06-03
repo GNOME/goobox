@@ -173,6 +173,14 @@ activate_action_about (GtkAction *action,
 
 
 void
+activate_action_close (GtkAction *action,
+		       gpointer   data)
+{
+	goo_window_close (GOO_WINDOW (data));
+}
+
+
+void
 activate_action_quit (GtkAction *action,
 		      gpointer   data)
 {

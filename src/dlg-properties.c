@@ -579,7 +579,7 @@ dlg_properties (GooWindow *window)
 	/* run dialog. */
 
 	gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
-	gtk_window_set_modal (GTK_WINDOW (data->dialog), FALSE);
+	gtk_window_set_modal (GTK_WINDOW (data->dialog), TRUE);
 	gtk_widget_show (data->dialog);
 
 	set_data_from_album (data, goo_window_get_album (data->window));

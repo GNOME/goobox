@@ -1,44 +1,4 @@
 <ui>
-  <menubar name="MenuBar">
-    <menu action="CDMenu">
-      <menuitem action="Extract"/>
-      <menuitem action="CopyDisc"/>
-      <menuitem action="Eject"/>
-      <separator />
-      <menuitem action="TogglePlay"/>
-      <menuitem action="Stop"/>
-      <menuitem action="Next"/>
-      <menuitem action="Prev"/>
-      <separator />
-      <menuitem action="Properties"/>
-      <separator />
-      <menuitem action="Quit"/>
-    </menu>
-    <menu action="EditMenu">
-      <menuitem action="PlayAll"/>
-      <menuitem action="Repeat"/>
-      <menuitem action="Shuffle"/>
-      <separator/>
-      <menu action="CDCoverMenu">
-        <menuitem action="PickCoverFromDisk"/>
-        <menuitem action="SearchCoverFromWeb"/>
-        <separator/>
-        <menuitem action="RemoveCover"/>
-      </menu>
-      <separator/>
-      <menuitem action="Preferences"/>
-    </menu>
-    <menu action="ViewMenu">
-      <menuitem action="ViewToolbar"/>
-      <menuitem action="ViewStatusbar"/>
-    </menu>
-    <menu action="HelpMenu">
-      <menuitem action="Contents"/>
-      <menuitem action="Shortcuts"/>
-      <separator name="sep01"/>
-      <menuitem action="About"/>
-    </menu>
-  </menubar>
   <toolbar  name="ToolBar">
     <toolitem action="TogglePlay"/>
     <toolitem action="Play"/>
@@ -46,7 +6,6 @@
     <toolitem action="Next"/>
     <separator />
     <toolitem action="Extract"/>
-    <toolitem action="EjectToolBar"/>
   </toolbar>
   <popup name="ListPopupMenu">
     <menuitem action="PlaySelected"/>
@@ -57,8 +16,6 @@
     <menuitem action="Next"/>
     <menuitem action="Eject"/>
     <separator/>
-    <menuitem action="ToggleVisibility"/>
-    <separator/>
     <menuitem action="Quit"/>
   </popup>
   <popup name="CoverPopupMenu">
@@ -66,5 +23,13 @@
     <menuitem action="SearchCoverFromWeb"/>
     <separator name="sep01"/>
     <menuitem action="RemoveCover"/>
+  </popup>
+  <popup name="ActionsMenu">
+    <menuitem action="CopyDisc"/>
+    <menuitem action="Eject"/>
+    <separator />
+    <menuitem action="Properties"/>
+    <separator />
+    <menuitem action="Close"/>
   </popup>
 </ui>

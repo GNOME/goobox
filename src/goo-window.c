@@ -36,6 +36,7 @@
 #include "goo-player-info.h"
 #include "goo-window.h"
 #include "goo-volume-tool-button.h"
+#include "gth-toggle-menu-tool-button.h"
 #include "gth-user-dir.h"
 #include "gtk-utils.h"
 #include "gtk-file-chooser-preview.h"
@@ -55,7 +56,8 @@
 #define IDLE_TIMEOUT 200
 #define FALLBACK_ICON_SIZE 16
 #define CONFIG_KEY_AUTOFETCH_GROUP "AutoFetch"
-#define VOLUME_BUTTON_POSITION 7
+#define ACTIONS_MENU_BUTTON_POSITION 6
+#define VOLUME_BUTTON_POSITION 8
 #define TRAY_TOOLTIP_DELAY 500
 #define AUTOPLAY_DELAY 250
 
@@ -143,18 +145,6 @@ G_DEFINE_TYPE (GooWindow, goo_window, GTH_TYPE_WINDOW)
 
 
 static void
-set_active (GooWindow  *window,
-	    const char *action_name,
-	    gboolean    is_active)
-{
-	GtkAction *action;
-
-	action = gtk_action_group_get_action (window->priv->actions, action_name);
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), is_active);
-}
-
-
-static void
 set_sensitive (GooWindow  *window,
 	       const char *action_name,
 	       gboolean    sensitive)
@@ -208,7 +198,6 @@ window_update_sensitivity (GooWindow *window)
 	gboolean       audio_cd;
 	gboolean       playing;
 	gboolean       paused;
-	gboolean       play_all;
 
 	n_selected        = _gtk_count_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (window->priv->list_view)));
 	one_file_selected = n_selected == 1;
@@ -216,7 +205,6 @@ window_update_sensitivity (GooWindow *window)
 	error             = ! goo_player_is_audio_cd (window->priv->player) || window->priv->hibernate;
 	playing           = state == GOO_PLAYER_STATE_PLAYING;
 	paused            = state == GOO_PLAYER_STATE_PAUSED;
-	play_all          = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL);
 	audio_cd          = (! error) && (goo_player_get_discid (window->priv->player) != NULL);
 
 	set_sensitive (window, "Play", audio_cd && !playing);
@@ -234,14 +222,10 @@ window_update_sensitivity (GooWindow *window)
 	set_sensitive (window, "RemoveCover", audio_cd);
 	set_sensitive (window, "SearchCoverFromWeb", audio_cd);
 
-	set_sensitive (window, "Repeat", play_all);
-	set_sensitive (window, "Shuffle", play_all);
-
 	gtk_widget_set_sensitive (window->priv->list_view, audio_cd);
 
 	set_sensitive (window, "Eject", ! window->priv->hibernate);
 	set_sensitive (window, "EjectToolBar", ! window->priv->hibernate);
-	set_sensitive (window, "Preferences", ! window->priv->hibernate);
 }
 
 
@@ -899,21 +883,6 @@ pref_playlist_playall_changed (GSettings  *settings,
 	create_playlist (window, play_all, shuffle);
 
 	window_update_sensitivity (window);
-
-	set_active (window, "PlayAll", play_all);
-}
-
-
-static void
-pref_playlist_repeat_changed (GSettings  *settings,
-	  	 	      const char *key,
-	  	 	      gpointer    user_data)
-{
-	GooWindow *window = user_data;
-
-	g_return_if_fail (window != NULL);
-
-	set_active (window, "Repeat", g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_REPEAT));
 }
 
 
@@ -931,8 +900,6 @@ pref_playlist_shuffle_changed (GSettings  *settings,
 	play_all = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL);
 	shuffle = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_SHUFFLE);
 	create_playlist (window, play_all, shuffle);
-
-	set_active (window, "Shuffle", shuffle);
 }
 
 
@@ -995,11 +962,9 @@ goo_window_show (GtkWidget *widget)
 		arg_toggle_visibility = FALSE;
 
 	view_foobar = g_settings_get_boolean (window->priv->settings_ui, PREF_UI_TOOLBAR);
-	set_active (window, "ViewToolbar", view_foobar);
 	goo_window_set_toolbar_visibility (window, view_foobar);
 
 	view_foobar = g_settings_get_boolean (window->priv->settings_ui, PREF_UI_STATUSBAR);
-	set_active (window, "ViewStatusbar", view_foobar);
 	goo_window_set_statusbar_visibility (window, view_foobar);
 
 	if (window->priv->first_time_event == 0)
@@ -1459,43 +1424,24 @@ static void
 window_update_title (GooWindow *window)
 {
 	GooPlayerState  state;
-	gboolean        paused;
 	GString        *title;
-
-	state = goo_player_get_state (window->priv->player);
-	paused = state == GOO_PLAYER_STATE_PAUSED;
 
 	title = g_string_new ("");
 
-	if (window->priv->current_track != NULL) {
-		g_string_append (title, window->priv->current_track->title);
-		if (window->priv->current_track->artist != NULL) {
-			g_string_append (title, " - ");
-			g_string_append (title, window->priv->current_track->artist);
-		}
-		g_string_append_printf (title,
-					"  [%d/%d]",
-					window->priv->current_track->number + 1,
-					window->priv->album->n_tracks);
-		if (paused)
-			g_string_append_printf (title,
-						" [%s]",
-						_("Paused"));
-	}
-	else if (state == GOO_PLAYER_STATE_NO_DISC) {
-		g_string_append (title, _("No Disc"));
-	}
-	else if (state == GOO_PLAYER_STATE_DATA_DISC) {
-		g_string_append (title, _("Data Disc"));
-	}
-	else {
-		if ((window->priv->album->title == NULL) || (window->priv->album->artist == NULL))
-			g_string_append (title, _("Audio CD"));
-		else {
+	state = goo_player_get_state (window->priv->player);
+	switch (state) {
+	case GOO_PLAYER_STATE_NO_DISC:
+	case GOO_PLAYER_STATE_DATA_DISC:
+	case GOO_PLAYER_STATE_ERROR:
+		g_string_append (title, _("CD Player"));
+		break;
+
+	default:
+		if ((window->priv->album != NULL) && (window->priv->album->title != NULL))
 			g_string_append (title, window->priv->album->title);
-			g_string_append (title, " - ");
-			g_string_append (title, window->priv->album->artist);
-		}
+		else
+			g_string_append (title, _("Audio CD"));
+		break;
 	}
 
 	gtk_window_set_title (GTK_WINDOW (window), title->str);
@@ -1998,10 +1944,6 @@ player_info_cover_clicked_cb (GooPlayerInfo *info,
 static void
 window_sync_ui_with_preferences (GooWindow *window)
 {
-	set_active (window, "PlayAll", g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL));
-	set_active (window, "Repeat", g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_REPEAT));
-	set_active (window, "Shuffle", g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_SHUFFLE));
-
 	update_ui_from_expander_state (window);
 }
 
@@ -2265,7 +2207,7 @@ goo_window_construct (GooWindow    *window,
 		      BraseroDrive *drive)
 {
 
-	GtkWidget        *menubar, *toolbar;
+	GtkWidget        *toolbar;
 	GtkWidget        *scrolled_window;
 	GtkWidget        *vbox;
 	GtkWidget        *hbox;
@@ -2377,6 +2319,7 @@ goo_window_construct (GooWindow    *window,
 					GTK_POLICY_NEVER,
 					GTK_POLICY_NEVER);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_NONE);
+	gtk_widget_set_hexpand (scrolled_window, TRUE);
 	gtk_container_add (GTK_CONTAINER (scrolled_window), window->priv->list_view);
 
 	/* Build the menu and the toolbar. */
@@ -2387,10 +2330,6 @@ goo_window_construct (GooWindow    *window,
 				      action_entries,
 				      n_action_entries,
 				      window);
-	gtk_action_group_add_toggle_actions (actions,
-					     action_toggle_entries,
-					     n_action_toggle_entries,
-					     window);
 
 	window->priv->ui = ui = gtk_ui_manager_new ();
 
@@ -2405,10 +2344,6 @@ goo_window_construct (GooWindow    *window,
 		g_message ("building menus failed: %s", error->message);
 		g_error_free (error);
 	}
-
-	menubar = gtk_ui_manager_get_widget (ui, "/MenuBar");
-	gtk_widget_show (menubar);
-	gth_window_attach (GTH_WINDOW (window), menubar, GTH_WINDOW_MENUBAR);
 
 	window->priv->toolbar = toolbar = gtk_ui_manager_get_widget (ui, "/ToolBar");
 	gtk_style_context_add_class (gtk_widget_get_style_context (window->priv->toolbar), GTK_STYLE_CLASS_PRIMARY_TOOLBAR);
@@ -2460,6 +2395,27 @@ goo_window_construct (GooWindow    *window,
 
 	window->priv->file_popup_menu = gtk_ui_manager_get_widget (ui, "/ListPopupMenu");
 	window->priv->cover_popup_menu = gtk_ui_manager_get_widget (ui, "/CoverPopupMenu");
+
+	/* Add the action menu button to the toolbar. */
+
+	{
+		GtkToolItem *item;
+
+		item = gtk_separator_tool_item_new ();
+		gtk_widget_show (GTK_WIDGET (item));
+		gtk_toolbar_insert (GTK_TOOLBAR (window->priv->toolbar),
+				    item,
+				    ACTIONS_MENU_BUTTON_POSITION);
+
+		item = gth_toggle_menu_tool_button_new ();
+		gth_toggle_menu_tool_button_set_icon_name (GTH_TOGGLE_MENU_TOOL_BUTTON (item), "emblem-system-symbolic");
+		gth_toggle_menu_tool_button_set_menu (GTH_TOGGLE_MENU_TOOL_BUTTON (item), gtk_ui_manager_get_widget (ui, "/ActionsMenu"));
+		gtk_tool_item_set_tooltip_text (item, _("Other actions"));
+		gtk_widget_show (GTK_WIDGET (item));
+		gtk_toolbar_insert (GTK_TOOLBAR (window->priv->toolbar),
+				    item,
+				    ACTIONS_MENU_BUTTON_POSITION + 1);
+	}
 
 	/* Add the volume button to the toolbar. */
 
@@ -2595,10 +2551,6 @@ goo_window_construct (GooWindow    *window,
 	g_signal_connect (window->priv->settings_playlist,
 			  "changed::" PREF_PLAYLIST_SHUFFLE,
 			  G_CALLBACK (pref_playlist_shuffle_changed),
-			  window);
-	g_signal_connect (window->priv->settings_playlist,
-			  "changed::" PREF_PLAYLIST_REPEAT,
-			  G_CALLBACK (pref_playlist_repeat_changed),
 			  window);
 
 	/* Media keys*/
@@ -3176,7 +3128,6 @@ goo_window_toggle_visibility (GooWindow *window)
 					   _("_Hide Window"),
 					   _("Hide the main window"),
 					   NULL,
-					   /*"/MenuBar/View/", FIXME*/
 					   "/TrayPopupMenu/",
 					   NULL);
 	}

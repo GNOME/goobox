@@ -62,6 +62,10 @@ goobox_SOURCES = 				\
 	goo-volume-tool-button.h		\
 	goo-window.c				\
 	goo-window.h				\
+	gth-toggle-menu-action.c		\
+	gth-toggle-menu-action.h		\
+	gth-toggle-menu-tool-button.c		\
+	gth-toggle-menu-tool-button.h		\
 	gth-user-dir.c				\
 	gth-user-dir.h				\
 	gth-window.c				\
