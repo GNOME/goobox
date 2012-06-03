@@ -72,6 +72,8 @@ void           gth_window_attach_toolbar     (GthWindow     *window,
 void           gth_window_attach_content     (GthWindow     *window,
 					      int            page,
 					      GtkWidget     *child);
+GtkWidget *    gth_window_attach_get_content (GthWindow     *window,
+					      int            page);
 void           gth_window_set_current_page   (GthWindow     *window,
 					      int            page);
 int            gth_window_get_current_page   (GthWindow     *window);

@@ -60,6 +60,7 @@
 #define VOLUME_BUTTON_POSITION 8
 #define TRAY_TOOLTIP_DELAY 500
 #define AUTOPLAY_DELAY 250
+#define MAX_WINDOW_HEIGHT_PERCENTAGE 0.80
 
 struct _GooWindowPrivate {
 	GtkUIManager      *ui;
@@ -67,6 +68,7 @@ struct _GooWindowPrivate {
 	GtkListStore      *list_store;
 	GtkWidget         *toolbar;
 	GtkWidget         *list_expander;
+	GtkWidget         *list_scrolled_window;
 
 	GtkTreeViewColumn *author_column;
 	WindowSortMethod   sort_method;
@@ -111,6 +113,7 @@ struct _GooWindowPrivate {
 	GtkWidget         *preview;
 	int                pos_x, pos_y;
 	gboolean           hibernate;
+	gboolean           resizable_playlist;
 
 	GDBusProxy        *media_keys_proxy;
 	gulong             focus_in_event;
@@ -333,6 +336,63 @@ goo_window_update (GooWindow *window)
 
 
 static void
+window_update_size (GooWindow *window)
+{
+	int          window_height_without_playlist;
+	GtkWidget   *vbox;
+	GList       *scan;
+	int          playlist_natural_height;
+	int          max_window_height;
+	GdkGeometry  hints;
+
+	window_height_without_playlist = 0;
+	vbox = gth_window_attach_get_content (GTH_WINDOW (window), 0);
+	for (scan = gtk_container_get_children (GTK_CONTAINER (vbox)); scan; scan = scan->next) {
+		GtkWidget     *child = scan->data;
+		GtkAllocation  allocation;
+
+		if (child == window->priv->list_expander)
+			continue;
+
+		gtk_widget_get_allocation (child, &allocation);
+		window_height_without_playlist += allocation.height;
+	}
+	gtk_widget_get_preferred_height (window->priv->list_view, NULL, &playlist_natural_height);
+
+	max_window_height = gdk_screen_get_height (gtk_widget_get_screen (GTK_WIDGET (window))) * MAX_WINDOW_HEIGHT_PERCENTAGE;
+
+	if (window_height_without_playlist + playlist_natural_height > max_window_height) {
+		hints.max_height = G_MAXINT;
+		hints.max_width = G_MAXINT;
+		gtk_window_set_geometry_hints (GTK_WINDOW (window),
+					       GTK_WIDGET (window),
+					       &hints,
+					       GDK_HINT_MAX_SIZE);
+
+		window->priv->resizable_playlist = TRUE;
+
+		gtk_window_resize (GTK_WINDOW (window),
+				   g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_WIDTH),
+				   max_window_height);
+	}
+	else {
+		hints.max_height = -1;
+		hints.max_width = G_MAXINT;
+		gtk_window_set_geometry_hints (GTK_WINDOW (window),
+					       GTK_WIDGET (window),
+					       &hints,
+					       GDK_HINT_MAX_SIZE);
+
+		window->priv->resizable_playlist = FALSE;
+	}
+
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (window->priv->list_scrolled_window),
+					GTK_POLICY_NEVER,
+					window->priv->resizable_playlist ? GTK_POLICY_AUTOMATIC : GTK_POLICY_NEVER);
+}
+
+
+static void
 goo_window_update_list (GooWindow *window)
 {
 	GdkPixbuf *icon;
@@ -379,6 +439,7 @@ goo_window_update_list (GooWindow *window)
 
 	window_update_sensitivity (window);
 	window_update_statusbar_list_info (window);
+	window_update_size (window);
 
 	g_object_unref (icon);
 }
@@ -1883,7 +1944,7 @@ update_ui_from_expander_state (GooWindow *window)
 					   g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_HEIGHT));
 		gtk_window_set_has_resize_grip (GTK_WINDOW (window), TRUE);
 
-		hints.max_height = -1;
+		hints.max_height = window->priv->resizable_playlist ? G_MAXINT : -1;
 		hints.max_width = G_MAXINT;
 		gtk_window_set_geometry_hints (GTK_WINDOW (window),
 					       GTK_WIDGET (window),
@@ -2098,6 +2159,7 @@ goo_window_init (GooWindow *window)
 	window->priv->url_list = NULL;
 	window->priv->hibernate = FALSE;
 	window->priv->album = album_info_new ();
+	window->priv->resizable_playlist = FALSE;
 }
 
 
@@ -2314,7 +2376,7 @@ goo_window_construct (GooWindow    *window,
 			  G_CALLBACK (sort_column_changed_cb),
 			  window);
 
-	scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+	window->priv->list_scrolled_window = scrolled_window = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
 					GTK_POLICY_NEVER,
 					GTK_POLICY_NEVER);

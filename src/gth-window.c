@@ -309,6 +309,23 @@ gth_window_attach_content (GthWindow *window,
 }
 
 
+GtkWidget *
+gth_window_attach_get_content (GthWindow *window,
+			       int        page)
+{
+	GList *children;
+
+	g_return_if_fail (window != NULL);
+	g_return_if_fail (GTH_IS_WINDOW (window));
+	g_return_if_fail (page >= 0 && page < window->priv->n_pages);
+
+	children = gtk_container_get_children (window->priv->contents[page]);
+	if (children != NULL)
+		return children->data;
+	else
+		return NULL;
+}
+
 void
 gth_window_set_current_page (GthWindow *window,
 			     int        page)
