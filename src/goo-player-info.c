@@ -379,6 +379,7 @@ goo_player_info_construct (GooPlayerInfo *info)
 
 	priv->title1_label = gtk_label_new (NULL);
 	gtk_misc_set_alignment (GTK_MISC (priv->title1_label), 0.0, 0.5);
+	gtk_widget_set_margin_top (priv->title1_label, 6);
 
 	priv->title2_label = gtk_label_new (NULL);
 	gtk_misc_set_alignment (GTK_MISC (priv->title2_label), 0.0, 0.5);
@@ -403,6 +404,7 @@ goo_player_info_construct (GooPlayerInfo *info)
 	/* Time */
 
 	time_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+	gtk_widget_set_margin_bottom (time_box, 6);
 
 	priv->time_scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL, 0.0, 1.0, 0.01);
 	gtk_range_set_increments (GTK_RANGE (priv->time_scale), 0.01, 0.1);
