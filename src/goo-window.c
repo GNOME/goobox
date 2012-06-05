@@ -2036,6 +2036,8 @@ goo_window_init (GooWindow *window)
 	window->priv->hibernate = FALSE;
 	window->priv->album = album_info_new ();
 	window->priv->resizable_playlist = FALSE;
+
+	gtk_window_set_title (GTK_WINDOW (window), _("CD Player"));
 }
 
 
