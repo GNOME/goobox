@@ -24,14 +24,25 @@
 #define DLG_COVER_CHOOSER_H
 
 #include "goo-window.h"
+#include "album-info.h"
 
-void   dlg_cover_chooser            (GooWindow  *window,
-				     const char *album,
-				     const char *artist);
-void   fetch_cover_image_from_name  (GooWindow  *window,
-				     const char *album,
-			  	     const char *artist);
-void   fetch_cover_image_from_asin  (GooWindow  *window,
-				     const char *asin);
+typedef enum {
+	FETCH_COVER_STAGE_0,
+	FETCH_COVER_STAGE_AFTER_ASIN,
+	FETCH_COVER_STAGE_AFTER_LIBCOVERART,
+	FETCH_COVER_STAGE_AFTER_WEB_SEARCH
+} FetchCoverStage;
+
+void   dlg_cover_chooser                 (GooWindow       *window,
+					  const char      *album,
+				       	  const char      *artist);
+void   fetch_cover_image_from_name       (GooWindow       *window,
+				      	  const char      *album,
+				          const char      *artist);
+void   fetch_cover_image_from_asin       (GooWindow       *window,
+					  const char      *asin);
+void   fetch_cover_image_from_album_info (GooWindow       *window,
+					  AlbumInfo       *album,
+					  FetchCoverStage  stage);
 
 #endif /* DLG_COVER_CHOOSER_H */

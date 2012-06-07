@@ -18,6 +18,7 @@ INCLUDES =						\
         -DGOO_LIBDIR=\"$(libdir)\"  	         	\
 	-DGOO_UIDIR=\""$(uidir)"\"     			\
 	$(GOO_CFLAGS)					\
+	$(LIBCOVERART_CFLAGS)				\
 	$(LIBNOTIFY_CFLAGS)
 
 BUILT_SOURCES =			\
@@ -101,6 +102,7 @@ goobox_LDADD = 				\
 	$(top_builddir)/copy-n-paste/libeggsmclient.la  \
 	$(GOO_LIBS) 			\
 	$(M_LIBS)			\
+	$(LIBCOVERART_LIBS)		\
 	$(LIBNOTIFY_LIBS)		\
 	$(SYSTEM_LIBS)
 

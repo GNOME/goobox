@@ -325,6 +325,12 @@ album_info_load_from_cache (AlbumInfo  *album,
 	}
 	g_free (path);
 
+	s = g_key_file_get_string (f, "Album", "ID", NULL);
+	if (s != NULL) {
+		album_info_set_id (album, s);
+		g_free (s);
+	}
+
 	s = g_key_file_get_string (f, "Album", "Title", NULL);
 	if (s != NULL) {
 		album_info_set_title (album, s);
@@ -398,6 +404,8 @@ album_info_save_to_cache (AlbumInfo  *album,
 
 	f = g_key_file_new ();
 
+	if (album->id != NULL)
+		g_key_file_set_string (f, "Album", "ID", album->id);
 	if (album->title != NULL)
 		g_key_file_set_string (f, "Album", "Title", album->title);
 	if (album->artist != NULL)

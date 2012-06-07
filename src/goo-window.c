@@ -898,7 +898,6 @@ static void
 goo_window_show (GtkWidget *widget)
 {
 	GooWindow *window = GOO_WINDOW (widget);
-	gboolean   view_foobar;
 
 	if (! arg_toggle_visibility)
 		GTK_WIDGET_CLASS (goo_window_parent_class)->show (widget);
@@ -1538,10 +1537,7 @@ auto_fetch_cover_image (GooWindow *window)
 	}
 	g_free (filename);
 
-	if ((window->priv->album->asin != NULL) && (strcmp (window->priv->album->asin, "") != 0))
-		fetch_cover_image_from_asin (window, window->priv->album->asin);
-	else if ((window->priv->album->title != NULL) && (window->priv->album->artist != NULL))
-		fetch_cover_image_from_name (window, window->priv->album->title, window->priv->album->artist);
+	fetch_cover_image_from_album_info (window, window->priv->album, FETCH_COVER_STAGE_0);
 }
 
 

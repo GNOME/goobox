@@ -20,6 +20,7 @@ GTK_REQUIRED=3.4.0
 GSTREAMER_REQUIRED=0.10.12
 LIBNOTIFY_REQUIRED=0.4.3
 LIBMUSICBRAINZ4_REQUIRED=4.0.0
+LIBCOVERART_REQUIRED=1.0.0beta1
 
 dnl ===========================================================================
 
@@ -88,9 +89,31 @@ AC_SUBST(M_LIBS)
 
 dnl ===========================================================================
 dnl
+dnl libcoverart
+dnl
+AC_ARG_ENABLE(libcoverart,[AC_HELP_STRING([--enable-libcoverart],[enable use of libcoverart to fetch CD covers [default=yes]])],, [enable_libcoverart="yes"])
+
+LIBCOVERART_LIBS=""
+LIBCOVERART_CFLAGS=""
+if test x"$enable_libcoverart" = xyes; then
+   AC_MSG_CHECKING(for libcoverart support)
+
+   if pkg-config --atleast-version=$LIBCOVERART_REQUIRED libcoverart; then
+      LIBCOVERART_LIBS=`pkg-config --libs libcoverart`
+      LIBCOVERART_CFLAGS=`pkg-config --cflags libcoverart`
+      AC_DEFINE(HAVE_LIBCOVERART, 1, [Have libcoverart])
+   else
+      enable_libcoverart=no
+   fi
+fi
+AC_MSG_RESULT($enable_libcoverart)
+AC_SUBST(LIBCOVERART_LIBS)
+AC_SUBST(LIBCOVERART_CFLAGS)
+
+dnl ===========================================================================
+dnl
 dnl libnotify
 dnl
-
 AC_ARG_ENABLE(notification,[AC_HELP_STRING([--enable-notification],[enable current track notification if libnotify is available [default=yes]])],, [enable_notification="yes"])
 AM_CONDITIONAL(ENABLE_NOTIFICATION, test "x$enable_notification" = xyes)
 
@@ -208,4 +231,5 @@ Configuration:
 	Run in place         : ${enable_run_in_place}
 	Enable notification  : ${enable_notification}
 	Enable media keys    : ${enable_media_keys}
+	Use libcoverart      : ${enable_libcoverart}
 "

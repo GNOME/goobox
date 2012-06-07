@@ -24,6 +24,10 @@
 #include <config.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#if HAVE_LIBCOVERART
+#include <coverart/caa_c.h>
+#endif
+#include "dlg-cover-chooser.h"
 #include "gio-utils.h"
 #include "glib-utils.h"
 #include "gtk-utils.h"
@@ -571,15 +575,20 @@ fetch_data_free (FetchData *data)
 
 
 static void
-fetch_image_data_ready_cb (void     *buffer,
-			   gsize     count,
-			   GError   *error,
-			   gpointer  user_data)
+image_data_ready_for_query_cb (void     *buffer,
+			       gsize     count,
+			       GError   *error,
+			       gpointer  user_data)
 {
 	FetchData *data = user_data;
 
-	if (error == NULL)
+	if ((error == NULL) && (count > 0))
 		goo_window_set_cover_image_from_data (data->window, buffer, count);
+	else
+		fetch_cover_image_from_album_info (data->window,
+						   goo_window_get_album (data->window),
+						   FETCH_COVER_STAGE_AFTER_WEB_SEARCH);
+
 	fetch_data_free (data);
 }
 
@@ -606,7 +615,7 @@ query_ready_cb (void     *buffer,
 		g_load_file_async (file,
 				   G_PRIORITY_DEFAULT,
 				   NULL,
-				   fetch_image_data_ready_cb,
+				   image_data_ready_for_query_cb,
 				   data);
 
 		g_object_unref (file);
@@ -643,6 +652,28 @@ fetch_cover_image_from_name (GooWindow  *window,
 }
 
 
+/* -- fetch_cover_image_from_asin -- */
+
+
+static void
+image_data_ready_for_asin_cb (void     *buffer,
+			      gsize     count,
+			      GError   *error,
+			      gpointer  user_data)
+{
+	FetchData *data = user_data;
+
+	if ((error == NULL) && (count > 0))
+		goo_window_set_cover_image_from_data (data->window, buffer, count);
+	else
+		fetch_cover_image_from_album_info (data->window,
+						   goo_window_get_album (data->window),
+						   FETCH_COVER_STAGE_AFTER_ASIN);
+
+	fetch_data_free (data);
+}
+
+
 void
 fetch_cover_image_from_asin (GooWindow  *window,
 		             const char *asin)
@@ -658,9 +689,195 @@ fetch_cover_image_from_asin (GooWindow  *window,
 	g_load_file_async (file,
 			   G_PRIORITY_DEFAULT,
 			   NULL,
-			   fetch_image_data_ready_cb,
+			   image_data_ready_for_asin_cb,
 			   data);
 
 	g_object_unref (file);
 	g_free (url);
+}
+
+
+/* -- fetch_cover_image_from_album_info -- */
+
+
+#if HAVE_LIBCOVERART
+
+
+typedef struct {
+	GooWindow *window;
+	AlbumInfo *album;
+	guchar    *buffer;
+	gsize      size;
+} GetCoverArtData;
+
+
+static void
+get_cover_art_data_free (GetCoverArtData *data)
+{
+	g_object_unref (data->window);
+	album_info_unref (data->album);
+	g_free (data->buffer);
+	g_free (data);
+}
+
+
+static void
+metadata_get_coverart_thread (GSimpleAsyncResult *result,
+			      GObject            *object,
+			      GCancellable       *cancellable)
+{
+	GetCoverArtData *data;
+	CaaCoverArt      cover_art;
+	CaaImageData     image_data;
+
+	data = g_simple_async_result_get_op_res_gpointer (result);
+
+	cover_art = caa_coverart_new (PACKAGE_NAME "-" PACKAGE_VERSION);
+	image_data = caa_coverart_fetch_front (cover_art, data->album->id);
+	if (image_data != NULL) {
+		data->size = caa_imagedata_size (image_data);
+		data->buffer = g_new (guchar, data->size);
+		memcpy (data->buffer, caa_imagedata_data (image_data), data->size);
+	}
+
+	caa_coverart_delete (cover_art);
+}
+
+
+static void
+metadata_get_coverart (GooWindow           *window,
+		       AlbumInfo           *album,
+		       GCancellable        *cancellable,
+		       GAsyncReadyCallback  callback,
+		       gpointer             user_data)
+{
+	GSimpleAsyncResult *result;
+	GetCoverArtData    *data;
+
+	result = g_simple_async_result_new (NULL,
+	                                    callback,
+	                                    user_data,
+	                                    metadata_get_coverart);
+
+	data = g_new0 (GetCoverArtData, 1);
+	data->window = g_object_ref (window);
+	data->album = album_info_ref (album);
+	data->buffer = NULL;
+	data->size = 0;
+
+	g_simple_async_result_set_op_res_gpointer (result,
+						   data,
+                                                   (GDestroyNotify) get_cover_art_data_free);
+
+	g_simple_async_result_run_in_thread (result,
+					     metadata_get_coverart_thread,
+					     G_PRIORITY_DEFAULT,
+					     cancellable);
+
+	g_object_unref (result);
+}
+
+
+static gboolean
+metadata_get_coverart_finish (GAsyncResult  *result,
+			      guchar       **buffer,
+			      gsize         *count)
+{
+	GetCoverArtData *data;
+
+	g_return_val_if_fail (g_simple_async_result_is_valid (result, NULL, metadata_get_coverart), FALSE);
+
+        data = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (result));
+        if (data->size == 0)
+        	return FALSE;
+
+        *buffer = data->buffer;
+        *count = data->size;
+
+        return TRUE;
+}
+
+
+typedef struct {
+	GooWindow *window;
+	AlbumInfo *album;
+} CoverArtData;
+
+
+static void
+cover_art_data_free (CoverArtData *data)
+{
+	g_object_unref (data->window);
+	album_info_unref (data->album);
+	g_free (data);
+}
+
+
+static void
+metadata_get_coverart_cb (GObject      *source_object,
+			  GAsyncResult *result,
+			  gpointer      user_data)
+{
+	CoverArtData *data = user_data;
+	guchar       *buffer;
+	gsize         size;
+
+	if (metadata_get_coverart_finish (result, &buffer, &size))
+		goo_window_set_cover_image_from_data (data->window,
+						      buffer,
+						      size);
+	else
+		fetch_cover_image_from_album_info (data->window,
+						   data->album,
+						   FETCH_COVER_STAGE_AFTER_LIBCOVERART);
+
+	cover_art_data_free (data);
+}
+
+
+#endif
+
+
+void
+fetch_cover_image_from_album_info (GooWindow       *window,
+				   AlbumInfo       *album,
+				   FetchCoverStage  after_stage)
+{
+	if ((FETCH_COVER_STAGE_AFTER_ASIN > after_stage)
+	    && (album != NULL)
+	    && (album->asin != NULL))
+	{
+		fetch_cover_image_from_asin (window, album->asin);
+		return;
+	}
+
+#if HAVE_LIBCOVERART
+
+	if ((FETCH_COVER_STAGE_AFTER_LIBCOVERART > after_stage)
+	    && (album != NULL)
+	    && (album->id != NULL))
+	{
+		CoverArtData *data;
+
+		data = g_new0 (CoverArtData, 1);
+		data->window = g_object_ref (window);
+		data->album = album_info_ref (album);
+		metadata_get_coverart (data->window,
+				       data->album,
+				       NULL,
+				       metadata_get_coverart_cb,
+				       data);
+
+		return;
+	}
+
+#endif
+
+	if ((FETCH_COVER_STAGE_AFTER_WEB_SEARCH > after_stage)
+	    && (album != NULL)
+	    && (album->title != NULL)
+	    && (album->artist != NULL))
+	{
+		fetch_cover_image_from_name (window, album->title, album->artist);
+	}
 }
