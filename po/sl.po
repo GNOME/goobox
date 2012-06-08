@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=goobox&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-06-09 05:23+0000\n"
-"PO-Revision-Date: 2011-06-09 16:02+0100\n"
-"Last-Translator: Andrej Žnidaršič <andrej.znidarsic@gmail.com>\n"
+"POT-Creation-Date: 2012-06-07 17:45+0000\n"
+"PO-Revision-Date: 2012-06-08 20:50+0100\n"
+"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -86,9 +86,11 @@ msgstr "Pokaži možnosti upravljanja seje"
 
 #: ../data/goobox.desktop.in.in.h:1
 #: ../src/actions.c:159
-#: ../src/goo-window.c:2128
-#: ../src/goo-window.c:2564
-#: ../src/main.c:237
+#: ../src/goo-window.c:1373
+#: ../src/goo-window.c:1994
+#: ../src/goo-window.c:2036
+#: ../src/goo-window.c:2436
+#: ../src/main.c:245
 msgid "CD Player"
 msgstr "Predvajalnik CD nosilcev"
 
@@ -97,238 +99,100 @@ msgid "Play and extract CDs"
 msgstr "Predvajanje in pretvarjanje CD nosilcev"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:1
-msgid "'Choose cover' location"
-msgstr "Mesto 'izbire naslovnice'"
+msgid "Device path"
+msgstr "Pot naprave"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:2
-msgid "Autoplay"
-msgstr "Samodejno predvajaj"
+msgid "Volume level"
+msgstr "Glasnost"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:3
-msgid "Autoplay discs after insertion."
-msgstr "Samodejno predvajanje diskov po vstavitvi."
+msgid "'Choose cover' location"
+msgstr "Mesto 'izbire naslovnice'"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:4
 msgid "Default location for the 'Choose cover' dialog."
 msgstr "Privzeto mesto pogovornega okna 'Izbira naslovnice'"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:5
-msgid "Device path"
-msgstr "Pot naprave"
+msgid "Use Sound Juicer to rip discs"
+msgstr "Za zajemanje diskov uporabi Sound Juicer"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:6
-msgid "Extraction folder"
-msgstr "Mapa pretvorbe"
+msgid "Autoplay"
+msgstr "Samodejno predvajaj"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:7
-msgid "FLAC files quality"
-msgstr "Kakovost datotek FLAC"
+msgid "Autoplay discs after insertion."
+msgstr "Samodejno predvajanje diskov po vstavitvi."
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:8
-msgid "File type"
-msgstr "Vrsta datoteke"
+msgid "Window width"
+msgstr "Širina okna"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:9
-msgid "MP3 files quality"
-msgstr "Kakovost datotek MP3"
+msgid "Window height"
+msgstr "Višina okna"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:10
-msgid "OGG files quality"
-msgstr "Kakovost datotek OGG"
+msgid "Playlist visibility"
+msgstr "Vidljivost seznama predvajanja"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:11
-#: ../src/ui.h:148
 msgid "Play all tracks"
 msgstr "Predvajanje vseh skladb"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:12
-msgid "Playlist sort method"
-msgstr "Način razvščanja seznama predvajanja"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
-msgid "Playlist sort type"
-msgstr "Vrsta razvrščanja seznama predvajanja"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
-msgid "Playlist visibility"
-msgstr "Vidljivost seznama predvajanja"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
-msgid "Possible values are: ogg, flac, mp3, wave."
-msgstr "Mogoče vrednosti so: ogg, flac, mp3, wave."
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
-msgid "Restart when finished"
-msgstr "Znova predvajaj po koncu predvajanja"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
-msgid "Save the playlist"
-msgstr "Shrani seznam predvajanja"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
-msgid "Save the playlist of the extracted tracks."
-msgstr "Shrani seznam predvajanja pretvorjenih skladb."
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
 msgid "Shuffle playlist"
 msgstr "Premešaj seznam predvajanja"
 
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
+msgid "Restart when finished"
+msgstr "Znova predvajaj po koncu predvajanja"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
+msgid "Playlist sort method"
+msgstr "Način razvščanja seznama predvajanja"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
+msgid "Playlist sort type"
+msgstr "Vrsta razvrščanja seznama predvajanja"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
+msgid "Extraction folder"
+msgstr "Mapa pretvorbe"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
+msgid "File type"
+msgstr "Vrsta datoteke"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "Mogoče vrednosti so: ogg, flac, mp3, wave."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
+msgid "Save the playlist"
+msgstr "Shrani seznam predvajanja"
+
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:20
-msgid "Statusbar visibility"
-msgstr "Vidljivost vrstice stanja"
+msgid "Save the playlist of the extracted tracks."
+msgstr "Shrani seznam predvajanja pretvorjenih skladb."
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:21
-msgid "Toolbar style"
-msgstr "Slog orodne vrstice"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
-msgid "Toolbar visibility"
-msgstr "Vidnost orodne vrstice"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
-msgid "Use Sound Juicer to rip discs"
-msgstr "Za zajemanje diskov uporabi Sound Juicer"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:24
 msgid "View the destination"
 msgstr "Ogled cilja"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:25
-msgid "Volume level"
-msgstr "Glasnost"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
+msgid "OGG files quality"
+msgstr "Kakovost datotek OGG"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:26
-msgid "Window height"
-msgstr "Višina okna"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
+msgid "FLAC files quality"
+msgstr "Kakovost datotek FLAC"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:27
-msgid "Window width"
-msgstr "Širina okna"
-
-#: ../data/ui/cover-chooser.ui.h:1
-msgid "Choose a CD Cover"
-msgstr "Izbor CD ovitka"
-
-#: ../data/ui/cover-chooser.ui.h:2
-msgid "Found images:"
-msgstr "Najdene slike:"
-
-#: ../data/ui/extract.ui.h:1
-#: ../data/ui/preferences.ui.h:1
-msgid "    "
-msgstr "    "
-
-#: ../data/ui/extract.ui.h:2
-msgid "<b>Extract</b>"
-msgstr "<b>Pretvori</b>"
-
-#: ../data/ui/extract.ui.h:3
-msgid "Extract Tracks"
-msgstr "Pretvorba skladb"
-
-#: ../data/ui/extract.ui.h:4
-msgid "_All tracks"
-msgstr "_Vse skladbe"
-
-#: ../data/ui/extract.ui.h:5
-msgid "_Selected tracks"
-msgstr "_Izbrane skladbe"
-
-#: ../data/ui/format-options.ui.h:1
-msgid "Format Properties"
-msgstr "Lastnosti zapisa"
-
-#: ../data/ui/preferences.ui.h:2
-msgid "<b>CD Drive</b>"
-msgstr "<b>CD pogon</b>"
-
-#: ../data/ui/preferences.ui.h:3
-msgid "<b>Destination folder</b>"
-msgstr "<b>Ciljna mapa</b>"
-
-#: ../data/ui/preferences.ui.h:4
-msgid "<b>Output format</b>"
-msgstr "<b>Odvodni zapis</b>"
-
-#: ../data/ui/preferences.ui.h:5
-msgid "<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality.</i></small>"
-msgstr "<small><i>Brezplačni kodek za kodiranje brez zvočnih izgub (FLAC) je odprtokodni kodek, ki zvok stisne, vendar ne poslabša njegove kakovosti.</i></small>"
-
-#: ../data/ui/preferences.ui.h:6
-msgid "<small><i>Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3.</i></small>"
-msgstr "<small><i>Vorbis je odprtokodni kodek za kodiranje z izgubami, z visoko kakovostnim odvodom pri manjši velikosti datoteke kot MP3.</i></small>"
-
-#: ../data/ui/preferences.ui.h:7
-msgid "<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio.</i></small>"
-msgstr "<small><i>WAV+PCM je oblika zapisa kodirana brez zvočnih izgub, ki vsebuje nestisnjen, surov pulzirajoče-kodno moduliran (PCM) zvok.</i></small>"
-
-#: ../data/ui/preferences.ui.h:8
-msgid "Automatically play newly inserted discs"
-msgstr "Samodejno predvajanje novo vstavljenih diskov"
-
-#: ../data/ui/preferences.ui.h:9
-msgid "CD Player Preferences"
-msgstr "Nastavitve CD predvajalnika"
-
-#: ../data/ui/preferences.ui.h:10
-msgid "Choose destination folder"
-msgstr "Izbor ciljne mape"
-
-#: ../data/ui/preferences.ui.h:11
-msgid "Extraction"
-msgstr "Pretvarjanje"
-
-#: ../data/ui/preferences.ui.h:12
-msgid "General"
-msgstr "Splošno"
-
-#: ../data/ui/preferences.ui.h:13
-msgid "_Save playlist"
-msgstr "_Shrani seznam predvajanja"
-
-#: ../data/ui/properties.ui.h:1
-msgid "No album found."
-msgstr "Albuma ni mogoče najti."
-
-#: ../data/ui/properties.ui.h:2
-msgid "Properties"
-msgstr "Lastnosti"
-
-#: ../data/ui/properties.ui.h:3
-msgid "Search for the remaining data"
-msgstr "Iskanje preostalih podatkov"
-
-#: ../data/ui/properties.ui.h:4
-msgid "Single artist"
-msgstr "En izvajalec"
-
-#: ../data/ui/properties.ui.h:5
-msgid "T_racks:"
-msgstr "S_kladbe:"
-
-#: ../data/ui/properties.ui.h:6
-msgid "Various artists"
-msgstr "Različni izvajalci"
-
-#: ../data/ui/properties.ui.h:7
-msgid "_Artist:"
-msgstr "_Izvajalec:"
-
-#: ../data/ui/properties.ui.h:8
-msgid "_Title:"
-msgstr "_Naslov:"
-
-#: ../data/ui/properties.ui.h:9
-msgid "_Year:"
-msgstr "_Leto:"
-
-#: ../data/ui/ripper.ui.h:1
-msgid "<big><b>Extracting tracks</b></big>"
-msgstr "<big><b>Pretvarjanje skladb</b></big>"
-
-#: ../data/ui/ripper.ui.h:2
-msgid "Extracting Tracks"
-msgstr "Pretvarjanje skladb"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:24
+msgid "MP3 files quality"
+msgstr "Kakovost datotek MP3"
 
 #: ../src/actions.c:139
 msgid "translator_credits"
@@ -351,14 +215,14 @@ msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
 msgstr "Avtorske pravice © 2004-2011 Free Software Foundation, Inc."
 
 #: ../src/actions.c:162
-#: ../src/main.c:334
-#: ../src/main.c:447
+#: ../src/main.c:340
+#: ../src/main.c:453
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "Predvajanje CD-jev in shranjevanje skladb na disk v obliki datotek"
 
-#: ../src/actions.c:308
-#: ../src/actions.c:343
-#: ../src/actions.c:376
+#: ../src/actions.c:290
+#: ../src/actions.c:325
+#: ../src/actions.c:358
 msgid "Could not execute command"
 msgstr "Ukaza ni mogoče izvesti"
 
@@ -366,13 +230,13 @@ msgstr "Ukaza ni mogoče izvesti"
 msgid "Various"
 msgstr "Različno"
 
-#: ../src/dlg-cover-chooser.c:271
+#: ../src/dlg-cover-chooser.c:275
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, nalaganje slike: %u"
 
-#: ../src/dlg-cover-chooser.c:336
-#: ../src/goo-window.c:3124
+#: ../src/dlg-cover-chooser.c:340
+#: ../src/goo-window.c:2958
 msgid "Could not search for a cover on Internet"
 msgstr "Naslovnice na spletu ni mogoče najti"
 
@@ -395,57 +259,57 @@ msgstr ""
 msgid "No encoder available."
 msgstr "Kodirnik ni na voljo."
 
-#: ../src/dlg-preferences.c:246
-#: ../src/dlg-preferences.c:479
+#: ../src/dlg-preferences.c:248
+#: ../src/dlg-preferences.c:484
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:258
-#: ../src/dlg-preferences.c:482
+#: ../src/dlg-preferences.c:260
+#: ../src/dlg-preferences.c:487
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:270
+#: ../src/dlg-preferences.c:272
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:296
-#: ../src/dlg-preferences.c:506
+#: ../src/dlg-preferences.c:298
+#: ../src/dlg-preferences.c:511
 msgid "Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3."
 msgstr "Vorbis je odprtokodni kodek za kodiranje izgubami, z visoko kakovostnim odvodom pri manjši velikosti datoteke kot MP3."
 
-#: ../src/dlg-preferences.c:297
-#: ../src/dlg-preferences.c:509
+#: ../src/dlg-preferences.c:299
+#: ../src/dlg-preferences.c:514
 msgid "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality."
 msgstr "Brezplačni kodek za kodiranje brez zvočnih izgub (FLAC) je odprtokodni kodek, ki zvok stisne, vendar ne poslabša njegove kakovosti."
 
-#: ../src/dlg-preferences.c:298
-#: ../src/dlg-preferences.c:512
+#: ../src/dlg-preferences.c:300
+#: ../src/dlg-preferences.c:517
 msgid "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio."
 msgstr "WAV+PCM je oblika zapisa kodirana brez zvočnih izgub, ki vsebuje nestisnjen, surov pulzirajoče-kodno moduliran (PCM) zvok."
 
-#: ../src/dlg-preferences.c:454
+#: ../src/dlg-preferences.c:459
 msgid "Faster compression"
 msgstr "Hitrejše stiskanje"
 
-#: ../src/dlg-preferences.c:458
+#: ../src/dlg-preferences.c:463
 msgid "Higher compression"
 msgstr "Višje stiskanje"
 
-#: ../src/dlg-preferences.c:465
+#: ../src/dlg-preferences.c:470
 msgid "Smaller size"
 msgstr "Manjša velikost"
 
-#: ../src/dlg-preferences.c:469
+#: ../src/dlg-preferences.c:474
 msgid "Higher quality"
 msgstr "Višja kakovost"
 
-#: ../src/dlg-preferences.c:493
+#: ../src/dlg-preferences.c:498
 msgid "Quality:"
 msgstr "Kakovost:"
 
-#: ../src/dlg-preferences.c:496
+#: ../src/dlg-preferences.c:501
 msgid "Compression level:"
 msgstr "Raven stiskanja:"
 
@@ -463,17 +327,17 @@ msgid "Searching disc info..."
 msgstr "Pridobivanje podrobnosti o disku ..."
 
 #: ../src/dlg-properties.c:361
-#: ../src/goo-window.c:542
+#: ../src/goo-window.c:547
 msgid "#"
 msgstr "#"
 
 #: ../src/dlg-properties.c:379
-#: ../src/goo-window.c:567
+#: ../src/goo-window.c:572
 msgid "Title"
 msgstr "Naslov"
 
 #: ../src/dlg-properties.c:412
-#: ../src/goo-window.c:590
+#: ../src/goo-window.c:595
 msgid "Artist"
 msgstr "Izvajalec"
 
@@ -506,29 +370,29 @@ msgstr "Neveljavna ciljna mapa: %s"
 msgid "Could not display the destination folder"
 msgstr "Ciljne mape ni mogoče prikazati"
 
-#: ../src/dlg-ripper.c:591
+#: ../src/dlg-ripper.c:592
 msgid "Tracks extracted successfully"
 msgstr "Skladbe so uspešno pretvorjenje"
 
-#: ../src/dlg-ripper.c:593
+#: ../src/dlg-ripper.c:594
 msgid "_View destination folder"
 msgstr "_Pogled ciljne mape"
 
-#: ../src/dlg-ripper.c:608
+#: ../src/dlg-ripper.c:609
 #, c-format
-msgid "<i>Extracting \"%s\"</i>"
-msgstr "<i>Pretvarjanje \"%s\"</i>"
+msgid "Extracting \"%s\""
+msgstr "Poteka pretvarjanje \"%s\""
 
-#: ../src/dlg-ripper.c:617
-#: ../src/dlg-ripper.c:626
+#: ../src/dlg-ripper.c:620
+#: ../src/dlg-ripper.c:629
 msgid "Could not extract tracks"
 msgstr "Skladb ni mogoče pretvoriti"
 
-#: ../src/dlg-ripper.c:656
+#: ../src/dlg-ripper.c:659
 msgid "Ripped with CD Player"
 msgstr "Pretvorjeno s CD predvajalnikom"
 
-#: ../src/dlg-ripper.c:702
+#: ../src/dlg-ripper.c:705
 msgid "Extracting disc tracks"
 msgstr "Pretvarjanje skladb diska"
 
@@ -563,47 +427,46 @@ msgstr "Predvajanje CD"
 #. translators: this is the current_time / total_time label
 #: ../src/goo-player-info.c:220
 #: ../src/goo-player-info.c:248
-#: ../src/goo-player-info.c:531
-#: ../src/goo-window.c:2110
+#: ../src/goo-player-info.c:554
+#: ../src/goo-window.c:1976
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
-#: ../src/goo-player-info.c:412
+#: ../src/goo-player-info.c:435
 msgid "Click here to choose a cover for this CD"
 msgstr "Za izbor ovitka kliknite tu"
 
-#: ../src/goo-player-info.c:669
-#: ../src/goo-window.c:1319
+#: ../src/goo-player-info.c:692
+#: ../src/goo-window.c:1216
 msgid "No disc"
 msgstr "Ni diska"
 
-#: ../src/goo-player-info.c:672
-#: ../src/goo-window.c:1324
+#: ../src/goo-player-info.c:695
+#: ../src/goo-window.c:1221
 msgid "Data disc"
 msgstr "Podatkovni disk"
 
-#: ../src/goo-player-info.c:687
-#: ../src/goo-window.c:1492
+#: ../src/goo-player-info.c:710
 msgid "Paused"
 msgstr "Premor"
 
-#: ../src/goo-player-info.c:696
+#: ../src/goo-player-info.c:719
 msgid "Ejecting CD"
 msgstr "Izmetavanje CD nosilca"
 
-#: ../src/goo-player-info.c:699
+#: ../src/goo-player-info.c:722
 msgid "Checking CD drive"
 msgstr "Preverjanje CD pogona"
 
-#: ../src/goo-player-info.c:702
-#: ../src/goo-player-info.c:705
+#: ../src/goo-player-info.c:725
+#: ../src/goo-player-info.c:728
 msgid "Reading CD"
 msgstr "Branje CD-ja"
 
-#: ../src/goo-player-info.c:708
-#: ../src/goo-window.c:1337
-#: ../src/goo-window.c:1502
+#: ../src/goo-player-info.c:731
+#: ../src/goo-window.c:1234
+#: ../src/goo-window.c:1380
 msgid "Audio CD"
 msgstr "Zvočni CD"
 
@@ -627,135 +490,121 @@ msgstr "G_lasnost"
 msgid "Volume level: %3.0f%%"
 msgstr "Raven glasnosti: %3.0f%%"
 
-#: ../src/goo-volume-tool-button.c:655
+#: ../src/goo-volume-tool-button.c:652
 msgid "+"
 msgstr "+"
 
-#: ../src/goo-volume-tool-button.c:697
+#: ../src/goo-volume-tool-button.c:694
 msgid "-"
 msgstr "-"
 
-#: ../src/goo-volume-tool-button.c:746
+#: ../src/goo-volume-tool-button.c:743
 msgid "Change the volume level"
 msgstr "Prilagodi raven glasnosti"
 
-#: ../src/goo-volume-tool-button.c:781
+#: ../src/goo-volume-tool-button.c:778
 msgid "Volume"
 msgstr "Glasnost"
 
-#: ../src/goo-window.c:51
+#: ../src/goo-window.c:52
 msgid "Hide _tracks"
 msgstr "Skrij _skladbe"
 
-#: ../src/goo-window.c:52
+#: ../src/goo-window.c:53
 msgid "Show _tracks"
 msgstr "Prikaži _skladbe"
 
-#: ../src/goo-window.c:183
-#, c-format
-msgid "%d track"
-msgid_plural "%d tracks"
-msgstr[0] "%d skladb"
-msgstr[1] "%d skladba"
-msgstr[2] "%d skladbi"
-msgstr[3] "%d skladbe"
-
-#: ../src/goo-window.c:614
+#: ../src/goo-window.c:619
 msgid "Length"
 msgstr "Dolžina"
 
-#: ../src/goo-window.c:1392
-#: ../src/ui.h:64
+#: ../src/goo-window.c:1289
+#: ../src/ui.h:48
 msgid "_Pause"
 msgstr "_Premor"
 
-#: ../src/goo-window.c:1393
-#: ../src/main.c:717
-#: ../src/ui.h:65
+#: ../src/goo-window.c:1290
+#: ../src/main.c:948
+#: ../src/ui.h:49
 msgid "Pause"
 msgstr "Premor"
 
-#: ../src/goo-window.c:1495
-msgid "No Disc"
-msgstr "Ni diska"
-
-#: ../src/goo-window.c:1498
-msgid "Data Disc"
-msgstr "Podatkovni disk"
-
-#: ../src/goo-window.c:1736
-#: ../src/goo-window.c:1754
-#: ../src/ui.h:52
-#: ../src/ui.h:56
-#: ../src/ui.h:60
+#: ../src/goo-window.c:1606
+#: ../src/goo-window.c:1624
+#: ../src/ui.h:36
+#: ../src/ui.h:40
+#: ../src/ui.h:44
 msgid "_Play"
 msgstr "_Predvajaj"
 
-#: ../src/goo-window.c:1737
-#: ../src/goo-window.c:1755
-#: ../src/main.c:724
-#: ../src/ui.h:57
+#: ../src/goo-window.c:1607
+#: ../src/goo-window.c:1625
+#: ../src/main.c:955
+#: ../src/ui.h:41
 msgid "Play"
 msgstr "Predvajaj"
 
-#: ../src/goo-window.c:2942
+#: ../src/goo-window.c:2346
+msgid "Other actions"
+msgstr "Druga dejanja"
+
+#: ../src/goo-window.c:2776
 msgid "Could not save cover image"
 msgstr "Slike ovitka ni mogoče shraniti"
 
-#: ../src/goo-window.c:2967
-#: ../src/goo-window.c:2993
+#: ../src/goo-window.c:2801
+#: ../src/goo-window.c:2827
 msgid "Could not load image"
 msgstr "Slike ni mogoče naložiti"
 
-#: ../src/goo-window.c:3062
+#: ../src/goo-window.c:2896
 msgid "Choose Disc Cover Image"
 msgstr "Izberite sliko za naslovnico diska"
 
-#: ../src/goo-window.c:3081
+#: ../src/goo-window.c:2915
 msgid "Images"
 msgstr "Slike"
 
-#: ../src/goo-window.c:3089
+#: ../src/goo-window.c:2923
 msgid "All files"
 msgstr "Vse datoteke"
 
-#: ../src/goo-window.c:3125
+#: ../src/goo-window.c:2959
 msgid "You have to enter the artist and album names in order to find the album cover."
 msgstr "Za iskanje ovitka albuma je treba vnesti ime izvajalca in albuma"
 
-#: ../src/goo-window.c:3170
+#: ../src/goo-window.c:3004
 msgid "_Show Window"
 msgstr "_Prikaži okno"
 
-#: ../src/goo-window.c:3171
+#: ../src/goo-window.c:3005
 msgid "Show the main window"
 msgstr "Prikaz glavnega okna"
 
-#: ../src/goo-window.c:3184
-#: ../src/ui.h:124
+#: ../src/goo-window.c:3018
+#: ../src/ui.h:108
 msgid "_Hide Window"
 msgstr "_Skrij okno"
 
-#. "H"
-#: ../src/goo-window.c:3185
-#: ../src/ui.h:125
+#: ../src/goo-window.c:3019
+#: ../src/ui.h:109
 msgid "Hide the main window"
 msgstr "Skrivanje glavnega okna"
 
-#: ../src/gtk-file-chooser-preview.c:170
+#: ../src/gtk-file-chooser-preview.c:166
 msgid "Preview"
 msgstr "Predogled"
 
-#: ../src/gtk-file-chooser-preview.c:271
+#: ../src/gtk-file-chooser-preview.c:267
 msgid "pixels"
 msgstr "točke"
 
-#: ../src/gtk-utils.c:753
+#: ../src/gtk-utils.c:754
 msgid "Could not display help"
 msgstr "Pomoči ni mogoče prikazati"
 
-#: ../src/gtk-utils.c:1021
-#: ../src/gtk-utils.c:1027
+#: ../src/gtk-utils.c:1040
+#: ../src/gtk-utils.c:1046
 msgid "Could not launch the application"
 msgstr "Programa ni mogoče zagnati"
 
@@ -776,17 +625,17 @@ msgid "Toggle play"
 msgstr "Preklopi predvajanje"
 
 #: ../src/main.c:82
-#: ../src/ui.h:69
+#: ../src/ui.h:53
 msgid "Stop playing"
 msgstr "Zaustavitev predvajanja"
 
 #: ../src/main.c:85
-#: ../src/ui.h:73
+#: ../src/ui.h:57
 msgid "Play the next track"
 msgstr "Predvajanje naslednje skladbe"
 
 #: ../src/main.c:88
-#: ../src/ui.h:77
+#: ../src/ui.h:61
 msgid "Play the previous track"
 msgstr "Predvajanje predhodne skladbe"
 
@@ -807,7 +656,7 @@ msgid "Volume Down"
 msgstr "Zmanjšaj glasnost"
 
 #: ../src/main.c:103
-#: ../src/ui.h:109
+#: ../src/ui.h:93
 msgid "Quit the application"
 msgstr "Končaj program"
 
@@ -815,15 +664,15 @@ msgstr "Končaj program"
 msgid "Show version"
 msgstr "Pokaži različico"
 
-#: ../src/main.c:292
+#: ../src/main.c:298
 msgid "Cannot start the CD player"
 msgstr "CD predvajalnika ni mogoče zagnati"
 
-#: ../src/main.c:293
+#: ../src/main.c:299
 msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgstr "Za branje CD-jev morate namestiti osnovne vstavke gstreamer"
 
-#: ../src/main.c:731
+#: ../src/main.c:962
 msgid "Next"
 msgstr "Naslednji"
 
@@ -832,152 +681,320 @@ msgstr "Naslednji"
 msgid "Track %u"
 msgstr "Skladba %u"
 
-#: ../src/ui.h:33
-msgid "_Disc"
-msgstr "_Disk"
+#: ../src/ui/app-menu.ui.h:1
+msgid "_Preferences"
+msgstr "_Možnosti"
 
-#: ../src/ui.h:34
-msgid "_Edit"
-msgstr "_Uredi"
+#: ../src/ui/app-menu.ui.h:2
+msgid "Play Mode"
+msgstr "Način predvajanja"
 
-#: ../src/ui.h:35
-msgid "_View"
-msgstr "_Pogled"
-
-#: ../src/ui.h:36
-msgid "_Help"
-msgstr "Pomo_č"
-
-#: ../src/ui.h:37
-msgid "C_over"
-msgstr "_Ovitek"
-
-#: ../src/ui.h:41
-msgid "Information about the program"
-msgstr "Podrobnosti o programu"
-
-#: ../src/ui.h:45
-msgid "Display the manual"
-msgstr "Prikaži priročnik"
-
-#: ../src/ui.h:48
-msgid "_Keyboard shortcuts"
-msgstr "_Tipkovne bližnjice"
-
-#: ../src/ui.h:53
-msgid "Play/Pause"
-msgstr "Predvajanje/Premor"
-
-#: ../src/ui.h:61
-msgid "Play this track"
-msgstr "Predvajaj to skladbo"
-
-#: ../src/ui.h:68
-msgid "_Stop"
-msgstr "Zau_stavi"
-
-#: ../src/ui.h:72
-msgid "_Next"
-msgstr "_Naslednja"
-
-#: ../src/ui.h:76
-msgid "Pre_v"
-msgstr "P_redhodna"
-
-#: ../src/ui.h:80
-#: ../src/ui.h:84
-msgid "_Eject"
-msgstr "_Izvrzi"
-
-#: ../src/ui.h:81
-#: ../src/ui.h:85
-msgid "Eject the disc"
-msgstr "Izvrzi disk"
-
-#: ../src/ui.h:89
-msgid "Edit various preferences"
-msgstr "Urejanje različnih možnosti"
-
-#: ../src/ui.h:92
-msgid "_Copy Disc"
-msgstr "_Kopiraj disk"
-
-#: ../src/ui.h:93
-msgid "Copy the content of this disc on another disc"
-msgstr "Kopiranje vsebine tega diska na drug disk"
-
-#: ../src/ui.h:96
-#: ../src/ui.h:100
-msgid "E_xtract Tracks"
-msgstr "Pretvori skladbe"
-
-#: ../src/ui.h:97
-msgid "Save the tracks to disk as files"
-msgstr "Shrani skladbe na disk kot datoteke"
-
-#: ../src/ui.h:101
-msgid "Save the selected tracks to disk as files"
-msgstr "Shranjevanje izbranih skladb na disk kot datoteke"
-
-#: ../src/ui.h:105
-msgid "Edit the disc artist, album and the tracks titles"
-msgstr "Urejanje izvajalca in albuma diska ter naslovov skladb"
-
-#: ../src/ui.h:112
-msgid "_Choose File..."
-msgstr "_Izberi datoteko ..."
-
-#: ../src/ui.h:113
-msgid "Choose a file to use as disc cover"
-msgstr "Izbor datoteke za uporabo kot naslovnica diska"
-
-#: ../src/ui.h:116
-msgid "_Search on Internet"
-msgstr "_Poišči na spletu"
-
-#: ../src/ui.h:117
-msgid "Search for a disc cover on Internet"
-msgstr "Iskanje ovitka diska na spletu"
-
-#: ../src/ui.h:121
-msgid "Remove current disc cover"
-msgstr "Odstrani trenutni ovitek diska"
-
-#: ../src/ui.h:137
-msgid "_Toolbar"
-msgstr "_Orodna vrstica"
-
-#: ../src/ui.h:138
-msgid "View the main toolbar"
-msgstr "Pokaži glavno orodno vrstico"
-
-#: ../src/ui.h:142
-msgid "Stat_usbar"
-msgstr "Vrstica _stanja"
-
-#: ../src/ui.h:143
-msgid "View the statusbar"
-msgstr "Pokaži vrstico stanja"
-
-#: ../src/ui.h:147
+#: ../src/ui/app-menu.ui.h:3
 msgid "Play _All"
 msgstr "Predvajaj _vse"
 
-#: ../src/ui.h:152
+#: ../src/ui/app-menu.ui.h:4
 msgid "_Repeat"
 msgstr "_Ponovi"
 
-#: ../src/ui.h:153
-msgid "Restart playing when finished"
-msgstr "Ponovno _predvajanje po koncu predvajanja"
-
-#: ../src/ui.h:157
+#: ../src/ui/app-menu.ui.h:5
 msgid "S_huffle"
 msgstr "P_remešaj"
 
-#: ../src/ui.h:158
-msgid "Play tracks in a random order"
-msgstr "Predvajanje skladb v naključnem vrstnem redu"
+#: ../src/ui/app-menu.ui.h:6
+msgid "_Help"
+msgstr "Pomo_č"
+
+#: ../src/ui/app-menu.ui.h:7
+msgid "_About CD Player"
+msgstr "_O predvajalniku CD"
+
+#: ../src/ui/app-menu.ui.h:8
+msgid "_Quit"
+msgstr "_Končaj"
+
+#: ../src/ui/cover-chooser.ui.h:1
+msgid "Choose a CD Cover"
+msgstr "Izbor CD ovitka"
+
+#: ../src/ui/cover-chooser.ui.h:2
+msgid "Found images:"
+msgstr "Najdene slike:"
+
+#: ../src/ui/extract.ui.h:1
+msgid "Extract Tracks"
+msgstr "Pretvorba skladb"
+
+#: ../src/ui/extract.ui.h:2
+msgid "Extract"
+msgstr "Pretvori"
+
+#: ../src/ui/extract.ui.h:3
+#: ../src/ui/preferences.ui.h:6
+msgid "    "
+msgstr "    "
+
+#: ../src/ui/extract.ui.h:4
+msgid "_All tracks"
+msgstr "_Vse skladbe"
+
+#: ../src/ui/extract.ui.h:5
+msgid "_Selected tracks"
+msgstr "_Izbrane skladbe"
+
+#: ../src/ui/format-options.ui.h:1
+msgid "Format Properties"
+msgstr "Lastnosti zapisa"
+
+#: ../src/ui.h:33
+msgid "C_over"
+msgstr "_Ovitek"
+
+#: ../src/ui.h:37
+msgid "Play/Pause"
+msgstr "Predvajanje/Premor"
+
+#: ../src/ui.h:45
+msgid "Play this track"
+msgstr "Predvajaj to skladbo"
+
+#: ../src/ui.h:52
+msgid "_Stop"
+msgstr "Zau_stavi"
+
+#: ../src/ui.h:56
+msgid "_Next"
+msgstr "_Naslednja"
+
+#: ../src/ui.h:60
+msgid "Pre_v"
+msgstr "P_redhodna"
+
+#: ../src/ui.h:64
+#: ../src/ui.h:68
+msgid "_Eject"
+msgstr "_Izvrzi"
+
+#: ../src/ui.h:65
+#: ../src/ui.h:69
+msgid "Eject the disc"
+msgstr "Izvrzi disk"
+
+#: ../src/ui.h:72
+msgid "_Copy Disc"
+msgstr "_Kopiraj disk"
+
+#: ../src/ui.h:73
+msgid "Copy the content of this disc on another disc"
+msgstr "Kopiranje vsebine tega diska na drug disk"
+
+#: ../src/ui.h:76
+#: ../src/ui.h:80
+msgid "E_xtract Tracks"
+msgstr "Pretvori skladbe"
+
+#: ../src/ui.h:77
+msgid "Save the tracks to disk as files"
+msgstr "Shrani skladbe na disk kot datoteke"
+
+#: ../src/ui.h:81
+msgid "Save the selected tracks to disk as files"
+msgstr "Shranjevanje izbranih skladb na disk kot datoteke"
+
+#: ../src/ui.h:85
+msgid "Edit the disc artist, album and the tracks titles"
+msgstr "Urejanje izvajalca in albuma diska ter naslovov skladb"
+
+#: ../src/ui.h:96
+msgid "_Choose File..."
+msgstr "_Izberi datoteko ..."
+
+#: ../src/ui.h:97
+msgid "Choose a file to use as disc cover"
+msgstr "Izbor datoteke za uporabo kot naslovnica diska"
+
+#: ../src/ui.h:100
+msgid "_Search on Internet"
+msgstr "_Poišči na spletu"
+
+#: ../src/ui.h:101
+msgid "Search for a disc cover on Internet"
+msgstr "Iskanje ovitka diska na spletu"
+
+#: ../src/ui.h:105
+msgid "Remove current disc cover"
+msgstr "Odstrani trenutni ovitek diska"
+
+#: ../src/ui/preferences.ui.h:1
+msgid "CD Player Preferences"
+msgstr "Nastavitve CD predvajalnika"
+
+#: ../src/ui/preferences.ui.h:2
+msgid "CD Drive"
+msgstr "Pogon CD"
+
+#: ../src/ui/preferences.ui.h:3
+msgid "Automatically play newly inserted discs"
+msgstr "Samodejno predvajanje novo vstavljenih diskov"
+
+#: ../src/ui/preferences.ui.h:4
+msgid "General"
+msgstr "Splošno"
+
+#: ../src/ui/preferences.ui.h:5
+msgid "Destination folder"
+msgstr "Ciljna mapa"
+
+#: ../src/ui/preferences.ui.h:7
+msgid "Choose destination folder"
+msgstr "Izbor ciljne mape"
+
+#: ../src/ui/preferences.ui.h:8
+msgid "Output format"
+msgstr "Izhodni zapis"
+
+#: ../src/ui/preferences.ui.h:9
+msgid "_Save playlist"
+msgstr "_Shrani seznam predvajanja"
+
+#: ../src/ui/preferences.ui.h:10
+msgid "Extraction"
+msgstr "Pretvarjanje"
+
+#: ../src/ui/properties.ui.h:1
+msgid "Single artist"
+msgstr "En izvajalec"
+
+#: ../src/ui/properties.ui.h:2
+msgid "Various artists"
+msgstr "Različni izvajalci"
+
+#: ../src/ui/properties.ui.h:3
+msgid "Properties"
+msgstr "Lastnosti"
+
+#: ../src/ui/properties.ui.h:4
+msgid "_Title:"
+msgstr "_Naslov:"
+
+#: ../src/ui/properties.ui.h:5
+msgid "T_racks:"
+msgstr "S_kladbe:"
+
+#: ../src/ui/properties.ui.h:6
+msgid "_Artist:"
+msgstr "_Izvajalec:"
+
+#: ../src/ui/properties.ui.h:7
+msgid "_Year:"
+msgstr "_Leto:"
+
+#: ../src/ui/properties.ui.h:8
+msgid "Search for the remaining data"
+msgstr "Iskanje preostalih podatkov"
+
+#: ../src/ui/properties.ui.h:9
+msgid "No album found."
+msgstr "Albuma ni mogoče najti."
+
+#: ../src/ui/ripper.ui.h:1
+msgid "Extracting Tracks"
+msgstr "Pretvarjanje skladb"
+
+#: ../src/ui/ripper.ui.h:2
+msgid "Extracting tracks"
+msgstr "Pretvarjanje skladb"
+
+#~ msgid "Statusbar visibility"
+#~ msgstr "Vidljivost vrstice stanja"
+
+#~ msgid "Toolbar style"
+#~ msgstr "Slog orodne vrstice"
+
+#~ msgid "Toolbar visibility"
+#~ msgstr "Vidnost orodne vrstice"
+
+#~ msgid "<b>Extract</b>"
+#~ msgstr "<b>Pretvori</b>"
+
+#~ msgid ""
+#~ "<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
+#~ "compresses but does not degrade audio quality.</i></small>"
+#~ msgstr ""
+#~ "<small><i>Brezplačni kodek za kodiranje brez zvočnih izgub (FLAC) je "
+#~ "odprtokodni kodek, ki zvok stisne, vendar ne poslabša njegove kakovosti.</"
+#~ "i></small>"
+
+#~ msgid ""
+#~ "<small><i>Vorbis is an open source, lossy audio codec with high quality "
+#~ "output at a lower file size than MP3.</i></small>"
+#~ msgstr ""
+#~ "<small><i>Vorbis je odprtokodni kodek za kodiranje z izgubami, z visoko "
+#~ "kakovostnim odvodom pri manjši velikosti datoteke kot MP3.</i></small>"
+
+#~ msgid ""
+#~ "<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
+#~ "code modulated (PCM) audio.</i></small>"
+#~ msgstr ""
+#~ "<small><i>WAV+PCM je oblika zapisa kodirana brez zvočnih izgub, ki "
+#~ "vsebuje nestisnjen, surov pulzirajoče-kodno moduliran (PCM) zvok.</i></"
+#~ "small>"
+
+#~ msgid "<big><b>Extracting tracks</b></big>"
+#~ msgstr "<big><b>Pretvarjanje skladb</b></big>"
+
+#~ msgid "%d track"
+
+#~ msgid_plural "%d tracks"
+#~ msgstr[0] "%d skladb"
+#~ msgstr[1] "%d skladba"
+#~ msgstr[2] "%d skladbi"
+#~ msgstr[3] "%d skladbe"
+
+#~ msgid "No Disc"
+#~ msgstr "Ni diska"
+
+#~ msgid "Data Disc"
+#~ msgstr "Podatkovni disk"
+
+#~ msgid "_Disc"
+#~ msgstr "_Disk"
+
+#~ msgid "_Edit"
+#~ msgstr "_Uredi"
+
+#~ msgid "_View"
+#~ msgstr "_Pogled"
+
+#~ msgid "Information about the program"
+#~ msgstr "Podrobnosti o programu"
+
+#~ msgid "Display the manual"
+#~ msgstr "Prikaži priročnik"
+
+#~ msgid "_Keyboard shortcuts"
+#~ msgstr "_Tipkovne bližnjice"
+
+#~ msgid "Edit various preferences"
+#~ msgstr "Urejanje različnih možnosti"
+
+#~ msgid "_Toolbar"
+#~ msgstr "_Orodna vrstica"
+
+#~ msgid "View the main toolbar"
+#~ msgstr "Pokaži glavno orodno vrstico"
+
+#~ msgid "Stat_usbar"
+#~ msgstr "Vrstica _stanja"
+
+#~ msgid "View the statusbar"
+#~ msgstr "Pokaži vrstico stanja"
+
+#~ msgid "Restart playing when finished"
+#~ msgstr "Ponovno _predvajanje po koncu predvajanja"
+
+#~ msgid "Play tracks in a random order"
+#~ msgstr "Predvajanje skladb v naključnem vrstnem redu"
 
 #~ msgid ""
 #~ "Possible values are: system, text_below, text_beside, text_only, "
