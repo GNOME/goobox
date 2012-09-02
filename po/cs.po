@@ -6,21 +6,21 @@
 # Miloslav Trmac <mitr@volny.cz>, 2005.
 # Petr Kovar <pknbe@volny.cz>, 2008.
 # Adrian Guniš <andygun696@gmail.com>, 2008, 2010.
-# Marek Černocký <marek@manet.cz>, 2011.
+# Marek Černocký <marek@manet.cz>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=goobox&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-06-05 15:05+0000\n"
-"PO-Revision-Date: 2011-06-08 20:31+0200\n"
-"Last-Translator: Adrian Guniš <andygun696@gmail.com>\n"
+"POT-Creation-Date: 2012-06-03 20:02+0000\n"
+"PO-Revision-Date: 2012-09-02 13:06+0200\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
-"Language: cs\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../copy-n-paste/eggdesktopfile.c:165
@@ -50,7 +50,6 @@ msgstr "Nerozpoznaná volba spuštění: %d"
 
 #: ../copy-n-paste/eggdesktopfile.c:1385
 #, c-format
-#| msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgid "Can't pass documents to this desktop element"
 msgstr "Tomuto prvku pracovní plochy nelze předat dokumenty"
 
@@ -88,7 +87,8 @@ msgid "Show session management options"
 msgstr "Zobrazit volby Správy sezení"
 
 #: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:159
-#: ../src/goo-window.c:2084 ../src/goo-window.c:2520 ../src/main.c:237
+#: ../src/goo-window.c:1374 ../src/goo-window.c:1998 ../src/goo-window.c:2438
+#: ../src/main.c:245
 msgid "CD Player"
 msgstr "Přehrávač CD"
 
@@ -97,261 +97,100 @@ msgid "Play and extract CDs"
 msgstr "Přehrávat a extrahovat CD"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:1
-#| msgid "Choose Disc Cover Image"
-msgid "'Choose cover' location"
-msgstr "Umístění „Zvolit přebal“"
+msgid "Device path"
+msgstr "Cesta k zařízení"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:2
-#| msgid "Stop playing"
-msgid "Autoplay"
-msgstr "Automaticky přehrát"
+msgid "Volume level"
+msgstr "Úroveň hlasitosti"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:3
-msgid "Autoplay discs after insertion."
-msgstr "Po vložení disk automaticky přehrát."
+msgid "'Choose cover' location"
+msgstr "Umístění „Zvolit přebal“"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:4
 msgid "Default location for the 'Choose cover' dialog."
 msgstr "Výchozí umístění pro dialogové okno „Zvolit přebal“."
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:5
-msgid "Device path"
-msgstr "Cesta k zařízení"
+msgid "Use Sound Juicer to rip discs"
+msgstr "K extrahování disků použít Sound Juicer"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:6
-#| msgid "Extraction"
-msgid "Extraction folder"
-msgstr "Složka pro extrahování"
+msgid "Autoplay"
+msgstr "Automaticky přehrát"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:7
-#| msgid "Higher quality"
-msgid "FLAC files quality"
-msgstr "Kvalita souborů FLAC"
+msgid "Autoplay discs after insertion."
+msgstr "Po vložení disk automaticky přehrát."
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:8
-msgid "File type"
-msgstr "Typ souboru"
+msgid "Window width"
+msgstr "Šířka okna"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:9
-#| msgid "Higher quality"
-msgid "MP3 files quality"
-msgstr "Kvalita souborů MP3"
+msgid "Window height"
+msgstr "Výška okna"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:10
-#| msgid "Higher quality"
-msgid "OGG files quality"
-msgstr "Kvalita souborů OGG"
+msgid "Playlist visibility"
+msgstr "Viditelnost seznamu skladeb"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:11 ../src/ui.h:148
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:11
 msgid "Play all tracks"
 msgstr "Přehrávat všechny stopy"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:12
-msgid "Playlist sort method"
-msgstr "Způsob řazení seznamu skladeb"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
-msgid "Playlist sort type"
-msgstr "Typ řazení seznamu skladeb"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
-msgid "Playlist visibility"
-msgstr "Viditelnost seznamu skladeb"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
-msgid "Possible values are: ogg, flac, mp3, wave."
-msgstr "Možné hodnoty jsou: ogg, flac, mp3, wave."
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
-#| msgid "Restart playing when finished"
-msgid "Restart when finished"
-msgstr "Po dokončení přehrávání začít znovu"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
-#| msgid "_Save playlist"
-msgid "Save the playlist"
-msgstr "Uložit seznam skladeb"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
-msgid "Save the playlist of the extracted tracks."
-msgstr "Uložit seznam skladeb extrahovaných stop."
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
-#| msgid "_Save playlist"
 msgid "Shuffle playlist"
 msgstr "Zamíchat seznam skladeb"
 
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
+msgid "Restart when finished"
+msgstr "Po dokončení přehrávání začít znovu"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
+msgid "Playlist sort method"
+msgstr "Způsob řazení seznamu skladeb"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
+msgid "Playlist sort type"
+msgstr "Typ řazení seznamu skladeb"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
+msgid "Extraction folder"
+msgstr "Složka pro extrahování"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
+msgid "File type"
+msgstr "Typ souboru"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "Možné hodnoty jsou: ogg, flac, mp3, wave."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
+msgid "Save the playlist"
+msgstr "Uložit seznam skladeb"
+
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:20
-#| msgid "Stat_usbar"
-msgid "Statusbar visibility"
-msgstr "Viditelnost stavové lišty"
+msgid "Save the playlist of the extracted tracks."
+msgstr "Uložit seznam skladeb extrahovaných stop."
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:21
-#| msgid "_Toolbar"
-msgid "Toolbar style"
-msgstr "Styl lišty nástrojů"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
-msgid "Toolbar visibility"
-msgstr "Viditelnost lišty nástrojů"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
-msgid "Use Sound Juicer to rip discs"
-msgstr "K extrahování disků použít Sound Juicer"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:24
-#| msgid "_View destination folder"
 msgid "View the destination"
 msgstr "Zobrazit cílovou složku"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:25
-#| msgid "Volume level: %3.0f%%"
-msgid "Volume level"
-msgstr "Úroveň hlasitosti"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
+msgid "OGG files quality"
+msgstr "Kvalita souborů OGG"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:26
-msgid "Window height"
-msgstr "Výška okna"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
+msgid "FLAC files quality"
+msgstr "Kvalita souborů FLAC"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:27
-msgid "Window width"
-msgstr "Šířka okna"
-
-#: ../data/ui/cover-chooser.ui.h:1
-msgid "Choose a CD Cover"
-msgstr "Zvolte přebal CD"
-
-#: ../data/ui/cover-chooser.ui.h:2
-msgid "Found images:"
-msgstr "Nalezené obrázky:"
-
-#: ../data/ui/extract.ui.h:1 ../data/ui/preferences.ui.h:1
-msgid "    "
-msgstr "    "
-
-#: ../data/ui/extract.ui.h:2
-msgid "<b>Extract</b>"
-msgstr "<b>Extrahovat</b>"
-
-#: ../data/ui/extract.ui.h:3
-msgid "Extract Tracks"
-msgstr "Extrahovat stopy"
-
-#: ../data/ui/extract.ui.h:4
-msgid "_All tracks"
-msgstr "_Všechny stopy"
-
-#: ../data/ui/extract.ui.h:5
-msgid "_Selected tracks"
-msgstr "_Zvolené stopy"
-
-#: ../data/ui/format-options.ui.h:1
-msgid "Format Properties"
-msgstr "Vlastnosti formátu"
-
-#: ../data/ui/preferences.ui.h:2
-msgid "<b>CD Drive</b>"
-msgstr "<b>Mechanika CD</b>"
-
-#: ../data/ui/preferences.ui.h:3
-msgid "<b>Destination folder</b>"
-msgstr "<b>Cílová složka</b>"
-
-#: ../data/ui/preferences.ui.h:4
-msgid "<b>Output format</b>"
-msgstr "<b>Výstupní formát</b>"
-
-#: ../data/ui/preferences.ui.h:5
-msgid ""
-"<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
-"compresses but does not degrade audio quality.</i></small>"
-msgstr ""
-"<small><i>Svobodný bezeztrátový zvukový kodek (FLAC) je kodek s otevřeným "
-"zdrojovým kódem, který komprimuje, ale nesnižuje kvalitu zvuku.</i></small>"
-
-#: ../data/ui/preferences.ui.h:6
-msgid ""
-"<small><i>Vorbis is an open source, lossy audio codec with high quality "
-"output at a lower file size than MP3.</i></small>"
-msgstr ""
-"<small><i>Vorbis je ztrátový zvukový kodek s otevřeným zdrojovým kódem, s "
-"vysoce kvalitním výstupem a menší velikostí souboru než MP3.</i></small>"
-
-#: ../data/ui/preferences.ui.h:7
-msgid ""
-"<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
-"code modulated (PCM) audio.</i></small>"
-msgstr ""
-"<small><i>WAV+PCM je bezeztrátový formát, který uchovává nekomprimovaný, "
-"neupravený pulzně kódově modulovaný (Pulse-Code Modulated) zvuk.</i></small>"
-
-#: ../data/ui/preferences.ui.h:8
-msgid "Automatically play newly inserted discs"
-msgstr "Automaticky přehrávat nově vložené disky"
-
-#: ../data/ui/preferences.ui.h:9
-msgid "CD Player Preferences"
-msgstr "Předvolby přehrávače CD"
-
-#: ../data/ui/preferences.ui.h:10
-msgid "Choose destination folder"
-msgstr "Zvolte cílovou složku"
-
-#: ../data/ui/preferences.ui.h:11
-msgid "Extraction"
-msgstr "Extrakce"
-
-#: ../data/ui/preferences.ui.h:12
-msgid "General"
-msgstr "Obecné"
-
-#: ../data/ui/preferences.ui.h:13
-msgid "_Save playlist"
-msgstr "_Uložit seznam skladeb"
-
-#: ../data/ui/properties.ui.h:1
-msgid "No album found."
-msgstr "Nenalezeno žádné album."
-
-#: ../data/ui/properties.ui.h:2
-msgid "Properties"
-msgstr "Vlastnosti"
-
-#: ../data/ui/properties.ui.h:3
-msgid "Search for the remaining data"
-msgstr "Hledat zbývající data"
-
-#: ../data/ui/properties.ui.h:4
-msgid "Single artist"
-msgstr "Jediný umělec"
-
-#: ../data/ui/properties.ui.h:5
-msgid "T_racks:"
-msgstr "_Stopy:"
-
-#: ../data/ui/properties.ui.h:6
-msgid "Various artists"
-msgstr "Různí umělci"
-
-#: ../data/ui/properties.ui.h:7
-msgid "_Artist:"
-msgstr "_Umělec:"
-
-#: ../data/ui/properties.ui.h:8
-msgid "_Title:"
-msgstr "_Název:"
-
-#: ../data/ui/properties.ui.h:9
-msgid "_Year:"
-msgstr "_Rok:"
-
-#: ../data/ui/ripper.ui.h:1
-msgid "<big><b>Extracting tracks</b></big>"
-msgstr "<big><b>Extrahování stop</b></big>"
-
-#: ../data/ui/ripper.ui.h:2
-msgid "Extracting Tracks"
-msgstr "Extrahují se stopy"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:24
+msgid "MP3 files quality"
+msgstr "Kvalita souborů MP3"
 
 #: ../src/actions.c:139
 msgid "translator_credits"
@@ -394,15 +233,14 @@ msgstr ""
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
 
 #: ../src/actions.c:161
-#| msgid "Copyright © 2004-2009 Free Software Foundation, Inc."
 msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
 msgstr "Copyright © 2004 – 2011 Free Software Foundation, Inc."
 
-#: ../src/actions.c:162 ../src/main.c:334 ../src/main.c:447
+#: ../src/actions.c:162 ../src/main.c:340 ../src/main.c:453
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "Přehrávat CD a uložit stopy na disk jako soubory"
 
-#: ../src/actions.c:308 ../src/actions.c:343 ../src/actions.c:376
+#: ../src/actions.c:290 ../src/actions.c:325 ../src/actions.c:358
 msgid "Could not execute command"
 msgstr "Nelze provést příkaz"
 
@@ -415,7 +253,7 @@ msgstr "Různí"
 msgid "%u, loading image: %u"
 msgstr "%u, načítá se obrázek: %u"
 
-#: ../src/dlg-cover-chooser.c:336 ../src/goo-window.c:3080
+#: ../src/dlg-cover-chooser.c:336 ../src/goo-window.c:2960
 msgid "Could not search for a cover on Internet"
 msgstr "Nelze hledat obal na Internetu"
 
@@ -440,20 +278,20 @@ msgstr ""
 msgid "No encoder available."
 msgstr "Není k dispozici žádný kodér."
 
-#: ../src/dlg-preferences.c:246 ../src/dlg-preferences.c:479
+#: ../src/dlg-preferences.c:248 ../src/dlg-preferences.c:484
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:258 ../src/dlg-preferences.c:482
+#: ../src/dlg-preferences.c:260 ../src/dlg-preferences.c:487
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:270
+#: ../src/dlg-preferences.c:272
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:296 ../src/dlg-preferences.c:506
+#: ../src/dlg-preferences.c:298 ../src/dlg-preferences.c:511
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
@@ -461,7 +299,7 @@ msgstr ""
 "Vorbis je ztrátový zvukový kodek s otevřeným zdrojovým kódem, s vysoce "
 "kvalitním výstupem a menší velikostí souboru než MP3."
 
-#: ../src/dlg-preferences.c:297 ../src/dlg-preferences.c:509
+#: ../src/dlg-preferences.c:299 ../src/dlg-preferences.c:514
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
@@ -469,7 +307,7 @@ msgstr ""
 "Svobodný bezeztrátový zvukový kodek (FLAC) je kodek s otevřeným zdrojovým "
 "kódem, který komprimuje, ale nesnižuje kvalitu zvuku."
 
-#: ../src/dlg-preferences.c:298 ../src/dlg-preferences.c:512
+#: ../src/dlg-preferences.c:300 ../src/dlg-preferences.c:517
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
@@ -477,52 +315,52 @@ msgstr ""
 "WAV+PCM je bezeztrátový formát, který uchovává nekomprimovaný, neupravený "
 "pulzně kódově modulovaný (Pulse-Code Modulated) zvuk."
 
-#: ../src/dlg-preferences.c:454
+#: ../src/dlg-preferences.c:459
 msgid "Faster compression"
 msgstr "Rychlejší komprese"
 
-#: ../src/dlg-preferences.c:458
+#: ../src/dlg-preferences.c:463
 msgid "Higher compression"
 msgstr "Lepší komprese"
 
-#: ../src/dlg-preferences.c:465
+#: ../src/dlg-preferences.c:470
 msgid "Smaller size"
 msgstr "Menší velikost"
 
-#: ../src/dlg-preferences.c:469
+#: ../src/dlg-preferences.c:474
 msgid "Higher quality"
 msgstr "Vyšší kvalita"
 
-#: ../src/dlg-preferences.c:493
+#: ../src/dlg-preferences.c:498
 msgid "Quality:"
 msgstr "Kvalita:"
 
-#: ../src/dlg-preferences.c:496
+#: ../src/dlg-preferences.c:501
 msgid "Compression level:"
 msgstr "Úroveň komprese:"
 
-#: ../src/dlg-properties.c:191
+#: ../src/dlg-properties.c:224
 #, c-format
 msgid "Album %d of %d"
 msgstr "Album %d z %d"
 
-#: ../src/dlg-properties.c:242
+#: ../src/dlg-properties.c:282
 msgid "No album found"
 msgstr "Nenalezeno žádné album"
 
-#: ../src/dlg-properties.c:258
+#: ../src/dlg-properties.c:301
 msgid "Searching disc info..."
 msgstr "Hledají se informace o disku…"
 
-#: ../src/dlg-properties.c:318 ../src/goo-window.c:536
+#: ../src/dlg-properties.c:361 ../src/goo-window.c:547
 msgid "#"
 msgstr "č."
 
-#: ../src/dlg-properties.c:336 ../src/goo-window.c:561
+#: ../src/dlg-properties.c:379 ../src/goo-window.c:572
 msgid "Title"
 msgstr "Název"
 
-#: ../src/dlg-properties.c:369 ../src/goo-window.c:584
+#: ../src/dlg-properties.c:412 ../src/goo-window.c:595
 msgid "Artist"
 msgstr "Umělec"
 
@@ -554,28 +392,28 @@ msgstr "Neplatná cílová složka: %s"
 msgid "Could not display the destination folder"
 msgstr "Nelze zobrazit cílovou složku"
 
-#: ../src/dlg-ripper.c:591
+#: ../src/dlg-ripper.c:592
 msgid "Tracks extracted successfully"
 msgstr "Stopy úspěšně extrahovány"
 
-#: ../src/dlg-ripper.c:593
+#: ../src/dlg-ripper.c:594
 msgid "_View destination folder"
 msgstr "_Zobrazit cílovou složku"
 
-#: ../src/dlg-ripper.c:608
+#: ../src/dlg-ripper.c:609
 #, c-format
-msgid "<i>Extracting \"%s\"</i>"
-msgstr "<i>Extrahuje se „%s“</i>"
+msgid "Extracting \"%s\""
+msgstr "Extrahuje se „%s“"
 
-#: ../src/dlg-ripper.c:617 ../src/dlg-ripper.c:626
+#: ../src/dlg-ripper.c:620 ../src/dlg-ripper.c:629
 msgid "Could not extract tracks"
 msgstr "Nelze extrahovat stopy"
 
-#: ../src/dlg-ripper.c:656
+#: ../src/dlg-ripper.c:659
 msgid "Ripped with CD Player"
 msgstr "Kopírováno pomocí Přehrávače CD"
 
-#: ../src/dlg-ripper.c:702
+#: ../src/dlg-ripper.c:705
 msgid "Extracting disc tracks"
 msgstr "Extrahují se stopy disku"
 
@@ -608,41 +446,42 @@ msgid "Playing CD"
 msgstr "Přehrává se CD"
 
 #. translators: this is the current_time / total_time label
-#: ../src/goo-player-info.c:217 ../src/goo-player-info.c:245
-#: ../src/goo-player-info.c:534 ../src/goo-window.c:2066
+#: ../src/goo-player-info.c:220 ../src/goo-player-info.c:248
+#: ../src/goo-player-info.c:552 ../src/goo-window.c:1980
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
-#: ../src/goo-player-info.c:409
+#: ../src/goo-player-info.c:433
 msgid "Click here to choose a cover for this CD"
 msgstr "Kliknutím sem zvolte přebal pro toto CD"
 
-#: ../src/goo-player-info.c:636
+#: ../src/goo-player-info.c:690 ../src/goo-window.c:1217
 msgid "No disc"
 msgstr "Žádný disk"
 
-#: ../src/goo-player-info.c:641
+#: ../src/goo-player-info.c:693 ../src/goo-window.c:1222
 msgid "Data disc"
 msgstr "Datový disk"
 
-#: ../src/goo-player-info.c:656 ../src/goo-window.c:1448
+#: ../src/goo-player-info.c:708
 msgid "Paused"
 msgstr "Pozastaveno"
 
-#: ../src/goo-player-info.c:665
+#: ../src/goo-player-info.c:717
 msgid "Ejecting CD"
 msgstr "Vysová se CD"
 
-#: ../src/goo-player-info.c:669
+#: ../src/goo-player-info.c:720
 msgid "Checking CD drive"
 msgstr "Kontroluje se mechanika CD"
 
-#: ../src/goo-player-info.c:673 ../src/goo-player-info.c:677
+#: ../src/goo-player-info.c:723 ../src/goo-player-info.c:726
 msgid "Reading CD"
 msgstr "Probíhá čtení CD"
 
-#: ../src/goo-player-info.c:693 ../src/goo-window.c:1458
+#: ../src/goo-player-info.c:729 ../src/goo-window.c:1235
+#: ../src/goo-window.c:1381
 msgid "Audio CD"
 msgstr "Zvukové CD"
 
@@ -664,125 +503,112 @@ msgstr "_Hlasitost"
 msgid "Volume level: %3.0f%%"
 msgstr "Úroveň hlasitosti: %3.0f%%"
 
-#: ../src/goo-volume-tool-button.c:655
+#: ../src/goo-volume-tool-button.c:652
 msgid "+"
 msgstr "+"
 
-#: ../src/goo-volume-tool-button.c:697
+#: ../src/goo-volume-tool-button.c:694
 msgid "-"
 msgstr "-"
 
-#: ../src/goo-volume-tool-button.c:746
+#: ../src/goo-volume-tool-button.c:743
 msgid "Change the volume level"
 msgstr "Změnit úroveň hlasitosti"
 
-#: ../src/goo-volume-tool-button.c:781
+#: ../src/goo-volume-tool-button.c:778
 msgid "Volume"
 msgstr "Hlasitost"
 
-#: ../src/goo-window.c:51
+#: ../src/goo-window.c:52
 msgid "Hide _tracks"
 msgstr "Skrýt _stopy"
 
-#: ../src/goo-window.c:52
+#: ../src/goo-window.c:53
 msgid "Show _tracks"
 msgstr "Zobrazit _stopy"
 
-#: ../src/goo-window.c:182
-#, c-format
-msgid "%d track"
-msgid_plural "%d tracks"
-msgstr[0] "%d stopa"
-msgstr[1] "%d stopy"
-msgstr[2] "%d stop"
-
-#: ../src/goo-window.c:608
+#: ../src/goo-window.c:619
 msgid "Length"
 msgstr "Délka"
 
-#: ../src/goo-window.c:1347 ../src/ui.h:64
+#: ../src/goo-window.c:1290 ../src/ui.h:48
 msgid "_Pause"
 msgstr "_Pozastavit"
 
-#: ../src/goo-window.c:1348 ../src/main.c:718 ../src/ui.h:65
+#: ../src/goo-window.c:1291 ../src/main.c:948 ../src/ui.h:49
 msgid "Pause"
 msgstr "Pozastavit"
 
-#: ../src/goo-window.c:1451
-msgid "No Disc"
-msgstr "Žádný disk"
-
-#: ../src/goo-window.c:1454
-msgid "Data Disc"
-msgstr "Datový disk"
-
-#: ../src/goo-window.c:1692 ../src/goo-window.c:1710 ../src/ui.h:52
-#: ../src/ui.h:56 ../src/ui.h:60
+#: ../src/goo-window.c:1610 ../src/goo-window.c:1628 ../src/ui.h:36
+#: ../src/ui.h:40 ../src/ui.h:44
 msgid "_Play"
 msgstr "_Přehrávat"
 
-#: ../src/goo-window.c:1693 ../src/goo-window.c:1711 ../src/main.c:725
-#: ../src/ui.h:57
+#: ../src/goo-window.c:1611 ../src/goo-window.c:1629 ../src/main.c:955
+#: ../src/ui.h:41
 msgid "Play"
 msgstr "Přehrávat"
 
-#: ../src/goo-window.c:2898
+#: ../src/goo-window.c:2348
+msgid "Other actions"
+msgstr "Ostatní činnosti"
+
+#: ../src/goo-window.c:2778
 msgid "Could not save cover image"
 msgstr "Nelze uložit obrázek přebalu"
 
-#: ../src/goo-window.c:2923 ../src/goo-window.c:2949
+#: ../src/goo-window.c:2803 ../src/goo-window.c:2829
 msgid "Could not load image"
 msgstr "Nelze načíst obrázek"
 
-#: ../src/goo-window.c:3018
+#: ../src/goo-window.c:2898
 msgid "Choose Disc Cover Image"
 msgstr "Zvolte obrázek přebalu disku"
 
-#: ../src/goo-window.c:3037
+#: ../src/goo-window.c:2917
 msgid "Images"
 msgstr "Obrázky"
 
-#: ../src/goo-window.c:3045
+#: ../src/goo-window.c:2925
 msgid "All files"
 msgstr "Všechny soubory"
 
-#: ../src/goo-window.c:3081
+#: ../src/goo-window.c:2961
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 msgstr ""
 "Abyste mohli vyhledat přebal alba, musíte zadat jméno umělce a název alba."
 
-#: ../src/goo-window.c:3126
+#: ../src/goo-window.c:3006
 msgid "_Show Window"
 msgstr "_Zobrazit okno"
 
-#: ../src/goo-window.c:3127
+#: ../src/goo-window.c:3007
 msgid "Show the main window"
 msgstr "Zobrazit hlavní okno"
 
-#: ../src/goo-window.c:3140 ../src/ui.h:124
+#: ../src/goo-window.c:3020 ../src/ui.h:108
 msgid "_Hide Window"
 msgstr "_Skrýt okno"
 
-#. "H"
-#: ../src/goo-window.c:3141 ../src/ui.h:125
+#: ../src/goo-window.c:3021 ../src/ui.h:109
 msgid "Hide the main window"
 msgstr "Skrýt hlavní okno"
 
-#: ../src/gtk-file-chooser-preview.c:170
+#: ../src/gtk-file-chooser-preview.c:166
 msgid "Preview"
 msgstr "Náhled"
 
-#: ../src/gtk-file-chooser-preview.c:271
+#: ../src/gtk-file-chooser-preview.c:267
 msgid "pixels"
 msgstr "pixelů"
 
-#: ../src/gtk-utils.c:753
+#: ../src/gtk-utils.c:754
 msgid "Could not display help"
 msgstr "Nelze zobrazit nápovědu"
 
-#: ../src/gtk-utils.c:1021 ../src/gtk-utils.c:1027
+#: ../src/gtk-utils.c:1040 ../src/gtk-utils.c:1046
 msgid "Could not launch the application"
 msgstr "Aplikaci nelze spustit"
 
@@ -802,15 +628,15 @@ msgstr "Přehrávat CD po spuštění"
 msgid "Toggle play"
 msgstr "Přepnout přehrávání"
 
-#: ../src/main.c:82 ../src/ui.h:69
+#: ../src/main.c:82 ../src/ui.h:53
 msgid "Stop playing"
 msgstr "Zastavit přehrávání"
 
-#: ../src/main.c:85 ../src/ui.h:73
+#: ../src/main.c:85 ../src/ui.h:57
 msgid "Play the next track"
 msgstr "Přehrávat následující stopu"
 
-#: ../src/main.c:88 ../src/ui.h:77
+#: ../src/main.c:88 ../src/ui.h:61
 msgid "Play the previous track"
 msgstr "Přehrávat předchozí stopu"
 
@@ -819,7 +645,6 @@ msgid "Eject the CD"
 msgstr "Vysunout CD"
 
 #: ../src/main.c:94
-#| msgid "Show the main window"
 msgid "Toggle the main window visibility"
 msgstr "Přepnout zobrazení hlavního okna"
 
@@ -831,7 +656,7 @@ msgstr "Zesílit"
 msgid "Volume Down"
 msgstr "Zeslabit"
 
-#: ../src/main.c:103 ../src/ui.h:109
+#: ../src/main.c:103 ../src/ui.h:93
 msgid "Quit the application"
 msgstr "Ukončit aplikaci"
 
@@ -839,16 +664,16 @@ msgstr "Ukončit aplikaci"
 msgid "Show version"
 msgstr "Zobrazit verzi"
 
-#: ../src/main.c:292
+#: ../src/main.c:298
 msgid "Cannot start the CD player"
 msgstr "Nelze spustit přehrávač CD"
 
-#: ../src/main.c:293
+#: ../src/main.c:299
 msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgstr ""
 "Aby bylo možné číst CD, musíte nainstalovat zásuvné moduly gstreamer base"
 
-#: ../src/main.c:732
+#: ../src/main.c:962
 msgid "Next"
 msgstr "Následující"
 
@@ -857,146 +682,222 @@ msgstr "Následující"
 msgid "Track %u"
 msgstr "Stopa %u"
 
-#: ../src/ui.h:33
-msgid "_Disc"
-msgstr "_Disk"
+#: ../src/ui/app-menu.ui.h:1
+msgid "_Preferences"
+msgstr "_Předvolby"
 
-#: ../src/ui.h:34
-msgid "_Edit"
-msgstr "_Upravit"
+#: ../src/ui/app-menu.ui.h:2
+msgid "Play Mode"
+msgstr "Režim přehrávání"
 
-#: ../src/ui.h:35
-msgid "_View"
-msgstr "_Zobrazit"
-
-#: ../src/ui.h:36
-msgid "_Help"
-msgstr "_Nápověda"
-
-#: ../src/ui.h:37
-msgid "C_over"
-msgstr "Pře_bal"
-
-#: ../src/ui.h:41
-msgid "Information about the program"
-msgstr "Informace o programu"
-
-#: ../src/ui.h:45
-msgid "Display the manual"
-msgstr "Zobrazit příručku"
-
-#: ../src/ui.h:48
-msgid "_Keyboard shortcuts"
-msgstr "_Klávesové zkratky"
-
-#: ../src/ui.h:53
-msgid "Play/Pause"
-msgstr "Přehrávat/pozastavit"
-
-#: ../src/ui.h:61
-msgid "Play this track"
-msgstr "Přehrávat tuto stopu"
-
-#: ../src/ui.h:68
-msgid "_Stop"
-msgstr "_Zastavit"
-
-#: ../src/ui.h:72
-msgid "_Next"
-msgstr "_Následující"
-
-#: ../src/ui.h:76
-msgid "Pre_v"
-msgstr "Př_edchozí"
-
-#: ../src/ui.h:80 ../src/ui.h:84
-msgid "_Eject"
-msgstr "V_ysunout"
-
-#: ../src/ui.h:81 ../src/ui.h:85
-msgid "Eject the disc"
-msgstr "Vysunout disk"
-
-#: ../src/ui.h:89
-msgid "Edit various preferences"
-msgstr "Upravit různé předvolby"
-
-#: ../src/ui.h:92
-msgid "_Copy Disc"
-msgstr "_Kopírovat disk"
-
-#: ../src/ui.h:93
-msgid "Copy the content of this disc on another disc"
-msgstr "Zkopírovat obsah tohoto disku na jiný disk"
-
-#: ../src/ui.h:96 ../src/ui.h:100
-msgid "E_xtract Tracks"
-msgstr "E_xtrahovat stopy"
-
-#: ../src/ui.h:97
-msgid "Save the tracks to disk as files"
-msgstr "Uložit stopy na disk jako soubory"
-
-#: ../src/ui.h:101
-msgid "Save the selected tracks to disk as files"
-msgstr "Uložit zvolené stopy na disk jako soubory"
-
-#: ../src/ui.h:105
-msgid "Edit the disc artist, album and the tracks titles"
-msgstr "Upravit u disku jméno umělce, název alba a názvy stop"
-
-#: ../src/ui.h:112
-msgid "_Choose File..."
-msgstr "_Vybrat soubor…"
-
-#: ../src/ui.h:113
-msgid "Choose a file to use as disc cover"
-msgstr "Vyberte soubor použitý jako přebal disku"
-
-#: ../src/ui.h:116
-msgid "_Search on Internet"
-msgstr "_Hledat na Internetu"
-
-#: ../src/ui.h:117
-msgid "Search for a disc cover on Internet"
-msgstr "Hledat přebal disku na Internetu"
-
-#: ../src/ui.h:121
-msgid "Remove current disc cover"
-msgstr "Odstranit současný přebal disku"
-
-#: ../src/ui.h:137
-msgid "_Toolbar"
-msgstr "_Lišta nástrojů"
-
-#: ../src/ui.h:138
-msgid "View the main toolbar"
-msgstr "Zobrazit hlavní lištu nástrojů"
-
-#: ../src/ui.h:142
-msgid "Stat_usbar"
-msgstr "_Stavová lišta"
-
-#: ../src/ui.h:143
-msgid "View the statusbar"
-msgstr "Zobrazit stavovou lištu"
-
-#: ../src/ui.h:147
+#: ../src/ui/app-menu.ui.h:3
 msgid "Play _All"
 msgstr "Přehrávat _vše"
 
-#: ../src/ui.h:152
+#: ../src/ui/app-menu.ui.h:4
 msgid "_Repeat"
 msgstr "O_pakovat"
 
-#: ../src/ui.h:153
-msgid "Restart playing when finished"
-msgstr "Po dokončení přehrávání začít znovu"
-
-#: ../src/ui.h:157
+#: ../src/ui/app-menu.ui.h:5
 msgid "S_huffle"
 msgstr "_Zamíchat"
 
-#: ../src/ui.h:158
-msgid "Play tracks in a random order"
-msgstr "Přehrávat stopy v náhodném pořadí"
+#: ../src/ui/app-menu.ui.h:6
+msgid "_Help"
+msgstr "_Nápověda"
+
+#: ../src/ui/app-menu.ui.h:7
+msgid "_About CD Player"
+msgstr "O přehráv_ači CD"
+
+#: ../src/ui/app-menu.ui.h:8
+msgid "_Quit"
+msgstr "U_končit"
+
+#: ../src/ui/cover-chooser.ui.h:1
+msgid "Choose a CD Cover"
+msgstr "Zvolte přebal CD"
+
+#: ../src/ui/cover-chooser.ui.h:2
+msgid "Found images:"
+msgstr "Nalezené obrázky:"
+
+#: ../src/ui/extract.ui.h:1
+msgid "Extract Tracks"
+msgstr "Extrahovat stopy"
+
+#: ../src/ui/extract.ui.h:2
+msgid "Extract"
+msgstr "Extrahovat"
+
+#: ../src/ui/extract.ui.h:3 ../src/ui/preferences.ui.h:6
+msgid "    "
+msgstr "    "
+
+#: ../src/ui/extract.ui.h:4
+msgid "_All tracks"
+msgstr "_Všechny stopy"
+
+#: ../src/ui/extract.ui.h:5
+msgid "_Selected tracks"
+msgstr "_Zvolené stopy"
+
+#: ../src/ui/format-options.ui.h:1
+msgid "Format Properties"
+msgstr "Vlastnosti formátu"
+
+#: ../src/ui.h:33
+msgid "C_over"
+msgstr "Pře_bal"
+
+#: ../src/ui.h:37
+msgid "Play/Pause"
+msgstr "Přehrávat/pozastavit"
+
+#: ../src/ui.h:45
+msgid "Play this track"
+msgstr "Přehrávat tuto stopu"
+
+#: ../src/ui.h:52
+msgid "_Stop"
+msgstr "_Zastavit"
+
+#: ../src/ui.h:56
+msgid "_Next"
+msgstr "_Následující"
+
+#: ../src/ui.h:60
+msgid "Pre_v"
+msgstr "Př_edchozí"
+
+#: ../src/ui.h:64 ../src/ui.h:68
+msgid "_Eject"
+msgstr "V_ysunout"
+
+#: ../src/ui.h:65 ../src/ui.h:69
+msgid "Eject the disc"
+msgstr "Vysunout disk"
+
+#: ../src/ui.h:72
+msgid "_Copy Disc"
+msgstr "_Kopírovat disk"
+
+#: ../src/ui.h:73
+msgid "Copy the content of this disc on another disc"
+msgstr "Zkopírovat obsah tohoto disku na jiný disk"
+
+#: ../src/ui.h:76 ../src/ui.h:80
+msgid "E_xtract Tracks"
+msgstr "E_xtrahovat stopy"
+
+#: ../src/ui.h:77
+msgid "Save the tracks to disk as files"
+msgstr "Uložit stopy na disk jako soubory"
+
+#: ../src/ui.h:81
+msgid "Save the selected tracks to disk as files"
+msgstr "Uložit zvolené stopy na disk jako soubory"
+
+#: ../src/ui.h:85
+msgid "Edit the disc artist, album and the tracks titles"
+msgstr "Upravit u disku jméno umělce, název alba a názvy stop"
+
+#: ../src/ui.h:96
+msgid "_Choose File..."
+msgstr "_Vybrat soubor…"
+
+#: ../src/ui.h:97
+msgid "Choose a file to use as disc cover"
+msgstr "Vyberte soubor použitý jako přebal disku"
+
+#: ../src/ui.h:100
+msgid "_Search on Internet"
+msgstr "_Hledat na Internetu"
+
+#: ../src/ui.h:101
+msgid "Search for a disc cover on Internet"
+msgstr "Hledat přebal disku na Internetu"
+
+#: ../src/ui.h:105
+msgid "Remove current disc cover"
+msgstr "Odstranit současný přebal disku"
+
+#: ../src/ui/preferences.ui.h:1
+msgid "CD Player Preferences"
+msgstr "Předvolby přehrávače CD"
+
+#: ../src/ui/preferences.ui.h:2
+msgid "CD Drive"
+msgstr "Mechanika CD"
+
+#: ../src/ui/preferences.ui.h:3
+msgid "Automatically play newly inserted discs"
+msgstr "Automaticky přehrávat nově vložené disky"
+
+#: ../src/ui/preferences.ui.h:4
+msgid "General"
+msgstr "Obecné"
+
+#: ../src/ui/preferences.ui.h:5
+msgid "Destination folder"
+msgstr "Cílová složka"
+
+#: ../src/ui/preferences.ui.h:7
+msgid "Choose destination folder"
+msgstr "Zvolte cílovou složku"
+
+#: ../src/ui/preferences.ui.h:8
+msgid "Output format"
+msgstr "Výstupní formát"
+
+#: ../src/ui/preferences.ui.h:9
+msgid "_Save playlist"
+msgstr "_Uložit seznam skladeb"
+
+#: ../src/ui/preferences.ui.h:10
+msgid "Extraction"
+msgstr "Extrakce"
+
+#: ../src/ui/properties.ui.h:1
+msgid "Single artist"
+msgstr "Jediný umělec"
+
+#: ../src/ui/properties.ui.h:2
+msgid "Various artists"
+msgstr "Různí umělci"
+
+#: ../src/ui/properties.ui.h:3
+msgid "Properties"
+msgstr "Vlastnosti"
+
+#: ../src/ui/properties.ui.h:4
+msgid "_Title:"
+msgstr "_Název:"
+
+#: ../src/ui/properties.ui.h:5
+msgid "T_racks:"
+msgstr "_Stopy:"
+
+#: ../src/ui/properties.ui.h:6
+msgid "_Artist:"
+msgstr "_Umělec:"
+
+#: ../src/ui/properties.ui.h:7
+msgid "_Year:"
+msgstr "_Rok:"
+
+#: ../src/ui/properties.ui.h:8
+msgid "Search for the remaining data"
+msgstr "Hledat zbývající data"
+
+#: ../src/ui/properties.ui.h:9
+msgid "No album found."
+msgstr "Nenalezeno žádné album."
+
+#: ../src/ui/ripper.ui.h:1
+msgid "Extracting Tracks"
+msgstr "Extrahují se stopy"
+
+#: ../src/ui/ripper.ui.h:2
+msgid "Extracting tracks"
+msgstr "Extrahují se stopy"
