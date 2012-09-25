@@ -5,172 +5,81 @@
 #
 #
 # Bruno Brouard <annoa.b@gmail.com>, 2007.
-# Julien Hardelin <jhardlin@orange.fr>, 2010, 2011.
+# Julien Hardelin <jhardlin@orange.fr>, 2010, 2011, 2012.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox 1.0 fr\n"
-"POT-Creation-Date: 2011-10-18 19:52+0000\n"
-"PO-Revision-Date: 2011-11-24 13:47+0100\n"
-"Last-Translator: Julien Hardelin <jhardlin@orange.fr>\n"
-"Language-Team: French <GNOME French Team <gnomefr@traduc.org>>\n"
+"POT-Creation-Date: 2012-09-25 16:46+0000\n"
+"PO-Revision-Date: 2012-09-25 18:46+0200\n"
+"Last-Translator: Julien hardelin <jhardlin@orange.fr>\n"
+"Language-Team: français <GNOME French Team <gnomefr@traduc.org>>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: C/shortcuts.page:6(title) C/shortcuts.page:44(key)
-msgid "1"
-msgstr "1"
-
-#: C/shortcuts.page:8(title)
-msgid "Keyboard Shortcuts"
-msgstr "Raccourcis clavier"
-
-#: C/shortcuts.page:9(p)
-msgid ""
-"Quick reference for some useful keyword shortcuts. Look in the menus for "
-"other available shortcuts."
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
 msgstr ""
-"Référence rapide pour quelques raccourcis clavier utiles. Reportez-vous aux "
-"menus pour les autres raccourcis clavier disponibles."
+"Bruno Brouard <annoa.b@gmail.com>, 2007\n"
+"Julien Hardelin <jhardlin{AT}orange{POINT}fr>, 2010, 2011, 2012"
 
-#: C/shortcuts.page:14(p)
-msgid "Keyboard Shortcut"
-msgstr "Raccourci clavier"
+#: C/index.page:4(credit/name)
+msgid "Paolo Bacchilega"
+msgstr "Paolo Bacchilega"
 
-#: C/shortcuts.page:15(p)
-msgid "Description"
-msgstr "Description"
+#: C/index.page:6(credit/years)
+msgid "2005-2011"
+msgstr "2005-2011"
 
-#: C/shortcuts.page:20(key)
-msgid "Space"
-msgstr "Espace"
+#: C/index.page:15(page/title)
+msgid "<app>CD Player</app> Help"
+msgstr "Manuel du <app>Lecteur de CD Goobox</app> "
 
-#: C/shortcuts.page:21(p)
-msgid "Play/Pause the current track"
-msgstr "Lecture/Pause de la piste actuelle"
+#: C/index.page:16(page/p)
+msgid ""
+"With <app>CD Player</app> you can play audio Compact Discs (CDs) and save "
+"the CD tracks as audio files."
+msgstr ""
+"Grâce au <app>lecteur de CD Goobox</app>, vous pouvez lire des disques "
+"compacts audio (CD) et enregistrer les pistes du CD sous la forme de "
+"fichiers audio."
 
-#: C/shortcuts.page:24(key)
-msgid "Escape"
-msgstr "Échap"
+#: C/legal.xml:4(p/link)
+msgid "Creative Commons Attribution-Share Alike 3.0 Unported License"
+msgstr ""
+"Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - "
+"Partage dans les Mêmes Conditions 3.0 non transposée"
 
-#: C/shortcuts.page:25(p)
-msgid "Stop playing the current track"
-msgstr "Arrêt de la lecture de la piste actuelle"
+#: C/legal.xml:3(license/p)
+msgid "This work is licensed under a <_:link-1/>."
+msgstr ""
+"Cette œuvre est sous licence <ulink url=\"http://creativecommons.org/"
+"licenses/by-nc-sa/3.0/deed.fr\"/>."
 
-#: C/shortcuts.page:28(key)
-msgid "N"
-msgstr "N"
+#: C/legal.xml:6(license/p)
+msgid ""
+"As a special exception, the copyright holders give you permission to copy, "
+"modify, and distribute the example code contained in this document under the "
+"terms of your choosing, without restriction."
+msgstr ""
+"À titre exceptionnel, les propriétaires du copyright vous donnent la "
+"permission de copier, modifier et distribuer le code d'exemple contenu dans "
+"ce document dans les termes de votre choix, sans restriction."
 
-#: C/shortcuts.page:29(p)
-msgid "Play the next track"
-msgstr "Lecture de la piste suivante"
-
-#: C/shortcuts.page:32(key)
-msgid "P"
-msgstr "P"
-
-#: C/shortcuts.page:33(p)
-msgid "Play the previous track"
-msgstr "Lecture de la piste précédente"
-
-#: C/shortcuts.page:36(key)
-msgid "J"
-msgstr "J"
-
-#: C/shortcuts.page:37(p)
-msgid "Eject the CD from the tray"
-msgstr "Éjection du CD"
-
-#: C/shortcuts.page:40(key)
-msgid "E"
-msgstr "E"
-
-#: C/shortcuts.page:41(p)
-msgid "Open the <app>Extract</app> dialog"
-msgstr "Ouverture de la boite de dialogue <app>Extraction</app>"
-
-#: C/shortcuts.page:45(p)
-msgid "Play the 1st track"
-msgstr "Lecture de la 1re piste"
-
-#: C/shortcuts.page:48(key)
-msgid "2"
-msgstr "2"
-
-#: C/shortcuts.page:49(p)
-msgid "Play the 2nd track"
-msgstr "Lecture de la 2e piste"
-
-#: C/shortcuts.page:52(key)
-msgid "3"
-msgstr "3"
-
-#: C/shortcuts.page:53(p)
-msgid "Play the 3rd track"
-msgstr "Lecture de la 3e piste"
-
-#: C/shortcuts.page:56(key)
-msgid "4"
-msgstr "4"
-
-#: C/shortcuts.page:57(p)
-msgid "Play the 4th track"
-msgstr "Lecture de la 4e piste"
-
-#: C/shortcuts.page:60(key)
-msgid "5"
-msgstr "5"
-
-#: C/shortcuts.page:61(p)
-msgid "Play the 5th track"
-msgstr "Lecture de la 5e piste"
-
-#: C/shortcuts.page:64(key)
-msgid "6"
-msgstr "6"
-
-#: C/shortcuts.page:65(p)
-msgid "Play the 6th track"
-msgstr "Lecture de la 6e piste"
-
-#: C/shortcuts.page:68(key)
-msgid "7"
-msgstr "7"
-
-#: C/shortcuts.page:69(p)
-msgid "Play the 7th track"
-msgstr "Lecture de la 7e piste"
-
-#: C/shortcuts.page:72(key)
-msgid "8"
-msgstr "8"
-
-#: C/shortcuts.page:73(p)
-msgid "Play the 8th track"
-msgstr "Lecture de la 8e piste"
-
-#: C/shortcuts.page:76(key)
-msgid "9"
-msgstr "9"
-
-#: C/shortcuts.page:77(p)
-msgid "Play the 9th track"
-msgstr "Lecture de la 9e piste"
-
-#: C/shortcuts.page:80(key) C/preferences.page:6(title)
+#: C/preferences.page:6(info/title)
+msgctxt "sort"
 msgid "0"
 msgstr "0"
 
-#: C/shortcuts.page:81(p)
-msgid "Play the 10th track"
-msgstr "Lecture de la 10e piste"
-
-#: C/preferences.page:8(title)
+#: C/preferences.page:8(page/title)
 msgid "Preferences"
 msgstr "Préférences"
 
-#: C/preferences.page:9(p)
+#: C/preferences.page:9(page/p)
 msgid ""
 "To configure <app>CD Player</app> open the <app>Preferences</app> dialog by "
 "choosing <guiseq><gui style=\"menu\">Edit</gui><gui style=\"menuitem"
@@ -180,31 +89,31 @@ msgstr ""
 "dialogue <app>Préférences</app> en choisissant <guiseq><gui style=\"menu"
 "\">Édition</gui><gui style=\"menuitem\">Préférences</gui></guiseq>."
 
-#: C/preferences.page:13(p)
+#: C/preferences.page:13(page/p)
 msgid ""
 "This dialog contains two tabs described in detail below. At the bottom of "
 "the dialog window, you'll find the following buttons:"
 msgstr ""
-"Cette boite de dialogue contient deux onglets décrits en détails ci-dessous. "
-"En bas de cette fenêtre se trouvent les boutons suivants :"
+"Cette boîte de dialogue contient deux onglets décrits en détails ci-dessous. "
+"En bas de cette fenêtre se trouvent les boutons suivants :"
 
-#: C/preferences.page:19(gui)
-msgid "Help"
-msgstr "Manuel"
+#: C/preferences.page:19(item/title)
+msgid "<gui style=\"button\">Help</gui>"
+msgstr "<gui style=\"button\">Aide</gui>"
 
-#: C/preferences.page:20(p)
+#: C/preferences.page:20(item/p)
 msgid "Shows this page."
 msgstr "Affiche cette page."
 
-#: C/preferences.page:23(gui)
-msgid "Close"
-msgstr "Fermer"
+#: C/preferences.page:23(item/title)
+msgid "<gui style=\"button\">Close</gui>"
+msgstr "<gui style=\"button\">Fermer</gui>"
 
-#: C/preferences.page:24(p)
+#: C/preferences.page:24(item/p)
 msgid "Closes the dialog."
-msgstr "Ferme la boite de dialogue."
+msgstr "Ferme la boîte de dialogue."
 
-#: C/preferences.page:27(p)
+#: C/preferences.page:27(page/p)
 msgid ""
 "Keep in mind that when you change an option it will automatically applied. "
 "This is why there is no <gui style=\"button\">Ok</gui> or <gui style=\"button"
@@ -214,31 +123,31 @@ msgstr ""
 "automatiquement. C'est pourquoi il n'y a pas de bouton <gui style=\"button"
 "\">Valider</gui> ou <gui style>Appliquer</gui>."
 
-#: C/preferences.page:34(title)
+#: C/preferences.page:34(section/title)
 msgid "General Tab"
 msgstr "Onglet Général"
 
-#: C/preferences.page:35(p)
+#: C/preferences.page:35(section/p)
 msgid "This tab allows you to set the following options:"
-msgstr "Cet onglet vous permet de paramétrer les options suivantes :"
+msgstr "Cet onglet vous permet de paramétrer les options suivantes :"
 
-#: C/preferences.page:38(p)
+#: C/preferences.page:38(item/p)
 msgid "Select the device to use."
 msgstr "Choix du périphérique à utiliser"
 
-#: C/preferences.page:40(p)
+#: C/preferences.page:40(item/p)
 msgid "Whether to automatically play a newly inserted disk."
 msgstr "Lecture automatique des disques nouvellement insérés"
 
-#: C/preferences.page:46(title)
+#: C/preferences.page:46(section/title)
 msgid "Extraction Tab"
 msgstr "Onglet Extraction"
 
-#: C/preferences.page:47(p)
+#: C/preferences.page:47(section/p)
 msgid "This tab allows you to set the extraction options:"
 msgstr "Cet onglet vous permet de paramétrer les options d'extraction :"
 
-#: C/preferences.page:49(p)
+#: C/preferences.page:49(item/p)
 msgid ""
 "The destination folder. Files are saved in a subfolder of the destination "
 "folder, following the scheme Artist/Album/track."
@@ -246,7 +155,7 @@ msgstr ""
 "Dossier de destination. Les fichiers sont enregistrés dans un sous-dossier "
 "du dossier de destination, selon le schéma Artiste/Album/piste."
 
-#: C/preferences.page:51(p)
+#: C/preferences.page:51(item/p)
 msgid ""
 "The audio files format to use. Some formats allow you to set the quality of "
 "the file, this can be useful because usually there is a trade-off between "
@@ -259,7 +168,7 @@ msgstr ""
 "Utilisez le bouton <gui style=\"button\">Propriétés</gui> pour paramétrer "
 "les propriétés du format de fichier."
 
-#: C/preferences.page:57(p)
+#: C/preferences.page:57(item/p)
 msgid ""
 "Whether to save a playlist file in PLS format that contains the list of the "
 "extracted files. The playlist is saved in the same folder of the audio files."
@@ -268,34 +177,155 @@ msgstr ""
 "la liste des fichiers extraits. La liste de lecture est enregistrée dans le "
 "même dossier que les fichiers audio."
 
-#: C/index.page:4(name)
-msgid "Paolo Bacchilega"
-msgstr "Paolo Bacchilega"
+#: C/shortcuts.page:6(info/title)
+msgctxt "sort"
+msgid "1"
+msgstr "1"
 
-#: C/index.page:5(email)
-msgid "paobac@src.gnome.org"
-msgstr "paobac@src.gnome.org"
+#: C/shortcuts.page:8(page/title)
+msgid "Keyboard Shortcuts"
+msgstr "Raccourcis clavier"
 
-#: C/index.page:6(years)
-msgid "2005-2011"
-msgstr "2005-2011"
-
-#: C/index.page:15(title)
-msgid "<app>CD Player</app> Help"
-msgstr "Manuel du <app>Lecteur de CD Goobox</app> "
-
-#: C/index.page:16(p)
+#: C/shortcuts.page:9(page/p)
 msgid ""
-"With <app>CD Player</app> you can play audio Compact Discs (CDs) and save "
-"the CD tracks as audio files."
+"Quick reference for some useful keyword shortcuts. Look in the menus for "
+"other available shortcuts."
 msgstr ""
-"Grâce au <app>lecteur de CD Goobox</app>, vous pouvez lire des disques "
-"compacts audio (CD) et enregistrer les pistes du CD sous la forme de "
-"fichiers audio."
+"Référence rapide pour quelques raccourcis clavier utiles. Reportez-vous aux "
+"menus pour les autres raccourcis clavier disponibles."
 
-#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
-#: C/index.page:0(None)
-msgid "translator-credits"
-msgstr ""
-"Bruno Brouard <annoa.b@gmail.com>, 2007\n"
-"Julien Hardelin <jhardlin{AT}orange{POINT}fr>, 2010, 2011"
+#: C/shortcuts.page:14(td/p)
+msgid "Keyboard Shortcut"
+msgstr "Raccourci clavier"
+
+#: C/shortcuts.page:15(td/p)
+msgid "Description"
+msgstr "Description"
+
+#: C/shortcuts.page:20(td/p)
+msgid "<key>Space</key>"
+msgstr "<key>Espace</key>"
+
+#: C/shortcuts.page:21(td/p)
+msgid "Play/Pause the current track"
+msgstr "Lecture/Pause de la piste actuelle"
+
+#: C/shortcuts.page:24(td/p)
+msgid "<key>Escape</key>"
+msgstr "<key>Échap</key>"
+
+#: C/shortcuts.page:25(td/p)
+msgid "Stop playing the current track"
+msgstr "Arrêt de la lecture de la piste actuelle"
+
+#: C/shortcuts.page:28(td/p)
+msgid "<key>N</key>"
+msgstr "<key>S</key>"
+
+#: C/shortcuts.page:29(td/p)
+msgid "Play the next track"
+msgstr "Lecture de la piste suivante"
+
+#: C/shortcuts.page:32(td/p)
+msgid "<key>P</key>"
+msgstr "<key>P</key>"
+
+#: C/shortcuts.page:33(td/p)
+msgid "Play the previous track"
+msgstr "Lecture de la piste précédente"
+
+#: C/shortcuts.page:36(td/p)
+msgid "<key>J</key>"
+msgstr "<key>J</key>"
+
+#: C/shortcuts.page:37(td/p)
+msgid "Eject the CD from the tray"
+msgstr "Éjection du CD"
+
+#: C/shortcuts.page:40(td/p)
+msgid "<key>E</key>"
+msgstr "<key>X</key>"
+
+#: C/shortcuts.page:41(td/p)
+msgid "Open the <app>Extract</app> dialog"
+msgstr "Ouverture de la boite de dialogue <app>Extraction</app>"
+
+#: C/shortcuts.page:44(td/p)
+msgid "<key>1</key>"
+msgstr "<key>1</key>"
+
+#: C/shortcuts.page:45(td/p)
+msgid "Play the 1st track"
+msgstr "Lecture de la 1re piste"
+
+#: C/shortcuts.page:48(td/p)
+msgid "<key>2</key>"
+msgstr "<key>2</key>"
+
+#: C/shortcuts.page:49(td/p)
+msgid "Play the 2nd track"
+msgstr "Lecture de la 2e piste"
+
+#: C/shortcuts.page:52(td/p)
+msgid "<key>3</key>"
+msgstr "<key>3</key>"
+
+#: C/shortcuts.page:53(td/p)
+msgid "Play the 3rd track"
+msgstr "Lecture de la 3e piste"
+
+#: C/shortcuts.page:56(td/p)
+msgid "<key>4</key>"
+msgstr "<key>4</key>"
+
+#: C/shortcuts.page:57(td/p)
+msgid "Play the 4th track"
+msgstr "Lecture de la 4e piste"
+
+#: C/shortcuts.page:60(td/p)
+msgid "<key>5</key>"
+msgstr "<key>5</key>"
+
+#: C/shortcuts.page:61(td/p)
+msgid "Play the 5th track"
+msgstr "Lecture de la 5e piste"
+
+#: C/shortcuts.page:64(td/p)
+msgid "<key>6</key>"
+msgstr "<key>6</key>"
+
+#: C/shortcuts.page:65(td/p)
+msgid "Play the 6th track"
+msgstr "Lecture de la 6e piste"
+
+#: C/shortcuts.page:68(td/p)
+msgid "<key>7</key>"
+msgstr "<key>7</key>"
+
+#: C/shortcuts.page:69(td/p)
+msgid "Play the 7th track"
+msgstr "Lecture de la 7e piste"
+
+#: C/shortcuts.page:72(td/p)
+msgid "<key>8</key>"
+msgstr "<key>8</key>"
+
+#: C/shortcuts.page:73(td/p)
+msgid "Play the 8th track"
+msgstr "Lecture de la 8e piste"
+
+#: C/shortcuts.page:76(td/p)
+msgid "<key>9</key>"
+msgstr "<key>9</key>"
+
+#: C/shortcuts.page:77(td/p)
+msgid "Play the 9th track"
+msgstr "Lecture de la 9e piste"
+
+#: C/shortcuts.page:80(td/p)
+msgid "<key>0</key>"
+msgstr "<key>0</key>"
+
+#: C/shortcuts.page:81(td/p)
+msgid "Play the 10th track"
+msgstr "Lecture de la 10e piste"
