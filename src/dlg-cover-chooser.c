@@ -194,6 +194,8 @@ destroy_cb (GtkWidget  *widget,
 		return;
 	}
 
+	g_signal_handlers_disconnect_by_data (data->icon_view, data);
+
 	g_object_unref (data->cancellable);
 	_g_string_list_free (data->file_list);
 	_g_object_unref (data->cover_backup);
