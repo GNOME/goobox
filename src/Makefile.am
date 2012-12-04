@@ -92,10 +92,12 @@ goo-marshal.c: goo-marshal.list $(GLIB_GENMARSHAL)
 	echo "#include \"goo-marshal.h\"" > $@ && \
 	$(GLIB_GENMARSHAL) $< --body --prefix=goo_marshal >> $@
 
-goo-resources.c: goobox.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies goobox.gresource.xml)
+RESOURCES_DEP = $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies --sourcedir=$(srcdir) $(srcdir)/goobox.gresource.xml)
+
+goo-resources.c: goobox.gresource.xml $(RESOURCES_DEP)
 	$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name goo $(srcdir)/goobox.gresource.xml
 
-goo-resources.h: goobox.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies goobox.gresource.xml)
+goo-resources.h: goobox.gresource.xml $(RESOURCES_DEP)
 	$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name goo $(srcdir)/goobox.gresource.xml
 
 goobox_LDADD = 				\
