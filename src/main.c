@@ -736,11 +736,6 @@ main (int argc, char *argv[])
 
 	program_argv0 = argv[0];
 
-	if (! g_thread_supported ()) {
-		g_thread_init (NULL);
-		gdk_threads_init ();
-	}
-
 	/* text domain */
 
 	bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
@@ -750,9 +745,8 @@ main (int argc, char *argv[])
 	/* run the main application */
 
 	application = goo_application_new ();
-	gdk_threads_enter ();
 	status = g_application_run (G_APPLICATION (application), argc, argv);
-	gdk_threads_leave ();
+
 	g_object_unref (application);
 
 	return status;
