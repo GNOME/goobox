@@ -261,16 +261,6 @@ time_scale_button_press_cb (GtkRange         *range,
 			    GdkEventButton   *event,
 			    GooPlayerInfo    *info)
 {
-        /* In an audio player when clicking on the progress bar the user expect
-         * to jump to the specified position directly instead of scrolling one
-         * page up or down as happens by default in Gtk+.  The button 2
-         * behavior is what we want by default for button 1. */
-
-        if (event->button == 1)
-                event->button = 2;
-        else if (event->button == 2)
-                event->button = 1;
-
 	info->priv->dragging = TRUE;
 	info->priv->update_id = g_timeout_add (UPDATE_TIMEOUT,
 					       update_time_label_cb,
@@ -284,14 +274,6 @@ time_scale_button_release_cb (GtkRange         *range,
 			      GdkEventButton   *event,
 			      GooPlayerInfo    *info)
 {
-        /* Swap button 1 and 2 behaviors, see time_scale_button_press_cb
-         * for an explanation. */
-
-        if (event->button == 1)
-                event->button = 2;
-        else if (event->button == 2)
-                event->button = 1;
-
 	if (info->priv->update_id != 0) {
 		g_source_remove (info->priv->update_id);
 		info->priv->update_id = 0;
