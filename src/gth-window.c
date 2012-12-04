@@ -41,7 +41,7 @@ static GtkWindowClass *parent_class = NULL;
 struct _GthWindowPrivate {
 	int         n_pages;
 	int         current_page;
-	GtkWidget  *table;
+	GtkWidget  *layout;
 	GtkWidget  *notebook;
 	GtkWidget  *menubar;
 	GtkWidget  *toolbar;
@@ -59,21 +59,15 @@ gth_window_set_n_pages (GthWindow *self,
 
 	self->priv->n_pages = n_pages;
 
-	self->priv->table = gtk_table_new (4, 1, FALSE);
-	gtk_widget_show (self->priv->table);
-	gtk_container_add (GTK_CONTAINER (self), self->priv->table);
+	self->priv->layout = gtk_grid_new ();
+	gtk_widget_show (self->priv->layout);
+	gtk_container_add (GTK_CONTAINER (self), self->priv->layout);
 
 	self->priv->notebook = gtk_notebook_new ();
 	gtk_notebook_set_show_tabs (GTK_NOTEBOOK (self->priv->notebook), FALSE);
 	gtk_notebook_set_show_border (GTK_NOTEBOOK (self->priv->notebook), FALSE);
 	gtk_widget_show (self->priv->notebook);
-	gtk_table_attach (GTK_TABLE (self->priv->table),
-			  self->priv->notebook,
-			  0, 1,
-			  2, 3,
-			  GTK_EXPAND | GTK_FILL,
-			  GTK_EXPAND | GTK_FILL,
-			  0, 0);
+	gtk_grid_attach (GTK_GRID (self->priv->layout), self->priv->notebook, 0, 2, 1, 1);
 
 	self->priv->toolbars = g_new0 (GtkWidget *, n_pages);
 	self->priv->contents = g_new0 (GtkWidget *, n_pages);
@@ -193,7 +187,7 @@ static void
 gth_window_init (GthWindow *window)
 {
 	window->priv = GTH_WINDOW_GET_PRIVATE (window);
-	window->priv->table = NULL;
+	window->priv->layout = NULL;
 	window->priv->contents = NULL;
 	window->priv->n_pages = 0;
 	window->priv->current_page = -1;
@@ -267,13 +261,10 @@ gth_window_attach (GthWindow     *window,
 		return;
 	}
 
-	gtk_table_attach (GTK_TABLE (window->priv->table),
-			  child,
-			  0, 1,
-			  position, position + 1,
-			  GTK_EXPAND | GTK_FILL,
-			  GTK_FILL,
-			  0, 0);
+	gtk_grid_attach (GTK_GRID (window->priv->layout),
+			 child,
+			 0, position,
+			 1, 1);
 }
 
 
