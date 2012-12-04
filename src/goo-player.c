@@ -66,7 +66,7 @@ struct _GooPlayerPrivate {
 	guint            update_state_id;
 	guint            update_progress_id;
 
-	GMutex          *yes_or_no;
+	GMutex           data_mutex;
 	gboolean         exiting;
 	GCancellable    *cancellable;
 	GList           *albums;
@@ -336,7 +336,7 @@ goo_player_init (GooPlayer *self)
 	self->priv->action = GOO_PLAYER_ACTION_NONE;
 	self->priv->is_busy = FALSE;
 	self->priv->hibernate = FALSE;
-	self->priv->yes_or_no = g_mutex_new ();
+	g_mutex_init (&self->priv->data_mutex);
 	self->priv->exiting = FALSE,
 	self->priv->discid = NULL;
 	self->priv->album = album_info_new ();
@@ -358,9 +358,9 @@ goo_player_finalize (GObject *object)
 
 	self = GOO_PLAYER (object);
 
-	g_mutex_lock (self->priv->yes_or_no);
+	g_mutex_lock (&self->priv->data_mutex);
 	self->priv->exiting = TRUE;
-        g_mutex_unlock (self->priv->yes_or_no);
+        g_mutex_unlock (&self->priv->data_mutex);
 
         brasero_drive_unlock (self->priv->drive);
         if (self->priv->medium_added_event != 0)
@@ -375,7 +375,7 @@ goo_player_finalize (GObject *object)
 	}
 
 	destroy_pipeline (self, FALSE);
-	g_mutex_free (self->priv->yes_or_no);
+	g_mutex_clear (&self->priv->data_mutex);
 	destroy_pipeline (self, FALSE);
 	g_free (self->priv->discid);
 	album_info_unref (self->priv->album);
