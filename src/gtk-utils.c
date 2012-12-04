@@ -99,7 +99,7 @@ _gtk_message_dialog_new (GtkWindow        *parent,
 	if (stock_id == NULL)
 		stock_id = GTK_STOCK_DIALOG_INFO;
 
-	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
+	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL, NULL);
 	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
 
 	gtk_container_set_border_width (GTK_CONTAINER (d), 6);
@@ -190,7 +190,7 @@ _gtk_request_dialog_run (GtkWindow        *parent,
 	char         *result = NULL;
 	char         *stock_id = GTK_STOCK_DIALOG_QUESTION;
 
-	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
+	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL, NULL);
 	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
 
 	gtk_container_set_border_width (GTK_CONTAINER (d), 6);
@@ -289,7 +289,7 @@ _gtk_yesno_dialog_new (GtkWindow        *parent,
 	GtkWidget    *button;
 	char         *stock_id = GTK_STOCK_DIALOG_QUESTION;
 
-	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
+	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL, NULL);
 	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
 
 	gtk_container_set_border_width (GTK_CONTAINER (d), 6);
@@ -384,7 +384,7 @@ _gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
 	char      *escaped_message, *markup_text;
 	DialogWithButtonData *data;
 
-	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL);
+	d = gtk_dialog_new_with_buttons ("", parent, flags, NULL, NULL);
 	gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
 
 	/* Add label and image */
