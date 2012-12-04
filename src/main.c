@@ -60,8 +60,6 @@ static int             arg_stop = FALSE;
 static int             arg_next = FALSE;
 static int             arg_prev = FALSE;
 static int             arg_eject = FALSE;
-static int             arg_volume_up = FALSE;
-static int             arg_volume_down = FALSE;
 static int             arg_quit = FALSE;
 static gboolean        arg_version = FALSE;
 static char           *arg_device = NULL;
@@ -92,12 +90,6 @@ static const GOptionEntry options[] = {
           0 },
 	{ "toggle-visibility", '\0', 0, G_OPTION_ARG_NONE, &arg_toggle_visibility,
           N_("Toggle the main window visibility"),
-          0 },
-	{ "volume-up", '\0', 0, G_OPTION_ARG_NONE, &arg_volume_up,
-          N_("Volume Up"),
-          0 },
-	{ "volume-down", '\0', 0, G_OPTION_ARG_NONE, &arg_volume_down,
-          N_("Volume Down"),
           0 },
 	{ "quit", '\0', 0, G_OPTION_ARG_NONE, &arg_quit,
           N_("Quit the application"),
@@ -382,18 +374,6 @@ goo_application_command_line (GApplication            *application,
 	else if (arg_toggle_visibility) {
 		goo_window_toggle_visibility (GOO_WINDOW (window));
 	}
-	else if (arg_volume_up) {
-		double volume;
-
-		volume = goo_window_get_volume (GOO_WINDOW (window));
-		goo_window_set_volume (GOO_WINDOW (window), volume + VOLUME_STEP);
-	}
-	else if (arg_volume_down) {
-		double volume;
-
-		volume = goo_window_get_volume (GOO_WINDOW (window));
-		goo_window_set_volume (GOO_WINDOW (window), volume - VOLUME_STEP);
-	}
 	else if (arg_quit) {
 		goo_window_close (GOO_WINDOW (window));
 	}
@@ -424,8 +404,6 @@ goo_application_command_line (GApplication            *application,
 	arg_prev = FALSE;
 	arg_eject = FALSE;
 	arg_toggle_visibility = FALSE;
-	arg_volume_up = FALSE;
-	arg_volume_down = FALSE;
 	arg_quit = FALSE;
 	g_free (arg_device);
 	arg_device = NULL;

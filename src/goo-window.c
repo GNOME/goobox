@@ -35,7 +35,6 @@
 #include "goo-player.h"
 #include "goo-player-info.h"
 #include "goo-window.h"
-#include "goo-volume-tool-button.h"
 #include "gth-toggle-menu-tool-button.h"
 #include "gth-user-dir.h"
 #include "gtk-utils.h"
@@ -57,7 +56,6 @@
 #define FALLBACK_ICON_SIZE 16
 #define CONFIG_KEY_AUTOFETCH_GROUP "AutoFetch"
 #define ACTIONS_MENU_BUTTON_POSITION 6
-#define VOLUME_BUTTON_POSITION 8
 #define TRAY_TOOLTIP_DELAY 500
 #define AUTOPLAY_DELAY 250
 #define MAX_WINDOW_HEIGHT_PERCENTAGE 0.80
@@ -81,7 +79,6 @@ struct _GooWindowPrivate {
 	GtkWidget         *status_tooltip_content;
 
 	GtkWidget         *info;
-	GtkWidget         *volume_button;
 
 	guint              help_message_cid;
 	guint              list_info_cid;
@@ -2015,14 +2012,6 @@ status_icon_popup_menu_cb (GtkStatusIcon *status_icon,
 
 
 static void
-volume_button_changed_cb (GooVolumeToolButton *button,
-			  GooWindow           *window)
-{
-	goo_player_set_audio_volume (window->priv->player, goo_volume_tool_button_get_volume (button));
-}
-
-
-static void
 goo_window_init (GooWindow *window)
 {
 	window->priv = GOO_WINDOW_GET_PRIVATE_DATA (window);
@@ -2350,31 +2339,6 @@ goo_window_construct (GooWindow    *window,
 				    ACTIONS_MENU_BUTTON_POSITION + 1);
 	}
 
-	/* Add the volume button to the toolbar. */
-
-	{
-		GtkToolItem *sep;
-
-		sep = gtk_separator_tool_item_new ();
-		gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (sep), FALSE);
-		gtk_tool_item_set_expand (GTK_TOOL_ITEM (sep), TRUE);
-		gtk_widget_show (GTK_WIDGET (sep));
-		gtk_toolbar_insert (GTK_TOOLBAR (window->priv->toolbar),
-				    GTK_TOOL_ITEM (sep),
-				    VOLUME_BUTTON_POSITION);
-	}
-
-	window->priv->volume_button = (GtkWidget*) goo_volume_tool_button_new ();
-	g_signal_connect (window->priv->volume_button,
-			  "changed",
-			  G_CALLBACK (volume_button_changed_cb),
-			  window);
-	gtk_widget_show (GTK_WIDGET (window->priv->volume_button));
-	gtk_tool_item_set_is_important (GTK_TOOL_ITEM (window->priv->volume_button), FALSE);
-	gtk_toolbar_insert (GTK_TOOLBAR (window->priv->toolbar),
-			    GTK_TOOL_ITEM (window->priv->volume_button),
-			    VOLUME_BUTTON_POSITION + 1);
-
 	/**/
 
 	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
@@ -2423,10 +2387,6 @@ goo_window_construct (GooWindow    *window,
 	gtk_window_set_default_size (GTK_WINDOW (window),
 				     g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_WIDTH),
 				     g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_HEIGHT));
-
-	goo_volume_tool_button_set_volume (GOO_VOLUME_TOOL_BUTTON (window->priv->volume_button),
-					   g_settings_get_int (window->priv->settings_general, PREF_GENERAL_VOLUME) / 100.0,
-					   TRUE);
 
 	/* The status icon. */
 
@@ -3021,30 +2981,6 @@ goo_window_toggle_visibility (GooWindow *window)
 					   "/TrayPopupMenu/",
 					   NULL);
 	}
-}
-
-
-double
-goo_window_get_volume (GooWindow *window)
-{
-	GooVolumeToolButton *volume_button;
-
-	volume_button = GOO_VOLUME_TOOL_BUTTON (window->priv->volume_button);
-	return goo_volume_tool_button_get_volume (volume_button);
-}
-
-
-void
-goo_window_set_volume (GooWindow *window,
-		       double     value)
-{
-	GooVolumeToolButton *volume_button;
-
-	if (window->priv->hibernate)
-		return;
-
-	volume_button = GOO_VOLUME_TOOL_BUTTON (window->priv->volume_button);
-	goo_volume_tool_button_set_volume (volume_button, value, TRUE);
 }
 
 

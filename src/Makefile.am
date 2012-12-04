@@ -59,8 +59,6 @@ goobox_SOURCES = 				\
 	goo-player-info.h			\
 	goo-stock.c				\
 	goo-stock.h				\
-	goo-volume-tool-button.c		\
-	goo-volume-tool-button.h		\
 	goo-window.c				\
 	goo-window.h				\
 	gth-toggle-menu-action.c		\
