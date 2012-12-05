@@ -682,12 +682,15 @@ void
 goo_player_skip_to (GooPlayer *player,
 		    guint      seconds)
 {
+	GstState state;
+
 	if (goo_player_get_is_busy (player))
 		return;
 
 	if (player->priv->pipeline == NULL)
 		return;
 
+	gst_element_get_state (player->priv->pipeline, &state, NULL, GST_CLOCK_TIME_NONE);
 	gst_element_set_state (player->priv->pipeline, GST_STATE_PAUSED);
 	gst_element_seek (player->priv->pipeline,
 			  1.0,
@@ -697,8 +700,8 @@ goo_player_skip_to (GooPlayer *player,
 			  G_GINT64_CONSTANT (1000000000) * seconds,
 			  GST_SEEK_TYPE_NONE,
 			  0);
-	gst_element_get_state (player->priv->pipeline, NULL, NULL, -1);
-	gst_element_set_state (player->priv->pipeline, GST_STATE_PLAYING);
+	gst_element_get_state (player->priv->pipeline, NULL, NULL, GST_CLOCK_TIME_NONE);
+	gst_element_set_state (player->priv->pipeline, (state == GST_STATE_PLAYING) ? GST_STATE_PLAYING : GST_STATE_PAUSED);
 }
 
 
