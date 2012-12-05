@@ -3,22 +3,26 @@ GtkWindow.goobox-main-window {
 	color: @text_color;
 }
 
+GtkWindow.goobox-main-window:backdrop {
+	background-color: @theme_unfocused_base_color;
+}
+
 .goobox-info-album {
-	font-size: 15;
+	padding: 0;
 	font-weight: bold;
 }
 
 .goobox-info-artist {
-	font-size: 12;
 }
 
-.goobox-info-track {
-	color: mix (@theme_fg_color, @theme_bg_color, 0.50);
-}
-
+.goobox-info-track,
 .goobox-info-time {
-	padding-top: 10px;
 	color: mix (@theme_fg_color, @theme_bg_color, 0.50);
+}
+
+.goobox-info-track:backdrop,
+.goobox-info-time:backdrop {
+	color: mix (@theme_fg_color, @theme_bg_color, 0.75);
 }
 
 .goobox-player-bar {
