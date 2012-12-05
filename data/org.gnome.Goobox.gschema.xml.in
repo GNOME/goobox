@@ -78,10 +78,6 @@
       <default>400</default>
       <_summary>Window height</_summary>
     </key>
-    <key name="playlist-visible" type="b">
-      <default>true</default>
-      <_summary>Playlist visibility</_summary>
-    </key>
   </schema>
 
   <schema id="org.gnome.Goobox.Playlist" path="/org/gnome/goobox/playlist/">

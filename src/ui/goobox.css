@@ -1,0 +1,32 @@
+GtkWindow.goobox-main-window {
+	background-color: @theme_base_color;
+	color: @text_color;
+}
+
+.goobox-info-album {
+	font-size: 15;
+	font-weight: bold;
+}
+
+.goobox-info-artist {
+	font-size: 12;
+}
+
+.goobox-info-track {
+	color: mix (@theme_fg_color, @theme_bg_color, 0.50);
+}
+
+.goobox-info-time {
+	padding-top: 10px;
+	color: mix (@theme_fg_color, @theme_bg_color, 0.50);
+}
+
+.goobox-player-bar {
+	background-color: @bg_color;
+	border: 0;
+}
+
+.goobox-cover-frame GtkButton:hover {
+	border-image-width: 0;
+	border-radius: 0;
+}

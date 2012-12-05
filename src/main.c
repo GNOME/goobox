@@ -209,6 +209,9 @@ goo_restore_session (EggSMClient  *client,
 /* -- main application -- */
 
 
+GtkApplication *Main_Application = NULL;
+
+
 typedef struct {
 	GtkApplication __parent;
 	GSettings *settings;
@@ -246,7 +249,6 @@ goo_application_activate (GApplication *application)
 	GtkWidget *window;
 
 	window = goo_window_new (NULL);
-	gtk_window_set_application (GTK_WINDOW (window), GTK_APPLICATION (application));
 	gtk_widget_show (window);
 }
 
@@ -722,7 +724,7 @@ main (int argc, char *argv[])
 
 	/* run the main application */
 
-	application = goo_application_new ();
+	application = Main_Application = goo_application_new ();
 	status = g_application_run (G_APPLICATION (application), argc, argv);
 
 	g_object_unref (application);

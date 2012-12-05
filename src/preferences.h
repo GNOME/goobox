@@ -38,7 +38,6 @@
 #define PREF_GENERAL_USE_SJ           "use-sound-juicer"
 #define PREF_GENERAL_AUTOPLAY         "autoplay"
 
-#define PREF_UI_PLAYLIST              "playlist-visible"
 #define PREF_UI_WINDOW_WIDTH          "window-width"
 #define PREF_UI_WINDOW_HEIGHT         "window-height"
 

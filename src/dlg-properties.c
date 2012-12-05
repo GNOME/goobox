@@ -167,14 +167,6 @@ ok_button_clicked_cb (GtkWidget  *widget,
 
 
 static void
-help_button_clicked_cb (GtkWidget  *widget,
-			DialogData *data)
-{
-	show_help_dialog (GTK_WINDOW (data->window), "properties");
-}
-
-
-static void
 set_data_from_album (DialogData *data,
 		     AlbumInfo  *album)
 {
@@ -546,10 +538,6 @@ dlg_properties (GooWindow *window)
 	g_signal_connect (GET_WIDGET ("ok_button"),
 			  "clicked",
 			  G_CALLBACK (ok_button_clicked_cb),
-			  data);
-	g_signal_connect (GET_WIDGET ("help_button"),
-			  "clicked",
-			  G_CALLBACK (help_button_clicked_cb),
 			  data);
 	g_signal_connect (GET_WIDGET ("search_button"),
 			  "clicked",

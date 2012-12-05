@@ -2222,7 +2222,7 @@ _g_format_duration_for_display (gint64 msecs)
                  * the separator that your locale uses or use "%Id" instead
                  * of "%d" if your locale uses localized digits.
                  */
-                return g_strdup_printf (C_("long time format", "%d:%02d:%02d"), hour, min, sec);
+                return g_strdup_printf (C_("long time format", "%d∶%02d∶%02d"), hour, min, sec);
         }
 
         /* minutes:seconds */
@@ -2231,5 +2231,5 @@ _g_format_duration_for_display (gint64 msecs)
          * separator that your locale uses or use "%Id" instead of
          * "%d" if your locale uses localized digits.
          */
-        return g_strdup_printf (C_("short time format", "%d:%02d"), min, sec);
+        return g_strdup_printf (C_("short time format", "%d∶%02d"), min, sec);
 }

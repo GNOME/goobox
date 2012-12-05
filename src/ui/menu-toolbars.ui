@@ -1,12 +1,4 @@
 <ui>
-  <toolbar name="ToolBar">
-    <toolitem action="TogglePlay"/>
-    <toolitem action="Play"/>
-    <toolitem action="Pause"/>
-    <toolitem action="Next"/>
-    <separator />
-    <toolitem action="Extract"/>
-  </toolbar>
   <popup name="ListPopupMenu">
     <menuitem action="PlaySelected"/>
     <menuitem action="ExtractSelected"/>
@@ -26,7 +18,7 @@
     <separator name="sep01"/>
     <menuitem action="RemoveCover"/>
   </popup>
-  <popup name="ActionsMenu">
+  <popup name="OtherActionsMenu">
     <menuitem action="CopyDisc"/>
     <menuitem action="Eject"/>
     <separator />

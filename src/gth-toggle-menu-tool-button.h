@@ -68,6 +68,11 @@ const char *   gth_toggle_menu_tool_button_get_stock_id      (GthToggleMenuToolB
 void           gth_toggle_menu_tool_button_set_icon_name     (GthToggleMenuToolButton *button,
 							      const char              *icon_name);
 const char *   gth_toggle_menu_tool_button_get_icon_name     (GthToggleMenuToolButton *button);
+void           gth_toggle_menu_tool_button_set_show_arrow    (GthToggleMenuToolButton *button,
+							      gboolean                 show_arrow);
+gboolean       gth_toggle_menu_tool_button_get_show_arrow    (GthToggleMenuToolButton *button);
+void           gth_toggle_menu_tool_button_set_menu_halign   (GthToggleMenuToolButton *button,
+							      GtkAlign                 align);
 void           gth_toggle_menu_tool_button_set_active        (GthToggleMenuToolButton *button,
 							      gboolean                 is_active);
 gboolean       gth_toggle_menu_tool_button_get_active        (GthToggleMenuToolButton *button);

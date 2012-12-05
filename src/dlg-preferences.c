@@ -110,14 +110,6 @@ close_button_clicked_cb (GtkWidget  *widget,
 }
 
 
-static void
-help_button_clicked_cb (GtkWidget  *widget,
-			DialogData *data)
-{
-	show_help_dialog (GTK_WINDOW (data->window), "goobox-preferences");
-}
-
-
 void dlg_format (DialogData *dialog_data, GooFileFormat format);
 
 
@@ -320,10 +312,6 @@ dlg_preferences (GooWindow *window)
 	g_signal_connect (GET_WIDGET ("close_button"),
 			  "clicked",
 			  G_CALLBACK (close_button_clicked_cb),
-			  data);
-	g_signal_connect (GET_WIDGET ("help_button"),
-			  "clicked",
-			  G_CALLBACK (help_button_clicked_cb),
 			  data);
 	g_signal_connect (GET_WIDGET ("filetype_properties_button"),
 			  "clicked",

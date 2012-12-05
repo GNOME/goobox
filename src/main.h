@@ -27,8 +27,9 @@
 #include "goo-player.h"
 #include "goo-window.h"
 
-extern int arg_auto_play;
-extern int arg_toggle_visibility;
+extern GtkApplication *Main_Application;
+extern int             arg_auto_play;
+extern int             arg_toggle_visibility;
 
 GtkWidget *     main_get_window_from_device  (const char      *device);
 BraseroDrive *  main_get_most_likely_drive   (void);

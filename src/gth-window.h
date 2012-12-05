@@ -16,8 +16,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Street #330, Boston, MA 02111-1307, USA.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef GTH_WINDOW_H
@@ -27,11 +26,20 @@
 
 G_BEGIN_DECLS
 
+#define GTH_WINDOW_PAGE_UNDEFINED -1
+
 typedef enum { /*< skip >*/
 	GTH_WINDOW_MENUBAR,
 	GTH_WINDOW_TOOLBAR,
+	GTH_WINDOW_INFOBAR,
 	GTH_WINDOW_STATUSBAR,
 } GthWindowArea;
+
+typedef struct { /*< skip >*/
+	gboolean saved;
+	int      width;
+	int      height;
+} GthWindowSize;
 
 #define GTH_TYPE_WINDOW              (gth_window_get_type ())
 #define GTH_WINDOW(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTH_TYPE_WINDOW, GthWindow))
@@ -72,19 +80,27 @@ void           gth_window_attach_toolbar     (GthWindow     *window,
 void           gth_window_attach_content     (GthWindow     *window,
 					      int            page,
 					      GtkWidget     *child);
-GtkWidget *    gth_window_attach_get_content (GthWindow     *window,
-					      int            page);
 void           gth_window_set_current_page   (GthWindow     *window,
 					      int            page);
 int            gth_window_get_current_page   (GthWindow     *window);
 void           gth_window_show_only_content  (GthWindow     *window,
 					      gboolean       only_content);
-
-/**/
-
-int            gth_window_get_n_windows      (void);
-GList *        gth_window_get_window_list    (void);
-GtkWidget *    gth_window_get_current_window (void);
+GtkWidget *    gth_window_get_area           (GthWindow     *window,
+					      GthWindowArea  area);
+GtkWidget *    gth_window_get_content        (GthWindow     *window,
+					      int            n_page);
+void           gth_window_save_page_size     (GthWindow     *window,
+					      int            page,
+					      int            width,
+					      int            height);
+void           gth_window_apply_saved_size   (GthWindow     *window,
+					      int            page);
+gboolean       gth_window_get_page_size      (GthWindow     *window,
+		      	      	      	      int            page,
+		      	      	      	      int           *width,
+		      	      	      	      int           *height);
+void           gth_window_clear_saved_size   (GthWindow     *window,
+      	      	      	      	      	      int            page);
 
 G_END_DECLS
 

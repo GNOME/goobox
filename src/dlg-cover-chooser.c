@@ -374,14 +374,6 @@ start_searching (DialogData *data)
 
 
 static void
-help_button_clicked_cb (GtkWidget  *widget,
-			DialogData *data)
-{
-	show_help_dialog (GTK_WINDOW (data->window), "search_cover_on_internet");
-}
-
-
-static void
 revert_button_clicked_cb (GtkWidget  *widget,
 			  DialogData *data)
 {
@@ -526,10 +518,6 @@ dlg_cover_chooser (GooWindow  *window,
 				  "clicked",
 				  G_CALLBACK (gtk_widget_destroy),
 				  G_OBJECT (data->dialog));
-	g_signal_connect (GET_WIDGET ("help_button"),
-			  "clicked",
-			  G_CALLBACK (help_button_clicked_cb),
-			  data);
 	g_signal_connect (GET_WIDGET ("ok_button"),
 			  "clicked",
 			  G_CALLBACK (ok_button_clicked_cb),

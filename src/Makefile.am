@@ -55,6 +55,8 @@ goobox_SOURCES = 				\
 	goo-error.h				\
 	goo-player.c				\
 	goo-player.h				\
+	goo-player-bar.c			\
+	goo-player-bar.h			\
 	goo-player-info.c			\
 	goo-player-info.h			\
 	goo-stock.c				\

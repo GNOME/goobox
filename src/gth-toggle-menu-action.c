@@ -32,12 +32,16 @@ G_DEFINE_TYPE (GthToggleMenuAction, gth_toggle_menu_action, GTK_TYPE_TOGGLE_ACTI
 /* Properties */
 enum {
         PROP_0,
-        PROP_MENU
+        PROP_SHOW_ARROW,
+        PROP_MENU,
+        PROP_MENU_HALIGN
 };
 
 
 struct _GthToggleMenuActionPrivate {
+	gboolean         show_arrow;
 	GtkWidget       *menu;
+	GtkAlign         menu_halign;
 	GthShowMenuFunc  show_menu_func;
 	gpointer         show_menu_data;
 	GDestroyNotify   show_menu_data_destroy;
@@ -48,6 +52,7 @@ static void
 gth_toggle_menu_action_init (GthToggleMenuAction *self)
 {
 	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, GTH_TYPE_TOGGLE_MENU_ACTION, GthToggleMenuActionPrivate);
+	self->priv->show_arrow = TRUE;
 	self->priv->menu = gtk_menu_new ();
 	g_object_ref_sink (self->priv->menu);
 }
@@ -63,12 +68,17 @@ gth_toggle_menu_action_set_property (GObject      *object,
 	GthToggleMenuAction *self = GTH_TOGGLE_MENU_ACTION (object);
 
 	switch (property_id) {
+	case PROP_SHOW_ARROW:
+		self->priv->show_arrow = g_value_get_boolean (value);
+		break;
 	case PROP_MENU:
 		if (self->priv->menu != NULL)
 			g_object_unref (self->priv->menu);
 		self->priv->menu = g_value_dup_object (value);
 		break;
-
+	case PROP_MENU_HALIGN:
+		self->priv->menu_halign = g_value_get_enum (value);
+		break;
 	default:
 		break;
 	}
@@ -84,10 +94,15 @@ gth_toggle_menu_action_get_property (GObject    *object,
 	GthToggleMenuAction *self = GTH_TOGGLE_MENU_ACTION (object);
 
 	switch (property_id) {
+	case PROP_SHOW_ARROW:
+		g_value_set_boolean (value, self->priv->show_arrow);
+		break;
 	case PROP_MENU:
 		g_value_set_object (value, self->priv->menu);
 		break;
-
+	case PROP_MENU_HALIGN:
+		g_value_set_enum (value, self->priv->menu_halign);
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 		break;
@@ -111,12 +126,20 @@ gth_toggle_menu_action_create_tool_item (GtkAction *action)
 	GthToggleMenuAction *self = GTH_TOGGLE_MENU_ACTION (action);
 	GtkWidget           *tool_item;
 
-	tool_item = g_object_new (GTH_TYPE_TOGGLE_MENU_TOOL_BUTTON, NULL);
+	tool_item = g_object_new (GTH_TYPE_TOGGLE_MENU_TOOL_BUTTON,
+				  "show-arrow", self->priv->show_arrow,
+				  NULL);
 	if (self->priv->show_menu_func != NULL)
 		g_signal_connect (tool_item,
 				  "show_menu",
 				  G_CALLBACK (tool_item_show_menu_cb),
 				  self);
+	else if (self->priv->menu != NULL) {
+		g_object_set (tool_item,
+			      "menu", self->priv->menu,
+			      "menu-halign", self->priv->menu_halign,
+			      NULL);
+	}
 
 	return tool_item;
 }
@@ -156,12 +179,27 @@ gth_toggle_menu_action_class_init (GthToggleMenuActionClass *klass)
 	/* properties */
 
 	g_object_class_install_property (object_class,
+					 PROP_SHOW_ARROW,
+					 g_param_spec_boolean ("show-arrow",
+                                                               "Show Arrow",
+                                                               "Whether to show an arrow",
+                                                               TRUE,
+                                                               G_PARAM_READWRITE));
+	g_object_class_install_property (object_class,
 					 PROP_MENU,
 					 g_param_spec_object ("menu",
                                                               "Menu",
                                                               "The menu to show",
                                                               GTK_TYPE_MENU,
                                                               G_PARAM_READWRITE));
+	g_object_class_install_property (object_class,
+					 PROP_MENU_HALIGN,
+					 g_param_spec_enum ("menu-halign",
+							    "Menu HAlign",
+							    "Menu Horizontal Alignment",
+							    GTK_TYPE_ALIGN,
+							    GTK_ALIGN_START,
+							    G_PARAM_READWRITE));
 }
 
 
@@ -183,4 +221,18 @@ GtkWidget *
 gth_toggle_menu_action_get_menu (GthToggleMenuAction *self)
 {
 	return self->priv->menu;
+}
+
+
+GtkAlign
+gth_toggle_menu_action_get_menu_halign (GthToggleMenuAction *self)
+{
+	return self->priv->menu_halign;
+}
+
+
+gboolean
+gth_toggle_menu_action_get_show_arrow (GthToggleMenuAction *self)
+{
+	return self->priv->show_arrow;
 }
