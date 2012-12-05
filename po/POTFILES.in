@@ -32,14 +32,14 @@ src/gnome-desktop-thumbnail.h
 src/gnome-thumbnail-pixbuf-utils.c
 src/goo-error.c
 src/goo-error.h
+src/goo-player-bar.c
+src/goo-player-bar.h
 src/goo-player.c
 src/goo-player.h
 src/goo-player-info.c
 src/goo-player-info.h
 src/goo-stock.c
 src/goo-stock.h
-src/goo-volume-tool-button.c
-src/goo-volume-tool-button.h
 src/goo-window.c
 src/goo-window.h
 src/gth-toggle-menu-action.c
