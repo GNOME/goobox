@@ -324,7 +324,7 @@ goo_player_bar_construct (GooPlayerBar   *self,
 	/* Other actions */
 
 	button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	gtk_style_context_add_class (gtk_widget_get_style_context (button_box), GTK_STYLE_CLASS_LINKED);
+	gtk_box_set_spacing (GTK_BOX (button_box), 6);
 	gtk_box_pack_end (GTK_BOX (main_box), button_box, FALSE, FALSE, 0);
 
 	button = _gtk_button_new_from_icon_name (GOO_STOCK_EXTRACT, GTK_ICON_SIZE_SMALL_TOOLBAR);
