@@ -221,7 +221,6 @@ goo_player_info_construct (GooPlayerInfo *info)
 	priv->title1_label = gtk_label_new (NULL);
 	gtk_style_context_add_class (gtk_widget_get_style_context (priv->title1_label), "goobox-info-album");
 	gtk_misc_set_alignment (GTK_MISC (priv->title1_label), 0.0, 0.5);
-	gtk_widget_set_margin_top (priv->title1_label, 6);
 
 	priv->title2_label = gtk_label_new (NULL);
 	gtk_style_context_add_class (gtk_widget_get_style_context (priv->title2_label), "goobox-info-artist");
@@ -308,7 +307,7 @@ goo_player_info_construct (GooPlayerInfo *info)
 	gtk_box_pack_start (GTK_BOX (vbox), priv->title1_label, TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), priv->title2_label, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), priv->title3_label, FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (vbox), priv->time_label, FALSE, FALSE, 0);
+	gtk_box_pack_end (GTK_BOX (vbox), priv->time_label, FALSE, FALSE, 0);
 
 	gtk_widget_show (vbox);
 	gtk_box_pack_start (GTK_BOX (info), vbox, TRUE, TRUE, 0);
