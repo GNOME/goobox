@@ -31,6 +31,7 @@
 
 
 #define SCALE_WIDTH 150
+#define TIME_LABEL_WIDTH_IN_CHARS 8
 #define MIN_WIDTH 500
 #define UPDATE_TIMEOUT 50
 
@@ -40,12 +41,12 @@ G_DEFINE_TYPE (GooPlayerBar, goo_player_bar, GTK_TYPE_BOX)
 
 struct _GooPlayerBarPrivateData {
 	GooPlayer *player;
-	GtkWidget *time_label;
+	GtkWidget *current_time_label;
+	GtkWidget *remaining_time_label;
 	GtkWidget *time_scale;
-	char      *current_time;
-	char      *total_time;
-	char       time[64];
+	GtkWidget *time_box;
 	gint64     track_length;
+	gint64     current_time;
 	gboolean   dragging;
 	guint      update_id;
 	double     fraction;
@@ -95,39 +96,34 @@ set_label (GtkWidget  *label,
 
 
 static void
-set_time (GooPlayerBar *self,
-	  const char    *text)
+_goo_player_bar_update_current_time (GooPlayerBar *self)
 {
-	set_label (self->priv->time_label, "%s", text);
+	char *s;
+
+	s = _g_format_duration_for_display (self->priv->current_time * 1000);
+	set_label (self->priv->current_time_label, "%s", s);
+	g_free (s);
+
+	s = _g_format_duration_for_display ((self->priv->track_length - self->priv->current_time) * 1000);
+	if (self->priv->track_length - self->priv->current_time > 0)
+		set_label (self->priv->remaining_time_label, "-%s", s);
+	else
+		set_label (self->priv->remaining_time_label, "%s", s);
+	g_free (s);
 }
 
 
 static void
-_goo_player_bar_set_current_time (GooPlayerBar *self,
-				  gint64        current_time)
-{
-	g_free (self->priv->current_time);
-	self->priv->current_time = _g_format_duration_for_display (current_time * 1000);
-	sprintf (self->priv->time, "%s", self->priv->current_time);
-	set_time (self, self->priv->time);
-}
-
-
-static void
-time_scale_value_changed_cb (GtkRange      *range,
+time_scale_value_changed_cb (GtkRange     *range,
 			     GooPlayerBar *self)
 {
-	double new_value;
-	gint64 current_time;
-
-	new_value = gtk_range_get_value (range);
-	current_time = self->priv->track_length * (new_value / 100.0);
-	_goo_player_bar_set_current_time (self, current_time);
+	self->priv->current_time = self->priv->track_length * gtk_range_get_value (range);
+	_goo_player_bar_update_current_time (self);
 
 	if (! self->priv->dragging) {
 		int seconds;
 
-		seconds = (int) (new_value * self->priv->track_length);
+		seconds = (int) (gtk_range_get_value (range) * self->priv->track_length);
 		g_signal_emit (self, goo_player_bar_signals[SKIP_TO], 0, seconds);
 	}
 }
@@ -137,21 +133,18 @@ static gboolean
 update_time_label_cb (gpointer data)
 {
 	GooPlayerBar *self = data;
-	GooPlayerBarPrivateData *priv = self->priv;
-	double new_value = gtk_range_get_value (GTK_RANGE (priv->time_scale));
-	gint64 current_time;
 
-	if (priv->update_id != 0) {
-		g_source_remove (priv->update_id);
-		priv->update_id = 0;
+	if (self->priv->update_id != 0) {
+		g_source_remove (self->priv->update_id);
+		self->priv->update_id = 0;
 	}
 
-	current_time = priv->track_length * new_value;
-	_goo_player_bar_set_current_time (self, current_time);
+	self->priv->current_time = self->priv->track_length * gtk_range_get_value (GTK_RANGE (self->priv->time_scale));
+	_goo_player_bar_update_current_time (self);
 
-	priv->update_id = g_timeout_add (UPDATE_TIMEOUT,
-					 update_time_label_cb,
-					 data);
+	self->priv->update_id = g_timeout_add (UPDATE_TIMEOUT,
+					       update_time_label_cb,
+					       data);
 
 	return FALSE;
 }
@@ -163,9 +156,10 @@ time_scale_button_press_cb (GtkRange         *range,
 			    GooPlayerBar    *self)
 {
 	self->priv->dragging = TRUE;
-	self->priv->update_id = g_timeout_add (UPDATE_TIMEOUT,
-					       update_time_label_cb,
-					       self);
+	if (self->priv->update_id == 0)
+		self->priv->update_id = g_timeout_add (UPDATE_TIMEOUT,
+						       update_time_label_cb,
+						       self);
 	return FALSE;
 }
 
@@ -191,7 +185,14 @@ static void
 goo_player_bar_init (GooPlayerBar *self)
 {
 	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, GOO_TYPE_PLAYER_BAR, GooPlayerBarPrivateData);
+	self->priv->dragging = FALSE;
+	self->priv->track_length = 0;
+	self->priv->current_time = 0;
+	self->priv->update_id = 0;
+	self->priv->update_progress_timeout = 0;
+
 	gtk_orientable_set_orientation (GTK_ORIENTABLE (self), GTK_ORIENTATION_HORIZONTAL);
+	gtk_widget_set_can_focus (GTK_WIDGET (self), FALSE);
 }
 
 
@@ -260,15 +261,8 @@ goo_player_bar_construct (GooPlayerBar   *self,
 	GtkWidget *frame;
 	GtkWidget *main_box;
 	GtkWidget *button_box;
-	GtkWidget *time_box;
 	GtkWidget *button;
 	GError    *error = NULL;
-
-	gtk_widget_set_can_focus (GTK_WIDGET (self), FALSE);
-	self->priv->dragging = FALSE;
-	self->priv->current_time = NULL;
-	self->priv->total_time = NULL;
-	self->priv->update_id = 0;
 
 	frame = gtk_event_box_new ();
 	gtk_style_context_add_class (gtk_widget_get_style_context (frame), "goobox-player-bar");
@@ -306,20 +300,27 @@ goo_player_bar_construct (GooPlayerBar   *self,
 
 	/* Time */
 
-	time_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+	self->priv->time_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+	gtk_widget_set_no_show_all (self->priv->time_box, TRUE);
+	gtk_box_pack_start (GTK_BOX (main_box), self->priv->time_box, TRUE, FALSE, 0);
+
+	self->priv->current_time_label = gtk_label_new (NULL);
+	gtk_misc_set_alignment (GTK_MISC (self->priv->current_time_label), 1.0, 0.5);
+	gtk_label_set_width_chars (GTK_LABEL (self->priv->current_time_label), TIME_LABEL_WIDTH_IN_CHARS);
 
 	self->priv->time_scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL, 0.0, 1.0, 0.01);
 	gtk_range_set_increments (GTK_RANGE (self->priv->time_scale), 0.01, 0.1);
 	gtk_scale_set_draw_value (GTK_SCALE (self->priv->time_scale), FALSE);
 	gtk_widget_set_size_request (self->priv->time_scale, SCALE_WIDTH, -1);
-	gtk_widget_set_no_show_all (self->priv->time_scale, TRUE);
+	gtk_widget_show (self->priv->time_scale);
 
-	self->priv->time_label = gtk_label_new (NULL);
-	gtk_widget_set_no_show_all (self->priv->time_label, TRUE);
+	self->priv->remaining_time_label = gtk_label_new (NULL);
+	gtk_misc_set_alignment (GTK_MISC (self->priv->remaining_time_label), 0.0, 0.5);
+	gtk_label_set_width_chars (GTK_LABEL (self->priv->remaining_time_label), TIME_LABEL_WIDTH_IN_CHARS);
 
-	gtk_box_pack_start (GTK_BOX (time_box), self->priv->time_scale, FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (time_box), self->priv->time_label, FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (main_box), time_box, TRUE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (self->priv->time_box), self->priv->current_time_label, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (self->priv->time_box), self->priv->time_scale, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (self->priv->time_box), self->priv->remaining_time_label, FALSE, FALSE, 0);
 
 	/* Other actions */
 
@@ -362,8 +363,11 @@ goo_player_bar_finalize (GObject *object)
 
 	self = GOO_PLAYER_BAR (object);
 
-	g_free (self->priv->current_time);
-	g_free (self->priv->total_time);
+	if (self->priv->update_progress_timeout != 0) {
+		g_source_remove (self->priv->update_progress_timeout);
+		self->priv->update_progress_timeout = 0;
+	}
+
 	if (self->priv->update_id != 0) {
 		g_source_remove (self->priv->update_id);
 		self->priv->update_id = 0;
@@ -371,7 +375,6 @@ goo_player_bar_finalize (GObject *object)
 
 	G_OBJECT_CLASS (goo_player_bar_parent_class)->finalize (object);
 }
-
 
 
 static void
@@ -402,13 +405,14 @@ goo_player_bar_class_init (GooPlayerBarClass *class)
 
 
 static void
-goo_player_bar_set_time (GooPlayerBar *self,
-			 gint64        current_time)
+_goo_player_bar_set_time (GooPlayerBar *self,
+			  gint64        current_time)
 {
 	if (self->priv->dragging)
 		return;
 
-	_goo_player_bar_set_current_time (self, current_time);
+	self->priv->current_time = current_time;
+	_goo_player_bar_update_current_time (self);
 
 	g_signal_handlers_block_by_data (self->priv->time_scale, self);
 	gtk_range_set_value (GTK_RANGE (self->priv->time_scale), (double) current_time / self->priv->track_length);
@@ -421,8 +425,10 @@ update_progress_cb (gpointer data)
 {
 	GooPlayerBar *self = data;
 
+	self->priv->update_progress_timeout = 0;
+
 	if ((self->priv->fraction >= 0.0) && (self->priv->fraction <= 1.0))
-		goo_player_bar_set_time (self, self->priv->fraction * self->priv->track_length);
+		_goo_player_bar_set_time (self, self->priv->fraction * self->priv->track_length);
 
 	return FALSE;
 }
@@ -434,7 +440,8 @@ player_progress_cb (GooPlayer     *player,
 		    GooPlayerBar *self)
 {
 	self->priv->fraction = fraction;
-	self->priv->update_progress_timeout = g_idle_add (update_progress_cb, self);
+	if (self->priv->update_progress_timeout == 0)
+		self->priv->update_progress_timeout = g_idle_add (update_progress_cb, self);
 }
 
 
@@ -459,23 +466,11 @@ goo_player_bar_update_state (GooPlayerBar *self)
 	if ((state == GOO_PLAYER_STATE_PLAYING)
 	    || (state == GOO_PLAYER_STATE_PAUSED))
 	{
-		gtk_widget_show (self->priv->time_scale);
-		gtk_widget_show (self->priv->time_label);
+		gtk_widget_show (self->priv->time_box);
 	}
 	else {
-		gtk_widget_hide (self->priv->time_scale);
-		gtk_widget_hide (self->priv->time_label);
+		gtk_widget_hide (self->priv->time_box);
 	}
-}
-
-
-static void
-goo_player_bar_set_total_time (GooPlayerBar *self,
-			       gint64        total_time)
-{
-	g_free (self->priv->total_time);
-	self->priv->total_time = _g_format_duration_for_display (total_time * 1000);
-	goo_player_bar_update_state (self);
 }
 
 
@@ -507,8 +502,8 @@ player_done_cb (GooPlayer       *player,
 
 	switch (action) {
 	case GOO_PLAYER_ACTION_LIST:
-		album = goo_player_get_album (player);
-		goo_player_bar_set_total_time (self, album->total_length);
+		goo_player_bar_update_state (self);
+		_goo_player_bar_set_time (self, 0);
 		break;
 	case GOO_PLAYER_ACTION_METADATA:
 		goo_player_bar_update_state (self);
@@ -516,12 +511,13 @@ player_done_cb (GooPlayer       *player,
 	case GOO_PLAYER_ACTION_SEEK_SONG:
 		album = goo_player_get_album (player);
 		self->priv->track_length = album_info_get_track (album, goo_player_get_current_track (player))->length;
-		goo_player_bar_set_total_time (self, self->priv->track_length);
+		goo_player_bar_update_state (self);
+		_goo_player_bar_set_time (self, 0);
 		break;
 	case GOO_PLAYER_ACTION_PLAY:
 	case GOO_PLAYER_ACTION_STOP:
 	case GOO_PLAYER_ACTION_MEDIUM_REMOVED:
-		goo_player_bar_set_time (self, 0);
+		_goo_player_bar_set_time (self, 0);
 		break;
 	default:
 		break;
