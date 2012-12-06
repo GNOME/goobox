@@ -32,6 +32,7 @@
 
 #define SCALE_WIDTH 150
 #define TIME_LABEL_WIDTH_IN_CHARS 8
+#define PLAY_BUTTON_SIZE GTK_ICON_SIZE_SMALL_TOOLBAR
 #define MIN_WIDTH 500
 #define UPDATE_TIMEOUT 50
 
@@ -237,7 +238,7 @@ toggle_play_notify_icon_name_cb (GObject    *gobject,
 
 	image = gtk_bin_get_child (GTK_BIN (button));
 	if ((image != NULL) && GTK_IS_IMAGE (image))
-		gtk_image_set_from_icon_name (GTK_IMAGE (image), gtk_action_get_icon_name (GTK_ACTION (gobject)), GTK_ICON_SIZE_LARGE_TOOLBAR);
+		gtk_image_set_from_icon_name (GTK_IMAGE (image), gtk_action_get_icon_name (GTK_ACTION (gobject)), PLAY_BUTTON_SIZE);
 }
 
 
@@ -278,20 +279,20 @@ goo_player_bar_construct (GooPlayerBar   *self,
 
 	/* Play buttons */
 
+	button = _gtk_button_new_from_icon_name (GOO_STOCK_PLAY, PLAY_BUTTON_SIZE);
+	_gtk_button_sync_with_action (button, gtk_action_group_get_action (actions, "TogglePlay"));
+	g_signal_connect (gtk_action_group_get_action (actions, "TogglePlay"),
+			  "notify::icon-name",
+			  G_CALLBACK (toggle_play_notify_icon_name_cb),
+			  button);
+	gtk_box_pack_start (GTK_BOX (main_box), button, FALSE, FALSE, 0);
+
 	button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_style_context_add_class (gtk_widget_get_style_context (button_box), GTK_STYLE_CLASS_LINKED);
 	gtk_box_pack_start (GTK_BOX (main_box), button_box, FALSE, FALSE, 0);
 
 	button = _gtk_button_new_from_icon_name (GOO_STOCK_PREV, GTK_ICON_SIZE_SMALL_TOOLBAR);
 	_gtk_button_sync_with_action (button, gtk_action_group_get_action (actions, "Prev"));
-	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
-
-	button = _gtk_button_new_from_icon_name (GOO_STOCK_PLAY, GTK_ICON_SIZE_LARGE_TOOLBAR);
-	_gtk_button_sync_with_action (button, gtk_action_group_get_action (actions, "TogglePlay"));
-	g_signal_connect (gtk_action_group_get_action (actions, "TogglePlay"),
-			  "notify::icon-name",
-			  G_CALLBACK (toggle_play_notify_icon_name_cb),
-			  button);
 	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
 
 	button = _gtk_button_new_from_icon_name (GOO_STOCK_NEXT, GTK_ICON_SIZE_SMALL_TOOLBAR);
