@@ -3,9 +3,9 @@ version 3.1.1
 
  New features and user visible changes:
 
+  * Implemented a GNOME 3 like interface.
   * Added an application menu.
-  * Removed the menubar, added a menu button on the toolbar.
-  * Show a scrollbar if the playlist is too long.
+  * Fixed the window size with big playlists.
 
  Bugs fixed:
 
@@ -18,6 +18,24 @@ version 3.1.1
   * Use GResource to store ui files.
   * Ported to the new documentation infrastructure.
   * Removed markup from translatable messages.
+  * Removed use of deprecated functions.
+
+ New or updated application translations:
+
+  * Czech (Marek Černocký)
+  * Español; Castellano (Daniel Mustieles)
+  * French (Bruno Brouard)
+  * Galician (Fran Dieguez)
+  * Indonesia (Andika Triwidada)
+  * Polish (Piotr Drąg)
+  * Romanian (Daniel Șerbănescu)
+  * Slovenian (Matej Urbančič)
+  * Swedish (Daniel Nylander)
+
+ New or updated manual translations:
+
+  * Español (Daniel Mustieles)
+  * Français (Julien hardelin)
 
 version 3.0.1
 -------------
