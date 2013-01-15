@@ -1,0 +1,848 @@
+# Serbian translation for goobox.
+# Copyright (C) 2013 goobox's COPYRIGHT HOLDER
+# This file is distributed under the same license as the goobox package.
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: goobox master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=goobox"
+"&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-01-15 06:17+0000\n"
+"PO-Revision-Date: 2013-01-15 11:19+0200\n"
+"Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
+"Language-Team: Serbian <gnom@prevod.org>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Project-Style: gnome\n"
+
+#: ../copy-n-paste/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "Датотека није исправна „.desktop“ датотека"
+
+#: ../copy-n-paste/eggdesktopfile.c:190
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Непознато издање датотеке радне површи „%s“"
+
+#: ../copy-n-paste/eggdesktopfile.c:970
+#, c-format
+msgid "Starting %s"
+msgstr "Покрећем „%s“"
+
+#: ../copy-n-paste/eggdesktopfile.c:1112
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "Програм не прихвата документе из линије наредби"
+
+#: ../copy-n-paste/eggdesktopfile.c:1180
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Непозната опција покретања: %d"
+
+#: ../copy-n-paste/eggdesktopfile.c:1385
+#, c-format
+msgid "Can't pass documents to this desktop element"
+msgstr "Не могу да проследим документе овом елементу радне површи"
+
+#: ../copy-n-paste/eggdesktopfile.c:1406
+#, c-format
+msgid "Not a launchable item"
+msgstr "Није ставка за покретање"
+
+#: ../copy-n-paste/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "Искључује везу са управником сесије"
+
+#: ../copy-n-paste/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "Наводи датотеку која садржи сачувана подешавања"
+
+#: ../copy-n-paste/eggsmclient.c:229
+msgid "FILE"
+msgstr "ДАТОТЕКА"
+
+#: ../copy-n-paste/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "Наводи ИБ управника сесије"
+
+#: ../copy-n-paste/eggsmclient.c:232
+msgid "ID"
+msgstr "ИБ"
+
+#: ../copy-n-paste/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "Могућности управљања сесијом:"
+
+#: ../copy-n-paste/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "Приказује могућности управљања сесијом"
+
+#: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:159
+#: ../src/goo-window.c:1315 ../src/goo-window.c:1328 ../src/goo-window.c:1846
+#: ../src/main.c:240
+msgid "CD Player"
+msgstr "Звучко"
+
+#: ../data/goobox.desktop.in.in.h:2
+msgid "Play and extract CDs"
+msgstr "Пуштајте и извлачите звучне дискове"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:1
+msgid "Device path"
+msgstr "Путања уређаја"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:2
+msgid "Volume level"
+msgstr "Јачина звука"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:3
+msgid "'Choose cover' location"
+msgstr "Место за „Изабери омот“"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:4
+msgid "Default location for the 'Choose cover' dialog."
+msgstr "Подразумевана путања за прозорче „Изабери омот“."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:5
+msgid "Use Sound Juicer to rip discs"
+msgstr "Користи Звуковник за чупање дискова"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:6
+msgid "Autoplay"
+msgstr "Самостално пуштање"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:7
+msgid "Autoplay discs after insertion."
+msgstr "Сам ће пустити дискове након уметања."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:8
+msgid "Window width"
+msgstr "Ширина прозора"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:9
+msgid "Window height"
+msgstr "Висина прозора"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:10
+msgid "Play all tracks"
+msgstr "Пушта све песме"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:11
+msgid "Shuffle playlist"
+msgstr "Меша списак нумера"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:12
+msgid "Restart when finished"
+msgstr "Поново покреће када заврши"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
+msgid "Playlist sort method"
+msgstr "Начин ређања списка нумера"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
+msgid "Playlist sort type"
+msgstr "Врста ређања списка нумера"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
+msgid "Extraction folder"
+msgstr "Фасцикла за извлачења"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
+msgid "File type"
+msgstr "Врста датотеке"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "Могуће вредности су: ogg, flac, mp3, wave."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
+msgid "Save the playlist"
+msgstr "Чува списак нумера"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
+msgid "Save the playlist of the extracted tracks."
+msgstr "Чува списак нумера извучених нумера."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:20
+msgid "View the destination"
+msgstr "Преглед одредишта"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:21
+msgid "OGG files quality"
+msgstr "Квалитет Огг датотека"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
+msgid "FLAC files quality"
+msgstr "Квалитет ФЛАЦ датотека"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
+msgid "MP3 files quality"
+msgstr "Квалитет МП3 датотека"
+
+#: ../src/actions.c:139
+msgid "translator_credits"
+msgstr ""
+"  Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
+"\n"
+"http://prevod.org — превод на српски језик"
+
+#: ../src/actions.c:142
+msgid ""
+"CD Player is free software; you can redistribute it and/or modify it under "
+"the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version."
+msgstr ""
+"Звучина је слободан програм; можете га прослеђивати и/или мењати под "
+"условима Гнуове опште јавне лиценце коју је објавила Задужбина слободног "
+"софтвера; било верзије 2 лиценце или (по вашем избору) било које новије "
+"верзије."
+
+#: ../src/actions.c:146
+msgid ""
+"CD Player is distributed in the hope that it will be useful, but WITHOUT ANY "
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details."
+msgstr ""
+"Звучина се расподељује у нади да ће бити користан, али БЕЗ ИКАКВЕ ГАРАНЦИЈЕ; "
+"чак и без примењене гаранције ТРЖИШНЕ ВРЕДНОСТИ или ПРИЛАГОЂЕНОСТИ "
+"ОДРЕЂЕНОЈ НАМЕНИ.  Погледајте Гнуову општу јавну лиценцу за више детаља."
+
+#: ../src/actions.c:150
+msgid ""
+"You should have received a copy of the GNU General Public License along with "
+"CD Player; if not, write to the Free Software Foundation, Inc., 51 Franklin "
+"St, Fifth Floor, Boston, MA 02110-1301 USA"
+msgstr ""
+"Требали сте да примите примерак Гнуове опште јавне лиценце уз Звучину; ако "
+"нисте, пишите Задужбини слободног софтвера на адресу: „Free Software "
+"Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA“"
+
+#: ../src/actions.c:161
+msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
+msgstr "Ауторска права © 2004-2011 Задужбина слободног софтвера, Доо."
+
+#: ../src/actions.c:162 ../src/main.c:334 ../src/main.c:433
+msgid "Play CDs and save the tracks to disk as files"
+msgstr "Пуштајте звучне дискове и чувајте нумере на диск као датотеке"
+
+#: ../src/actions.c:290 ../src/actions.c:325 ../src/actions.c:358
+msgid "Could not execute command"
+msgstr "Не могу да извршим наредбу"
+
+#: ../src/album-info.c:176
+msgid "Various"
+msgstr "Разно"
+
+#: ../src/dlg-cover-chooser.c:277
+#, c-format
+msgid "%u, loading image: %u"
+msgstr "%u, учитавам слику: %u"
+
+#: ../src/dlg-cover-chooser.c:342 ../src/goo-window.c:2657
+msgid "Could not search for a cover on Internet"
+msgstr "Не могу да потражим омот на Интернету"
+
+#: ../src/dlg-extract.c:110
+#, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract "
+"CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Waveform PCM"
+msgstr ""
+"Потребан вам је барем један од наведених прикључака Гстримера да бисте "
+"извлачили нумере са ЦД-а:\n"
+"\n"
+"• %s → Огг Ворбис\n"
+"• %s → ФЛАЦ\n"
+"• %s → Вејвформ ПЦМ"
+
+#: ../src/dlg-extract.c:121
+msgid "No encoder available."
+msgstr "Нема доступних шифрера."
+
+#: ../src/dlg-preferences.c:240 ../src/dlg-preferences.c:472
+msgid "Ogg Vorbis"
+msgstr "Огг Ворбис"
+
+#: ../src/dlg-preferences.c:252 ../src/dlg-preferences.c:475
+msgid "FLAC"
+msgstr "ФЛАЦ"
+
+#: ../src/dlg-preferences.c:264
+msgid "Waveform PCM"
+msgstr "Вејвформ ПЦМ"
+
+#.
+#: ../src/dlg-preferences.c:290 ../src/dlg-preferences.c:499
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
+msgstr ""
+"Ворбис је отворени звучни кодек, са губицима, који даје бољи квалитет звука "
+"уз мање датотеке у односу на МП3."
+
+#: ../src/dlg-preferences.c:291 ../src/dlg-preferences.c:502
+msgid ""
+"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
+"does not degrade audio quality."
+msgstr ""
+"ФЛАЦ је слободан звучни кодек који смањује величину датотека без губитка на "
+"квалитету."
+
+#: ../src/dlg-preferences.c:292 ../src/dlg-preferences.c:505
+msgid ""
+"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
+"modulated (PCM) audio."
+msgstr ""
+"ВАВ+ПЦМ је формат без губитака који чува несажети, изворни импулсним кодом "
+"модулисани (ПЦМ) звук."
+
+#: ../src/dlg-preferences.c:447
+msgid "Faster compression"
+msgstr "Брзо сажимање"
+
+#: ../src/dlg-preferences.c:451
+msgid "Higher compression"
+msgstr "Високо сажимање"
+
+#: ../src/dlg-preferences.c:458
+msgid "Smaller size"
+msgstr "Мала величина"
+
+#: ../src/dlg-preferences.c:462
+msgid "Higher quality"
+msgstr "Високи квалитет"
+
+#: ../src/dlg-preferences.c:486
+msgid "Quality:"
+msgstr "Квалитет:"
+
+#: ../src/dlg-preferences.c:489
+msgid "Compression level:"
+msgstr "Ниво сажимања:"
+
+#: ../src/dlg-properties.c:216
+#, c-format
+msgid "Album %d of %d"
+msgstr "Албум бр. %d од %d"
+
+#: ../src/dlg-properties.c:274
+msgid "No album found"
+msgstr "Нисам пронашао албуме"
+
+#: ../src/dlg-properties.c:293
+msgid "Searching disc info..."
+msgstr "Претражујем податке о диску..."
+
+#: ../src/dlg-properties.c:353
+msgid "#"
+msgstr "#"
+
+#: ../src/dlg-properties.c:371
+msgid "Title"
+msgstr "Наслов"
+
+#: ../src/dlg-properties.c:404
+msgid "Artist"
+msgstr "Извођач"
+
+#: ../src/dlg-ripper.c:178
+#, c-format
+msgid "(%d:%02d:%02d Remaining)"
+msgstr "(преостаје %d:%02d:%02d)"
+
+#: ../src/dlg-ripper.c:180
+#, c-format
+msgid "(%d:%02d Remaining)"
+msgstr "(преостаје %d:%02d)"
+
+#: ../src/dlg-ripper.c:185
+#, c-format
+msgid "Extracting track: %d of %d %s"
+msgstr "Извлачим нумеру: %d од %d %s"
+
+#: ../src/dlg-ripper.c:222
+msgid "Could not extract the tracks"
+msgstr "Не могу да извучем нумере"
+
+#: ../src/dlg-ripper.c:430
+#, c-format
+msgid "Invalid destination folder: %s"
+msgstr "Неисправна фасцикла одредишта: %s"
+
+#: ../src/dlg-ripper.c:460 ../src/dlg-ripper.c:464
+msgid "Could not display the destination folder"
+msgstr "Не могу да прикажем фасциклу одредишта"
+
+#: ../src/dlg-ripper.c:592
+msgid "Tracks extracted successfully"
+msgstr "Нумере су успешно извучене"
+
+#: ../src/dlg-ripper.c:594
+msgid "_View destination folder"
+msgstr "_Прикажи фасциклу одредишта"
+
+#: ../src/dlg-ripper.c:609
+#, c-format
+msgid "Extracting \"%s\""
+msgstr "Извлачим „%s“"
+
+#: ../src/dlg-ripper.c:620 ../src/dlg-ripper.c:629
+msgid "Could not extract tracks"
+msgstr "Не могу да извучем нумере"
+
+#: ../src/dlg-ripper.c:659
+msgid "Ripped with CD Player"
+msgstr "Ишчупано снагом Звучине"
+
+#: ../src/dlg-ripper.c:705
+msgid "Extracting disc tracks"
+msgstr "Извлачим нумере са диска"
+
+#. hour:minutes:seconds
+#. Translators: This is a time format, like "9:05:02" for 9
+#. * hours, 5 minutes, and 2 seconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: ../src/glib-utils.c:2225
+#, c-format
+msgctxt "long time format"
+msgid "%d∶%02d∶%02d"
+msgstr "%d∶%02d∶%02d"
+
+#. minutes:seconds
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes and 2 seconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: ../src/glib-utils.c:2234
+#, c-format
+msgctxt "short time format"
+msgid "%d∶%02d"
+msgstr "%d∶%02d"
+
+#: ../src/goo-player.c:259
+msgid "Playing CD"
+msgstr "Пуштам ЦД"
+
+#: ../src/goo-player-info.c:256
+msgid "Click here to choose a cover for this CD"
+msgstr "Кликните овде да изаберете омот за овај ЦД"
+
+#: ../src/goo-player-info.c:419 ../src/goo-window.c:1174
+msgid "No disc"
+msgstr "Нема диска"
+
+#: ../src/goo-player-info.c:422 ../src/goo-window.c:1179
+msgid "Data disc"
+msgstr "Диск са подацима"
+
+#: ../src/goo-player-info.c:426
+msgid "Ejecting CD"
+msgstr "Избацујем ЦД"
+
+#: ../src/goo-player-info.c:429
+msgid "Checking CD drive"
+msgstr "Проверавам ЦД уређај"
+
+#: ../src/goo-player-info.c:432 ../src/goo-player-info.c:435
+msgid "Reading CD"
+msgstr "Читам ЦД"
+
+#: ../src/goo-player-info.c:438 ../src/goo-window.c:1192
+#: ../src/goo-window.c:1335
+msgid "Audio CD"
+msgstr "Звучни ЦД"
+
+#: ../src/goo-stock.c:40
+msgid "_Extract"
+msgstr "_Извуци"
+
+#: ../src/goo-stock.c:41
+msgid "_Reset"
+msgstr "_Врати"
+
+#: ../src/goo-stock.c:42 ../src/goo-stock.c:43 ../src/goo-stock.c:44
+#: ../src/goo-stock.c:45
+msgid "V_olume"
+msgstr "Јачина _звука"
+
+#: ../src/goo-window.c:52
+msgid "Hide _tracks"
+msgstr "Сакриј _нумере"
+
+#: ../src/goo-window.c:53
+msgid "Show _tracks"
+msgstr "Прикажи _нумере"
+
+#: ../src/goo-window.c:1245 ../src/ui.h:48
+msgid "_Pause"
+msgstr "_Застани"
+
+#: ../src/goo-window.c:1245 ../src/main.c:922 ../src/ui.h:49
+msgid "Pause"
+msgstr "Застани"
+
+#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/ui.h:36
+#: ../src/ui.h:40 ../src/ui.h:44
+msgid "_Play"
+msgstr "_Пусти"
+
+#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/main.c:929
+#: ../src/ui.h:41
+msgid "Play"
+msgstr "Покрени"
+
+#: ../src/goo-window.c:2082 ../src/goo-window.c:2083
+msgid "Other actions"
+msgstr "Остале радње"
+
+#: ../src/goo-window.c:2475
+msgid "Could not save cover image"
+msgstr "Не могу да сачувам слику омота"
+
+#: ../src/goo-window.c:2500 ../src/goo-window.c:2526
+msgid "Could not load image"
+msgstr "Не могу да учитам слику"
+
+#: ../src/goo-window.c:2595
+msgid "Choose Disc Cover Image"
+msgstr "Изаберите слику омота диска"
+
+#: ../src/goo-window.c:2614
+msgid "Images"
+msgstr "Слике"
+
+#: ../src/goo-window.c:2622
+msgid "All files"
+msgstr "Све датотеке"
+
+#: ../src/goo-window.c:2658
+msgid ""
+"You have to enter the artist and album names in order to find the album "
+"cover."
+msgstr ""
+"Морате да унесете име извођача и назив албума да бисте пронашли омот албума."
+
+#: ../src/goo-window.c:2701
+msgid "_Show Window"
+msgstr "_Прикажи прозор"
+
+#: ../src/goo-window.c:2701
+msgid "Show the main window"
+msgstr "Прикажите главни прозор"
+
+#: ../src/goo-window.c:2709 ../src/ui.h:108
+msgid "_Hide Window"
+msgstr "_Сакриј прозор"
+
+#: ../src/goo-window.c:2709 ../src/ui.h:109
+msgid "Hide the main window"
+msgstr "Сакријте главни прозор"
+
+#: ../src/gtk-file-chooser-preview.c:166
+msgid "Preview"
+msgstr "Преглед"
+
+#: ../src/gtk-file-chooser-preview.c:267
+msgid "pixels"
+msgstr "тачкица"
+
+#: ../src/gtk-utils.c:754
+msgid "Could not display help"
+msgstr "Не могу да прикажем помоћ"
+
+#: ../src/gtk-utils.c:1040 ../src/gtk-utils.c:1046
+msgid "Could not launch the application"
+msgstr "Не могу да покренем програм"
+
+#: ../src/main.c:71
+msgid "CD device to be used"
+msgstr "ЦД уређај за коришћење"
+
+#: ../src/main.c:72
+msgid "DEVICE_PATH"
+msgstr "ПУТАЊА_УРЕЂАЈА"
+
+#: ../src/main.c:74
+msgid "Play the CD on startup"
+msgstr "Пушта ЦД при покретању"
+
+#: ../src/main.c:77
+msgid "Toggle play"
+msgstr "Започиње/паузира пуштање"
+
+#: ../src/main.c:80 ../src/ui.h:53
+msgid "Stop playing"
+msgstr "Зауставља пуштање"
+
+#: ../src/main.c:83 ../src/ui.h:57
+msgid "Play the next track"
+msgstr "Пустите наредну нумеру"
+
+#: ../src/main.c:86 ../src/ui.h:61
+msgid "Play the previous track"
+msgstr "Пустите претходну нумеру"
+
+#: ../src/main.c:89
+msgid "Eject the CD"
+msgstr "Избацује ЦД"
+
+#: ../src/main.c:92
+msgid "Toggle the main window visibility"
+msgstr "Окида видљивост главног прозора"
+
+#: ../src/main.c:95 ../src/ui.h:93
+msgid "Quit the application"
+msgstr "Излази из програма"
+
+#: ../src/main.c:98
+msgid "Show version"
+msgstr "Приказује издање"
+
+#: ../src/main.c:292
+msgid "Cannot start the CD player"
+msgstr "Не могу да покренем Звучину"
+
+#: ../src/main.c:293
+msgid "In order to read CDs you have to install the gstreamer base plugins"
+msgstr ""
+"Да бисте могли да читате звучне дискове морате да инсталирате основне "
+"прикључке гстримера (gstreamer base)"
+
+#: ../src/main.c:936
+msgid "Next"
+msgstr "Следеће"
+
+#: ../src/track-info.c:123
+#, c-format
+msgid "Track %u"
+msgstr "Нумера %u"
+
+#: ../src/ui/app-menu.ui.h:1
+msgid "_Preferences"
+msgstr "_Поставке"
+
+#: ../src/ui/app-menu.ui.h:2
+msgid "Play Mode"
+msgstr "Режим пуштања"
+
+#: ../src/ui/app-menu.ui.h:3
+msgid "Play _All"
+msgstr "Пусти _све"
+
+#: ../src/ui/app-menu.ui.h:4
+msgid "_Repeat"
+msgstr "_Понови"
+
+#: ../src/ui/app-menu.ui.h:5
+msgid "S_huffle"
+msgstr "_Промешај"
+
+#: ../src/ui/app-menu.ui.h:6
+msgid "_Help"
+msgstr "По_моћ"
+
+#: ../src/ui/app-menu.ui.h:7
+msgid "_About CD Player"
+msgstr "_О Звучини"
+
+#: ../src/ui/app-menu.ui.h:8
+msgid "_Quit"
+msgstr "_Изађи"
+
+#: ../src/ui/cover-chooser.ui.h:1
+msgid "Choose a CD Cover"
+msgstr "Изаберите омот ЦД-а"
+
+#: ../src/ui/cover-chooser.ui.h:2
+msgid "Found images:"
+msgstr "Пронађене слике:"
+
+#: ../src/ui/extract.ui.h:1
+msgid "Extract Tracks"
+msgstr "Извуци нумере"
+
+#: ../src/ui/extract.ui.h:2
+msgid "_All tracks"
+msgstr "_Све нумере"
+
+#: ../src/ui/extract.ui.h:3
+msgid "_Selected tracks"
+msgstr "_Изабране нумере"
+
+#: ../src/ui/format-options.ui.h:1
+msgid "Format Properties"
+msgstr "Својства облика"
+
+#: ../src/ui.h:33
+msgid "C_over"
+msgstr "_Омот"
+
+#: ../src/ui.h:37
+msgid "Play/Pause"
+msgstr "Пусти/паузирај"
+
+#: ../src/ui.h:45
+msgid "Play this track"
+msgstr "Пустите ову нумеру"
+
+#: ../src/ui.h:52
+msgid "_Stop"
+msgstr "_Заустави"
+
+#: ../src/ui.h:56
+msgid "_Next"
+msgstr "_Следећа"
+
+#: ../src/ui.h:60
+msgid "Pre_v"
+msgstr "_Претходна"
+
+#: ../src/ui.h:64 ../src/ui.h:68
+msgid "_Eject"
+msgstr "_Избаци"
+
+#: ../src/ui.h:65 ../src/ui.h:69
+msgid "Eject the disc"
+msgstr "Избаци диск"
+
+#: ../src/ui.h:72
+msgid "_Copy Disc"
+msgstr "_Умножи диск"
+
+#: ../src/ui.h:73
+msgid "Copy the content of this disc on another disc"
+msgstr "Умножите садржај овог диска на други диск"
+
+#: ../src/ui.h:76 ../src/ui.h:80
+msgid "E_xtract Tracks"
+msgstr "Извуци _нумере"
+
+#: ../src/ui.h:77
+msgid "Save the tracks to disk as files"
+msgstr "Сачувајте нумере на диск као датотеке"
+
+#: ../src/ui.h:81
+msgid "Save the selected tracks to disk as files"
+msgstr "Сачувајте изабране нумере на диск као датотеке"
+
+#: ../src/ui.h:85
+msgid "Edit the disc artist, album and the tracks titles"
+msgstr "Уредите извођача диска, албум и наслове нумера"
+
+#: ../src/ui.h:96
+msgid "_Choose File..."
+msgstr "_Изабери датотеку..."
+
+#: ../src/ui.h:97
+msgid "Choose a file to use as disc cover"
+msgstr "Изаберите датотеку за употребу као омот диска"
+
+#: ../src/ui.h:100
+msgid "_Search on Internet"
+msgstr "_Тражи на Интернету"
+
+#: ../src/ui.h:101
+msgid "Search for a disc cover on Internet"
+msgstr "Потражите омот диска на Интернету"
+
+#: ../src/ui.h:105
+msgid "Remove current disc cover"
+msgstr "Уклоните текући омот диска"
+
+#: ../src/ui/preferences.ui.h:1
+msgid "CD Player Preferences"
+msgstr "Поставке Звучине"
+
+#: ../src/ui/preferences.ui.h:2
+msgid "CD Drive"
+msgstr "ЦД уређај"
+
+#: ../src/ui/preferences.ui.h:3
+msgid "Automatically play newly inserted discs"
+msgstr "Сам пусти ново уметнуте дискове"
+
+#: ../src/ui/preferences.ui.h:4
+msgid "General"
+msgstr "Опште"
+
+#: ../src/ui/preferences.ui.h:5
+msgid "Destination folder"
+msgstr "Фасцикла одредишта"
+
+#: ../src/ui/preferences.ui.h:6
+msgid "    "
+msgstr "    "
+
+#: ../src/ui/preferences.ui.h:7
+msgid "Choose destination folder"
+msgstr "Изаберите фасциклу одредишта"
+
+#: ../src/ui/preferences.ui.h:8
+msgid "Output format"
+msgstr "Излазни облик"
+
+#: ../src/ui/preferences.ui.h:9
+msgid "_Save playlist"
+msgstr "_Сачувај списак нумера"
+
+#: ../src/ui/preferences.ui.h:10
+msgid "Extraction"
+msgstr "Извлачење"
+
+#: ../src/ui/properties.ui.h:1
+msgid "Single artist"
+msgstr "Један извођач"
+
+#: ../src/ui/properties.ui.h:2
+msgid "Various artists"
+msgstr "Разни извођачи"
+
+#: ../src/ui/properties.ui.h:3
+msgid "Properties"
+msgstr "Својства"
+
+#: ../src/ui/properties.ui.h:4
+msgid "_Title:"
+msgstr "_Наслов:"
+
+#: ../src/ui/properties.ui.h:5
+msgid "T_racks:"
+msgstr "_Нумере:"
+
+#: ../src/ui/properties.ui.h:6
+msgid "_Artist:"
+msgstr "_Извођач:"
+
+#: ../src/ui/properties.ui.h:7
+msgid "_Year:"
+msgstr "_Година:"
+
+#: ../src/ui/properties.ui.h:8
+msgid "Search for the remaining data"
+msgstr "Потражи преостале податке"
+
+#: ../src/ui/properties.ui.h:9
+msgid "No album found."
+msgstr "Нисам пронашао албуме."
+
+#: ../src/ui/ripper.ui.h:1
+msgid "Extracting Tracks"
+msgstr "Извлачим нумере"
+
+#: ../src/ui/ripper.ui.h:2
+msgid "Extracting tracks"
+msgstr "Извлачим нумере"
