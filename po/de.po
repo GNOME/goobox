@@ -11,10 +11,11 @@ msgstr ""
 "Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=goobox&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-06-08 06:37+0000\n"
-"PO-Revision-Date: 2011-07-15 20:38+0100\n"
-"Last-Translator: Mario Blättermann <mariobl@freenet.de>\n"
+"POT-Creation-Date: 2013-01-15 10:30+0000\n"
+"PO-Revision-Date: 2013-01-16 00:10+0100\n"
+"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -84,7 +85,8 @@ msgid "Show session management options"
 msgstr "Sitzungsmanagement-Optionen anzeigen"
 
 #: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:159
-#: ../src/goo-window.c:2128 ../src/goo-window.c:2564 ../src/main.c:237
+#: ../src/goo-window.c:1315 ../src/goo-window.c:1328 ../src/goo-window.c:1846
+#: ../src/main.c:240
 msgid "CD Player"
 msgstr "CD-Spieler"
 
@@ -93,248 +95,96 @@ msgid "Play and extract CDs"
 msgstr "CDs abspielen und auslesen"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:1
-msgid "'Choose cover' location"
-msgstr "Ort für »Cover wählen«"
+msgid "Device path"
+msgstr "Gerätepfad"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:2
-msgid "Autoplay"
-msgstr "Automatische Wiedergabe"
+msgid "Volume level"
+msgstr "Lautstärkepegel"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:3
-msgid "Autoplay discs after insertion."
-msgstr "Medien nach dem Einlegen automatisch abspielen."
+msgid "'Choose cover' location"
+msgstr "Ort für »Cover wählen«"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:4
 msgid "Default location for the 'Choose cover' dialog."
 msgstr "Vorgegebener Speicherort im Dialog »Cover wählen«."
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:5
-msgid "Device path"
-msgstr "Gerätepfad"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:6
-msgid "Extraction folder"
-msgstr "Ordner zum Speichern"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:7
-msgid "FLAC files quality"
-msgstr "Qualität der FLAC-Dateien"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:8
-msgid "File type"
-msgstr "Dateityp"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:9
-msgid "MP3 files quality"
-msgstr "Qualität der MP3-Dateien"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:10
-msgid "OGG files quality"
-msgstr "Qualität der Ogg-Dateien"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:11 ../src/ui.h:148
-msgid "Play all tracks"
-msgstr "Alle Stücke abspielen"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:12
-msgid "Playlist sort method"
-msgstr "Sortiermethode der Wiedergabeliste"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
-msgid "Playlist sort type"
-msgstr "Sortiertyp der Wiedergabeliste"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
-msgid "Playlist visibility"
-msgstr "Sichtbarkeit der Wiedergabeliste"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
-msgid "Possible values are: ogg, flac, mp3, wave."
-msgstr "Mögliche Werte sind: ogg, flac, mp3, wave."
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
-msgid "Restart when finished"
-msgstr "Nach Beenden neu starten"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
-msgid "Save the playlist"
-msgstr "Wiedergabeliste speichern"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
-msgid "Save the playlist of the extracted tracks."
-msgstr "Die Wiedergabeliste der entpackten Titel speichern."
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
-msgid "Shuffle playlist"
-msgstr "Wiedergabeliste mischen"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:20
-msgid "Statusbar visibility"
-msgstr "Sichtbarkeit der Statuszeile"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:21
-msgid "Toolbar style"
-msgstr "Stil der Werkzeugleisten"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
-msgid "Toolbar visibility"
-msgstr "Sichtbarkeit der Werkzeugleiste"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
 msgid "Use Sound Juicer to rip discs"
 msgstr "Sound Juicer zum Auslesen von Medien verwenden"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:24
-msgid "View the destination"
-msgstr "Ziel öffnen"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:6
+msgid "Autoplay"
+msgstr "Automatische Wiedergabe"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:25
-msgid "Volume level"
-msgstr "Lautstärkepegel"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:7
+msgid "Autoplay discs after insertion."
+msgstr "Medien nach dem Einlegen automatisch abspielen."
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:26
-msgid "Window height"
-msgstr "Fensterhöhe"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:27
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:8
 msgid "Window width"
 msgstr "Fensterbreite"
 
-#: ../data/ui/cover-chooser.ui.h:1
-msgid "Choose a CD Cover"
-msgstr "CD-Hülle auswählen"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:9
+msgid "Window height"
+msgstr "Fensterhöhe"
 
-#: ../data/ui/cover-chooser.ui.h:2
-msgid "Found images:"
-msgstr "Gefundene Bilder:"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:10
+msgid "Play all tracks"
+msgstr "Alle Stücke abspielen"
 
-#: ../data/ui/extract.ui.h:1 ../data/ui/preferences.ui.h:1
-msgid "    "
-msgstr "    "
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:11
+msgid "Shuffle playlist"
+msgstr "Wiedergabeliste mischen"
 
-#: ../data/ui/extract.ui.h:2
-msgid "<b>Extract</b>"
-msgstr "<b>Auslesen</b>"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:12
+msgid "Restart when finished"
+msgstr "Nach Beenden neu starten"
 
-#: ../data/ui/extract.ui.h:3
-msgid "Extract Tracks"
-msgstr "Stücke auslesen"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
+msgid "Playlist sort method"
+msgstr "Sortiermethode der Wiedergabeliste"
 
-#: ../data/ui/extract.ui.h:4
-msgid "_All tracks"
-msgstr "_Alle Stücke"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
+msgid "Playlist sort type"
+msgstr "Sortiertyp der Wiedergabeliste"
 
-#: ../data/ui/extract.ui.h:5
-msgid "_Selected tracks"
-msgstr "Au_sgewählte Stücke"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
+msgid "Extraction folder"
+msgstr "Ordner zum Speichern"
 
-#: ../data/ui/format-options.ui.h:1
-msgid "Format Properties"
-msgstr "Format-Eigenschaften"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
+msgid "File type"
+msgstr "Dateityp"
 
-#: ../data/ui/preferences.ui.h:2
-msgid "<b>CD Drive</b>"
-msgstr "<b>CD-Laufwerk</b>"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "Mögliche Werte sind: ogg, flac, mp3, wave."
 
-#: ../data/ui/preferences.ui.h:3
-msgid "<b>Destination folder</b>"
-msgstr "<b>Zielordner</b>"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
+msgid "Save the playlist"
+msgstr "Wiedergabeliste speichern"
 
-#: ../data/ui/preferences.ui.h:4
-msgid "<b>Output format</b>"
-msgstr "<b>Ausgabeformat</b>"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
+msgid "Save the playlist of the extracted tracks."
+msgstr "Die Wiedergabeliste der entpackten Titel speichern."
 
-#: ../data/ui/preferences.ui.h:5
-msgid ""
-"<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
-"compresses but does not degrade audio quality.</i></small>"
-msgstr ""
-"<small><i>Free Lossless Audio Codec (FLAC) ist ein Open-Source-Codec, der "
-"komprimiert, aber die Audio-Qualität nicht reduziert.</i></small>"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:20
+msgid "View the destination"
+msgstr "Ziel öffnen"
 
-#: ../data/ui/preferences.ui.h:6
-msgid ""
-"<small><i>Vorbis is an open source, lossy audio codec with high quality "
-"output at a lower file size than MP3.</i></small>"
-msgstr ""
-"<small><i>Vorbis ist ein verlustbehafteter Open-Source-Codec, mit hoher "
-"Qualität und kleineren Dateigrößen als MP3.</i></small>"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:21
+msgid "OGG files quality"
+msgstr "Qualität der Ogg-Dateien"
 
-#: ../data/ui/preferences.ui.h:7
-msgid ""
-"<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
-"code modulated (PCM) audio.</i></small>"
-msgstr ""
-"<small><i>WAV+PCM ist ein verlustloses Format, das unkomprimierte Audio-Daten "
-"in roher puls-kodierter Modulation (PCM) enthält.</i></small>"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
+msgid "FLAC files quality"
+msgstr "Qualität der FLAC-Dateien"
 
-#: ../data/ui/preferences.ui.h:8
-msgid "Automatically play newly inserted discs"
-msgstr "Neu eingelegte CDs automatisch abspielen"
-
-#: ../data/ui/preferences.ui.h:9
-msgid "CD Player Preferences"
-msgstr "CD-Spieler-Einstellungen"
-
-#: ../data/ui/preferences.ui.h:10
-msgid "Choose destination folder"
-msgstr "Zielordner auswählen"
-
-#: ../data/ui/preferences.ui.h:11
-msgid "Extraction"
-msgstr "Auslesen"
-
-#: ../data/ui/preferences.ui.h:12
-msgid "General"
-msgstr "Allgemein"
-
-#: ../data/ui/preferences.ui.h:13
-msgid "_Save playlist"
-msgstr "Wiedergabeliste _speichern"
-
-#: ../data/ui/properties.ui.h:1
-msgid "No album found."
-msgstr "Kein Album gefunden."
-
-#: ../data/ui/properties.ui.h:2
-msgid "Properties"
-msgstr "Eigenschaften"
-
-#: ../data/ui/properties.ui.h:3
-msgid "Search for the remaining data"
-msgstr "Suche nach den verbliebenen Daten"
-
-#: ../data/ui/properties.ui.h:4
-msgid "Single artist"
-msgstr "Einzelner Künstler"
-
-#: ../data/ui/properties.ui.h:5
-msgid "T_racks:"
-msgstr "_Stücke:"
-
-#: ../data/ui/properties.ui.h:6
-msgid "Various artists"
-msgstr "Verschiedene Künstler"
-
-#: ../data/ui/properties.ui.h:7
-msgid "_Artist:"
-msgstr "_Künstler:"
-
-#: ../data/ui/properties.ui.h:8
-msgid "_Title:"
-msgstr "_Titel:"
-
-#: ../data/ui/properties.ui.h:9
-msgid "_Year:"
-msgstr "_Jahr:"
-
-#: ../data/ui/ripper.ui.h:1
-msgid "<big><b>Extracting tracks</b></big>"
-msgstr "<big><b>Stücke werden ausgelesen</b></big>"
-
-#: ../data/ui/ripper.ui.h:2
-msgid "Extracting Tracks"
-msgstr "Stücke werden ausgelesen"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
+msgid "MP3 files quality"
+msgstr "Qualität der MP3-Dateien"
 
 #: ../src/actions.c:139
 msgid "translator_credits"
@@ -346,25 +196,26 @@ msgstr ""
 #: ../src/actions.c:142
 msgid ""
 "CD Player is free software; you can redistribute it and/or modify it under "
-"the terms of the GNU General Public License as published by the Free Software "
-"Foundation; either version 2 of the License, or (at your option) any later "
-"version."
+"the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version."
 msgstr ""
 "CD-Spieler ist Freie Software; Sie können ihn unter den Bedingungen der »GNU "
 "General Public License«, wie sie von der »Free Software Foundation« "
-"veröffentlicht wurde, entweder Version 2 oder (nach Ihrer Wahl) jeder neueren "
-"Version, verteilen und/oder bearbeiten."
+"veröffentlicht wurde, entweder Version 2 oder (nach Ihrer Wahl) jeder "
+"neueren Version, verteilen und/oder bearbeiten."
 
 #: ../src/actions.c:146
 msgid ""
 "CD Player is distributed in the hope that it will be useful, but WITHOUT ANY "
-"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR "
-"A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details."
 msgstr ""
 "CD-Spieler wird in der Hoffnung des Nutzens vertrieben, aber OHNE JEDE "
-"HAFTUNG; ohne die möglicherweise implizite Garantie der GEBRAUCHSTAUGLICHKEIT "
-"oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. Lesen Sie die »GNU General Public "
-"License« für weitere Details."
+"HAFTUNG; ohne die möglicherweise implizite Garantie der "
+"GEBRAUCHSTAUGLICHKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. Lesen Sie die "
+"»GNU General Public License« für weitere Details."
 
 #: ../src/actions.c:150
 msgid ""
@@ -374,18 +225,18 @@ msgid ""
 msgstr ""
 "Sie sollten eine Kopie der »GNU General Public License« zusammen mit dem CD-"
 "Spieler erhalten haben; falls nicht, schreiben Sie (auf Englisch) an Free "
-"Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 "
-"USA."
+"Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA "
+"02110-1301 USA."
 
 #: ../src/actions.c:161
 msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
 msgstr "Copyright 2004-2011 Free Software Foundation, Inc."
 
-#: ../src/actions.c:162 ../src/main.c:334 ../src/main.c:447
+#: ../src/actions.c:162 ../src/main.c:334 ../src/main.c:433
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "CDs abspielen und die Stücke als Dateien auf der Festplatte speichern"
 
-#: ../src/actions.c:308 ../src/actions.c:343 ../src/actions.c:376
+#: ../src/actions.c:290 ../src/actions.c:325 ../src/actions.c:358
 msgid "Could not execute command"
 msgstr "Befehl konnte nicht ausgeführt werden"
 
@@ -393,16 +244,16 @@ msgstr "Befehl konnte nicht ausgeführt werden"
 msgid "Various"
 msgstr "Verschiedene"
 
-#: ../src/dlg-cover-chooser.c:271
+#: ../src/dlg-cover-chooser.c:277
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, Bild wird geladen: %u"
 
-#: ../src/dlg-cover-chooser.c:336 ../src/goo-window.c:3124
+#: ../src/dlg-cover-chooser.c:342 ../src/goo-window.c:2657
 msgid "Could not search for a cover on Internet"
 msgstr "Es konnte nicht nach einem Hüllen-Bild im Internet gesucht werden"
 
-#: ../src/dlg-extract.c:118
+#: ../src/dlg-extract.c:110
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -419,24 +270,24 @@ msgstr ""
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 
-#: ../src/dlg-extract.c:129
+#: ../src/dlg-extract.c:121
 msgid "No encoder available."
 msgstr "Es sind keine Kodierer vorhanden."
 
-#: ../src/dlg-preferences.c:246 ../src/dlg-preferences.c:479
+#: ../src/dlg-preferences.c:240 ../src/dlg-preferences.c:472
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:258 ../src/dlg-preferences.c:482
+#: ../src/dlg-preferences.c:252 ../src/dlg-preferences.c:475
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:270
+#: ../src/dlg-preferences.c:264
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:296 ../src/dlg-preferences.c:506
+#: ../src/dlg-preferences.c:290 ../src/dlg-preferences.c:499
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
@@ -444,7 +295,7 @@ msgstr ""
 "Vorbis ist ein verlustbehafteter Open-Source-Codec, mit hoher Qualität und "
 "kleineren Dateigrößen als MP3."
 
-#: ../src/dlg-preferences.c:297 ../src/dlg-preferences.c:509
+#: ../src/dlg-preferences.c:291 ../src/dlg-preferences.c:502
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
@@ -452,7 +303,7 @@ msgstr ""
 "Free Lossless Audio Codec (FLAC) ist ein Open-Source-Codec, der komprimiert, "
 "aber die Audio-Qualität nicht reduziert."
 
-#: ../src/dlg-preferences.c:298 ../src/dlg-preferences.c:512
+#: ../src/dlg-preferences.c:292 ../src/dlg-preferences.c:505
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
@@ -460,52 +311,52 @@ msgstr ""
 "WAV+PCM ist ein verlustloses Format, das unkomprimierte Audio-Daten in roher "
 "puls-kodierter Modulation (PCM) enthält."
 
-#: ../src/dlg-preferences.c:454
+#: ../src/dlg-preferences.c:447
 msgid "Faster compression"
 msgstr "Schnellere Komprimierung"
 
-#: ../src/dlg-preferences.c:458
+#: ../src/dlg-preferences.c:451
 msgid "Higher compression"
 msgstr "Stärkere Komprimierung"
 
-#: ../src/dlg-preferences.c:465
+#: ../src/dlg-preferences.c:458
 msgid "Smaller size"
 msgstr "Weniger Speicherplatz"
 
-#: ../src/dlg-preferences.c:469
+#: ../src/dlg-preferences.c:462
 msgid "Higher quality"
 msgstr "Höhere Qualität"
 
-#: ../src/dlg-preferences.c:493
+#: ../src/dlg-preferences.c:486
 msgid "Quality:"
 msgstr "Qualität:"
 
-#: ../src/dlg-preferences.c:496
+#: ../src/dlg-preferences.c:489
 msgid "Compression level:"
 msgstr "Komprimierungsstärke:"
 
-#: ../src/dlg-properties.c:224
+#: ../src/dlg-properties.c:216
 #, c-format
 msgid "Album %d of %d"
 msgstr "Album %d von %d"
 
-#: ../src/dlg-properties.c:282
+#: ../src/dlg-properties.c:274
 msgid "No album found"
 msgstr "Kein Album gefunden"
 
-#: ../src/dlg-properties.c:301
+#: ../src/dlg-properties.c:293
 msgid "Searching disc info..."
 msgstr "Nach Medieninformationen wird gesucht …"
 
-#: ../src/dlg-properties.c:361 ../src/goo-window.c:542
+#: ../src/dlg-properties.c:353
 msgid "#"
 msgstr "Nr. "
 
-#: ../src/dlg-properties.c:379 ../src/goo-window.c:567
+#: ../src/dlg-properties.c:371
 msgid "Title"
 msgstr "Titel"
 
-#: ../src/dlg-properties.c:412 ../src/goo-window.c:590
+#: ../src/dlg-properties.c:404
 msgid "Artist"
 msgstr "Künstler"
 
@@ -537,28 +388,28 @@ msgstr "Ungültiger Zielordner: %s"
 msgid "Could not display the destination folder"
 msgstr "Der Zielordner konnte nicht angezeigt werden"
 
-#: ../src/dlg-ripper.c:591
+#: ../src/dlg-ripper.c:592
 msgid "Tracks extracted successfully"
 msgstr "Stücke wurden erfolgreich ausgelesen"
 
-#: ../src/dlg-ripper.c:593
+#: ../src/dlg-ripper.c:594
 msgid "_View destination folder"
 msgstr "_Zielordner anzeigen"
 
-#: ../src/dlg-ripper.c:608
+#: ../src/dlg-ripper.c:609
 #, c-format
-msgid "<i>Extracting \"%s\"</i>"
-msgstr "<i>Auslesen »%s«</i>"
+msgid "Extracting \"%s\""
+msgstr "Auslesen von »%s«"
 
-#: ../src/dlg-ripper.c:617 ../src/dlg-ripper.c:626
+#: ../src/dlg-ripper.c:620 ../src/dlg-ripper.c:629
 msgid "Could not extract tracks"
 msgstr "Stücke konnten nicht ausgelesen werden"
 
-#: ../src/dlg-ripper.c:656
+#: ../src/dlg-ripper.c:659
 msgid "Ripped with CD Player"
 msgstr "Ausgelesen mit CD-Spieler"
 
-#: ../src/dlg-ripper.c:702
+#: ../src/dlg-ripper.c:705
 msgid "Extracting disc tracks"
 msgstr "Stücke werden ausgelesen"
 
@@ -571,8 +422,8 @@ msgstr "Stücke werden ausgelesen"
 #: ../src/glib-utils.c:2225
 #, c-format
 msgctxt "long time format"
-msgid "%d:%02d:%02d"
-msgstr "%d:%02d:%02d"
+msgid "%d∶%02d∶%02d"
+msgstr "%d∶%02d∶%02d"
 
 #. minutes:seconds
 #. Translators: This is a time format, like "5:02" for 5
@@ -583,50 +434,39 @@ msgstr "%d:%02d:%02d"
 #: ../src/glib-utils.c:2234
 #, c-format
 msgctxt "short time format"
-msgid "%d:%02d"
-msgstr "%d:%02d"
+msgid "%d∶%02d"
+msgstr "%d∶%02d"
 
 #: ../src/goo-player.c:259
 msgid "Playing CD"
 msgstr "CD abspielen"
 
-#. translators: this is the current_time / total_time label
-#: ../src/goo-player-info.c:220 ../src/goo-player-info.c:248
-#: ../src/goo-player-info.c:531 ../src/goo-window.c:2110
-#, c-format
-msgid "%s / %s"
-msgstr "%s / %s"
-
-#: ../src/goo-player-info.c:412
+#: ../src/goo-player-info.c:256
 msgid "Click here to choose a cover for this CD"
 msgstr "Klicken Sie hier, um ein Hüllen-Bild für diese CD auszuwählen"
 
-#: ../src/goo-player-info.c:669 ../src/goo-window.c:1319
+#: ../src/goo-player-info.c:419 ../src/goo-window.c:1174
 msgid "No disc"
 msgstr "Kein Medium"
 
-#: ../src/goo-player-info.c:672 ../src/goo-window.c:1324
+#: ../src/goo-player-info.c:422 ../src/goo-window.c:1179
 msgid "Data disc"
 msgstr "Daten-Platte"
 
-#: ../src/goo-player-info.c:687 ../src/goo-window.c:1492
-msgid "Paused"
-msgstr "Unterbrochen"
-
-#: ../src/goo-player-info.c:696
+#: ../src/goo-player-info.c:426
 msgid "Ejecting CD"
 msgstr "CD wird ausgeworfen"
 
-#: ../src/goo-player-info.c:699
+#: ../src/goo-player-info.c:429
 msgid "Checking CD drive"
 msgstr "CD-Laufwerk wird überprüft"
 
-#: ../src/goo-player-info.c:702 ../src/goo-player-info.c:705
+#: ../src/goo-player-info.c:432 ../src/goo-player-info.c:435
 msgid "Reading CD"
 msgstr "CD wird gelesen"
 
-#: ../src/goo-player-info.c:708 ../src/goo-window.c:1337
-#: ../src/goo-window.c:1502
+#: ../src/goo-player-info.c:438 ../src/goo-window.c:1192
+#: ../src/goo-window.c:1335
 msgid "Audio CD"
 msgstr "Audio-CD"
 
@@ -643,181 +483,137 @@ msgstr "Zu_rücksetzen"
 msgid "V_olume"
 msgstr "_Lautstärke"
 
-#: ../src/goo-volume-tool-button.c:164
-#, c-format
-msgid "Volume level: %3.0f%%"
-msgstr "Lautstärke: %3.0f%%"
-
-#: ../src/goo-volume-tool-button.c:655
-msgid "+"
-msgstr "+"
-
-#: ../src/goo-volume-tool-button.c:697
-msgid "-"
-msgstr "-"
-
-#: ../src/goo-volume-tool-button.c:746
-msgid "Change the volume level"
-msgstr "Die Lautstärke ändern"
-
-#: ../src/goo-volume-tool-button.c:781
-msgid "Volume"
-msgstr "Lautstärke"
-
-#: ../src/goo-window.c:51
+#: ../src/goo-window.c:52
 msgid "Hide _tracks"
 msgstr "Stücke _ausblenden"
 
-#: ../src/goo-window.c:52
+#: ../src/goo-window.c:53
 msgid "Show _tracks"
 msgstr "Stücke a_nzeigen"
 
-#: ../src/goo-window.c:183
-#, c-format
-msgid "%d track"
-msgid_plural "%d tracks"
-msgstr[0] "%d Stück"
-msgstr[1] "%d Stücke"
-
-#: ../src/goo-window.c:614
-msgid "Length"
-msgstr "Länge"
-
-#: ../src/goo-window.c:1392 ../src/ui.h:64
+#: ../src/goo-window.c:1245 ../src/ui.h:48
 msgid "_Pause"
 msgstr "_Pause"
 
-#: ../src/goo-window.c:1393 ../src/main.c:717 ../src/ui.h:65
+#: ../src/goo-window.c:1245 ../src/main.c:922 ../src/ui.h:49
 msgid "Pause"
 msgstr "Pause"
 
-#: ../src/goo-window.c:1495
-msgid "No Disc"
-msgstr "Keine CD"
-
-#: ../src/goo-window.c:1498
-msgid "Data Disc"
-msgstr "Daten-CD"
-
-#: ../src/goo-window.c:1736 ../src/goo-window.c:1754 ../src/ui.h:52
-#: ../src/ui.h:56 ../src/ui.h:60
+#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/ui.h:36
+#: ../src/ui.h:40 ../src/ui.h:44
 msgid "_Play"
 msgstr "_Wiedergabe"
 
-#: ../src/goo-window.c:1737 ../src/goo-window.c:1755 ../src/main.c:724
-#: ../src/ui.h:57
+#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/main.c:929
+#: ../src/ui.h:41
 msgid "Play"
 msgstr "Wiedergabe"
 
-#: ../src/goo-window.c:2942
+#: ../src/goo-window.c:2082 ../src/goo-window.c:2083
+msgid "Other actions"
+msgstr "Weitere Aktionen"
+
+#: ../src/goo-window.c:2475
 msgid "Could not save cover image"
 msgstr "Hüllen-Bild konnte nicht gespeichert werden"
 
-#: ../src/goo-window.c:2967 ../src/goo-window.c:2993
+#: ../src/goo-window.c:2500 ../src/goo-window.c:2526
 msgid "Could not load image"
 msgstr "Bild konnte nicht geladen werden"
 
-#: ../src/goo-window.c:3062
+#: ../src/goo-window.c:2595
 msgid "Choose Disc Cover Image"
 msgstr "Bild für CD-Hülle auswählen"
 
-#: ../src/goo-window.c:3081
+#: ../src/goo-window.c:2614
 msgid "Images"
 msgstr "Bilder"
 
-#: ../src/goo-window.c:3089
+#: ../src/goo-window.c:2622
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: ../src/goo-window.c:3125
+#: ../src/goo-window.c:2658
 msgid ""
-"You have to enter the artist and album names in order to find the album cover."
+"You have to enter the artist and album names in order to find the album "
+"cover."
 msgstr ""
 "Bitte geben Sie die Namen des Künstlers und des Albums an, um nach dem Album-"
 "Hüllen-Bild zu suchen."
 
-#: ../src/goo-window.c:3170
+#: ../src/goo-window.c:2701
 msgid "_Show Window"
 msgstr "Fenster an_zeigen"
 
-#: ../src/goo-window.c:3171
+#: ../src/goo-window.c:2701
 msgid "Show the main window"
 msgstr "Das Hauptfenster anzeigen"
 
-#: ../src/goo-window.c:3184 ../src/ui.h:124
+#: ../src/goo-window.c:2709 ../src/ui.h:108
 msgid "_Hide Window"
 msgstr "Fenster aus_blenden"
 
-#. "H"
-#: ../src/goo-window.c:3185 ../src/ui.h:125
+#: ../src/goo-window.c:2709 ../src/ui.h:109
 msgid "Hide the main window"
 msgstr "Das Hauptfenster ausblenden"
 
-#: ../src/gtk-file-chooser-preview.c:170
+#: ../src/gtk-file-chooser-preview.c:166
 msgid "Preview"
 msgstr "Vorschau"
 
-#: ../src/gtk-file-chooser-preview.c:271
+#: ../src/gtk-file-chooser-preview.c:267
 msgid "pixels"
 msgstr "Pixel"
 
-#: ../src/gtk-utils.c:753
+#: ../src/gtk-utils.c:754
 msgid "Could not display help"
 msgstr "Die Hilfe kann nicht angezeigt werden"
 
-#: ../src/gtk-utils.c:1021 ../src/gtk-utils.c:1027
+#: ../src/gtk-utils.c:1040 ../src/gtk-utils.c:1046
 msgid "Could not launch the application"
 msgstr "Konnte die Anwendung nicht starten"
 
-#: ../src/main.c:73
+#: ../src/main.c:71
 msgid "CD device to be used"
 msgstr "Zu verwendendes CD-Laufwerk"
 
-#: ../src/main.c:74
+#: ../src/main.c:72
 msgid "DEVICE_PATH"
 msgstr "DEVICE_PATH"
 
-#: ../src/main.c:76
+#: ../src/main.c:74
 msgid "Play the CD on startup"
 msgstr "CD beim Programmstart wiedergeben"
 
-#: ../src/main.c:79
+#: ../src/main.c:77
 msgid "Toggle play"
 msgstr "Fenstersichtbarkeit"
 
-#: ../src/main.c:82 ../src/ui.h:69
+#: ../src/main.c:80 ../src/ui.h:53
 msgid "Stop playing"
 msgstr "Wiedergabe abbrechen"
 
-#: ../src/main.c:85 ../src/ui.h:73
+#: ../src/main.c:83 ../src/ui.h:57
 msgid "Play the next track"
 msgstr "Das nächste Stück abspielen"
 
-#: ../src/main.c:88 ../src/ui.h:77
+#: ../src/main.c:86 ../src/ui.h:61
 msgid "Play the previous track"
 msgstr "Das vorhergehende Stück abspielen"
 
-#: ../src/main.c:91
+#: ../src/main.c:89
 msgid "Eject the CD"
 msgstr "Die CD auswerfen"
 
-#: ../src/main.c:94
+#: ../src/main.c:92
 msgid "Toggle the main window visibility"
 msgstr "Das Hauptfenster anzeigen/verbergen"
 
-#: ../src/main.c:97
-msgid "Volume Up"
-msgstr "Lauter"
-
-#: ../src/main.c:100
-msgid "Volume Down"
-msgstr "Leiser"
-
-#: ../src/main.c:103 ../src/ui.h:109
+#: ../src/main.c:95 ../src/ui.h:93
 msgid "Quit the application"
 msgstr "Die Anwendung beenden"
 
-#: ../src/main.c:106
+#: ../src/main.c:98
 msgid "Show version"
 msgstr "Zeige Version"
 
@@ -831,7 +627,7 @@ msgstr ""
 "Um CDs auszulesen, müssen Sie die base-Erweiterungen von GStreamer "
 "installieren"
 
-#: ../src/main.c:731
+#: ../src/main.c:936
 msgid "Next"
 msgstr "Nächster"
 
@@ -840,150 +636,341 @@ msgstr "Nächster"
 msgid "Track %u"
 msgstr "Stück %u"
 
-#: ../src/ui.h:33
-msgid "_Disc"
-msgstr "_CD"
+#: ../src/ui/app-menu.ui.h:1
+msgid "_Preferences"
+msgstr "_Einstellungen"
 
-#: ../src/ui.h:34
-msgid "_Edit"
-msgstr "_Bearbeiten"
+#: ../src/ui/app-menu.ui.h:2
+msgid "Play Mode"
+msgstr "Wiedergabemodus"
 
-#: ../src/ui.h:35
-msgid "_View"
-msgstr "_Ansicht"
+#: ../src/ui/app-menu.ui.h:3
+msgid "Play _All"
+msgstr "_Alle abspielen"
 
-#: ../src/ui.h:36
+#: ../src/ui/app-menu.ui.h:4
+msgid "_Repeat"
+msgstr "_Schleife"
+
+#: ../src/ui/app-menu.ui.h:5
+msgid "S_huffle"
+msgstr "_Zufall"
+
+#: ../src/ui/app-menu.ui.h:6
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: ../src/ui.h:37
+#: ../src/ui/app-menu.ui.h:7
+msgid "_About CD Player"
+msgstr "_Info zu CD-Spieler"
+
+#: ../src/ui/app-menu.ui.h:8
+msgid "_Quit"
+msgstr "_Beenden"
+
+#: ../src/ui/cover-chooser.ui.h:1
+msgid "Choose a CD Cover"
+msgstr "CD-Hülle auswählen"
+
+#: ../src/ui/cover-chooser.ui.h:2
+msgid "Found images:"
+msgstr "Gefundene Bilder:"
+
+#: ../src/ui/extract.ui.h:1
+msgid "Extract Tracks"
+msgstr "Stücke auslesen"
+
+#: ../src/ui/extract.ui.h:2
+msgid "_All tracks"
+msgstr "_Alle Stücke"
+
+#: ../src/ui/extract.ui.h:3
+msgid "_Selected tracks"
+msgstr "Au_sgewählte Stücke"
+
+#: ../src/ui/format-options.ui.h:1
+msgid "Format Properties"
+msgstr "Format-Eigenschaften"
+
+#: ../src/ui.h:33
 msgid "C_over"
 msgstr "Hü_llen-Bild"
 
-#: ../src/ui.h:41
-msgid "Information about the program"
-msgstr "Informationen zu diesem Programm"
-
-#: ../src/ui.h:45
-msgid "Display the manual"
-msgstr "Das Handbuch anzeigen"
-
-#: ../src/ui.h:48
-msgid "_Keyboard shortcuts"
-msgstr "_Tastenkombinationen"
-
-#: ../src/ui.h:53
+#: ../src/ui.h:37
 msgid "Play/Pause"
 msgstr "Wiedergabe/Pause"
 
-#: ../src/ui.h:61
+#: ../src/ui.h:45
 msgid "Play this track"
 msgstr "Dieses Stück abspielen"
 
-#: ../src/ui.h:68
+#: ../src/ui.h:52
 msgid "_Stop"
 msgstr "_Stopp"
 
-#: ../src/ui.h:72
+#: ../src/ui.h:56
 msgid "_Next"
 msgstr "_Nächster"
 
-#: ../src/ui.h:76
+#: ../src/ui.h:60
 msgid "Pre_v"
 msgstr "_Vorheriger"
 
-#: ../src/ui.h:80 ../src/ui.h:84
+#: ../src/ui.h:64 ../src/ui.h:68
 msgid "_Eject"
 msgstr "_Auswerfen"
 
-#: ../src/ui.h:81 ../src/ui.h:85
+#: ../src/ui.h:65 ../src/ui.h:69
 msgid "Eject the disc"
 msgstr "Die CD auswerfen"
 
-#: ../src/ui.h:89
-msgid "Edit various preferences"
-msgstr "Verschiedene Voreinstellungen anpassen"
-
-#: ../src/ui.h:92
+#: ../src/ui.h:72
 msgid "_Copy Disc"
 msgstr "CD _kopieren"
 
-#: ../src/ui.h:93
+#: ../src/ui.h:73
 msgid "Copy the content of this disc on another disc"
 msgstr "Den Inhalt dieser CD auf eine andere CD kopieren"
 
-#: ../src/ui.h:96 ../src/ui.h:100
+#: ../src/ui.h:76 ../src/ui.h:80
 msgid "E_xtract Tracks"
 msgstr "Stücke aus_lesen"
 
-#: ../src/ui.h:97
+#: ../src/ui.h:77
 msgid "Save the tracks to disk as files"
 msgstr "Die Stücke als Dateien auf der Festplatte speichern"
 
-#: ../src/ui.h:101
+#: ../src/ui.h:81
 msgid "Save the selected tracks to disk as files"
 msgstr "Die ausgewählten Stücke als Dateien auf der Festplatte speichern"
 
-#: ../src/ui.h:105
+#: ../src/ui.h:85
 msgid "Edit the disc artist, album and the tracks titles"
 msgstr ""
 "Bearbeiten des CD-Künstlers, des CD-Albumnamens und der Namen der Stücke"
 
-#: ../src/ui.h:112
+#: ../src/ui.h:96
 msgid "_Choose File..."
 msgstr "Datei wä_hlen …"
 
-#: ../src/ui.h:113
+#: ../src/ui.h:97
 msgid "Choose a file to use as disc cover"
 msgstr "Eine Datei als Plattenhülle wählen"
 
-#: ../src/ui.h:116
+#: ../src/ui.h:100
 msgid "_Search on Internet"
 msgstr "Im Internet _suchen"
 
-#: ../src/ui.h:117
+#: ../src/ui.h:101
 msgid "Search for a disc cover on Internet"
 msgstr "Nach einem CD-Hüllen-Bild im Internet suchen"
 
-#: ../src/ui.h:121
+#: ../src/ui.h:105
 msgid "Remove current disc cover"
 msgstr "Aktuelles CD-Hüllen-Bild entfernen"
 
-#: ../src/ui.h:137
-msgid "_Toolbar"
-msgstr "_Werkzeugleiste"
+#: ../src/ui/preferences.ui.h:1
+msgid "CD Player Preferences"
+msgstr "CD-Spieler-Einstellungen"
 
-#: ../src/ui.h:138
-msgid "View the main toolbar"
-msgstr "Die Hauptwerkzeugleiste anzeigen"
+#: ../src/ui/preferences.ui.h:2
+msgid "CD Drive"
+msgstr "CD-Laufwerk"
 
-#: ../src/ui.h:142
-msgid "Stat_usbar"
-msgstr "Stat_usleiste"
+#: ../src/ui/preferences.ui.h:3
+msgid "Automatically play newly inserted discs"
+msgstr "Neu eingelegte CDs automatisch abspielen"
 
-#: ../src/ui.h:143
-msgid "View the statusbar"
-msgstr "Die Statusleiste anzeigen"
+#: ../src/ui/preferences.ui.h:4
+msgid "General"
+msgstr "Allgemein"
 
-#: ../src/ui.h:147
-msgid "Play _All"
-msgstr "_Alle abspielen"
+#: ../src/ui/preferences.ui.h:5
+msgid "Destination folder"
+msgstr "Zielordner"
 
-#: ../src/ui.h:152
-msgid "_Repeat"
-msgstr "_Schleife"
+#: ../src/ui/preferences.ui.h:6
+msgid "    "
+msgstr "    "
 
-#: ../src/ui.h:153
-msgid "Restart playing when finished"
-msgstr "Die Wiedergabe vom Anfang beginnen, sobald das Ende erreicht ist"
+#: ../src/ui/preferences.ui.h:7
+msgid "Choose destination folder"
+msgstr "Zielordner auswählen"
 
-#: ../src/ui.h:157
-msgid "S_huffle"
-msgstr "_Zufall"
+#: ../src/ui/preferences.ui.h:8
+msgid "Output format"
+msgstr "Ausgabeformat"
 
-#: ../src/ui.h:158
-msgid "Play tracks in a random order"
-msgstr "Die Stücke in zufälliger Reihenfolge abspielen"
+#: ../src/ui/preferences.ui.h:9
+msgid "_Save playlist"
+msgstr "Wiedergabeliste _speichern"
+
+#: ../src/ui/preferences.ui.h:10
+msgid "Extraction"
+msgstr "Auslesen"
+
+#: ../src/ui/properties.ui.h:1
+msgid "Single artist"
+msgstr "Einzelner Künstler"
+
+#: ../src/ui/properties.ui.h:2
+msgid "Various artists"
+msgstr "Verschiedene Künstler"
+
+#: ../src/ui/properties.ui.h:3
+msgid "Properties"
+msgstr "Eigenschaften"
+
+#: ../src/ui/properties.ui.h:4
+msgid "_Title:"
+msgstr "_Titel:"
+
+#: ../src/ui/properties.ui.h:5
+msgid "T_racks:"
+msgstr "_Stücke:"
+
+#: ../src/ui/properties.ui.h:6
+msgid "_Artist:"
+msgstr "_Künstler:"
+
+#: ../src/ui/properties.ui.h:7
+msgid "_Year:"
+msgstr "_Jahr:"
+
+#: ../src/ui/properties.ui.h:8
+msgid "Search for the remaining data"
+msgstr "Suche nach den verbliebenen Daten"
+
+#: ../src/ui/properties.ui.h:9
+msgid "No album found."
+msgstr "Kein Album gefunden."
+
+#: ../src/ui/ripper.ui.h:1
+msgid "Extracting Tracks"
+msgstr "Stücke werden ausgelesen"
+
+#: ../src/ui/ripper.ui.h:2
+msgid "Extracting tracks"
+msgstr "Titel werden ausgelesen"
+
+#~ msgid "Playlist visibility"
+#~ msgstr "Sichtbarkeit der Wiedergabeliste"
+
+#~ msgid "Statusbar visibility"
+#~ msgstr "Sichtbarkeit der Statuszeile"
+
+#~ msgid "Toolbar style"
+#~ msgstr "Stil der Werkzeugleisten"
+
+#~ msgid "Toolbar visibility"
+#~ msgstr "Sichtbarkeit der Werkzeugleiste"
+
+#~ msgid "<b>Extract</b>"
+#~ msgstr "<b>Auslesen</b>"
+
+#~ msgid ""
+#~ "<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
+#~ "compresses but does not degrade audio quality.</i></small>"
+#~ msgstr ""
+#~ "<small><i>Free Lossless Audio Codec (FLAC) ist ein Open-Source-Codec, der "
+#~ "komprimiert, aber die Audio-Qualität nicht reduziert.</i></small>"
+
+#~ msgid ""
+#~ "<small><i>Vorbis is an open source, lossy audio codec with high quality "
+#~ "output at a lower file size than MP3.</i></small>"
+#~ msgstr ""
+#~ "<small><i>Vorbis ist ein verlustbehafteter Open-Source-Codec, mit hoher "
+#~ "Qualität und kleineren Dateigrößen als MP3.</i></small>"
+
+#~ msgid ""
+#~ "<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
+#~ "code modulated (PCM) audio.</i></small>"
+#~ msgstr ""
+#~ "<small><i>WAV+PCM ist ein verlustloses Format, das unkomprimierte Audio-"
+#~ "Daten in roher puls-kodierter Modulation (PCM) enthält.</i></small>"
+
+#~ msgid "<big><b>Extracting tracks</b></big>"
+#~ msgstr "<big><b>Stücke werden ausgelesen</b></big>"
+
+#~ msgid "%s / %s"
+#~ msgstr "%s / %s"
+
+#~ msgid "Paused"
+#~ msgstr "Unterbrochen"
+
+#~ msgid "Volume level: %3.0f%%"
+#~ msgstr "Lautstärke: %3.0f%%"
+
+#~ msgid "+"
+#~ msgstr "+"
+
+#~ msgid "-"
+#~ msgstr "-"
+
+#~ msgid "Change the volume level"
+#~ msgstr "Die Lautstärke ändern"
+
+#~ msgid "Volume"
+#~ msgstr "Lautstärke"
+
+#~ msgid "%d track"
+#~ msgid_plural "%d tracks"
+#~ msgstr[0] "%d Stück"
+#~ msgstr[1] "%d Stücke"
+
+#~ msgid "Length"
+#~ msgstr "Länge"
+
+#~ msgid "No Disc"
+#~ msgstr "Keine CD"
+
+#~ msgid "Data Disc"
+#~ msgstr "Daten-CD"
+
+#~ msgid "Volume Up"
+#~ msgstr "Lauter"
+
+#~ msgid "Volume Down"
+#~ msgstr "Leiser"
+
+#~ msgid "_Disc"
+#~ msgstr "_CD"
+
+#~ msgid "_Edit"
+#~ msgstr "_Bearbeiten"
+
+#~ msgid "_View"
+#~ msgstr "_Ansicht"
+
+#~ msgid "Information about the program"
+#~ msgstr "Informationen zu diesem Programm"
+
+#~ msgid "Display the manual"
+#~ msgstr "Das Handbuch anzeigen"
+
+#~ msgid "_Keyboard shortcuts"
+#~ msgstr "_Tastenkombinationen"
+
+#~ msgid "Edit various preferences"
+#~ msgstr "Verschiedene Voreinstellungen anpassen"
+
+#~ msgid "_Toolbar"
+#~ msgstr "_Werkzeugleiste"
+
+#~ msgid "View the main toolbar"
+#~ msgstr "Die Hauptwerkzeugleiste anzeigen"
+
+#~ msgid "Stat_usbar"
+#~ msgstr "Stat_usleiste"
+
+#~ msgid "View the statusbar"
+#~ msgstr "Die Statusleiste anzeigen"
+
+#~ msgid "Restart playing when finished"
+#~ msgstr "Die Wiedergabe vom Anfang beginnen, sobald das Ende erreicht ist"
+
+#~ msgid "Play tracks in a random order"
+#~ msgstr "Die Stücke in zufälliger Reihenfolge abspielen"
 
 #~ msgid "Hide/Show the main window"
 #~ msgstr "Das Hauptfenster ein- oder ausblenden"
@@ -1143,9 +1130,3 @@ msgstr "Die Stücke in zufälliger Reihenfolge abspielen"
 
 #~ msgid "Reload the CD"
 #~ msgstr "Die CD neu laden"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Einstellungen"
-
-#~ msgid "_Quit"
-#~ msgstr "_Beenden"
