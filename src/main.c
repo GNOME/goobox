@@ -905,6 +905,7 @@ system_notify (GooWindow       *window,
 #else
 		notification = notify_notification_new_with_status_icon (summary, body, "goobox", status_icon);
 #endif
+		notify_notification_set_hint_string (notification, "desktop-entry", "goobox");
 		notify_notification_set_urgency (notification, NOTIFY_URGENCY_LOW);
 	}
 	else
