@@ -19,7 +19,7 @@ GLIB_REQUIRED=2.30
 GTK_REQUIRED=3.4.0
 GSTREAMER_REQUIRED=0.10.12
 LIBNOTIFY_REQUIRED=0.4.3
-LIBMUSICBRAINZ4_REQUIRED=4.0.0
+LIBMUSICBRAINZ5_REQUIRED=5.0.0
 LIBCOVERART_REQUIRED=1.0.0beta1
 
 dnl ===========================================================================
@@ -34,7 +34,7 @@ PKG_CHECK_MODULES(GOO, [
 	gtk+-3.0 >= $GTK_REQUIRED
 	gstreamer-0.10 >= $GSTREAMER_REQUIRED
 	libbrasero-media3
-	libmusicbrainz4 >= $LIBMUSICBRAINZ4_REQUIRED
+	libmusicbrainz5 >= $LIBMUSICBRAINZ5_REQUIRED
 	libdiscid
 	ice
 	sm
