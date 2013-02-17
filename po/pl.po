@@ -5,14 +5,14 @@
 # gnomepl@aviary.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Artur Flinta <aflinta@at.kernel.pl>, 2005-2007.
-# Piotr Drąg <piotrdrag@gmail.com>, 2012.
-# Aviary.pl <gnomepl@aviary.pl>, 2012.
+# Piotr Drąg <piotrdrag@gmail.com>, 2012-2013.
+# Aviary.pl <gnomepl@aviary.pl>, 2012-2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-06 22:29+0100\n"
-"PO-Revision-Date: 2012-12-06 22:30+0100\n"
+"POT-Creation-Date: 2013-02-17 19:04+0100\n"
+"PO-Revision-Date: 2013-02-17 19:05+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -275,7 +275,7 @@ msgstr ""
 
 #: ../src/dlg-extract.c:121
 msgid "No encoder available."
-msgstr "Brak kodera"
+msgstr "Brak kodera."
 
 #: ../src/dlg-preferences.c:240 ../src/dlg-preferences.c:472
 msgid "Ogg Vorbis"
@@ -497,7 +497,7 @@ msgstr "_Wyświetl ścieżki"
 msgid "_Pause"
 msgstr "_Wstrzymaj"
 
-#: ../src/goo-window.c:1245 ../src/main.c:922 ../src/ui.h:49
+#: ../src/goo-window.c:1245 ../src/main.c:923 ../src/ui.h:49
 msgid "Pause"
 msgstr "Wstrzymuje"
 
@@ -506,7 +506,7 @@ msgstr "Wstrzymuje"
 msgid "_Play"
 msgstr "_Odtwarzaj"
 
-#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/main.c:929
+#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/main.c:930
 #: ../src/ui.h:41
 msgid "Play"
 msgstr "Odtwarza"
@@ -625,9 +625,9 @@ msgstr "Nie można uruchomić odtwarzacza płyt CD"
 msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgstr ""
 "Należy zainstalować podstawowe wtyczki biblioteki GStreamer, aby odczytywać "
-"płyty CD."
+"płyty CD"
 
-#: ../src/main.c:936
+#: ../src/main.c:937
 msgid "Next"
 msgstr "Następna"
 
