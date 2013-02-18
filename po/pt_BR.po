@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=goobox&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-03 22:59+0000\n"
-"PO-Revision-Date: 2013-02-15 12:50-0300\n"
+"POT-Creation-Date: 2013-02-17 18:05+0000\n"
+"PO-Revision-Date: 2013-02-17 15:51-0300\n"
 "Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -85,7 +85,8 @@ msgid "Show session management options"
 msgstr "Mostrar opções de gerenciamento de sessão"
 
 #: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:159
-#: ../src/goo-window.c:2120 ../src/goo-window.c:2557 ../src/main.c:237
+#: ../src/goo-window.c:1315 ../src/goo-window.c:1328 ../src/goo-window.c:1846
+#: ../src/main.c:240
 msgid "CD Player"
 msgstr "Reprodutor de CDs"
 
@@ -122,222 +123,68 @@ msgid "Autoplay discs after insertion."
 msgstr "Reproduzir discos automaticamente após inserí-los."
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:8
-msgid "Toolbar style"
-msgstr "Estilo da barra de ferramentas"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:9
 msgid "Window width"
 msgstr "Largura da janela"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:10
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:9
 msgid "Window height"
 msgstr "Altura da janela"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:11
-msgid "Toolbar visibility"
-msgstr "Visibilidade da barra de ferramentas"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:12
-msgid "Statusbar visibility"
-msgstr "Visibilidade da barra de status"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
-msgid "Playlist visibility"
-msgstr "Visibilidade da lista de reprodução"
-
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:14 ../src/ui.h:148
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:10
 msgid "Play all tracks"
 msgstr "Reproduz todas as faixas"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:11
 msgid "Shuffle playlist"
 msgstr "Embaralhar lista de reprodução"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:12
 msgid "Restart when finished"
 msgstr "Reinicia ao finalizar"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
 msgid "Playlist sort method"
 msgstr "Método de ordenação da lista de reprodução"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
 msgid "Playlist sort type"
 msgstr "Tipo de ordenação da lista de reprodução"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
 msgid "Extraction folder"
 msgstr "Pasta de extração"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:20
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
 msgid "File type"
 msgstr "Tipo de arquivo"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:21
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
 msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr "Os valores possíveis são: ogg, flac, mp3, wave."
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
 msgid "Save the playlist"
 msgstr "Salvar a lista de reprodução"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
 msgid "Save the playlist of the extracted tracks."
 msgstr "Salvar a lista de reprodução de faixas extraídas."
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:24
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:20
 msgid "View the destination"
 msgstr "Ver o destino"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:25
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:21
 msgid "OGG files quality"
 msgstr "Qualidade de arquivos Ogg"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:26
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
 msgid "FLAC files quality"
 msgstr "Qualidade de arquivos FLAC"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:27
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
 msgid "MP3 files quality"
 msgstr "Qualidade de arquivos MP3"
-
-#: ../data/ui/cover-chooser.ui.h:1
-msgid "Choose a CD Cover"
-msgstr "Escolha uma capa de CD"
-
-#: ../data/ui/cover-chooser.ui.h:2
-msgid "Found images:"
-msgstr "Imagens encontradas:"
-
-#: ../data/ui/extract.ui.h:1
-msgid "Extract Tracks"
-msgstr "Extrair Faixas"
-
-#: ../data/ui/extract.ui.h:2
-msgid "<b>Extract</b>"
-msgstr "<b>Extrair</b>"
-
-#: ../data/ui/extract.ui.h:3 ../data/ui/preferences.ui.h:6
-msgid "    "
-msgstr "    "
-
-#: ../data/ui/extract.ui.h:4
-msgid "_All tracks"
-msgstr "_Todas as faixas"
-
-#: ../data/ui/extract.ui.h:5
-msgid "_Selected tracks"
-msgstr "Faixas _selecionadas"
-
-#: ../data/ui/format-options.ui.h:1
-msgid "Format Properties"
-msgstr "Propriedades do formato"
-
-#: ../data/ui/preferences.ui.h:1
-msgid "CD Player Preferences"
-msgstr "Preferências do reprodutor de CD"
-
-#: ../data/ui/preferences.ui.h:2
-msgid "<b>CD Drive</b>"
-msgstr "<b>Unidade de CD</b>"
-
-#: ../data/ui/preferences.ui.h:3
-msgid "Automatically play newly inserted discs"
-msgstr "Reproduzir automaticamente ao inserir discos"
-
-#: ../data/ui/preferences.ui.h:4
-msgid "General"
-msgstr "Geral"
-
-#: ../data/ui/preferences.ui.h:5
-msgid "<b>Destination folder</b>"
-msgstr "<b>Pasta de destino</b>"
-
-#: ../data/ui/preferences.ui.h:7
-msgid "Choose destination folder"
-msgstr "Escolha a pasta de destino"
-
-#: ../data/ui/preferences.ui.h:8
-msgid "<b>Output format</b>"
-msgstr "<b>Formato de saída</b>"
-
-#: ../data/ui/preferences.ui.h:9
-msgid ""
-"<small><i>Vorbis is an open source, lossy audio codec with high quality "
-"output at a lower file size than MP3.</i></small>"
-msgstr ""
-"<small><i>Vorbis é um codec de áudio de código aberto, com perdas, com saída "
-"de alta qualidade em um arquivo de menor tamanho que o MP3.</i></small>"
-
-#: ../data/ui/preferences.ui.h:10
-msgid ""
-"<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
-"compresses but does not degrade audio quality.</i></small>"
-msgstr ""
-"<small><i>O Codec de Áudio Sem Perda Livre, acrônimo em inglês (FLAC) é um "
-"codec de código aberto que comprime mas não degrada a qualidade do áudio.</"
-"i></small>"
-
-#: ../data/ui/preferences.ui.h:11
-msgid ""
-"<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
-"code modulated (PCM) audio.</i></small>"
-msgstr ""
-"<small><i>O WAV+PCM é um formato sem perdas que mantém descomprimidos um "
-"áudio de modulação por pulso codificado bruto, acrônimo em inglês (PCM).</"
-"i></small>"
-
-#: ../data/ui/preferences.ui.h:12
-msgid "_Save playlist"
-msgstr "_Salvar lista de reprodução"
-
-#: ../data/ui/preferences.ui.h:13
-msgid "Extraction"
-msgstr "Extração"
-
-#: ../data/ui/properties.ui.h:1
-msgid "Single artist"
-msgstr "Artista único"
-
-#: ../data/ui/properties.ui.h:2
-msgid "Various artists"
-msgstr "Vários artistas"
-
-#: ../data/ui/properties.ui.h:3
-msgid "Properties"
-msgstr "Propriedades"
-
-#: ../data/ui/properties.ui.h:4
-msgid "_Title:"
-msgstr "_Título:"
-
-#: ../data/ui/properties.ui.h:5
-msgid "T_racks:"
-msgstr "_Faixas:"
-
-#: ../data/ui/properties.ui.h:6
-msgid "_Artist:"
-msgstr "_Artista:"
-
-#: ../data/ui/properties.ui.h:7
-msgid "_Year:"
-msgstr "_Ano:"
-
-#: ../data/ui/properties.ui.h:8
-msgid "Search for the remaining data"
-msgstr "Pesquisar pelos dados restantes"
-
-#: ../data/ui/properties.ui.h:9
-msgid "No album found."
-msgstr "Nenhum álbum encontrado."
-
-#: ../data/ui/ripper.ui.h:1
-msgid "Extracting Tracks"
-msgstr "Extraindo faixas"
-
-#: ../data/ui/ripper.ui.h:2
-msgid "<big><b>Extracting tracks</b></big>"
-msgstr "<big><b>Extraindo faixas</b></big>"
 
 #: ../src/actions.c:139
 msgid "translator_credits"
@@ -384,11 +231,11 @@ msgstr ""
 msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
 msgstr "Copyright © 2004-2011 Free Software Foundation, Inc."
 
-#: ../src/actions.c:162 ../src/main.c:330 ../src/main.c:443
+#: ../src/actions.c:162 ../src/main.c:334 ../src/main.c:433
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "Reproduz CDs e salva as faixas no disco como arquivos"
 
-#: ../src/actions.c:308 ../src/actions.c:343 ../src/actions.c:376
+#: ../src/actions.c:290 ../src/actions.c:325 ../src/actions.c:358
 msgid "Could not execute command"
 msgstr "Não foi possível executar o comando"
 
@@ -396,16 +243,16 @@ msgstr "Não foi possível executar o comando"
 msgid "Various"
 msgstr "Vários"
 
-#: ../src/dlg-cover-chooser.c:271
+#: ../src/dlg-cover-chooser.c:277
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, carregando imagem: %u"
 
-#: ../src/dlg-cover-chooser.c:336 ../src/goo-window.c:3117
+#: ../src/dlg-cover-chooser.c:342 ../src/goo-window.c:2657
 msgid "Could not search for a cover on Internet"
 msgstr "Não foi possível procurar uma capa na Internet"
 
-#: ../src/dlg-extract.c:118
+#: ../src/dlg-extract.c:110
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -422,24 +269,24 @@ msgstr ""
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 
-#: ../src/dlg-extract.c:129
+#: ../src/dlg-extract.c:121
 msgid "No encoder available."
 msgstr "Nenhum codificador disponível."
 
-#: ../src/dlg-preferences.c:248 ../src/dlg-preferences.c:484
+#: ../src/dlg-preferences.c:240 ../src/dlg-preferences.c:472
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:260 ../src/dlg-preferences.c:487
+#: ../src/dlg-preferences.c:252 ../src/dlg-preferences.c:475
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:272
+#: ../src/dlg-preferences.c:264
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:298 ../src/dlg-preferences.c:511
+#: ../src/dlg-preferences.c:290 ../src/dlg-preferences.c:499
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
@@ -447,7 +294,7 @@ msgstr ""
 "O Vorbis é um codec de áudio de código aberto com perda de qualidade, mas "
 "com alta qualidade de saída em um arquivo de tamanho menor que o MP3."
 
-#: ../src/dlg-preferences.c:299 ../src/dlg-preferences.c:514
+#: ../src/dlg-preferences.c:291 ../src/dlg-preferences.c:502
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
@@ -455,7 +302,7 @@ msgstr ""
 "O Codec de Áudio Sem Perda Livre, acrônimo em inglês (FLAC) é um codec de "
 "código aberto que comprime mas não degrada a qualidade do áudio."
 
-#: ../src/dlg-preferences.c:300 ../src/dlg-preferences.c:517
+#: ../src/dlg-preferences.c:292 ../src/dlg-preferences.c:505
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
@@ -463,52 +310,52 @@ msgstr ""
 "O WAV+PCM é um formato sem perdas que mantém descomprimidos, um áudio de "
 "modulação por pulso codificado bruto, acrônimo em inglês (PCM)."
 
-#: ../src/dlg-preferences.c:459
+#: ../src/dlg-preferences.c:447
 msgid "Faster compression"
 msgstr "Compressão mais rápida"
 
-#: ../src/dlg-preferences.c:463
+#: ../src/dlg-preferences.c:451
 msgid "Higher compression"
 msgstr "Compressão mais alta"
 
-#: ../src/dlg-preferences.c:470
+#: ../src/dlg-preferences.c:458
 msgid "Smaller size"
 msgstr "Menor tamanho"
 
-#: ../src/dlg-preferences.c:474
+#: ../src/dlg-preferences.c:462
 msgid "Higher quality"
 msgstr "Maior qualidade"
 
-#: ../src/dlg-preferences.c:498
+#: ../src/dlg-preferences.c:486
 msgid "Quality:"
 msgstr "Qualidade:"
 
-#: ../src/dlg-preferences.c:501
+#: ../src/dlg-preferences.c:489
 msgid "Compression level:"
 msgstr "Nível de compressão:"
 
-#: ../src/dlg-properties.c:224
+#: ../src/dlg-properties.c:216
 #, c-format
 msgid "Album %d of %d"
 msgstr "Álbum %d de %d"
 
-#: ../src/dlg-properties.c:282
+#: ../src/dlg-properties.c:274
 msgid "No album found"
 msgstr "Nenhum álbum encontrado"
 
-#: ../src/dlg-properties.c:301
+#: ../src/dlg-properties.c:293
 msgid "Searching disc info..."
 msgstr "Pesquisando informações do disco..."
 
-#: ../src/dlg-properties.c:361 ../src/goo-window.c:538
+#: ../src/dlg-properties.c:353
 msgid "#"
 msgstr "nº"
 
-#: ../src/dlg-properties.c:379 ../src/goo-window.c:563
+#: ../src/dlg-properties.c:371
 msgid "Title"
 msgstr "Título"
 
-#: ../src/dlg-properties.c:412 ../src/goo-window.c:586
+#: ../src/dlg-properties.c:404
 msgid "Artist"
 msgstr "Artista"
 
@@ -540,28 +387,28 @@ msgstr "Pasta de destino inválida: %s"
 msgid "Could not display the destination folder"
 msgstr "Não foi possível exibir a pasta de destino"
 
-#: ../src/dlg-ripper.c:591
+#: ../src/dlg-ripper.c:592
 msgid "Tracks extracted successfully"
 msgstr "Faixas extraídas com sucesso"
 
-#: ../src/dlg-ripper.c:593
+#: ../src/dlg-ripper.c:594
 msgid "_View destination folder"
 msgstr "_Ver pasta de destino"
 
-#: ../src/dlg-ripper.c:608
+#: ../src/dlg-ripper.c:609
 #, c-format
-msgid "<i>Extracting \"%s\"</i>"
-msgstr "<i>Extraindo \"%s\"</i>"
+msgid "Extracting \"%s\""
+msgstr "Extraindo \"%s\""
 
-#: ../src/dlg-ripper.c:617 ../src/dlg-ripper.c:626
+#: ../src/dlg-ripper.c:620 ../src/dlg-ripper.c:629
 msgid "Could not extract tracks"
 msgstr "Não foi possível extrair faixas"
 
-#: ../src/dlg-ripper.c:656
+#: ../src/dlg-ripper.c:659
 msgid "Ripped with CD Player"
 msgstr "Extraído com o Goobox"
 
-#: ../src/dlg-ripper.c:702
+#: ../src/dlg-ripper.c:705
 msgid "Extracting disc tracks"
 msgstr "Extraindo faixas do disco"
 
@@ -574,8 +421,8 @@ msgstr "Extraindo faixas do disco"
 #: ../src/glib-utils.c:2225
 #, c-format
 msgctxt "long time format"
-msgid "%d:%02d:%02d"
-msgstr "%d:%02d:%02d"
+msgid "%d∶%02d∶%02d"
+msgstr "%d∶%02d∶%02d"
 
 #. minutes:seconds
 #. Translators: This is a time format, like "5:02" for 5
@@ -586,50 +433,39 @@ msgstr "%d:%02d:%02d"
 #: ../src/glib-utils.c:2234
 #, c-format
 msgctxt "short time format"
-msgid "%d:%02d"
-msgstr "%d:%02d"
+msgid "%d∶%02d"
+msgstr "%d∶%02d"
 
 #: ../src/goo-player.c:259
 msgid "Playing CD"
 msgstr "Reproduzindo CD"
 
-#. translators: this is the current_time / total_time label
-#: ../src/goo-player-info.c:220 ../src/goo-player-info.c:248
-#: ../src/goo-player-info.c:532 ../src/goo-window.c:2102
-#, c-format
-msgid "%s / %s"
-msgstr "%s / %s"
-
-#: ../src/goo-player-info.c:413
+#: ../src/goo-player-info.c:256
 msgid "Click here to choose a cover for this CD"
 msgstr "Clique aqui para escolher uma capa para esse CD"
 
-#: ../src/goo-player-info.c:670 ../src/goo-window.c:1315
+#: ../src/goo-player-info.c:419 ../src/goo-window.c:1174
 msgid "No disc"
 msgstr "Sem disco"
 
-#: ../src/goo-player-info.c:673 ../src/goo-window.c:1320
+#: ../src/goo-player-info.c:422 ../src/goo-window.c:1179
 msgid "Data disc"
 msgstr "Disco de dados"
 
-#: ../src/goo-player-info.c:688 ../src/goo-window.c:1484
-msgid "Paused"
-msgstr "Pausado"
-
-#: ../src/goo-player-info.c:697
+#: ../src/goo-player-info.c:426
 msgid "Ejecting CD"
 msgstr "Ejetando o CD"
 
-#: ../src/goo-player-info.c:700
+#: ../src/goo-player-info.c:429
 msgid "Checking CD drive"
 msgstr "Verificando a unidade de CD"
 
-#: ../src/goo-player-info.c:703 ../src/goo-player-info.c:706
+#: ../src/goo-player-info.c:432 ../src/goo-player-info.c:435
 msgid "Reading CD"
 msgstr "Lendo o CD"
 
-#: ../src/goo-player-info.c:709 ../src/goo-window.c:1333
-#: ../src/goo-window.c:1494
+#: ../src/goo-player-info.c:438 ../src/goo-window.c:1192
+#: ../src/goo-window.c:1335
 msgid "Audio CD"
 msgstr "CD de Áudio"
 
@@ -646,93 +482,57 @@ msgstr "_Redefinir"
 msgid "V_olume"
 msgstr "V_olume"
 
-#: ../src/goo-volume-tool-button.c:164
-#, c-format
-msgid "Volume level: %3.0f%%"
-msgstr "Nível de volume: %3.0f%%"
-
-#: ../src/goo-volume-tool-button.c:652
-msgid "+"
-msgstr "+"
-
-#: ../src/goo-volume-tool-button.c:694
-msgid "-"
-msgstr "-"
-
-#: ../src/goo-volume-tool-button.c:743
-msgid "Change the volume level"
-msgstr "Altera o nível de volume"
-
-#: ../src/goo-volume-tool-button.c:778
-msgid "Volume"
-msgstr "Volume"
-
-#: ../src/goo-window.c:51
+#: ../src/goo-window.c:52
 msgid "Hide _tracks"
 msgstr "Ocultar _faixas"
 
-#: ../src/goo-window.c:52
+#: ../src/goo-window.c:53
 msgid "Show _tracks"
 msgstr "Mostrar _faixas"
 
-#: ../src/goo-window.c:183
-#, c-format
-msgid "%d track"
-msgid_plural "%d tracks"
-msgstr[0] "%d faixa"
-msgstr[1] "%d faixas"
-
-#: ../src/goo-window.c:610
-msgid "Length"
-msgstr "Comprimento"
-
-#: ../src/goo-window.c:1388 ../src/ui.h:64
+#: ../src/goo-window.c:1245 ../src/ui.h:48
 msgid "_Pause"
 msgstr "_Pausar"
 
-#: ../src/goo-window.c:1389 ../src/main.c:713 ../src/ui.h:65
+#: ../src/goo-window.c:1245 ../src/main.c:923 ../src/ui.h:49
 msgid "Pause"
 msgstr "Pausar"
 
-#: ../src/goo-window.c:1487
-msgid "No Disc"
-msgstr "Sem disco"
-
-#: ../src/goo-window.c:1490
-msgid "Data Disc"
-msgstr "Disco de dados"
-
-#: ../src/goo-window.c:1728 ../src/goo-window.c:1746 ../src/ui.h:52
-#: ../src/ui.h:56 ../src/ui.h:60
+#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/ui.h:36
+#: ../src/ui.h:40 ../src/ui.h:44
 msgid "_Play"
 msgstr "_Reproduzir"
 
-#: ../src/goo-window.c:1729 ../src/goo-window.c:1747 ../src/main.c:720
-#: ../src/ui.h:57
+#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/main.c:930
+#: ../src/ui.h:41
 msgid "Play"
 msgstr "Reproduzir"
 
-#: ../src/goo-window.c:2935
+#: ../src/goo-window.c:2082 ../src/goo-window.c:2083
+msgid "Other actions"
+msgstr "Outras ações"
+
+#: ../src/goo-window.c:2475
 msgid "Could not save cover image"
 msgstr "Não foi possível salvar a imagem da capa"
 
-#: ../src/goo-window.c:2960 ../src/goo-window.c:2986
+#: ../src/goo-window.c:2500 ../src/goo-window.c:2526
 msgid "Could not load image"
 msgstr "Não foi possível carregar a imagem"
 
-#: ../src/goo-window.c:3055
+#: ../src/goo-window.c:2595
 msgid "Choose Disc Cover Image"
 msgstr "Escolha a imagem da capa do CD"
 
-#: ../src/goo-window.c:3074
+#: ../src/goo-window.c:2614
 msgid "Images"
 msgstr "Imagens"
 
-#: ../src/goo-window.c:3082
+#: ../src/goo-window.c:2622
 msgid "All files"
 msgstr "Todos os arquivos"
 
-#: ../src/goo-window.c:3118
+#: ../src/goo-window.c:2658
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -740,20 +540,19 @@ msgstr ""
 "Você tem que digitar os nomes do artista e do álbum para localizar a capa do "
 "álbum."
 
-#: ../src/goo-window.c:3163
+#: ../src/goo-window.c:2701
 msgid "_Show Window"
 msgstr "_Mostrar janela"
 
-#: ../src/goo-window.c:3164
+#: ../src/goo-window.c:2701
 msgid "Show the main window"
 msgstr "Mostra a janela principal"
 
-#: ../src/goo-window.c:3177 ../src/ui.h:124
+#: ../src/goo-window.c:2709 ../src/ui.h:108
 msgid "_Hide Window"
 msgstr "_Ocultar janela"
 
-#. "H"
-#: ../src/goo-window.c:3178 ../src/ui.h:125
+#: ../src/goo-window.c:2709 ../src/ui.h:109
 msgid "Hide the main window"
 msgstr "Oculta a janela principal"
 
@@ -765,75 +564,67 @@ msgstr "Prévia"
 msgid "pixels"
 msgstr "pixels"
 
-#: ../src/gtk-utils.c:753
+#: ../src/gtk-utils.c:754
 msgid "Could not display help"
 msgstr "Não foi possível exibir a ajuda"
 
-#: ../src/gtk-utils.c:1021 ../src/gtk-utils.c:1027
+#: ../src/gtk-utils.c:1040 ../src/gtk-utils.c:1046
 msgid "Could not launch the application"
 msgstr "Não foi possível lançar o aplicativo"
 
-#: ../src/main.c:73
+#: ../src/main.c:71
 msgid "CD device to be used"
 msgstr "O dispositivo de CD que será usado"
 
-#: ../src/main.c:74
+#: ../src/main.c:72
 msgid "DEVICE_PATH"
 msgstr "CAMINHO_DO_DISPOSITIVO"
 
-#: ../src/main.c:76
+#: ../src/main.c:74
 msgid "Play the CD on startup"
 msgstr "Reproduz o CD ao iniciar"
 
-#: ../src/main.c:79
+#: ../src/main.c:77
 msgid "Toggle play"
 msgstr "Alterna a reprodução"
 
-#: ../src/main.c:82 ../src/ui.h:69
+#: ../src/main.c:80 ../src/ui.h:53
 msgid "Stop playing"
 msgstr "Para a reprodução"
 
-#: ../src/main.c:85 ../src/ui.h:73
+#: ../src/main.c:83 ../src/ui.h:57
 msgid "Play the next track"
 msgstr "Reproduz a próxima faixa"
 
-#: ../src/main.c:88 ../src/ui.h:77
+#: ../src/main.c:86 ../src/ui.h:61
 msgid "Play the previous track"
 msgstr "Reproduz a faixa anterior"
 
-#: ../src/main.c:91
+#: ../src/main.c:89
 msgid "Eject the CD"
 msgstr "Ejeta o CD"
 
-#: ../src/main.c:94
+#: ../src/main.c:92
 msgid "Toggle the main window visibility"
 msgstr "Alterna a visibilidade da janela principal"
 
-#: ../src/main.c:97
-msgid "Volume Up"
-msgstr "Aumenta o volume"
-
-#: ../src/main.c:100
-msgid "Volume Down"
-msgstr "Diminui o volume"
-
-#: ../src/main.c:103 ../src/ui.h:109
+#: ../src/main.c:95 ../src/ui.h:93
 msgid "Quit the application"
 msgstr "Sai da aplicação"
 
-#: ../src/main.c:106
+#: ../src/main.c:98
 msgid "Show version"
 msgstr "Exibe a versão"
 
-#: ../src/main.c:288
+#: ../src/main.c:292
 msgid "Cannot start the CD player"
 msgstr "Não é possível iniciar o reprodutor de CD"
 
-#: ../src/main.c:289
+#: ../src/main.c:293
 msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgstr "Para ler CDs, você tem que instalar o gstreamer base plug-ins"
 
-#: ../src/main.c:727
+#: ../src/main.c:937
 msgid "Next"
 msgstr "Próxima"
 
@@ -842,164 +633,340 @@ msgstr "Próxima"
 msgid "Track %u"
 msgstr "Faixa %u"
 
-#: ../src/ui.h:33
-msgid "_Disc"
-msgstr "_Disco"
+#: ../src/ui/app-menu.ui.h:1
+msgid "_Preferences"
+msgstr "_Preferências"
 
-#: ../src/ui.h:34
-msgid "_Edit"
-msgstr "_Editar"
+#: ../src/ui/app-menu.ui.h:2
+msgid "Play Mode"
+msgstr "Modo de reprodução"
 
-#: ../src/ui.h:35
-msgid "_View"
-msgstr "_Ver"
-
-#: ../src/ui.h:36
-msgid "_Help"
-msgstr "Aj_uda"
-
-#: ../src/ui.h:37
-msgid "C_over"
-msgstr "Ca_pa"
-
-#: ../src/ui.h:41
-msgid "Information about the program"
-msgstr "Informações sobre o programa"
-
-#: ../src/ui.h:45
-msgid "Display the manual"
-msgstr "Exibir o manual"
-
-#: ../src/ui.h:48
-msgid "_Keyboard shortcuts"
-msgstr "A_talhos de teclado"
-
-#: ../src/ui.h:53
-msgid "Play/Pause"
-msgstr "Reproduzir/pausar"
-
-#: ../src/ui.h:61
-msgid "Play this track"
-msgstr "Reproduz essa faixa"
-
-#: ../src/ui.h:68
-msgid "_Stop"
-msgstr "Pa_rar"
-
-#: ../src/ui.h:72
-msgid "_Next"
-msgstr "_Próxima"
-
-#: ../src/ui.h:76
-msgid "Pre_v"
-msgstr "_Anterior"
-
-#: ../src/ui.h:80 ../src/ui.h:84
-msgid "_Eject"
-msgstr "_Ejetar"
-
-#: ../src/ui.h:81 ../src/ui.h:85
-msgid "Eject the disc"
-msgstr "Ejeta o disco"
-
-#: ../src/ui.h:89
-msgid "Edit various preferences"
-msgstr "Edita várias preferências"
-
-#: ../src/ui.h:92
-msgid "_Copy Disc"
-msgstr "_Copiar disco"
-
-#: ../src/ui.h:93
-msgid "Copy the content of this disc on another disc"
-msgstr "Copiar o conteúdo do disco para outro disco"
-
-#: ../src/ui.h:96 ../src/ui.h:100
-msgid "E_xtract Tracks"
-msgstr "E_xtrair faixas"
-
-#: ../src/ui.h:97
-msgid "Save the tracks to disk as files"
-msgstr "Salva as faixas no disco como arquivos"
-
-#: ../src/ui.h:101
-msgid "Save the selected tracks to disk as files"
-msgstr "Salva as faixas selecionadas do disco como arquivos"
-
-#: ../src/ui.h:105
-msgid "Edit the disc artist, album and the tracks titles"
-msgstr "Edita o artista, álbum e os títulos das faixas do CD"
-
-#: ../src/ui.h:112
-msgid "_Choose File..."
-msgstr "Es_colher arquivo..."
-
-#: ../src/ui.h:113
-msgid "Choose a file to use as disc cover"
-msgstr "Escolha um arquivo para ser utilizado como capa do disco"
-
-#: ../src/ui.h:116
-msgid "_Search on Internet"
-msgstr "_Procurar na Internet"
-
-#: ../src/ui.h:117
-msgid "Search for a disc cover on Internet"
-msgstr "Procurar uma capa do disco na Internet"
-
-#: ../src/ui.h:121
-msgid "Remove current disc cover"
-msgstr "Remove a capa atual do disco"
-
-#: ../src/ui.h:137
-msgid "_Toolbar"
-msgstr "Barra de _ferramentas"
-
-#: ../src/ui.h:138
-msgid "View the main toolbar"
-msgstr "Ver a barra de ferramentas principal"
-
-#: ../src/ui.h:142
-msgid "Stat_usbar"
-msgstr "Barra d_e status:"
-
-#: ../src/ui.h:143
-msgid "View the statusbar"
-msgstr "Ver a barra de status"
-
-#: ../src/ui.h:147
+#: ../src/ui/app-menu.ui.h:3
 msgid "Play _All"
 msgstr "Reproduzir _todas"
 
-#: ../src/ui.h:152
+#: ../src/ui/app-menu.ui.h:4
 msgid "_Repeat"
 msgstr "_Repetir"
 
-#: ../src/ui.h:153
-msgid "Restart playing when finished"
-msgstr "Reiniciar a reprodução quando finalizado"
-
-#: ../src/ui.h:157
+#: ../src/ui/app-menu.ui.h:5
 msgid "S_huffle"
 msgstr "_Aleatório"
 
-#: ../src/ui.h:158
-msgid "Play tracks in a random order"
-msgstr "Reproduzir faixas em ordem aleatória"
+#: ../src/ui/app-menu.ui.h:6
+msgid "_Help"
+msgstr "Aj_uda"
 
-#, fuzzy
-#~ msgid "Other actions"
-#~ msgstr "Acções de Operador"
+#: ../src/ui/app-menu.ui.h:7
+msgid "_About CD Player"
+msgstr "_Sobre o reprodutor de CDs"
 
-#~ msgid "_Preferences"
-#~ msgstr "_Preferências"
+#: ../src/ui/app-menu.ui.h:8
+msgid "_Quit"
+msgstr "Sai_r"
 
-#, fuzzy
-#~ msgid "Play Mode"
-#~ msgstr "Modo carácter"
+#: ../src/ui/cover-chooser.ui.h:1
+msgid "Choose a CD Cover"
+msgstr "Escolha uma capa de CD"
 
-#, fuzzy
-#~ msgid "_About CD Player"
-#~ msgstr "Reprodutor de CDs (obsoleto)"
+#: ../src/ui/cover-chooser.ui.h:2
+msgid "Found images:"
+msgstr "Imagens encontradas:"
 
-#~ msgid "_Quit"
-#~ msgstr "Sai_r"
+#: ../src/ui/extract.ui.h:1
+msgid "Extract Tracks"
+msgstr "Extrair Faixas"
+
+#: ../src/ui/extract.ui.h:2
+msgid "_All tracks"
+msgstr "_Todas as faixas"
+
+#: ../src/ui/extract.ui.h:3
+msgid "_Selected tracks"
+msgstr "Faixas _selecionadas"
+
+#: ../src/ui/format-options.ui.h:1
+msgid "Format Properties"
+msgstr "Propriedades do formato"
+
+#: ../src/ui.h:33
+msgid "C_over"
+msgstr "Ca_pa"
+
+#: ../src/ui.h:37
+msgid "Play/Pause"
+msgstr "Reproduzir/pausar"
+
+#: ../src/ui.h:45
+msgid "Play this track"
+msgstr "Reproduz essa faixa"
+
+#: ../src/ui.h:52
+msgid "_Stop"
+msgstr "Pa_rar"
+
+#: ../src/ui.h:56
+msgid "_Next"
+msgstr "_Próxima"
+
+#: ../src/ui.h:60
+msgid "Pre_v"
+msgstr "_Anterior"
+
+#: ../src/ui.h:64 ../src/ui.h:68
+msgid "_Eject"
+msgstr "_Ejetar"
+
+#: ../src/ui.h:65 ../src/ui.h:69
+msgid "Eject the disc"
+msgstr "Ejeta o disco"
+
+#: ../src/ui.h:72
+msgid "_Copy Disc"
+msgstr "_Copiar disco"
+
+#: ../src/ui.h:73
+msgid "Copy the content of this disc on another disc"
+msgstr "Copiar o conteúdo do disco para outro disco"
+
+#: ../src/ui.h:76 ../src/ui.h:80
+msgid "E_xtract Tracks"
+msgstr "E_xtrair faixas"
+
+#: ../src/ui.h:77
+msgid "Save the tracks to disk as files"
+msgstr "Salva as faixas no disco como arquivos"
+
+#: ../src/ui.h:81
+msgid "Save the selected tracks to disk as files"
+msgstr "Salva as faixas selecionadas do disco como arquivos"
+
+#: ../src/ui.h:85
+msgid "Edit the disc artist, album and the tracks titles"
+msgstr "Edita o artista, álbum e os títulos das faixas do CD"
+
+#: ../src/ui.h:96
+msgid "_Choose File..."
+msgstr "Es_colher arquivo..."
+
+#: ../src/ui.h:97
+msgid "Choose a file to use as disc cover"
+msgstr "Escolha um arquivo para ser utilizado como capa do disco"
+
+#: ../src/ui.h:100
+msgid "_Search on Internet"
+msgstr "_Procurar na Internet"
+
+#: ../src/ui.h:101
+msgid "Search for a disc cover on Internet"
+msgstr "Procurar uma capa do disco na Internet"
+
+#: ../src/ui.h:105
+msgid "Remove current disc cover"
+msgstr "Remove a capa atual do disco"
+
+#: ../src/ui/preferences.ui.h:1
+msgid "CD Player Preferences"
+msgstr "Preferências do reprodutor de CD"
+
+#: ../src/ui/preferences.ui.h:2
+msgid "CD Drive"
+msgstr "Unidade de CD"
+
+#: ../src/ui/preferences.ui.h:3
+msgid "Automatically play newly inserted discs"
+msgstr "Reproduzir automaticamente ao inserir discos"
+
+#: ../src/ui/preferences.ui.h:4
+msgid "General"
+msgstr "Geral"
+
+#: ../src/ui/preferences.ui.h:5
+msgid "Destination folder"
+msgstr "Pasta de destino"
+
+#: ../src/ui/preferences.ui.h:6
+msgid "    "
+msgstr "    "
+
+#: ../src/ui/preferences.ui.h:7
+msgid "Choose destination folder"
+msgstr "Escolha a pasta de destino"
+
+#: ../src/ui/preferences.ui.h:8
+msgid "Output format"
+msgstr "Formato de saída"
+
+#: ../src/ui/preferences.ui.h:9
+msgid "_Save playlist"
+msgstr "_Salvar lista de reprodução"
+
+#: ../src/ui/preferences.ui.h:10
+msgid "Extraction"
+msgstr "Extração"
+
+#: ../src/ui/properties.ui.h:1
+msgid "Single artist"
+msgstr "Artista único"
+
+#: ../src/ui/properties.ui.h:2
+msgid "Various artists"
+msgstr "Vários artistas"
+
+#: ../src/ui/properties.ui.h:3
+msgid "Properties"
+msgstr "Propriedades"
+
+#: ../src/ui/properties.ui.h:4
+msgid "_Title:"
+msgstr "_Título:"
+
+#: ../src/ui/properties.ui.h:5
+msgid "T_racks:"
+msgstr "_Faixas:"
+
+#: ../src/ui/properties.ui.h:6
+msgid "_Artist:"
+msgstr "_Artista:"
+
+#: ../src/ui/properties.ui.h:7
+msgid "_Year:"
+msgstr "_Ano:"
+
+#: ../src/ui/properties.ui.h:8
+msgid "Search for the remaining data"
+msgstr "Pesquisar pelos dados restantes"
+
+#: ../src/ui/properties.ui.h:9
+msgid "No album found."
+msgstr "Nenhum álbum encontrado."
+
+#: ../src/ui/ripper.ui.h:1
+msgid "Extracting Tracks"
+msgstr "Extraindo faixas"
+
+#: ../src/ui/ripper.ui.h:2
+msgid "Extracting tracks"
+msgstr "Extraindo faixas"
+
+#~ msgid "Toolbar style"
+#~ msgstr "Estilo da barra de ferramentas"
+
+#~ msgid "Toolbar visibility"
+#~ msgstr "Visibilidade da barra de ferramentas"
+
+#~ msgid "Statusbar visibility"
+#~ msgstr "Visibilidade da barra de status"
+
+#~ msgid "Playlist visibility"
+#~ msgstr "Visibilidade da lista de reprodução"
+
+#~ msgid "<b>Extract</b>"
+#~ msgstr "<b>Extrair</b>"
+
+#~ msgid ""
+#~ "<small><i>Vorbis is an open source, lossy audio codec with high quality "
+#~ "output at a lower file size than MP3.</i></small>"
+#~ msgstr ""
+#~ "<small><i>Vorbis é um codec de áudio de código aberto, com perdas, com "
+#~ "saída de alta qualidade em um arquivo de menor tamanho que o MP3.</i></"
+#~ "small>"
+
+#~ msgid ""
+#~ "<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
+#~ "compresses but does not degrade audio quality.</i></small>"
+#~ msgstr ""
+#~ "<small><i>O Codec de Áudio Sem Perda Livre, acrônimo em inglês (FLAC) é "
+#~ "um codec de código aberto que comprime mas não degrada a qualidade do "
+#~ "áudio.</i></small>"
+
+#~ msgid ""
+#~ "<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
+#~ "code modulated (PCM) audio.</i></small>"
+#~ msgstr ""
+#~ "<small><i>O WAV+PCM é um formato sem perdas que mantém descomprimidos um "
+#~ "áudio de modulação por pulso codificado bruto, acrônimo em inglês (PCM).</"
+#~ "i></small>"
+
+#~ msgid "<big><b>Extracting tracks</b></big>"
+#~ msgstr "<big><b>Extraindo faixas</b></big>"
+
+#~ msgid "%s / %s"
+#~ msgstr "%s / %s"
+
+#~ msgid "Paused"
+#~ msgstr "Pausado"
+
+#~ msgid "Volume level: %3.0f%%"
+#~ msgstr "Nível de volume: %3.0f%%"
+
+#~ msgid "+"
+#~ msgstr "+"
+
+#~ msgid "-"
+#~ msgstr "-"
+
+#~ msgid "Change the volume level"
+#~ msgstr "Altera o nível de volume"
+
+#~ msgid "Volume"
+#~ msgstr "Volume"
+
+#~ msgid "%d track"
+#~ msgid_plural "%d tracks"
+#~ msgstr[0] "%d faixa"
+#~ msgstr[1] "%d faixas"
+
+#~ msgid "Length"
+#~ msgstr "Comprimento"
+
+#~ msgid "No Disc"
+#~ msgstr "Sem disco"
+
+#~ msgid "Data Disc"
+#~ msgstr "Disco de dados"
+
+#~ msgid "Volume Up"
+#~ msgstr "Aumenta o volume"
+
+#~ msgid "Volume Down"
+#~ msgstr "Diminui o volume"
+
+#~ msgid "_Disc"
+#~ msgstr "_Disco"
+
+#~ msgid "_Edit"
+#~ msgstr "_Editar"
+
+#~ msgid "_View"
+#~ msgstr "_Ver"
+
+#~ msgid "Information about the program"
+#~ msgstr "Informações sobre o programa"
+
+#~ msgid "Display the manual"
+#~ msgstr "Exibir o manual"
+
+#~ msgid "_Keyboard shortcuts"
+#~ msgstr "A_talhos de teclado"
+
+#~ msgid "Edit various preferences"
+#~ msgstr "Edita várias preferências"
+
+#~ msgid "_Toolbar"
+#~ msgstr "Barra de _ferramentas"
+
+#~ msgid "View the main toolbar"
+#~ msgstr "Ver a barra de ferramentas principal"
+
+#~ msgid "Stat_usbar"
+#~ msgstr "Barra d_e status:"
+
+#~ msgid "View the statusbar"
+#~ msgstr "Ver a barra de status"
+
+#~ msgid "Restart playing when finished"
+#~ msgstr "Reiniciar a reprodução quando finalizado"
+
+#~ msgid "Play tracks in a random order"
+#~ msgstr "Reproduzir faixas em ordem aleatória"
