@@ -21,6 +21,7 @@
  */
 
 #include <config.h>
+#include <stdio.h>
 #include <glib/gi18n.h>
 #include <gst/gst.h>
 #include "album-info.h"

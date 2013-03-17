@@ -21,6 +21,7 @@
  */
 
 #include <config.h>
+#include <stdlib.h>
 #include <brasero3/brasero-medium-monitor.h>
 #include <gst/gst.h>
 #include <glib.h>
