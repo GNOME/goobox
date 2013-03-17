@@ -434,8 +434,10 @@ goo_window_update_titles (GooWindow *window)
 				    -1);
 
 		/* Update the current track info. */
+
 		if ((window->priv->current_track != NULL)
-		    && (new_track->number == window->priv->current_track->number)) {
+		    && (new_track->number == window->priv->current_track->number))
+		{
 			track_info_unref (window->priv->current_track);
 			track_info_ref (new_track);
 			window->priv->current_track = new_track;
@@ -747,10 +749,51 @@ create_playlist (GooWindow *window,
 
 
 static void
-play_track (GooWindow *window,
-	    int        track_number)
+update_playlist_after_started_next (GooWindow *window)
 {
-	goo_player_seek_track (window->priv->player, track_number);
+	GList *current;
+
+	if (window->priv->playlist == NULL)
+		return;
+
+	current = window->priv->playlist;
+	window->priv->playlist = g_list_remove_link (window->priv->playlist, current);
+
+	g_list_free (current);
+}
+
+
+static void
+update_next_track_to_play (GooWindow *window)
+{
+	GList *track;
+	int    next_track_to_play;
+
+	for (track = window->priv->playlist; track; track = track->next)
+		if (GPOINTER_TO_INT (track->data) == goo_player_get_current_track (window->priv->player))
+			break;
+
+	if (track != NULL) {
+		if (track->next != NULL)
+			next_track_to_play = GPOINTER_TO_INT (track->next->data);
+		else
+			next_track_to_play = -1;
+	}
+	else if (window->priv->playlist != NULL)
+		next_track_to_play = GPOINTER_TO_INT (window->priv->playlist->data);
+	else
+		next_track_to_play = -1;
+
+	goo_player_set_next_track (window->priv->player, next_track_to_play);
+}
+
+
+static void
+play_track (GooWindow *window,
+	    int        track_to_play)
+{
+	goo_player_seek_track (window->priv->player, track_to_play);
+	update_next_track_to_play (window);
 }
 
 
@@ -777,14 +820,17 @@ play_next_track_in_playlist (GooWindow *window)
 
 	print_playlist (window);
 
-	if (next == NULL)
-		goo_window_stop (window);
-	else {
-		int pos = GPOINTER_TO_INT (next->data);
-		play_track (window, pos);
+	if (next != NULL) {
+		int pos;
+
+		pos = GPOINTER_TO_INT (next->data);
 		window->priv->playlist = g_list_remove_link (window->priv->playlist, next);
 		g_list_free (next);
+
+		play_track (window, pos);
 	}
+	else
+		goo_window_stop (window);
 }
 
 
@@ -1124,6 +1170,9 @@ get_action_name (GooPlayerAction action)
 		break;
 	case GOO_PLAYER_ACTION_METADATA:
 		name = "METADATA";
+		break;
+	case GOO_PLAYER_ACTION_STARTED_NEXT:
+		name = "STARTED_NEXT";
 		break;
 	default:
 		name = "???";
@@ -1564,6 +1613,12 @@ player_done_cb (GooPlayer       *player,
 		set_current_track_icon (window, GOO_STOCK_PAUSE);
 		_gtk_action_set_label_and_icon (window, "TogglePlay", _("_Play"), _("Play"), GOO_STOCK_PLAY);
 		notify_current_state (window, action);
+		break;
+
+	case GOO_PLAYER_ACTION_STARTED_NEXT:
+		notify_current_state (window, GOO_PLAYER_ACTION_PLAY);
+		update_playlist_after_started_next (window);
+		update_next_track_to_play (window);
 		break;
 
 	default:
@@ -2349,13 +2404,7 @@ goo_window_prev (GooWindow *window)
 
 		current_track = window->priv->current_track->number;
 		current_pos = get_position_from_track_number (window, current_track);
-
-		/* FIXME
-		if (goo_player_info_get_progress (GOO_PLAYER_INFO (window->priv->info)) * window->priv->current_track->length > 4)
-			new_pos = current_pos;
-		else
-		*/
-			new_pos = MAX (current_pos - 1, 0);
+		new_pos = MAX (current_pos - 1, 0);
 	}
 	else
 		new_pos = window->priv->album->n_tracks - 1;

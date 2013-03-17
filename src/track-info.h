@@ -32,7 +32,7 @@ typedef struct {
 	guint   number;
 	gint64  from_time, to_time;
 	gint64  from_sector, to_sector;
-	gint64  length, sectors;
+	gint64  time, length, sectors;
 	int     min, sec;
 	char   *title;
 	char   *artist;
@@ -43,7 +43,7 @@ typedef struct {
 
 GType           track_info_get_type       (void);
 TrackInfo *     track_info_new            (int         number,
-					   gint64      from_sector, 
+					   gint64      from_sector,
 					   gint64      to_sector);
 void            track_info_ref            (TrackInfo  *track);
 void            track_info_unref          (TrackInfo  *track);

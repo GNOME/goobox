@@ -51,7 +51,8 @@ typedef enum {
 	GOO_PLAYER_ACTION_MEDIUM_REMOVED,
 	GOO_PLAYER_ACTION_MEDIUM_ADDED,
 	GOO_PLAYER_ACTION_UPDATE,
-	GOO_PLAYER_ACTION_METADATA
+	GOO_PLAYER_ACTION_METADATA,
+	GOO_PLAYER_ACTION_STARTED_NEXT
 } GooPlayerAction;
 
 typedef enum {
@@ -104,8 +105,10 @@ gboolean         goo_player_is_hibernate        (GooPlayer       *player);
 void             goo_player_update              (GooPlayer       *player);
 void             goo_player_list                (GooPlayer       *player);
 void             goo_player_seek_track          (GooPlayer       *player,
-						 int              n);
+						 int              track_to_play);
 int              goo_player_get_current_track   (GooPlayer       *player);
+void             goo_player_set_next_track	(GooPlayer       *player,
+						 int              next_track_to_play);
 void             goo_player_skip_to             (GooPlayer       *player,
 						 guint            seconds);
 void             goo_player_play                (GooPlayer       *player);

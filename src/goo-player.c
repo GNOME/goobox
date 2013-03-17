@@ -25,6 +25,7 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <gst/gst.h>
+#include "goo-error.h"
 #include "goo-player.h"
 #include "goo-marshal.h"
 #include "glib-utils.h"
@@ -52,16 +53,11 @@ struct _GooPlayerPrivate {
 	gboolean         hibernate;
 
 	GstElement      *pipeline;
-	GstElement      *source;
-	GstPad          *source_pad;
-	GstElement      *audio_volume;
-	GstFormat        track_format;
-	GstFormat        sector_format;
-
 	char            *discid;
 	AlbumInfo       *album;
 	TrackInfo       *current_track;
 	int              current_track_n;
+	int              next_track_n;
 
 	guint            update_state_id;
 	guint            update_progress_id;
@@ -92,8 +88,7 @@ G_DEFINE_TYPE (GooPlayer, goo_player, G_TYPE_OBJECT)
 
 
 static void
-destroy_pipeline (GooPlayer *player,
-		  gboolean   poll)
+destroy_pipeline (GooPlayer *player)
 {
 	if (player->priv->pipeline != NULL) {
 		gst_element_set_state (player->priv->pipeline, GST_STATE_NULL);
@@ -105,10 +100,6 @@ destroy_pipeline (GooPlayer *player,
 		g_source_remove (player->priv->update_progress_id);
 		player->priv->update_progress_id = 0;
 	}
-
-	player->priv->source = NULL;
-	player->priv->source_pad = NULL;
-	player->priv->audio_volume = NULL;
 }
 
 
@@ -120,123 +111,179 @@ action_done (GooPlayer       *self,
 }
 
 
-static gboolean
-player_done_cb (gpointer user_data)
+static void
+action_done_with_error (GooPlayer       *self,
+			GooPlayerAction  action,
+			GError          *error)
 {
-	action_done ((GooPlayer *) user_data, GOO_PLAYER_ACTION_PLAY);
-	return FALSE;
+	g_signal_emit_by_name (G_OBJECT (self), "done", action, error);
+	g_error_free (error);
+}
+
+
+static TrackInfo*
+get_track (GooPlayer *player,
+           guint      n)
+{
+	GList *scan;
+
+	for (scan = player->priv->album->tracks; scan; scan = scan->next) {
+		TrackInfo *track = scan->data;
+
+		if (track->number == n)
+			return track;
+	}
+
+	return NULL;
 }
 
 
 static gboolean
-pipeline_bus_message_cb (GstBus     *bus,
-		         GstMessage *message,
-		         gpointer    user_data)
+set_current_track (GooPlayer *player,
+		   int        track_to_play)
+{
+	GstStateChangeReturn ret;
+
+	if (track_to_play == -1)
+		return FALSE;
+
+	player->priv->current_track_n = CLAMP (track_to_play, 0, player->priv->album->n_tracks - 1);
+	player->priv->current_track = get_track (player, player->priv->current_track_n);
+	g_return_val_if_fail (player->priv->current_track != NULL, FALSE);
+
+	debug (DEBUG_INFO, "seek to track %d\n", player->priv->current_track_n);
+
+	ret = gst_element_set_state (player->priv->pipeline, GST_STATE_PAUSED);
+	while (ret == GST_STATE_CHANGE_ASYNC)
+		ret = gst_element_get_state (player->priv->pipeline, NULL, NULL, GST_MSECOND);
+
+	if (ret != GST_STATE_CHANGE_SUCCESS)
+		return FALSE;
+
+	return gst_element_seek (player->priv->pipeline,
+				 1.0,
+				 gst_format_get_by_nick ("track"),
+				 GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
+				 GST_SEEK_TYPE_SET,
+				 track_to_play,
+				 GST_SEEK_TYPE_NONE,
+				 -1);
+}
+
+
+static gboolean
+player_done_cb (gpointer user_data)
 {
 	GooPlayer *self = user_data;
 
-	switch (GST_MESSAGE_TYPE (message)) {
-	case GST_MESSAGE_EOS:
+	if (set_current_track (self, self->priv->next_track_n)) {
+		gst_element_set_state (self->priv->pipeline, GST_STATE_PLAYING);
+		action_done (self, GOO_PLAYER_ACTION_SEEK_SONG);
+		action_done (self, GOO_PLAYER_ACTION_STARTED_NEXT);
+	}
+	else {
 		if (self->priv->update_progress_id != 0) {
 			g_source_remove (self->priv->update_progress_id);
 			self->priv->update_progress_id = 0;
 		}
-		g_idle_add (player_done_cb, user_data);
-		break;
-
-	default:
-		break;
+		action_done (self, GOO_PLAYER_ACTION_PLAY);
 	}
-
-	return TRUE;
-}
-
-
-static gboolean
-update_progress_cb (gpointer user_data)
-{
-	GooPlayer *self = user_data;
-	gint64     sector = 0;
-
-	if (self->priv->update_progress_id != 0) {
-		g_source_remove (self->priv->update_progress_id);
-		self->priv->update_progress_id = 0;
-	}
-
-	if ((self->priv->current_track == NULL)
-	    || ! gst_pad_query_position (self->priv->source_pad,
-					 &self->priv->sector_format,
-					 &sector))
-	{
-		return FALSE;
-	}
-
-	g_signal_emit_by_name (G_OBJECT (self),
-			       "progress",
-			       ((double) sector) / (double) self->priv->current_track->sectors,
-			       NULL);
-
-	self->priv->update_progress_id = g_timeout_add (PROGRESS_DELAY, update_progress_cb, user_data);
 
 	return FALSE;
 }
 
 
 static void
-create_pipeline (GooPlayer *self)
+pipeline_eos_cb (GstBus     *bus,
+		 GstMessage *message,
+		 gpointer    user_data)
 {
-	GstElement *audioconvert;
-	GstElement *audioresample;
-	GstElement *queue;
-	GstElement *sink;
+	g_idle_add (player_done_cb, user_data);
+}
 
-	destroy_pipeline (self, FALSE);
 
-	self->priv->pipeline = gst_pipeline_new ("pipeline");
+static void
+pipeline_source_setup_cb (GstElement *playbin,
+			  GstElement *source,
+			  gpointer    user_data)
+{
+	GooPlayer *self = user_data;
 
-	/*self->priv->source = gst_element_make_from_uri (GST_URI_SRC, "cdda://1", "source");*/
-	self->priv->source = gst_element_factory_make ("cdparanoiasrc", "source");
+	if (g_object_class_find_property (G_OBJECT_GET_CLASS (source), "read-speed") != NULL) {
+		g_object_set (G_OBJECT (source),
+			      "read-speed", 2,
+			      NULL);
+	}
+
+	/* Disable paranoia in playback mode */
+	if (g_object_class_find_property (G_OBJECT_GET_CLASS (source), "paranoia-mode"))
+		g_object_set (source, "paranoia-mode", 0, NULL);
 
 	debug (DEBUG_INFO, "DEVICE: %s\n", brasero_drive_get_device (self->priv->drive));
-	g_object_set (G_OBJECT (self->priv->source),
+	g_object_set (G_OBJECT (source),
 		      "device", brasero_drive_get_device (self->priv->drive),
 		      NULL);
+}
 
-	audioconvert = gst_element_factory_make ("audioconvert", "convert");
-    	audioresample = gst_element_factory_make ("audioresample", "resample");
-	self->priv->audio_volume = gst_element_factory_make ("volume", "volume");
 
-	queue = gst_element_factory_make ("queue", "queue");
-	g_object_set (queue,
-		      "min-threshold-time", (guint64) 200 * GST_MSECOND,
-		      "max-size-time", (guint64) 2 * GST_SECOND,
+typedef enum {
+	_GST_PLAY_FLAG_VIDEO         = (1 << 0),
+	_GST_PLAY_FLAG_AUDIO         = (1 << 1),
+	_GST_PLAY_FLAG_TEXT          = (1 << 2),
+	_GST_PLAY_FLAG_VIS           = (1 << 3),
+	_GST_PLAY_FLAG_SOFT_VOLUME   = (1 << 4),
+	_GST_PLAY_FLAG_NATIVE_AUDIO  = (1 << 5),
+	_GST_PLAY_FLAG_NATIVE_VIDEO  = (1 << 6),
+	_GST_PLAY_FLAG_DOWNLOAD      = (1 << 7),
+	_GST_PLAY_FLAG_BUFFERING     = (1 << 8),
+	_GST_PLAY_FLAG_DEINTERLACE   = (1 << 9),
+	_GST_PLAY_FLAG_SOFT_COLORBALANCE = (1 << 10)
+} _GstPlayFlags;
+
+
+static gboolean
+create_pipeline (GooPlayer *self)
+{
+	GstElement    *audio_sink;
+	GstElement    *vis_plugin;
+	_GstPlayFlags  flags;
+	GstBus        *bus;
+
+	if (self->priv->pipeline != NULL)
+		return TRUE;
+
+	self->priv->pipeline = gst_element_factory_make ("playbin", "playbin");
+	if (self->priv->pipeline == NULL)
+		return FALSE;
+
+	audio_sink = gst_element_factory_make ("gsettingsaudiosink", "audiosink");
+	vis_plugin = NULL; /*gst_element_factory_make ("monoscope", "visplugin");*/
+
+	flags = _GST_PLAY_FLAG_AUDIO;
+	if (vis_plugin != NULL)
+		flags |= _GST_PLAY_FLAG_VIS;
+
+	g_object_set (self->priv->pipeline,
+		      "audio-sink", audio_sink,
+		      "vis-plugin", vis_plugin,
+		      "flags", flags,
+		      "uri", "cdda://",
 		      NULL);
 
-	sink = gst_element_factory_make ("gsettingsaudiosink", "sink");
+	g_signal_connect (self->priv->pipeline,
+			  "source-setup",
+			  G_CALLBACK (pipeline_source_setup_cb),
+			  self);
 
-	gst_bin_add_many (GST_BIN (self->priv->pipeline),
-			  self->priv->source,
-			  queue,
-			  audioconvert,
-			  audioresample,
-			  self->priv->audio_volume,
-			  sink,
-			  NULL);
-	gst_element_link_many (self->priv->source,
-			       queue,
-			       audioconvert,
-			       audioresample,
-			       self->priv->audio_volume,
-			       sink,
-			       NULL);
+	bus = gst_element_get_bus (self->priv->pipeline);
+	gst_bus_add_signal_watch (bus);
 
-	self->priv->track_format = gst_format_get_by_nick ("track");
-	self->priv->sector_format = gst_format_get_by_nick ("sector");
-	self->priv->source_pad = gst_element_get_pad (self->priv->source, "src");
+	g_signal_connect (bus,
+			  "message::eos",
+			  G_CALLBACK (pipeline_eos_cb),
+			  self);
 
-	gst_bus_add_watch (gst_pipeline_get_bus (GST_PIPELINE (self->priv->pipeline)),
-			   pipeline_bus_message_cb,
-			   self);
+	return TRUE;
 }
 
 
@@ -247,6 +294,7 @@ goo_player_empty_list (GooPlayer *player)
 	player->priv->album = album_info_new ();
 	player->priv->current_track = NULL;
 	player->priv->current_track_n = -1;
+	player->priv->next_track_n = -1;
 }
 
 
@@ -295,10 +343,10 @@ goo_player_class_init (GooPlayerClass *class)
 			      G_SIGNAL_RUN_LAST,
 			      G_STRUCT_OFFSET (GooPlayerClass, done),
 			      NULL, NULL,
-			      goo_marshal_VOID__INT_POINTER,
+			      goo_marshal_VOID__INT_BOXED,
 			      G_TYPE_NONE, 2,
 			      G_TYPE_INT,
-			      G_TYPE_POINTER);
+			      G_TYPE_ERROR);
 	goo_player_signals[PROGRESS] =
 		g_signal_new ("progress",
 			      G_TYPE_FROM_CLASS (class),
@@ -341,6 +389,7 @@ goo_player_init (GooPlayer *self)
 	self->priv->discid = NULL;
 	self->priv->album = album_info_new ();
 	self->priv->current_track_n = -1;
+	self->priv->next_track_n = -1;
 	self->priv->volume_value = 1.0;
 	self->priv->update_progress_id = 0;
 	self->priv->albums = NULL;
@@ -374,9 +423,8 @@ goo_player_finalize (GObject *object)
 		self->priv->update_progress_id = 0;
 	}
 
-	destroy_pipeline (self, FALSE);
+	destroy_pipeline (self);
 	g_mutex_clear (&self->priv->data_mutex);
-	destroy_pipeline (self, FALSE);
 	g_free (self->priv->discid);
 	album_info_unref (self->priv->album);
 	g_object_unref (self->priv->cancellable);
@@ -551,11 +599,10 @@ get_cd_info_from_device_ready_cb (GObject      *source_object,
 		album_info_set_tracks (player->priv->album, album->tracks);
 	}
 
+	destroy_pipeline (player);
 	goo_player_set_is_busy (player, FALSE);
-	gst_element_set_state (player->priv->pipeline, GST_STATE_NULL);
 	goo_player_set_state (player, GOO_PLAYER_STATE_STOPPED, TRUE);
 	action_done (player, GOO_PLAYER_ACTION_LIST);
-	destroy_pipeline (player, TRUE);
 
 	if (player->priv->discid == NULL)
 		return;
@@ -586,10 +633,12 @@ goo_player_list (GooPlayer *player)
 
 	goo_player_empty_list (player);
 	goo_player_set_is_busy (player, TRUE);
-	create_pipeline (player);
 
+#if 0
+	create_pipeline (player);
 	if (player->priv->pipeline != NULL)
 		gst_element_set_state (player->priv->pipeline, GST_STATE_PAUSED);
+#endif
 
 	g_free (player->priv->discid);
 	player->priv->discid = NULL;
@@ -601,29 +650,10 @@ goo_player_list (GooPlayer *player)
 }
 
 
-static TrackInfo*
-get_track (GooPlayer *player,
-           guint      n)
-{
-	GList *scan;
-
-	for (scan = player->priv->album->tracks; scan; scan = scan->next) {
-		TrackInfo *track = scan->data;
-
-		if (track->number == n)
-			return track;
-	}
-
-	return NULL;
-}
-
-
 void
 goo_player_seek_track (GooPlayer *player,
-		       int        n)
+		       int        track_to_play)
 {
-	int track_n;
-
 	if (goo_player_get_is_busy (player))
 		return;
 
@@ -637,35 +667,16 @@ goo_player_seek_track (GooPlayer *player,
 	}
 
 	goo_player_stop (player);
-	create_pipeline (player);
-	gst_element_set_state (player->priv->pipeline, GST_STATE_PAUSED);
+	if (! create_pipeline (player)) {
+		GError *error = g_error_new (GOO_ERROR, GOO_ERROR_GENERIC, "Could not create the pipeline");
+		action_done_with_error (player, GOO_PLAYER_ACTION_SEEK_SONG, error);
+		return;
+	}
 
 	/* seek to track */
 
 	goo_player_set_state (player, GOO_PLAYER_STATE_SEEKING, TRUE);
-
-	track_n = CLAMP (n, 0, player->priv->album->n_tracks - 1);
-	player->priv->current_track_n = track_n;
-
-	debug (DEBUG_INFO, "seek to track %d\n", track_n);
-
-	player->priv->current_track = get_track (player, player->priv->current_track_n);
-
-	g_return_if_fail (player->priv->current_track != NULL);
-
-	if (! gst_element_seek (player->priv->pipeline,
-			        1.0,
-			        player->priv->track_format,
-			        GST_SEEK_FLAG_FLUSH,
-			        GST_SEEK_TYPE_SET,
-			        track_n,
-			        GST_SEEK_TYPE_SET,
-			        track_n + 1))
-	{
-		g_warning ("seek failed");
-	}
-	gst_element_get_state (player->priv->pipeline, NULL, NULL, -1);
-
+	set_current_track (player, track_to_play);
 	action_done (player, GOO_PLAYER_ACTION_SEEK_SONG);
 	goo_player_play (player);
 }
@@ -675,6 +686,14 @@ int
 goo_player_get_current_track (GooPlayer *player)
 {
 	return player->priv->current_track_n;
+}
+
+
+void
+goo_player_set_next_track (GooPlayer *self,
+			   int        next_track_to_play)
+{
+	self->priv->next_track_n = next_track_to_play;
 }
 
 
@@ -692,14 +711,10 @@ goo_player_skip_to (GooPlayer *player,
 
 	gst_element_get_state (player->priv->pipeline, &state, NULL, GST_CLOCK_TIME_NONE);
 	gst_element_set_state (player->priv->pipeline, GST_STATE_PAUSED);
-	gst_element_seek (player->priv->pipeline,
-			  1.0,
-			  GST_FORMAT_TIME,
-			  GST_SEEK_FLAG_FLUSH,
-			  GST_SEEK_TYPE_SET,
-			  G_GINT64_CONSTANT (1000000000) * seconds,
-			  GST_SEEK_TYPE_NONE,
-			  0);
+	gst_element_seek_simple (player->priv->pipeline,
+				 GST_FORMAT_TIME,
+				 GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
+				 G_GINT64_CONSTANT (1000000000) * seconds);
 	gst_element_get_state (player->priv->pipeline, NULL, NULL, GST_CLOCK_TIME_NONE);
 	gst_element_set_state (player->priv->pipeline, (state == GST_STATE_PLAYING) ? GST_STATE_PLAYING : GST_STATE_PAUSED);
 }
@@ -747,6 +762,38 @@ goo_player_get_device (GooPlayer *self)
 }
 
 
+static gboolean
+update_progress_cb (gpointer user_data)
+{
+	GooPlayer *self = user_data;
+	gint64     current_time = 0;
+
+	if (self->priv->update_progress_id != 0) {
+		g_source_remove (self->priv->update_progress_id);
+		self->priv->update_progress_id = 0;
+	}
+
+	if (self->priv->current_track == NULL)
+		return FALSE;
+
+	if (! gst_element_query_position (self->priv->pipeline,
+					  GST_FORMAT_TIME,
+					  &current_time))
+	{
+		return FALSE;
+	}
+
+	g_signal_emit_by_name (G_OBJECT (self),
+			       "progress",
+			       (double) current_time / self->priv->current_track->time,
+			       NULL);
+
+	self->priv->update_progress_id = g_timeout_add (PROGRESS_DELAY, update_progress_cb, user_data);
+
+	return FALSE;
+}
+
+
 void
 goo_player_play (GooPlayer *player)
 {
@@ -763,14 +810,19 @@ goo_player_play (GooPlayer *player)
 		return;
 	}
 
+#if 0
 	if (! ((player->priv->pipeline != NULL)
 	       && ((goo_player_get_state (player) == GOO_PLAYER_STATE_PAUSED)
 		   || (goo_player_get_state (player) == GOO_PLAYER_STATE_SEEKING))))
 	{
 		create_pipeline (player);
 	}
+#endif
 
-	g_object_set (G_OBJECT (player->priv->audio_volume), "volume", goo_player_get_audio_volume (player), NULL);
+	if (! create_pipeline (player))
+		return;
+
+	/*g_object_set (G_OBJECT (player->priv->pipeline), "volume", goo_player_get_audio_volume (player), NULL);*/
 
 	gst_element_set_state (player->priv->pipeline, GST_STATE_PLAYING);
 	goo_player_set_state (player, GOO_PLAYER_STATE_PLAYING, TRUE);
@@ -789,6 +841,11 @@ goo_player_pause (GooPlayer *player)
 	if (player->priv->pipeline == NULL)
 		return;
 
+	if (player->priv->update_progress_id != 0) {
+		g_source_remove (player->priv->update_progress_id);
+		player->priv->update_progress_id = 0;
+	}
+
 	gst_element_set_state (player->priv->pipeline, GST_STATE_PAUSED);
 	goo_player_set_state (GOO_PLAYER (player), GOO_PLAYER_STATE_PAUSED, TRUE);
 
@@ -806,7 +863,7 @@ goo_player_stop (GooPlayer *player)
 	if (player->priv->pipeline == NULL)
 		return;
 
-	destroy_pipeline (player, TRUE);
+	destroy_pipeline (player);
 	goo_player_set_state (GOO_PLAYER (player), GOO_PLAYER_STATE_STOPPED, TRUE);
 
 	action_done (player, GOO_PLAYER_ACTION_STOP);
@@ -882,8 +939,10 @@ goo_player_set_audio_volume (GooPlayer *player,
 		return;
 
 	player->priv->volume_value = vol;
-	if (player->priv->audio_volume != NULL)
-		g_object_set (G_OBJECT (player->priv->audio_volume), "volume", vol, NULL);
+	/*
+	if (player->priv->pipeline != NULL)
+		g_object_set (G_OBJECT (player->priv->pipeline), "volume", vol, NULL);
+	*/
 }
 
 

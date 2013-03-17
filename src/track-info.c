@@ -32,7 +32,7 @@
 
 TrackInfo*
 track_info_new (int    number,
-		gint64 from_sector, 
+		gint64 from_sector,
 		gint64 to_sector)
 {
 	TrackInfo *track;
@@ -41,7 +41,7 @@ track_info_new (int    number,
 
 	track->ref = 1;
 	track->number = number;
-	
+
 	track_info_set_title (track, NULL);
 	track_info_set_artist (track, NULL, NULL);
 
@@ -51,6 +51,7 @@ track_info_new (int    number,
 
 	track->from_time = TO_TIME (from_sector);
 	track->to_time = TO_TIME (to_sector);
+	track->time = track->to_time - track->from_time;
 	track->length = (track->to_time - track->from_time) / GST_SECOND;
 	track->min = track->length / 60;
 	track->sec = track->length % 60;
@@ -73,12 +74,12 @@ GType
 track_info_get_type (void)
 {
 	static GType type = 0;
-  
+
 	if (type == 0)
-		type = g_boxed_type_register_static ("TrackInfo", 
+		type = g_boxed_type_register_static ("TrackInfo",
 						     (GBoxedCopyFunc) track_info_copy,
 						     (GBoxedFreeFunc) track_info_free);
-  
+
 	return type;
 }
 
@@ -123,7 +124,7 @@ track_info_set_title (TrackInfo  *track,
 		track->title = g_strdup_printf (_("Track %u"), track->number + 1);
 		return;
 	}
-	
+
 	if (title == track->title)
 		return;
 
@@ -144,10 +145,10 @@ track_info_set_artist (TrackInfo  *track,
 		track->artist_id = NULL;
 		return;
 	}
-	
+
 	if (artist == track->artist)
 		return;
-		
+
 	g_free (track->artist);
 	track->artist = g_strdup (artist);
 
