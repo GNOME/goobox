@@ -236,7 +236,7 @@ update_progress_cb (gpointer callback_data)
 		data->update_handle = 0;
 	}
 
-	if (! gst_pad_query_position (data->source_pad, &data->sector_format, &sector))
+	if (! gst_pad_query_position (data->source_pad, data->sector_format, &sector))
 		return FALSE;
 
 	data->current_track_sectors = sector;
@@ -319,9 +319,9 @@ create_pipeline (DialogData *data)
 
 	data->track_format = gst_format_get_by_nick ("track");
 	data->sector_format = gst_format_get_by_nick ("sector");
-	data->source_pad = gst_element_get_pad (data->source, "src");
+	data->source_pad = gst_element_get_static_pad (data->source, "src");
 
-	bus =  gst_element_get_bus (data->pipeline);
+	bus = gst_element_get_bus (data->pipeline);
 	gst_bus_add_signal_watch (bus);
 	g_signal_connect (G_OBJECT (bus),
 			  "message::error",
