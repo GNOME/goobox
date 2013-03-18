@@ -580,7 +580,6 @@ rip_current_track (DialogData *data)
 			save_playlist (data);
 
 		data->ripping = FALSE;
-		gtk_window_set_modal (GTK_WINDOW (data->dialog), FALSE);
 		gtk_widget_hide (data->dialog);
 
 		d = _gtk_ok_dialog_with_checkbutton_new (GTK_WINDOW (data->window),
@@ -594,8 +593,7 @@ rip_current_track (DialogData *data)
 		g_signal_connect (G_OBJECT (d), "response",
 				  G_CALLBACK (done_dialog_response_cb),
 				  data);
-		gtk_window_set_resizable (GTK_WINDOW (d), FALSE);
-		gtk_widget_show (d);
+		gtk_window_present (GTK_WINDOW (d));
 
 		return;
 	}

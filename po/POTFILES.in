@@ -68,6 +68,7 @@ src/typedefs.h
 [type: gettext/glade]src/ui/format-options.ui
 src/ui.h
 [type: gettext/glade]src/ui/menu-toolbars.ui
+[type: gettext/glade]src/ui/message-dialog.ui
 [type: gettext/glade]src/ui/preferences.ui
 [type: gettext/glade]src/ui/properties.ui
 [type: gettext/glade]src/ui/ripper.ui

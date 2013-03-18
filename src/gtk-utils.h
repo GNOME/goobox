@@ -37,28 +37,6 @@ GtkWidget*  _gtk_message_dialog_new        (GtkWindow        *parent,
 					    const char       *first_button_text,
 					    ...);
 GtkWidget*
-_gtk_message_dialog_with_checkbutton_new   (GtkWindow        *parent,
-			 		    GtkDialogFlags    flags,
-			 		    const char       *stock_id,
-			 		    const char       *message,
-			 		    const char       *secondary_message,
-			 		    const char       *gconf_key,
-			 		    const char       *check_button_label,
-			 		    const char       *first_button_text,
-			 		    ...);
-gchar*      _gtk_request_dialog_run        (GtkWindow        *parent,
-					    GtkDialogFlags    flags,
-					    const char       *message,
-					    const char       *default_value,
-					    int               max_length,
-					    const char       *no_button_text,
-					    const char       *yes_button_text);
-GtkWidget*  _gtk_yesno_dialog_new          (GtkWindow        *parent,
-					    GtkDialogFlags    flags,
-					    const char       *message,
-					    const char       *no_button_text,
-					    const char       *yes_button_text);
-GtkWidget*
 _gtk_ok_dialog_with_checkbutton_new        (GtkWindow        *parent,
 					    GtkDialogFlags    flags,
 					    const char       *message,
@@ -80,6 +58,8 @@ void        _gtk_error_dialog_run          (GtkWindow        *parent,
 void        _gtk_info_dialog_run           (GtkWindow        *parent,
 					    const gchar      *format,
 					    ...) G_GNUC_PRINTF (2, 3);
+void        _gtk_dialog_add_to_window_group (GtkDialog       *dialog);
+
 GdkPixbuf * _g_icon_get_pixbuf             (GIcon            *icon,
 		 			    int               size,
 		 			    GtkIconTheme     *icon_theme);

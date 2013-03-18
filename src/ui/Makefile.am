@@ -5,6 +5,7 @@ EXTRA_DIST = 			\
 	format-options.ui	\
 	goobox.css		\
 	menu-toolbars.ui	\
+	message-dialog.ui	\
 	preferences.ui		\
 	properties.ui		\
 	ripper.ui
