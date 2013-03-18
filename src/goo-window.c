@@ -918,6 +918,7 @@ pref_playlist_playall_changed (GSettings  *settings,
 	play_all = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL);
 	shuffle = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_SHUFFLE);
 	create_playlist (window, play_all, shuffle);
+	update_next_track_to_play (window);
 
 	window_update_sensitivity (window);
 }
@@ -937,6 +938,7 @@ pref_playlist_shuffle_changed (GSettings  *settings,
 	play_all = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_PLAYALL);
 	shuffle = g_settings_get_boolean (window->priv->settings_playlist, PREF_PLAYLIST_SHUFFLE);
 	create_playlist (window, play_all, shuffle);
+	update_next_track_to_play (window);
 }
 
 
