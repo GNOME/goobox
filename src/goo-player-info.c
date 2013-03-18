@@ -34,7 +34,7 @@
 #define TITLE3_FORMAT "%s"
 #define TIME_FORMAT "%s"
 #define SCALE_WIDTH 150
-#define COVER_SIZE 80
+#define COVER_SIZE 100
 #define TRAY_COVER_SIZE 80
 #define MIN_WIDTH 500
 #define MIN_TOOLTIP_WIDTH 300
