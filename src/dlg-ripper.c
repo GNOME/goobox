@@ -75,18 +75,6 @@ typedef struct {
 } DialogData;
 
 
-/* From lame.h */
-typedef enum vbr_mode_e {
-	vbr_off=0,
-	vbr_mt,               /* obsolete, same as vbr_mtrh */
-	vbr_rh,
-	vbr_abr,
-	vbr_mtrh,
-	vbr_max_indicator,    /* Don't use this! It's used for sanity checks.       */
-	vbr_default=vbr_rh    /* change this to change the default VBR mode of LAME */
-} vbr_mode;
-
-
 static void
 dialog_destroy_cb (GtkWidget  *widget,
 		   DialogData *data)
@@ -131,7 +119,6 @@ rip_next_track (gpointer callback_data)
 	_g_object_unref (data->current_file);
 	data->current_file = NULL;
 
-	gst_element_set_state (data->encoder, GST_STATE_NULL);
 	gst_element_set_state (data->pipeline, GST_STATE_NULL);
 
 	track = data->current_track->data;
@@ -248,7 +235,7 @@ update_progress_cb (gpointer callback_data)
 }
 
 
-static void
+static gboolean
 create_pipeline (DialogData *data)
 {
 	GstBus     *bus;
@@ -257,13 +244,14 @@ create_pipeline (DialogData *data)
 	GstElement *queue;
 	float       ogg_quality;
 	int         flac_compression;
+	gboolean    result;
 
 	data->pipeline = gst_pipeline_new ("pipeline");
 
 	data->source = gst_element_factory_make ("cdparanoiasrc", "source");
 	g_object_set (G_OBJECT (data->source),
 		      "device", brasero_drive_get_device (data->drive),
-		      "read-speed", G_MAXINT,
+		      /*"read-speed", G_MAXINT,*/
 		      NULL);
 
 	audioconvert = gst_element_factory_make ("audioconvert", "convert");
@@ -285,36 +273,41 @@ create_pipeline (DialogData *data)
 
 	case GOO_FILE_FORMAT_FLAC:
 		data->ext = "flac";
-		data->encoder = data->container = gst_element_factory_make (FLAC_ENCODER, "encoder");
-		flac_compression = g_settings_get_double (data->settings_encoder, PREF_ENCODER_FLAC_COMPRESSION);
+		data->encoder = gst_element_factory_make (FLAC_ENCODER, "encoder");
+		flac_compression = g_settings_get_int (data->settings_encoder, PREF_ENCODER_FLAC_COMPRESSION);
 		g_object_set (data->encoder,
 			      "quality", flac_compression,
 			      NULL);
+		data->container = NULL;
 		break;
 
 	case GOO_FILE_FORMAT_WAVE:
 		data->ext = "wav";
-		data->encoder = data->container = gst_element_factory_make (WAVE_ENCODER, "encoder");
+		data->encoder = gst_element_factory_make (WAVE_ENCODER, "encoder");
+		data->container = NULL;
 		break;
 	}
 
 	data->sink = gst_element_factory_make ("giosink", "sink");
 
-	if (data->encoder == data->container) {
-		gst_bin_add_many (GST_BIN (data->pipeline), data->source, queue,
-				  audioconvert, audioresample, data->encoder,
-				  data->sink, NULL);
-		gst_element_link_many (data->source, queue, audioconvert,
-				       audioresample, data->encoder,
-				       data->sink, NULL);
+	if (data->container != NULL) {
+		gst_bin_add_many (GST_BIN (data->pipeline), data->source, queue, audioconvert, audioresample, data->encoder, data->container, data->sink, NULL);
+		result = gst_element_link_many (data->source, queue, audioconvert, audioresample, data->encoder, data->container, data->sink, NULL);
 	}
 	else {
-		gst_bin_add_many (GST_BIN (data->pipeline), data->source, queue,
-				  audioconvert, audioresample, data->encoder,
-				  data->container, data->sink, NULL);
-		gst_element_link_many (data->source, queue, audioconvert,
-				       audioresample, data->encoder,
-				       data->container, data->sink, NULL);
+		gst_bin_add_many (GST_BIN (data->pipeline), data->source, queue, audioconvert, /*audioresample,*/ data->encoder, data->sink, NULL);
+		result = gst_element_link_many (data->source, queue, audioconvert, /*audioresample,*/ data->encoder, data->sink, NULL);
+	}
+
+	if (! result) {
+		GError *error;
+
+		g_clear_object (&data->pipeline);
+
+		error = g_error_new (G_IO_ERROR, G_IO_ERROR_INVAL, "Could not link the pipeline");
+		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (data->window), _("Could not extract the tracks"), &error);
+
+		return FALSE;
 	}
 
 	data->track_format = gst_format_get_by_nick ("track");
@@ -323,6 +316,7 @@ create_pipeline (DialogData *data)
 
 	bus = gst_element_get_bus (data->pipeline);
 	gst_bus_add_signal_watch (bus);
+
 	g_signal_connect (G_OBJECT (bus),
 			  "message::error",
 			  G_CALLBACK (pipeline_error_cb),
@@ -331,6 +325,8 @@ create_pipeline (DialogData *data)
 			  "message::eos",
 			  G_CALLBACK (pipeline_eos_cb),
 			  data);
+
+	return TRUE;
 }
 
 
@@ -344,7 +340,7 @@ valid_filename_char (char c)
 
 /* Remove special characters from a track title in order to make it a
  * valid filename. */
-char*
+char *
 tracktitle_to_filename (const char *trackname,
 			gboolean    escape)
 {
@@ -569,13 +565,13 @@ save_playlist (DialogData *data)
 static void
 rip_current_track (DialogData *data)
 {
-	TrackInfo *track;
-	char      *msg;
-	char      *escaped;
-	GFile     *folder;
-	GError    *error = NULL;
-	char      *filename;
-	GstEvent  *event;
+	TrackInfo            *track;
+	char                 *msg;
+	char                 *escaped;
+	GFile                *folder;
+	GError               *error = NULL;
+	char                 *filename;
+	GstStateChangeReturn  ret;
 
 	if (data->current_track == NULL) {
 		GtkWidget *d;
@@ -642,8 +638,9 @@ rip_current_track (DialogData *data)
 
 	g_file_delete (data->current_file, NULL, NULL);
 
-	gst_element_set_state (data->sink, GST_STATE_NULL);
+	ret = gst_element_set_state (data->pipeline, GST_STATE_NULL);
 	g_object_set (G_OBJECT (data->sink), "file", data->current_file, NULL);
+	g_object_set (G_OBJECT (data->source), "track", track->number + 1, NULL);
 
 	/* Set track tags. */
 
@@ -672,21 +669,6 @@ rip_current_track (DialogData *data)
 					         NULL);
 	}
 
-	/* Seek to track. */
-
-	gst_element_set_state (data->pipeline, GST_STATE_PAUSED);
-	event = gst_event_new_seek (1.0,
-				    data->track_format,
-				    GST_SEEK_FLAG_FLUSH,
-				    GST_SEEK_TYPE_SET,
-				    track->number,
-				    GST_SEEK_TYPE_SET,
-				    track->number + 1);
-	if (! gst_pad_send_event (data->source_pad, event)) {
-		g_warning ("seek failed");
-		return;
-	}
-
 	/* Start ripping. */
 
 	data->current_track_sectors = 0;
@@ -701,10 +683,12 @@ start_ripper (DialogData *data)
 {
 	GList *scan;
 
+	if (! create_pipeline (data))
+		return;
+
 	data->ripping = TRUE;
 	brasero_drive_lock (data->drive, _("Extracting disc tracks"), NULL);
 
-	create_pipeline (data);
 	data->prev_tracks_sectors = 0;
 	data->total_sectors = 0;
 	for (scan = data->tracks; scan; scan = scan->next) {
