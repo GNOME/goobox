@@ -33,7 +33,8 @@
   <enum id="org.gnome.Goobox.FileFormat">
     <value nick="ogg" value="0"/>
     <value nick="flac" value="1"/>
-    <value nick="wave" value="2"/>
+    <value nick="mp3" value="2"/>
+    <value nick="wave" value="3"/>
   </enum>
 
   <schema id="org.gnome.Goobox" path="/org/gnome/goobox/">
@@ -134,7 +135,7 @@
       <_summary>FLAC files quality</_summary>
     </key>
     <key name="mp3-quality" type="i">
-      <default>4</default>
+      <default>2</default>
       <_summary>MP3 files quality</_summary>
     </key>
   </schema>

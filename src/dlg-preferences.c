@@ -45,6 +45,7 @@ enum {
 
 
 static int flac_compression[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+static int mp3_quality[]      = { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
 
 
 typedef struct {
@@ -165,7 +166,7 @@ dlg_preferences (GooWindow *window)
 	char            *destination = NULL;
 	GooFileFormat    file_format;
 	GstElement      *encoder;
-	gboolean         ogg_encoder, flac_encoder, wave_encoder;
+	gboolean         ogg_encoder, flac_encoder, mp3_encoder, wave_encoder;
 	gboolean         find_first_available;
 	GtkTreeIter      iter;
         GtkCellRenderer *renderer;
@@ -233,6 +234,8 @@ dlg_preferences (GooWindow *window)
 	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (GET_WIDGET ("destination_filechooserbutton")), destination);
 	g_free (destination);
 
+	/* ogg */
+
 	encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
 	ogg_encoder = encoder != NULL;
         gtk_list_store_append (GTK_LIST_STORE (data->filetype_model), &iter);
@@ -245,6 +248,8 @@ dlg_preferences (GooWindow *window)
 	if (encoder != NULL)
 		gst_object_unref (GST_OBJECT (encoder));
 
+	/* flac */
+
 	encoder = gst_element_factory_make (FLAC_ENCODER, "encoder");
 	flac_encoder = encoder != NULL;
         gtk_list_store_append (GTK_LIST_STORE (data->filetype_model), &iter);
@@ -256,6 +261,22 @@ dlg_preferences (GooWindow *window)
                            -1);
 	if (encoder != NULL)
 		gst_object_unref (GST_OBJECT (encoder));
+
+	/* mp3 */
+
+	encoder = gst_element_factory_make (MP3_ENCODER, "encoder");
+	mp3_encoder = encoder != NULL;
+        gtk_list_store_append (GTK_LIST_STORE (data->filetype_model), &iter);
+        gtk_list_store_set (GTK_LIST_STORE (data->filetype_model),
+                            &iter,
+                            TEXT_COLUMN, _("MP3"),
+                            DATA_COLUMN, GOO_FILE_FORMAT_MP3,
+                            PRESENT_COLUMN, mp3_encoder,
+                           -1);
+	if (encoder != NULL)
+		gst_object_unref (GST_OBJECT (encoder));
+
+	/* wav */
 
 	encoder = gst_element_factory_make (WAVE_ENCODER, "encoder");
 	wave_encoder = encoder != NULL;
@@ -270,15 +291,18 @@ dlg_preferences (GooWindow *window)
 		gst_object_unref (GST_OBJECT (encoder));
 
 	file_format = g_settings_get_enum (data->settings_ripper, PREF_RIPPER_FILETYPE);
-	find_first_available = (((file_format == GOO_FILE_FORMAT_OGG) && !ogg_encoder)
-				|| ((file_format == GOO_FILE_FORMAT_FLAC) && !flac_encoder)
-				|| ((file_format == GOO_FILE_FORMAT_WAVE) && !wave_encoder));
+	find_first_available = (((file_format == GOO_FILE_FORMAT_OGG) && ! ogg_encoder)
+				|| ((file_format == GOO_FILE_FORMAT_FLAC) && ! flac_encoder)
+				|| ((file_format == GOO_FILE_FORMAT_MP3) && ! mp3_encoder)
+				|| ((file_format == GOO_FILE_FORMAT_WAVE) && ! wave_encoder));
 
 	if (find_first_available) {
 		if (ogg_encoder)
 			file_format = GOO_FILE_FORMAT_OGG;
 		else if (flac_encoder)
 			file_format = GOO_FILE_FORMAT_FLAC;
+		else if (mp3_encoder)
+			file_format = GOO_FILE_FORMAT_MP3;
 		else if (wave_encoder)
 			file_format = GOO_FILE_FORMAT_WAVE;
 	}
@@ -288,9 +312,10 @@ dlg_preferences (GooWindow *window)
 
 	/**/
 
-	set_description_label (data, "ogg_description_label", _("Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3."));
-	set_description_label (data, "flac_description_label", _("Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality."));
-	set_description_label (data, "wave_description_label", _("WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio."));
+	set_description_label (data, "ogg_description_label", _(OGG_DESCRIPTION));
+	set_description_label (data, "flac_description_label", _(FLAC_DESCRIPTION));
+	set_description_label (data, "mp3_description_label", _(MP3_DESCRIPTION));
+	set_description_label (data, "wave_description_label", _(WAVE_DESCRIPTION));
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("save_playlist_checkbutton")), g_settings_get_boolean (data->settings_ripper, PREF_RIPPER_SAVE_PLAYLIST));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("autoplay_checkbutton")), g_settings_get_boolean (data->settings_general, PREF_GENERAL_AUTOPLAY));
@@ -370,6 +395,9 @@ format_dialog_ok_button_clicked_cb (GtkWidget        *widget,
 	case GOO_FILE_FORMAT_FLAC:
 		g_settings_set_int (data->settings_encoder, PREF_ENCODER_FLAC_COMPRESSION, flac_compression[data->value]);
 		break;
+	case GOO_FILE_FORMAT_MP3:
+		g_settings_set_int (data->settings_encoder, PREF_ENCODER_MP3_QUALITY, mp3_quality[data->value]);
+		break;
 	default:
 		break;
 	}
@@ -412,6 +440,10 @@ get_current_value (FormatDialogData *data,
 		value = g_settings_get_int (data->settings_encoder, PREF_ENCODER_FLAC_COMPRESSION);
 		index = find_index (flac_compression, value);
 		break;
+	case GOO_FILE_FORMAT_MP3:
+		value = g_settings_get_int (data->settings_encoder, PREF_ENCODER_MP3_QUALITY);
+		index = find_index (mp3_quality, value);
+		break;
 	default:
 		break;
 	}
@@ -453,7 +485,7 @@ dlg_format (DialogData    *preferences_data,
 		gtk_label_set_markup (GTK_LABEL (GET_WIDGET ("bigger_value_label")), text);
 		g_free (text);
 	}
-	else if (format == GOO_FILE_FORMAT_OGG) {
+	else if ((format == GOO_FILE_FORMAT_OGG) || (format == GOO_FILE_FORMAT_MP3)) {
 		gtk_adjustment_set_upper (GTK_ADJUSTMENT (GET_WIDGET ("quality_adjustment")), 10.0);
 
 		text = g_strdup_printf ("<small><i>%s</i></small>", _("Smaller size"));
@@ -475,6 +507,9 @@ dlg_format (DialogData    *preferences_data,
 	case GOO_FILE_FORMAT_FLAC:
 		text = g_strdup_printf ("<big><b>%s</b></big>", _("FLAC"));
 		break;
+	case GOO_FILE_FORMAT_MP3:
+		text = g_strdup_printf ("<big><b>%s</b></big>", _("MP3"));
+		break;
 	default:
 		text = g_strdup ("");
 		break;
@@ -484,6 +519,7 @@ dlg_format (DialogData    *preferences_data,
 
 	switch (data->format) {
 	case GOO_FILE_FORMAT_OGG:
+	case GOO_FILE_FORMAT_MP3:
 		text = _("Quality:");
 		break;
 	case GOO_FILE_FORMAT_FLAC:
@@ -497,13 +533,16 @@ dlg_format (DialogData    *preferences_data,
 
 	switch (data->format) {
 	case GOO_FILE_FORMAT_OGG:
-		text = _("Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3.");
+		text = _(OGG_DESCRIPTION);
 		break;
 	case GOO_FILE_FORMAT_FLAC:
-		text = _("Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality.");
+		text = _(FLAC_DESCRIPTION);
+		break;
+	case GOO_FILE_FORMAT_MP3:
+		text = _(MP3_DESCRIPTION);
 		break;
 	case GOO_FILE_FORMAT_WAVE:
-		text = _("WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio.");
+		text = _(WAVE_DESCRIPTION);
 		break;
 	default:
 		text = "";

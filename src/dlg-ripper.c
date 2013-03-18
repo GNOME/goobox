@@ -243,7 +243,7 @@ create_pipeline (DialogData *data)
 	GstElement *audioconvert;
 	GstElement *audioresample;
 	GstElement *queue;
-	float       ogg_quality;
+	float       quality;
 	int         flac_compression;
 	gboolean    result;
 
@@ -265,9 +265,9 @@ create_pipeline (DialogData *data)
 	case GOO_FILE_FORMAT_OGG:
 		data->ext = "ogg";
 		data->encoder = gst_element_factory_make (OGG_ENCODER, "encoder");
-		ogg_quality = g_settings_get_double (data->settings_encoder, PREF_ENCODER_OGG_QUALITY);
+		quality = g_settings_get_double (data->settings_encoder, PREF_ENCODER_OGG_QUALITY);
 		g_object_set (data->encoder,
-			      "quality", ogg_quality,
+			      "quality", quality,
 			      NULL);
 		data->container = gst_element_factory_make ("oggmux", "container");
 		break;
@@ -285,6 +285,16 @@ create_pipeline (DialogData *data)
 	case GOO_FILE_FORMAT_WAVE:
 		data->ext = "wav";
 		data->encoder = gst_element_factory_make (WAVE_ENCODER, "encoder");
+		data->container = NULL;
+		break;
+
+	case GOO_FILE_FORMAT_MP3:
+		data->ext = "mp3";
+		data->encoder = gst_element_factory_make (MP3_ENCODER, "encoder");
+		quality = g_settings_get_int (data->settings_encoder, PREF_ENCODER_MP3_QUALITY);
+		g_object_set (data->encoder,
+			      "quality", quality,
+			      NULL);
 		data->container = NULL;
 		break;
 	}

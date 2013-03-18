@@ -28,11 +28,20 @@
 
 #define OGG_ENCODER "vorbisenc"
 #define FLAC_ENCODER "flacenc"
+#define MP3_ENCODER "lamemp3enc"
 #define WAVE_ENCODER "wavenc"
+
+#define OGG_DESCRIPTION "Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3."
+#define FLAC_DESCRIPTION "FLAC is an open source codec that compresses but does not degrade audio quality."
+#define MP3_DESCRIPTION "MP3 is a patented lossy audio codec, supported by most digital audio players."
+#define WAVE_DESCRIPTION "WAV+PCM is a lossless format that holds uncompressed audio."
+
+/* same order shown in the preferences dialog */
 
 typedef enum {
 	GOO_FILE_FORMAT_OGG,
 	GOO_FILE_FORMAT_FLAC,
+	GOO_FILE_FORMAT_MP3,
 	GOO_FILE_FORMAT_WAVE
 } GooFileFormat;
 
