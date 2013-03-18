@@ -62,9 +62,9 @@ struct _GooPlayerInfoPrivateData {
 	gint64       track_length;
 	gboolean     dragging;
 	guint        update_id;
-
 	double       fraction;
 	guint        update_progress_timeout;
+	GdkPixbuf   *original_cover;
 };
 
 
@@ -323,6 +323,7 @@ goo_player_info_finalize (GObject *object)
 	info = GOO_PLAYER_INFO (object);
 	g_free (info->priv->total_time);
 	if (info->priv->update_id != 0) {
+		g_object_unref (info->priv->original_cover);
 		g_source_remove (info->priv->update_id);
 		info->priv->update_id = 0;
 	}
@@ -509,6 +510,8 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 	if (cover == NULL)
 		return;
 
+	g_clear_object (&info->priv->original_cover);
+
 	if (strcmp (cover, "no-disc") == 0) {
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 0);
 		gtk_image_set_from_stock (GTK_IMAGE (info->priv->status_image),
@@ -528,12 +531,14 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 					  GTK_ICON_SIZE_DIALOG);
 	}
 	else {
-		GdkPixbuf *image;
+		info->priv->original_cover = gdk_pixbuf_new_from_file (cover, NULL);
+		if (info->priv->original_cover != NULL) {
+			GdkPixbuf *image;
 
-		image = gdk_pixbuf_new_from_file_at_size (cover, 80, 80, NULL);
-		if (image != NULL) {
+			image = gdk_pixbuf_scale_simple (info->priv->original_cover, COVER_SIZE, COVER_SIZE, GDK_INTERP_BILINEAR);
 			gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 1);
 			gtk_image_set_from_pixbuf (GTK_IMAGE (info->priv->cover_image), image);
+
 			g_object_unref (image);
 		}
 		else
@@ -646,8 +651,5 @@ goo_player_info_new (GooWindow *window)
 GdkPixbuf *
 goo_player_info_get_cover (GooPlayerInfo *info)
 {
-	if (gtk_image_get_storage_type (GTK_IMAGE (info->priv->cover_image)) == GTK_IMAGE_PIXBUF)
-		return gtk_image_get_pixbuf (GTK_IMAGE (info->priv->cover_image));
-	else
-		return NULL;
+	return info->priv->original_cover;
 }
