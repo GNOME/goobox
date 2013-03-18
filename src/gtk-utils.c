@@ -31,51 +31,6 @@
 #define RESOURCE_UI_PATH "/org/gnome/Goobox/ui/"
 
 
-static GtkWidget *
-create_button (const char *stock_id,
-	       const char *text)
-{
-	GtkWidget    *button;
-	GtkWidget    *hbox;
-	GtkWidget    *image;
-	GtkWidget    *label;
-	GtkWidget    *align;
-	const char   *label_text;
-	gboolean      text_is_stock;
-	GtkStockItem  stock_item;
-
-	button = gtk_button_new ();
-
-	if (gtk_stock_lookup (text, &stock_item)) {
-		label_text = stock_item.label;
-		text_is_stock = TRUE;
-	} else {
-		label_text = text;
-		text_is_stock = FALSE;
-	}
-
-	if (text_is_stock)
-		image = gtk_image_new_from_stock (text, GTK_ICON_SIZE_BUTTON);
-	else
-		image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-	label = gtk_label_new_with_mnemonic (label_text);
-	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-
-	gtk_widget_set_can_default (button, TRUE);
-	gtk_label_set_mnemonic_widget (GTK_LABEL (label), GTK_WIDGET (button));
-
-	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-	gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (button), align);
-	gtk_container_add (GTK_CONTAINER (align), hbox);
-
-	gtk_widget_show_all (button);
-
-	return button;
-}
-
-
 GtkWidget *
 _gtk_message_dialog_new (GtkWindow        *parent,
 			 GtkDialogFlags    flags,
@@ -410,7 +365,7 @@ get_file_icon_pixbuf (GFileIcon *icon,
 }
 
 
-gboolean
+static gboolean
 scale_keeping_ratio_min (int      *width,
 			 int      *height,
 			 int       min_width,
@@ -448,7 +403,7 @@ scale_keeping_ratio_min (int      *width,
 }
 
 
-gboolean
+static gboolean
 scale_keeping_ratio (int      *width,
 		     int      *height,
 		     int       max_width,

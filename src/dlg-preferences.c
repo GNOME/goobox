@@ -24,6 +24,7 @@
 #include <brasero3/brasero-drive-selection.h>
 #include <gtk/gtk.h>
 #include <gst/gst.h>
+#include "dlg-preferences.h"
 #include "goo-window.h"
 #include "glib-utils.h"
 #include "gtk-utils.h"

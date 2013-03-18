@@ -25,6 +25,7 @@
 #include <brasero3/brasero-drive.h>
 #include <gtk/gtk.h>
 #include <gst/gst.h>
+#include "dlg-ripper.h"
 #include "glib-utils.h"
 #include "gtk-utils.h"
 #include "main.h"
@@ -340,7 +341,7 @@ valid_filename_char (char c)
 
 /* Remove special characters from a track title in order to make it a
  * valid filename. */
-char *
+static char *
 tracktitle_to_filename (const char *trackname,
 			gboolean    escape)
 {
@@ -565,13 +566,12 @@ save_playlist (DialogData *data)
 static void
 rip_current_track (DialogData *data)
 {
-	TrackInfo            *track;
-	char                 *msg;
-	char                 *escaped;
-	GFile                *folder;
-	GError               *error = NULL;
-	char                 *filename;
-	GstStateChangeReturn  ret;
+	TrackInfo *track;
+	char      *msg;
+	char      *escaped;
+	GFile     *folder;
+	GError    *error = NULL;
+	char      *filename;
 
 	if (data->current_track == NULL) {
 		GtkWidget *d;
@@ -636,7 +636,7 @@ rip_current_track (DialogData *data)
 
 	g_file_delete (data->current_file, NULL, NULL);
 
-	ret = gst_element_set_state (data->pipeline, GST_STATE_NULL);
+	gst_element_set_state (data->pipeline, GST_STATE_NULL);
 	g_object_set (G_OBJECT (data->sink), "file", data->current_file, NULL);
 	g_object_set (G_OBJECT (data->source), "track", track->number + 1, NULL);
 

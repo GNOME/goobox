@@ -263,7 +263,6 @@ goo_player_bar_construct (GooPlayerBar   *self,
 	GtkWidget *main_box;
 	GtkWidget *button_box;
 	GtkWidget *button;
-	GError    *error = NULL;
 
 	frame = gtk_event_box_new ();
 	gtk_style_context_add_class (gtk_widget_get_style_context (frame), "goobox-player-bar");

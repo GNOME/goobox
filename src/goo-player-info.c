@@ -90,8 +90,6 @@ goo_player_info_get_preferred_width (GtkWidget *widget,
 				     int       *minimum_width,
 				     int       *natural_width)
 {
-	GooPlayerInfo *info = GOO_PLAYER_INFO (widget);
-
 	*minimum_width = *natural_width = MIN_WIDTH;
 }
 
@@ -163,7 +161,7 @@ cover_button_clicked_cb (GtkWidget     *button,
 /* -- drag and drop -- */
 
 
-void
+static void
 cover_button_drag_data_received  (GtkWidget          *widget,
 				  GdkDragContext     *context,
 				  gint                x,
@@ -330,28 +328,6 @@ goo_player_info_finalize (GObject *object)
 	}
 
 	G_OBJECT_CLASS (goo_player_info_parent_class)->finalize (object);
-}
-
-
-static void
-update_subtitle (GooPlayerInfo *info,
-		 TrackInfo     *track)
-{
- 	AlbumInfo *album;
-
-	album = goo_window_get_album (info->priv->window);
-
-	if ((album->title == NULL) || (album->artist == NULL)) {
-		g_free (info->priv->total_time);
-		info->priv->total_time = (track->length > 0) ? _g_format_duration_for_display (track->length * 1000) : NULL;
-		set_title2 (info, info->priv->total_time);
-	}
-	else {
-		set_title2 (info, album->artist);
-		set_title3 (info, album->title);
-		gtk_label_set_selectable (GTK_LABEL (info->priv->title2_label), TRUE);
-		gtk_label_set_selectable (GTK_LABEL (info->priv->title3_label), TRUE);
-	}
 }
 
 
@@ -530,8 +506,6 @@ static void
 goo_player_info_set_cover (GooPlayerInfo *info,
 			   const char    *cover)
 {
-	gboolean cover_set = FALSE;
-
 	if (cover == NULL)
 		return;
 
@@ -560,7 +534,6 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 		if (image != NULL) {
 			gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 1);
 			gtk_image_set_from_pixbuf (GTK_IMAGE (info->priv->cover_image), image);
-			cover_set = TRUE;
 			g_object_unref (image);
 		}
 		else

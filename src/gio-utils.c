@@ -39,7 +39,7 @@ g_load_file_in_buffer (GFile   *file,
 {
 	GFileInputStream *istream;
 	gboolean          retval;
-	void             *local_buffer;
+	guchar           *local_buffer;
 	gsize             count;
 	gssize            n;
 	char              tmp_buffer[BUFFER_SIZE];
@@ -83,7 +83,7 @@ typedef struct {
 	gpointer             user_data;
 	GInputStream        *stream;
 	guchar               tmp_buffer[BUFFER_SIZE];
-	void                *buffer;
+	guchar              *buffer;
 	gsize                count;
 } LoadData;
 
@@ -188,7 +188,7 @@ typedef struct {
 	GCancellable        *cancellable;
 	BufferReadyCallback  callback;
 	gpointer             user_data;
-	void                *buffer;
+	guchar              *buffer;
 	gsize                count;
 	gsize                written;
 	GError              *error;
@@ -435,24 +435,4 @@ g_write_file (GFile             *file,
 	_g_object_unref (stream);
 
 	return success;
-}
-
-
-gboolean
-_g_directory_make (GFile    *file,
-		   guint32   unix_mode,
-		   GError  **error)
-{
-	if (! g_file_make_directory (file, NULL, error)) {
-		if (! (*error)->code == G_IO_ERROR_EXISTS)
-			return FALSE;
-		g_clear_error (error);
-	}
-
-	return g_file_set_attribute_uint32 (file,
-					    G_FILE_ATTRIBUTE_UNIX_MODE,
-					    unix_mode,
-					    G_FILE_QUERY_INFO_NONE,
-					    NULL,
-					    error);
 }

@@ -955,7 +955,6 @@ static void
 goo_window_unrealize (GtkWidget *widget)
 {
 	GooWindow *window;
-	gboolean   playlist_visible;
 
 	window = GOO_WINDOW (widget);
 

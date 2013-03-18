@@ -8,7 +8,7 @@ else
 uidir = $(datadir)/goobox/ui
 endif
 
-INCLUDES =						\
+AM_CPPFLAGS =						\
 	-I$(top_srcdir)					\
 	-I$(top_builddir)				\
 	-I$(top_srcdir)/copy-n-paste/ 			\
