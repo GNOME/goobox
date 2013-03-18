@@ -776,17 +776,15 @@ update_progress_cb (gpointer user_data)
 	if (self->priv->current_track == NULL)
 		return FALSE;
 
-	if (! gst_element_query_position (self->priv->pipeline,
-					  GST_FORMAT_TIME,
-					  &current_time))
+	if (gst_element_query_position (self->priv->pipeline,
+					GST_FORMAT_TIME,
+					&current_time))
 	{
-		return FALSE;
+		g_signal_emit_by_name (G_OBJECT (self),
+				       "progress",
+				       (double) current_time / self->priv->current_track->time,
+				       NULL);
 	}
-
-	g_signal_emit_by_name (G_OBJECT (self),
-			       "progress",
-			       (double) current_time / self->priv->current_track->time,
-			       NULL);
 
 	self->priv->update_progress_id = g_timeout_add (PROGRESS_DELAY, update_progress_cb, user_data);
 
