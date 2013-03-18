@@ -571,10 +571,13 @@ image_data_ready_for_query_cb (void     *buffer,
 			       gpointer  user_data)
 {
 	FetchData *data = user_data;
+	gboolean   success;
 
-	if ((error == NULL) && (count > 0))
-		goo_window_set_cover_image_from_data (data->window, buffer, count);
-	else
+	success = (error == NULL) && (count > 0);
+	if (success)
+		success = goo_window_set_cover_image_from_data (data->window, buffer, count);
+
+	if (! success)
 		fetch_cover_image_from_album_info (data->window,
 						   goo_window_get_album (data->window),
 						   FETCH_COVER_STAGE_AFTER_WEB_SEARCH);
@@ -652,10 +655,13 @@ image_data_ready_for_asin_cb (void     *buffer,
 			      gpointer  user_data)
 {
 	FetchData *data = user_data;
+	gboolean   success;
 
-	if ((error == NULL) && (count > 0))
-		goo_window_set_cover_image_from_data (data->window, buffer, count);
-	else
+	success = (error == NULL) && (count > 0);
+	if (success)
+		success = goo_window_set_cover_image_from_data (data->window, buffer, count);
+
+	if (! success)
 		fetch_cover_image_from_album_info (data->window,
 						   goo_window_get_album (data->window),
 						   FETCH_COVER_STAGE_AFTER_ASIN);
@@ -811,12 +817,13 @@ metadata_get_coverart_cb (GObject      *source_object,
 	CoverArtData *data = user_data;
 	guchar       *buffer;
 	gsize         size;
+	gboolean      success;
 
-	if (metadata_get_coverart_finish (result, &buffer, &size))
-		goo_window_set_cover_image_from_data (data->window,
-						      buffer,
-						      size);
-	else
+	success = metadata_get_coverart_finish (result, &buffer, &size);
+	if (success)
+		success = goo_window_set_cover_image_from_data (data->window, buffer, size);
+
+	if (! success)
 		fetch_cover_image_from_album_info (data->window,
 						   data->album,
 						   FETCH_COVER_STAGE_AFTER_LIBCOVERART);
@@ -833,14 +840,6 @@ fetch_cover_image_from_album_info (GooWindow       *window,
 				   AlbumInfo       *album,
 				   FetchCoverStage  after_stage)
 {
-	if ((FETCH_COVER_STAGE_AFTER_ASIN > after_stage)
-	    && (album != NULL)
-	    && (album->asin != NULL))
-	{
-		fetch_cover_image_from_asin (window, album->asin);
-		return;
-	}
-
 #if HAVE_LIBCOVERART
 
 	if ((FETCH_COVER_STAGE_AFTER_LIBCOVERART > after_stage)
@@ -862,6 +861,14 @@ fetch_cover_image_from_album_info (GooWindow       *window,
 	}
 
 #endif
+
+	if ((FETCH_COVER_STAGE_AFTER_ASIN > after_stage)
+	    && (album != NULL)
+	    && (album->asin != NULL))
+	{
+		fetch_cover_image_from_asin (window, album->asin);
+		return;
+	}
 
 	if ((FETCH_COVER_STAGE_AFTER_WEB_SEARCH > after_stage)
 	    && (album != NULL)

@@ -2541,16 +2541,23 @@ goo_window_get_player_info (GooWindow *window)
 }
 
 
-void
+#define MIN_COVER_SIZE 10
+
+
+gboolean
 goo_window_set_cover_image_from_pixbuf (GooWindow *window,
 					GdkPixbuf *image)
 {
 	GError    *error = NULL;
 	GdkPixbuf *frame;
 	char      *cover_filename;
+	gboolean   image_saved;
 
 	if (image == NULL)
-		return;
+		return FALSE;
+
+	if ((gdk_pixbuf_get_width (image) < MIN_COVER_SIZE) || (gdk_pixbuf_get_height (image) < MIN_COVER_SIZE))
+		return FALSE;
 
 	frame = gdk_pixbuf_new (gdk_pixbuf_get_colorspace (image),
 				gdk_pixbuf_get_has_alpha (image),
@@ -2568,44 +2575,51 @@ goo_window_set_cover_image_from_pixbuf (GooWindow *window,
 	cover_filename = goo_window_get_cover_filename (window);
 	debug (DEBUG_INFO, "SAVE IMAGE %s\n", cover_filename);
 
-	if (! gdk_pixbuf_save (frame, cover_filename, "png", &error, NULL))
-		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
-						   _("Could not save cover image"),
-						   &error);
-	else {
+	image_saved = gdk_pixbuf_save (frame, cover_filename, "png", &error, NULL);
+	if (image_saved) {
 		goo_window_set_current_cd_autofetch (window, FALSE);
 		goo_window_update_cover (window);
 	}
+	else
+		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
+						   _("Could not save cover image"),
+						   &error);
 
 	g_free (cover_filename);
 	g_object_unref (frame);
+
+	return image_saved;
 }
 
 
-void
+gboolean
 goo_window_set_cover_image (GooWindow  *window,
 			    const char *filename)
 {
 	GdkPixbuf *image;
 	GError    *error = NULL;
+	gboolean   result;
 
 	if (window->priv->hibernate)
-		return;
+		return FALSE;
 
 	image = gdk_pixbuf_new_from_file (filename, &error);
 	if (image == NULL) {
 		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
 						   _("Could not load image"),
 						   &error);
-		return;
+		return FALSE;
 	}
-	goo_window_set_cover_image_from_pixbuf (window, image);
+
+	result = goo_window_set_cover_image_from_pixbuf (window, image);
 
 	g_object_unref (image);
+
+	return result;
 }
 
 
-void
+gboolean
 goo_window_set_cover_image_from_data (GooWindow *window,
 				      void      *buffer,
 				      gsize      count)
@@ -2613,24 +2627,28 @@ goo_window_set_cover_image_from_data (GooWindow *window,
 	GInputStream *stream;
 	GdkPixbuf    *image;
 	GError       *error = NULL;
+	gboolean      result;
 
 	if (window->priv->hibernate)
-		return;
+		return FALSE;
 
 	stream = g_memory_input_stream_new_from_data (buffer, count, NULL);
 	image = gdk_pixbuf_new_from_stream (stream, NULL, &error);
+
 	if (image == NULL) {
 		_gtk_error_dialog_from_gerror_run (GTK_WINDOW (window),
 						   _("Could not load image"),
 						   &error);
 		g_object_unref (stream);
-		return;
+		return FALSE;
 	}
 
-	goo_window_set_cover_image_from_pixbuf (window, image);
+	result = goo_window_set_cover_image_from_pixbuf (window, image);
 
 	g_object_unref (image);
 	g_object_unref (stream);
+
+	return result;
 }
 
 

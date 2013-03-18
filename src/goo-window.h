@@ -77,11 +77,12 @@ GList *     goo_window_get_tracks                (GooWindow    *window,
 GooPlayer * goo_window_get_player                (GooWindow    *window);
 GtkWidget * goo_window_get_player_info           (GooWindow    *window);
 void        goo_window_update_cover              (GooWindow    *window);
-void        goo_window_set_cover_image_from_pixbuf (GooWindow  *window,
+gboolean    goo_window_set_cover_image_from_pixbuf
+						 (GooWindow  *window,
 					          GdkPixbuf    *image);
-void        goo_window_set_cover_image           (GooWindow    *window,
+gboolean    goo_window_set_cover_image           (GooWindow    *window,
 						  const char   *filename);
-void        goo_window_set_cover_image_from_data (GooWindow    *window,
+gboolean    goo_window_set_cover_image_from_data (GooWindow    *window,
 						  void         *buffer,
 						  gsize         count);
 char *      goo_window_get_cover_filename        (GooWindow    *window);
