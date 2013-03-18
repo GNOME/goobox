@@ -296,8 +296,8 @@ create_pipeline (DialogData *data)
 		result = gst_element_link_many (data->source, queue, audioconvert, audioresample, data->encoder, data->container, data->sink, NULL);
 	}
 	else {
-		gst_bin_add_many (GST_BIN (data->pipeline), data->source, queue, audioconvert, /*audioresample,*/ data->encoder, data->sink, NULL);
-		result = gst_element_link_many (data->source, queue, audioconvert, /*audioresample,*/ data->encoder, data->sink, NULL);
+		gst_bin_add_many (GST_BIN (data->pipeline), data->source, queue, audioconvert, audioresample, data->encoder, data->sink, NULL);
+		result = gst_element_link_many (data->source, queue, audioconvert, audioresample, data->encoder, data->sink, NULL);
 	}
 
 	if (! result) {
