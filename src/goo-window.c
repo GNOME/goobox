@@ -691,13 +691,62 @@ get_position_from_track_number (GooWindow   *window,
 
 
 static void
+add_selected_track (GtkTreeModel *model,
+		    GtkTreePath  *path,
+		    GtkTreeIter  *iter,
+		    gpointer      data)
+{
+	GList    **list = data;
+	TrackInfo  *track;
+
+	gtk_tree_model_get (model, iter, COLUMN_TRACK_INFO, &track, -1);
+	*list = g_list_prepend (*list, track);
+}
+
+
+static gboolean
+set_selected_track_if_unique (GooWindow *window,
+			      int       *n_track)
+{
+	GtkTreeSelection *list_selection;
+	GList            *tracks;
+	gboolean          result;
+
+	if (window->priv->album->tracks == NULL)
+		return FALSE;
+
+	list_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->priv->list_view));
+	if (list_selection == NULL)
+		return FALSE;
+
+	tracks = NULL;
+	gtk_tree_selection_selected_foreach (list_selection, add_selected_track, &tracks);
+
+	if ((tracks != NULL) && (tracks->next == NULL)) {
+		TrackInfo *track;
+
+		track = tracks->data;
+		*n_track = track->number;
+		result = TRUE;
+	}
+	else
+		result = FALSE;
+
+	track_list_free (tracks);
+
+	return result;
+}
+
+
+static void
 create_playlist (GooWindow *window,
 		 gboolean   play_all,
 		 gboolean   shuffle)
 {
 
 	GList *playlist;
-	int    pos = 0, i;
+	int    selected_track_number;
+	int    pos;
 
 	debug (DEBUG_INFO, "PLAY ALL: %d\n", play_all);
 	debug (DEBUG_INFO, "SHUFFLE: %d\n", shuffle);
@@ -706,42 +755,63 @@ create_playlist (GooWindow *window,
 		g_list_free (window->priv->playlist);
 	window->priv->playlist = NULL;
 
-	if (!play_all)
-		return;
-
 	playlist = NULL;
 
-	if (window->priv->current_track != NULL)
+	if (window->priv->current_track != NULL) {
+
+		/* ignore the currently playing track */
+
+		selected_track_number = window->priv->current_track->number;
 		pos = get_position_from_track_number (window, window->priv->current_track->number);
+	}
+	else if (set_selected_track_if_unique (window, &selected_track_number)) {
 
-	for (i = 0; i < window->priv->album->n_tracks; i++, pos = (pos + 1) % window->priv->album->n_tracks) {
-		int track_number;
+		/* put the selected track first */
 
-		track_number = get_track_number_from_position (window, pos);
-		if ((window->priv->current_track != NULL)
-		    && (window->priv->current_track->number == track_number))
-			continue;
-		playlist = g_list_prepend (playlist, GINT_TO_POINTER (track_number));
+		playlist = g_list_prepend (playlist, GINT_TO_POINTER (selected_track_number));
+		pos = get_position_from_track_number (window, selected_track_number);
+	}
+	else {
+		selected_track_number = -1;
+		pos = 0;
 	}
 
-	playlist = g_list_reverse (playlist);
+	if (play_all) {
+		int i;
 
-	if (shuffle) {
-		GRand *grand = g_rand_new ();
-		GList *random_list = NULL;
-		int    len = g_list_length (playlist);
+		for (i = 0;
+		     i < window->priv->album->n_tracks;
+		     i++, pos = (pos + 1) % window->priv->album->n_tracks)
+		{
+			int track_number;
 
-		while (playlist != NULL) {
-			GList *item;
+			track_number = get_track_number_from_position (window, pos);
+			if (track_number == selected_track_number)
+				/* skip the selected track */
+				continue;
 
-			pos = g_rand_int_range (grand, 0, len--);
-			item = g_list_nth (playlist, pos);
-			playlist = g_list_remove_link (playlist, item);
-			random_list = g_list_concat (random_list, item);
+			playlist = g_list_prepend (playlist, GINT_TO_POINTER (track_number));
 		}
-		playlist = random_list;
 
-		g_rand_free (grand);
+		playlist = g_list_reverse (playlist);
+
+		if (shuffle) {
+			GRand *grand = g_rand_new ();
+			GList *random_list = NULL;
+			int    len = g_list_length (playlist);
+
+			while (playlist != NULL) {
+				GList *item;
+
+				pos = g_rand_int_range (grand, 0, len--);
+				item = g_list_nth (playlist, pos);
+				playlist = g_list_remove_link (playlist, item);
+				random_list = g_list_concat (random_list, item);
+			}
+			playlist = random_list;
+
+			g_rand_free (grand);
+		}
 	}
 
 	window->priv->playlist = playlist;
@@ -2305,19 +2375,13 @@ goo_window_play (GooWindow *window)
 void
 goo_window_play_selected (GooWindow *window)
 {
-	GList *tracks;
+	int track_n;
 
-	tracks = goo_window_get_tracks (window, TRUE);
-
-	if (g_list_length (tracks) == 1) {
-		TrackInfo *track = tracks->data;
-
+	if (set_selected_track_if_unique (window, &track_n)) {
 		goo_window_stop (window);
-		goo_window_set_current_track (window, track->number);
+		goo_window_set_current_track (window, track_n);
 		goo_window_play (window);
 	}
-
-	track_list_free (tracks);
 }
 
 
@@ -2428,20 +2492,6 @@ goo_window_set_drive (GooWindow    *window,
 		      BraseroDrive *drive)
 {
 	goo_player_set_drive (window->priv->player, drive);
-}
-
-
-static void
-add_selected_track (GtkTreeModel *model,
-		   GtkTreePath  *path,
-		   GtkTreeIter  *iter,
-		   gpointer      data)
-{
-	GList    **list = data;
-	TrackInfo  *track;
-
-	gtk_tree_model_get (model, iter, COLUMN_TRACK_INFO, &track, -1);
-	*list = g_list_prepend (*list, track);
 }
 
 
