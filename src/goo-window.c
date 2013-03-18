@@ -626,12 +626,14 @@ add_columns (GooWindow   *window,
 static void
 print_playlist (GooWindow *window)
 {
+#ifdef DEBUG
 	GList *scan;
 
 	debug (DEBUG_INFO, "PLAYLIST: ");
 	for (scan = window->priv->playlist; scan; scan = scan->next)
 		debug (DEBUG_INFO, "%d, ", GPOINTER_TO_INT (scan->data));
 	debug (DEBUG_INFO, "\n");
+#endif
 }
 
 
@@ -815,6 +817,8 @@ create_playlist (GooWindow *window,
 	}
 
 	window->priv->playlist = playlist;
+
+	print_playlist (window);
 }
 
 
@@ -887,8 +891,6 @@ play_next_track_in_playlist (GooWindow *window)
 		create_playlist (window, play_all, shuffle);
 		next = window->priv->playlist;
 	}
-
-	print_playlist (window);
 
 	if (next != NULL) {
 		int pos;
