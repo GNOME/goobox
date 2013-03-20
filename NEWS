@@ -1,3 +1,35 @@
+version 3.1.2
+-------------
+
+ New features and user visible changes:
+
+  * Use a cover size of 100x100
+
+ Bugs fixed:
+
+  * Fixed cover image fetching.
+  * Check for ice and sm pkg-config in configure. (#670941)
+
+ Internal code changes:
+
+  * Ported to libmusicbrainz5.
+  * Ported to GStreamer 1.0
+
+ New or updated application translations:
+
+  * Brazilian Portuguese (Enrico Nicoletto)
+  * Deutsch (Christian Kirbach)
+  * French (Bruno Brouard)
+  * Lietuvių (Aurimas Černius)
+  * Polish (Piotr Drąg)
+  * Serbian (Мирослав Николић)
+  * Serbian (Miroslav Nikolić)
+  * čeština (Marek Černocký)
+
+ New or updated manual translations:
+
+  * čeština (Marek Černocký)
+
 version 3.1.1
 -------------
 
