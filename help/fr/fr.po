@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox 1.0 fr\n"
-"POT-Creation-Date: 2012-09-25 16:46+0000\n"
+"POT-Creation-Date: 2013-03-20 19:39+0000\n"
 "PO-Revision-Date: 2012-09-25 18:46+0200\n"
 "Last-Translator: Julien hardelin <jhardlin@orange.fr>\n"
 "Language-Team: français <GNOME French Team <gnomefr@traduc.org>>\n"
@@ -121,7 +121,7 @@ msgid ""
 msgstr ""
 "Gardez à l'esprit que lorsque vous changez une option, elle est appliquée "
 "automatiquement. C'est pourquoi il n'y a pas de bouton <gui style=\"button"
-"\">Valider</gui> ou <gui style>Appliquer</gui>."
+"\">Valider</gui> ou <gui style=\"button\">Appliquer</gui>."
 
 #: C/preferences.page:34(section/title)
 msgid "General Tab"
