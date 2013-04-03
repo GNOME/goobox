@@ -3,86 +3,90 @@
 # This file is distributed under the same license as the goobox package.
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2005, 2010.
+# Balázs Úr <urbalazs at gmail dot com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-26 00:27+0100\n"
-"PO-Revision-Date: 2010-12-26 00:26+0100\n"
-"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=goobox&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-12-05 16:22+0000\n"
+"PO-Revision-Date: 2013-04-03 09:15+0200\n"
+"Last-Translator: Balázs Úr <urbalazs at gmail dot com>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.2\n"
 
 #: ../copy-n-paste/eggdesktopfile.c:165
 #, c-format
 msgid "File is not a valid .desktop file"
 msgstr "A fájl nem egy érvényes .desktop fájl"
 
-#: ../copy-n-paste/eggdesktopfile.c:188
+#: ../copy-n-paste/eggdesktopfile.c:190
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Ismeretlen .desktop fájl verzió: „%s”"
 
-#: ../copy-n-paste/eggdesktopfile.c:958
+#: ../copy-n-paste/eggdesktopfile.c:970
 #, c-format
 msgid "Starting %s"
 msgstr "%s indítása"
 
-#: ../copy-n-paste/eggdesktopfile.c:1100
+#: ../copy-n-paste/eggdesktopfile.c:1112
 #, c-format
 msgid "Application does not accept documents on command line"
 msgstr "Az alkalmazás nem fogad el dokumentumokat a parancssorban"
 
-#: ../copy-n-paste/eggdesktopfile.c:1168
+#: ../copy-n-paste/eggdesktopfile.c:1180
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Ismeretlen indítási kapcsoló: %d"
 
-#: ../copy-n-paste/eggdesktopfile.c:1373
+#: ../copy-n-paste/eggdesktopfile.c:1385
 #, c-format
-msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "Nem adhatók dokumentum-URI címek egy „Type=Link” asztali bejegyzésnek"
+#| msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgid "Can't pass documents to this desktop element"
+msgstr "Nem adhatók át dokumentumok ennek az asztalelemnek"
 
-#: ../copy-n-paste/eggdesktopfile.c:1392
+#: ../copy-n-paste/eggdesktopfile.c:1406
 #, c-format
 msgid "Not a launchable item"
 msgstr "Nem futtatható elem"
 
-#: ../copy-n-paste/eggsmclient.c:225
+#: ../copy-n-paste/eggsmclient.c:226
 msgid "Disable connection to session manager"
 msgstr "A munkamenet-kezelőhöz való csatlakozás tiltása"
 
-#: ../copy-n-paste/eggsmclient.c:228
+#: ../copy-n-paste/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
 msgstr "A mentett beállításokat tartalmazó fájl megadása"
 
-#: ../copy-n-paste/eggsmclient.c:228
+#: ../copy-n-paste/eggsmclient.c:229
 msgid "FILE"
 msgstr "FÁJL"
 
-#: ../copy-n-paste/eggsmclient.c:231
+#: ../copy-n-paste/eggsmclient.c:232
 msgid "Specify session management ID"
 msgstr "A munkamenet-kezelő azonosítójának megadása"
 
-#: ../copy-n-paste/eggsmclient.c:231
+#: ../copy-n-paste/eggsmclient.c:232
 msgid "ID"
 msgstr "AZONOSÍTÓ"
 
-#: ../copy-n-paste/eggsmclient.c:252
+#: ../copy-n-paste/eggsmclient.c:253
 msgid "Session management options:"
 msgstr "Munkamenet-kezelés kapcsolói:"
 
-#: ../copy-n-paste/eggsmclient.c:253
+#: ../copy-n-paste/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Munkamenet-kezelési kapcsolók megjelenítése"
 
-#: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:160
-#: ../src/goo-window.c:2056 ../src/goo-window.c:2508 ../src/main.c:378
+#: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:159
+#: ../src/goo-window.c:1315 ../src/goo-window.c:1328 ../src/goo-window.c:1846
+#: ../src/main.c:240
 msgid "CD Player"
 msgstr "CD-lejátszó"
 
@@ -90,159 +94,114 @@ msgstr "CD-lejátszó"
 msgid "Play and extract CDs"
 msgstr "CD lemezek lejátszása és beolvasása"
 
-#: ../data/goobox.schemas.in.h:1
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:1
+msgid "Device path"
+msgstr "Eszköz elérési útja"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:2
+#| msgid "Volume level: %3.0f%%"
+msgid "Volume level"
+msgstr "Hangerő szintje"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:3
+#| msgid "Choose Disc Cover Image"
+msgid "'Choose cover' location"
+msgstr "„Borító választása” helye"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:4
+msgid "Default location for the 'Choose cover' dialog."
+msgstr "Az alapértelmezett helye a „Borító választása” párbeszédablaknak."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:5
+msgid "Use Sound Juicer to rip discs"
+msgstr "Sound Juicer használta lemezek beolvasásához"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:6
+#| msgid "Stop playing"
+msgid "Autoplay"
+msgstr "Automatikus lejátszás"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:7
+msgid "Autoplay discs after insertion."
+msgstr "Lemezek automatikus lejátszása behelyezés után."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:8
+msgid "Window width"
+msgstr "Ablak szélessége"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:9
+msgid "Window height"
+msgstr "Ablak magassága"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:10
+msgid "Play all tracks"
+msgstr "Az összes szám lejátszása"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:11
+#| msgid "_Save playlist"
+msgid "Shuffle playlist"
+msgstr "Lejátszólista megkeverése"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:12
+#| msgid "Restart playing when finished"
+msgid "Restart when finished"
+msgstr "Újraindítás, miután befejeződött"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
+msgid "Playlist sort method"
+msgstr "Lejátszólista rendezési mód"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
+msgid "Playlist sort type"
+msgstr "Lejátszólista rendezési típus"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
+#| msgid "Extraction"
+msgid "Extraction folder"
+msgstr "Beolvasási mappa"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
+msgid "File type"
+msgstr "Fájltípus"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
 msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr "A lehetséges értékek: ogg, flac, mp3, wave."
 
-#: ../data/goobox.schemas.in.h:2
-msgid ""
-"Possible values are: system, text_below, text_beside, text_only, icons_only."
-msgstr ""
-"Lehetséges értékek: system (rendszerbeállítás), text_below (szöveg az ikonok "
-"alatt),text_beside (szöveg az ikonok mellett), text_only (csak szöveg), "
-"icons_only (csak ikonok)."
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
+#| msgid "_Save playlist"
+msgid "Save the playlist"
+msgstr "A lejátszólista mentése"
 
-#: ../data/ui/cover-chooser.ui.h:1
-msgid "Choose a CD Cover"
-msgstr "Válasszon egy CD-borítót"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
+msgid "Save the playlist of the extracted tracks."
+msgstr "A beolvasott számok lejátszólistájának mentése."
 
-#: ../data/ui/cover-chooser.ui.h:2
-msgid "Found images:"
-msgstr "Talált képek:"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:20
+#| msgid "_View destination folder"
+msgid "View the destination"
+msgstr "A cél megtekintése"
 
-#: ../data/ui/extract.ui.h:1 ../data/ui/preferences.ui.h:1
-msgid "    "
-msgstr "    "
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:21
+#| msgid "Higher quality"
+msgid "OGG files quality"
+msgstr "OGG fájlok minősége"
 
-#: ../data/ui/extract.ui.h:2
-msgid "<b>Extract</b>"
-msgstr "<b>Beolvasás</b>"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
+#| msgid "Higher quality"
+msgid "FLAC files quality"
+msgstr "FLAC fájlok minősége"
 
-#: ../data/ui/extract.ui.h:3
-msgid "Extract Tracks"
-msgstr "Számok beolvasása"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
+#| msgid "Higher quality"
+msgid "MP3 files quality"
+msgstr "MP3 fájlok minősége"
 
-#: ../data/ui/extract.ui.h:4
-msgid "_All tracks"
-msgstr "M_inden számot"
-
-#: ../data/ui/extract.ui.h:5
-msgid "_Selected tracks"
-msgstr "_Kiválasztott számokat"
-
-#: ../data/ui/format-options.ui.h:1
-msgid "Format Properties"
-msgstr "Formátum tulajdonságai"
-
-#: ../data/ui/preferences.ui.h:2
-msgid "<b>CD Drive</b>"
-msgstr "<b>CD-meghajtó</b>"
-
-#: ../data/ui/preferences.ui.h:3
-msgid "<b>Destination folder</b>"
-msgstr "<b>Célmappa</b>"
-
-#: ../data/ui/preferences.ui.h:4
-msgid "<b>Output format</b>"
-msgstr "<b>Kimeneti formátum</b>"
-
-#: ../data/ui/preferences.ui.h:5
-msgid ""
-"<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
-"compresses but does not degrade audio quality.</i></small>"
-msgstr ""
-"<small><i>A Szabad veszteségmentes hangkodek (FLAC) egy nyílt forrású kodek, "
-"amely tömörít, de nem rontja a hangminőséget.</i></small>"
-
-#: ../data/ui/preferences.ui.h:6
-msgid ""
-"<small><i>Vorbis is an open source, lossy audio codec with high quality "
-"output at a lower file size than MP3.</i></small>"
-msgstr ""
-"<small><i>A Vorbis egy nyílt forrású, veszteséges hangkodek, amely az MP3-"
-"nál kisebb méretben jobb minőségű eredményt produkál.</i></small>"
-
-#: ../data/ui/preferences.ui.h:7
-msgid ""
-"<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
-"code modulated (PCM) audio.</i></small>"
-msgstr ""
-"<small><i>A Wav+PCM egy tömörítetlen, nyers impulzuskód-modulált (PCM) "
-"hangot tároló veszteségmentes formátum.</i></small>"
-
-#: ../data/ui/preferences.ui.h:8
-msgid "Automatically play newly inserted discs"
-msgstr "Újonnan behelyezett lemezek automatikus lejátszása"
-
-#: ../data/ui/preferences.ui.h:9
-msgid "CD Player Preferences"
-msgstr "CD-lejátszó beállításai"
-
-#: ../data/ui/preferences.ui.h:10
-msgid "Choose destination folder"
-msgstr "Válassza ki a célmappát"
-
-#: ../data/ui/preferences.ui.h:11
-msgid "Extraction"
-msgstr "Beolvasás"
-
-#: ../data/ui/preferences.ui.h:12
-msgid "General"
-msgstr "Általános"
-
-#: ../data/ui/preferences.ui.h:13
-msgid "_Save playlist"
-msgstr "_Lejátszólista mentése"
-
-#: ../data/ui/properties.ui.h:1
-msgid "No album found."
-msgstr "Nem található album."
-
-#: ../data/ui/properties.ui.h:2
-msgid "Properties"
-msgstr "Tulajdonságok"
-
-#: ../data/ui/properties.ui.h:3
-msgid "Search for the remaining data"
-msgstr "Hátralévő adatok keresése"
-
-#: ../data/ui/properties.ui.h:4
-msgid "Single artist"
-msgstr "Egy előadó"
-
-#: ../data/ui/properties.ui.h:5
-msgid "T_racks:"
-msgstr "S_zámok:"
-
-#: ../data/ui/properties.ui.h:6
-msgid "Various artists"
-msgstr "Vegyes előadók"
-
-#: ../data/ui/properties.ui.h:7
-msgid "_Artist:"
-msgstr "_Előadó:"
-
-#: ../data/ui/properties.ui.h:8
-msgid "_Title:"
-msgstr "_Cím:"
-
-#: ../data/ui/properties.ui.h:9
-msgid "_Year:"
-msgstr "É_v:"
-
-#: ../data/ui/ripper.ui.h:1
-msgid "<big><b>Extracting tracks</b></big>"
-msgstr "<big><b>Számok beolvasása</b></big>"
-
-#: ../data/ui/ripper.ui.h:2
-msgid "Extracting Tracks"
-msgstr "Számok beolvasása"
-
-#: ../src/actions.c:140
+#: ../src/actions.c:139
 msgid "translator_credits"
 msgstr "Kelemen Gábor <kelemeng at gnome dot hu>"
 
-#: ../src/actions.c:143
+#: ../src/actions.c:142
 msgid ""
 "CD Player is free software; you can redistribute it and/or modify it under "
 "the terms of the GNU General Public License as published by the Free "
@@ -253,7 +212,7 @@ msgstr ""
 "Software Foundation által kiadott GNU General Public License második (vagy "
 "bármely későbbi) változatában foglaltak alapján."
 
-#: ../src/actions.c:147
+#: ../src/actions.c:146
 msgid ""
 "CD Player is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -265,7 +224,7 @@ msgstr ""
 "alkalmas-e a KÖZREADÁSRA vagy EGY BIZONYOS FELADAT ELVÉGZÉSÉRE. További "
 "részletekért tanulmányozza a GNU GPL licencet."
 
-#: ../src/actions.c:151
+#: ../src/actions.c:150
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "CD Player; if not, write to the Free Software Foundation, Inc., 51 Franklin "
@@ -275,32 +234,33 @@ msgstr ""
 "ha nem kapta meg, írjon a Free Software Foundation Inc.-nek. Levélcímük: 51 "
 "Franklin St, Fifth Floor, Boston, MA 02110-1301, USA."
 
-#: ../src/actions.c:162
-msgid "Copyright © 2004-2009 Free Software Foundation, Inc."
-msgstr "Copyright © 2004-2009 Free Software Foundation, Inc."
+#: ../src/actions.c:161
+#| msgid "Copyright © 2004-2009 Free Software Foundation, Inc."
+msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
+msgstr "Copyright © 2004-2011 Free Software Foundation, Inc."
 
-#: ../src/actions.c:163 ../src/main.c:415
+#: ../src/actions.c:162 ../src/main.c:334 ../src/main.c:433
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "CD-k lejátszása és számok lemezre mentése fájlokként"
 
-#: ../src/actions.c:284 ../src/actions.c:313 ../src/actions.c:340
+#: ../src/actions.c:290 ../src/actions.c:325 ../src/actions.c:358
 msgid "Could not execute command"
 msgstr "Nem lehet végrehajtani a parancsot"
 
-#: ../src/album-info.c:174
+#: ../src/album-info.c:176
 msgid "Various"
 msgstr "Különböző"
 
-#: ../src/dlg-cover-chooser.c:271
+#: ../src/dlg-cover-chooser.c:277
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, kép betöltése: %u"
 
-#: ../src/dlg-cover-chooser.c:336 ../src/goo-window.c:3060
+#: ../src/dlg-cover-chooser.c:342 ../src/goo-window.c:2657
 msgid "Could not search for a cover on Internet"
 msgstr "Nem lehet borítóképet keresni az interneten"
 
-#: ../src/dlg-extract.c:119
+#: ../src/dlg-extract.c:110
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -317,24 +277,24 @@ msgstr ""
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 
-#: ../src/dlg-extract.c:130
+#: ../src/dlg-extract.c:121
 msgid "No encoder available."
 msgstr "Nem áll rendelkezésre tömörítő."
 
-#: ../src/dlg-preferences.c:243 ../src/dlg-preferences.c:474
+#: ../src/dlg-preferences.c:240 ../src/dlg-preferences.c:472
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:255 ../src/dlg-preferences.c:477
+#: ../src/dlg-preferences.c:252 ../src/dlg-preferences.c:475
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:267
+#: ../src/dlg-preferences.c:264
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:294 ../src/dlg-preferences.c:501
+#: ../src/dlg-preferences.c:290 ../src/dlg-preferences.c:499
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
@@ -342,7 +302,7 @@ msgstr ""
 "A Vorbis egy nyílt forrású, veszteséges hangkodek, amely az MP3-nál kisebb "
 "méretben jobb minőségű eredményt produkál."
 
-#: ../src/dlg-preferences.c:295 ../src/dlg-preferences.c:504
+#: ../src/dlg-preferences.c:291 ../src/dlg-preferences.c:502
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
@@ -350,7 +310,7 @@ msgstr ""
 "A Szabad veszteségmentes hangkodek (FLAC) egy nyílt forrású kodek, amely "
 "tömörít, de nem rontja a hangminőséget."
 
-#: ../src/dlg-preferences.c:296 ../src/dlg-preferences.c:507
+#: ../src/dlg-preferences.c:292 ../src/dlg-preferences.c:505
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
@@ -358,53 +318,52 @@ msgstr ""
 "A Wav+PCM egy tömörítetlen, nyers impulzuskód-modulált (PCM) hangot tároló "
 "veszteségmentes formátum."
 
-#: ../src/dlg-preferences.c:449
+#: ../src/dlg-preferences.c:447
 msgid "Faster compression"
 msgstr "Gyorsabb tömörítés"
 
-#: ../src/dlg-preferences.c:453
+#: ../src/dlg-preferences.c:451
 msgid "Higher compression"
 msgstr "Magasabb tömörítés"
 
-#: ../src/dlg-preferences.c:460
+#: ../src/dlg-preferences.c:458
 msgid "Smaller size"
 msgstr "Kisebb méret"
 
-#: ../src/dlg-preferences.c:464
+#: ../src/dlg-preferences.c:462
 msgid "Higher quality"
 msgstr "Jobb minőség"
 
-#: ../src/dlg-preferences.c:488
+#: ../src/dlg-preferences.c:486
 msgid "Quality:"
 msgstr "Minőség:"
 
-#: ../src/dlg-preferences.c:491
+#: ../src/dlg-preferences.c:489
 msgid "Compression level:"
 msgstr "Tömörítési szint:"
 
-#: ../src/dlg-properties.c:189
+#: ../src/dlg-properties.c:216
 #, c-format
 msgid "Album %d of %d"
 msgstr "%d. album, összesen %d"
 
-#: ../src/dlg-properties.c:245
-#, c-format
-msgid "Search failed: %s\n"
-msgstr "Keresés meghiúsult: %s\n"
-
-#: ../src/dlg-properties.c:255
+#: ../src/dlg-properties.c:274
 msgid "No album found"
 msgstr "Nem található album"
 
-#: ../src/dlg-properties.c:316 ../src/goo-window.c:532
+#: ../src/dlg-properties.c:293
+msgid "Searching disc info..."
+msgstr "Lemezinformációk keresése…"
+
+#: ../src/dlg-properties.c:353
 msgid "#"
 msgstr "#"
 
-#: ../src/dlg-properties.c:334 ../src/goo-window.c:557
+#: ../src/dlg-properties.c:371
 msgid "Title"
 msgstr "Cím"
 
-#: ../src/dlg-properties.c:367 ../src/goo-window.c:580
+#: ../src/dlg-properties.c:404
 msgid "Artist"
 msgstr "Előadó"
 
@@ -436,28 +395,29 @@ msgstr "Érvénytelen célmappa: %s"
 msgid "Could not display the destination folder"
 msgstr "A célmappa nem jeleníthető meg"
 
-#: ../src/dlg-ripper.c:591
+#: ../src/dlg-ripper.c:592
 msgid "Tracks extracted successfully"
 msgstr "Számok sikeresen beolvasva"
 
-#: ../src/dlg-ripper.c:593
+#: ../src/dlg-ripper.c:594
 msgid "_View destination folder"
 msgstr "Célmappa me_gjelenítése"
 
-#: ../src/dlg-ripper.c:607
+#: ../src/dlg-ripper.c:609
 #, c-format
-msgid "<i>Extracting \"%s\"</i>"
-msgstr "<i>„%s” beolvasása</i>"
+#| msgid "<i>Extracting \"%s\"</i>"
+msgid "Extracting \"%s\""
+msgstr "„%s” beolvasása"
 
-#: ../src/dlg-ripper.c:616 ../src/dlg-ripper.c:625
+#: ../src/dlg-ripper.c:620 ../src/dlg-ripper.c:629
 msgid "Could not extract tracks"
 msgstr "Nem lehet beolvasni a számokat"
 
-#: ../src/dlg-ripper.c:655
+#: ../src/dlg-ripper.c:659
 msgid "Ripped with CD Player"
 msgstr "Beolvasva a CD-lejátszóval"
 
-#: ../src/dlg-ripper.c:701
+#: ../src/dlg-ripper.c:705
 msgid "Extracting disc tracks"
 msgstr "Számok beolvasása"
 
@@ -467,10 +427,12 @@ msgstr "Számok beolvasása"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: ../src/glib-utils.c:2348
+#: ../src/glib-utils.c:2225
 #, c-format
+#| msgctxt "long time format"
+#| msgid "%d:%02d:%02d"
 msgctxt "long time format"
-msgid "%d:%02d:%02d"
+msgid "%d∶%02d∶%02d"
 msgstr "%d.%02d.%02d"
 
 #. minutes:seconds
@@ -479,52 +441,44 @@ msgstr "%d.%02d.%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: ../src/glib-utils.c:2357
+#: ../src/glib-utils.c:2234
 #, c-format
+#| msgctxt "short time format"
+#| msgid "%d:%02d"
 msgctxt "short time format"
-msgid "%d:%02d"
+msgid "%d∶%02d"
 msgstr "%d.%02d"
 
-#: ../src/goo-player.c:263
+#: ../src/goo-player.c:259
 msgid "Playing CD"
 msgstr "CD lejátszása"
 
-#. translators: this is the current_time / total_time label
-#: ../src/goo-player-info.c:220 ../src/goo-player-info.c:248
-#: ../src/goo-player-info.c:542 ../src/goo-window.c:2038
-#, c-format
-msgid "%s / %s"
-msgstr "%s / %s"
-
-#: ../src/goo-player-info.c:417
+#: ../src/goo-player-info.c:256
 msgid "Click here to choose a cover for this CD"
 msgstr "Kattintson ide borító kiválasztásához ezen CD-hez"
 
-#: ../src/goo-player-info.c:644
+#: ../src/goo-player-info.c:419 ../src/goo-window.c:1174
 msgid "No disc"
 msgstr "Nincs lemez"
 
-#: ../src/goo-player-info.c:649
+#: ../src/goo-player-info.c:422 ../src/goo-window.c:1179
 msgid "Data disc"
 msgstr "Adatlemez"
 
-#: ../src/goo-player-info.c:664 ../src/goo-window.c:1421
-msgid "Paused"
-msgstr "Szüneteltetve"
-
-#: ../src/goo-player-info.c:673
+#: ../src/goo-player-info.c:426
 msgid "Ejecting CD"
 msgstr "CD kiadása"
 
-#: ../src/goo-player-info.c:677
+#: ../src/goo-player-info.c:429
 msgid "Checking CD drive"
 msgstr "CD-meghajtó ellenőrzése"
 
-#: ../src/goo-player-info.c:681 ../src/goo-player-info.c:685
+#: ../src/goo-player-info.c:432 ../src/goo-player-info.c:435
 msgid "Reading CD"
 msgstr "CD olvasása"
 
-#: ../src/goo-player-info.c:701 ../src/goo-window.c:1431
+#: ../src/goo-player-info.c:438 ../src/goo-window.c:1192
+#: ../src/goo-window.c:1335
 msgid "Audio CD"
 msgstr "Audio CD"
 
@@ -541,92 +495,58 @@ msgstr "_Visszaállítás"
 msgid "V_olume"
 msgstr "Hange_rő"
 
-#: ../src/goo-volume-tool-button.c:164
-#, c-format
-msgid "Volume level: %3.0f%%"
-msgstr "Hangerő: %3.0f%%"
-
-#: ../src/goo-volume-tool-button.c:641
-msgid "+"
-msgstr "+"
-
-#: ../src/goo-volume-tool-button.c:683
-msgid "-"
-msgstr "-"
-
-#: ../src/goo-volume-tool-button.c:732
-msgid "Change the volume level"
-msgstr "A hangerő megváltoztatása"
-
-#: ../src/goo-volume-tool-button.c:767
-msgid "Volume"
-msgstr "Hangerő"
-
-#: ../src/goo-window.c:58
+#: ../src/goo-window.c:52
 msgid "Hide _tracks"
 msgstr "Számok elre_jtése"
 
-#: ../src/goo-window.c:59
+#: ../src/goo-window.c:53
 msgid "Show _tracks"
 msgstr "Számok _mutatása"
 
-#: ../src/goo-window.c:189
-#, c-format
-msgid "%d track"
-msgid_plural "%d tracks"
-msgstr[0] "%d szám"
-msgstr[1] "%d szám"
-
-#: ../src/goo-window.c:604
-msgid "Length"
-msgstr "Hossz"
-
-#: ../src/goo-window.c:1299 ../src/ui.h:64
+#: ../src/goo-window.c:1245 ../src/ui.h:48
 msgid "_Pause"
 msgstr "_Szünet"
 
-#: ../src/goo-window.c:1300 ../src/ui.h:65
+#: ../src/goo-window.c:1245 ../src/main.c:922 ../src/ui.h:49
 msgid "Pause"
 msgstr "Szünet"
 
-#: ../src/goo-window.c:1424
-msgid "No Disc"
-msgstr "Nincs lemez"
-
-#: ../src/goo-window.c:1427
-msgid "Data Disc"
-msgstr "Adatlemez"
-
-#: ../src/goo-window.c:1665 ../src/goo-window.c:1683 ../src/ui.h:52
-#: ../src/ui.h:56 ../src/ui.h:60
+#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/ui.h:36
+#: ../src/ui.h:40 ../src/ui.h:44
 msgid "_Play"
 msgstr "Le_játszás"
 
-#: ../src/goo-window.c:1666 ../src/goo-window.c:1684 ../src/ui.h:57
+#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/main.c:929
+#: ../src/ui.h:41
 msgid "Play"
 msgstr "Lejátszás"
 
-#: ../src/goo-window.c:2878
+#: ../src/goo-window.c:2082 ../src/goo-window.c:2083
+#| msgid "Extraction"
+msgid "Other actions"
+msgstr "Egyéb műveletek"
+
+#: ../src/goo-window.c:2475
 msgid "Could not save cover image"
 msgstr "Nem lehet menteni a borítóképet"
 
-#: ../src/goo-window.c:2903 ../src/goo-window.c:2929
+#: ../src/goo-window.c:2500 ../src/goo-window.c:2526
 msgid "Could not load image"
 msgstr "Nem lehet betölteni a képet"
 
-#: ../src/goo-window.c:2998
+#: ../src/goo-window.c:2595
 msgid "Choose Disc Cover Image"
 msgstr "Válasszon lemezborító képet"
 
-#: ../src/goo-window.c:3017
+#: ../src/goo-window.c:2614
 msgid "Images"
 msgstr "Képek"
 
-#: ../src/goo-window.c:3025
+#: ../src/goo-window.c:2622
 msgid "All files"
 msgstr "Minden fájl"
 
-#: ../src/goo-window.c:3061
+#: ../src/goo-window.c:2658
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -634,252 +554,437 @@ msgstr ""
 "Az album borítójának megtalálásához pontosan meg kell adnia az előadó nevét "
 "és az album címét."
 
-#: ../src/goo-window.c:3106
+#: ../src/goo-window.c:2701
 msgid "_Show Window"
 msgstr "_Ablak megjelenítése"
 
-#: ../src/goo-window.c:3107
+#: ../src/goo-window.c:2701
 msgid "Show the main window"
 msgstr "Főablak mutatása"
 
-#: ../src/goo-window.c:3120 ../src/ui.h:124
+#: ../src/goo-window.c:2709 ../src/ui.h:108
 msgid "_Hide Window"
 msgstr "Ablak _elrejtése"
 
-#. "H"
-#: ../src/goo-window.c:3121 ../src/ui.h:125
+#: ../src/goo-window.c:2709 ../src/ui.h:109
 msgid "Hide the main window"
 msgstr "A főablak elrejtése"
 
-#: ../src/gtk-file-chooser-preview.c:189
+#: ../src/gtk-file-chooser-preview.c:166
 msgid "Preview"
 msgstr "Előnézet"
 
-#: ../src/gtk-file-chooser-preview.c:290
+#: ../src/gtk-file-chooser-preview.c:267
 msgid "pixels"
 msgstr "képpont"
 
-#: ../src/gtk-utils.c:944
+#: ../src/gtk-utils.c:754
 msgid "Could not display help"
 msgstr "Nem lehet megjeleníteni a súgót"
 
-#: ../src/gtk-utils.c:1208 ../src/gtk-utils.c:1216
+#: ../src/gtk-utils.c:1040 ../src/gtk-utils.c:1046
 msgid "Could not launch the application"
 msgstr "Az alkalmazás nem indítható"
 
-#: ../src/main.c:82
+#: ../src/main.c:71
 msgid "CD device to be used"
 msgstr "A használandó CD-eszköz"
 
-#: ../src/main.c:83
+#: ../src/main.c:72
 msgid "DEVICE_PATH"
 msgstr "ESZKÖZ_ÚTVONAL"
 
-#: ../src/main.c:85
+#: ../src/main.c:74
 msgid "Play the CD on startup"
 msgstr "CD lejátszása indításkor"
 
-#: ../src/main.c:88 ../src/ui.h:53
-msgid "Play/Pause"
-msgstr "Lejátszás/szünet"
+#: ../src/main.c:77
+msgid "Toggle play"
+msgstr "Lejátszás váltása"
 
-#: ../src/main.c:91 ../src/ui.h:69
+#: ../src/main.c:80 ../src/ui.h:53
 msgid "Stop playing"
 msgstr "Lejátszás leállítása"
 
-#: ../src/main.c:94 ../src/ui.h:73
+#: ../src/main.c:83 ../src/ui.h:57
 msgid "Play the next track"
 msgstr "A következő szám lejátszása"
 
-#: ../src/main.c:97 ../src/ui.h:77
+#: ../src/main.c:86 ../src/ui.h:61
 msgid "Play the previous track"
 msgstr "Az előző szám lejátszása"
 
-#: ../src/main.c:100
+#: ../src/main.c:89
 msgid "Eject the CD"
 msgstr "A CD kiadása"
 
-#: ../src/main.c:103
-msgid "Hide/Show the main window"
-msgstr "A főablak elrejtése/mutatása"
+#: ../src/main.c:92
+#| msgid "Hide the main window"
+msgid "Toggle the main window visibility"
+msgstr "A főablak láthatóságának váltása"
 
-#: ../src/main.c:106
-msgid "Volume Up"
-msgstr "Hangerő növelése"
-
-#: ../src/main.c:109
-msgid "Volume Down"
-msgstr "Hangerő csökkentése"
-
-#: ../src/main.c:112 ../src/ui.h:109
+#: ../src/main.c:95 ../src/ui.h:93
 msgid "Quit the application"
 msgstr "Kilépés az alkalmazásból"
 
-#: ../src/main.c:116
+#: ../src/main.c:98
 msgid "Show version"
 msgstr "Verziószám megjelenítése"
 
-#: ../src/main.c:315
+#: ../src/main.c:292
 msgid "Cannot start the CD player"
 msgstr "Nem lehet elindítani a CD-lejátszót"
 
-#: ../src/main.c:316
+#: ../src/main.c:293
 msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgstr "A CD-k beolvasásához telepítenie kell a GStreamer base bővítményeket"
 
-#: ../src/main.c:600
+#: ../src/main.c:936
 msgid "Next"
 msgstr "Következő"
-
-#: ../src/main.c:606
-msgid "Stop"
-msgstr "Leállítás"
 
 #: ../src/track-info.c:123
 #, c-format
 msgid "Track %u"
 msgstr "%u. szám"
 
-#: ../src/ui.h:33
-msgid "_Disc"
-msgstr "_Lemez"
+#: ../src/ui/app-menu.ui.h:1
+#| msgid "CD Player Preferences"
+msgid "_Preferences"
+msgstr "_Beállítások"
 
-#: ../src/ui.h:34
-msgid "_Edit"
-msgstr "S_zerkesztés"
+#: ../src/ui/app-menu.ui.h:2
+#| msgid "Play"
+msgid "Play Mode"
+msgstr "Lejátszási mód"
 
-#: ../src/ui.h:35
-msgid "_View"
-msgstr "_Nézet"
-
-#: ../src/ui.h:36
-msgid "_Help"
-msgstr "_Súgó"
-
-#: ../src/ui.h:37
-msgid "C_over"
-msgstr "B_orító"
-
-#: ../src/ui.h:41
-msgid "Information about the program"
-msgstr "Információk a programról"
-
-#: ../src/ui.h:45
-msgid "Display the manual"
-msgstr "A kézikönyv megjelenítése"
-
-#: ../src/ui.h:48
-msgid "_Keyboard shortcuts"
-msgstr "_Gyorsbillentyűk"
-
-#: ../src/ui.h:61
-msgid "Play this track"
-msgstr "Ezen szám lejátszása"
-
-#: ../src/ui.h:68
-msgid "_Stop"
-msgstr "_Leállítás"
-
-#: ../src/ui.h:72
-msgid "_Next"
-msgstr "Kö_vetkező"
-
-#: ../src/ui.h:76
-msgid "Pre_v"
-msgstr "_Előző"
-
-#: ../src/ui.h:80 ../src/ui.h:84
-msgid "_Eject"
-msgstr "Ki_adás"
-
-#: ../src/ui.h:81 ../src/ui.h:85
-msgid "Eject the disc"
-msgstr "A lemez kiadása"
-
-#: ../src/ui.h:89
-msgid "Edit various preferences"
-msgstr "Különféle beállítások megváltoztatása"
-
-#: ../src/ui.h:92
-msgid "_Copy Disc"
-msgstr "Le_mez másolása"
-
-#: ../src/ui.h:93
-msgid "Copy the content of this disc on another disc"
-msgstr "A lemez tartalmának másik lemezre másolása"
-
-#: ../src/ui.h:96 ../src/ui.h:100
-msgid "E_xtract Tracks"
-msgstr "Számok _beolvasása"
-
-#: ../src/ui.h:97
-msgid "Save the tracks to disk as files"
-msgstr "Számok mentése a merevlemezre fájlokként"
-
-#: ../src/ui.h:101
-msgid "Save the selected tracks to disk as files"
-msgstr "Kijelölt számok mentése a merevlemezre fájlokként"
-
-#: ../src/ui.h:105
-msgid "Edit the disc artist, album and the tracks titles"
-msgstr "A lemez előadójának, címének és a számok címeinek szerkesztése"
-
-#: ../src/ui.h:112
-msgid "_Choose File..."
-msgstr "_Válasszon fájlt…"
-
-#: ../src/ui.h:113
-msgid "Choose a file to use as disc cover"
-msgstr "Válassza ki a lemezborítóként használandó fájlt"
-
-#: ../src/ui.h:116
-msgid "_Search on Internet"
-msgstr "Keresés az _interneten"
-
-#: ../src/ui.h:117
-msgid "Search for a disc cover on Internet"
-msgstr "Lemezborító keresése az interneten"
-
-#: ../src/ui.h:121
-msgid "Remove current disc cover"
-msgstr "A jelenlegi lemezborító eltávolítása"
-
-#: ../src/ui.h:137
-msgid "_Toolbar"
-msgstr "_Eszköztár"
-
-#: ../src/ui.h:138
-msgid "View the main toolbar"
-msgstr "A fő eszköztár megjelenítése"
-
-#: ../src/ui.h:142
-msgid "Stat_usbar"
-msgstr "Állap_otsor"
-
-#: ../src/ui.h:143
-msgid "View the statusbar"
-msgstr "Az állapotsor megjelenítése"
-
-#: ../src/ui.h:147
+#: ../src/ui/app-menu.ui.h:3
 msgid "Play _All"
 msgstr "Összes le_játszása"
 
-#: ../src/ui.h:148
-msgid "Play all tracks"
-msgstr "Az összes szám lejátszása"
-
-#: ../src/ui.h:152
+#: ../src/ui/app-menu.ui.h:4
 msgid "_Repeat"
 msgstr "_Ismétlés"
 
-#: ../src/ui.h:153
-msgid "Restart playing when finished"
-msgstr "Lejátszás újrakezdése miután befejeződött"
-
-#: ../src/ui.h:157
+#: ../src/ui/app-menu.ui.h:5
 msgid "S_huffle"
 msgstr "_Véletlen"
 
-#: ../src/ui.h:158
-msgid "Play tracks in a random order"
-msgstr "Számok lejátszása véletlen sorrendben"
+#: ../src/ui/app-menu.ui.h:6
+msgid "_Help"
+msgstr "_Súgó"
+
+#: ../src/ui/app-menu.ui.h:7
+#| msgid "CD Player"
+msgid "_About CD Player"
+msgstr "A CD-lejátszó _névjegye"
+
+#: ../src/ui/app-menu.ui.h:8
+msgid "_Quit"
+msgstr "_Kilépés"
+
+#: ../src/ui/cover-chooser.ui.h:1
+msgid "Choose a CD Cover"
+msgstr "Válasszon egy CD-borítót"
+
+#: ../src/ui/cover-chooser.ui.h:2
+msgid "Found images:"
+msgstr "Talált képek:"
+
+#: ../src/ui/extract.ui.h:1
+msgid "Extract Tracks"
+msgstr "Számok beolvasása"
+
+#: ../src/ui/extract.ui.h:2
+msgid "_All tracks"
+msgstr "M_inden számot"
+
+#: ../src/ui/extract.ui.h:3
+msgid "_Selected tracks"
+msgstr "_Kiválasztott számokat"
+
+#: ../src/ui/format-options.ui.h:1
+msgid "Format Properties"
+msgstr "Formátum tulajdonságai"
+
+#: ../src/ui.h:33
+msgid "C_over"
+msgstr "B_orító"
+
+#: ../src/ui.h:37
+msgid "Play/Pause"
+msgstr "Lejátszás/szünet"
+
+#: ../src/ui.h:45
+msgid "Play this track"
+msgstr "Ezen szám lejátszása"
+
+#: ../src/ui.h:52
+msgid "_Stop"
+msgstr "_Leállítás"
+
+#: ../src/ui.h:56
+msgid "_Next"
+msgstr "Kö_vetkező"
+
+#: ../src/ui.h:60
+msgid "Pre_v"
+msgstr "_Előző"
+
+#: ../src/ui.h:64 ../src/ui.h:68
+msgid "_Eject"
+msgstr "Ki_adás"
+
+#: ../src/ui.h:65 ../src/ui.h:69
+msgid "Eject the disc"
+msgstr "A lemez kiadása"
+
+#: ../src/ui.h:72
+msgid "_Copy Disc"
+msgstr "Le_mez másolása"
+
+#: ../src/ui.h:73
+msgid "Copy the content of this disc on another disc"
+msgstr "A lemez tartalmának másik lemezre másolása"
+
+#: ../src/ui.h:76 ../src/ui.h:80
+msgid "E_xtract Tracks"
+msgstr "Számok _beolvasása"
+
+#: ../src/ui.h:77
+msgid "Save the tracks to disk as files"
+msgstr "Számok mentése a merevlemezre fájlokként"
+
+#: ../src/ui.h:81
+msgid "Save the selected tracks to disk as files"
+msgstr "Kijelölt számok mentése a merevlemezre fájlokként"
+
+#: ../src/ui.h:85
+msgid "Edit the disc artist, album and the tracks titles"
+msgstr "A lemez előadójának, címének és a számok címeinek szerkesztése"
+
+#: ../src/ui.h:96
+msgid "_Choose File..."
+msgstr "_Válasszon fájlt…"
+
+#: ../src/ui.h:97
+msgid "Choose a file to use as disc cover"
+msgstr "Válassza ki a lemezborítóként használandó fájlt"
+
+#: ../src/ui.h:100
+msgid "_Search on Internet"
+msgstr "Keresés az _interneten"
+
+#: ../src/ui.h:101
+msgid "Search for a disc cover on Internet"
+msgstr "Lemezborító keresése az interneten"
+
+#: ../src/ui.h:105
+msgid "Remove current disc cover"
+msgstr "A jelenlegi lemezborító eltávolítása"
+
+#: ../src/ui/preferences.ui.h:1
+msgid "CD Player Preferences"
+msgstr "CD-lejátszó beállításai"
+
+#: ../src/ui/preferences.ui.h:2
+#| msgid "<b>CD Drive</b>"
+msgid "CD Drive"
+msgstr "CD-meghajtó"
+
+#: ../src/ui/preferences.ui.h:3
+msgid "Automatically play newly inserted discs"
+msgstr "Újonnan behelyezett lemezek automatikus lejátszása"
+
+#: ../src/ui/preferences.ui.h:4
+msgid "General"
+msgstr "Általános"
+
+#: ../src/ui/preferences.ui.h:5
+#| msgid "<b>Destination folder</b>"
+msgid "Destination folder"
+msgstr "Célmappa"
+
+#: ../src/ui/preferences.ui.h:6
+msgid "    "
+msgstr "    "
+
+#: ../src/ui/preferences.ui.h:7
+msgid "Choose destination folder"
+msgstr "Válassza ki a célmappát"
+
+#: ../src/ui/preferences.ui.h:8
+#| msgid "<b>Output format</b>"
+msgid "Output format"
+msgstr "Kimeneti formátum"
+
+#: ../src/ui/preferences.ui.h:9
+msgid "_Save playlist"
+msgstr "_Lejátszólista mentése"
+
+#: ../src/ui/preferences.ui.h:10
+msgid "Extraction"
+msgstr "Beolvasás"
+
+#: ../src/ui/properties.ui.h:1
+msgid "Single artist"
+msgstr "Egy előadó"
+
+#: ../src/ui/properties.ui.h:2
+msgid "Various artists"
+msgstr "Vegyes előadók"
+
+#: ../src/ui/properties.ui.h:3
+msgid "Properties"
+msgstr "Tulajdonságok"
+
+#: ../src/ui/properties.ui.h:4
+msgid "_Title:"
+msgstr "_Cím:"
+
+#: ../src/ui/properties.ui.h:5
+msgid "T_racks:"
+msgstr "S_zámok:"
+
+#: ../src/ui/properties.ui.h:6
+msgid "_Artist:"
+msgstr "_Előadó:"
+
+#: ../src/ui/properties.ui.h:7
+msgid "_Year:"
+msgstr "É_v:"
+
+#: ../src/ui/properties.ui.h:8
+msgid "Search for the remaining data"
+msgstr "Hátralévő adatok keresése"
+
+#: ../src/ui/properties.ui.h:9
+msgid "No album found."
+msgstr "Nem található album."
+
+#: ../src/ui/ripper.ui.h:1
+msgid "Extracting Tracks"
+msgstr "Számok beolvasása"
+
+#: ../src/ui/ripper.ui.h:2
+#| msgid "Extracting Tracks"
+msgid "Extracting tracks"
+msgstr "Számok beolvasása"
+
+#~ msgid ""
+#~ "Possible values are: system, text_below, text_beside, text_only, "
+#~ "icons_only."
+#~ msgstr ""
+#~ "Lehetséges értékek: system (rendszerbeállítás), text_below (szöveg az "
+#~ "ikonok alatt),text_beside (szöveg az ikonok mellett), text_only (csak "
+#~ "szöveg), icons_only (csak ikonok)."
+
+#~ msgid "<b>Extract</b>"
+#~ msgstr "<b>Beolvasás</b>"
+
+#~ msgid ""
+#~ "<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
+#~ "compresses but does not degrade audio quality.</i></small>"
+#~ msgstr ""
+#~ "<small><i>A Szabad veszteségmentes hangkodek (FLAC) egy nyílt forrású "
+#~ "kodek, amely tömörít, de nem rontja a hangminőséget.</i></small>"
+
+#~ msgid ""
+#~ "<small><i>Vorbis is an open source, lossy audio codec with high quality "
+#~ "output at a lower file size than MP3.</i></small>"
+#~ msgstr ""
+#~ "<small><i>A Vorbis egy nyílt forrású, veszteséges hangkodek, amely az MP3-"
+#~ "nál kisebb méretben jobb minőségű eredményt produkál.</i></small>"
+
+#~ msgid ""
+#~ "<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
+#~ "code modulated (PCM) audio.</i></small>"
+#~ msgstr ""
+#~ "<small><i>A Wav+PCM egy tömörítetlen, nyers impulzuskód-modulált (PCM) "
+#~ "hangot tároló veszteségmentes formátum.</i></small>"
+
+#~ msgid "<big><b>Extracting tracks</b></big>"
+#~ msgstr "<big><b>Számok beolvasása</b></big>"
+
+#~ msgid "Search failed: %s\n"
+#~ msgstr "Keresés meghiúsult: %s\n"
+
+#~ msgid "%s / %s"
+#~ msgstr "%s / %s"
+
+#~ msgid "Paused"
+#~ msgstr "Szüneteltetve"
+
+#~ msgid "+"
+#~ msgstr "+"
+
+#~ msgid "-"
+#~ msgstr "-"
+
+#~ msgid "Change the volume level"
+#~ msgstr "A hangerő megváltoztatása"
+
+#~ msgid "Volume"
+#~ msgstr "Hangerő"
+
+#~ msgid "%d track"
+#~ msgid_plural "%d tracks"
+#~ msgstr[0] "%d szám"
+#~ msgstr[1] "%d szám"
+
+#~ msgid "Length"
+#~ msgstr "Hossz"
+
+#~ msgid "No Disc"
+#~ msgstr "Nincs lemez"
+
+#~ msgid "Data Disc"
+#~ msgstr "Adatlemez"
+
+#~ msgid "Hide/Show the main window"
+#~ msgstr "A főablak elrejtése/mutatása"
+
+#~ msgid "Volume Up"
+#~ msgstr "Hangerő növelése"
+
+#~ msgid "Volume Down"
+#~ msgstr "Hangerő csökkentése"
+
+#~ msgid "Stop"
+#~ msgstr "Leállítás"
+
+#~ msgid "_Disc"
+#~ msgstr "_Lemez"
+
+#~ msgid "_Edit"
+#~ msgstr "S_zerkesztés"
+
+#~ msgid "_View"
+#~ msgstr "_Nézet"
+
+#~ msgid "Information about the program"
+#~ msgstr "Információk a programról"
+
+#~ msgid "Display the manual"
+#~ msgstr "A kézikönyv megjelenítése"
+
+#~ msgid "_Keyboard shortcuts"
+#~ msgstr "_Gyorsbillentyűk"
+
+#~ msgid "Edit various preferences"
+#~ msgstr "Különféle beállítások megváltoztatása"
+
+#~ msgid "_Toolbar"
+#~ msgstr "_Eszköztár"
+
+#~ msgid "View the main toolbar"
+#~ msgstr "A fő eszköztár megjelenítése"
+
+#~ msgid "Stat_usbar"
+#~ msgstr "Állap_otsor"
+
+#~ msgid "View the statusbar"
+#~ msgstr "Az állapotsor megjelenítése"
+
+#~ msgid "Play tracks in a random order"
+#~ msgstr "Számok lejátszása véletlen sorrendben"
