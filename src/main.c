@@ -294,9 +294,10 @@ init_application (GApplication *application)
 					     _("In order to read CDs you have to install the gstreamer base plugins"),
 					     GTK_STOCK_OK, GTK_RESPONSE_OK,
 					     NULL);
-		g_signal_connect (G_OBJECT (d), "response",
-				  G_CALLBACK (gtk_main_quit),
-				  NULL);
+		g_signal_connect_swapped (G_OBJECT (d), "response",
+					  G_CALLBACK (gtk_widget_destroy),
+					  d);
+		gtk_window_set_application (GTK_WINDOW (d), GTK_APPLICATION (application));
 		gtk_widget_show (d);
 
 		return FALSE;
