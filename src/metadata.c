@@ -33,6 +33,10 @@
 
 #define QUERY_AGENT (PACKAGE_NAME "-" PACKAGE_VERSION)
 
+#ifndef DISCID_HAVE_SPARSE_READ
+#define discid_read_sparse(disc, dev, i) discid_read(disc, dev)
+#endif
+
 
 static TrackInfo *
 get_track_info (Mb5Track mb_track,
@@ -331,7 +335,7 @@ get_cd_info_from_device_thread (GSimpleAsyncResult *result,
 	data->album_info = album_info_new ();
 	tracks = NULL;
 	disc = discid_new ();
-	if (discid_read (disc, data->device)) {
+	if (discid_read_sparse (disc, data->device, 0)) {
 		int first_track;
 		int last_track;
 		int i;
