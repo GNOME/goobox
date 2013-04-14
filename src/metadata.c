@@ -574,7 +574,7 @@ search_album_by_title_thread (GSimpleAsyncResult *result,
 	param_names[0] = g_strdup ("query");
 	param_values[0] = g_strdup_printf ("title:%s", data->title);
 	param_names[1] = g_strdup ("limit");
-	param_values[1] = g_strdup ("10");
+	param_values[1] = g_strdup ("5");
 	param_names[2] = NULL;
 	param_values[2] = NULL;
 
