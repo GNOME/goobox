@@ -104,10 +104,26 @@ destroy_pipeline (GooPlayer *player)
 
 
 static void
+action_start (GooPlayer       *self,
+	      GooPlayerAction  action)
+{
+	g_signal_emit (G_OBJECT (self),
+		       goo_player_signals[START],
+		       0,
+		       action,
+		       NULL);
+}
+
+
+static void
 action_done (GooPlayer       *self,
 	     GooPlayerAction  action)
 {
-	g_signal_emit_by_name (G_OBJECT (self), "done", action, NULL);
+	g_signal_emit (G_OBJECT (self),
+		       goo_player_signals[DONE],
+		       0,
+		       action,
+		       NULL);
 }
 
 
@@ -579,6 +595,8 @@ album_info_from_disc_id_ready_cb (GObject      *source_object,
 
 		album_list_free (albums);
 	}
+	else
+		action_done (player, GOO_PLAYER_ACTION_METADATA);
 }
 
 
@@ -611,6 +629,8 @@ get_cd_info_from_device_ready_cb (GObject      *source_object,
 		action_done (player, GOO_PLAYER_ACTION_METADATA);
 		return;
 	}
+
+	action_start (player, GOO_PLAYER_ACTION_METADATA);
 
 	metadata_get_album_info_from_disc_id (player->priv->discid,
 					      player->priv->cancellable,

@@ -56,6 +56,7 @@
 #define TRAY_TOOLTIP_DELAY 500
 #define AUTOPLAY_DELAY 250
 #define MAX_WINDOW_HEIGHT_PERCENTAGE 0.80
+#define MESSAGE_BAR_RESPONSE_PROPERTIES 1
 
 struct _GooWindowPrivate {
 	GtkWidget         *list_view;
@@ -69,6 +70,9 @@ struct _GooWindowPrivate {
 	GtkWidget         *file_popup_menu;
 	GtkWidget         *cover_popup_menu;
 
+	GtkWidget         *message_bar;
+	GtkWidget         *message_label;
+	GtkWidget         *message_bar_properties_button;
 	GtkWidget         *info;
 	GtkWidget         *player_bar;
 
@@ -1265,6 +1269,36 @@ notify_current_state (GooWindow       *window,
 
 
 static void
+goo_window_show_message_bar_action (GooWindow  *window,
+				    const char *message)
+{
+	gtk_label_set_text (GTK_LABEL (window->priv->message_label), message);
+	gtk_info_bar_set_message_type (GTK_INFO_BAR (window->priv->message_bar), GTK_MESSAGE_INFO);
+	gtk_widget_hide (window->priv->message_bar_properties_button);
+	gtk_widget_show (window->priv->message_bar);
+}
+
+
+static void
+goo_window_show_message_bar_result (GooWindow      *window,
+				    const char     *message,
+				    GtkMessageType  message_type)
+{
+	gtk_label_set_text (GTK_LABEL (window->priv->message_label), message);
+	gtk_info_bar_set_message_type (GTK_INFO_BAR (window->priv->message_bar), message_type);
+	gtk_widget_hide (window->priv->message_bar_properties_button);
+	gtk_widget_show (window->priv->message_bar);
+}
+
+
+static void
+goo_window_hide_message_bar (GooWindow *window)
+{
+	gtk_widget_hide (window->priv->message_bar);
+}
+
+
+static void
 player_start_cb (GooPlayer       *player,
 		 GooPlayerAction  action,
 		 GooWindow       *window)
@@ -1275,6 +1309,7 @@ player_start_cb (GooPlayer       *player,
 	case GOO_PLAYER_ACTION_PLAY:
 	case GOO_PLAYER_ACTION_METADATA:
 		notify_current_state (window, action);
+		goo_window_show_message_bar_action (window, _("Searching disc information…"));
 		break;
 
 	default:
@@ -1565,6 +1600,12 @@ player_done_cb (GooPlayer       *player,
 		goo_window_update_album (window);
 		goo_window_update_titles (window);
 		window_update_title (window);
+		if (window->priv->album->title == NULL) {
+			goo_window_show_message_bar_result (window, _("No information found for this disc"), GTK_MESSAGE_WARNING);
+			gtk_widget_show (window->priv->message_bar_properties_button);
+		}
+		else
+			goo_window_hide_message_bar (window);
 		auto_fetch_cover_image (window);
 		break;
 
@@ -2028,6 +2069,25 @@ _goo_window_enable_media_keys (GooWindow *window)
 
 
 static void
+message_bar_response_cb (GtkInfoBar *info_bar,
+                	 int         response_id,
+                	 gpointer    user_data)
+{
+	GooWindow *window = user_data;
+
+	switch (response_id) {
+	case GTK_RESPONSE_CLOSE:
+		goo_window_hide_message_bar (window);
+		break;
+	case MESSAGE_BAR_RESPONSE_PROPERTIES:
+		activate_action_properties (NULL, window);
+		goo_window_hide_message_bar (window);
+		break;
+	}
+}
+
+
+static void
 goo_window_construct (GooWindow    *window,
 		      BraseroDrive *drive)
 {
@@ -2157,9 +2217,25 @@ goo_window_construct (GooWindow    *window,
 		g_object_unref (builder);
         }
 
-	/**/
-
 	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+
+	/* message bar */
+
+	window->priv->message_bar = gtk_info_bar_new ();
+	gtk_widget_set_no_show_all (window->priv->message_bar, TRUE);
+	window->priv->message_label = gtk_label_new ("");
+	gtk_container_add (GTK_CONTAINER (gtk_info_bar_get_content_area (GTK_INFO_BAR (window->priv->message_bar))), window->priv->message_label);
+	window->priv->message_bar_properties_button = gtk_button_new_from_stock (GTK_STOCK_PROPERTIES);
+	gtk_info_bar_add_action_widget (GTK_INFO_BAR (window->priv->message_bar), window->priv->message_bar_properties_button, MESSAGE_BAR_RESPONSE_PROPERTIES);
+	gtk_info_bar_add_button (GTK_INFO_BAR (window->priv->message_bar), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
+	g_signal_connect (window->priv->message_bar,
+			  "response",
+	                  G_CALLBACK (message_bar_response_cb),
+	                  window);
+	gtk_widget_show (window->priv->message_label);
+	gtk_box_pack_start (GTK_BOX (vbox), window->priv->message_bar, FALSE, FALSE, 0);
+
+	/**/
 
 	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_widget_set_vexpand (hbox, FALSE);
