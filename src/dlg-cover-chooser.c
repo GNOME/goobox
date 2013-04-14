@@ -545,13 +545,15 @@ dlg_cover_chooser (GooWindow  *window,
 
 
 typedef struct {
-	GooWindow *window;
+	GooWindow    *window;
+	GCancellable *cancellable;
 } FetchData;
 
 
 static void
 fetch_data_free (FetchData *data)
 {
+	_g_object_unref (data->cancellable);
 	g_free (data);
 }
 
@@ -572,7 +574,8 @@ image_data_ready_for_query_cb (void     *buffer,
 	if (! success)
 		fetch_cover_image_from_album_info (data->window,
 						   goo_window_get_album (data->window),
-						   FETCH_COVER_STAGE_AFTER_WEB_SEARCH);
+						   FETCH_COVER_STAGE_AFTER_WEB_SEARCH,
+						   data->cancellable);
 
 	fetch_data_free (data);
 }
@@ -613,9 +616,10 @@ query_ready_cb (void     *buffer,
 
 
 void
-fetch_cover_image_from_name (GooWindow  *window,
-		             const char *album,
-		             const char *artist)
+fetch_cover_image_from_name (GooWindow    *window,
+		             const char   *album,
+		             const char   *artist,
+		             GCancellable *cancellable)
 {
 	FetchData *data;
 	char      *url;
@@ -623,12 +627,13 @@ fetch_cover_image_from_name (GooWindow  *window,
 
 	data = g_new0 (FetchData, 1);
 	data->window = window;
+	data->cancellable = _g_object_ref (cancellable);
 
 	url = get_query (album, artist);
 	file = g_file_new_for_uri (url);
 	g_load_file_async (file,
 			   G_PRIORITY_DEFAULT,
-			   NULL,
+			   data->cancellable,
 			   query_ready_cb,
 			   data);
 
@@ -656,15 +661,17 @@ image_data_ready_for_asin_cb (void     *buffer,
 	if (! success)
 		fetch_cover_image_from_album_info (data->window,
 						   goo_window_get_album (data->window),
-						   FETCH_COVER_STAGE_AFTER_ASIN);
+						   FETCH_COVER_STAGE_AFTER_ASIN,
+						   data->cancellable);
 
 	fetch_data_free (data);
 }
 
 
 void
-fetch_cover_image_from_asin (GooWindow  *window,
-		             const char *asin)
+fetch_cover_image_from_asin (GooWindow    *window,
+		             const char   *asin,
+		             GCancellable *cancellable)
 {
 	FetchData *data;
 	char      *url;
@@ -672,11 +679,13 @@ fetch_cover_image_from_asin (GooWindow  *window,
 
 	data = g_new0 (FetchData, 1);
 	data->window = window;
+	data->cancellable = _g_object_ref (cancellable);
+
 	url = g_strdup_printf ("http://images.amazon.com/images/P/%s.01._SCLZZZZZZZ_.jpg", asin);
 	file = g_file_new_for_uri (url);
 	g_load_file_async (file,
 			   G_PRIORITY_DEFAULT,
-			   NULL,
+			   data->cancellable,
 			   image_data_ready_for_asin_cb,
 			   data);
 
@@ -787,8 +796,9 @@ metadata_get_coverart_finish (GAsyncResult  *result,
 
 
 typedef struct {
-	GooWindow *window;
-	AlbumInfo *album;
+	GooWindow    *window;
+	AlbumInfo    *album;
+	GCancellable *cancellable;
 } CoverArtData;
 
 
@@ -797,6 +807,7 @@ cover_art_data_free (CoverArtData *data)
 {
 	g_object_unref (data->window);
 	album_info_unref (data->album);
+	_g_object_unref (data->cancellable);
 	g_free (data);
 }
 
@@ -818,7 +829,8 @@ metadata_get_coverart_cb (GObject      *source_object,
 	if (! success)
 		fetch_cover_image_from_album_info (data->window,
 						   data->album,
-						   FETCH_COVER_STAGE_AFTER_LIBCOVERART);
+						   FETCH_COVER_STAGE_AFTER_LIBCOVERART,
+						   data->cancellable);
 
 	cover_art_data_free (data);
 }
@@ -830,8 +842,12 @@ metadata_get_coverart_cb (GObject      *source_object,
 void
 fetch_cover_image_from_album_info (GooWindow       *window,
 				   AlbumInfo       *album,
-				   FetchCoverStage  after_stage)
+				   FetchCoverStage  after_stage,
+				   GCancellable    *cancellable)
 {
+	if ((cancellable != NULL) && g_cancellable_is_cancelled (cancellable))
+		return;
+
 #if HAVE_LIBCOVERART
 
 	if ((FETCH_COVER_STAGE_AFTER_LIBCOVERART > after_stage)
@@ -843,9 +859,10 @@ fetch_cover_image_from_album_info (GooWindow       *window,
 		data = g_new0 (CoverArtData, 1);
 		data->window = g_object_ref (window);
 		data->album = album_info_ref (album);
+		data->cancellable = _g_object_ref (cancellable);
 		metadata_get_coverart (data->window,
 				       data->album,
-				       NULL,
+				       data->cancellable,
 				       metadata_get_coverart_cb,
 				       data);
 
@@ -858,7 +875,7 @@ fetch_cover_image_from_album_info (GooWindow       *window,
 	    && (album != NULL)
 	    && (album->asin != NULL))
 	{
-		fetch_cover_image_from_asin (window, album->asin);
+		fetch_cover_image_from_asin (window, album->asin, cancellable);
 		return;
 	}
 
@@ -867,6 +884,6 @@ fetch_cover_image_from_album_info (GooWindow       *window,
 	    && (album->title != NULL)
 	    && (album->artist != NULL))
 	{
-		fetch_cover_image_from_name (window, album->title, album->artist);
+		fetch_cover_image_from_name (window, album->title, album->artist, cancellable);
 	}
 }

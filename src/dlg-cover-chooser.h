@@ -38,11 +38,14 @@ void   dlg_cover_chooser                 (GooWindow       *window,
 				       	  const char      *artist);
 void   fetch_cover_image_from_name       (GooWindow       *window,
 				      	  const char      *album,
-				          const char      *artist);
+				          const char      *artist,
+					  GCancellable    *cancellable);
 void   fetch_cover_image_from_asin       (GooWindow       *window,
-					  const char      *asin);
+					  const char      *asin,
+					  GCancellable    *cancellable);
 void   fetch_cover_image_from_album_info (GooWindow       *window,
 					  AlbumInfo       *album,
-					  FetchCoverStage  stage);
+					  FetchCoverStage  stage,
+					  GCancellable    *cancellable);
 
 #endif /* DLG_COVER_CHOOSER_H */

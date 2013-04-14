@@ -1548,7 +1548,7 @@ auto_fetch_cover_image (GooWindow *window)
 	}
 	g_free (filename);
 
-	fetch_cover_image_from_album_info (window, window->priv->album, FETCH_COVER_STAGE_0);
+	fetch_cover_image_from_album_info (window, window->priv->album, FETCH_COVER_STAGE_0, NULL);
 }
 
 
