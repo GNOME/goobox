@@ -269,8 +269,8 @@ search_album_by_title_ready_cb (GObject      *source_object,
 	data->n_albums = g_list_length (data->albums);
 
 	if (data->n_albums == 0) {
-		gtk_image_set_from_icon_name (GTK_IMAGE (GET_WIDGET ("info_icon")), _GTK_ICON_NAME_DIALOG_WARNING, GTK_ICON_SIZE_BUTTON);
 		gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), _("No album found"));
+		gtk_info_bar_set_message_type (GTK_INFO_BAR (GET_WIDGET ("info_box")), GTK_MESSAGE_WARNING);
 		gtk_widget_show (GET_WIDGET ("info_box"));
 		gtk_widget_hide (GET_WIDGET ("navigation_box"));
 	}
@@ -288,8 +288,8 @@ search_cb (GtkWidget  *widget,
 
 	data->searching = TRUE;
 
-	gtk_image_set_from_icon_name (GTK_IMAGE (GET_WIDGET ("info_icon")), "edit-find-symbolic", GTK_ICON_SIZE_BUTTON);
-	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), _("Searching disc info..."));
+	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), _("Searching disc information…"));
+	gtk_info_bar_set_message_type (GTK_INFO_BAR (GET_WIDGET ("info_box")), GTK_MESSAGE_INFO);
 	gtk_widget_show (GET_WIDGET ("info_box"));
 	gtk_widget_hide (GET_WIDGET ("navigation_box"));
 

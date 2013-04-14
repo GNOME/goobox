@@ -316,18 +316,22 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkHBox" id="info_box">
+                              <object class="GtkInfoBar" id="info_box">
+                                <property name="app_paintable">True</property>
                                 <property name="can_focus">False</property>
-                                <child>
-                                  <object class="GtkHBox" id="hbox5">
+                                <property name="no_show_all">True</property>
+                                <property name="message_type">warning</property>
+                                <child internal-child="content_area">
+                                  <object class="GtkBox" id="infobar-content_area1">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="spacing">6</property>
+                                    <property name="border_width">8</property>
+                                    <property name="spacing">16</property>
                                     <child>
-                                      <object class="GtkImage" id="info_icon">
+                                      <object class="GtkLabel" id="info_label">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="icon_name">dialog-warning-symbolic</property>
+                                        <property name="label">No album found.</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -335,28 +339,39 @@
                                         <property name="position">0</property>
                                       </packing>
                                     </child>
-                                    <child>
-                                      <object class="GtkLabel" id="info_label">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">No album found.</property>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
-                                    <property name="fill">False</property>
+                                    <property name="fill">True</property>
                                     <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child internal-child="action_area">
+                                  <object class="GtkButtonBox" id="infobar-action_area1">
+                                    <property name="can_focus">False</property>
+                                    <property name="border_width">5</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">6</property>
+                                    <property name="layout_style">end</property>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
                                   </packing>
                                 </child>
                               </object>
                               <packing>
-                                <property name="expand">False</property>
+                                <property name="expand">True</property>
                                 <property name="fill">True</property>
                                 <property name="position">0</property>
                               </packing>
@@ -439,7 +454,7 @@
                           </object>
                           <packing>
                             <property name="expand">True</property>
-                            <property name="fill">False</property>
+                            <property name="fill">True</property>
                             <property name="pack_type">end</property>
                             <property name="position">0</property>
                           </packing>
