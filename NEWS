@@ -1,3 +1,16 @@
+version 3.2.1
+-------------
+
+ Bugs fixed:
+
+  * Correctly show an error dialog if some gstreamer plugin is missing.
+  * Faster metadata download using read_sparse (#697966)
+  * Use the 'popup' attribute for the GtkMenuButton.
+
+ New or updated application translations:
+
+  * Hungarian (Balázs Úr)
+
 version 3.2.0
 -------------
 
