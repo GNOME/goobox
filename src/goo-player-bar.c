@@ -263,6 +263,9 @@ goo_player_bar_construct (GooPlayerBar   *self,
 	GtkWidget *main_box;
 	GtkWidget *button_box;
 	GtkWidget *button;
+    gboolean rtl;
+
+    rtl = gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL;
 
 	frame = gtk_event_box_new ();
 	gtk_style_context_add_class (gtk_widget_get_style_context (frame), "goobox-player-bar");
@@ -290,11 +293,11 @@ goo_player_bar_construct (GooPlayerBar   *self,
 	gtk_style_context_add_class (gtk_widget_get_style_context (button_box), GTK_STYLE_CLASS_LINKED);
 	gtk_box_pack_start (GTK_BOX (main_box), button_box, FALSE, FALSE, 0);
 
-	button = _gtk_button_new_from_icon_name (GOO_STOCK_PREV, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	button = _gtk_button_new_from_icon_name (rtl ? GOO_STOCK_NEXT : GOO_STOCK_PREV, GTK_ICON_SIZE_SMALL_TOOLBAR);
 	_gtk_button_sync_with_action (button, gtk_action_group_get_action (actions, "Prev"));
 	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
 
-	button = _gtk_button_new_from_icon_name (GOO_STOCK_NEXT, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	button = _gtk_button_new_from_icon_name (rtl ? GOO_STOCK_PREV : GOO_STOCK_NEXT, GTK_ICON_SIZE_SMALL_TOOLBAR);
 	_gtk_button_sync_with_action (button, gtk_action_group_get_action (actions, "Next"));
 	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
 
