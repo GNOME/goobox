@@ -250,7 +250,7 @@ _gtk_button_sync_with_action (GtkWidget *button,
 	gtk_widget_set_tooltip_text (button, gtk_action_get_tooltip (action));
 	if (GTK_IS_MENU_BUTTON (button))
 		g_object_set (button,
-			      "menu", gth_toggle_menu_action_get_menu (GTH_TOGGLE_MENU_ACTION (action)),
+			      "popup", gth_toggle_menu_action_get_menu (GTH_TOGGLE_MENU_ACTION (action)),
 			      NULL);
 }
 
