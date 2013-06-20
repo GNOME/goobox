@@ -2094,6 +2094,7 @@ goo_window_construct (GooWindow    *window,
 	GError           *error = NULL;
 
 	gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (window)), "goobox-main-window");
+	gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (window)), GTK_STYLE_CLASS_VIEW);
 
 	g_signal_connect (G_OBJECT (window),
 			  "delete_event",

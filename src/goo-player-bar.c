@@ -268,7 +268,7 @@ goo_player_bar_construct (GooPlayerBar   *self,
     rtl = gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL;
 
 	frame = gtk_event_box_new ();
-	gtk_style_context_add_class (gtk_widget_get_style_context (frame), "goobox-player-bar");
+	gtk_style_context_add_class (gtk_widget_get_style_context (frame), GTK_STYLE_CLASS_BACKGROUND);
 	gtk_widget_show (frame);
 	gtk_box_pack_start (GTK_BOX (self), frame, TRUE, TRUE, 0);
 
