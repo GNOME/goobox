@@ -701,6 +701,8 @@ goo_application_class_init (GooApplicationClass *klass)
 static GtkApplication *
 goo_application_new (void)
 {
+	g_type_init ();
+
 	return g_object_new (goo_application_get_type (),
 	                     "application-id", "org.gnome.Goobox",
 	                     "flags", 0,
