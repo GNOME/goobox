@@ -24,10 +24,13 @@
 #define GOO_STOCK_H
 
 #define GOO_STOCK_PLAY        "media-playback-start-symbolic"
+#define GOO_STOCK_PLAY_RTL    "media-playback-start-rtl-symbolic"
 #define GOO_STOCK_PAUSE       "media-playback-pause-symbolic"
 #define GOO_STOCK_STOP        "media-playback-stop-symbolic"
 #define GOO_STOCK_NEXT        "media-skip-forward-symbolic"
+#define GOO_STOCK_NEXT_RTL    "media-skip-forward-rtl-symbolic"
 #define GOO_STOCK_PREV        "media-skip-backward-symbolic"
+#define GOO_STOCK_PREV_RTL    "media-skip-backward-rtl-symbolic"
 #define GOO_STOCK_EJECT       "media-eject-symbolic"
 #define GOO_STOCK_EXTRACT     "document-save-symbolic"
 #define GOO_STOCK_RESET       "goo-reset"
