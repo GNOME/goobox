@@ -946,18 +946,18 @@ _g_list_insert_list_before (GList *list1,
 
 
 GHashTable *static_strings = NULL;
-static GStaticMutex static_strings_mutex = G_STATIC_MUTEX_INIT;
 
 
 const char *
 get_static_string (const char *s)
 {
-	const char *result;
+	static GMutex  static_strings_mutex;
+	const char    *result;
 
 	if (s == NULL)
 		return NULL;
 
-	g_static_mutex_lock (&static_strings_mutex);
+	g_mutex_lock (&static_strings_mutex);
 
 	if (static_strings == NULL)
 		static_strings = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
@@ -969,7 +969,7 @@ get_static_string (const char *s)
 				     GINT_TO_POINTER (1));
 	}
 
-	g_static_mutex_unlock (&static_strings_mutex);
+	g_mutex_unlock (&static_strings_mutex);
 
 	return result;
 }
