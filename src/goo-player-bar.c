@@ -263,9 +263,9 @@ goo_player_bar_construct (GooPlayerBar   *self,
 	GtkWidget *main_box;
 	GtkWidget *button_box;
 	GtkWidget *button;
-    gboolean rtl;
+	gboolean rtl;
 
-    rtl = gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL;
+	rtl = gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL;
 
 	frame = gtk_event_box_new ();
 	gtk_style_context_add_class (gtk_widget_get_style_context (frame), GTK_STYLE_CLASS_BACKGROUND);
