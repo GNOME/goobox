@@ -1,7 +1,7 @@
 [Desktop Entry]
 _Name=CD Player
 _Comment=Play and extract CDs
-Categories=GNOME;GTK;AudioVideo;
+Categories=GNOME;GTK;AudioVideo;Audio;
 Encoding=UTF-8
 Exec=goobox
 Icon=goobox
