@@ -5,240 +5,266 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Raivis Dejus <orvils@gmail.com>, 2007.
+# Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: lv\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-27 16:58+0300\n"
-"PO-Revision-Date: 2007-07-27 17:03+0300\n"
-"Last-Translator: Raivis Dejus <orvils@gmail.com>\n"
-"Language-Team: Latvian <locale@laka.lv>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=goobox&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-08-20 21:43+0000\n"
+"PO-Revision-Date: 2013-10-08 02:07+0300\n"
+"Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
+"Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
+"Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
-"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+"X-Generator: Lokalize 1.5\n"
 
-#: ../data/glade/cover_chooser.glade.h:1
-msgid "Choose a CD Cover"
-msgstr "Izvēlieties CD vāciņu"
+#: ../copy-n-paste/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "Datne nav derīga .desktop datne"
 
-#: ../data/glade/cover_chooser.glade.h:2
-msgid "Found images:"
-msgstr "Atrastie attēli:"
+#: ../copy-n-paste/eggdesktopfile.c:190
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Neatpazīta darbvirsmas datnes versija “%s”"
 
-#: ../data/glade/extract_dialog.glade.h:1 ../data/glade/preferences.glade.h:1
-msgid "    "
-msgstr "    "
+#: ../copy-n-paste/eggdesktopfile.c:970
+#, c-format
+msgid "Starting %s"
+msgstr "Palaiž %s"
 
-#: ../data/glade/extract_dialog.glade.h:2
-msgid "<b>Extract</b>"
-msgstr "<b>Atkodēt</b>"
+#: ../copy-n-paste/eggdesktopfile.c:1112
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "Lietotne nepieņem dokumentus no komandrindas"
 
-#: ../data/glade/extract_dialog.glade.h:3
-msgid "Extract Tracks"
-msgstr "Pārkodēt celiņus"
+#: ../copy-n-paste/eggdesktopfile.c:1180
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Neatpazīta palaišanas opcija — %d"
 
-#: ../data/glade/extract_dialog.glade.h:4
-msgid "_All tracks"
-msgstr "_Visi celiņi"
+#: ../copy-n-paste/eggdesktopfile.c:1385
+#, c-format
+msgid "Can't pass documents to this desktop element"
+msgstr "Nevar padot dokumentus uz šo darbvirsmas elementu"
 
-#: ../data/glade/extract_dialog.glade.h:5
-msgid "_Selected tracks"
-msgstr "_Izvēlētie celiņi"
+#: ../copy-n-paste/eggdesktopfile.c:1406
+#, c-format
+msgid "Not a launchable item"
+msgstr "Nav palaižams vienums"
 
-#: ../data/glade/format_dialog.glade.h:1
-msgid "Format Properties"
-msgstr ""
+#: ../copy-n-paste/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "Deaktivēt savienojumu ar sesiju pārvaldnieku"
 
-#: ../data/glade/preferences.glade.h:2
-msgid "<b>CD Drive</b>"
-msgstr "<b>CD Iekārta</b>"
+#: ../copy-n-paste/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "Norādiet datni, kur saglabāta konfigurācija"
 
-#: ../data/glade/preferences.glade.h:3
-msgid "<b>Destination folder</b>"
-msgstr "<b>Mērķa mape</b>"
+#: ../copy-n-paste/eggsmclient.c:229
+msgid "FILE"
+msgstr "DATNE"
 
-#: ../data/glade/preferences.glade.h:4
-msgid "<b>Output format</b>"
-msgstr ""
+#: ../copy-n-paste/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "Norādiet sesiju pārvaldības ID"
 
-#: ../data/glade/preferences.glade.h:5
-msgid ""
-"<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
-"compresses but does not degrade audio quality.</i></small>"
-msgstr ""
+#: ../copy-n-paste/eggsmclient.c:232
+msgid "ID"
+msgstr "ID"
 
-#: ../data/glade/preferences.glade.h:6
-msgid ""
-"<small><i>Vorbis is an open source, lossy audio codec with high quality "
-"output at a lower file size than MP3.</i></small>"
-msgstr ""
+#: ../copy-n-paste/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "Sesiju pārvaldības opcijas:"
 
-#: ../data/glade/preferences.glade.h:7
-msgid ""
-"<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
-"code modulated (PCM) audio.</i></small>"
-msgstr ""
+#: ../copy-n-paste/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "Rādīt sesiju pārvaldības opcijas"
 
-#: ../data/glade/preferences.glade.h:8
-msgid "CD Player Preferences"
-msgstr ""
-
-#: ../data/glade/preferences.glade.h:9
-msgid "Choose destination folder"
-msgstr "Izvēlieties mērķa mapi"
-
-#: ../data/glade/preferences.glade.h:10
-msgid "Extraction"
-msgstr ""
-
-#: ../data/glade/preferences.glade.h:11
-msgid "General"
-msgstr "Vispārējs"
-
-#: ../data/glade/preferences.glade.h:12
-msgid "_Save playlist"
-msgstr "_Saglabāt atskaņojumu sarakstu"
-
-#: ../data/glade/properties.glade.h:1
-msgid "No album found."
-msgstr ""
-
-#: ../data/glade/properties.glade.h:2
-msgid "Properties"
-msgstr "Iestatījumi"
-
-#: ../data/glade/properties.glade.h:3
-msgid "Search for the remaining data"
-msgstr ""
-
-#: ../data/glade/properties.glade.h:4
-msgid ""
-"Single artist\n"
-"Various artists\n"
-msgstr ""
-
-#: ../data/glade/properties.glade.h:7
-msgid "T_racks:"
-msgstr "C_eliņi:"
-
-#: ../data/glade/properties.glade.h:8
-msgid "_Artist:"
-msgstr "_Mākslinieks:"
-
-#: ../data/glade/properties.glade.h:9
-msgid "_Title:"
-msgstr "_Nosaukums:"
-
-#: ../data/glade/properties.glade.h:10
-msgid "_Year:"
-msgstr ""
-
-#: ../data/glade/ripper_dialog.glade.h:1
-msgid "<big><b>Extracting tracks</b></big>"
-msgstr ""
-
-#: ../data/glade/ripper_dialog.glade.h:2
-msgid "Extracting Tracks"
-msgstr "Pārkodēju celiņus"
-
-#: ../data/GNOME_Goobox.server.in.h:1
-msgid "Goobox Application"
-msgstr "Goobox Programma"
-
-#: ../data/GNOME_Goobox.server.in.h:2
-msgid "Goobox Application Factory"
-msgstr "Goobox Programmas Rūpnīca"
-
-#: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:209
-#: ../src/goo-window.c:2596 ../src/main.c:148 ../src/main.c:234
+#: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:159
+#: ../src/goo-window.c:1439 ../src/goo-window.c:1452 ../src/goo-window.c:1976
+#: ../src/main.c:241
 msgid "CD Player"
-msgstr "CD Atskaņotājs"
+msgstr "CD atskaņotājs"
 
 #: ../data/goobox.desktop.in.in.h:2
 msgid "Play and extract CDs"
-msgstr "Atskaņot un ekstraktēt kompaktdiskus"
+msgstr "Atskaņot un izvilkt kompaktdiskus"
 
-#: ../data/goobox.schemas.in.h:1
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:1
+msgid "Device path"
+msgstr "Ierīces ceļš"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:2
+#| msgid "Volume level: %3.0f%%"
+msgid "Volume level"
+msgstr "Skaņas līmenis"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:3
+msgid "'Choose cover' location"
+msgstr "Vieta “Izvēlieties vāciņu”"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:4
+msgid "Default location for the 'Choose cover' dialog."
+msgstr "Dialoglodziņu “Izvelieties vāciņu” noklusējuma atrašanās vieta."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:5
+msgid "Use Sound Juicer to rip discs"
+msgstr "Izmanto Skaņas izvilcēju, lai izvilktu diskus"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:6
+#| msgid "Stop playing"
+msgid "Autoplay"
+msgstr "Automātiskā atskaņošana"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:7
+msgid "Autoplay discs after insertion."
+msgstr "Automātiski atskaņot diskus pēc ievietošanas."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:8
+msgid "Window width"
+msgstr "Loga platums"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:9
+msgid "Window height"
+msgstr "Loga augstums"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:10
+msgid "Play all tracks"
+msgstr "Atskaņot visus celiņus"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:11
+#| msgid "_Save playlist"
+msgid "Shuffle playlist"
+msgstr "Sajaukt repertuāru"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:12
+#| msgid "Restart playing when finished"
+msgid "Restart when finished"
+msgstr "Pārstartēt, kad pabeigts"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
+msgid "Playlist sort method"
+msgstr "Repertuāra kārtošanas metode"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
+msgid "Playlist sort type"
+msgstr "Repertuāra kārtošanas tips"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
+#| msgid "Extracting Tracks"
+msgid "Extraction folder"
+msgstr "Izvilkšanas mape"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
+#| msgid "File image"
+msgid "File type"
+msgstr "Datnes tips"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
 msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr "Iespējamās vērtības ir: ogg, flac, mp3, wave."
 
-#: ../data/goobox.schemas.in.h:2
-msgid "Possible values are: system, text_below, text_beside, text_only, icons_only."
-msgstr ""
-"Iespējamās vērtības ir: sistēma, teksts_zem, teksts_blakus, tikai_teksts, "
-"tikai_ikonas."
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
+#| msgid "_Save playlist"
+msgid "Save the playlist"
+msgstr "Saglabāt repertuāru"
 
-#: ../src/actions.c:140
-msgid "Could not display help"
-msgstr "Nevarēju parādīt palīdzību"
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
+msgid "Save the playlist of the extracted tracks."
+msgstr "Saglabāt izvilkto celiņu repertuāru."
 
-#.
-#. const char     *documenters [] = {
-#. NULL
-#. };
-#: ../src/actions.c:189
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:20
+#| msgid "_View destination folder"
+msgid "View the destination"
+msgstr "Skatīt mērķi"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:21
+#| msgid "Higher quality"
+msgid "OGG files quality"
+msgstr "OGG datņu kvalitāte"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
+#| msgid "Higher quality"
+msgid "FLAC files quality"
+msgstr "FLAC datņu kvalitāte"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
+#| msgid "Higher quality"
+msgid "MP3 files quality"
+msgstr "MP3 datņu kvalitāte"
+
+#: ../src/actions.c:139
 msgid "translator_credits"
-msgstr "Martins Lismanis <lismanis@gmail.com>, Ingus Skaistkalns"
-
-#: ../src/actions.c:211
-msgid "Copyright © 2004-2007 Free Software Foundation, Inc."
 msgstr ""
+"Martins Lismanis <lismanis@gmail.com>,\n"
+"Ingus Skaistkalns\n"
+"Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>"
 
-#: ../src/actions.c:212 ../src/main.c:138
+#: ../src/actions.c:142
+msgid ""
+"CD Player is free software; you can redistribute it and/or modify it under "
+"the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version."
+msgstr ""
+"CD atskaņotājs ir brīvā programmatūra; jūs varat izplatīt un/vai modificēt to "
+"saskaņā ar "
+"GNU Vispārējās Publiskās Licences 2 vai kādas vēlākas versijas noteikumiem."
+
+#: ../src/actions.c:146
+msgid ""
+"CD Player is distributed in the hope that it will be useful, but WITHOUT ANY "
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details."
+msgstr ""
+"CD atskaņotājs tiek izplatīts ar cerību, ka tas būs noderīgs. Tas tiek "
+"izplatīts BEZ "
+"jebkādas garantijas vai iekļautas ražotāja atbildības par šo produktu. "
+"Sīkāku informāciju meklējiet GNU Vispārējās Publiskās Licences tekstā."
+
+#: ../src/actions.c:150
+msgid ""
+"You should have received a copy of the GNU General Public License along with "
+"CD Player; if not, write to the Free Software Foundation, Inc., 51 Franklin "
+"St, Fifth Floor, Boston, MA 02110-1301 USA"
+msgstr ""
+"Jums vajadzēja kopā ar CD atskaņotāju saņemt GNU General Public License "
+"kopiju. Ja tas tā nav, tad rakstiet Free Sofrware Foundation, Inc., 51 "
+"Franklin St, Fifth Floor, Boston, MA 02110-1301, USA"
+
+#: ../src/actions.c:161
+msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
+msgstr "Autortiesības 2004-2011 brīvās programmatūras fonds."
+
+#: ../src/actions.c:162 ../src/main.c:336 ../src/main.c:435
 msgid "Play CDs and save the tracks to disk as files"
-msgstr ""
+msgstr "Atskaņot kompaktdiskus un saglabāt diskus kā datnes"
 
-#: ../src/actions.c:332 ../src/actions.c:353 ../src/gtk-utils.c:797
+#: ../src/actions.c:290 ../src/actions.c:325 ../src/actions.c:358
 msgid "Could not execute command"
 msgstr "Nevarēju izpildīt komandu"
 
-#: ../src/album-info.c:171
+#: ../src/album-info.c:177
 msgid "Various"
-msgstr ""
+msgstr "Dažādi"
 
-#: ../src/bacon-cd-selection.c:194
-msgid "Unnamed CDROM"
-msgstr "Nenosaukts CDROM"
-
-#: ../src/cd-drive.c:835
-#, c-format
-msgid "Unnamed SCSI Drive (%s)"
-msgstr "Nenosaukts SCSI diskdzinis (%s)"
-
-#: ../src/cd-drive.c:1395
-msgid "File image"
-msgstr "Faila attēls"
-
-#: ../src/dlg-cover-chooser.c:280
+#: ../src/dlg-cover-chooser.c:277
 #, c-format
 msgid "%u, loading image: %u"
-msgstr "%u, lādēju attēlu%u"
+msgstr "%u, lādē attēlu: %u"
 
-#: ../src/dlg-cover-chooser.c:318
-msgid "Loading images"
-msgstr "Lādēju attēlus"
-
-#: ../src/dlg-cover-chooser.c:432 ../src/goo-window.c:3160
+#: ../src/dlg-cover-chooser.c:342 ../src/goo-window.c:2775
 msgid "Could not search for a cover on Internet"
-msgstr "Nespēju atrast vāciņu internetā"
+msgstr "Nespēja atrast vāciņu internetā"
 
-#: ../src/dlg-cover-chooser.c:439
-msgid "No image found"
-msgstr "Nav atrasts neviens attēls"
-
-#: ../src/dlg-cover-chooser.c:503 ../src/dlg-extract.c:133
-#: ../src/dlg-preferences.c:147 ../src/dlg-properties.c:155
-#, c-format
-msgid "Could not display help: %s"
-msgstr "Nevarēja parādīt palīdzību: %s"
-
-#: ../src/dlg-cover-chooser.c:726
-msgid "Searching images..."
-msgstr "Meklēju attēlus..."
-
-#: ../src/dlg-extract.c:179
+#: ../src/dlg-extract.c:110
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -255,556 +281,740 @@ msgstr ""
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 
-#: ../src/dlg-extract.c:190
+#: ../src/dlg-extract.c:121
 msgid "No encoder available."
 msgstr "Nav pieejams neviens kodētājs."
 
-#: ../src/dlg-preferences.c:321 ../src/dlg-preferences.c:577
+#: ../src/dlg-preferences.c:241 ../src/dlg-preferences.c:473
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:333 ../src/dlg-preferences.c:580
+#: ../src/dlg-preferences.c:253 ../src/dlg-preferences.c:476
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:345
+#: ../src/dlg-preferences.c:265
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
 #.
-#: ../src/dlg-preferences.c:372 ../src/dlg-preferences.c:603
+#: ../src/dlg-preferences.c:291 ../src/dlg-preferences.c:500
 msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
 msgstr ""
+"Vorbis ir atvērtā pirmkoda, ar zudumiem audio kodeks ar augstas kvalitātes "
+"izvadi un mazākiem datņu izmēriem kā MP3."
 
-#: ../src/dlg-preferences.c:373 ../src/dlg-preferences.c:606
+#: ../src/dlg-preferences.c:292 ../src/dlg-preferences.c:503
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
 msgstr ""
+"Brīvs bezzudumu audio kodeks (FLAC) ir atvērtā pirmkoda kodeks, kurš "
+"saspiež, bet nebojā audio kvalitāti."
 
-#: ../src/dlg-preferences.c:374 ../src/dlg-preferences.c:609
+#: ../src/dlg-preferences.c:293 ../src/dlg-preferences.c:506
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
 msgstr ""
+"WAV+PCM ir bezzudumu audio formāts, kurš satur nekompresētu pulse-code "
+"modulated (PCM) audio."
 
-#: ../src/dlg-preferences.c:557
+#: ../src/dlg-preferences.c:448
 msgid "Faster compression"
-msgstr "Ātrāka kompresija"
+msgstr "Ātrāka saspiešana"
 
-#: ../src/dlg-preferences.c:561
+#: ../src/dlg-preferences.c:452
 msgid "Higher compression"
-msgstr "Ugstāka kompresija"
+msgstr "Labāka saspiešana"
 
-#: ../src/dlg-preferences.c:566
+#: ../src/dlg-preferences.c:459
 msgid "Smaller size"
 msgstr "Mazāks izmērs"
 
-#: ../src/dlg-preferences.c:570
+#: ../src/dlg-preferences.c:463
 msgid "Higher quality"
-msgstr "Lielāka kvalitāte"
+msgstr "Labāka kvalitāte"
 
-#: ../src/dlg-preferences.c:591
+#: ../src/dlg-preferences.c:487
 msgid "Quality:"
 msgstr "Kvalitāte:"
 
-#: ../src/dlg-preferences.c:594
+#: ../src/dlg-preferences.c:490
 msgid "Compression level:"
-msgstr "Kompresijas līmenis:"
+msgstr "Saspiešanas līmenis:"
 
-#: ../src/dlg-properties.c:218
+#: ../src/dlg-properties.c:216
 #, c-format
 msgid "Album %d of %d"
-msgstr ""
+msgstr "Albums %d no %d"
 
 #: ../src/dlg-properties.c:274
-#, c-format
-msgid "Search failed: %s\n"
-msgstr ""
-
-#: ../src/dlg-properties.c:284
 msgid "No album found"
-msgstr ""
+msgstr "Nav atrastu albumu"
 
-#: ../src/dlg-properties.c:345 ../src/goo-window.c:593
+#: ../src/dlg-properties.c:293
+#| msgid "Searching images..."
+msgid "Searching disc info..."
+msgstr "Meklē informāciju par disku..."
+
+#: ../src/dlg-properties.c:353
 msgid "#"
 msgstr "#"
 
-#: ../src/dlg-properties.c:363 ../src/goo-window.c:618
+#: ../src/dlg-properties.c:371
 msgid "Title"
 msgstr "Nosaukums"
 
-#: ../src/dlg-properties.c:396 ../src/goo-window.c:641
+#: ../src/dlg-properties.c:404
 msgid "Artist"
-msgstr "Mākslinieks"
+msgstr "Izpildītājs"
 
-#: ../src/dlg-ripper.c:201
+#: ../src/dlg-ripper.c:166
 #, c-format
 msgid "(%d:%02d:%02d Remaining)"
-msgstr ""
+msgstr "(Atlicis %d.%02d.%02d)"
 
-#: ../src/dlg-ripper.c:203
+#: ../src/dlg-ripper.c:168
 #, c-format
 msgid "(%d:%02d Remaining)"
-msgstr ""
+msgstr "(Atlicis %d.%02d)"
 
-#: ../src/dlg-ripper.c:208
+#: ../src/dlg-ripper.c:173
 #, c-format
 msgid "Extracting track: %d of %d %s"
-msgstr "Pārkodēju celiņu %d no %d:%s"
+msgstr "Pārkodē celiņu %d no %d %s"
 
-#: ../src/dlg-ripper.c:245
+#: ../src/dlg-ripper.c:210 ../src/dlg-ripper.c:309
 msgid "Could not extract the tracks"
-msgstr ""
+msgstr "Nevarēja izvilkt celiņus"
 
-#: ../src/dlg-ripper.c:410
+#: ../src/dlg-ripper.c:427
+#, c-format
+#| msgid "_View destination folder"
+msgid "Invalid destination folder: %s"
+msgstr "Nederīga mērķa mape — %s"
+
+#: ../src/dlg-ripper.c:457 ../src/dlg-ripper.c:461
 msgid "Could not display the destination folder"
-msgstr "Nebija iespējams parādīt mērķa mapi"
+msgstr "Nevarēja parādīt mērķa mapi"
 
-#: ../src/dlg-ripper.c:556
+#: ../src/dlg-ripper.c:587
 msgid "Tracks extracted successfully"
-msgstr "Celiņi atkodēti veiksmīgi"
+msgstr "Celiņi ir veiksmīgi izvilkti"
 
-#: ../src/dlg-ripper.c:558
+#: ../src/dlg-ripper.c:589
 msgid "_View destination folder"
 msgstr "S_katīt mērķa mapi"
 
-#: ../src/dlg-ripper.c:572
+#: ../src/dlg-ripper.c:603
 #, c-format
-msgid "<i>Extracting \"%s\"</i>"
-msgstr ""
+#| msgid "Extracting Tracks"
+msgid "Extracting \"%s\""
+msgstr "Izvelk “%s”"
 
-#: ../src/dlg-ripper.c:585
+#: ../src/dlg-ripper.c:614 ../src/dlg-ripper.c:623
 msgid "Could not extract tracks"
-msgstr ""
+msgstr "Nevarēja izvilkt celiņus"
 
-#: ../src/dlg-ripper.c:586
-#, c-format
-msgid ""
-"Could not create folder \"%s\"\n"
-"\n"
-"%s"
-msgstr ""
-
-#: ../src/dlg-ripper.c:616
+#: ../src/dlg-ripper.c:654
 msgid "Ripped with CD Player"
-msgstr ""
+msgstr "Izvilkts ar CD atskaņotāju"
 
-#: ../src/eggtrayicon.c:118
-msgid "Orientation"
-msgstr "Atrašanās vieta"
+#: ../src/dlg-ripper.c:688
+#| msgid "Extracting Tracks"
+msgid "Extracting disc tracks"
+msgstr "Izvelk diska celiņus"
 
-#: ../src/eggtrayicon.c:119
-msgid "The orientation of the tray."
-msgstr "Paplātes novietojums."
+#. hour:minutes:seconds
+#. Translators: This is a time format, like "9:05:02" for 9
+#. * hours, 5 minutes, and 2 seconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: ../src/glib-utils.c:2226
+#, c-format
+msgctxt "long time format"
+msgid "%d∶%02d∶%02d"
+msgstr "%d.%02d.%02d"
 
-#: ../src/file-utils.c:664
-msgid "Cannot find a terminal, using xterm, even if it may not work"
-msgstr "Nevar atrast termināli, izmantoju xterm, pat, ja tas var nestrādāt"
+#. minutes:seconds
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes and 2 seconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: ../src/glib-utils.c:2235
+#, c-format
+msgctxt "short time format"
+msgid "%d∶%02d"
+msgstr "%d.%02d"
 
-#: ../src/goo-cdrom-bsd.c:140 ../src/goo-cdrom-linux.c:121
-#: ../src/goo-cdrom-solaris.c:123
-msgid "Error reading CD"
-msgstr "Kļūda lasot kompaktdisku"
+#: ../src/goo-player.c:307
+#| msgid "Reading CD"
+msgid "Playing CD"
+msgstr "Atskaņo CD"
 
-#: ../src/goo-cdrom.c:323
-msgid "The specified device is not valid"
-msgstr "Norādītā ierīce nav derīga"
+#: ../src/goo-player-info.c:254
+msgid "Click here to choose a cover for this CD"
+msgstr "Spiediet šeit, lai izvēlētos vāciņu šim diskam"
 
-#: ../src/goo-player.c:497
-msgid "Drive not ready"
-msgstr "Iekārta nav gatava"
-
-#: ../src/goo-player.c:501
-msgid "Tray open"
-msgstr "Paplāte atvērta"
-
-#: ../src/goo-player.c:502 ../src/goo-player.c:506
+#: ../src/goo-player-info.c:396 ../src/goo-window.c:1298
 msgid "No disc"
 msgstr "Nav diska"
 
-#: ../src/goo-player.c:510 ../src/goo-window.c:1452
-msgid "Data Disc"
-msgstr "Datu CD"
+#: ../src/goo-player-info.c:399 ../src/goo-window.c:1303
+#| msgid "Data Disc"
+msgid "Data disc"
+msgstr "Datu disks"
 
-#: ../src/goo-player.c:610
-msgid "Invalid device"
-msgstr ""
-
-#: ../src/goo-player-info.c:247 ../src/goo-player-info.c:274
-#: ../src/goo-player-info.c:644
-#, c-format
-msgid "%s / %s"
-msgstr "%s / %s"
-
-#: ../src/goo-player-info.c:520
-msgid "Click here to choose a cover for this CD"
-msgstr "Ieklikšķiniet šeit, lai izvēlētos vāciņu šim diskam"
-
-#: ../src/goo-player-info.c:760
-msgid "Paused"
-msgstr "Pauzēts"
-
-#: ../src/goo-player-info.c:769
+#: ../src/goo-player-info.c:403
 msgid "Ejecting CD"
-msgstr "Izgrūžu disku"
+msgstr "Izgrūžu CD"
 
-#: ../src/goo-player-info.c:773
+#: ../src/goo-player-info.c:406
 msgid "Checking CD drive"
-msgstr "Pārbaudu CD iekārtu"
+msgstr "Pārbauda CD ierīci"
 
-#: ../src/goo-player-info.c:777 ../src/goo-player-info.c:781
+#: ../src/goo-player-info.c:409 ../src/goo-player-info.c:412
 msgid "Reading CD"
-msgstr "Lasu disku"
+msgstr "Lasa CD"
 
-#: ../src/goo-player-info.c:797 ../src/goo-window.c:1456
+#: ../src/goo-player-info.c:415 ../src/goo-window.c:1316
+#: ../src/goo-window.c:1459
 msgid "Audio CD"
-msgstr "Audio disks"
+msgstr "Audio CD"
 
 #: ../src/goo-stock.c:40
 msgid "_Extract"
-msgstr "_Atkodēt"
+msgstr "_Izvilkt"
 
 #: ../src/goo-stock.c:41
 msgid "_Reset"
-msgstr "_Pārstatīt"
+msgstr "_Atstatīt"
 
 #: ../src/goo-stock.c:42 ../src/goo-stock.c:43 ../src/goo-stock.c:44
 #: ../src/goo-stock.c:45
 msgid "V_olume"
 msgstr "Sk_aļums"
 
-#: ../src/goo-window.c:57
+#: ../src/goo-window.c:52
 msgid "Hide _tracks"
-msgstr "Paslēpt _celiņus"
+msgstr "Slēpt _celiņus"
 
-#: ../src/goo-window.c:58
+#: ../src/goo-window.c:53
 msgid "Show _tracks"
-msgstr "Parādīt _celiņus"
+msgstr "Rādīt _celiņus"
 
-#: ../src/goo-window.c:185
-#, c-format
-msgid "%d track"
-msgid_plural "%d tracks"
-msgstr[0] "%d celiņš"
-msgstr[1] "%d celiņi"
-msgstr[2] "%d celiņu"
-
-#: ../src/goo-window.c:665
-msgid "Length"
-msgstr "Garums"
-
-#: ../src/goo-window.c:1315 ../src/ui.h:65
+#: ../src/goo-window.c:1369 ../src/ui.h:48
 msgid "_Pause"
-msgstr "_Pauze"
+msgstr "_Pauzēt"
 
-#: ../src/goo-window.c:1316 ../src/ui.h:66
+#: ../src/goo-window.c:1369 ../src/main.c:923 ../src/ui.h:49
 msgid "Pause"
-msgstr "Pauze"
+msgstr "Pauzēt"
 
-#: ../src/goo-window.c:1449
-msgid "No Disc"
-msgstr "Nav diska"
-
-#: ../src/goo-window.c:1732 ../src/goo-window.c:1751 ../src/ui.h:53
-#: ../src/ui.h:57 ../src/ui.h:61
+#: ../src/goo-window.c:1677 ../src/goo-window.c:1689 ../src/ui.h:36
+#: ../src/ui.h:40 ../src/ui.h:44
 msgid "_Play"
 msgstr "_Atskaņot"
 
-#: ../src/goo-window.c:1733 ../src/goo-window.c:1752 ../src/ui.h:58
+#: ../src/goo-window.c:1677 ../src/goo-window.c:1689 ../src/main.c:930
+#: ../src/ui.h:41
 msgid "Play"
 msgstr "Atskaņot"
 
-#: ../src/goo-window.c:2916
-msgid "Could not eject the CD"
-msgstr "Nevarēju izgrūst disku"
+#: ../src/goo-window.c:2213 ../src/goo-window.c:2214
+#| msgid "Quit the application"
+msgid "Other actions"
+msgstr "Citas darbības"
 
-#: ../src/goo-window.c:2929
-msgid "Could not read drive"
-msgstr "Nevarēju nolasīt iekārtu"
-
-#: ../src/goo-window.c:3011
-msgid "Could not load image"
-msgstr "Nevarēju ielādēt attēlu"
-
-#: ../src/goo-window.c:3034
+#: ../src/goo-window.c:2587
 msgid "Could not save cover image"
-msgstr "Nevarēju saglabāt vāciņa attēlu"
+msgstr "Nevarēja saglabāt vāciņa attēlu"
 
-#: ../src/goo-window.c:3100
-msgid "Choose CD Cover Image"
+#: ../src/goo-window.c:2611 ../src/goo-window.c:2642
+msgid "Could not load image"
+msgstr "Nevarēja ielādēt attēlu"
+
+#: ../src/goo-window.c:2713
+#| msgid "Choose CD Cover Image"
+msgid "Choose Disc Cover Image"
 msgstr "Izvēlieties diska vāciņa attēlu"
 
-#: ../src/goo-window.c:3119
+#: ../src/goo-window.c:2732
 msgid "Images"
 msgstr "Attēli"
 
-#: ../src/goo-window.c:3127
+#: ../src/goo-window.c:2740
 msgid "All files"
-msgstr "Visi faili"
+msgstr "Visas datnes"
 
-#: ../src/goo-window.c:3161
+#: ../src/goo-window.c:2776
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 msgstr ""
-"Jums jāievada mākslinieka vārds un albuma nosaukums, lai varētu atrast "
-"albuma vāciņu."
+"Jums jāievada izpildītāja vārds un albuma nosaukums, lai varētu atrast albuma "
+"vāciņu."
 
-#: ../src/goo-window.c:3200
+#: ../src/goo-window.c:2819
 msgid "_Show Window"
 msgstr "Rādīt _logu"
 
-#: ../src/goo-window.c:3201
+#: ../src/goo-window.c:2819
 msgid "Show the main window"
 msgstr "Rādīt galveno logu"
 
-#: ../src/goo-window.c:3213 ../src/ui.h:121
+#: ../src/goo-window.c:2827 ../src/ui.h:108
 msgid "_Hide Window"
-msgstr "Paslēpt lo_gu"
+msgstr "Slēpt lo_gu"
 
-#. "H"
-#: ../src/goo-window.c:3214 ../src/ui.h:122
+#: ../src/goo-window.c:2827 ../src/ui.h:109
 msgid "Hide the main window"
-msgstr "Paslēpt galveno logu"
+msgstr "Slēpt galveno logu"
 
-#: ../src/goo-volume-tool-button.c:185
-#, c-format
-msgid "Volume level: %3.0f%%"
-msgstr "Skaņas līmenis: %3.0f%%"
-
-#: ../src/goo-volume-tool-button.c:747
-msgid "+"
-msgstr "+"
-
-#: ../src/goo-volume-tool-button.c:789
-msgid "-"
-msgstr "-"
-
-#: ../src/goo-volume-tool-button.c:838
-msgid "Change the volume level"
-msgstr "Mainīt skaļuma līmeni"
-
-#: ../src/goo-volume-tool-button.c:882
-msgid "Volume"
-msgstr "Skaļums"
-
-#: ../src/gth-image-list.c:3520
-msgid "No image"
-msgstr "Nav attēla"
-
-#: ../src/gtk-file-chooser-preview.c:203
+#: ../src/gtk-file-chooser-preview.c:166
 msgid "Preview"
-msgstr "Apskatīt"
+msgstr "Priekšskatījums"
 
-#: ../src/gtk-file-chooser-preview.c:328
+#: ../src/gtk-file-chooser-preview.c:267
 msgid "pixels"
 msgstr "pikseļi"
 
-#: ../src/main.c:84
-msgid "CD device to be used"
-msgstr "CD iekārta tiks izmantota"
+#: ../src/gtk-utils.c:502
+msgid "Could not display help"
+msgstr "Nevarēja parādīt palīdzību"
 
-#: ../src/main.c:85
+#: ../src/gtk-utils.c:788 ../src/gtk-utils.c:794
+#| msgid "Quit the application"
+msgid "Could not launch the application"
+msgstr "Nevarēja palaist lietotni"
+
+#: ../src/main.c:72
+msgid "CD device to be used"
+msgstr "Tiks izmantota CD ierīce"
+
+#: ../src/main.c:73
 msgid "DEVICE_PATH"
 msgstr "IERĪCES_CEĻŠ"
 
-#: ../src/main.c:87
+#: ../src/main.c:75
 msgid "Play the CD on startup"
-msgstr "Atskaņot CD pie sāknēšanas"
+msgstr "Atskaņot CD pie palaišanas"
 
-#: ../src/main.c:90 ../src/ui.h:54
-msgid "Play/Pause"
-msgstr "Atskaņot/Pauzēt"
+#: ../src/main.c:78
+msgid "Toggle play"
+msgstr "Pārslēgt atskaņošanu"
 
-#: ../src/main.c:93 ../src/ui.h:70
+#: ../src/main.c:81 ../src/ui.h:53
 msgid "Stop playing"
 msgstr "Apturēt atskaņošanu"
 
-#: ../src/main.c:96 ../src/ui.h:74
+#: ../src/main.c:84 ../src/ui.h:57
 msgid "Play the next track"
 msgstr "Atskaņot nākamo celiņu"
 
-#: ../src/main.c:99 ../src/ui.h:78
+#: ../src/main.c:87 ../src/ui.h:61
 msgid "Play the previous track"
 msgstr "Atskaņot iepriekšējo celiņu"
 
-#: ../src/main.c:102
+#: ../src/main.c:90
 msgid "Eject the CD"
-msgstr "Izgrūst disku"
+msgstr "Izgrūst CD"
 
-#: ../src/main.c:105
-msgid "Hide/Show the main window"
-msgstr "Paslēpt/Parādtīt galveno logu"
+#: ../src/main.c:93
+#| msgid "Hide the main window"
+msgid "Toggle the main window visibility"
+msgstr "Pārslēgt galvenā loga redzamību"
 
-#: ../src/main.c:108
-msgid "Volume Up"
-msgstr "Skaļāk"
-
-#: ../src/main.c:111
-msgid "Volume Down"
-msgstr "Klusāk"
-
-#: ../src/main.c:114 ../src/ui.h:106
+#: ../src/main.c:96 ../src/ui.h:93
 msgid "Quit the application"
-msgstr "Iziet no programmas"
+msgstr "Iziet no lietotnes"
 
-#: ../src/main.c:347
+#: ../src/main.c:99
+msgid "Show version"
+msgstr "Rādīt versiju"
+
+#: ../src/main.c:293
 msgid "Cannot start the CD player"
-msgstr "Nevarēju sāknēt CD atskaņotāju"
+msgstr "Nevarēja palaist CD atskaņotāju"
 
-#: ../src/main.c:348
+#: ../src/main.c:294
 msgid "In order to read CDs you have to install the gstreamer base plugins"
-msgstr ""
+msgstr "Lai lasītu CD, ir jābūt uzinstalētiem gstreamer bāzes spraudņiem"
 
-#: ../src/main.c:705
+#: ../src/main.c:937
 msgid "Next"
 msgstr "Nākamais"
 
-#: ../src/main.c:711
-msgid "Stop"
-msgstr "Apturēt"
-
-#: ../src/track-info.c:122
+#: ../src/track-info.c:124
 #, c-format
 msgid "Track %u"
-msgstr "%u celiņš"
+msgstr "%u. celiņš"
 
-#: ../src/ui.h:34
-msgid "_Disc"
-msgstr "_Disks"
+#: ../src/ui/app-menu.ui.h:1
+msgid "_Preferences"
+msgstr "_Iestatījumi"
 
-#: ../src/ui.h:35
-msgid "_Edit"
-msgstr "_Rediģēt"
+#: ../src/ui/app-menu.ui.h:2
+#| msgid "Play"
+msgid "Play Mode"
+msgstr "Atskaņošanas režīms"
 
-#: ../src/ui.h:36
-msgid "_View"
-msgstr "_Skats"
-
-#: ../src/ui.h:37
-msgid "_Help"
-msgstr "_Palīdzība"
-
-#: ../src/ui.h:38
-msgid "C_over"
-msgstr "_Vāciņš"
-
-#: ../src/ui.h:42
-msgid "Information about the program"
-msgstr "Informācija par programmu"
-
-#: ../src/ui.h:46
-msgid "Display the manual"
-msgstr "Parādīt ceļvedi"
-
-#: ../src/ui.h:49
-msgid "_Keyboard shortcuts"
-msgstr "_Tastatūras īsinājuma ceļi"
-
-#: ../src/ui.h:62
-msgid "Play this track"
-msgstr "Atskaņot šo celiņu"
-
-#: ../src/ui.h:69
-msgid "_Stop"
-msgstr "_Apturēt"
-
-#: ../src/ui.h:73
-msgid "_Next"
-msgstr "_Nākamais"
-
-#: ../src/ui.h:77
-msgid "Pre_v"
-msgstr "Iep_r"
-
-#: ../src/ui.h:81 ../src/ui.h:85
-msgid "_Eject"
-msgstr "_Izgrūst"
-
-#: ../src/ui.h:82 ../src/ui.h:86
-msgid "Eject the disc"
-msgstr "Izgrūst disku"
-
-#: ../src/ui.h:90
-msgid "Edit various preferences"
-msgstr "Rediģēt dažādus uzstādījumus"
-
-#: ../src/ui.h:93 ../src/ui.h:97
-msgid "E_xtract Tracks"
-msgstr "Atko_dēt celiņus"
-
-#: ../src/ui.h:94
-msgid "Save the tracks to disk as files"
-msgstr "Saglabāt šos celiņus uz diskā kā failus"
-
-#: ../src/ui.h:98
-msgid "Save the selected tracks to disk as files"
-msgstr "Saglabāt šos celiņus uz diskā kā failus"
-
-#: ../src/ui.h:102
-msgid "Edit the disc artist, album and the tracks titles"
-msgstr "Rediģēt diska mākslinieka, albuma, celiņa virsrakstus"
-
-#: ../src/ui.h:109
-msgid "_Choose from Disk"
-msgstr "I_zvēlieties no diska"
-
-#: ../src/ui.h:110
-msgid "Choose a disc cover from the local disk"
-msgstr "Izvēlēties diska vāciņu no lokālā diska"
-
-#: ../src/ui.h:113
-msgid "_Search on Internet"
-msgstr "Meklēt internetā"
-
-#: ../src/ui.h:114
-msgid "Search for a disc cover on Internet"
-msgstr "Meklēt diska vāciņu internetā"
-
-#: ../src/ui.h:118
-msgid "Remove current disc cover"
-msgstr "Aizvākt doto diska vāciņu"
-
-#: ../src/ui.h:134
-msgid "_Toolbar"
-msgstr "_Rīkjosla"
-
-#: ../src/ui.h:135
-msgid "View the main toolbar"
-msgstr "Skatīt galveno rīkjoslu"
-
-#: ../src/ui.h:139
-msgid "Stat_usbar"
-msgstr "Status_josla"
-
-#: ../src/ui.h:140
-msgid "View the statusbar"
-msgstr "Skatīt statusjoslu"
-
-#: ../src/ui.h:144
+#: ../src/ui/app-menu.ui.h:3
 msgid "Play _All"
 msgstr "Atskaņot vis_u"
 
-#: ../src/ui.h:145
-msgid "Play all tracks"
-msgstr "Atskaņot visus celiņus"
-
-#: ../src/ui.h:149
+#: ../src/ui/app-menu.ui.h:4
 msgid "_Repeat"
 msgstr "Atkā_rtot"
 
-#: ../src/ui.h:150
-msgid "Restart playing when finished"
-msgstr "Kad pabeigts, atsākt atskaņošanu"
-
-#: ../src/ui.h:154
+#: ../src/ui/app-menu.ui.h:5
 msgid "S_huffle"
 msgstr "Jaukta secī_ba"
 
-#: ../src/ui.h:155
-msgid "Play tracks in a random order"
-msgstr "Atskaņot celiņus gadījuma kārtībā"
+#: ../src/ui/app-menu.ui.h:6
+msgid "_Help"
+msgstr "_Palīdzība"
 
+#: ../src/ui/app-menu.ui.h:7
+#| msgid "CD Player"
+msgid "_About CD Player"
+msgstr "P_ar CD atskaņotāju"
+
+#: ../src/ui/app-menu.ui.h:8
+msgid "_Quit"
+msgstr "I_ziet"
+
+#: ../src/ui/cover-chooser.ui.h:1
+msgid "Choose a CD Cover"
+msgstr "Izvēlieties CD vāciņu"
+
+#: ../src/ui/cover-chooser.ui.h:2
+msgid "Found images:"
+msgstr "Atrastie attēli:"
+
+#: ../src/ui/extract.ui.h:1
+msgid "Extract Tracks"
+msgstr "Izvilkt celiņus"
+
+#: ../src/ui/extract.ui.h:2
+msgid "_All tracks"
+msgstr "_Visi celiņi"
+
+#: ../src/ui/extract.ui.h:3
+msgid "_Selected tracks"
+msgstr "_Izvēlētie celiņi"
+
+#: ../src/ui/format-options.ui.h:1
+msgid "Format Properties"
+msgstr "Formāta īpašības"
+
+#: ../src/ui.h:33
+msgid "C_over"
+msgstr "_Vāciņš"
+
+#: ../src/ui.h:37
+msgid "Play/Pause"
+msgstr "Atskaņot / pauzēt"
+
+#: ../src/ui.h:45
+msgid "Play this track"
+msgstr "Atskaņot šo celiņu"
+
+#: ../src/ui.h:52
+msgid "_Stop"
+msgstr "_Apturēt"
+
+#: ../src/ui.h:56
+msgid "_Next"
+msgstr "_Nākamais"
+
+#: ../src/ui.h:60
+msgid "Pre_v"
+msgstr "Iep_r"
+
+#: ../src/ui.h:64 ../src/ui.h:68
+msgid "_Eject"
+msgstr "_Izgrūst"
+
+#: ../src/ui.h:65 ../src/ui.h:69
+msgid "Eject the disc"
+msgstr "Izgrūst disku"
+
+#: ../src/ui.h:72
+#| msgid "No Disc"
+msgid "_Copy Disc"
+msgstr "_Kopēt disku"
+
+#: ../src/ui.h:73
+msgid "Copy the content of this disc on another disc"
+msgstr "Kopēt šī diska saturu uz citu disku"
+
+#: ../src/ui.h:76 ../src/ui.h:80
+msgid "E_xtract Tracks"
+msgstr "I_zvilkt celiņus"
+
+#: ../src/ui.h:77
+msgid "Save the tracks to disk as files"
+msgstr "Saglabāt šos celiņus uz diskā kā datnes"
+
+#: ../src/ui.h:81
+msgid "Save the selected tracks to disk as files"
+msgstr "Saglabāt izvēlētos celiņus uz diskā kā datnes"
+
+#: ../src/ui.h:85
+msgid "Edit the disc artist, album and the tracks titles"
+msgstr "Rediģēt diska izpildītāja, albuma, celiņa virsrakstus"
+
+#: ../src/ui.h:96
+msgid "_Choose File..."
+msgstr "_Izvēlieties datni..."
+
+#: ../src/ui.h:97
+msgid "Choose a file to use as disc cover"
+msgstr "Izvēlieties datni, ko izmantot kā diska vāciņu"
+
+#: ../src/ui.h:100
+msgid "_Search on Internet"
+msgstr "M_eklēt internetā"
+
+#: ../src/ui.h:101
+msgid "Search for a disc cover on Internet"
+msgstr "Meklēt diska vāciņu internetā"
+
+#: ../src/ui.h:105
+msgid "Remove current disc cover"
+msgstr "Izņemt doto diska vāciņu"
+
+#: ../src/ui/preferences.ui.h:1
+msgid "CD Player Preferences"
+msgstr "CD atskaņotāja iestatījumi"
+
+#: ../src/ui/preferences.ui.h:2
+#| msgid "<b>CD Drive</b>"
+msgid "CD Drive"
+msgstr "CD dzinis"
+
+#: ../src/ui/preferences.ui.h:3
+msgid "Automatically play newly inserted discs"
+msgstr "Automātiski atskaņot no jauna ievietots diskus"
+
+#: ../src/ui/preferences.ui.h:4
+msgid "General"
+msgstr "Vispārējs"
+
+#: ../src/ui/preferences.ui.h:5
+#| msgid "<b>Destination folder</b>"
+msgid "Destination folder"
+msgstr "Mērķa mape"
+
+#: ../src/ui/preferences.ui.h:6
+msgid "    "
+msgstr "    "
+
+#: ../src/ui/preferences.ui.h:7
+msgid "Choose destination folder"
+msgstr "Izvēlieties mērķa mapi"
+
+#: ../src/ui/preferences.ui.h:8
+msgid "Output format"
+msgstr "Izvades formāts"
+
+#: ../src/ui/preferences.ui.h:9
+msgid "_Save playlist"
+msgstr "_Saglabāt repertuāru"
+
+#: ../src/ui/preferences.ui.h:10
+msgid "Extraction"
+msgstr "Izvilkšana"
+
+#: ../src/ui/properties.ui.h:1
+msgid "Single artist"
+msgstr "Singla izpildītājs"
+
+#: ../src/ui/properties.ui.h:2
+msgid "Various artists"
+msgstr "Dažādi izpildītāji"
+
+#: ../src/ui/properties.ui.h:3
+msgid "Properties"
+msgstr "Īpašības"
+
+#: ../src/ui/properties.ui.h:4
+msgid "_Title:"
+msgstr "_Nosaukums:"
+
+#: ../src/ui/properties.ui.h:5
+msgid "T_racks:"
+msgstr "C_eliņi:"
+
+#: ../src/ui/properties.ui.h:6
+msgid "_Artist:"
+msgstr "_Izpildītājs:"
+
+#: ../src/ui/properties.ui.h:7
+msgid "_Year:"
+msgstr "_Gads:"
+
+#: ../src/ui/properties.ui.h:8
+msgid "Search for the remaining data"
+msgstr "Meklēt atlikušos datus"
+
+#: ../src/ui/properties.ui.h:9
+msgid "No album found."
+msgstr "Nav atrastu albumu."
+
+#: ../src/ui/ripper.ui.h:1
+msgid "Extracting Tracks"
+msgstr "Izvelk diska celiņus"
+
+#: ../src/ui/ripper.ui.h:2
+#| msgid "Extracting Tracks"
+msgid "Extracting tracks"
+msgstr "Izvelk diska celiņus"
+
+#~ msgid "<b>Extract</b>"
+#~ msgstr "<b>Atkodēt</b>"
+
+#~ msgid "Goobox Application"
+#~ msgstr "Goobox Programma"
+
+#~ msgid "Goobox Application Factory"
+#~ msgstr "Goobox Programmas Rūpnīca"
+
+#~ msgid ""
+#~ "Possible values are: system, text_below, text_beside, text_only, "
+#~ "icons_only."
+#~ msgstr ""
+#~ "Iespējamās vērtības ir: sistēma, teksts_zem, teksts_blakus, tikai_teksts, "
+#~ "tikai_ikonas."
+
+#~ msgid "Unnamed CDROM"
+#~ msgstr "Nenosaukts CDROM"
+
+#~ msgid "Unnamed SCSI Drive (%s)"
+#~ msgstr "Nenosaukts SCSI diskdzinis (%s)"
+
+#~ msgid "Loading images"
+#~ msgstr "Lādēju attēlus"
+
+#~ msgid "No image found"
+#~ msgstr "Nav atrasts neviens attēls"
+
+#~ msgid "Could not display help: %s"
+#~ msgstr "Nevarēja parādīt palīdzību: %s"
+
+#~ msgid "Orientation"
+#~ msgstr "Atrašanās vieta"
+
+#~ msgid "The orientation of the tray."
+#~ msgstr "Paplātes novietojums."
+
+#~ msgid "Cannot find a terminal, using xterm, even if it may not work"
+#~ msgstr "Nevar atrast termināli, izmantoju xterm, pat, ja tas var nestrādāt"
+
+#~ msgid "Error reading CD"
+#~ msgstr "Kļūda lasot kompaktdisku"
+
+#~ msgid "The specified device is not valid"
+#~ msgstr "Norādītā ierīce nav derīga"
+
+#~ msgid "Drive not ready"
+#~ msgstr "Iekārta nav gatava"
+
+#~ msgid "Tray open"
+#~ msgstr "Paplāte atvērta"
+
+#~ msgid "%s / %s"
+#~ msgstr "%s / %s"
+
+#~ msgid "Paused"
+#~ msgstr "Pauzēts"
+
+#~ msgid "%d track"
+#~ msgid_plural "%d tracks"
+#~ msgstr[0] "%d celiņš"
+#~ msgstr[1] "%d celiņi"
+#~ msgstr[2] "%d celiņu"
+
+#~ msgid "Length"
+#~ msgstr "Garums"
+
+#~ msgid "Could not eject the CD"
+#~ msgstr "Nevarēju izgrūst disku"
+
+#~ msgid "Could not read drive"
+#~ msgstr "Nevarēju nolasīt iekārtu"
+
+#~ msgid "+"
+#~ msgstr "+"
+
+#~ msgid "-"
+#~ msgstr "-"
+
+#~ msgid "Change the volume level"
+#~ msgstr "Mainīt skaļuma līmeni"
+
+#~ msgid "Volume"
+#~ msgstr "Skaļums"
+
+#~ msgid "No image"
+#~ msgstr "Nav attēla"
+
+#~ msgid "Hide/Show the main window"
+#~ msgstr "Paslēpt/Parādtīt galveno logu"
+
+#~ msgid "Volume Up"
+#~ msgstr "Skaļāk"
+
+#~ msgid "Volume Down"
+#~ msgstr "Klusāk"
+
+#~ msgid "Stop"
+#~ msgstr "Apturēt"
+
+#~ msgid "_Disc"
+#~ msgstr "_Disks"
+
+#~ msgid "_Edit"
+#~ msgstr "_Rediģēt"
+
+#~ msgid "_View"
+#~ msgstr "_Skats"
+
+#~ msgid "Information about the program"
+#~ msgstr "Informācija par programmu"
+
+#~ msgid "Display the manual"
+#~ msgstr "Parādīt ceļvedi"
+
+#~ msgid "_Keyboard shortcuts"
+#~ msgstr "_Tastatūras īsinājuma ceļi"
+
+#~ msgid "Edit various preferences"
+#~ msgstr "Rediģēt dažādus uzstādījumus"
+
+#~ msgid "_Choose from Disk"
+#~ msgstr "I_zvēlieties no diska"
+
+#~ msgid "Choose a disc cover from the local disk"
+#~ msgstr "Izvēlēties diska vāciņu no lokālā diska"
+
+#~ msgid "_Toolbar"
+#~ msgstr "_Rīkjosla"
+
+#~ msgid "View the main toolbar"
+#~ msgstr "Skatīt galveno rīkjoslu"
+
+#~ msgid "Stat_usbar"
+#~ msgstr "Status_josla"
+
+#~ msgid "View the statusbar"
+#~ msgstr "Skatīt statusjoslu"
+
+#~ msgid "Play tracks in a random order"
+#~ msgstr "Atskaņot celiņus gadījuma kārtībā"
