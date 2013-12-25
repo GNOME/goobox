@@ -32,7 +32,7 @@
 #include "glib-utils.h"
 #include "gtk-utils.h"
 #include "goo-window.h"
-#include "goo-stock.h"
+
 
 #define BUFFER_SIZE 4096
 #define COVER_BACKUP_FILENAME "original_cover.png"
@@ -463,7 +463,6 @@ dlg_cover_chooser (GooWindow  *window,
 	DialogData      *data;
 	GtkListStore    *model;
 	GtkCellRenderer *renderer;
-	GtkWidget       *image;
 
 	data = g_new0 (DialogData, 1);
 	data->window = window;
@@ -500,13 +499,6 @@ dlg_cover_chooser (GooWindow  *window,
 	backup_cover_image (data);
 
 	gtk_widget_set_sensitive (GET_WIDGET ("ok_button"), FALSE);
-
-	image = gtk_image_new_from_stock (GOO_STOCK_RESET, GTK_ICON_SIZE_BUTTON);
-	g_object_set (GET_WIDGET ("revert_button"),
-		      "use_stock", TRUE,
-		      "label", GOO_STOCK_RESET,
-		      "image", image,
-		      NULL);
 
 	/* Set the signals handlers. */
 

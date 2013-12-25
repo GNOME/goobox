@@ -9,8 +9,6 @@ uidir = $(datadir)/goobox/ui
 endif
 
 AM_CPPFLAGS =						\
-	-I$(top_srcdir)					\
-	-I$(top_builddir)				\
 	-I$(top_srcdir)/copy-n-paste/ 			\
 	-DGOO_PREFIX=\"$(prefix)\"           		\
         -DGOO_SYSCONFDIR=\"$(sysconfdir)\"   		\
@@ -18,6 +16,7 @@ AM_CPPFLAGS =						\
         -DGOO_LIBDIR=\"$(libdir)\"  	         	\
 	-DGOO_UIDIR=\""$(uidir)"\"     			\
 	$(GOO_CFLAGS)					\
+	$(SMCLIENT_CFLAGS)				\
 	$(LIBCOVERART_CFLAGS)				\
 	$(LIBNOTIFY_CFLAGS)
 
@@ -30,8 +29,6 @@ BUILT_SOURCES =			\
 	
 goobox_SOURCES = 				\
 	$(BUILT_SOURCES)			\
-	actions.c				\
-	actions.h				\
 	album-info.c				\
 	album-info.h				\
 	dlg-cover-chooser.c			\
@@ -51,6 +48,11 @@ goobox_SOURCES = 				\
 	gnome-desktop-thumbnail.c		\
 	gnome-desktop-thumbnail.h		\
 	gnome-thumbnail-pixbuf-utils.c		\
+	goo-application.c			\
+	goo-application.h			\
+	goo-application-actions-callbacks.c	\
+	goo-application-actions-callbacks.h	\
+	goo-application-actions-entries.h	\
 	goo-error.c				\
 	goo-error.h				\
 	goo-player.c				\
@@ -59,18 +61,13 @@ goobox_SOURCES = 				\
 	goo-player-bar.h			\
 	goo-player-info.c			\
 	goo-player-info.h			\
-	goo-stock.c				\
-	goo-stock.h				\
 	goo-window.c				\
 	goo-window.h				\
-	gth-toggle-menu-action.c		\
-	gth-toggle-menu-action.h		\
-	gth-toggle-menu-tool-button.c		\
-	gth-toggle-menu-tool-button.h		\
+	goo-window-actions-callbacks.c		\
+	goo-window-actions-callbacks.h		\
+	goo-window-actions-entries.h		\
 	gth-user-dir.c				\
 	gth-user-dir.h				\
-	gth-window.c				\
-	gth-window.h				\
 	gtk-file-chooser-preview.c		\
 	gtk-file-chooser-preview.h		\
 	gtk-utils.c				\
@@ -82,8 +79,7 @@ goobox_SOURCES = 				\
 	preferences.h				\
 	track-info.c				\
 	track-info.h				\
-	typedefs.h				\
-	ui.h					
+	typedefs.h					
 
 goo-marshal.h: goo-marshal.list $(GLIB_GENMARSHAL)
 	$(GLIB_GENMARSHAL) $< --header --prefix=goo_marshal > $@
@@ -100,12 +96,13 @@ goo-resources.c: goobox.gresource.xml $(RESOURCES_DEP)
 goo-resources.h: goobox.gresource.xml $(RESOURCES_DEP)
 	$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name goo $(srcdir)/goobox.gresource.xml
 
-goobox_LDADD = 				\
+goobox_LDADD = 						\
 	$(top_builddir)/copy-n-paste/libeggsmclient.la  \
-	$(GOO_LIBS) 			\
-	$(M_LIBS)			\
-	$(LIBCOVERART_LIBS)		\
-	$(LIBNOTIFY_LIBS)		\
+	$(GOO_LIBS) 					\
+	$(M_LIBS)					\
+	$(SMCLIENT_LIBS)				\
+	$(LIBCOVERART_LIBS)				\
+	$(LIBNOTIFY_LIBS)				\
 	$(SYSTEM_LIBS)
 
 EXTRA_DIST = 				\

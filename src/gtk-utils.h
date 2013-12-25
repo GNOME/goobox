@@ -29,6 +29,43 @@
 
 G_BEGIN_DECLS
 
+#define _GTK_ICON_NAME_DIALOG_ERROR "dialog-error-symbolic"
+#define _GTK_ICON_NAME_DIALOG_INFO "dialog-information-symbolic"
+#define _GTK_ICON_NAME_DIALOG_QUESTION "dialog-question-symbolic"
+#define _GTK_ICON_NAME_DIALOG_WARNING "dialog-warning-symbolic"
+
+#define _GTK_LABEL_CANCEL _("_Cancel")
+#define _GTK_LABEL_CLOSE _("_Close")
+#define _GTK_LABEL_OK _("_Ok")
+#define _GTK_LABEL_OPEN _("_Open")
+#define _GTK_LABEL_RESET _("_Reset")
+
+#define GOO_ICON_NAME_PLAY        "media-playback-start-symbolic"
+#define GOO_ICON_NAME_PLAY_RTL    "media-playback-start-rtl-symbolic"
+#define GOO_ICON_NAME_PAUSE       "media-playback-pause-symbolic"
+#define GOO_ICON_NAME_STOP        "media-playback-stop-symbolic"
+#define GOO_ICON_NAME_NEXT        "media-skip-forward-symbolic"
+#define GOO_ICON_NAME_NEXT_RTL    "media-skip-forward-rtl-symbolic"
+#define GOO_ICON_NAME_PREV        "media-skip-backward-symbolic"
+#define GOO_ICON_NAME_PREV_RTL    "media-skip-backward-rtl-symbolic"
+#define GOO_ICON_NAME_EJECT       "media-eject-symbolic"
+#define GOO_ICON_NAME_EXTRACT     "document-save-symbolic"
+#define GOO_ICON_NAME_RESET       "goo-reset"
+#define GOO_ICON_NAME_NO_DISC     "media-optical-symbolic"
+#define GOO_ICON_NAME_DATA_DISC   "drive-harddisk-symbolic"
+#define GOO_ICON_NAME_AUDIO_CD    "media-optical-symbolic"
+#define GOO_ICON_NAME_VOLUME_MAX  "audio-volume-high-symbolic"
+#define GOO_ICON_NAME_VOLUME_MED  "audio-volume-medium-symbolic"
+#define GOO_ICON_NAME_VOLUME_MIN  "audio-volume-low-symbolic"
+#define GOO_ICON_NAME_VOLUME_ZERO "audio-volume-muted-symbolic"
+
+
+typedef struct {
+        const char *action_name;
+        const char *accelerator;
+} _GtkAccelerator;
+
+
 GtkWidget*  _gtk_message_dialog_new        (GtkWindow        *parent,
 					    GtkDialogFlags    flags,
 					    const char       *stock_id,
@@ -98,11 +135,28 @@ void        _gtk_tree_path_list_free       (GList            *list);
 int         _gtk_paned_get_position2       (GtkPaned         *paned);
 void        _gtk_paned_set_position2       (GtkPaned         *paned,
 					    int               pos);
-void        _g_launch_command              (GtkWidget        *parent,
-					    const char       *command,
-					    const char       *name,
-					    GList            *files);
-int         _gtk_count_selected            (GtkTreeSelection *selection);
+void		_g_launch_command			(GtkWidget		*parent,
+							 const char		*command,
+							 const char		*name,
+							 GList			*files);
+int		_gtk_count_selected			(GtkTreeSelection	*selection);
+void		_gtk_window_add_accelerator_for_action	(GtkWindow		*window,
+							 GtkAccelGroup		*accel_group,
+							 const char		*action_name,
+							 const char		*accel,
+							 GVariant		*target);
+void		_gtk_window_add_accelerators_from_menu	(GtkWindow		*window,
+							 GMenuModel		*menu);
+void		_g_action_map_enable_action		(GActionMap		*action_map,
+							 const char		*action_name,
+							 gboolean		 enabled);
+void		_g_action_map_set_action_state		(GActionMap		*action_map,
+							 const char		*action_name,
+							 gboolean		 active);
+void		_g_action_map_change_action_state	(GActionMap		*action_map,
+							 const char		*action_name,
+							 gboolean		 value);
+GtkWidget *	_gtk_application_get_current_window	(GtkApplication		*application);
 
 G_END_DECLS
 

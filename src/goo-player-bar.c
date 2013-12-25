@@ -25,9 +25,8 @@
 #include <glib/gi18n.h>
 #include "goo-player-bar.h"
 #include "goo-marshal.h"
-#include "goo-stock.h"
 #include "glib-utils.h"
-#include "gth-toggle-menu-action.h"
+#include "gtk-utils.h"
 
 
 #define SCALE_WIDTH 150
@@ -46,6 +45,7 @@ struct _GooPlayerBarPrivateData {
 	GtkWidget *remaining_time_label;
 	GtkWidget *time_scale;
 	GtkWidget *time_box;
+	GtkWidget *play_button_image;
 	gint64     track_length;
 	gint64     current_time;
 	gboolean   dragging;
@@ -198,22 +198,6 @@ goo_player_bar_init (GooPlayerBar *self)
 
 
 static GtkWidget *
-_gtk_button_new_from_icon_name (const char *icon_name,
-				GtkIconSize size)
-{
-	GtkWidget *button;
-	GtkWidget *image;
-
-	button = gtk_button_new ();
-	image = gtk_image_new_from_icon_name (icon_name, size);
-	gtk_widget_show (image);
-	gtk_container_add (GTK_CONTAINER (button), image);
-
-	return button;
-}
-
-
-static GtkWidget *
 _gtk_menu_button_new_from_icon_name (const char *icon_name)
 {
 	GtkWidget *button;
@@ -229,41 +213,14 @@ _gtk_menu_button_new_from_icon_name (const char *icon_name)
 
 
 static void
-toggle_play_notify_icon_name_cb (GObject    *gobject,
-				 GParamSpec *pspec,
-				 gpointer    user_data)
-{
-	GtkWidget *button = user_data;
-	GtkWidget *image;
-
-	image = gtk_bin_get_child (GTK_BIN (button));
-	if ((image != NULL) && GTK_IS_IMAGE (image))
-		gtk_image_set_from_icon_name (GTK_IMAGE (image), gtk_action_get_icon_name (GTK_ACTION (gobject)), PLAY_BUTTON_SIZE);
-}
-
-
-static void
-_gtk_button_sync_with_action (GtkWidget *button,
-			      GtkAction *action)
-{
-	gtk_activatable_set_related_action (GTK_ACTIVATABLE (button), action);
-	gtk_widget_set_tooltip_text (button, gtk_action_get_tooltip (action));
-	if (GTK_IS_MENU_BUTTON (button))
-		g_object_set (button,
-			      "popup", gth_toggle_menu_action_get_menu (GTH_TOGGLE_MENU_ACTION (action)),
-			      NULL);
-}
-
-
-static void
-goo_player_bar_construct (GooPlayerBar   *self,
-			  GtkActionGroup *actions)
+goo_player_bar_construct (GooPlayerBar	*self,
+			  GActionMap	*action_map)
 {
 	GtkWidget *frame;
 	GtkWidget *main_box;
 	GtkWidget *button_box;
 	GtkWidget *button;
-	gboolean rtl;
+	gboolean   rtl;
 
 	rtl = gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL;
 
@@ -281,24 +238,22 @@ goo_player_bar_construct (GooPlayerBar   *self,
 
 	/* Play buttons */
 
-	button = _gtk_button_new_from_icon_name (rtl ? GOO_STOCK_PLAY_RTL : GOO_STOCK_PLAY, PLAY_BUTTON_SIZE);
-	_gtk_button_sync_with_action (button, gtk_action_group_get_action (actions, "TogglePlay"));
-	g_signal_connect (gtk_action_group_get_action (actions, "TogglePlay"),
-			  "notify::icon-name",
-			  G_CALLBACK (toggle_play_notify_icon_name_cb),
-			  button);
+	self->priv->play_button_image = gtk_image_new_from_icon_name (rtl ? GOO_ICON_NAME_PLAY_RTL : GOO_ICON_NAME_PLAY, PLAY_BUTTON_SIZE);
+	button = gtk_button_new ();
+	gtk_container_add (GTK_CONTAINER (button), self->priv->play_button_image);
+	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.toggle-play");
 	gtk_box_pack_start (GTK_BOX (main_box), button, FALSE, FALSE, 0);
 
 	button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_style_context_add_class (gtk_widget_get_style_context (button_box), GTK_STYLE_CLASS_LINKED);
 	gtk_box_pack_start (GTK_BOX (main_box), button_box, FALSE, FALSE, 0);
 
-	button = _gtk_button_new_from_icon_name (rtl ? GOO_STOCK_PREV_RTL : GOO_STOCK_PREV, GTK_ICON_SIZE_SMALL_TOOLBAR);
-	_gtk_button_sync_with_action (button, gtk_action_group_get_action (actions, "Prev"));
+	button = gtk_button_new_from_icon_name (rtl ? GOO_ICON_NAME_PREV_RTL : GOO_ICON_NAME_PREV, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.previous-track");
 	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
 
-	button = _gtk_button_new_from_icon_name (rtl ? GOO_STOCK_NEXT_RTL : GOO_STOCK_NEXT, GTK_ICON_SIZE_SMALL_TOOLBAR);
-	_gtk_button_sync_with_action (button, gtk_action_group_get_action (actions, "Next"));
+	button = gtk_button_new_from_icon_name (rtl ? GOO_ICON_NAME_NEXT_RTL : GOO_ICON_NAME_NEXT, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.next-track");
 	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
 
 	/* Time */
@@ -331,13 +286,20 @@ goo_player_bar_construct (GooPlayerBar   *self,
 	gtk_box_set_spacing (GTK_BOX (button_box), 6);
 	gtk_box_pack_end (GTK_BOX (main_box), button_box, FALSE, FALSE, 0);
 
-	button = _gtk_button_new_from_icon_name (GOO_STOCK_EXTRACT, GTK_ICON_SIZE_SMALL_TOOLBAR);
-	_gtk_button_sync_with_action (button, gtk_action_group_get_action (actions, "Extract"));
+	button = gtk_button_new_from_icon_name (GOO_ICON_NAME_EXTRACT, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.extract");
 	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
 
-	button = _gtk_menu_button_new_from_icon_name ("emblem-system-symbolic");
-	_gtk_button_sync_with_action (button, gtk_action_group_get_action (actions, "OtherActions"));
-	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
+	{
+		GtkBuilder *builder;
+
+		builder = _gtk_builder_new_from_resource ("gears-menu.ui");
+		button = _gtk_menu_button_new_from_icon_name ("emblem-system-symbolic");
+		gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (button), G_MENU_MODEL (gtk_builder_get_object (builder, "gears-menu")));
+		gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
+
+		g_object_unref (builder);
+	}
 
 	/* signals */
 
@@ -487,10 +449,21 @@ player_state_changed_cb (GooPlayer     *player,
 
 
 static void
+_goo_player_bar_update_play_button_icon (GooPlayerBar *self,
+					 gboolean      playing)
+{
+	gtk_image_set_from_icon_name (GTK_IMAGE (self->priv->play_button_image),
+				      playing ? GOO_ICON_NAME_PAUSE : (gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL ? GOO_ICON_NAME_PLAY_RTL : GOO_ICON_NAME_PLAY),
+				      PLAY_BUTTON_SIZE);
+}
+
+
+static void
 player_start_cb (GooPlayer       *player,
 		 GooPlayerAction  action,
 		 GooPlayerBar    *self)
 {
+	_goo_player_bar_update_play_button_icon (self, action == GOO_PLAYER_ACTION_PLAY);
 	goo_player_bar_update_state (self);
 }
 
@@ -529,8 +502,8 @@ player_done_cb (GooPlayer       *player,
 
 
 GtkWidget *
-goo_player_bar_new (GooPlayer      *player,
-		    GtkActionGroup *actions)
+goo_player_bar_new (GooPlayer	*player,
+		    GActionMap	*action_map)
 {
 	GooPlayerBar *self;
 
@@ -538,7 +511,7 @@ goo_player_bar_new (GooPlayer      *player,
 
 	self = GOO_PLAYER_BAR (g_object_new (GOO_TYPE_PLAYER_BAR, NULL));
 	self->priv->player = g_object_ref (player);
-	goo_player_bar_construct (self, actions);
+	goo_player_bar_construct (self, action_map);
 
 	g_signal_connect (player,
 			  "start",

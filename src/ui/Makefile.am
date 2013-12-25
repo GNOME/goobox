@@ -3,8 +3,9 @@ EXTRA_DIST = 			\
 	cover-chooser.ui	\
 	extract.ui		\
 	format-options.ui	\
+	gears-menu.ui		\
 	goobox.css		\
-	menu-toolbars.ui	\
+	menus.ui		\
 	message-dialog.ui	\
 	preferences.ui		\
 	properties.ui		\

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.16.1 -->
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
+  <requires lib="gtk+" version="3.10"/>
   <object class="GtkAdjustment" id="adjustment1">
     <property name="upper">9999</property>
     <property name="value">2000</property>
@@ -41,12 +42,12 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="undo_button">
-                <property name="label">gtk-undo</property>
+                <property name="label">_Reset</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <property name="use_stock">True</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -289,7 +290,7 @@
                               <object class="GtkImage" id="image5">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="stock">gtk-find</property>
+                                <property name="icon_name">edit-find-symbolic</property>
                               </object>
                             </child>
                           </object>
@@ -326,7 +327,7 @@
                                       <object class="GtkImage" id="info_icon">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="stock">gtk-dialog-warning</property>
+                                        <property name="icon_name">dialog-warning-symbolic</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>

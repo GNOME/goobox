@@ -26,7 +26,6 @@
 #include "dlg-extract.h"
 #include "dlg-ripper.h"
 #include "goo-player.h"
-#include "goo-stock.h"
 #include "gtk-utils.h"
 #include "track-info.h"
 #include "typedefs.h"
@@ -117,10 +116,10 @@ dlg_extract_ask (GooWindow *window)
 
 		d = _gtk_message_dialog_new (GTK_WINDOW (window),
 					     GTK_DIALOG_MODAL,
-					     GTK_STOCK_DIALOG_ERROR,
+					     _GTK_ICON_NAME_DIALOG_ERROR,
 					     _("No encoder available."),
 					     msg,
-					     GTK_STOCK_OK, GTK_RESPONSE_OK,
+					     _GTK_LABEL_OK, GTK_RESPONSE_OK,
 					     NULL);
 		g_free (msg);
 
@@ -144,8 +143,6 @@ dlg_extract_ask (GooWindow *window)
 	/* Get the widgets. */
 
 	data->dialog = GET_WIDGET ("extract_dialog");
-	gtk_button_set_use_stock (GTK_BUTTON (GET_WIDGET ("ok_button")), TRUE);
-	gtk_button_set_label (GTK_BUTTON (GET_WIDGET ("ok_button")), GOO_STOCK_EXTRACT);
 
 	/* Set widgets data. */
 

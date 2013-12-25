@@ -55,8 +55,8 @@ struct _GooPlayerBarClass
 };
 
 GType       goo_player_bar_get_type      (void);
-GtkWidget * goo_player_bar_new           (GooPlayer      *player,
-					  GtkActionGroup *actions);
-double      goo_player_bar_get_progress  (GooPlayerBar *info);
+GtkWidget * goo_player_bar_new           (GooPlayer	*player,
+					  GActionMap	*action_map);
+double      goo_player_bar_get_progress  (GooPlayerBar	*info);
 
 #endif /* GOO_PLAYER_BAR_H */

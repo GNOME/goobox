@@ -30,6 +30,7 @@
 
 G_BEGIN_DECLS
 
+#define DEF_ACTION_CALLBACK(x) void x (GSimpleAction *action, GVariant *parameter, gpointer user_data);
 #define GFILE_NAME_TYPE_ATTRIBUTES "standard::name,standard::type"
 #define GFILE_DISPLAY_ATTRIBUTES "standard::display-name,standard::icon"
 #define GFILE_BASIC_ATTRIBUTES GFILE_DISPLAY_ATTRIBUTES ",standard::name,standard::type"
@@ -261,6 +262,9 @@ char *          _g_make_temp_directory           (void);
 /* Other */
 
 char *          _g_format_duration_for_display   (gint64 msecs);
+void		_g_toggle_action_activated	 (GSimpleAction *action,
+						  GVariant      *parameter,
+						  gpointer       data);
 
 G_END_DECLS
 

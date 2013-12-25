@@ -25,9 +25,9 @@
 #include <glib/gi18n.h>
 #include "goo-player-info.h"
 #include "goo-marshal.h"
-#include "goo-stock.h"
 #include "goo-window.h"
 #include "glib-utils.h"
+#include "gtk-utils.h"
 
 #define TITLE1_FORMAT "<span size='large'>%s</span>"
 #define TITLE2_FORMAT "%s"
@@ -266,7 +266,7 @@ goo_player_info_construct (GooPlayerInfo *info)
 			  G_CALLBACK (cover_button_drag_data_received),
 			  info);
 
-	priv->cover_image = gtk_image_new_from_stock (GOO_STOCK_NO_DISC, GTK_ICON_SIZE_DIALOG);
+	priv->cover_image = gtk_image_new_from_icon_name (GOO_ICON_NAME_NO_DISC, GTK_ICON_SIZE_DIALOG);
 	gtk_widget_set_size_request (priv->cover_image, COVER_SIZE, COVER_SIZE);
 	gtk_widget_show (priv->cover_image);
 
@@ -274,7 +274,7 @@ goo_player_info_construct (GooPlayerInfo *info)
 
 	/* Status image */
 
-	priv->status_image = gtk_image_new_from_stock (GOO_STOCK_NO_DISC, GTK_ICON_SIZE_DIALOG);
+	priv->status_image = gtk_image_new_from_icon_name (GOO_ICON_NAME_NO_DISC, GTK_ICON_SIZE_DIALOG);
 	gtk_widget_set_size_request (priv->status_image, COVER_SIZE, COVER_SIZE);
 	gtk_widget_show (priv->cover_image);
 	/*gtk_container_set_border_width (GTK_CONTAINER (priv->status_image), 6);*/
@@ -514,21 +514,21 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 
 	if (strcmp (cover, "no-disc") == 0) {
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 0);
-		gtk_image_set_from_stock (GTK_IMAGE (info->priv->status_image),
-					  GOO_STOCK_NO_DISC,
-					  GTK_ICON_SIZE_DIALOG);
+		gtk_image_set_from_icon_name (GTK_IMAGE (info->priv->status_image),
+					      GOO_ICON_NAME_NO_DISC,
+					      GTK_ICON_SIZE_DIALOG);
 	}
 	else if (strcmp (cover, "data-disc") == 0) {
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 0);
-		gtk_image_set_from_stock (GTK_IMAGE (info->priv->status_image),
-					  GOO_STOCK_DATA_DISC,
-					  GTK_ICON_SIZE_DIALOG);
+		gtk_image_set_from_icon_name (GTK_IMAGE (info->priv->status_image),
+					      GOO_ICON_NAME_DATA_DISC,
+					      GTK_ICON_SIZE_DIALOG);
 	}
 	else if (strcmp (cover, "audio-cd") == 0) {
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 1);
-		gtk_image_set_from_stock (GTK_IMAGE (info->priv->cover_image),
-					  GOO_STOCK_AUDIO_CD,
-					  GTK_ICON_SIZE_DIALOG);
+		gtk_image_set_from_icon_name (GTK_IMAGE (info->priv->cover_image),
+					      GOO_ICON_NAME_NO_DISC,
+					      GTK_ICON_SIZE_DIALOG);
 	}
 	else {
 		info->priv->original_cover = gdk_pixbuf_new_from_file (cover, NULL);

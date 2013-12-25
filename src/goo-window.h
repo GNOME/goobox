@@ -27,7 +27,6 @@
 #include <brasero3/brasero-drive.h>
 #include "album-info.h"
 #include "goo-player.h"
-#include "gth-window.h"
 
 #define GOO_TYPE_WINDOW              (goo_window_get_type ())
 #define GOO_WINDOW(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GOO_TYPE_WINDOW, GooWindow))
@@ -42,7 +41,7 @@ typedef struct _GooWindowPrivate GooWindowPrivate;
 
 struct _GooWindow
 {
-	GthWindow __parent;
+	GtkApplicationWindow __parent;
 	GtkWidget *preferences_dialog;
 	GtkWidget *properties_dialog;
 	GooWindowPrivate *priv;
@@ -50,7 +49,7 @@ struct _GooWindow
 
 struct _GooWindowClass
 {
-	GthWindowClass __parent_class;
+	GtkApplicationWindowClass __parent_class;
 
 	/*<signals>*/
 

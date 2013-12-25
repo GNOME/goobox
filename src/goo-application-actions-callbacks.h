@@ -3,7 +3,7 @@
 /*
  *  Goo
  *
- *  Copyright (C) 2004 Free Software Foundation, Inc.
+ *  Copyright (C) 2013 Free Software Foundation, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,23 +20,20 @@
  *  Foundation, Inc., 59 Temple Street #330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef GOO_APPLICATION_ACTIONS_CALLBACKS_H
+#define GOO_APPLICATION_ACTIONS_CALLBACKS_H
 
-#include <brasero3/brasero-drive.h>
-#include "goo-player.h"
-#include "goo-window.h"
+#include <gtk/gtk.h>
+#include "glib-utils.h"
 
-extern GtkApplication *Main_Application;
-extern int	       arg_auto_play;
-extern int	       arg_toggle_visibility;
+void update_actions_sensitivity (GApplication *application);
 
-GtkWidget *     main_get_window_from_device  (const char      *device);
-BraseroDrive *  main_get_most_likely_drive   (void);
-BraseroDrive *  main_get_drive_for_device    (const char      *device);
-gboolean        notification_has_persistence (void);
-void            system_notify                (GooWindow       *window,
-					      const char      *title,
-					      const char      *msg);
+DEF_ACTION_CALLBACK (goo_application_activate_about)
+DEF_ACTION_CALLBACK (goo_application_activate_help)
+DEF_ACTION_CALLBACK (goo_application_activate_play_all)
+DEF_ACTION_CALLBACK (goo_application_activate_preferences)
+DEF_ACTION_CALLBACK (goo_application_activate_quit)
+DEF_ACTION_CALLBACK (goo_application_activate_repeat)
+DEF_ACTION_CALLBACK (goo_application_activate_shuffle)
 
-#endif /* MAIN_H */
+#endif /* GOO_APPLICATION_ACTIONS_CALLBACKS_H */

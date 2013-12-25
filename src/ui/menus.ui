@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <menu id="track-list-popup">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Play</attribute>
+        <attribute name="action">win.play</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">E_xtract Tracks</attribute>
+        <attribute name="action">win.extract</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Properties</attribute>
+        <attribute name="action">win.properties</attribute>
+      </item>
+    </section>
+  </menu>
+  <menu id="cover-popup">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Choose File…</attribute>
+        <attribute name="action">win.pick-cover-from-disk</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Search on Internet</attribute>
+        <attribute name="action">win.search-cover</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Remove</attribute>
+        <attribute name="action">win.remove-cover</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

@@ -34,7 +34,7 @@
 GtkWidget *
 _gtk_message_dialog_new (GtkWindow        *parent,
 			 GtkDialogFlags    flags,
-			 const char       *stock_id,
+			 const char       *icon_name,
 			 const char       *message,
 			 const char       *secondary_message,
 			 const char       *first_button_text,
@@ -60,9 +60,9 @@ _gtk_message_dialog_new (GtkWindow        *parent,
 
 	/* set the icon */
 
-	gtk_image_set_from_stock (GTK_IMAGE (_gtk_builder_get_widget (builder, "icon_image")),
-				  stock_id,
-				  GTK_ICON_SIZE_DIALOG);
+	gtk_image_set_from_icon_name (GTK_IMAGE (_gtk_builder_get_widget (builder, "icon_image")),
+				      icon_name,
+				      GTK_ICON_SIZE_DIALOG);
 
 	/* set the message */
 
@@ -160,7 +160,7 @@ _gtk_ok_dialog_with_checkbutton_new (GtkWindow        *parent,
 
 	d = _gtk_message_dialog_new (parent,
 				     flags,
-				     GTK_STOCK_DIALOG_INFO,
+				     _GTK_ICON_NAME_DIALOG_INFO,
 				     message,
 				     NULL,
 				     ok_button_text, GTK_RESPONSE_OK,
@@ -200,10 +200,10 @@ _gtk_error_dialog_from_gerror_run (GtkWindow   *parent,
 
 	d = _gtk_message_dialog_new (parent,
 				     GTK_DIALOG_DESTROY_WITH_PARENT,
-				     GTK_STOCK_DIALOG_ERROR,
+				     _GTK_ICON_NAME_DIALOG_ERROR,
 				     title,
 				     (*gerror)->message,
-				     GTK_STOCK_OK, GTK_RESPONSE_OK,
+				     _GTK_LABEL_OK, GTK_RESPONSE_OK,
 				     NULL);
 	gtk_dialog_run (GTK_DIALOG (d));
 
@@ -230,10 +230,10 @@ _gtk_error_dialog_from_gerror_show (GtkWindow   *parent,
 
 	d = _gtk_message_dialog_new (parent,
 				     GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-				     GTK_STOCK_DIALOG_ERROR,
+				     _GTK_ICON_NAME_DIALOG_ERROR,
 				     title,
 				     (gerror != NULL) ? (*gerror)->message : NULL,
-				     GTK_STOCK_OK, GTK_RESPONSE_OK,
+				     _GTK_LABEL_OK, GTK_RESPONSE_OK,
 				     NULL);
 	g_signal_connect (d, "response", G_CALLBACK (error_dialog_response_cb), NULL);
 
@@ -260,10 +260,10 @@ _gtk_error_dialog_run (GtkWindow        *parent,
 
 	d =  _gtk_message_dialog_new (parent,
 				      GTK_DIALOG_MODAL,
-				      GTK_STOCK_DIALOG_ERROR,
+				      _GTK_ICON_NAME_DIALOG_ERROR,
 				      message,
 				      NULL,
-				      GTK_STOCK_CLOSE, GTK_RESPONSE_CANCEL,
+				      _GTK_LABEL_CLOSE, GTK_RESPONSE_CANCEL,
 				      NULL);
 	g_free (message);
 
@@ -290,10 +290,10 @@ _gtk_info_dialog_run (GtkWindow        *parent,
 
 	d =  _gtk_message_dialog_new (parent,
 				      GTK_DIALOG_MODAL,
-				      GTK_STOCK_DIALOG_INFO,
+				      _GTK_ICON_NAME_DIALOG_INFO,
 				      message,
 				      NULL,
-				      GTK_STOCK_CLOSE, GTK_RESPONSE_CANCEL,
+				      _GTK_LABEL_CLOSE, GTK_RESPONSE_CANCEL,
 				      NULL);
 	g_free (message);
 
@@ -478,9 +478,8 @@ _gtk_icon_get_pixel_size (GtkWidget   *widget,
 {
 	int icon_width, icon_height;
 
-	gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (widget),
-					   size,
-					   &icon_width, &icon_height);
+	gtk_icon_size_lookup (size, &icon_width, &icon_height);
+
 	return MAX (icon_width, icon_height);
 }
 
@@ -498,10 +497,10 @@ show_help_dialog (GtkWindow  *parent,
 
 		dialog = _gtk_message_dialog_new (parent,
 						  GTK_DIALOG_DESTROY_WITH_PARENT,
-						  GTK_STOCK_DIALOG_ERROR,
+						  _GTK_ICON_NAME_DIALOG_ERROR,
 						  _("Could not display help"),
 						  error->message,
-						  GTK_STOCK_OK, GTK_RESPONSE_OK,
+						  _GTK_LABEL_OK, GTK_RESPONSE_OK,
 						  NULL);
 		gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
@@ -825,3 +824,219 @@ _gtk_count_selected (GtkTreeSelection *selection)
 	return n;
 }
 
+
+/* -- _gtk_window_add_accelerator_for_action -- */
+
+
+typedef struct {
+	GtkWindow *window;
+	char      *action_name;
+	GVariant  *target;
+} AccelData;
+
+
+static void
+accel_data_free (gpointer  user_data,
+                 GClosure *closure)
+{
+	AccelData *accel_data = user_data;
+
+	g_return_if_fail (accel_data != NULL);
+
+	if (accel_data->target != NULL)
+		g_variant_unref (accel_data->target);
+	g_free (accel_data->action_name);
+	g_free (accel_data);
+}
+
+
+static void
+window_accelerator_activated_cb (GtkAccelGroup  *accel_group,
+				 GObject                *object,
+				 guint           key,
+				 GdkModifierType         mod,
+				 gpointer                user_data)
+{
+	AccelData *accel_data = user_data;
+	GAction   *action;
+
+	action = g_action_map_lookup_action (G_ACTION_MAP (accel_data->window), accel_data->action_name);
+	if (action != NULL)
+		g_action_activate (action, accel_data->target);
+}
+
+
+void
+_gtk_window_add_accelerator_for_action (GtkWindow       *window,
+					GtkAccelGroup   *accel_group,
+					const char      *action_name,
+					const char      *accel,
+					GVariant        *target)
+{
+	AccelData       *accel_data;
+	guint            key;
+	GdkModifierType  mods;
+	GClosure        *closure;
+
+	if ((action_name == NULL) || (accel == NULL))
+		return;
+
+	if (g_str_has_prefix (action_name, "app."))
+		return;
+
+	accel_data = g_new0 (AccelData, 1);
+	accel_data->window = window;
+	/* remove the win. prefix from the action name */
+	if (g_str_has_prefix (action_name, "win."))
+		accel_data->action_name = g_strdup (action_name + strlen ("win."));
+	else
+		accel_data->action_name = g_strdup (action_name);
+	if (target != NULL)
+		accel_data->target = g_variant_ref (target);
+
+	gtk_accelerator_parse (accel, &key, &mods);
+	closure = g_cclosure_new (G_CALLBACK (window_accelerator_activated_cb),
+				  accel_data,
+				  accel_data_free);
+	gtk_accel_group_connect (accel_group,
+				 key,
+				 mods,
+				 0,
+				 closure);
+}
+
+
+/* -- _gtk_window_add_accelerators_from_menu --  */
+
+
+static void
+add_accelerators_from_menu_item (GtkWindow      *window,
+				 GtkAccelGroup  *accel_group,
+				 GMenuModel     *model,
+				 int             item)
+{
+	GMenuAttributeIter      *iter;
+	const char              *key;
+	GVariant                *value;
+	const char              *accel = NULL;
+	const char              *action = NULL;
+	GVariant                *target = NULL;
+
+	iter = g_menu_model_iterate_item_attributes (model, item);
+	while (g_menu_attribute_iter_get_next (iter, &key, &value)) {
+               	if (g_str_equal (key, "action") && g_variant_is_of_type (value, G_VARIANT_TYPE_STRING))
+               		action = g_variant_get_string (value, NULL);
+               	else if (g_str_equal (key, "accel") && g_variant_is_of_type (value, G_VARIANT_TYPE_STRING))
+               		accel = g_variant_get_string (value, NULL);
+               	else if (g_str_equal (key, "target"))
+               		target = g_variant_ref (value);
+               	g_variant_unref (value);
+	}
+	g_object_unref (iter);
+
+	_gtk_window_add_accelerator_for_action (window,
+						accel_group,
+						action,
+						accel,
+						target);
+
+       	if (target != NULL)
+       		g_variant_unref (target);
+}
+
+static void
+add_accelerators_from_menu (GtkWindow      *window,
+			    GtkAccelGroup  *accel_group,
+			    GMenuModel     *model)
+{
+	int              i;
+	GMenuLinkIter   *iter;
+	const char      *key;
+	GMenuModel      *m;
+
+	for (i = 0; i < g_menu_model_get_n_items (model); i++) {
+		add_accelerators_from_menu_item (window, accel_group, model, i);
+
+		iter = g_menu_model_iterate_item_links (model, i);
+		while (g_menu_link_iter_get_next (iter, &key, &m)) {
+			add_accelerators_from_menu (window, accel_group, m);
+			g_object_unref (m);
+		}
+		g_object_unref (iter);
+	}
+}
+
+
+void
+_gtk_window_add_accelerators_from_menu (GtkWindow  *window,
+					GMenuModel *menu)
+{
+	GtkAccelGroup *accel_group;
+
+	accel_group = gtk_accel_group_new ();
+	add_accelerators_from_menu (window, accel_group, menu);
+	gtk_window_add_accel_group (window, accel_group);
+}
+
+
+void
+_g_action_map_enable_action (GActionMap *action_map,
+			     const char *action_name,
+			     gboolean    enabled)
+{
+	GAction *action;
+
+	action = g_action_map_lookup_action (action_map, action_name);
+	g_return_if_fail (action != NULL);
+
+	g_object_set (action, "enabled", enabled, NULL);
+}
+
+
+void
+_g_action_map_set_action_state (GActionMap *action_map,
+				const char *action_name,
+				gboolean    active)
+{
+        GAction *action;
+
+        action = g_action_map_lookup_action (action_map, action_name);
+        g_return_if_fail (action != NULL);
+
+        g_simple_action_set_state (G_SIMPLE_ACTION (action), g_variant_new_boolean (active));
+}
+
+
+void
+_g_action_map_change_action_state (GActionMap *action_map,
+				   const char *action_name,
+				   gboolean    value)
+{
+        GAction  *action;
+        GVariant *old_state;
+        GVariant *new_state;
+
+        action = g_action_map_lookup_action (action_map, action_name);
+        g_return_if_fail (action != NULL);
+
+        old_state = g_action_get_state (action);
+        new_state = g_variant_new_boolean (value);
+        if ((old_state == NULL) || ! g_variant_equal (old_state, new_state))
+                g_action_change_state (action, new_state);
+
+        if (old_state != NULL)
+                g_variant_unref (old_state);
+}
+
+
+GtkWidget *
+_gtk_application_get_current_window (GtkApplication *application)
+{
+	GList *windows;
+
+	windows = gtk_application_get_windows (application);
+	if (windows == NULL)
+		return NULL;
+
+	return GTK_WIDGET (windows->data);
+}

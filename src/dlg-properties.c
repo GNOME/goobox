@@ -23,7 +23,6 @@
 #include <config.h>
 #include <gtk/gtk.h>
 #include "dlg-properties.h"
-#include "goo-stock.h"
 #include "gtk-utils.h"
 #include "metadata.h"
 
@@ -270,7 +269,7 @@ search_album_by_title_ready_cb (GObject      *source_object,
 	data->n_albums = g_list_length (data->albums);
 
 	if (data->n_albums == 0) {
-		gtk_image_set_from_stock (GTK_IMAGE (GET_WIDGET ("info_icon")), GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_BUTTON);
+		gtk_image_set_from_icon_name (GTK_IMAGE (GET_WIDGET ("info_icon")), _GTK_ICON_NAME_DIALOG_WARNING, GTK_ICON_SIZE_BUTTON);
 		gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), _("No album found"));
 		gtk_widget_show (GET_WIDGET ("info_box"));
 		gtk_widget_hide (GET_WIDGET ("navigation_box"));
@@ -289,7 +288,7 @@ search_cb (GtkWidget  *widget,
 
 	data->searching = TRUE;
 
-	gtk_image_set_from_stock (GTK_IMAGE (GET_WIDGET ("info_icon")), GTK_STOCK_FIND, GTK_ICON_SIZE_BUTTON);
+	gtk_image_set_from_icon_name (GTK_IMAGE (GET_WIDGET ("info_icon")), "edit-find-symbolic", GTK_ICON_SIZE_BUTTON);
 	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("info_label")), _("Searching disc info..."));
 	gtk_widget_show (GET_WIDGET ("info_box"));
 	gtk_widget_hide (GET_WIDGET ("navigation_box"));
@@ -485,7 +484,6 @@ void
 dlg_properties (GooWindow *window)
 {
 	DialogData *data;
-        GtkWidget  *image;
 
         if (window->properties_dialog != NULL) {
         	gtk_window_present (GTK_WINDOW (window->properties_dialog));
@@ -505,13 +503,6 @@ dlg_properties (GooWindow *window)
 	window->properties_dialog = data->dialog;
 
 	/* Set widgets data. */
-
-	image = gtk_image_new_from_stock (GOO_STOCK_RESET, GTK_ICON_SIZE_BUTTON);
-	g_object_set (GET_WIDGET ("undo_button"),
-		      "use_stock", TRUE,
-		      "label", GOO_STOCK_RESET,
-		      "image", image,
-		      NULL);
 
 	data->list_store = gtk_list_store_new (N_COLUMNS,
 					       G_TYPE_INT,

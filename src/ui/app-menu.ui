@@ -7,7 +7,6 @@
       </item>
     </section>
     <section>
-      <attribute name="label" translatable="yes">Play Mode</attribute>
       <item>
         <attribute name="action">app.play-all</attribute>
         <attribute name="label" translatable="yes">Play _All</attribute>

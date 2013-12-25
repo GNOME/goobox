@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <menu id="gears-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Copy _Disk</attribute>
+        <attribute name="action">win.copy-disk</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Eject</attribute>
+        <attribute name="action">win.eject</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Properties</attribute>
+        <attribute name="action">win.properties</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Close</attribute>
+        <attribute name="action">win.close</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

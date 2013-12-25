@@ -585,7 +585,7 @@ rip_current_track (DialogData *data)
 		d = _gtk_ok_dialog_with_checkbutton_new (GTK_WINDOW (data->window),
 							 GTK_DIALOG_MODAL,
 							 _("Tracks extracted successfully"),
-							 GTK_STOCK_OK,
+							 _GTK_LABEL_OK,
 							 _("_View destination folder"),
 							 data->settings_ripper,
 							 PREF_RIPPER_VIEW_DISTINATION);
