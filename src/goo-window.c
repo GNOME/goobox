@@ -1010,7 +1010,7 @@ window_delete_event_cb (GtkWidget  *caller,
 	if (goo_player_get_state (window->priv->player) == GOO_PLAYER_STATE_PLAYING)
 		gtk_window_iconify (GTK_WINDOW (window));
 	else
-		gtk_widget_destroy (GTK_WIDGET (window));
+		goo_window_close (GOO_WINDOW (window));
 
 	return TRUE;
 }

@@ -123,7 +123,11 @@ goo_application_activate_quit (GSimpleAction *action,
 			       GVariant      *parameter,
 			       gpointer       user_data)
 {
-	g_application_quit (G_APPLICATION (user_data));
+	GApplication *application = user_data;
+	GList        *windows;
+
+	while ((windows = gtk_application_get_windows (GTK_APPLICATION (application))) != NULL)
+		goo_window_close (GOO_WINDOW (windows->data));
 }
 
 
