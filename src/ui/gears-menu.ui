@@ -10,18 +10,21 @@
       <item>
         <attribute name="label" translatable="yes">_Eject</attribute>
         <attribute name="action">win.eject</attribute>
+        <attribute name="accel">j</attribute>
       </item>
     </section>
     <section>
       <item>
         <attribute name="label" translatable="yes">_Properties</attribute>
         <attribute name="action">win.properties</attribute>
+        <attribute name="accel"><![CDATA[<Control>Return]]></attribute>
       </item>
     </section>
     <section>
       <item>
         <attribute name="label" translatable="yes">_Close</attribute>
         <attribute name="action">win.close</attribute>
+        <attribute name="accel"><![CDATA[<Control>w]]></attribute>
       </item>
     </section>
   </menu>
