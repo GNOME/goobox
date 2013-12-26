@@ -1307,6 +1307,9 @@ player_start_cb (GooPlayer       *player,
 
 	switch (action) {
 	case GOO_PLAYER_ACTION_PLAY:
+		notify_current_state (window, action);
+		break;
+
 	case GOO_PLAYER_ACTION_METADATA:
 		notify_current_state (window, action);
 		goo_window_show_message_bar_action (window, _("Searching disc information…"));
@@ -2080,7 +2083,7 @@ message_bar_response_cb (GtkInfoBar *info_bar,
 		goo_window_hide_message_bar (window);
 		break;
 	case MESSAGE_BAR_RESPONSE_PROPERTIES:
-		activate_action_properties (NULL, window);
+		goo_window_activate_properties (NULL, NULL, window);
 		goo_window_hide_message_bar (window);
 		break;
 	}
@@ -2225,9 +2228,9 @@ goo_window_construct (GooWindow    *window,
 	gtk_widget_set_no_show_all (window->priv->message_bar, TRUE);
 	window->priv->message_label = gtk_label_new ("");
 	gtk_container_add (GTK_CONTAINER (gtk_info_bar_get_content_area (GTK_INFO_BAR (window->priv->message_bar))), window->priv->message_label);
-	window->priv->message_bar_properties_button = gtk_button_new_from_stock (GTK_STOCK_PROPERTIES);
+	window->priv->message_bar_properties_button = gtk_button_new_with_mnemonic (_("_Properties"));
 	gtk_info_bar_add_action_widget (GTK_INFO_BAR (window->priv->message_bar), window->priv->message_bar_properties_button, MESSAGE_BAR_RESPONSE_PROPERTIES);
-	gtk_info_bar_add_button (GTK_INFO_BAR (window->priv->message_bar), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
+	gtk_info_bar_add_button (GTK_INFO_BAR (window->priv->message_bar), _GTK_LABEL_CLOSE, GTK_RESPONSE_CLOSE);
 	g_signal_connect (window->priv->message_bar,
 			  "response",
 	                  G_CALLBACK (message_bar_response_cb),
