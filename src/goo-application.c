@@ -346,12 +346,9 @@ goo_application_command_line (GApplication            *application,
 
 	/* execute the command line */
 
-	/*window = _gtk_application_get_current_window (GTK_APPLICATION (application));
+	window = _gtk_application_get_current_window (GTK_APPLICATION (application));
 	if (window == NULL)
 		window = goo_window_new (NULL);
-	gtk_window_present (GTK_WINDOW (window));*/
-
-	window = goo_window_new (NULL);
 	gtk_window_present (GTK_WINDOW (window));
 
 	if (arg_auto_play) {
