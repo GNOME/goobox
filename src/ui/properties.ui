@@ -321,6 +321,29 @@
                                 <property name="can_focus">False</property>
                                 <property name="no_show_all">True</property>
                                 <property name="message_type">warning</property>
+                                <child internal-child="action_area">
+                                  <object class="GtkButtonBox" id="infobar-action_area1">
+                                    <property name="can_focus">False</property>
+                                    <property name="border_width">5</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">6</property>
+                                    <property name="layout_style">end</property>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
                                 <child internal-child="content_area">
                                   <object class="GtkBox" id="infobar-content_area1">
                                     <property name="visible">True</property>
@@ -344,29 +367,6 @@
                                     <property name="expand">True</property>
                                     <property name="fill">True</property>
                                     <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child internal-child="action_area">
-                                  <object class="GtkButtonBox" id="infobar-action_area1">
-                                    <property name="can_focus">False</property>
-                                    <property name="border_width">5</property>
-                                    <property name="orientation">vertical</property>
-                                    <property name="spacing">6</property>
-                                    <property name="layout_style">end</property>
-                                    <child>
-                                      <placeholder/>
-                                    </child>
-                                    <child>
-                                      <placeholder/>
-                                    </child>
-                                    <child>
-                                      <placeholder/>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">1</property>
                                   </packing>
                                 </child>
                               </object>
@@ -394,7 +394,7 @@
                                           <object class="GtkImage" id="image3">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="stock">gtk-go-back</property>
+                                            <property name="icon_name">go-previous-symbolic</property>
                                           </object>
                                         </child>
                                       </object>
@@ -426,7 +426,7 @@
                                           <object class="GtkImage" id="image4">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="stock">gtk-go-forward</property>
+                                            <property name="icon_name">go-next-symbolic</property>
                                           </object>
                                         </child>
                                       </object>
