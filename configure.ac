@@ -267,6 +267,7 @@ Makefile
 copy-n-paste/Makefile
 data/Makefile
 data/goobox.desktop.in
+data/appdata/Makefile
 data/icons/Makefile
 data/icons/256x256/Makefile
 data/icons/256x256/apps/Makefile

@@ -1,4 +1,4 @@
-SUBDIRS = icons
+SUBDIRS = appdata icons
 
 desktop_in_in_files = goobox.desktop.in.in
 desktop_in_files = $(desktop_in_in_files:.desktop.in.in=.desktop.in) 
