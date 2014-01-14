@@ -261,7 +261,11 @@ system_notify (GooWindow       *window,
 	notify_notification_set_image_from_pixbuf (notification, cover);
 
 	if (notification_supports_actions) {
+		gboolean rtl;
+
 		notify_notification_clear_actions (notification);
+
+		rtl = gtk_widget_get_direction (GTK_WIDGET (window)) == GTK_TEXT_DIR_RTL;
 
 		if (goo_player_get_state (goo_window_get_player (window)) == GOO_PLAYER_STATE_PLAYING)
 			notify_notification_add_action (notification,
@@ -272,14 +276,14 @@ system_notify (GooWindow       *window,
 							NULL);
 		else
 			notify_notification_add_action (notification,
-							GOO_ICON_NAME_PLAY,
+							rtl ? GOO_ICON_NAME_PLAY : GOO_ICON_NAME_PLAY,
 							_("Play"),
 							notify_action_toggle_play_cb,
 							window,
 							NULL);
 
 		notify_notification_add_action (notification,
-						GOO_ICON_NAME_NEXT,
+						rtl ? GOO_ICON_NAME_NEXT_RTL : GOO_ICON_NAME_NEXT,
 						_("Next"),
 						notify_action_next_cb,
 						window,
