@@ -1,3 +1,29 @@
+version 3.3.1
+-------------
+
+ New features and user visible changes:
+
+  * Added support for writing MP3 files.
+  * Preferences: use a single page to show all the preferences.
+  * Show a message bar while fetching the disc information.
+  * Set button arrow icons according to locale's text direction. (Yosef Or Boczko)
+  * Added AppData description.
+
+ New or updated application translations:
+
+  * Brazilian Portuguese (Enrico Nicoletto)
+  * Czech (Marek Černocký)
+  * Español (Daniel Mustieles)
+  * Greek (Dimitris Spingos (Δημήτρης Σπίγγος))
+  * Indonesia (Andika Triwidada)
+  * Latvian (Rūdolfs Mazurs)
+  * Polish (Piotr Drąg)
+  * suomi (Jiri Grönroos)
+
+ New or updated manual translations:
+
+  * German (Mario Blättermann)
+
 version 3.2.1
 -------------
 
