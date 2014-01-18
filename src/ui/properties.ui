@@ -391,10 +391,9 @@
                                         <property name="receives_default">False</property>
                                         <property name="relief">none</property>
                                         <child>
-                                          <object class="GtkImage" id="image3">
+                                          <object class="GtkImage" id="prev_album_image">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="icon_name">go-previous-symbolic</property>
                                           </object>
                                         </child>
                                       </object>
@@ -423,10 +422,9 @@
                                         <property name="receives_default">False</property>
                                         <property name="relief">none</property>
                                         <child>
-                                          <object class="GtkImage" id="image4">
+                                          <object class="GtkImage" id="next_album_image">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="icon_name">go-next-symbolic</property>
                                           </object>
                                         </child>
                                       </object>
