@@ -9,7 +9,6 @@ uidir = $(datadir)/goobox/ui
 endif
 
 AM_CPPFLAGS =						\
-	-I$(top_srcdir)/copy-n-paste/ 			\
 	-DGOO_PREFIX=\"$(prefix)\"           		\
         -DGOO_SYSCONFDIR=\"$(sysconfdir)\"   		\
         -DGOO_DATADIR=\"$(datadir)\"     	    	\
@@ -97,7 +96,6 @@ goo-resources.h: goobox.gresource.xml $(RESOURCES_DEP)
 	$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name goo $(srcdir)/goobox.gresource.xml
 
 goobox_LDADD = 						\
-	$(top_builddir)/copy-n-paste/libeggsmclient.la  \
 	$(GOO_LIBS) 					\
 	$(M_LIBS)					\
 	$(SMCLIENT_LIBS)				\

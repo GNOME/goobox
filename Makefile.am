@@ -1,4 +1,4 @@
-SUBDIRS = copy-n-paste data help src po
+SUBDIRS = data help src po
 ACLOCAL_AMFLAGS = -I m4
 
 

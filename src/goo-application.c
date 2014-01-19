@@ -25,9 +25,6 @@
 #include <glib/gi18n.h>
 #include <glib/gprintf.h>
 #include <gst/gst.h>
-#ifdef USE_SMCLIENT
-#  include "eggsmclient.h"
-#endif
 #include "goo-application.h"
 #include "goo-application-actions-callbacks.h"
 #include "goo-application-actions-entries.h"
@@ -83,118 +80,6 @@ static const GOptionEntry options[] = {
     	  0 },
 	{ NULL }
 };
-
-
-/* -- session management -- */
-
-
-#ifdef USE_SMCLIENT
-
-
-static void
-client_save_state (EggSMClient *client,
-		   GKeyFile    *state,
-		   gpointer     user_data)
-{
-	GApplication *application = user_data;
-	const char   *argv[2] = { NULL };
-	guint         i;
-	GList        *scan;
-
-	argv[0] = program_argv0;
-	argv[1] = NULL;
-	egg_sm_client_set_restart_command (client, 1, argv);
-
-	i = 0;
-	for (scan = gtk_application_get_windows (GTK_APPLICATION (application)); scan; scan = scan->next) {
-		GtkWidget *window = scan->data;
-		char      *key;
-
-		key = g_strdup_printf ("device%d", ++i);
-		g_key_file_set_string (state,
-				       "Session",
-				       key,
-				       goo_player_get_device (goo_window_get_player (GOO_WINDOW (window))));
-
-		g_free (key);
-	}
-
-	g_key_file_set_integer (state, "Session", "devices", i);
-}
-
-
-static void
-client_quit_requested_cb (EggSMClient *client,
-			  gpointer     data)
-{
-	egg_sm_client_will_quit (client, TRUE);
-}
-
-
-static void
-client_quit_cb (EggSMClient *client,
-		gpointer     data)
-{
-	gtk_main_quit ();
-}
-
-
-static EggSMClient *
-goo_session_manager_init (GApplication *application)
-{
-	EggSMClient *client = NULL;
-
-	client = egg_sm_client_get ();
-	g_signal_connect (client,
-			  "save_state",
-			  G_CALLBACK (client_save_state),
-			  application);
-	g_signal_connect (client,
-			  "quit_requested",
-			  G_CALLBACK (client_quit_requested_cb),
-			  application);
-	g_signal_connect (client,
-			  "quit",
-			  G_CALLBACK (client_quit_cb),
-			  application);
-
-	return client;
-}
-
-
-static void
-goo_restore_session (EggSMClient  *client,
-		     GApplication *application)
-{
-	GKeyFile *state = NULL;
-	guint     i;
-
-	state = egg_sm_client_get_state_file (client);
-	i = g_key_file_get_integer (state, "Session", "devices", NULL);
-	g_assert (i > 0);
-	for (/* void */; i > 0; i--) {
-		char         *key;
-		char         *device;
-		BraseroDrive *drive;
-		GtkWidget    *window;
-
-		key = g_strdup_printf ("device%d", i);
-		device = g_key_file_get_string (state, "Session", key, NULL);
-		g_free (key);
-
-		g_assert (device != NULL);
-
-		drive = main_get_drive_for_device (device);
-		window = goo_window_new (drive);
-		gtk_widget_show (window);
-
-		g_object_unref (drive);
-		g_free (device);
-	}
-}
-
-
-#endif
 
 
 /* -- GooApplication --  */
@@ -278,9 +163,6 @@ goo_application_create_option_context (void)
 
 	if (g_once_init_enter (&initialized)) {
 		g_option_context_add_group (options_context, gtk_get_option_group (TRUE));
-#if USE_SMCLIENT
-		g_option_context_add_group (options_context, egg_sm_client_get_option_group ());
-#endif
 		g_option_context_add_group (options_context, gst_init_get_option_group ());
 
 		g_once_init_leave (&initialized, TRUE);
@@ -329,20 +211,6 @@ goo_application_command_line (GApplication            *application,
 
 		return goo_application_command_line_finished (application, EXIT_FAILURE);
 	}
-
-	/* restore the session */
-
-#if USE_SMCLIENT
-	{
-		EggSMClient *client;
-
-		client = goo_session_manager_init (application);
-		if (egg_sm_client_is_resumed (client)) {
-			goo_restore_session (client, application);
-			return goo_application_command_line_finished (application, EXIT_SUCCESS);
-		}
-	}
-#endif
 
 	/* execute the command line */
 

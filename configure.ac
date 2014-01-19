@@ -172,43 +172,6 @@ AC_MSG_RESULT($enable_media_keys)
 
 dnl ===========================================================================
 
-GDK_TARGET="$($PKG_CONFIG --variable targets gdk-3.0)"
-
-AC_MSG_CHECKING([which smclient backend to use])
-AC_ARG_WITH([smclient],
-  [AS_HELP_STRING([--with-smclient=no|auto|xsmp],
-                  [Setting smclient backend (default:no)])],,
-                  [with_smclient=no])
-
-if test "$with_smclient" == "auto"; then
-  case "$GDK_TARGET" in
-    *x11*) with_smclient=xsmp ;;
-    *) with_smclient=no ;;
-  esac
-fi
-
-AC_MSG_RESULT([$with_smclient])
-
-if test "$with_smclient" != "no"; then
-  AC_DEFINE([WITH_SMCLIENT],[1],[Define if smclient is enabled])
-
-  case "$with_smclient" in
-    xsmp) SMCLIENT_PKGS="sm >= 1.0.0 ice" ;;
-    *) SMCLIENT_PKGS="" ;;
-  esac
-
-  PKG_CHECK_MODULES([SMCLIENT],[$SMCLIENT_PKGS])
-  AC_SUBST([SMCLIENT_CFLAGS])
-  AC_SUBST([SMCLIENT_LIBS])
-  AC_DEFINE(USE_SMCLIENT, 1, [Use a session menager])
-fi
-
-AM_CONDITIONAL([WITH_SMCLIENT],[test "$with_smclient" != "no"])
-AM_CONDITIONAL([WITH_SMCLIENT_XSMP],[test "$with_smclient" = "xsmp"])
-AM_CONDITIONAL([WITH_SMCLIENT_WIN32],[test "$with_smclient" = "win32"])
-
-dnl ===========================================================================
-
 SYSTEM_LIBS=""
 host=`uname -s`
 case "$host" in
@@ -264,7 +227,6 @@ dnl ===========================================================================
 
 AC_CONFIG_FILES([
 Makefile
-copy-n-paste/Makefile
 data/Makefile
 data/goobox.desktop.in
 data/appdata/Makefile
@@ -294,5 +256,4 @@ Configuration:
 	Enable notification  : ${enable_notification}
 	Enable media keys    : ${enable_media_keys}
 	Use libcoverart      : ${enable_libcoverart}
-	SM client support    : ${with_smclient}
 "
