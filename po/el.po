@@ -3,94 +3,49 @@
 # Copyright (C) 2004 THE PACKAGE'S COPYRIGHT HOLDER.
 # Kostas Papadimas <pkst@gnome.org>, 2004.
 # Giannis Katsampirhs <giannis1_86@hotmail.com>, 2008.
-# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2013.
+# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2013, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox.HEAD\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=goobox"
-"&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-12-05 16:22+0000\n"
-"PO-Revision-Date: 2013-07-14 22:04+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=goobox&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-02-02 09:43+0000\n"
+"PO-Revision-Date: 2014-02-02 22:12+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
-"Language-Team: team@gnome.gr\n"
+"Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Virtaal 0.7.0\n"
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Project-Style: gnome\n"
 
-#: ../copy-n-paste/eggdesktopfile.c:165
-#, c-format
-msgid "File is not a valid .desktop file"
-msgstr "Το αρχείο δεν είναι ένα έγκυρο .desktop αρχείο"
+#: ../data/appdata/goobox.appdata.xml.in.h:1
+msgid "Goobox CD Player"
+msgstr "Αναπαραγωγή CD Goobox"
 
-#: ../copy-n-paste/eggdesktopfile.c:190
-#, c-format
-msgid "Unrecognized desktop file Version '%s'"
-msgstr "Μη αναγνωρίσιμη έκδοση αρχείου επιφάνειας εργασίας '%s'"
-
-#: ../copy-n-paste/eggdesktopfile.c:970
-#, c-format
-msgid "Starting %s"
-msgstr "Έναρξη %s"
-
-#: ../copy-n-paste/eggdesktopfile.c:1112
-#, c-format
-msgid "Application does not accept documents on command line"
-msgstr "Η εφαρμογή δε δέχεται έγγραφα από τη γραμμή εντολών"
-
-#: ../copy-n-paste/eggdesktopfile.c:1180
-#, c-format
-msgid "Unrecognized launch option: %d"
-msgstr "Άγνωστη επιλογή εκκίνησης: %d"
-
-#: ../copy-n-paste/eggdesktopfile.c:1385
-#, c-format
-msgid "Can't pass documents to this desktop element"
+#: ../data/appdata/goobox.appdata.xml.in.h:2
+msgid ""
+"Goobox allows you to play CDs and save the tracks to disk as mp3, ogg, flac "
+"or wav files."
 msgstr ""
-"Δε μπορούν να διαβιβαστούν έγγραφα σε αυτό το στοιχείο της επιφάνειας "
-"εργασίας"
+"Το Goobox σας επιτρέπει να παίζετε CDs και να αποθηκεύετε κομμάτια σε δίσκο "
+"ως αρχεία mp3, ogg, flac ή wav."
 
-#: ../copy-n-paste/eggdesktopfile.c:1406
-#, c-format
-msgid "Not a launchable item"
-msgstr "Μη εκκινήσιμο στοιχείο"
+#: ../data/appdata/goobox.appdata.xml.in.h:3
+msgid ""
+"Track titles and CD covers are set automatically using the MusicBrainz web "
+"service."
+msgstr ""
+"Οι τίτλοι των κομματιών και τα εξώφυλλα των CD ορίζονται αυτόματα "
+"χρησιμοποιώντας την υπηρεσία ιστού MusicBrainz."
 
-#: ../copy-n-paste/eggsmclient.c:226
-msgid "Disable connection to session manager"
-msgstr "Απενεργοποίηση σύνδεσης με το διαχειριστή συνεδρίας"
-
-#: ../copy-n-paste/eggsmclient.c:229
-msgid "Specify file containing saved configuration"
-msgstr "Καθορίστε το αρχείο που περιέχει αποθηκευμένες ρυθμίσεις"
-
-#: ../copy-n-paste/eggsmclient.c:229
-msgid "FILE"
-msgstr "ΑΡΧΕΙΟ"
-
-#: ../copy-n-paste/eggsmclient.c:232
-msgid "Specify session management ID"
-msgstr "Καθορίστε το αναγνωριστικό της διαχείρισης συνεδρίας"
-
-#: ../copy-n-paste/eggsmclient.c:232
-msgid "ID"
-msgstr "Αναγνωριστικό"
-
-#: ../copy-n-paste/eggsmclient.c:253
-msgid "Session management options:"
-msgstr "Επιλογές διαχείρισης συνεδρίας:"
-
-#: ../copy-n-paste/eggsmclient.c:254
-msgid "Show session management options"
-msgstr "Εμφάνιση επιλογών διαχείρισης συνεδρίας"
-
-#: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:159
-#: ../src/goo-window.c:1315 ../src/goo-window.c:1328 ../src/goo-window.c:1846
-#: ../src/main.c:240
+#: ../data/goobox.desktop.in.in.h:1
+#: ../src/goo-application-actions-callbacks.c:63 ../src/goo-application.c:417
+#: ../src/goo-window.c:1379 ../src/goo-window.c:1392 ../src/goo-window.c:1962
 msgid "CD Player"
 msgstr "Αναπαραγωγός CD"
 
@@ -103,7 +58,6 @@ msgid "Device path"
 msgstr "Διαδρομή συσκευής"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:2
-#| msgid "Volume level: %3.0f%%"
 msgid "Volume level"
 msgstr "Επίπεδο έντασης"
 
@@ -120,7 +74,6 @@ msgid "Use Sound Juicer to rip discs"
 msgstr "Χρήση του Sound Juicer για αντιγραφή δίσκων"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:6
-#| msgid "Stop playing"
 msgid "Autoplay"
 msgstr "Αυτόματη αναπαραγωγή"
 
@@ -141,12 +94,10 @@ msgid "Play all tracks"
 msgstr "Αναπαραγωγή όλων των κομματιών"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:11
-#| msgid "_Save playlist"
 msgid "Shuffle playlist"
 msgstr "Τυχαία σειρά λίστας αναπαραγωγής"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:12
-#| msgid "Restart playing when finished"
 msgid "Restart when finished"
 msgstr "Επανεκκίνηση μετά την ολοκλήρωση"
 
@@ -159,12 +110,10 @@ msgid "Playlist sort type"
 msgstr "Τύπος ταξινόμησης λίστας αναπαραγωγής"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:15
-#| msgid "Extraction"
 msgid "Extraction folder"
 msgstr "Εξαγωγή φακέλου"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:16
-#| msgid "<b>File type</b>"
 msgid "File type"
 msgstr "Τύπος αρχείου"
 
@@ -173,7 +122,6 @@ msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr "Πιθανές τιμές είναι: ogg, flac, mp3, wave."
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:18
-#| msgid "_Save playlist"
 msgid "Save the playlist"
 msgstr "Αποθήκευση λίστας αναπαραγωγής"
 
@@ -182,93 +130,35 @@ msgid "Save the playlist of the extracted tracks."
 msgstr "Αποθήκευση της λίστας αναπαραγωγής των εξαχθέντων κομματιών."
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:20
-#| msgid "_View destination folder"
 msgid "View the destination"
 msgstr "Προβολή του προορισμού"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:21
-#| msgid "Higher quality"
 msgid "OGG files quality"
 msgstr "Ποιότητα αρχείων OGG"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:22
-#| msgid "Higher quality"
 msgid "FLAC files quality"
 msgstr "Ποιότητα αρχείων FLAC"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:23
-#| msgid "Higher quality"
 msgid "MP3 files quality"
 msgstr "Ποιότητα αρχείων MP3"
-
-#: ../src/actions.c:139
-msgid "translator_credits"
-msgstr ""
-"Ελληνική μεταφραστική ομάδα GNOME\n"
-" Δημήτρης Σπίγγος <dmtrs32@gmail.com>\n"
-"Για λεπτομέρειες δείτε: http://gnome.gr"
-
-#: ../src/actions.c:142
-msgid ""
-"CD Player is free software; you can redistribute it and/or modify it under "
-"the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version."
-msgstr ""
-"Το CD Player είναι ελεύθερο λογισμικό· επιτρέπεται η αναδιανομή ή/και "
-"τροποποίησή του υπό τους όρους της Γενικής Άδειας Δημόσιας Χρήσης GNU, όπως "
-"αυτή έχει δημοσιευτεί από το Ίδρυμα Ελεύθερου Λογισμικού· είτε της έκδοσης 2 "
-"της Άδειας, είτε (κατ' επιλογήν σας) οποιασδήποτε μεταγενέστερης έκδοσης."
-
-#: ../src/actions.c:146
-msgid ""
-"CD Player is distributed in the hope that it will be useful, but WITHOUT ANY "
-"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
-"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
-"details."
-msgstr ""
-"Το CD Player διανέμεται με την ελπίδα ότι θα αποδειχθεί χρήσιμο, αλλά ΧΩΡΙΣ "
-"ΚΑΜΙΑ ΕΓΓΥΗΣΗ· χωρίς ούτε και την σιωπηρή εγγύηση ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ ή "
-"ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΗ ΧΡΗΣΗ. Για περισσότερες λεπτομέρειες "
-"ανατρέξτε στη Γενική Άδεια Δημόσιας Χρήσης GNU."
-
-#: ../src/actions.c:150
-msgid ""
-"You should have received a copy of the GNU General Public License along with "
-"CD Player; if not, write to the Free Software Foundation, Inc., 51 Franklin "
-"St, Fifth Floor, Boston, MA 02110-1301 USA"
-msgstr ""
-"Θα πρέπει να έχετε λάβει ένα αντίγραφο της Γενικής Άδειας Δημόσιας Χρήσης "
-"GNU μαζί με το CD Player· αν όχι, επικοινωνήστε γραπτώς με το Free Software "
-"Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA"
-
-#: ../src/actions.c:161
-#| msgid "Copyright © 2004-2007 Free Software Foundation, Inc."
-msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
-msgstr "Πνευματικά δικαιώματα © 2004-2011 Free Software Foundation, Inc."
-
-#: ../src/actions.c:162 ../src/main.c:334 ../src/main.c:433
-msgid "Play CDs and save the tracks to disk as files"
-msgstr "Αναπαραγωγή CDs και αποθήκευση των κομματιών στο δίσκο ως αρχείων"
-
-#: ../src/actions.c:290 ../src/actions.c:325 ../src/actions.c:358
-msgid "Could not execute command"
-msgstr "Αδυναμία εκτέλεσης εντολής"
 
 #: ../src/album-info.c:176
 msgid "Various"
 msgstr "Διάφορα"
 
-#: ../src/dlg-cover-chooser.c:277
+#: ../src/dlg-cover-chooser.c:276
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, φόρτωση εικόνας: %u"
 
-#: ../src/dlg-cover-chooser.c:342 ../src/goo-window.c:2657
+#: ../src/dlg-cover-chooser.c:341 ../src/goo-window.c:2805
 msgid "Could not search for a cover on Internet"
 msgstr "Αδύνατη η αναζήτηση ενός εξωφύλλου στο διαδίκτυο"
 
-#: ../src/dlg-extract.c:110
+#: ../src/dlg-extract.c:108
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -285,150 +175,125 @@ msgstr ""
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 
-#: ../src/dlg-extract.c:121
+#: ../src/dlg-extract.c:119
 msgid "No encoder available."
 msgstr "Δεν υπάρχει διαθέσιμος κωδικοποιητής."
 
-#: ../src/dlg-preferences.c:240 ../src/dlg-preferences.c:472
+#: ../src/dlg-preferences.c:243 ../src/dlg-preferences.c:504
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:252 ../src/dlg-preferences.c:475
+#: ../src/dlg-preferences.c:257 ../src/dlg-preferences.c:507
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:264
+#: ../src/dlg-preferences.c:271 ../src/dlg-preferences.c:510
+msgid "MP3"
+msgstr "MP3"
+
+#: ../src/dlg-preferences.c:285
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
-#.
-#: ../src/dlg-preferences.c:290 ../src/dlg-preferences.c:499
-msgid ""
-"Vorbis is an open source, lossy audio codec with high quality output at a "
-"lower file size than MP3."
-msgstr ""
-"Η Vorbis είναι μια ανοικτού κώδικα, απωλεστική κωδικοποίηση ήχου υψηλής "
-"ποιότητας με χαμηλότερο μέγεθος αρχείου από το MP3."
-
-#: ../src/dlg-preferences.c:291 ../src/dlg-preferences.c:502
-msgid ""
-"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
-"does not degrade audio quality."
-msgstr ""
-"Η ελεύθερη μη απωλεστική κωδικοποίηση ήχου (FLAC) είναι μια κωδικοποίηση "
-"ανοικτού κώδικα που συμπιέζει, αλλά δεν υποβαθμίζει την ποιότητα του ήχου."
-
-#: ../src/dlg-preferences.c:292 ../src/dlg-preferences.c:505
-msgid ""
-"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
-"modulated (PCM) audio."
-msgstr ""
-"Η WAV+PCM είναι μια μη απωλεστική μορφή που διατηρεί ασυμπίεστο, ακατέργαστο "
-"παλμοκωδικά διαμορφωμένο (PCM) ήχο."
-
-#: ../src/dlg-preferences.c:447
+#: ../src/dlg-preferences.c:479
 msgid "Faster compression"
 msgstr "Γρηγορότερη συμπίεση"
 
-#: ../src/dlg-preferences.c:451
+#: ../src/dlg-preferences.c:483
 msgid "Higher compression"
 msgstr "Υψηλότερη συμπίεση"
 
-#: ../src/dlg-preferences.c:458
+#: ../src/dlg-preferences.c:490
 msgid "Smaller size"
 msgstr "Μικρότερο μέγεθος"
 
-#: ../src/dlg-preferences.c:462
+#: ../src/dlg-preferences.c:494
 msgid "Higher quality"
 msgstr "Υψηλότερη ποιότητα"
 
-#: ../src/dlg-preferences.c:486
+#: ../src/dlg-preferences.c:522
 msgid "Quality:"
 msgstr "Ποιότητα:"
 
-#: ../src/dlg-preferences.c:489
+#: ../src/dlg-preferences.c:525
 msgid "Compression level:"
 msgstr "Επίπεδο συμπίεσης:"
 
-#: ../src/dlg-properties.c:216
+#: ../src/dlg-properties.c:214
 #, c-format
 msgid "Album %d of %d"
 msgstr "%d δίσκος από %d"
 
-#: ../src/dlg-properties.c:274
+#: ../src/dlg-properties.c:271
 msgid "No album found"
 msgstr "Δεν βρέθηκε δίσκος"
 
-#: ../src/dlg-properties.c:293
-#| msgid "Searching images..."
-msgid "Searching disc info..."
-msgstr "Αναζήτηση πληροφοριών δίσκου..."
+#: ../src/dlg-properties.c:290 ../src/goo-window.c:1314
+msgid "Searching disc information…"
+msgstr "Αναζήτηση πληροφοριών δίσκου…"
 
-#: ../src/dlg-properties.c:353
+#: ../src/dlg-properties.c:351
 msgid "#"
 msgstr "#"
 
-#: ../src/dlg-properties.c:371
+#: ../src/dlg-properties.c:369
 msgid "Title"
 msgstr "Τίτλος"
 
-#: ../src/dlg-properties.c:404
+#: ../src/dlg-properties.c:402
 msgid "Artist"
 msgstr "Καλλιτέχνης"
 
-#: ../src/dlg-ripper.c:178
+#: ../src/dlg-ripper.c:165
 #, c-format
 msgid "(%d:%02d:%02d Remaining)"
 msgstr "(%d:%02d:%02d απομένουν)"
 
-#: ../src/dlg-ripper.c:180
+#: ../src/dlg-ripper.c:167
 #, c-format
 msgid "(%d:%02d Remaining)"
 msgstr "(%d:%02d απομένουν)"
 
-#: ../src/dlg-ripper.c:185
+#: ../src/dlg-ripper.c:172
 #, c-format
 msgid "Extracting track: %d of %d %s"
 msgstr "Εξαγωγή κομματιού: %d από %d %s"
 
-#: ../src/dlg-ripper.c:222
+#: ../src/dlg-ripper.c:209 ../src/dlg-ripper.c:318
 msgid "Could not extract the tracks"
 msgstr "Αδυναμία εξαγωγής των κομματιών"
 
-#: ../src/dlg-ripper.c:430
+#: ../src/dlg-ripper.c:436
 #, c-format
-#| msgid "_View destination folder"
 msgid "Invalid destination folder: %s"
 msgstr "Άκυρος φάκελος προορισμού: %s"
 
-#: ../src/dlg-ripper.c:460 ../src/dlg-ripper.c:464
+#: ../src/dlg-ripper.c:466 ../src/dlg-ripper.c:470
 msgid "Could not display the destination folder"
 msgstr "Αδυναμία εμφ'ανισης του φάκελου προορισμού"
 
-#: ../src/dlg-ripper.c:592
+#: ../src/dlg-ripper.c:596
 msgid "Tracks extracted successfully"
 msgstr "Τα κομμάτια εξάχθηκαν επιτυχώς"
 
-#: ../src/dlg-ripper.c:594
+#: ../src/dlg-ripper.c:598
 msgid "_View destination folder"
 msgstr "Προ_βολή φακέλου προορισμού"
 
-#: ../src/dlg-ripper.c:609
+#: ../src/dlg-ripper.c:612
 #, c-format
-#| msgid "<i>Extracting \"%s\"</i>"
 msgid "Extracting \"%s\""
 msgstr "Εξάγεται το \"%s\""
 
-#: ../src/dlg-ripper.c:620 ../src/dlg-ripper.c:629
+#: ../src/dlg-ripper.c:623 ../src/dlg-ripper.c:632
 msgid "Could not extract tracks"
 msgstr "Αδύνατη η εξαγωγή των κομματιών"
 
-#: ../src/dlg-ripper.c:659
+#: ../src/dlg-ripper.c:663
 msgid "Ripped with CD Player"
 msgstr "Ripped με CD Player"
 
-#: ../src/dlg-ripper.c:705
-#| msgid "Extracting Tracks"
+#: ../src/dlg-ripper.c:697
 msgid "Extracting disc tracks"
 msgstr "Εξάγονται κομμάτια δίσκου"
 
@@ -456,107 +321,151 @@ msgctxt "short time format"
 msgid "%d∶%02d"
 msgstr "%d∶%02d"
 
-#: ../src/goo-player.c:259
-#| msgid "Play CD"
+#: ../src/goo-application-actions-callbacks.c:60
+msgid "translator_credits"
+msgstr ""
+"Ελληνική μεταφραστική ομάδα GNOME\n"
+" Δημήτρης Σπίγγος <dmtrs32@gmail.com>\n"
+"Για λεπτομέρειες δείτε: http://gnome.gr"
+
+#: ../src/goo-application-actions-callbacks.c:65
+msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
+msgstr "Πνευματικά δικαιώματα © 2004-2011 Free Software Foundation, Inc."
+
+#: ../src/goo-application-actions-callbacks.c:66 ../src/goo-application.c:159
+msgid "Play CDs and save the tracks to disk as files"
+msgstr "Αναπαραγωγή CDs και αποθήκευση των κομματιών στο δίσκο ως αρχείων"
+
+#: ../src/goo-application.c:52
+msgid "CD device to be used"
+msgstr "Συσκευή CD για χρήση"
+
+#: ../src/goo-application.c:53
+msgid "DEVICE_PATH"
+msgstr "ΔΙΑΔΡΟΜΗ_ΣΥΣΚΕΥΗΣ"
+
+#: ../src/goo-application.c:55
+msgid "Play the CD on startup"
+msgstr "Αναπαραγωγή του CD κατά την εκκίνηση"
+
+#: ../src/goo-application.c:58
+msgid "Toggle play"
+msgstr "Εναλλαγή αναπαραγωγής"
+
+#: ../src/goo-application.c:61
+msgid "Stop playing"
+msgstr "Διακοπή αναπαραγωγής"
+
+#: ../src/goo-application.c:64
+msgid "Play the next track"
+msgstr "Αναπαραγωγή του επόμενου κομματιού"
+
+#: ../src/goo-application.c:67
+msgid "Play the previous track"
+msgstr "Αναπαραγωγή του προηγούμενου κομματιού"
+
+#: ../src/goo-application.c:70
+msgid "Eject the CD"
+msgstr "Εξαγωγή του CD"
+
+#: ../src/goo-application.c:73
+msgid "Toggle the main window visibility"
+msgstr "Εναλλαγή της ορατότητας του κυρίως παράθυρου"
+
+#: ../src/goo-application.c:76
+msgid "Quit the application"
+msgstr "Έξοδος από την εφαρμογή"
+
+#: ../src/goo-application.c:79
+msgid "Show version"
+msgstr "Εμφάνιση έκδοσης"
+
+#: ../src/goo-application.c:202
+msgid "Cannot start the CD player"
+msgstr "Αδύνατη η εκκίνηση του αναπαραγωγού CD"
+
+#: ../src/goo-application.c:203
+msgid "In order to read CDs you have to install the gstreamer base plugins"
+msgstr ""
+"Για να διαβάσετε CDs θα πρέπει να εγκαταστήσετε τα βασικά πρόσθετα του "
+"gstreamer"
+
+#: ../src/goo-player.c:322
 msgid "Playing CD"
 msgstr "Αναπαραγωγή CD"
 
-#: ../src/goo-player-info.c:256
+#: ../src/goo-player-info.c:253
 msgid "Click here to choose a cover for this CD"
 msgstr "Πατήστε εδώ για να επιλέξετε ένα εξώφυλλο για το CD"
 
-#: ../src/goo-player-info.c:419 ../src/goo-window.c:1174
+#: ../src/goo-player-info.c:395 ../src/goo-window.c:1208
 msgid "No disc"
 msgstr "Χωρίς δίσκο"
 
-#: ../src/goo-player-info.c:422 ../src/goo-window.c:1179
-#| msgid "Data Disc"
+#: ../src/goo-player-info.c:398 ../src/goo-window.c:1213
 msgid "Data disc"
 msgstr "Δίσκος δεδομένων"
 
-#: ../src/goo-player-info.c:426
+#: ../src/goo-player-info.c:402
 msgid "Ejecting CD"
 msgstr "Εξαγωγή του CD"
 
-#: ../src/goo-player-info.c:429
+#: ../src/goo-player-info.c:405
 msgid "Checking CD drive"
 msgstr "Έλεγχος οδηγού CD"
 
-#: ../src/goo-player-info.c:432 ../src/goo-player-info.c:435
+#: ../src/goo-player-info.c:408 ../src/goo-player-info.c:411
 msgid "Reading CD"
 msgstr "Ανάγνωση CD"
 
-#: ../src/goo-player-info.c:438 ../src/goo-window.c:1192
-#: ../src/goo-window.c:1335
+#: ../src/goo-player-info.c:414 ../src/goo-window.c:1226
+#: ../src/goo-window.c:1399
 msgid "Audio CD"
 msgstr "CD ήχου"
 
-#: ../src/goo-stock.c:40
-msgid "_Extract"
-msgstr "Ε_ξαγωγή"
+#: ../src/goo-window-actions-callbacks.c:232
+#: ../src/goo-window-actions-callbacks.c:268
+#: ../src/goo-window-actions-callbacks.c:302
+msgid "Could not execute command"
+msgstr "Αδυναμία εκτέλεσης εντολής"
 
-#: ../src/goo-stock.c:41
-msgid "_Reset"
-msgstr "Επανα_φορά"
-
-#: ../src/goo-stock.c:42 ../src/goo-stock.c:43 ../src/goo-stock.c:44
-#: ../src/goo-stock.c:45
-msgid "V_olume"
-msgstr "Έ_νταση"
-
-#: ../src/goo-window.c:52
+#: ../src/goo-window.c:47
 msgid "Hide _tracks"
 msgstr "Απόκρυψη κο_μματιών"
 
-#: ../src/goo-window.c:53
+#: ../src/goo-window.c:48
 msgid "Show _tracks"
 msgstr "Εμφάνιση κο_μματιών"
 
-#: ../src/goo-window.c:1245 ../src/ui.h:48
-msgid "_Pause"
-msgstr "_Παύση"
+#: ../src/goo-window.c:1610
+msgid "No information found for this disc"
+msgstr "Δεν βρέθηκαν πληροφορίες για αυτόν τον δίσκο"
 
-#: ../src/goo-window.c:1245 ../src/main.c:922 ../src/ui.h:49
-msgid "Pause"
-msgstr "Παύση"
+#: ../src/goo-window.c:2234 ../src/ui/gears-menu.ui.h:3 ../src/ui/menus.ui.h:3
+msgid "_Properties"
+msgstr "Ι_διότητες"
 
-#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/ui.h:36
-#: ../src/ui.h:40 ../src/ui.h:44
-msgid "_Play"
-msgstr "Ανα_παραγωγή"
-
-#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/main.c:929
-#: ../src/ui.h:41
-msgid "Play"
-msgstr "Αναπαραγωγή"
-
-#: ../src/goo-window.c:2082 ../src/goo-window.c:2083
-#| msgid "Extraction"
-msgid "Other actions"
-msgstr "Άλλες ενέργειες"
-
-#: ../src/goo-window.c:2475
+#: ../src/goo-window.c:2617
 msgid "Could not save cover image"
 msgstr "Αδύνατη η αποθήκευση εικόνας εξωφύλλου"
 
-#: ../src/goo-window.c:2500 ../src/goo-window.c:2526
+#: ../src/goo-window.c:2641 ../src/goo-window.c:2672
 msgid "Could not load image"
 msgstr "Αδύνατη η φόρτωση εικόνας"
 
-#: ../src/goo-window.c:2595
-#| msgid "Choose CD Cover Image"
+#: ../src/goo-window.c:2743
 msgid "Choose Disc Cover Image"
 msgstr "Επιλογή εικόνας εξωφύλλου δίσκου"
 
-#: ../src/goo-window.c:2614
+#: ../src/goo-window.c:2762
 msgid "Images"
 msgstr "Εικόνες"
 
-#: ../src/goo-window.c:2622
+#: ../src/goo-window.c:2770
 msgid "All files"
 msgstr "Όλα τα αρχεία"
 
-#: ../src/goo-window.c:2658
+#: ../src/goo-window.c:2806
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -564,95 +473,52 @@ msgstr ""
 "Θα πρέπει να εισάγετε τον καλλιτέχνη και τα ονόματα δίσκου για να βρείτε το "
 "εξώφυλλο του δίσκου."
 
-#: ../src/goo-window.c:2701
-msgid "_Show Window"
-msgstr "Ε_μφάνιση παραθύρου"
-
-#: ../src/goo-window.c:2701
-msgid "Show the main window"
-msgstr "Εμφάνιση του κυρίως παραθύρου"
-
-#: ../src/goo-window.c:2709 ../src/ui.h:108
-msgid "_Hide Window"
-msgstr "Απόκρυ_ψη παραθύρου"
-
-#: ../src/goo-window.c:2709 ../src/ui.h:109
-msgid "Hide the main window"
-msgstr "Απόκρυψη του κυρίως παράθυρου"
-
-#: ../src/gtk-file-chooser-preview.c:166
+#: ../src/gtk-file-chooser-preview.c:165
 msgid "Preview"
 msgstr "Προεπισκόπηση"
 
-#: ../src/gtk-file-chooser-preview.c:267
+#: ../src/gtk-file-chooser-preview.c:266
 msgid "pixels"
 msgstr "εικονοστοιχεία"
 
-#: ../src/gtk-utils.c:754
+#: ../src/gtk-utils.c:500
 msgid "Could not display help"
 msgstr "Αδύνατη η προβολή βοήθειας"
 
-#: ../src/gtk-utils.c:1040 ../src/gtk-utils.c:1046
-#| msgid "Quit the application"
+#: ../src/gtk-utils.c:786 ../src/gtk-utils.c:792
 msgid "Could not launch the application"
 msgstr "Αδύνατη η εκκίνηση της εφαρμογής"
 
-#: ../src/main.c:71
-msgid "CD device to be used"
-msgstr "Συσκευή CD για χρήση"
+#: ../src/gtk-utils.h:36
+msgid "_Cancel"
+msgstr "Ά_κυρο"
 
-#: ../src/main.c:72
-msgid "DEVICE_PATH"
-msgstr "ΔΙΑΔΡΟΜΗ_ΣΥΣΚΕΥΗΣ"
+#: ../src/gtk-utils.h:37 ../src/ui/gears-menu.ui.h:4
+msgid "_Close"
+msgstr "Κλεί_σιμο"
 
-#: ../src/main.c:74
-msgid "Play the CD on startup"
-msgstr "Αναπαραγωγή του CD κατά την εκκίνηση"
+#: ../src/gtk-utils.h:38
+msgid "_Ok"
+msgstr "Εν_τάξει"
 
-#: ../src/main.c:77
-msgid "Toggle play"
-msgstr "Εναλλαγή αναπαραγωγής"
+#: ../src/gtk-utils.h:39
+msgid "_Open"
+msgstr "Ά_νοιγμα"
 
-#: ../src/main.c:80 ../src/ui.h:53
-msgid "Stop playing"
-msgstr "Διακοπή αναπαραγωγής"
+#: ../src/gtk-utils.h:40 ../src/ui/cover-chooser.ui.h:2
+#: ../src/ui/properties.ui.h:4
+msgid "_Reset"
+msgstr "Επανα_φορά"
 
-#: ../src/main.c:83 ../src/ui.h:57
-msgid "Play the next track"
-msgstr "Αναπαραγωγή του επόμενου κομματιού"
+#: ../src/main.c:272
+msgid "Pause"
+msgstr "Παύση"
 
-#: ../src/main.c:86 ../src/ui.h:61
-msgid "Play the previous track"
-msgstr "Αναπαραγωγή του προηγούμενου κομματιού"
+#: ../src/main.c:279
+msgid "Play"
+msgstr "Αναπαραγωγή"
 
-#: ../src/main.c:89
-msgid "Eject the CD"
-msgstr "Εξαγωγή του CD"
-
-#: ../src/main.c:92
-#| msgid "Hide the main window"
-msgid "Toggle the main window visibility"
-msgstr "Εναλλαγή της ορατότητας του κυρίως παράθυρου"
-
-#: ../src/main.c:95 ../src/ui.h:93
-msgid "Quit the application"
-msgstr "Έξοδος από την εφαρμογή"
-
-#: ../src/main.c:98
-msgid "Show version"
-msgstr "Εμφάνιση έκδοσης"
-
-#: ../src/main.c:292
-msgid "Cannot start the CD player"
-msgstr "Αδύνατη η εκκίνηση του αναπαραγωγού CD"
-
-#: ../src/main.c:293
-msgid "In order to read CDs you have to install the gstreamer base plugins"
-msgstr ""
-"Για να διαβάσετε CDs θα πρέπει να εγκαταστήσετε τα βασικά πρόσθετα του "
-"gstreamer"
-
-#: ../src/main.c:936
+#: ../src/main.c:286
 msgid "Next"
 msgstr "Επόμενο"
 
@@ -666,32 +532,26 @@ msgid "_Preferences"
 msgstr "_Προτιμήσεις"
 
 #: ../src/ui/app-menu.ui.h:2
-#| msgid "Play CD"
-msgid "Play Mode"
-msgstr "Λειτουργία αναπαραγωγής"
-
-#: ../src/ui/app-menu.ui.h:3
 msgid "Play _All"
 msgstr "Αναπαραγωγή ό_λων"
 
-#: ../src/ui/app-menu.ui.h:4
+#: ../src/ui/app-menu.ui.h:3
 msgid "_Repeat"
 msgstr "Επα_νάληψη"
 
-#: ../src/ui/app-menu.ui.h:5
+#: ../src/ui/app-menu.ui.h:4
 msgid "S_huffle"
 msgstr "_Τυχαία σειρά"
 
-#: ../src/ui/app-menu.ui.h:6
+#: ../src/ui/app-menu.ui.h:5
 msgid "_Help"
 msgstr "_Βοήθεια"
 
-#: ../src/ui/app-menu.ui.h:7
-#| msgid "CD Player"
-msgid "_About CD Player"
-msgstr "_Περί του αναπαραγωγού CD"
+#: ../src/ui/app-menu.ui.h:6
+msgid "_About"
+msgstr "Π_ερί"
 
-#: ../src/ui/app-menu.ui.h:8
+#: ../src/ui/app-menu.ui.h:7
 msgid "_Quit"
 msgstr "Έ_ξοδος"
 
@@ -699,7 +559,7 @@ msgstr "Έ_ξοδος"
 msgid "Choose a CD Cover"
 msgstr "Επιλογή ενός εξώφυλλου CD"
 
-#: ../src/ui/cover-chooser.ui.h:2
+#: ../src/ui/cover-chooser.ui.h:3
 msgid "Found images:"
 msgstr "Βρέθηκαν εικόνες:"
 
@@ -708,10 +568,14 @@ msgid "Extract Tracks"
 msgstr "Εξαγωγή κομματιών"
 
 #: ../src/ui/extract.ui.h:2
+msgid "_Extract"
+msgstr "Ε_ξαγωγή"
+
+#: ../src/ui/extract.ui.h:3
 msgid "_All tracks"
 msgstr "Ό_λα τα κομμάτια"
 
-#: ../src/ui/extract.ui.h:3
+#: ../src/ui/extract.ui.h:4
 msgid "_Selected tracks"
 msgstr "Επιλεγ_μένα κομμάτια"
 
@@ -719,138 +583,75 @@ msgstr "Επιλεγ_μένα κομμάτια"
 msgid "Format Properties"
 msgstr "Ιδιότητες μορφοποίησης"
 
-#: ../src/ui.h:33
-msgid "C_over"
-msgstr "Ε_ξώφυλλο"
+#: ../src/ui/gears-menu.ui.h:1
+msgid "Copy _Disk"
+msgstr "Αντιγραφή _δίσκου"
 
-#: ../src/ui.h:37
-msgid "Play/Pause"
-msgstr "Αναπαραγωγή/Παύση"
-
-#: ../src/ui.h:45
-msgid "Play this track"
-msgstr "Αναπαραγωγή αυτού του κομματιού"
-
-#: ../src/ui.h:52
-msgid "_Stop"
-msgstr "_Διακοπή"
-
-#: ../src/ui.h:56
-msgid "_Next"
-msgstr "_Επόμενο"
-
-#: ../src/ui.h:60
-msgid "Pre_v"
-msgstr "Προη_γ"
-
-#: ../src/ui.h:64 ../src/ui.h:68
+#: ../src/ui/gears-menu.ui.h:2
 msgid "_Eject"
 msgstr "Ε_ξαγωγή"
 
-#: ../src/ui.h:65 ../src/ui.h:69
-msgid "Eject the disc"
-msgstr "Εξαγωγή του δίσκου"
+#: ../src/ui/menus.ui.h:1
+msgid "_Play"
+msgstr "Ανα_παραγωγή"
 
-#: ../src/ui.h:72
-msgid "_Copy Disc"
-msgstr "_Αντιγραφή δίσκου"
-
-#: ../src/ui.h:73
-msgid "Copy the content of this disc on another disc"
-msgstr "Αντιγραφή του περιεχομένου αυτού του δίσκου σε έναν άλλο δίσκο"
-
-#: ../src/ui.h:76 ../src/ui.h:80
+#: ../src/ui/menus.ui.h:2
 msgid "E_xtract Tracks"
 msgstr "Ε_ξαγωγή κομματιών"
 
-#: ../src/ui.h:77
-msgid "Save the tracks to disk as files"
-msgstr "Αποθήκευση των κομματιών στον δίσκο ως αρχεία"
+#: ../src/ui/menus.ui.h:4
+msgid "_Choose File…"
+msgstr "Επι_λογή αρχείου…"
 
-#: ../src/ui.h:81
-msgid "Save the selected tracks to disk as files"
-msgstr "Αποθήκευση των επιλεγμένων κομματιών στον δίσκο ως αρχεία"
-
-#: ../src/ui.h:85
-msgid "Edit the disc artist, album and the tracks titles"
-msgstr ""
-"Επεξεργασία του καλλιτέχνη του δίσκου, του δίσκου και των τίτλων των "
-"κομματιών"
-
-#: ../src/ui.h:96
-msgid "_Choose File..."
-msgstr "Επι_λογή αρχείου..."
-
-#: ../src/ui.h:97
-msgid "Choose a file to use as disc cover"
-msgstr "Επιλέξτε ένα αρχείο που θα χρησιμοποιήσετε ως εξώφυλλο δίσκου"
-
-#: ../src/ui.h:100
+#: ../src/ui/menus.ui.h:5
 msgid "_Search on Internet"
 msgstr "Ανα_ζήτηση στο διαδίκτυο"
 
-#: ../src/ui.h:101
-msgid "Search for a disc cover on Internet"
-msgstr "Αναζήτηση ενός εξωφύλλου δίσκου στο διαδίκτυο"
-
-#: ../src/ui.h:105
-msgid "Remove current disc cover"
-msgstr "Αφαίρεση τρέχοντος εξώφυλλου δίσκου"
+#: ../src/ui/menus.ui.h:6
+msgid "_Remove"
+msgstr "Α_φαίρεση"
 
 #: ../src/ui/preferences.ui.h:1
 msgid "CD Player Preferences"
 msgstr "Προτιμήσεις αναπαραγωγής CD"
 
 #: ../src/ui/preferences.ui.h:2
-#| msgid "<b>CD Drive</b>"
-msgid "CD Drive"
-msgstr "Οδηγός CD"
+msgid "Playback"
+msgstr "Αναπαραγωγή"
 
 #: ../src/ui/preferences.ui.h:3
+msgid "Drive:"
+msgstr "Οδηγός:"
+
+#: ../src/ui/preferences.ui.h:4
 msgid "Automatically play newly inserted discs"
 msgstr "Αυτόματη αναπαραγωγή των νεοεισαγόμενων δίσκων"
 
-#: ../src/ui/preferences.ui.h:4
-msgid "General"
-msgstr "Γενικά"
-
 #: ../src/ui/preferences.ui.h:5
-#| msgid "<b>Destination folder</b>"
-msgid "Destination folder"
-msgstr "Φάκελος προορισμού"
+msgid "Extraction"
+msgstr "Εξαγωγή"
 
 #: ../src/ui/preferences.ui.h:6
-msgid "    "
-msgstr "    "
+msgid "Destination:"
+msgstr "Προορισμός:"
 
 #: ../src/ui/preferences.ui.h:7
 msgid "Choose destination folder"
 msgstr "Επιλογή φακέλου προορισμού"
 
 #: ../src/ui/preferences.ui.h:8
-#| msgid "<b>Output format</b>"
-msgid "Output format"
-msgstr "Μορφή εξαγωγής"
+msgid "Format:"
+msgstr "Μορφή:"
 
 #: ../src/ui/preferences.ui.h:9
 msgid "_Save playlist"
 msgstr "Απο_θήκευση λίστας αναπαραγωγής"
 
-#: ../src/ui/preferences.ui.h:10
-msgid "Extraction"
-msgstr "Εξαγωγή"
-
 #: ../src/ui/properties.ui.h:1
-#| msgid ""
-#| "Single artist\n"
-#| "Various artists\n"
 msgid "Single artist"
 msgstr "Ένας καλλιτέχνης"
 
 #: ../src/ui/properties.ui.h:2
-#| msgid ""
-#| "Single artist\n"
-#| "Various artists\n"
 msgid "Various artists"
 msgstr "Διάφοροι καλλιτέχνες"
 
@@ -858,38 +659,214 @@ msgstr "Διάφοροι καλλιτέχνες"
 msgid "Properties"
 msgstr "Ιδιότητες"
 
-#: ../src/ui/properties.ui.h:4
+#: ../src/ui/properties.ui.h:5
 msgid "_Title:"
 msgstr "_Τίτλος:"
 
-#: ../src/ui/properties.ui.h:5
+#: ../src/ui/properties.ui.h:6
 msgid "T_racks:"
 msgstr "Κο_μμάτια:"
 
-#: ../src/ui/properties.ui.h:6
+#: ../src/ui/properties.ui.h:7
 msgid "_Artist:"
 msgstr "_Καλλιτέχνης:"
 
-#: ../src/ui/properties.ui.h:7
+#: ../src/ui/properties.ui.h:8
 msgid "_Year:"
 msgstr "Έ_τος:"
 
-#: ../src/ui/properties.ui.h:8
+#: ../src/ui/properties.ui.h:9
 msgid "Search for the remaining data"
 msgstr "Αναζήτηση των δεδομένων που απομένουν"
-
-#: ../src/ui/properties.ui.h:9
-msgid "No album found."
-msgstr "Δεν βρέθηκε ο δίσκος."
 
 #: ../src/ui/ripper.ui.h:1
 msgid "Extracting Tracks"
 msgstr "Εξάγονται κομμάτια"
 
 #: ../src/ui/ripper.ui.h:2
-#| msgid "Extracting Tracks"
 msgid "Extracting tracks"
 msgstr "Εξάγονται κομμάτια"
+
+#~ msgid "File is not a valid .desktop file"
+#~ msgstr "Το αρχείο δεν είναι ένα έγκυρο .desktop αρχείο"
+
+#~ msgid "Unrecognized desktop file Version '%s'"
+#~ msgstr "Μη αναγνωρίσιμη έκδοση αρχείου επιφάνειας εργασίας '%s'"
+
+#~ msgid "Starting %s"
+#~ msgstr "Έναρξη %s"
+
+#~ msgid "Application does not accept documents on command line"
+#~ msgstr "Η εφαρμογή δε δέχεται έγγραφα από τη γραμμή εντολών"
+
+#~ msgid "Unrecognized launch option: %d"
+#~ msgstr "Άγνωστη επιλογή εκκίνησης: %d"
+
+#~ msgid "Can't pass documents to this desktop element"
+#~ msgstr ""
+#~ "Δε μπορούν να διαβιβαστούν έγγραφα σε αυτό το στοιχείο της επιφάνειας "
+#~ "εργασίας"
+
+#~ msgid "Not a launchable item"
+#~ msgstr "Μη εκκινήσιμο στοιχείο"
+
+#~ msgid "Disable connection to session manager"
+#~ msgstr "Απενεργοποίηση σύνδεσης με το διαχειριστή συνεδρίας"
+
+#~ msgid "Specify file containing saved configuration"
+#~ msgstr "Καθορίστε το αρχείο που περιέχει αποθηκευμένες ρυθμίσεις"
+
+#~ msgid "FILE"
+#~ msgstr "ΑΡΧΕΙΟ"
+
+#~ msgid "Specify session management ID"
+#~ msgstr "Καθορίστε το αναγνωριστικό της διαχείρισης συνεδρίας"
+
+#~ msgid "ID"
+#~ msgstr "Αναγνωριστικό"
+
+#~ msgid "Session management options:"
+#~ msgstr "Επιλογές διαχείρισης συνεδρίας:"
+
+#~ msgid "Show session management options"
+#~ msgstr "Εμφάνιση επιλογών διαχείρισης συνεδρίας"
+
+#~ msgid ""
+#~ "CD Player is free software; you can redistribute it and/or modify it "
+#~ "under the terms of the GNU General Public License as published by the "
+#~ "Free Software Foundation; either version 2 of the License, or (at your "
+#~ "option) any later version."
+#~ msgstr ""
+#~ "Το CD Player είναι ελεύθερο λογισμικό· επιτρέπεται η αναδιανομή ή/και "
+#~ "τροποποίησή του υπό τους όρους της Γενικής Άδειας Δημόσιας Χρήσης GNU, "
+#~ "όπως αυτή έχει δημοσιευτεί από το Ίδρυμα Ελεύθερου Λογισμικού· είτε της "
+#~ "έκδοσης 2 της Άδειας, είτε (κατ' επιλογήν σας) οποιασδήποτε "
+#~ "μεταγενέστερης έκδοσης."
+
+#~ msgid ""
+#~ "CD Player is distributed in the hope that it will be useful, but WITHOUT "
+#~ "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+#~ "FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+#~ "more details."
+#~ msgstr ""
+#~ "Το CD Player διανέμεται με την ελπίδα ότι θα αποδειχθεί χρήσιμο, αλλά "
+#~ "ΧΩΡΙΣ ΚΑΜΙΑ ΕΓΓΥΗΣΗ· χωρίς ούτε και την σιωπηρή εγγύηση ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ "
+#~ "ή ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΗ ΧΡΗΣΗ. Για περισσότερες λεπτομέρειες "
+#~ "ανατρέξτε στη Γενική Άδεια Δημόσιας Χρήσης GNU."
+
+#~ msgid ""
+#~ "You should have received a copy of the GNU General Public License along "
+#~ "with CD Player; if not, write to the Free Software Foundation, Inc., 51 "
+#~ "Franklin St, Fifth Floor, Boston, MA 02110-1301 USA"
+#~ msgstr ""
+#~ "Θα πρέπει να έχετε λάβει ένα αντίγραφο της Γενικής Άδειας Δημόσιας Χρήσης "
+#~ "GNU μαζί με το CD Player· αν όχι, επικοινωνήστε γραπτώς με το Free "
+#~ "Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA "
+#~ "02110-1301 USA"
+
+#~ msgid ""
+#~ "Vorbis is an open source, lossy audio codec with high quality output at a "
+#~ "lower file size than MP3."
+#~ msgstr ""
+#~ "Η Vorbis είναι μια ανοικτού κώδικα, απωλεστική κωδικοποίηση ήχου υψηλής "
+#~ "ποιότητας με χαμηλότερο μέγεθος αρχείου από το MP3."
+
+#~ msgid ""
+#~ "Free Lossless Audio Codec (FLAC) is an open source codec that compresses "
+#~ "but does not degrade audio quality."
+#~ msgstr ""
+#~ "Η ελεύθερη μη απωλεστική κωδικοποίηση ήχου (FLAC) είναι μια κωδικοποίηση "
+#~ "ανοικτού κώδικα που συμπιέζει, αλλά δεν υποβαθμίζει την ποιότητα του ήχου."
+
+#~ msgid ""
+#~ "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
+#~ "modulated (PCM) audio."
+#~ msgstr ""
+#~ "Η WAV+PCM είναι μια μη απωλεστική μορφή που διατηρεί ασυμπίεστο, "
+#~ "ακατέργαστο παλμοκωδικά διαμορφωμένο (PCM) ήχο."
+
+#~ msgid "V_olume"
+#~ msgstr "Έ_νταση"
+
+#~ msgid "_Pause"
+#~ msgstr "_Παύση"
+
+#~| msgid "Extraction"
+#~ msgid "Other actions"
+#~ msgstr "Άλλες ενέργειες"
+
+#~ msgid "_Show Window"
+#~ msgstr "Ε_μφάνιση παραθύρου"
+
+#~ msgid "Show the main window"
+#~ msgstr "Εμφάνιση του κυρίως παραθύρου"
+
+#~ msgid "_Hide Window"
+#~ msgstr "Απόκρυ_ψη παραθύρου"
+
+#~ msgid "Hide the main window"
+#~ msgstr "Απόκρυψη του κυρίως παράθυρου"
+
+#~| msgid "Play CD"
+#~ msgid "Play Mode"
+#~ msgstr "Λειτουργία αναπαραγωγής"
+
+#~ msgid "C_over"
+#~ msgstr "Ε_ξώφυλλο"
+
+#~ msgid "Play/Pause"
+#~ msgstr "Αναπαραγωγή/Παύση"
+
+#~ msgid "Play this track"
+#~ msgstr "Αναπαραγωγή αυτού του κομματιού"
+
+#~ msgid "_Stop"
+#~ msgstr "_Διακοπή"
+
+#~ msgid "_Next"
+#~ msgstr "_Επόμενο"
+
+#~ msgid "Pre_v"
+#~ msgstr "Προη_γ"
+
+#~ msgid "Eject the disc"
+#~ msgstr "Εξαγωγή του δίσκου"
+
+#~ msgid "Copy the content of this disc on another disc"
+#~ msgstr "Αντιγραφή του περιεχομένου αυτού του δίσκου σε έναν άλλο δίσκο"
+
+#~ msgid "Save the tracks to disk as files"
+#~ msgstr "Αποθήκευση των κομματιών στον δίσκο ως αρχεία"
+
+#~ msgid "Save the selected tracks to disk as files"
+#~ msgstr "Αποθήκευση των επιλεγμένων κομματιών στον δίσκο ως αρχεία"
+
+#~ msgid "Edit the disc artist, album and the tracks titles"
+#~ msgstr ""
+#~ "Επεξεργασία του καλλιτέχνη του δίσκου, του δίσκου και των τίτλων των "
+#~ "κομματιών"
+
+#~ msgid "Choose a file to use as disc cover"
+#~ msgstr "Επιλέξτε ένα αρχείο που θα χρησιμοποιήσετε ως εξώφυλλο δίσκου"
+
+#~ msgid "Search for a disc cover on Internet"
+#~ msgstr "Αναζήτηση ενός εξωφύλλου δίσκου στο διαδίκτυο"
+
+#~ msgid "Remove current disc cover"
+#~ msgstr "Αφαίρεση τρέχοντος εξώφυλλου δίσκου"
+
+#~ msgid "General"
+#~ msgstr "Γενικά"
+
+#~ msgid "    "
+#~ msgstr "    "
+
+#~| msgid "<b>Output format</b>"
+#~ msgid "Output format"
+#~ msgstr "Μορφή εξαγωγής"
+
+#~ msgid "No album found."
+#~ msgstr "Δεν βρέθηκε ο δίσκος."
 
 #~ msgid "<b>Extract</b>"
 #~ msgstr "<b>Εξαγωγή</b>"
@@ -1107,9 +1084,6 @@ msgstr "Εξάγονται κομμάτια"
 #~ msgid "Raw audio"
 #~ msgstr "Raw audio"
 
-#~ msgid "_MP3"
-#~ msgstr "_MP3"
-
 #~ msgid "_Wave"
 #~ msgstr "_Wave"
 
@@ -1128,17 +1102,11 @@ msgstr "Εξάγονται κομμάτια"
 #~ msgid "_CD"
 #~ msgstr "_CD"
 
-#~ msgid "_Remove Cover"
-#~ msgstr "Α_φαίρεση εξωφύλλου"
-
 #~ msgid "Bitrate: %d Kbps"
 #~ msgstr "Bitrate: %d Kbps"
 
 #~ msgid "year %d"
 #~ msgstr "έτος %d"
-
-#~ msgid "_About"
-#~ msgstr "Π_ερί"
 
 #~ msgid "_Contents"
 #~ msgstr "_Περιεχόμενα"
