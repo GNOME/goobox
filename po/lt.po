@@ -2,15 +2,15 @@
 # Copyright (C) 2004-2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the goobox package.
 # Žygimantas Beručka <uid0@akl.lt>, 2004-2005.
-# Aurimas Černius <aurisc4@gmail.com>, 2013.
+# Aurimas Černius <aurisc4@gmail.com>, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=goobox&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-12-05 16:22+0000\n"
-"PO-Revision-Date: 2013-03-03 23:01+0200\n"
+"POT-Creation-Date: 2014-03-02 09:12+0000\n"
+"PO-Revision-Date: 2014-03-02 22:35+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -21,72 +21,31 @@ msgstr ""
 "%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Gtranslator 2.91.6\n"
 
-#: ../copy-n-paste/eggdesktopfile.c:165
-#, c-format
-msgid "File is not a valid .desktop file"
-msgstr "Failas nėra tinkamas .desktop failas"
+#: ../data/appdata/goobox.appdata.xml.in.h:1
+#| msgid "_About CD Player"
+msgid "Goobox CD Player"
+msgstr "Goobox CD grotuvas"
 
-#: ../copy-n-paste/eggdesktopfile.c:190
-#, c-format
-msgid "Unrecognized desktop file Version '%s'"
-msgstr "Neatpažinta desktop failo versija „%s“"
+#: ../data/appdata/goobox.appdata.xml.in.h:2
+#| msgid "Play CDs and save the tracks to disk as files"
+msgid ""
+"Goobox allows you to play CDs and save the tracks to disk as mp3, ogg, flac "
+"or wav files."
+msgstr ""
+"Goobox leidžia groti CD ir įrašyti takelius į diską kaip mp3, ogg, flac arba "
+"wav failus."
 
-#: ../copy-n-paste/eggdesktopfile.c:970
-#, c-format
-msgid "Starting %s"
-msgstr "Paleidžiama %s"
+#: ../data/appdata/goobox.appdata.xml.in.h:3
+msgid ""
+"Track titles and CD covers are set automatically using the MusicBrainz web "
+"service."
+msgstr ""
+"Takelių pavadinimai ir CD viršeliai yra automatiškai nustatomi naudojant "
+"MusicBrainz internetinę tarnybą."
 
-#: ../copy-n-paste/eggdesktopfile.c:1112
-#, c-format
-msgid "Application does not accept documents on command line"
-msgstr "Programa nepriima dokumentų komandų eilutėje"
-
-#: ../copy-n-paste/eggdesktopfile.c:1180
-#, c-format
-msgid "Unrecognized launch option: %d"
-msgstr "Neatpažintas paleidimo parametras: %d"
-
-#: ../copy-n-paste/eggdesktopfile.c:1385
-#, c-format
-msgid "Can't pass documents to this desktop element"
-msgstr "Negalima perduoti dokumentų šiam desktop elementui"
-
-#: ../copy-n-paste/eggdesktopfile.c:1406
-#, c-format
-msgid "Not a launchable item"
-msgstr "Ne paleidžiamas elementas"
-
-#: ../copy-n-paste/eggsmclient.c:226
-msgid "Disable connection to session manager"
-msgstr "Išjungti jungimąsi prie seanso valdyklės"
-
-#: ../copy-n-paste/eggsmclient.c:229
-msgid "Specify file containing saved configuration"
-msgstr "Nurodykite failą su įrašyta konfigūracija"
-
-#: ../copy-n-paste/eggsmclient.c:229
-msgid "FILE"
-msgstr "FAILAS"
-
-#: ../copy-n-paste/eggsmclient.c:232
-msgid "Specify session management ID"
-msgstr "Nurodykite seanso valdymo ID"
-
-#: ../copy-n-paste/eggsmclient.c:232
-msgid "ID"
-msgstr "ID"
-
-#: ../copy-n-paste/eggsmclient.c:253
-msgid "Session management options:"
-msgstr "Seanso valdymo parametrai:"
-
-#: ../copy-n-paste/eggsmclient.c:254
-msgid "Show session management options"
-msgstr "Rodyti seanso valdymo parametrus"
-
-#: ../data/goobox.desktop.in.in.h:1 ../src/actions.c:159
-#: ../src/goo-window.c:1315 ../src/goo-window.c:1328 ../src/goo-window.c:1846
-#: ../src/main.c:240
+#: ../data/goobox.desktop.in.in.h:1
+#: ../src/goo-application-actions-callbacks.c:63 ../src/goo-application.c:417
+#: ../src/goo-window.c:1379 ../src/goo-window.c:1392 ../src/goo-window.c:1962
 msgid "CD Player"
 msgstr "CD grotuvas"
 
@@ -99,12 +58,10 @@ msgid "Device path"
 msgstr "Įrenginio kelias"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:2
-#| msgid "Volume level: %3.0f%%"
 msgid "Volume level"
 msgstr "Garsumo lygis"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:3
-#| msgid "Choose a CD cover from the local disk"
 msgid "'Choose cover' location"
 msgstr "Viršelio pasirinkimo vieta"
 
@@ -117,7 +74,6 @@ msgid "Use Sound Juicer to rip discs"
 msgstr "Naudoti Saund Juicer diskų turinio išsaugojimui"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:6
-#| msgid "Stop playing"
 msgid "Autoplay"
 msgstr "Automatinis grojimas"
 
@@ -138,12 +94,10 @@ msgid "Play all tracks"
 msgstr "Groti visus takelius"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:11
-#| msgid "_Save playlist"
 msgid "Shuffle playlist"
 msgstr "Maišyti grojaraštį"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:12
-#| msgid "Restart playing when finished"
 msgid "Restart when finished"
 msgstr "Pabaigus groti iš naujo"
 
@@ -156,12 +110,10 @@ msgid "Playlist sort type"
 msgstr "Grojaraščio rikiavimo tipas"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:15
-#| msgid "Extracting Tracks"
 msgid "Extraction folder"
 msgstr "Išskleidimo aplankas"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:16
-#| msgid "<b>File type</b>"
 msgid "File type"
 msgstr "Failo tipas"
 
@@ -170,7 +122,6 @@ msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr "Galimos reikšmės yra: ogg, flac, mp3, wave."
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:18
-#| msgid "_Save playlist"
 msgid "Save the playlist"
 msgstr "Įrašyti grojaraštį"
 
@@ -179,102 +130,36 @@ msgid "Save the playlist of the extracted tracks."
 msgstr "Įrašyti išskleistų takelių grojaraštį."
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:20
-#| msgid "_View destination folder"
 msgid "View the destination"
 msgstr "Rodyti paskirties aplanką"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:21
-#| msgid "Higher quality"
 msgid "OGG files quality"
 msgstr "OGG failų kokybė"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:22
-#| msgid "Higher quality"
 msgid "FLAC files quality"
 msgstr "FLAC failų kokybė"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:23
-#| msgid "Higher quality"
 msgid "MP3 files quality"
 msgstr "MP3 failų kokybė"
-
-#: ../src/actions.c:139
-msgid "translator_credits"
-msgstr ""
-"Išvertė:\n"
-"Žygimantas Beručka <uid0@akl.lt>\n"
-"Aurimas Černius <aurisc4@gmail.com>"
-
-#: ../src/actions.c:142
-msgid ""
-"CD Player is free software; you can redistribute it and/or modify it under "
-"the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version."
-msgstr ""
-"CD grotuvas yra laisva programinė įranga; galite ją platinti ir (arba) "
-"keisti pagal GNU Bendrosios Viešos Licencijos sąlygas, kaip jas pateikia "
-"Free Software Foundation; licencijos versija 2 arba (jūsų pasirinkta) bet "
-"kuri vėlesnė versija."
-
-#: ../src/actions.c:146
-msgid ""
-"CD Player is distributed in the hope that it will be useful, but WITHOUT ANY "
-"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
-"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
-"details."
-msgstr ""
-"CD grotuvas yra platinamas tikintis, kad jis bus naudingas, bet BE JOKIŲ "
-"GARANTIJŲ; netgi be numanomų PREKYBINIŲ ar TINKAMUMO KONKREČIAM TIKSLUI "
-"garantijų.  Daugiau informacijos rasite GNU Bendrojoje Viešoje Licencijoje."
-
-#: ../src/actions.c:150
-msgid ""
-"You should have received a copy of the GNU General Public License along with "
-"CD Player; if not, write to the Free Software Foundation, Inc., 51 Franklin "
-"St, Fifth Floor, Boston, MA 02110-1301 USA"
-msgstr ""
-"Jūs turėjote gauti GNU Bendrosios Viešos Licencijos kopiją su CD grotuvu; "
-"jei negavote, parašykite Free Software Foundation, Inc., 51 Franklin St, "
-"Fifth Floor, Boston, MA 02110-1301 USA"
-
-#: ../src/actions.c:161
-msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
-msgstr "Autorinės teisės © 2004-2011 Free Software Foundation, Inc."
-
-#: ../src/actions.c:162 ../src/main.c:334 ../src/main.c:433
-#| msgid "Save the tracks to disk as files"
-msgid "Play CDs and save the tracks to disk as files"
-msgstr "Groti CD ir įrašyti takelius į diską kaip failus"
-
-#: ../src/actions.c:290 ../src/actions.c:325 ../src/actions.c:358
-msgid "Could not execute command"
-msgstr "Nepavyko įvykdyti komandos"
 
 #: ../src/album-info.c:176
 msgid "Various"
 msgstr "Įvairūs"
 
-#: ../src/dlg-cover-chooser.c:277
+#: ../src/dlg-cover-chooser.c:276
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, įkeliamas paveikslėlis: %u"
 
-#: ../src/dlg-cover-chooser.c:342 ../src/goo-window.c:2657
-#| msgid "Could not search a cover on Internet"
+#: ../src/dlg-cover-chooser.c:341 ../src/goo-window.c:2805
 msgid "Could not search for a cover on Internet"
 msgstr "Nepavyko surasti viršelio Internete"
 
-#: ../src/dlg-extract.c:110
+#: ../src/dlg-extract.c:108
 #, c-format
-#| msgid ""
-#| "You need at least one of the following GStreamer plugins in order to "
-#| "extract CD tracks:\n"
-#| "\n"
-#| "• %s → Ogg Vorbis\n"
-#| "• %s → FLAC\n"
-#| "• %s → Mp3\n"
-#| "• %s → Wave"
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
 "CD tracks:\n"
@@ -289,159 +174,126 @@ msgstr ""
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 
-#: ../src/dlg-extract.c:121
+#: ../src/dlg-extract.c:119
 msgid "No encoder available."
 msgstr "Nėra prieinamo koduotojo."
 
-#: ../src/dlg-preferences.c:240 ../src/dlg-preferences.c:472
-#| msgid "_Ogg Vorbis"
+#: ../src/dlg-preferences.c:243 ../src/dlg-preferences.c:504
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:252 ../src/dlg-preferences.c:475
-#| msgid "_FLAC"
+#: ../src/dlg-preferences.c:257 ../src/dlg-preferences.c:507
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:264
+#: ../src/dlg-preferences.c:271 ../src/dlg-preferences.c:510
+msgid "MP3"
+msgstr "MP3"
+
+#: ../src/dlg-preferences.c:285
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
-#.
-#: ../src/dlg-preferences.c:290 ../src/dlg-preferences.c:499
-msgid ""
-"Vorbis is an open source, lossy audio codec with high quality output at a "
-"lower file size than MP3."
-msgstr ""
-"Vorbis yra atviro kodo garso kodekas su praradimais, su aukštesne išvesties "
-"kokybe esant mažesniam dydžiui nei MP3."
-
-#: ../src/dlg-preferences.c:291 ../src/dlg-preferences.c:502
-msgid ""
-"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
-"does not degrade audio quality."
-msgstr ""
-"Laisvas Garso Kodekas Be Praradimų (FLAC) yra atviro kodo kodekas, kuris "
-"suspaudžia, bet nesumažina garso kokybės."
-
-#: ../src/dlg-preferences.c:292 ../src/dlg-preferences.c:505
-msgid ""
-"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
-"modulated (PCM) audio."
-msgstr ""
-"WAV+PCM yra formatas be praradimų, kuris laiko nespaustą, tiesioginių pulsų "
-"kodo moduliuotą (PCM) garsą."
-
-#: ../src/dlg-preferences.c:447
+#: ../src/dlg-preferences.c:479
 msgid "Faster compression"
 msgstr "Greitesnis suspaudimas"
 
-#: ../src/dlg-preferences.c:451
+#: ../src/dlg-preferences.c:483
 msgid "Higher compression"
 msgstr "Didesnis suspaudimas"
 
-#: ../src/dlg-preferences.c:458
+#: ../src/dlg-preferences.c:490
 msgid "Smaller size"
 msgstr "Mažesnis dydis"
 
-#: ../src/dlg-preferences.c:462
+#: ../src/dlg-preferences.c:494
 msgid "Higher quality"
 msgstr "Aukštesnė kokybė"
 
-#: ../src/dlg-preferences.c:486
-#| msgid "<b>Quality</b>"
+#: ../src/dlg-preferences.c:522
 msgid "Quality:"
 msgstr "Kokybė:"
 
-#: ../src/dlg-preferences.c:489
-#| msgid "Compression level: %d"
+#: ../src/dlg-preferences.c:525
 msgid "Compression level:"
 msgstr "Suspaudimo lygis:"
 
-#: ../src/dlg-properties.c:216
+#: ../src/dlg-properties.c:214
 #, c-format
 msgid "Album %d of %d"
 msgstr "Albumas %d iš %d"
 
-#: ../src/dlg-properties.c:274
-#| msgid "No image found"
+#: ../src/dlg-properties.c:271
 msgid "No album found"
 msgstr "Nerasta albumų"
 
-#: ../src/dlg-properties.c:293
-#| msgid "Searching images..."
-msgid "Searching disc info..."
-msgstr "Ieškoma disko informacijos..."
+#: ../src/dlg-properties.c:290 ../src/goo-window.c:1314
+#| msgid "Searching disc info..."
+msgid "Searching disc information…"
+msgstr "Ieškoma disko informacijos…"
 
-#: ../src/dlg-properties.c:353
+#: ../src/dlg-properties.c:351
 msgid "#"
 msgstr "Nr."
 
-#: ../src/dlg-properties.c:371
+#: ../src/dlg-properties.c:369
 msgid "Title"
 msgstr "Pavadinimas"
 
-#: ../src/dlg-properties.c:404
+#: ../src/dlg-properties.c:402
 msgid "Artist"
 msgstr "Atlikėjas"
 
-#: ../src/dlg-ripper.c:178
+#: ../src/dlg-ripper.c:165
 #, c-format
 msgid "(%d:%02d:%02d Remaining)"
 msgstr "(Liko %d:%02d:%02d)"
 
-#: ../src/dlg-ripper.c:180
+#: ../src/dlg-ripper.c:167
 #, c-format
 msgid "(%d:%02d Remaining)"
 msgstr "(Liko %d:%02d)"
 
-#: ../src/dlg-ripper.c:185
+#: ../src/dlg-ripper.c:172
 #, c-format
-#| msgid "Extracting track %d of %d: %s"
 msgid "Extracting track: %d of %d %s"
 msgstr "Išskleidžiamas takelis: %d iš %d %s"
 
-#: ../src/dlg-ripper.c:222
-#| msgid "Could not eject the CD"
+#: ../src/dlg-ripper.c:209 ../src/dlg-ripper.c:318
 msgid "Could not extract the tracks"
 msgstr "Nepavyko išskleisti takelių"
 
-#: ../src/dlg-ripper.c:430
+#: ../src/dlg-ripper.c:436
 #, c-format
-#| msgid "_View destination folder"
 msgid "Invalid destination folder: %s"
 msgstr "Netinkamas paskirties aplankas: %s"
 
-#: ../src/dlg-ripper.c:460 ../src/dlg-ripper.c:464
+#: ../src/dlg-ripper.c:466 ../src/dlg-ripper.c:470
 msgid "Could not display the destination folder"
 msgstr "Nepavyko parodyti paskirties aplanko"
 
-#: ../src/dlg-ripper.c:592
+#: ../src/dlg-ripper.c:596
 msgid "Tracks extracted successfully"
 msgstr "Takeliai įrašyti sėkmingai"
 
-#: ../src/dlg-ripper.c:594
+#: ../src/dlg-ripper.c:598
 msgid "_View destination folder"
 msgstr "_Rodyti paskirties aplanką"
 
-#: ../src/dlg-ripper.c:609
+#: ../src/dlg-ripper.c:612
 #, c-format
-#| msgid "Extracting Tracks"
 msgid "Extracting \"%s\""
 msgstr "Išskleidžiamas „%s“"
 
-#: ../src/dlg-ripper.c:620 ../src/dlg-ripper.c:629
-#| msgid "Could not execute command"
+#: ../src/dlg-ripper.c:623 ../src/dlg-ripper.c:632
 msgid "Could not extract tracks"
 msgstr "Nepavyko išskleisti takelių"
 
-#: ../src/dlg-ripper.c:659
-#| msgid "Ripped with Goobox"
+#: ../src/dlg-ripper.c:663
 msgid "Ripped with CD Player"
 msgstr "Išskleista naudojant CD grotuvą"
 
-#: ../src/dlg-ripper.c:705
-#| msgid "Extracting Tracks"
+#: ../src/dlg-ripper.c:697
 msgid "Extracting disc tracks"
 msgstr "Išskleidžiami disko takeliai"
 
@@ -469,107 +321,150 @@ msgctxt "short time format"
 msgid "%d∶%02d"
 msgstr "%d∶%02d"
 
-#: ../src/goo-player.c:259
-#| msgid "Play CD"
+#: ../src/goo-application-actions-callbacks.c:60
+msgid "translator_credits"
+msgstr ""
+"Išvertė:\n"
+"Žygimantas Beručka <uid0@akl.lt>\n"
+"Aurimas Černius <aurisc4@gmail.com>"
+
+#: ../src/goo-application-actions-callbacks.c:65
+msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
+msgstr "Autorinės teisės © 2004-2011 Free Software Foundation, Inc."
+
+#: ../src/goo-application-actions-callbacks.c:66 ../src/goo-application.c:159
+msgid "Play CDs and save the tracks to disk as files"
+msgstr "Groti CD ir įrašyti takelius į diską kaip failus"
+
+#: ../src/goo-application.c:52
+msgid "CD device to be used"
+msgstr "Naudojamas CD įrenginys"
+
+#: ../src/goo-application.c:53
+msgid "DEVICE_PATH"
+msgstr "ĮRENGINIO_KELIAS"
+
+#: ../src/goo-application.c:55
+msgid "Play the CD on startup"
+msgstr "Paleidus programą pradėti grojimą"
+
+#: ../src/goo-application.c:58
+msgid "Toggle play"
+msgstr "Perjungti grojimą"
+
+#: ../src/goo-application.c:61
+msgid "Stop playing"
+msgstr "Sustabdyti grojimą"
+
+#: ../src/goo-application.c:64
+msgid "Play the next track"
+msgstr "Groti sekantį takelį"
+
+#: ../src/goo-application.c:67
+msgid "Play the previous track"
+msgstr "Groti ankstesnį takelį"
+
+#: ../src/goo-application.c:70
+msgid "Eject the CD"
+msgstr "Išstumti CD"
+
+#: ../src/goo-application.c:73
+msgid "Toggle the main window visibility"
+msgstr "Perjungti pagrindinio lango matomumą"
+
+#: ../src/goo-application.c:76
+msgid "Quit the application"
+msgstr "Uždaryti programą"
+
+#: ../src/goo-application.c:79
+msgid "Show version"
+msgstr "Parodyti versiją"
+
+#: ../src/goo-application.c:202
+msgid "Cannot start the CD player"
+msgstr "Nepavyko paleisti CD grotuvo"
+
+#: ../src/goo-application.c:203
+msgid "In order to read CDs you have to install the gstreamer base plugins"
+msgstr "CD skaitymui reikia įdiegti gstreamer base įskiepius"
+
+#: ../src/goo-player.c:322
 msgid "Playing CD"
 msgstr "Grojamas CD"
 
-#: ../src/goo-player-info.c:256
+#: ../src/goo-player-info.c:253
 msgid "Click here to choose a cover for this CD"
 msgstr "Norėdami parinkti šiam CD viršelį, spauskite čia"
 
-#: ../src/goo-player-info.c:419 ../src/goo-window.c:1174
+#: ../src/goo-player-info.c:395 ../src/goo-window.c:1208
 msgid "No disc"
 msgstr "Nėra disko"
 
-#: ../src/goo-player-info.c:422 ../src/goo-window.c:1179
-#| msgid "No disc"
+#: ../src/goo-player-info.c:398 ../src/goo-window.c:1213
 msgid "Data disc"
 msgstr "Duomenų diskas"
 
-#: ../src/goo-player-info.c:426
+#: ../src/goo-player-info.c:402
 msgid "Ejecting CD"
 msgstr "Išimamas CD"
 
-#: ../src/goo-player-info.c:429
+#: ../src/goo-player-info.c:405
 msgid "Checking CD drive"
 msgstr "Tikrinamas CD įrenginys"
 
-#: ../src/goo-player-info.c:432 ../src/goo-player-info.c:435
+#: ../src/goo-player-info.c:408 ../src/goo-player-info.c:411
 msgid "Reading CD"
 msgstr "Skaitomas CD"
 
-#: ../src/goo-player-info.c:438 ../src/goo-window.c:1192
-#: ../src/goo-window.c:1335
+#: ../src/goo-player-info.c:414 ../src/goo-window.c:1226
+#: ../src/goo-window.c:1399
 msgid "Audio CD"
 msgstr "Audio CD"
 
-#: ../src/goo-stock.c:40
-msgid "_Extract"
-msgstr "_Rašyti"
+#: ../src/goo-window-actions-callbacks.c:232
+#: ../src/goo-window-actions-callbacks.c:268
+#: ../src/goo-window-actions-callbacks.c:302
+msgid "Could not execute command"
+msgstr "Nepavyko įvykdyti komandos"
 
-#: ../src/goo-stock.c:41
-msgid "_Reset"
-msgstr "_Atstatyti"
-
-#: ../src/goo-stock.c:42 ../src/goo-stock.c:43 ../src/goo-stock.c:44
-#: ../src/goo-stock.c:45
-msgid "V_olume"
-msgstr "_Garsumas"
-
-#: ../src/goo-window.c:52
+#: ../src/goo-window.c:47
 msgid "Hide _tracks"
 msgstr "Paslėpti _takelius"
 
-#: ../src/goo-window.c:53
+#: ../src/goo-window.c:48
 msgid "Show _tracks"
 msgstr "Rodyti _takelius"
 
-#: ../src/goo-window.c:1245 ../src/ui.h:48
-msgid "_Pause"
-msgstr "_Pauzė"
+#: ../src/goo-window.c:1610
+msgid "No information found for this disc"
+msgstr "Šiam diskui nerasta informacijos"
 
-#: ../src/goo-window.c:1245 ../src/main.c:922 ../src/ui.h:49
-msgid "Pause"
-msgstr "Pauzė"
+#: ../src/goo-window.c:2234 ../src/ui/gears-menu.ui.h:3 ../src/ui/menus.ui.h:3
+#| msgid "Properties"
+msgid "_Properties"
+msgstr "_Savybės"
 
-#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/ui.h:36
-#: ../src/ui.h:40 ../src/ui.h:44
-msgid "_Play"
-msgstr "_Groti"
-
-#: ../src/goo-window.c:1553 ../src/goo-window.c:1565 ../src/main.c:929
-#: ../src/ui.h:41
-msgid "Play"
-msgstr "Groti"
-
-#: ../src/goo-window.c:2082 ../src/goo-window.c:2083
-#| msgid "Quit the application"
-msgid "Other actions"
-msgstr "Kiti veiksmai"
-
-#: ../src/goo-window.c:2475
+#: ../src/goo-window.c:2617
 msgid "Could not save cover image"
 msgstr "Nepavyko išsaugoti viršelio paveiksliuko"
 
-#: ../src/goo-window.c:2500 ../src/goo-window.c:2526
+#: ../src/goo-window.c:2641 ../src/goo-window.c:2672
 msgid "Could not load image"
 msgstr "Nepavyko įkelti paveikslėlio"
 
-#: ../src/goo-window.c:2595
-#| msgid "Choose CD Cover Image"
+#: ../src/goo-window.c:2743
 msgid "Choose Disc Cover Image"
 msgstr "Pasirinkite CD viršelio paveiksliuką"
 
-#: ../src/goo-window.c:2614
+#: ../src/goo-window.c:2762
 msgid "Images"
 msgstr "Paveikslėliai"
 
-#: ../src/goo-window.c:2622
+#: ../src/goo-window.c:2770
 msgid "All files"
 msgstr "Visi failai"
 
-#: ../src/goo-window.c:2658
+#: ../src/goo-window.c:2806
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -577,96 +472,52 @@ msgstr ""
 "Norint surasti albumo viršelį Jums reikia įvesti atlikėją ir albumo "
 "pavadinimą."
 
-#: ../src/goo-window.c:2701
-msgid "_Show Window"
-msgstr "_Rodyti langą"
-
-#: ../src/goo-window.c:2701
-msgid "Show the main window"
-msgstr "Rodyti pagrindinį langą"
-
-#: ../src/goo-window.c:2709 ../src/ui.h:108
-msgid "_Hide Window"
-msgstr "_Paslėpti langą"
-
-#: ../src/goo-window.c:2709 ../src/ui.h:109
-msgid "Hide the main window"
-msgstr "Paslėpti pagrindinį langą"
-
-#: ../src/gtk-file-chooser-preview.c:166
+#: ../src/gtk-file-chooser-preview.c:165
 msgid "Preview"
 msgstr "Peržiūra"
 
-#: ../src/gtk-file-chooser-preview.c:267
+#: ../src/gtk-file-chooser-preview.c:266
 msgid "pixels"
 msgstr "taškai"
 
-#: ../src/gtk-utils.c:754
+#: ../src/gtk-utils.c:500
 msgid "Could not display help"
 msgstr "Nepavyko parodyti pagalbos"
 
-#: ../src/gtk-utils.c:1040 ../src/gtk-utils.c:1046
-#| msgid "Quit the application"
+#: ../src/gtk-utils.c:786 ../src/gtk-utils.c:792
 msgid "Could not launch the application"
 msgstr "Nepavyko paleisti programos"
 
-#: ../src/main.c:71
-msgid "CD device to be used"
-msgstr "Naudojamas CD įrenginys"
+#: ../src/gtk-utils.h:36
+msgid "_Cancel"
+msgstr "_Atsisakyti"
 
-#: ../src/main.c:72
-msgid "DEVICE_PATH"
-msgstr "ĮRENGINIO_KELIAS"
+#: ../src/gtk-utils.h:37 ../src/ui/gears-menu.ui.h:4
+msgid "_Close"
+msgstr "_Užverti"
 
-#: ../src/main.c:74
-msgid "Play the CD on startup"
-msgstr "Paleidus programą pradėti grojimą"
+#: ../src/gtk-utils.h:38
+msgid "_Ok"
+msgstr "_Gerai"
 
-#: ../src/main.c:77
-msgid "Toggle play"
-msgstr "Perjungti grojimą"
+#: ../src/gtk-utils.h:39
+msgid "_Open"
+msgstr "_Atverti"
 
-#: ../src/main.c:80 ../src/ui.h:53
-msgid "Stop playing"
-msgstr "Sustabdyti grojimą"
+#: ../src/gtk-utils.h:40 ../src/ui/cover-chooser.ui.h:2
+#: ../src/ui/properties.ui.h:4
+msgid "_Reset"
+msgstr "_Atstatyti"
 
-#: ../src/main.c:83 ../src/ui.h:57
-msgid "Play the next track"
-msgstr "Groti sekantį takelį"
+#: ../src/main.c:272
+msgid "Pause"
+msgstr "Pauzė"
 
-#: ../src/main.c:86 ../src/ui.h:61
-msgid "Play the previous track"
-msgstr "Groti ankstesnį takelį"
+#: ../src/main.c:279
+msgid "Play"
+msgstr "Groti"
 
-#: ../src/main.c:89
-msgid "Eject the CD"
-msgstr "Išstumti CD"
-
-#: ../src/main.c:92
-#| msgid "Hide the main window"
-msgid "Toggle the main window visibility"
-msgstr "Perjungti pagrindinio lango matomumą"
-
-#: ../src/main.c:95 ../src/ui.h:93
-msgid "Quit the application"
-msgstr "Uždaryti programą"
-
-#: ../src/main.c:98
-msgid "Show version"
-msgstr "Parodyti versiją"
-
-#: ../src/main.c:292
-msgid "Cannot start the CD player"
-msgstr "Nepavyko paleisti CD grotuvo"
-
-#: ../src/main.c:293
-#| msgid ""
-#| "In order to read CDs you have to install the cdparanoia gstreamer plugin"
-msgid "In order to read CDs you have to install the gstreamer base plugins"
-msgstr "CD skaitymui reikia įdiegti gstreamer base įskiepius"
-
-#: ../src/main.c:936
-#| msgid "_Next"
+#: ../src/main.c:286
 msgid "Next"
 msgstr "Kitas"
 
@@ -680,32 +531,26 @@ msgid "_Preferences"
 msgstr "_Nustatymai"
 
 #: ../src/ui/app-menu.ui.h:2
-#| msgid "Play CD"
-msgid "Play Mode"
-msgstr "Grojimo veiksena"
-
-#: ../src/ui/app-menu.ui.h:3
 msgid "Play _All"
 msgstr "_Groti visus"
 
-#: ../src/ui/app-menu.ui.h:4
+#: ../src/ui/app-menu.ui.h:3
 msgid "_Repeat"
 msgstr "_Kartoti"
 
-#: ../src/ui/app-menu.ui.h:5
+#: ../src/ui/app-menu.ui.h:4
 msgid "S_huffle"
 msgstr "_Maišyti"
 
-#: ../src/ui/app-menu.ui.h:6
+#: ../src/ui/app-menu.ui.h:5
 msgid "_Help"
 msgstr "_Pagalba"
 
-#: ../src/ui/app-menu.ui.h:7
-#| msgid "CD Player"
-msgid "_About CD Player"
-msgstr "_Apie CD grotuvą"
+#: ../src/ui/app-menu.ui.h:6
+msgid "_About"
+msgstr "_Apie"
 
-#: ../src/ui/app-menu.ui.h:8
+#: ../src/ui/app-menu.ui.h:7
 msgid "_Quit"
 msgstr "_Uždaryti"
 
@@ -713,7 +558,7 @@ msgstr "_Uždaryti"
 msgid "Choose a CD Cover"
 msgstr "Pasirinkite CD viršelį"
 
-#: ../src/ui/cover-chooser.ui.h:2
+#: ../src/ui/cover-chooser.ui.h:3
 msgid "Found images:"
 msgstr "Rasta paveikslėlių:"
 
@@ -722,143 +567,89 @@ msgid "Extract Tracks"
 msgstr "Rašyti takelius"
 
 #: ../src/ui/extract.ui.h:2
+msgid "_Extract"
+msgstr "_Rašyti"
+
+#: ../src/ui/extract.ui.h:3
 msgid "_All tracks"
 msgstr "_Visus takelius"
 
-#: ../src/ui/extract.ui.h:3
+#: ../src/ui/extract.ui.h:4
 msgid "_Selected tracks"
 msgstr "_Pažymėtus takelius"
 
 #: ../src/ui/format-options.ui.h:1
-#| msgid "_CD Properties"
 msgid "Format Properties"
 msgstr "Formato savybės"
 
-#: ../src/ui.h:33
-#| msgid "CD C_over"
-msgid "C_over"
-msgstr "_Viršelis"
+#: ../src/ui/gears-menu.ui.h:1
+#| msgid "_Copy Disc"
+msgid "Copy _Disk"
+msgstr "Kopijuoti _diską"
 
-#: ../src/ui.h:37
-msgid "Play/Pause"
-msgstr "Groti/pauzė"
-
-#: ../src/ui.h:45
-msgid "Play this track"
-msgstr "Groti šį takelį"
-
-#: ../src/ui.h:52
-msgid "_Stop"
-msgstr "_Stop"
-
-#: ../src/ui.h:56
-msgid "_Next"
-msgstr "S_ekantis"
-
-#: ../src/ui.h:60
-msgid "Pre_v"
-msgstr "_Ankstesnis"
-
-#: ../src/ui.h:64 ../src/ui.h:68
+#: ../src/ui/gears-menu.ui.h:2
 msgid "_Eject"
 msgstr "_Išimti"
 
-#: ../src/ui.h:65 ../src/ui.h:69
-#| msgid "Eject the CD"
-msgid "Eject the disc"
-msgstr "Išstumti diską"
+#: ../src/ui/menus.ui.h:1
+msgid "_Play"
+msgstr "_Groti"
 
-#: ../src/ui.h:72
-msgid "_Copy Disc"
-msgstr "_Kopijuoti diską"
-
-#: ../src/ui.h:73
-msgid "Copy the content of this disc on another disc"
-msgstr "Kopijuoti šio disko turinį į kitą diską"
-
-#: ../src/ui.h:76 ../src/ui.h:80
+#: ../src/ui/menus.ui.h:2
 msgid "E_xtract Tracks"
 msgstr "Į_rašyti takelius"
 
-#: ../src/ui.h:77
-msgid "Save the tracks to disk as files"
-msgstr "Įrašyti takelius į diską kaip failas"
+#: ../src/ui/menus.ui.h:4
+#| msgid "_Choose File..."
+msgid "_Choose File…"
+msgstr "Pasirinkite _failą…"
 
-#: ../src/ui.h:81
-#| msgid "Save the tracks to disk as files"
-msgid "Save the selected tracks to disk as files"
-msgstr "Įrašyti takelius į diską kaip failus"
-
-#: ../src/ui.h:85
-#| msgid "Edit the CD artist, album and tracks titles"
-msgid "Edit the disc artist, album and the tracks titles"
-msgstr "Keisti disko atlikėją, albumą ir takelių pavadinimus"
-
-#: ../src/ui.h:96
-msgid "_Choose File..."
-msgstr "Pasirinkite _failą..."
-
-#: ../src/ui.h:97
-msgid "Choose a file to use as disc cover"
-msgstr "Pasirinkite failą, kurį norite naudoti kaip disko viršelį"
-
-#: ../src/ui.h:100
+#: ../src/ui/menus.ui.h:5
 msgid "_Search on Internet"
 msgstr "_Ieškoti Internete"
 
-#: ../src/ui.h:101
-#| msgid "Search a CD cover on Internet"
-msgid "Search for a disc cover on Internet"
-msgstr "Ieškoti disko viršelio Internete"
-
-#: ../src/ui.h:105
-#| msgid "Remove current CD cover"
-msgid "Remove current disc cover"
-msgstr "Pašalinti esamą disko viršelį"
+#: ../src/ui/menus.ui.h:6
+msgid "_Remove"
+msgstr "_Pašalinti"
 
 #: ../src/ui/preferences.ui.h:1
-#| msgid "Preferences"
 msgid "CD Player Preferences"
 msgstr "CD grotuvo nustatymai"
 
 #: ../src/ui/preferences.ui.h:2
-#| msgid "<b>CD Drive</b>"
-msgid "CD Drive"
-msgstr "CD įrenginys"
+#| msgid "Play"
+msgid "Playback"
+msgstr "Grojimas"
 
 #: ../src/ui/preferences.ui.h:3
+#| msgid "CD Drive"
+msgid "Drive:"
+msgstr "Diskas:"
+
+#: ../src/ui/preferences.ui.h:4
 msgid "Automatically play newly inserted discs"
 msgstr "Automatiškai groti įdėtus naujus diskus"
 
-#: ../src/ui/preferences.ui.h:4
-msgid "General"
-msgstr "Bendri"
-
 #: ../src/ui/preferences.ui.h:5
-#| msgid "<b>Destination folder</b>"
-msgid "Destination folder"
-msgstr "Paskirties aplankas"
+msgid "Extraction"
+msgstr "Išskleidimas"
 
 #: ../src/ui/preferences.ui.h:6
-msgid "    "
-msgstr "    "
+#| msgid "Destination folder"
+msgid "Destination:"
+msgstr "Paskirtis:"
 
 #: ../src/ui/preferences.ui.h:7
 msgid "Choose destination folder"
 msgstr "Pasirinkite paskirties aplanką"
 
 #: ../src/ui/preferences.ui.h:8
-msgid "Output format"
-msgstr "Išvesties formatas"
+msgid "Format:"
+msgstr "Formatas:"
 
 #: ../src/ui/preferences.ui.h:9
 msgid "_Save playlist"
 msgstr "Iš_saugoti grojaraštį"
-
-#: ../src/ui/preferences.ui.h:10
-#| msgid "_Extract"
-msgid "Extraction"
-msgstr "Išskleidimas"
 
 #: ../src/ui/properties.ui.h:1
 msgid "Single artist"
@@ -869,45 +660,34 @@ msgid "Various artists"
 msgstr "Įvairūs atlikėjai"
 
 #: ../src/ui/properties.ui.h:3
-#| msgid "_CD Properties"
 msgid "Properties"
 msgstr "Savybės"
 
-#: ../src/ui/properties.ui.h:4
-#| msgid "Title"
+#: ../src/ui/properties.ui.h:5
 msgid "_Title:"
 msgstr "_Pavadinimas:"
 
-#: ../src/ui/properties.ui.h:5
-#| msgid "_All tracks"
+#: ../src/ui/properties.ui.h:6
 msgid "T_racks:"
 msgstr "_Takeliai:"
 
-#: ../src/ui/properties.ui.h:6
-#| msgid "Artist"
+#: ../src/ui/properties.ui.h:7
 msgid "_Artist:"
 msgstr "_Atlikėjas:"
 
-#: ../src/ui/properties.ui.h:7
+#: ../src/ui/properties.ui.h:8
 msgid "_Year:"
 msgstr "_Metai:"
 
-#: ../src/ui/properties.ui.h:8
-#| msgid "Show the main window"
+#: ../src/ui/properties.ui.h:9
 msgid "Search for the remaining data"
 msgstr "Ieškoti likusių duomenų"
-
-#: ../src/ui/properties.ui.h:9
-#| msgid "No image found"
-msgid "No album found."
-msgstr "Nerasta albumų."
 
 #: ../src/ui/ripper.ui.h:1
 msgid "Extracting Tracks"
 msgstr "Išskleidžiami takeliai"
 
 #: ../src/ui/ripper.ui.h:2
-#| msgid "Extracting Tracks"
 msgid "Extracting tracks"
 msgstr "Išskleidžiami takeliai"
 
