@@ -1,0 +1,387 @@
+# Greek translation for goobox.
+# Copyright (C) 2014 goobox's COPYRIGHT HOLDER
+# This file is distributed under the same license as the goobox package.
+# Dimitris Spingos <dmtrs32@gmail.com>, 2014.
+# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: goobox master\n"
+"POT-Creation-Date: 2014-03-02 21:12+0000\n"
+"PO-Revision-Date: 2014-03-03 10:58+0300\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
+"Language-Team: team@lists.gnome.gr\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.0\n"
+
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
+msgstr ""
+"Ελληνική μεταφραστική ομάδα GNOME\n"
+" Δημήτρης Σπίγγος, <dmtrs32@gmail.com>, 2014\n"
+"Για περισσότερα δείτε http://www.gnome.gr/"
+
+#. (itstool) path: credit/name
+#: C/index.page:4
+msgid "Paolo Bacchilega"
+msgstr "Paolo Bacchilega"
+
+#. (itstool) path: credit/years
+#: C/index.page:6
+msgid "2005-2011"
+msgstr "2005-2011"
+
+#. (itstool) path: page/title
+#: C/index.page:15
+msgid "<app>CD Player</app> Help"
+msgstr "Βοήθεια του <app>Αναπαραγωγή CD</app>"
+
+#. (itstool) path: page/p
+#: C/index.page:16
+msgid ""
+"With <app>CD Player</app> you can play audio Compact Discs (CDs) and save "
+"the CD tracks as audio files."
+msgstr ""
+"Με το <app>Αναπαραγωγή CD</app> μπορείτε να παίξετε ηχητικούς συμπαγείς "
+"δίσκους (CDs) και να αποθηκεύσετε τα κομμάτια CD ως αρχεία ήχου."
+
+#. (itstool) path: p/link
+#: C/legal.xml:4
+msgid "Creative Commons Attribution-Share Alike 3.0 Unported License"
+msgstr "Creative Commons Attribution-Share Alike 3.0 Unported License"
+
+#. (itstool) path: license/p
+#: C/legal.xml:3
+msgid "This work is licensed under a <_:link-1/>."
+msgstr "Αυτή η δουλειά αδειοδοτείται από <_:link-1/>."
+
+#. (itstool) path: license/p
+#: C/legal.xml:6
+msgid ""
+"As a special exception, the copyright holders give you permission to copy, "
+"modify, and distribute the example code contained in this document under the "
+"terms of your choosing, without restriction."
+msgstr ""
+"Ως ειδική εξαίρεση, οι πνευματικοί ιδιοκτήτες σας επιτρέπουν να αντιγράψετε, "
+"να τροποποιήσετε και να αναδιανείμετε τα παραδείγματα πηγαίου κώδικα που "
+"περιλαμβάνονται σ' αυτό το έγγραφο υπό τους όρους της επιλογής σας, χωρίς "
+"περιορισμό."
+
+#. (itstool) path: info/title
+#: C/preferences.page:6
+msgctxt "sort"
+msgid "0"
+msgstr "0"
+
+#. (itstool) path: page/title
+#: C/preferences.page:8
+msgid "Preferences"
+msgstr "Προτιμήσεις"
+
+#. (itstool) path: page/p
+#: C/preferences.page:9
+msgid ""
+"To configure <app>CD Player</app> open the <app>Preferences</app> dialog by "
+"choosing <guiseq><gui style=\"menu\">Edit</gui><gui style=\"menuitem"
+"\">Preferences</gui></guiseq>."
+msgstr ""
+"Για να ρυθμίσετε το <app>Αναπαραγωγή CD</app> ανοίξτε τον διάλογο "
+"<app>Προτιμήσεις</app> επιλέγοντας <guiseq><gui style=\"menu\">Επεξεργασία</"
+"gui><gui style=\"menuitem\">Προτιμήσεις</gui></guiseq>."
+
+#. (itstool) path: page/p
+#: C/preferences.page:13
+msgid ""
+"This dialog contains two tabs described in detail below. At the bottom of "
+"the dialog window, you'll find the following buttons:"
+msgstr ""
+"Ο διάλογος αυτός περιέχει δύο καρτέλες που περιγράφονται με λεπτομέρεια στην "
+"συνέχεια. Στο κάτω μέρος του παραθύρου, βρίσκονται τα παρακάτω πλήκτρα:"
+
+#. (itstool) path: item/title
+#: C/preferences.page:19
+msgid "<gui style=\"button\">Help</gui>"
+msgstr "<gui style=\"button\">Βοήθεια</gui>"
+
+#. (itstool) path: item/p
+#: C/preferences.page:20
+msgid "Shows this page."
+msgstr "Εμφανίζει αυτήν τη σελίδα."
+
+#. (itstool) path: item/title
+#: C/preferences.page:23
+msgid "<gui style=\"button\">Close</gui>"
+msgstr "<gui style=\"button\">Κλείσιμο</gui>"
+
+#. (itstool) path: item/p
+#: C/preferences.page:24
+msgid "Closes the dialog."
+msgstr "Κλείνει τον διάλογο."
+
+#. (itstool) path: page/p
+#: C/preferences.page:27
+msgid ""
+"Keep in mind that when you change an option it will automatically applied. "
+"This is why there is no <gui style=\"button\">Ok</gui> or <gui style=\"button"
+"\">Apply</gui> button."
+msgstr ""
+"Να θυμόσαστε ότι όταν αλλάζετε μια επιλογή θα εφαρμοστεί αυτόματα. Γιαυτό "
+"δεν υπάρχουν πλήκτρα <gui style=\"button\">Εντάξει</gui> ή <gui style="
+"\"button\">Εφαρμογή</gui>."
+
+#. (itstool) path: section/title
+#: C/preferences.page:34
+msgid "General Tab"
+msgstr "Γενική καρτέλα"
+
+#. (itstool) path: section/p
+#: C/preferences.page:35
+msgid "This tab allows you to set the following options:"
+msgstr "Αυτή η καρτέλα σας επιτρέπει να ρυθμίσετε τις παρακάτω επιλογές:"
+
+#. (itstool) path: item/p
+#: C/preferences.page:38
+msgid "Select the device to use."
+msgstr "Επιλέξτε τη συσκευή που θα χρησιμοποιήσετε."
+
+#. (itstool) path: item/p
+#: C/preferences.page:40
+msgid "Whether to automatically play a newly inserted disk."
+msgstr "Αν θα αναπαράγεται αυτόματα ένας νεοεισαγόμενος δίσκος."
+
+#. (itstool) path: section/title
+#: C/preferences.page:46
+msgid "Extraction Tab"
+msgstr "Καρτέλα εξαγωγής"
+
+#. (itstool) path: section/p
+#: C/preferences.page:47
+msgid "This tab allows you to set the extraction options:"
+msgstr "Αυτή η καρτέλα σας επιτρέπει να ρυθμίσετε τις επιλογές εξαγωγής:"
+
+#. (itstool) path: item/p
+#: C/preferences.page:49
+msgid ""
+"The destination folder. Files are saved in a subfolder of the destination "
+"folder, following the scheme Artist/Album/track."
+msgstr ""
+"Ο φάκελος προορισμού. Τα αρχεία αποθηκεύονται σε έναν υποφάκελο του φακέλου "
+"προορισμού, ακολουθώντας το σχήμα καλλιτέχνης/δίσκος/κομμάτι."
+
+#. (itstool) path: item/p
+#: C/preferences.page:51
+msgid ""
+"The audio files format to use. Some formats allow you to set the quality of "
+"the file, this can be useful because usually there is a trade-off between "
+"audio quality and file size. Use the <gui style=\"button\">Properties</gui> "
+"button to set the file format properties."
+msgstr ""
+"Η μορφή αρχείων ήχου προς χρήση. Κάποιες μορφές σας επιτρέπουν να ορίσετε "
+"την ποιότητα του αρχείου, αυτό μπορεί να είναι χρήσιμο επειδή συνήθως "
+"υπάρχει ένας συμβιβασμός μεταξύ ποιότητας ήχου και μεγέθους αρχείου. "
+"Χρησιμοποιήστε το πλήκτρο <gui style=\"button\">Ιδιότητες</gui> για να "
+"ορίσετε τις ιδιότητες μορφών αρχείου."
+
+#. (itstool) path: item/p
+#: C/preferences.page:57
+msgid ""
+"Whether to save a playlist file in PLS format that contains the list of the "
+"extracted files. The playlist is saved in the same folder of the audio files."
+msgstr ""
+"Αν θα αποθηκευτεί ένα αρχείο καταλόγου αναπαραγωγής σε μορφή PLS που "
+"περιέχει τον κατάλογο των εξαχθέντων αρχείων. Ο κατάλογος αναπαραγωγής "
+"αποθηκεύεται στον ίδιο φάκελο με τα αρχεία ήχου."
+
+#. (itstool) path: info/title
+#: C/shortcuts.page:6
+msgctxt "sort"
+msgid "1"
+msgstr "1"
+
+#. (itstool) path: page/title
+#: C/shortcuts.page:8
+msgid "Keyboard Shortcuts"
+msgstr "Συντομεύσεις πληκτρολογίου"
+
+#. (itstool) path: page/p
+#: C/shortcuts.page:9
+msgid ""
+"Quick reference for some useful keyword shortcuts. Look in the menus for "
+"other available shortcuts."
+msgstr ""
+"Γρήγορη αναφορά για κάποιες χρήσιμες συντομεύσεις λέξεων-κλειδιών. Ψάξτε στα "
+"μενού για άλλες διαθέσιμες συντομεύσεις."
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:14
+msgid "Keyboard Shortcut"
+msgstr "Συντόμευση πληκτρολογίου"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:15
+msgid "Description"
+msgstr "Περιγραφή"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:20
+msgid "<key>Space</key>"
+msgstr "<key>Διάστημα</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:21
+msgid "Play/Pause the current track"
+msgstr "Αναπαραγωγή/παύση του τρέχοντος κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:24
+msgid "<key>Escape</key>"
+msgstr "<key>Διαφυγή</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:25
+msgid "Stop playing the current track"
+msgstr "Διακοπή αναπαραγωγής του τρέχοντος κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:28
+msgid "<key>N</key>"
+msgstr "<key>N</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:29
+msgid "Play the next track"
+msgstr "Αναπαραγωγή του επόμενου κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:32
+msgid "<key>P</key>"
+msgstr "<key>P</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:33
+msgid "Play the previous track"
+msgstr "Αναπαραγωγή του προηγούμενου κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:36
+msgid "<key>J</key>"
+msgstr "<key>J</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:37
+msgid "Eject the CD from the tray"
+msgstr "Εξαγωγή του CD από τον δίσκο"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:40
+msgid "<key>E</key>"
+msgstr "<key>E</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:41
+msgid "Open the <app>Extract</app> dialog"
+msgstr "Άνοιγμα του διαλόγου <app>Εξαγωγή</app>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:44
+msgid "<key>1</key>"
+msgstr "<key>1</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:45
+msgid "Play the 1st track"
+msgstr "Αναπαραγωγή του 1ου κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:48
+msgid "<key>2</key>"
+msgstr "<key>2</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:49
+msgid "Play the 2nd track"
+msgstr "Αναπαραγωγή του 2ου κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:52
+msgid "<key>3</key>"
+msgstr "<key>3</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:53
+msgid "Play the 3rd track"
+msgstr "Αναπαραγωγή του 3ου κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:56
+msgid "<key>4</key>"
+msgstr "<key>4</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:57
+msgid "Play the 4th track"
+msgstr "Αναπαραγωγή του 4ου κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:60
+msgid "<key>5</key>"
+msgstr "<key>5</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:61
+msgid "Play the 5th track"
+msgstr "Αναπαραγωγή του 5ου κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:64
+msgid "<key>6</key>"
+msgstr "<key>6</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:65
+msgid "Play the 6th track"
+msgstr "Αναπαραγωγή του 6ου κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:68
+msgid "<key>7</key>"
+msgstr "<key>7</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:69
+msgid "Play the 7th track"
+msgstr "Αναπαραγωγή του 7ου κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:72
+msgid "<key>8</key>"
+msgstr "<key>8</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:73
+msgid "Play the 8th track"
+msgstr "Αναπαραγωγή του 8ου κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:76
+msgid "<key>9</key>"
+msgstr "<key>9</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:77
+msgid "Play the 9th track"
+msgstr "Αναπαραγωγή του 9ου κομματιού"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:80
+msgid "<key>0</key>"
+msgstr "<key>0</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:81
+msgid "Play the 10th track"
+msgstr "Αναπαραγωγή του 10ου κομματιού"
