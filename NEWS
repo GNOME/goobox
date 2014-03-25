@@ -1,3 +1,29 @@
+version 3.3.2
+-------------
+
+ Bugs fixed:
+
+  * Updated obsolete info in license text. (Andika Triwidadan) (#721455)
+  * Properties: Set button arrow icons according to locale's text
+    direction (Yosef Or Boczko) (#722513)
+  * notification: Set arrow icons according to locale's text direction
+    (Yosef Or Boczko) (#722176)
+  * window: Set button arrow icons according to locale's text direction
+    (Yosef Or Boczko) (#722174)
+  * Require gtk+ 3.10 or higher.
+
+ New or updated application translations:
+
+  * Greek (Dimitris Spingos (Δημήτρης Σπίγγος))
+  * Lietuvių (Aurimas Černius)
+  * Serbian (Miroslav Nikolić)
+  * Serbian (Мирослав Николић)
+  * עברית (Yosef Or Boczko)
+
+ New or updated manual translations:
+
+  * Greek (Dimitris Spingos (Δημήτρης Σπίγγος))
+
 version 3.3.1
 -------------
 
