@@ -4,22 +4,24 @@
 #
 # Mikel Olasagasti <hey_neken@mundurat.net>, 2004, 2005.
 # Iñaki Larrañaga  <dooteo@euskalgnu.org>, 2005, 2006, 2007, 2008, 2010, 2014.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2014.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2014, 2015.
+# Edurne Labaka <elabaka@uzei.com>, 2015.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox goobox-3-2\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-21 21:42+0200\n"
-"PO-Revision-Date: 2014-05-21 21:44+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=goobox&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-02-07 17:14+0100\n"
+"PO-Revision-Date: 2014-11-18 17:11+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Poedit 1.6.10\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"\n"
 
 #: ../copy-n-paste/eggdesktopfile.c:165
 #, c-format
@@ -104,7 +106,7 @@ msgstr "Bolumen-maila"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:3
 msgid "'Choose cover' location"
-msgstr "'Aukeratu azala'-ren kokalekua"
+msgstr "'Aukeratu azala'ren kokalekua"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:4
 msgid "Default location for the 'Choose cover' dialog."
@@ -248,7 +250,7 @@ msgstr "%u, irudia kargatzen: %u"
 
 #: ../src/dlg-cover-chooser.c:342 ../src/goo-window.c:2775
 msgid "Could not search for a cover on Internet"
-msgstr "Ezin izan da azal bat bilatu interneten"
+msgstr "Ezin izan da azal bat bilatu Interneten"
 
 #: ../src/dlg-extract.c:110
 #, c-format
@@ -289,7 +291,7 @@ msgid ""
 "lower file size than MP3."
 msgstr ""
 "Vorbis iturburu irekiko kodeka da, audioaren kalitatea galdu arren MP3rekin "
-"konparatuz tamaina txikiagoko eta kalitate altuagoko fixtategiak sortzen "
+"konparatuz tamaina txikiagoko eta kalitate altuagoko fitxategiak sortzen "
 "ditu."
 
 #: ../src/dlg-preferences.c:292 ../src/dlg-preferences.c:503
@@ -298,14 +300,14 @@ msgid ""
 "does not degrade audio quality."
 msgstr ""
 "Galerarik gabeko Audiko Kodeka Librea (FLAC edo Free Lossless Audio Codec) "
-"iturburu irekiko kodeka da, audioa konprimitzen du kalitate galerarik gabe."
+"iturburu irekiko kodeka da, audioa konprimatzen du kalitate galerarik gabe."
 
 #: ../src/dlg-preferences.c:293 ../src/dlg-preferences.c:506
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
 msgstr ""
-"WAV+PCM kalitatearen galerarik gabeko formatua da, audioa konprimitu gabe "
+"WAV+PCM kalitatearen galerarik gabeko formatua da, audioa konprimatu gabe "
 "mantentzen du, audioaren pultsu-kode modulatu gordina darabilena."
 
 #: ../src/dlg-preferences.c:448
@@ -733,7 +735,7 @@ msgstr "_Erauzi pistak"
 
 #: ../src/ui.h:77
 msgid "Save the tracks to disk as files"
-msgstr "Gorde pistak diskoan fitxategi bezala"
+msgstr "Gorde pistak diskoan fitxategi gisa"
 
 #: ../src/ui.h:81
 msgid "Save the selected tracks to disk as files"
@@ -753,11 +755,11 @@ msgstr "Aukeratu fitxategi bat diskoaren azala bezala erabiltzeko"
 
 #: ../src/ui.h:100
 msgid "_Search on Internet"
-msgstr "_Bilatu interneten"
+msgstr "_Bilatu Interneten"
 
 #: ../src/ui.h:101
 msgid "Search for a disc cover on Internet"
-msgstr "Bilatu disko baten azala interneten"
+msgstr "Bilatu disko baten azala Interneten"
 
 #: ../src/ui.h:105
 msgid "Remove current disc cover"
