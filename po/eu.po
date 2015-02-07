@@ -4,13 +4,16 @@
 #
 # Mikel Olasagasti <hey_neken@mundurat.net>, 2004, 2005.
 # Iñaki Larrañaga  <dooteo@euskalgnu.org>, 2005, 2006, 2007, 2008, 2010, 2014.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2014, 2015.
+# Edurne Labaka <elabaka@uzei.com>, 2015.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=goobox&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-05-21 21:30+0200\n"
-"PO-Revision-Date: 2014-05-21 21:40+0200\n"
+"POT-Creation-Date: 2015-02-07 17:18+0100\n"
+"PO-Revision-Date: 2015-02-07 17:18+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
@@ -19,7 +22,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 1.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"\n"
 
 #: ../data/appdata/goobox.appdata.xml.in.h:1
 msgid "Goobox CD Player"
@@ -31,8 +33,7 @@ msgid ""
 "or wav files."
 msgstr ""
 "Goobox-ek CDak erreproduzitu eta pistak diskoan mp3, ogg, flac edo wav "
-"bezalako "
-"fitxategietan gordetzea uzten dizu."
+"bezalako fitxategietan gordetzea uzten dizu."
 
 #: ../data/appdata/goobox.appdata.xml.in.h:3
 msgid ""
@@ -40,8 +41,7 @@ msgid ""
 "service."
 msgstr ""
 "Pisten tituluak eta CDen azalak automatikoki ezartzen dira MusicBrainz "
-"webaren "
-"zerbitzuak erabiliz."
+"webaren zerbitzuak erabiliz."
 
 #: ../data/goobox.desktop.in.in.h:1
 #: ../src/goo-application-actions-callbacks.c:63 ../src/goo-application.c:417
@@ -63,7 +63,7 @@ msgstr "Bolumen-maila"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:3
 msgid "'Choose cover' location"
-msgstr "'Aukeratu azala'-ren kokalekua"
+msgstr "'Aukeratu azala'ren kokalekua"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:4
 msgid "Default location for the 'Choose cover' dialog."
@@ -156,7 +156,7 @@ msgstr "%u, irudia kargatzen: %u"
 
 #: ../src/dlg-cover-chooser.c:341 ../src/goo-window.c:2805
 msgid "Could not search for a cover on Internet"
-msgstr "Ezin izan da azal bat bilatu interneten"
+msgstr "Ezin izan da azal bat bilatu Interneten"
 
 #: ../src/dlg-extract.c:108
 #, c-format
@@ -601,7 +601,7 @@ msgstr "_Aukeratu fitxategia…"
 
 #: ../src/ui/menus.ui.h:5
 msgid "_Search on Internet"
-msgstr "_Bilatu interneten"
+msgstr "_Bilatu Interneten"
 
 #: ../src/ui/menus.ui.h:6
 msgid "_Remove"
@@ -698,9 +698,8 @@ msgstr "Pistak erauzten"
 #~ msgid "Unrecognized launch option: %d"
 #~ msgstr "Abiarazteko aukera ezezaguna: %d"
 
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "Ezin zaizkie dokumentuen URIak mahaigaineko 'Type=Link' sarrerari igaro"
+#~ msgid "Can't pass documents to this desktop element"
+#~ msgstr "Ezin zaizkio dokumentuak mahaigaineko elementu honi igorri"
 
 #~ msgid "Not a launchable item"
 #~ msgstr "Ez dago abiaraz daitekeen elementurik"
@@ -725,60 +724,6 @@ msgstr "Pistak erauzten"
 
 #~ msgid "Show session management options"
 #~ msgstr "Erakutsi saio-kudeatzailearen aukerak"
-
-#~ msgid ""
-#~ "Possible values are: system, text_below, text_beside, text_only, "
-#~ "icons_only."
-#~ msgstr ""
-#~ "Balio posibleak: system, text_below, text_beside, text_only, icons_only."
-
-#~ msgid "    "
-#~ msgstr "    "
-
-#~ msgid "<b>Extract</b>"
-#~ msgstr "<b>Erauzi</b>"
-
-#~ msgid "<b>CD Drive</b>"
-#~ msgstr "<b>CD unitatea</b>"
-
-#~ msgid "<b>Destination folder</b>"
-#~ msgstr "<b>Helburuko karpeta</b>"
-
-#~ msgid "<b>Output format</b>"
-#~ msgstr "<b>Irteerako formatua</b>"
-
-#~ msgid ""
-#~ "<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
-#~ "compresses but does not degrade audio quality.</i></small>"
-#~ msgstr ""
-#~ "<small><i>Galerarik gabeko Audiko Kodeka Librea (FLAC edo Free Lossless "
-#~ "Audio Codec) iturburu irekiko kodeka da, audioa konprimitzen du kalitate "
-#~ "galerarik gabe.</i></small>"
-
-#~ msgid ""
-#~ "<small><i>Vorbis is an open source, lossy audio codec with high quality "
-#~ "output at a lower file size than MP3.</i></small>"
-#~ msgstr ""
-#~ "<small><i>Vorbis iturburu irekiko kodeka da, audioaren kalitatea galdu "
-#~ "arren MP3rekin konparatuz tamaina txikiagoko eta kalitate altuagoko "
-#~ "fixtategiak sortzen ditu.</i></small>"
-
-#~ msgid ""
-#~ "<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
-#~ "code modulated (PCM) audio.</i></small>"
-#~ msgstr ""
-#~ "<small><i>WAV+PCM kalitatearen galerarik gabeko formatua da, audioa "
-#~ "konprimitu gabe mantentzen du, audioaren pultsu-kode modulatu gordina "
-#~ "darabilena.</i></small>"
-
-#~ msgid "General"
-#~ msgstr "Orokorra"
-
-#~ msgid "No album found."
-#~ msgstr "Ez da albumik aurkitu"
-
-#~ msgid "<big><b>Extracting tracks</b></big>"
-#~ msgstr "<big><b>Pistak erauzten</b></big>"
 
 #~ msgid ""
 #~ "CD Player is free software; you can redistribute it and/or modify it "
@@ -816,7 +761,7 @@ msgstr "Pistak erauzten"
 #~ "lower file size than MP3."
 #~ msgstr ""
 #~ "Vorbis iturburu irekiko kodeka da, audioaren kalitatea galdu arren "
-#~ "MP3rekin konparatuz tamaina txikiagoko eta kalitate altuagoko fixtategiak "
+#~ "MP3rekin konparatuz tamaina txikiagoko eta kalitate altuagoko fitxategiak "
 #~ "sortzen ditu."
 
 #~ msgid ""
@@ -824,15 +769,135 @@ msgstr "Pistak erauzten"
 #~ "but does not degrade audio quality."
 #~ msgstr ""
 #~ "Galerarik gabeko Audiko Kodeka Librea (FLAC edo Free Lossless Audio "
-#~ "Codec) iturburu irekiko kodeka da, audioa konprimitzen du kalitate "
+#~ "Codec) iturburu irekiko kodeka da, audioa konprimatzen du kalitate "
 #~ "galerarik gabe."
 
 #~ msgid ""
 #~ "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 #~ "modulated (PCM) audio."
 #~ msgstr ""
-#~ "WAV+PCM kalitatearen galerarik gabeko formatua da, audioa konprimitu gabe "
+#~ "WAV+PCM kalitatearen galerarik gabeko formatua da, audioa konprimatu gabe "
 #~ "mantentzen du, audioaren pultsu-kode modulatu gordina darabilena."
+
+#~ msgid "V_olume"
+#~ msgstr "B_olumena"
+
+#~ msgid "_Pause"
+#~ msgstr "_Pausarazi"
+
+#~ msgid "Other actions"
+#~ msgstr "Beste ekintzak"
+
+#~ msgid "_Show Window"
+#~ msgstr "_Erakutsi leihoa"
+
+#~ msgid "Show the main window"
+#~ msgstr "Erakutsi leiho nagusian"
+
+#~ msgid "_Hide Window"
+#~ msgstr "_Ezkutatu leihoa"
+
+#~ msgid "Hide the main window"
+#~ msgstr "Ezkutatu leiho nagusia"
+
+#~ msgid "Play Mode"
+#~ msgstr "Erreprodukzioaren modua"
+
+#~ msgid "C_over"
+#~ msgstr "A_zala"
+
+#~ msgid "Play/Pause"
+#~ msgstr "Erreproduzitu/Pausarazi"
+
+#~ msgid "Play this track"
+#~ msgstr "Erreproduzitu pista hau"
+
+#~ msgid "_Stop"
+#~ msgstr "_Gelditu"
+
+#~ msgid "_Next"
+#~ msgstr "_Hurrengoa"
+
+#~ msgid "Pre_v"
+#~ msgstr "Aurr_e."
+
+#~ msgid "Eject the disc"
+#~ msgstr "Egotzi diskoa"
+
+#~ msgid "Copy the content of this disc on another disc"
+#~ msgstr "Kopiatu diskoaren edukia beste diskora"
+
+#~ msgid "Save the tracks to disk as files"
+#~ msgstr "Gorde pistak diskoan fitxategi gisa"
+
+#~ msgid "Save the selected tracks to disk as files"
+#~ msgstr "Gorde hautatutako pistak diskoan fitxategi bezala"
+
+#~ msgid "Edit the disc artist, album and the tracks titles"
+#~ msgstr "Editatu diskoaren artista, albuma eta pisten izenak"
+
+#~ msgid "Choose a file to use as disc cover"
+#~ msgstr "Aukeratu fitxategi bat diskoaren azala bezala erabiltzeko"
+
+#~ msgid "Search for a disc cover on Internet"
+#~ msgstr "Bilatu disko baten azala Interneten"
+
+#~ msgid "Remove current disc cover"
+#~ msgstr "Kendu uneko diskoaren azala"
+
+#~ msgid "General"
+#~ msgstr "Orokorra"
+
+#~ msgid "Destination folder"
+#~ msgstr "Helburuko karpeta"
+
+#~ msgid "    "
+#~ msgstr "    "
+
+#~ msgid "Output format"
+#~ msgstr "Irteerako formatua"
+
+#~ msgid "No album found."
+#~ msgstr "Ez da albumik aurkitu"
+
+#~ msgid ""
+#~ "Possible values are: system, text_below, text_beside, text_only, "
+#~ "icons_only."
+#~ msgstr ""
+#~ "Balio posibleak: system, text_below, text_beside, text_only, icons_only."
+
+#~ msgid "<b>Extract</b>"
+#~ msgstr "<b>Erauzi</b>"
+
+#~ msgid "<b>CD Drive</b>"
+#~ msgstr "<b>CD unitatea</b>"
+
+#~ msgid ""
+#~ "<small><i>Free Lossless Audio Codec (FLAC) is an open source codec that "
+#~ "compresses but does not degrade audio quality.</i></small>"
+#~ msgstr ""
+#~ "<small><i>Galerarik gabeko Audiko Kodeka Librea (FLAC edo Free Lossless "
+#~ "Audio Codec) iturburu irekiko kodeka da, audioa konprimitzen du kalitate "
+#~ "galerarik gabe.</i></small>"
+
+#~ msgid ""
+#~ "<small><i>Vorbis is an open source, lossy audio codec with high quality "
+#~ "output at a lower file size than MP3.</i></small>"
+#~ msgstr ""
+#~ "<small><i>Vorbis iturburu irekiko kodeka da, audioaren kalitatea galdu "
+#~ "arren MP3rekin konparatuz tamaina txikiagoko eta kalitate altuagoko "
+#~ "fixtategiak sortzen ditu.</i></small>"
+
+#~ msgid ""
+#~ "<small><i>WAV+PCM is a lossless format that holds uncompressed, raw pulse-"
+#~ "code modulated (PCM) audio.</i></small>"
+#~ msgstr ""
+#~ "<small><i>WAV+PCM kalitatearen galerarik gabeko formatua da, audioa "
+#~ "konprimitu gabe mantentzen du, audioaren pultsu-kode modulatu gordina "
+#~ "darabilena.</i></small>"
+
+#~ msgid "<big><b>Extracting tracks</b></big>"
+#~ msgstr "<big><b>Pistak erauzten</b></big>"
 
 #~ msgid "Search failed: %s\n"
 #~ msgstr "Bilaketak huts egin du: %s\n"
@@ -842,9 +907,6 @@ msgstr "Pistak erauzten"
 
 #~ msgid "Paused"
 #~ msgstr "Pausarazita"
-
-#~ msgid "V_olume"
-#~ msgstr "B_olumena"
 
 #~ msgid "+"
 #~ msgstr "+"
@@ -866,29 +928,11 @@ msgstr "Pistak erauzten"
 #~ msgid "Length"
 #~ msgstr "Luzera"
 
-#~ msgid "_Pause"
-#~ msgstr "_Pausarazi"
-
 #~ msgid "No Disc"
 #~ msgstr "Ez dago diskorik"
 
 #~ msgid "Data Disc"
 #~ msgstr "Datuen diskoa"
-
-#~ msgid "_Show Window"
-#~ msgstr "_Erakutsi leihoa"
-
-#~ msgid "Show the main window"
-#~ msgstr "Erakutsi leiho nagusian"
-
-#~ msgid "_Hide Window"
-#~ msgstr "_Ezkutatu leihoa"
-
-#~ msgid "Play/Pause"
-#~ msgstr "Erreproduzitu/Pausarazi"
-
-#~ msgid "Hide/Show the main window"
-#~ msgstr "Ezkutatu/Erakutsi leiho nagusia"
 
 #~ msgid "Volume Up"
 #~ msgstr "Igo bolumena"
@@ -908,9 +952,6 @@ msgstr "Pistak erauzten"
 #~ msgid "_View"
 #~ msgstr "_Ikusi"
 
-#~ msgid "C_over"
-#~ msgstr "A_zala"
-
 #~ msgid "Information about the program"
 #~ msgstr "Programari buruzko informazioa"
 
@@ -920,44 +961,8 @@ msgstr "Pistak erauzten"
 #~ msgid "_Keyboard shortcuts"
 #~ msgstr "_Lasterbideak"
 
-#~ msgid "Play this track"
-#~ msgstr "Erreproduzitu pista hau"
-
-#~ msgid "_Stop"
-#~ msgstr "_Gelditu"
-
-#~ msgid "_Next"
-#~ msgstr "_Hurrengoa"
-
-#~ msgid "Pre_v"
-#~ msgstr "Aurr_e."
-
-#~ msgid "Eject the disc"
-#~ msgstr "Egotzi diskoa"
-
 #~ msgid "Edit various preferences"
 #~ msgstr "Editatu hainbat hobespen"
-
-#~ msgid "Copy the content of this disc on another disc"
-#~ msgstr "Kopiatu diskoaren edukia beste diskora"
-
-#~ msgid "Save the tracks to disk as files"
-#~ msgstr "Gorde pistak diskoan fitxategi bezala"
-
-#~ msgid "Save the selected tracks to disk as files"
-#~ msgstr "Gorde hautatutako pistak diskoan fitxategi bezala"
-
-#~ msgid "Edit the disc artist, album and the tracks titles"
-#~ msgstr "Editatu diskoaren artista, albuma eta pisten izenak"
-
-#~ msgid "Choose a file to use as disc cover"
-#~ msgstr "Aukeratu fitxategi bat diskoaren azala bezala erabiltzeko"
-
-#~ msgid "Search for a disc cover on Internet"
-#~ msgstr "Bilatu disko baten azala interneten"
-
-#~ msgid "Remove current disc cover"
-#~ msgstr "Kendu uneko diskoaren azala"
 
 #~ msgid "_Toolbar"
 #~ msgstr "_Tresna-barra"
