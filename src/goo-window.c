@@ -2319,8 +2319,6 @@ goo_window_new (BraseroDrive *drive)
 		g_free (default_device);
 	}
 
-	g_return_val_if_fail (drive != NULL, NULL);
-
 	window = (GooWindow*) g_object_new (GOO_TYPE_WINDOW, NULL);
 	goo_window_construct (window, drive);
 
@@ -2521,6 +2519,7 @@ goo_window_set_drive (GooWindow    *window,
 		      BraseroDrive *drive)
 {
 	goo_player_set_drive (window->priv->player, drive);
+	goo_player_update (window->priv->player);
 }
 
 

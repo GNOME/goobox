@@ -318,10 +318,12 @@ goo_player_set_state (GooPlayer       *self,
 		      GooPlayerState   state,
 		      gboolean         notify)
 {
-	if (state == GOO_PLAYER_STATE_PLAYING)
-		brasero_drive_lock (self->priv->drive, _("Playing CD"), NULL);
-	else
-		brasero_drive_unlock (self->priv->drive);
+	if (self->priv->drive != NULL) {
+		if (state == GOO_PLAYER_STATE_PLAYING)
+			brasero_drive_lock (self->priv->drive, _("Playing CD"), NULL);
+		else
+			brasero_drive_unlock (self->priv->drive);
+	}
 
 	self->priv->state = state;
 	if (notify)
@@ -476,8 +478,6 @@ GooPlayer *
 goo_player_new (BraseroDrive *drive)
 {
 	GooPlayer *self;
-
-	g_return_val_if_fail (drive != NULL, NULL);
 
 	self = GOO_PLAYER (g_object_new (GOO_TYPE_PLAYER, NULL));
 	goo_player_set_drive (self, drive);
@@ -743,17 +743,25 @@ void
 goo_player_set_drive (GooPlayer    *self,
 		      BraseroDrive *drive)
 {
-	g_return_if_fail (drive != NULL);
+	if (self->priv->drive == drive)
+		return;
 
 	if (self->priv->drive != NULL) {
-		if (self->priv->medium_added_event != 0)
+		if (self->priv->medium_added_event != 0) {
 			g_signal_handler_disconnect (self->priv->drive, self->priv->medium_added_event);
-		if (self->priv->medium_removed_event != 0)
+			self->priv->medium_added_event = 0;
+		}
+		if (self->priv->medium_removed_event != 0) {
 			g_signal_handler_disconnect (self->priv->drive, self->priv->medium_removed_event);
+			self->priv->medium_removed_event = 0;
+		}
 		g_object_unref (self->priv->drive);
 	}
 
-	self->priv->drive = g_object_ref (drive);
+	self->priv->drive = _g_object_ref (drive);
+	if (self->priv->drive == NULL)
+		return;
+
 	self->priv->medium_added_event =
 			g_signal_connect (self->priv->drive,
 					  "medium-added",
