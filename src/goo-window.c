@@ -269,63 +269,6 @@ goo_window_update (GooWindow *window)
 
 
 static void
-window_update_size (GooWindow *window)
-{
-	int          window_height_without_playlist;
-	GtkWidget   *vbox;
-	GList       *scan;
-	int          playlist_natural_height;
-	int          max_window_height;
-	GdkGeometry  hints;
-
-	window_height_without_playlist = 0;
-	vbox = gtk_bin_get_child (GTK_BIN (window));
-	for (scan = gtk_container_get_children (GTK_CONTAINER (vbox)); scan; scan = scan->next) {
-		GtkWidget     *child = scan->data;
-		GtkAllocation  allocation;
-
-		if (child == window->priv->list_scrolled_window)
-			continue;
-
-		gtk_widget_get_allocation (child, &allocation);
-		window_height_without_playlist += allocation.height;
-	}
-	gtk_widget_get_preferred_height (window->priv->list_view, NULL, &playlist_natural_height);
-
-	max_window_height = gdk_screen_get_height (gtk_widget_get_screen (GTK_WIDGET (window))) * MAX_WINDOW_HEIGHT_PERCENTAGE;
-
-	if (window_height_without_playlist + playlist_natural_height > max_window_height) {
-		hints.max_height = G_MAXINT;
-		hints.max_width = G_MAXINT;
-		gtk_window_set_geometry_hints (GTK_WINDOW (window),
-					       GTK_WIDGET (window),
-					       &hints,
-					       GDK_HINT_MAX_SIZE);
-
-		window->priv->resizable_playlist = TRUE;
-
-		gtk_window_resize (GTK_WINDOW (window),
-				   g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_WIDTH),
-				   max_window_height);
-	}
-	else {
-		hints.max_height = -1;
-		hints.max_width = G_MAXINT;
-		gtk_window_set_geometry_hints (GTK_WINDOW (window),
-					       GTK_WIDGET (window),
-					       &hints,
-					       GDK_HINT_MAX_SIZE);
-
-		window->priv->resizable_playlist = FALSE;
-	}
-
-	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (window->priv->list_scrolled_window),
-					GTK_POLICY_NEVER,
-					window->priv->resizable_playlist ? GTK_POLICY_AUTOMATIC : GTK_POLICY_NEVER);
-}
-
-
-static void
 goo_window_update_list (GooWindow *window)
 {
 	GdkPixbuf *icon;
@@ -371,7 +314,22 @@ goo_window_update_list (GooWindow *window)
 	}
 
 	window_update_sensitivity (window);
-	window_update_size (window);
+
+	{
+		GdkGeometry hints;
+
+		hints.max_height = -1;
+		hints.max_width = G_MAXINT;
+		gtk_window_set_geometry_hints (GTK_WINDOW (window),
+					       GTK_WIDGET (window),
+					       &hints,
+					       GDK_HINT_MAX_SIZE);
+
+		window->priv->resizable_playlist = FALSE;
+		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (window->priv->list_scrolled_window),
+						GTK_POLICY_NEVER,
+						GTK_POLICY_NEVER);
+	}
 
 	g_object_unref (icon);
 }
@@ -1947,6 +1905,40 @@ goo_window_add_accelerators (GooWindow                *window,
 
 
 static void
+window_size_allocate_cb (GtkWidget    *widget,
+	                 GdkRectangle *allocation,
+	                 gpointer      user_data)
+{
+	GooWindow *window = user_data;
+	int        max_window_height;
+
+	if (window->priv->resizable_playlist)
+		return;
+
+	max_window_height = gdk_screen_get_height (gtk_widget_get_screen (GTK_WIDGET (window))) * MAX_WINDOW_HEIGHT_PERCENTAGE;
+	if (allocation->height > max_window_height) {
+		GdkGeometry hints;
+
+		hints.max_height = G_MAXINT;
+		hints.max_width = G_MAXINT;
+		gtk_window_set_geometry_hints (GTK_WINDOW (window),
+					       GTK_WIDGET (window),
+					       &hints,
+					       GDK_HINT_MAX_SIZE);
+
+		window->priv->resizable_playlist = TRUE;
+
+		gtk_window_resize (GTK_WINDOW (window),
+				   g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_WIDTH),
+				   max_window_height);
+		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (window->priv->list_scrolled_window),
+						GTK_POLICY_NEVER,
+						GTK_POLICY_AUTOMATIC);
+	}
+}
+
+
+static void
 goo_window_init (GooWindow *window)
 {
 	window->priv = G_TYPE_INSTANCE_GET_PRIVATE (window, GOO_TYPE_WINDOW, GooWindowPrivate);
@@ -1957,6 +1949,7 @@ goo_window_init (GooWindow *window)
 	window->priv->album = album_info_new ();
 	window->priv->resizable_playlist = FALSE;
 	window->priv->accel_group = gtk_accel_group_new ();
+
 	gtk_window_add_accel_group (GTK_WINDOW (window), window->priv->accel_group);
 
 	gtk_window_set_title (GTK_WINDOW (window), _("CD Player"));
@@ -1970,6 +1963,11 @@ goo_window_init (GooWindow *window)
 				     G_N_ELEMENTS (goo_window_accelerators));
 
 	gtk_window_set_application (GTK_WINDOW (window), Main_Application);
+
+	g_signal_connect (window,
+			  "size-allocate",
+			  G_CALLBACK (window_size_allocate_cb),
+			  window);
 }
 
 
