@@ -1,5 +1,5 @@
 AC_PREREQ(2.61)
-AC_INIT([goobox], [3.3.2], [http://bugzilla.gnome.org/enter_bug.cgi?product=goobox])
+AC_INIT([goobox], [3.3.3], [http://bugzilla.gnome.org/enter_bug.cgi?product=goobox])
 AM_INIT_AUTOMAKE([1.11 foreign no-dist-gzip dist-xz tar-ustar])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 

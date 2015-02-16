@@ -1,3 +1,19 @@
+version 3.3.3
+-------------
+ Bugs fixed:
+
+  * Allow to start with no drive.
+  * Update the window content after changing the drive in the preferences.
+  * Fixed window auto resize.
+
+ New or updated application translations:
+
+  * Basque (Iñaki Larrañaga Murgoitio)
+  * Deutsch (Mario Blättermann)
+  * Hungarian (Balázs Úr)
+  * Indonesia (Andika Triwidada)
+  * suomi (Jiri Grönroos)
+
 version 3.3.2
 -------------
 
