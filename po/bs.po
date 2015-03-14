@@ -1,0 +1,686 @@
+# Bosnian translation for bosnianuniversetranslation
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the bosnianuniversetranslation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bosnianuniversetranslation\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=goobox&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-02-26 21:34+0000\n"
+"PO-Revision-Date: 2015-02-05 00:19+0000\n"
+"Last-Translator: Samir Ribić <Unknown>\n"
+"Language-Team: Bosnian <bs@li.org>\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2015-02-05 07:06+0000\n"
+"X-Generator: Launchpad (build 17331)\n"
+
+#: ../data/appdata/goobox.appdata.xml.in.h:1
+msgid "Goobox CD Player"
+msgstr "Gooboc CD plejer"
+
+#: ../data/appdata/goobox.appdata.xml.in.h:2
+msgid ""
+"Goobox allows you to play CDs and save the tracks to disk as mp3, ogg, flac "
+"or wav files."
+msgstr ""
+"Goobox vam dopušta puštanje CD-ova i spremanje snimaka na disk kao mp3, ogg, "
+"flac ili wav datoteke."
+
+#: ../data/appdata/goobox.appdata.xml.in.h:3
+msgid ""
+"Track titles and CD covers are set automatically using the MusicBrainz web "
+"service."
+msgstr ""
+"Naslov snimke i CD omota se postavljaju automatski korištenjem MusicBrainz "
+"veb usluge."
+
+#: ../data/goobox.desktop.in.in.h:1
+#: ../src/goo-application-actions-callbacks.c:63 ../src/goo-application.c:417
+#: ../src/goo-window.c:1337 ../src/goo-window.c:1350 ../src/goo-window.c:1955
+msgid "CD Player"
+msgstr "CD plejer"
+
+#: ../data/goobox.desktop.in.in.h:2
+msgid "Play and extract CDs"
+msgstr "Izvodite i ekstraktujte CD-ove"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:1
+msgid "Device path"
+msgstr "Put do uređaja"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:2
+msgid "Volume level"
+msgstr "Nivo glasnoće"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:3
+msgid "'Choose cover' location"
+msgstr "'Odaberi omot' lokaciju"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:4
+msgid "Default location for the 'Choose cover' dialog."
+msgstr "Zadana lokacija za 'Odaberi omot' dialog."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:5
+msgid "Use Sound Juicer to rip discs"
+msgstr "Koristiti Sound Juicer za snimak diskova"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:6
+msgid "Autoplay"
+msgstr "Autoizvođenje"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:7
+msgid "Autoplay discs after insertion."
+msgstr "Automatski pusti disk nakon ubacivanja."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:8
+msgid "Window width"
+msgstr "Širina prozora"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:9
+msgid "Window height"
+msgstr "Visina prozora"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:10
+msgid "Play all tracks"
+msgstr "Pusti sve snimke"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:11
+msgid "Shuffle playlist"
+msgstr "Promiješaj playlist-u"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:12
+msgid "Restart when finished"
+msgstr "Pokreni ponovo nakon završetka"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
+msgid "Playlist sort method"
+msgstr "Metod sortiranja liste puštanja"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
+msgid "Playlist sort type"
+msgstr "Vrsta sortiranja liste puštanja"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
+msgid "Extraction folder"
+msgstr "Folder za raspakivanje"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
+msgid "File type"
+msgstr "Vrsta datoteke"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "Moguće vrijednosti su: ogg, flac, mp3, wave."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
+msgid "Save the playlist"
+msgstr "Spremi listu puštanja"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
+msgid "Save the playlist of the extracted tracks."
+msgstr "Spremi listu puštanja raspakovanih snimki."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:20
+msgid "View the destination"
+msgstr "Pregledaj odredište"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:21
+msgid "OGG files quality"
+msgstr "Kvalitet OGG datoteke"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
+msgid "FLAC files quality"
+msgstr "Kvalitet FLAC datoteka"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
+msgid "MP3 files quality"
+msgstr "Kvalitet MP3 datoteka"
+
+#: ../src/album-info.c:176
+msgid "Various"
+msgstr "Različito"
+
+#: ../src/dlg-cover-chooser.c:276
+#, c-format
+msgid "%u, loading image: %u"
+msgstr "%u, učitavanje slike: %u"
+
+#: ../src/dlg-cover-chooser.c:341 ../src/goo-window.c:2802
+msgid "Could not search for a cover on Internet"
+msgstr "Nije moguće tražiti omot na Internetu"
+
+#: ../src/dlg-extract.c:108
+#, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract "
+"CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Waveform PCM"
+msgstr ""
+"Trebate bar jedan od sljedećih GStreamer dodataka da bi raspakovali CD "
+"snimke:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Waveform PCM"
+
+#: ../src/dlg-extract.c:119
+msgid "No encoder available."
+msgstr "Enkoder nije dostupan."
+
+#: ../src/dlg-preferences.c:243 ../src/dlg-preferences.c:504
+msgid "Ogg Vorbis"
+msgstr "Ogg Vorbis"
+
+#: ../src/dlg-preferences.c:257 ../src/dlg-preferences.c:507
+msgid "FLAC"
+msgstr "FLAC"
+
+#: ../src/dlg-preferences.c:271 ../src/dlg-preferences.c:510
+msgid "MP3"
+msgstr "MP3"
+
+#: ../src/dlg-preferences.c:285
+msgid "Waveform PCM"
+msgstr "Talasni PCM"
+
+#: ../src/dlg-preferences.c:479
+msgid "Faster compression"
+msgstr "Brža kompresija"
+
+#: ../src/dlg-preferences.c:483
+msgid "Higher compression"
+msgstr "Veća kompresija"
+
+#: ../src/dlg-preferences.c:490
+msgid "Smaller size"
+msgstr "Manja veličina"
+
+#: ../src/dlg-preferences.c:494
+msgid "Higher quality"
+msgstr "Veća kvaliteta"
+
+#: ../src/dlg-preferences.c:522
+msgid "Quality:"
+msgstr "Kvalitet:"
+
+#: ../src/dlg-preferences.c:525
+msgid "Compression level:"
+msgstr "Razina kompresije:"
+
+#: ../src/dlg-properties.c:214
+#, c-format
+msgid "Album %d of %d"
+msgstr "Album %d od %d"
+
+#: ../src/dlg-properties.c:271
+msgid "No album found"
+msgstr "Album nije nađen"
+
+#: ../src/dlg-properties.c:290 ../src/goo-window.c:1272
+msgid "Searching disc information…"
+msgstr "Traženje informacija o disku…"
+
+#: ../src/dlg-properties.c:351
+msgid "#"
+msgstr "#"
+
+#: ../src/dlg-properties.c:369
+msgid "Title"
+msgstr "Naslov"
+
+#: ../src/dlg-properties.c:402
+msgid "Artist"
+msgstr "Izvođač"
+
+#: ../src/dlg-ripper.c:165
+#, c-format
+msgid "(%d:%02d:%02d Remaining)"
+msgstr "(%d:%02d:%02d Preostalo)"
+
+#: ../src/dlg-ripper.c:167
+#, c-format
+msgid "(%d:%02d Remaining)"
+msgstr "(Preostalo %d:%02d)"
+
+#: ../src/dlg-ripper.c:172
+#, c-format
+msgid "Extracting track: %d of %d %s"
+msgstr "Izvlačenje snimke: %d of %d %s"
+
+#: ../src/dlg-ripper.c:209 ../src/dlg-ripper.c:318
+msgid "Could not extract the tracks"
+msgstr "Nije moguće raspakovati snimku"
+
+#: ../src/dlg-ripper.c:436
+#, c-format
+msgid "Invalid destination folder: %s"
+msgstr "Pogrešan odredišni direktorij: %s"
+
+#: ../src/dlg-ripper.c:466 ../src/dlg-ripper.c:470
+msgid "Could not display the destination folder"
+msgstr "Nije moguće prikazati destinaciju direktorija"
+
+#: ../src/dlg-ripper.c:596
+msgid "Tracks extracted successfully"
+msgstr "Izvlačenje snimke uspješno"
+
+#: ../src/dlg-ripper.c:598
+msgid "_View destination folder"
+msgstr "_Pogledaj odredišni direktorij"
+
+#: ../src/dlg-ripper.c:612
+#, c-format
+msgid "Extracting \"%s\""
+msgstr "Izvlačim „%s“"
+
+#: ../src/dlg-ripper.c:623 ../src/dlg-ripper.c:632
+msgid "Could not extract tracks"
+msgstr "Nije moguće izvuči snimku"
+
+#: ../src/dlg-ripper.c:663
+msgid "Ripped with CD Player"
+msgstr "Snimljeno sa CD Player"
+
+#: ../src/dlg-ripper.c:697
+msgid "Extracting disc tracks"
+msgstr "Izvlačenje snimaka sa diska"
+
+#. hour:minutes:seconds
+#. Translators: This is a time format, liki "9:05:02" for 9
+#. * hours, 5 minutes, and 2 seconds. You may change ":" to
+#. * the separator that your locale uses or usi "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: ../src/glib-utils.c:2225
+#, c-format
+msgctxt "long time format"
+msgid "%d∶%02d∶%02d"
+msgstr "%d∶%02d∶%02d"
+
+#. minutes:seconds
+#. Translators: This is a time format, liki "5:02" for 5
+#. * minutes and 2 seconds. You may change ":" to the
+#. * separator that your locale uses or usi "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: ../src/glib-utils.c:2234
+#, c-format
+msgctxt "short time format"
+msgid "%d∶%02d"
+msgstr "%d∶%02d"
+
+#: ../src/goo-application-actions-callbacks.c:60
+msgid "translator_credits"
+msgstr ""
+"launchpad Contributions:\n"
+"  Samir Ribić https://launchpad.net/~megaribi\n"
+"  Selma Glavić https://launchpad.net/~sglavic1\n"
+"\n"
+"Launchpad Contributions:\n"
+"  Samir Ribić https://launchpad.net/~megaribi\n"
+"  Samir Ribić https://launchpad.net/~samir-ribic\n"
+"  Selma Glavić https://launchpad.net/~sglavic1"
+
+#: ../src/goo-application-actions-callbacks.c:65
+msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
+msgstr "Autorska prava © 2004-2011 Free Software Foundation, Inc."
+
+#: ../src/goo-application-actions-callbacks.c:66 ../src/goo-application.c:159
+msgid "Play CDs and save the tracks to disk as files"
+msgstr "Pusti CD-ove i spremi snimke kao datoteke na disk"
+
+#: ../src/goo-application.c:52
+msgid "CD device to be used"
+msgstr "CD uređaj će se koristiti"
+
+#: ../src/goo-application.c:53
+msgid "DEVICE_PATH"
+msgstr "DEVICE_PATH"
+
+#: ../src/goo-application.c:55
+msgid "Play the CD on startup"
+msgstr "Pusti CD na početku"
+
+#: ../src/goo-application.c:58
+msgid "Toggle play"
+msgstr "Preklopi izvođenje"
+
+#: ../src/goo-application.c:61
+msgid "Stop playing"
+msgstr "Zaustavi puštanje"
+
+#: ../src/goo-application.c:64
+msgid "Play the next track"
+msgstr "Pusti sljedeću snimku"
+
+#: ../src/goo-application.c:67
+msgid "Play the previous track"
+msgstr "Pusti prethodnu snimku"
+
+#: ../src/goo-application.c:70
+msgid "Eject the CD"
+msgstr "Izbaci CD"
+
+#: ../src/goo-application.c:73
+msgid "Toggle the main window visibility"
+msgstr "Upravljaj vidljivošću na glavnom prozoru"
+
+#: ../src/goo-application.c:76
+msgid "Quit the application"
+msgstr "Izađi iz aplikacije"
+
+#: ../src/goo-application.c:79
+msgid "Show version"
+msgstr "Prikaži verziju"
+
+#: ../src/goo-application.c:202
+msgid "Cannot start the CD player"
+msgstr "Nije moguće pokrenuti CD player"
+
+#: ../src/goo-application.c:203
+msgid "In order to read CDs you have to install the gstreamer base plugins"
+msgstr ""
+"Da bi mogli očitati CD morate imati instaliran gstreamer osnovni dodatak"
+
+#: ../src/goo-player.c:323
+msgid "Playing CD"
+msgstr "Puštam CD"
+
+#: ../src/goo-player-info.c:253
+msgid "Click here to choose a cover for this CD"
+msgstr "Klikni ovdje da izabereš omot za ovaj CD"
+
+#: ../src/goo-player-info.c:395 ../src/goo-window.c:1166
+msgid "No disc"
+msgstr "Nema diska"
+
+#: ../src/goo-player-info.c:398 ../src/goo-window.c:1171
+msgid "Data disc"
+msgstr "Podatkovni disk"
+
+#: ../src/goo-player-info.c:402
+msgid "Ejecting CD"
+msgstr "Izbacujem CD"
+
+#: ../src/goo-player-info.c:405
+msgid "Checking CD drive"
+msgstr "Provjera CD pogona"
+
+#: ../src/goo-player-info.c:408 ../src/goo-player-info.c:411
+msgid "Reading CD"
+msgstr "Očitavam CD"
+
+#: ../src/goo-player-info.c:414 ../src/goo-window.c:1184
+#: ../src/goo-window.c:1357
+msgid "Audio CD"
+msgstr "Audio CD"
+
+#: ../src/goo-window-actions-callbacks.c:232
+#: ../src/goo-window-actions-callbacks.c:268
+#: ../src/goo-window-actions-callbacks.c:302
+msgid "Could not execute command"
+msgstr "Nije moguće izvršiti naredbu"
+
+#: ../src/goo-window.c:47
+msgid "Hide _tracks"
+msgstr "Sakrij _snimke"
+
+#: ../src/goo-window.c:48
+msgid "Show _tracks"
+msgstr "Prikaži _snimke"
+
+#: ../src/goo-window.c:1568
+msgid "No information found for this disc"
+msgstr "Nema nađenih informacija za ovaj disk"
+
+#: ../src/goo-window.c:2232 ../src/ui/gears-menu.ui.h:3 ../src/ui/menus.ui.h:3
+msgid "_Properties"
+msgstr "_Svojstva"
+
+#: ../src/goo-window.c:2614
+msgid "Could not save cover image"
+msgstr "Nije moguće spremiti sliku omota"
+
+#: ../src/goo-window.c:2638 ../src/goo-window.c:2669
+msgid "Could not load image"
+msgstr "Nije moguće učitati sliku"
+
+#: ../src/goo-window.c:2740
+msgid "Choose Disc Cover Image"
+msgstr "Izaberi Sliku Omota za Disk"
+
+#: ../src/goo-window.c:2759
+msgid "Images"
+msgstr "Liki"
+
+#: ../src/goo-window.c:2767
+msgid "All files"
+msgstr "Sve datoteke"
+
+#: ../src/goo-window.c:2803
+msgid ""
+"You have to enter the artist and album names in order to find the album "
+"cover."
+msgstr "Morate unijeti ime umjetnika i albuma da bi pronašli omot albuma."
+
+#: ../src/gtk-file-chooser-preview.c:165
+msgid "Preview"
+msgstr "Pregled"
+
+#: ../src/gtk-file-chooser-preview.c:266
+msgid "pixels"
+msgstr "tačaka"
+
+#: ../src/gtk-utils.c:500
+msgid "Could not display help"
+msgstr "Ne mogu prikazati pomoć"
+
+#: ../src/gtk-utils.c:786 ../src/gtk-utils.c:792
+msgid "Could not launch the application"
+msgstr "Ne može se pokrenuti aplikacija"
+
+#: ../src/gtk-utils.h:36
+msgid "_Cancel"
+msgstr "_Poništi"
+
+#: ../src/gtk-utils.h:37 ../src/ui/gears-menu.ui.h:4
+msgid "_Close"
+msgstr "_Zatvori"
+
+#: ../src/gtk-utils.h:38
+msgid "_Ok"
+msgstr "_U redu"
+
+#: ../src/gtk-utils.h:39
+msgid "_Open"
+msgstr "_Otvori"
+
+#: ../src/gtk-utils.h:40 ../src/ui/cover-chooser.ui.h:2
+#: ../src/ui/properties.ui.h:4
+msgid "_Reset"
+msgstr "_Ponovo pokreni"
+
+#: ../src/main.c:272
+msgid "Pause"
+msgstr "Stanka"
+
+#: ../src/main.c:279
+msgid "Play"
+msgstr "Pusti"
+
+#: ../src/main.c:286
+msgid "Next"
+msgstr "Sljedeće"
+
+#: ../src/track-info.c:123
+#, c-format
+msgid "Track %u"
+msgstr "Snimka %u"
+
+#: ../src/ui/app-menu.ui.h:1
+msgid "_Preferences"
+msgstr "_Postavke"
+
+#: ../src/ui/app-menu.ui.h:2
+msgid "Play _All"
+msgstr "Pusti_sve"
+
+#: ../src/ui/app-menu.ui.h:3
+msgid "_Repeat"
+msgstr "_Ponavljaj"
+
+#: ../src/ui/app-menu.ui.h:4
+msgid "S_huffle"
+msgstr "P_romiješaj"
+
+#: ../src/ui/app-menu.ui.h:5
+msgid "_Help"
+msgstr "_Pomoć"
+
+#: ../src/ui/app-menu.ui.h:6
+msgid "_About"
+msgstr "_O programu"
+
+#: ../src/ui/app-menu.ui.h:7
+msgid "_Quit"
+msgstr "_Izlaz"
+
+#: ../src/ui/cover-chooser.ui.h:1
+msgid "Choose a CD Cover"
+msgstr "Odaberi CD omot"
+
+#: ../src/ui/cover-chooser.ui.h:3
+msgid "Found images:"
+msgstr "Pronađene slike:"
+
+#: ../src/ui/extract.ui.h:1
+msgid "Extract Tracks"
+msgstr "Izvadi Snimke"
+
+#: ../src/ui/extract.ui.h:2
+msgid "_Extract"
+msgstr "_Raspakavoti"
+
+#: ../src/ui/extract.ui.h:3
+msgid "_All tracks"
+msgstr "_Sve snimke"
+
+#: ../src/ui/extract.ui.h:4
+msgid "_Selected tracks"
+msgstr "_Odabrane snimke"
+
+#: ../src/ui/format-options.ui.h:1
+msgid "Format Properties"
+msgstr "Format Svojstva"
+
+#: ../src/ui/gears-menu.ui.h:1
+msgid "Copy _Disk"
+msgstr "Kopiraj_Disk"
+
+#: ../src/ui/gears-menu.ui.h:2
+msgid "_Eject"
+msgstr "_Izbaci"
+
+#: ../src/ui/menus.ui.h:1
+msgid "_Play"
+msgstr "_Pusti"
+
+#: ../src/ui/menus.ui.h:2
+msgid "E_xtract Tracks"
+msgstr "E_xtract Snimke"
+
+#: ../src/ui/menus.ui.h:4
+msgid "_Choose File…"
+msgstr "_Odaberi Datoteku…"
+
+#: ../src/ui/menus.ui.h:5
+msgid "_Search on Internet"
+msgstr "_Traži na Internetu"
+
+#: ../src/ui/menus.ui.h:6
+msgid "_Remove"
+msgstr "_Ukloni"
+
+#: ../src/ui/preferences.ui.h:1
+msgid "CD Player Preferences"
+msgstr "Opcije CD Plejera"
+
+#: ../src/ui/preferences.ui.h:2
+msgid "Playback"
+msgstr "Reprodukcija"
+
+#: ../src/ui/preferences.ui.h:3
+msgid "Drive:"
+msgstr "Uređaj:"
+
+#: ../src/ui/preferences.ui.h:4
+msgid "Automatically play newly inserted discs"
+msgstr "Automatski pusti novi ubačeni disk"
+
+#: ../src/ui/preferences.ui.h:5
+msgid "Extraction"
+msgstr "Izvlačenje"
+
+#: ../src/ui/preferences.ui.h:6
+msgid "Destination:"
+msgstr "Odredište:"
+
+#: ../src/ui/preferences.ui.h:7
+msgid "Choose destination folder"
+msgstr "Odaberi odredišni direktorij"
+
+#: ../src/ui/preferences.ui.h:8
+msgid "Format:"
+msgstr "Format:"
+
+#: ../src/ui/preferences.ui.h:9
+msgid "_Save playlist"
+msgstr "_Spremi listu snimaka za puštanje"
+
+#: ../src/ui/properties.ui.h:1
+msgid "Single artist"
+msgstr "Jedan izvođač"
+
+#: ../src/ui/properties.ui.h:2
+msgid "Various artists"
+msgstr "Više izvođača"
+
+#: ../src/ui/properties.ui.h:3
+msgid "Properties"
+msgstr "Svojstva"
+
+#: ../src/ui/properties.ui.h:5
+msgid "_Title:"
+msgstr "_Naslov:"
+
+#: ../src/ui/properties.ui.h:6
+msgid "T_racks:"
+msgstr "Z_apisi:"
+
+#: ../src/ui/properties.ui.h:7
+msgid "_Artist:"
+msgstr "_Izvođač:"
+
+#: ../src/ui/properties.ui.h:8
+msgid "_Year:"
+msgstr "_Godina:"
+
+#: ../src/ui/properties.ui.h:9
+msgid "Search for the remaining data"
+msgstr "Pretraga preostalih podataka"
+
+#: ../src/ui/ripper.ui.h:1
+msgid "Extracting Tracks"
+msgstr "Vađenje Snimaka"
+
+#: ../src/ui/ripper.ui.h:2
+msgid "Extracting tracks"
+msgstr "Izvlačenje snimaka"
