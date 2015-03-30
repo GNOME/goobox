@@ -13,6 +13,7 @@
   -->
   <download-page rdf:resource="http://download.gnome.org/sources/goobox/" />
   <bug-database rdf:resource="https://bugzilla.gnome.org/browse.cgi?product=goobox" />
+  <programming-language>C</programming-language>
 
   <maintainer>
     <foaf:Person>
