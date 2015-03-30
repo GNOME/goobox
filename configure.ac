@@ -235,6 +235,8 @@ data/icons/256x256/Makefile
 data/icons/256x256/apps/Makefile
 data/icons/48x48/Makefile
 data/icons/48x48/apps/Makefile
+data/icons/scalable/Makefile
+data/icons/scalable/apps/Makefile
 help/Makefile
 src/Makefile
 src/icons/Makefile
