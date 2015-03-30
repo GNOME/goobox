@@ -492,7 +492,11 @@ player_done_cb (GooPlayer       *player,
 	case GOO_PLAYER_ACTION_PLAY:
 	case GOO_PLAYER_ACTION_STOP:
 	case GOO_PLAYER_ACTION_MEDIUM_REMOVED:
+		_goo_player_bar_update_play_button_icon (self, FALSE);
 		_goo_player_bar_set_time (self, 0);
+		break;
+	case GOO_PLAYER_ACTION_PAUSE:
+		_goo_player_bar_update_play_button_icon (self, FALSE);
 		break;
 	default:
 		break;
