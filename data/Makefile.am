@@ -15,6 +15,9 @@ gsettings_SCHEMAS = $(gsettingsschema_in_files:.xml.in=.xml)
 
 @GSETTINGS_RULES@
 
+%.gschema.xml: %.gschema.xml.in
+	$(AM_V_GEN) $(INTLTOOL_MERGE) -x -u --no-translations $< $@
+
 convertdir = $(datadir)/GConf/gsettings
 convert_DATA = goobox.convert
 
