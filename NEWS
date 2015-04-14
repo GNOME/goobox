@@ -1,5 +1,19 @@
+version 3.4.0
+-------------
+
+ Bugs fixed:
+
+  * Correctly update the play button icon after pausing.
+  * Added symbolic app icon.
+
+ New or updated application translations:
+
+  * Bosnian (Samir Ribić)
+  * Swedish (Anders Jonsson)
+
 version 3.3.3
 -------------
+
  Bugs fixed:
 
   * Allow to start with no drive.
