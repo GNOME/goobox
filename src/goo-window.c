@@ -430,16 +430,6 @@ goo_window_finalize (GObject *object)
 		if (window->priv->playlist != NULL)
 			g_list_free (window->priv->playlist);
 
-		if (window->priv->file_popup_menu != NULL) {
-			gtk_widget_destroy (window->priv->file_popup_menu);
-			window->priv->file_popup_menu = NULL;
-		}
-
-		if (window->priv->cover_popup_menu != NULL) {
-			gtk_widget_destroy (window->priv->cover_popup_menu);
-			window->priv->cover_popup_menu = NULL;
-		}
-
 		g_signal_handlers_disconnect_by_data (window->priv->player, window);
 		g_object_unref (window->priv->player);
 
