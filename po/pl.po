@@ -5,14 +5,14 @@
 # gnomepl@aviary.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Artur Flinta <aflinta@at.kernel.pl>, 2005-2007.
-# Piotr Drąg <piotrdrag@gmail.com>, 2012-2014.
-# Aviary.pl <gnomepl@aviary.pl>, 2012-2014.
+# Piotr Drąg <piotrdrag@gmail.com>, 2012-2015.
+# Aviary.pl <gnomepl@aviary.pl>, 2012-2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-03 15:30+0100\n"
-"PO-Revision-Date: 2014-01-03 15:31+0100\n"
+"POT-Creation-Date: 2015-09-02 21:07+0200\n"
+"PO-Revision-Date: 2015-09-02 21:08+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -23,69 +23,6 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-Language: Polish\n"
 "X-Poedit-Country: Poland\n"
-
-#: ../copy-n-paste/eggdesktopfile.c:165
-#, c-format
-msgid "File is not a valid .desktop file"
-msgstr "To nie jest prawidłowy plik typu .desktop"
-
-#: ../copy-n-paste/eggdesktopfile.c:190
-#, c-format
-msgid "Unrecognized desktop file Version '%s'"
-msgstr "Nierozpoznana wersja \"%s\" pliku .desktop"
-
-#: ../copy-n-paste/eggdesktopfile.c:970
-#, c-format
-msgid "Starting %s"
-msgstr "Uruchamianie %s"
-
-#: ../copy-n-paste/eggdesktopfile.c:1112
-#, c-format
-msgid "Application does not accept documents on command line"
-msgstr "Program nie przyjmuje dokumentów w wierszu poleceń"
-
-#: ../copy-n-paste/eggdesktopfile.c:1180
-#, c-format
-msgid "Unrecognized launch option: %d"
-msgstr "Nierozpoznana opcja uruchamiania: %d"
-
-#: ../copy-n-paste/eggdesktopfile.c:1385
-#, c-format
-msgid "Can't pass documents to this desktop element"
-msgstr "Nie można przekazać dokumentów do tego elementu .desktop"
-
-#: ../copy-n-paste/eggdesktopfile.c:1406
-#, c-format
-msgid "Not a launchable item"
-msgstr "Nie można uruchamiać"
-
-#: ../copy-n-paste/eggsmclient.c:226
-msgid "Disable connection to session manager"
-msgstr "Rozłącza połączenie z menedżerem sesji"
-
-#: ../copy-n-paste/eggsmclient.c:229
-msgid "Specify file containing saved configuration"
-msgstr "Podaje plik zawierający zapisaną konfigurację"
-
-#: ../copy-n-paste/eggsmclient.c:229
-msgid "FILE"
-msgstr "PLIK"
-
-#: ../copy-n-paste/eggsmclient.c:232
-msgid "Specify session management ID"
-msgstr "Podaje identyfikator zarządzania sesją"
-
-#: ../copy-n-paste/eggsmclient.c:232
-msgid "ID"
-msgstr "IDENTYFIKATOR"
-
-#: ../copy-n-paste/eggsmclient.c:253
-msgid "Session management options:"
-msgstr "Opcje zarządzania sesją:"
-
-#: ../copy-n-paste/eggsmclient.c:254
-msgid "Show session management options"
-msgstr "Wyświetla opcje zarządzania sesją"
 
 #: ../data/appdata/goobox.appdata.xml.in.h:1
 msgid "Goobox CD Player"
@@ -108,8 +45,8 @@ msgstr ""
 "WWW MusicBrainz."
 
 #: ../data/goobox.desktop.in.in.h:1
-#: ../src/goo-application-actions-callbacks.c:64 ../src/goo-application.c:549
-#: ../src/goo-window.c:1380 ../src/goo-window.c:1393 ../src/goo-window.c:1959
+#: ../src/goo-application-actions-callbacks.c:63 ../src/goo-application.c:417
+#: ../src/goo-window.c:1327 ../src/goo-window.c:1340 ../src/goo-window.c:1945
 msgid "CD Player"
 msgstr "Odtwarzacz płyt CD"
 
@@ -127,11 +64,11 @@ msgstr "Poziom głośności"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:3
 msgid "'Choose cover' location"
-msgstr "Położenie \"Wyboru okładki\""
+msgstr "Położenie „Wyboru okładki”"
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:4
 msgid "Default location for the 'Choose cover' dialog."
-msgstr "Domyślne położenie dla okna dialogowego \"Wybór okładki\"."
+msgstr "Domyślne położenie dla okna dialogowego „Wybór okładki”."
 
 #: ../data/org.gnome.Goobox.gschema.xml.in.h:5
 msgid "Use Sound Juicer to rip discs"
@@ -209,20 +146,20 @@ msgstr "Jakość plików FLAC"
 msgid "MP3 files quality"
 msgstr "Jakość plików MP3"
 
-#: ../src/album-info.c:177
+#: ../src/album-info.c:176
 msgid "Various"
 msgstr "Różne"
 
-#: ../src/dlg-cover-chooser.c:277
+#: ../src/dlg-cover-chooser.c:276
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, wczytywanie obrazu: %u"
 
-#: ../src/dlg-cover-chooser.c:342 ../src/goo-window.c:2802
+#: ../src/dlg-cover-chooser.c:341 ../src/goo-window.c:2792
 msgid "Could not search for a cover on Internet"
 msgstr "Nie można wyszukać okładki w Internecie"
 
-#: ../src/dlg-extract.c:109
+#: ../src/dlg-extract.c:108
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -239,125 +176,125 @@ msgstr ""
 "• %s → FLAC\n"
 "• %s → WAV+PCM"
 
-#: ../src/dlg-extract.c:120
+#: ../src/dlg-extract.c:119
 msgid "No encoder available."
 msgstr "Brak kodera."
 
-#: ../src/dlg-preferences.c:244 ../src/dlg-preferences.c:505
+#: ../src/dlg-preferences.c:243 ../src/dlg-preferences.c:504
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:258 ../src/dlg-preferences.c:508
+#: ../src/dlg-preferences.c:257 ../src/dlg-preferences.c:507
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:272 ../src/dlg-preferences.c:511
+#: ../src/dlg-preferences.c:271 ../src/dlg-preferences.c:510
 msgid "MP3"
 msgstr "MP3"
 
-#: ../src/dlg-preferences.c:286
+#: ../src/dlg-preferences.c:285
 msgid "Waveform PCM"
 msgstr "WAV+PCM"
 
-#: ../src/dlg-preferences.c:480
+#: ../src/dlg-preferences.c:479
 msgid "Faster compression"
 msgstr "Szybsza kompresja"
 
-#: ../src/dlg-preferences.c:484
+#: ../src/dlg-preferences.c:483
 msgid "Higher compression"
 msgstr "Wyższa kompresja"
 
-#: ../src/dlg-preferences.c:491
+#: ../src/dlg-preferences.c:490
 msgid "Smaller size"
 msgstr "Mniejszy rozmiar"
 
-#: ../src/dlg-preferences.c:495
+#: ../src/dlg-preferences.c:494
 msgid "Higher quality"
 msgstr "Wyższa jakość"
 
-#: ../src/dlg-preferences.c:523
+#: ../src/dlg-preferences.c:522
 msgid "Quality:"
 msgstr "Jakość:"
 
-#: ../src/dlg-preferences.c:526
+#: ../src/dlg-preferences.c:525
 msgid "Compression level:"
 msgstr "Poziom kompresji:"
 
-#: ../src/dlg-properties.c:215
+#: ../src/dlg-properties.c:214
 #, c-format
 msgid "Album %d of %d"
 msgstr "Album %d z %d"
 
-#: ../src/dlg-properties.c:272
+#: ../src/dlg-properties.c:271
 msgid "No album found"
 msgstr "Nie odnaleziono albumu"
 
-#: ../src/dlg-properties.c:291 ../src/goo-window.c:1315
+#: ../src/dlg-properties.c:290 ../src/goo-window.c:1262
 msgid "Searching disc information…"
 msgstr "Wyszukiwanie informacji o płycie…"
 
-#: ../src/dlg-properties.c:352
+#: ../src/dlg-properties.c:351
 msgid "#"
 msgstr "#"
 
-#: ../src/dlg-properties.c:370
+#: ../src/dlg-properties.c:369
 msgid "Title"
 msgstr "Tytuł"
 
-#: ../src/dlg-properties.c:403
+#: ../src/dlg-properties.c:402
 msgid "Artist"
 msgstr "Wykonawca"
 
-#: ../src/dlg-ripper.c:166
+#: ../src/dlg-ripper.c:165
 #, c-format
 msgid "(%d:%02d:%02d Remaining)"
 msgstr "(pozostało: %d∶%02d∶%02d)"
 
-#: ../src/dlg-ripper.c:168
+#: ../src/dlg-ripper.c:167
 #, c-format
 msgid "(%d:%02d Remaining)"
 msgstr "(pozostało: %d∶%02d)"
 
-#: ../src/dlg-ripper.c:173
+#: ../src/dlg-ripper.c:172
 #, c-format
 msgid "Extracting track: %d of %d %s"
 msgstr "Zgrywanie ścieżki: %d z %d %s"
 
-#: ../src/dlg-ripper.c:210 ../src/dlg-ripper.c:319
+#: ../src/dlg-ripper.c:209 ../src/dlg-ripper.c:318
 msgid "Could not extract the tracks"
 msgstr "Nie można zgrać ścieżek"
 
-#: ../src/dlg-ripper.c:437
+#: ../src/dlg-ripper.c:436
 #, c-format
 msgid "Invalid destination folder: %s"
 msgstr "Nieprawidłowy katalog docelowy: %s"
 
-#: ../src/dlg-ripper.c:467 ../src/dlg-ripper.c:471
+#: ../src/dlg-ripper.c:466 ../src/dlg-ripper.c:470
 msgid "Could not display the destination folder"
 msgstr "Nie można wyświetlić katalogu docelowego"
 
-#: ../src/dlg-ripper.c:597
+#: ../src/dlg-ripper.c:596
 msgid "Tracks extracted successfully"
 msgstr "Pomyślnie zgrano ścieżki"
 
-#: ../src/dlg-ripper.c:599
+#: ../src/dlg-ripper.c:598
 msgid "_View destination folder"
 msgstr "_Wyświetlenie katalogu docelowego"
 
-#: ../src/dlg-ripper.c:613
+#: ../src/dlg-ripper.c:612
 #, c-format
 msgid "Extracting \"%s\""
-msgstr "Zgrywanie \"%s\""
+msgstr "Zgrywanie „%s”"
 
-#: ../src/dlg-ripper.c:624 ../src/dlg-ripper.c:633
+#: ../src/dlg-ripper.c:623 ../src/dlg-ripper.c:632
 msgid "Could not extract tracks"
 msgstr "Nie można zgrać ścieżek"
 
-#: ../src/dlg-ripper.c:664
+#: ../src/dlg-ripper.c:663
 msgid "Ripped with CD Player"
 msgstr "Zgrano za pomocą Odtwarzacza CD"
 
-#: ../src/dlg-ripper.c:698
+#: ../src/dlg-ripper.c:697
 msgid "Extracting disc tracks"
 msgstr "Zgrywanie ścieżek płyty"
 
@@ -367,7 +304,7 @@ msgstr "Zgrywanie ścieżek płyty"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: ../src/glib-utils.c:2226
+#: ../src/glib-utils.c:2225
 #, c-format
 msgctxt "long time format"
 msgid "%d∶%02d∶%02d"
@@ -379,76 +316,76 @@ msgstr "%d∶%02d∶%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: ../src/glib-utils.c:2235
+#: ../src/glib-utils.c:2234
 #, c-format
 msgctxt "short time format"
 msgid "%d∶%02d"
 msgstr "%d∶%02d"
 
-#: ../src/goo-application-actions-callbacks.c:61
+#: ../src/goo-application-actions-callbacks.c:60
 msgid "translator_credits"
 msgstr ""
 "Artur Flinta <aflinta@at.kernel.pl>, 2005-2007\n"
-"Piotr Drąg <piotrdrag@gmail.com>, 2012-2014\n"
-"Aviary.pl <gnomepl@aviary.pl>, 2012-2014"
+"Piotr Drąg <piotrdrag@gmail.com>, 2012-2015\n"
+"Aviary.pl <gnomepl@aviary.pl>, 2012-2015"
 
-#: ../src/goo-application-actions-callbacks.c:66
+#: ../src/goo-application-actions-callbacks.c:65
 msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
 msgstr "Copyright © 2004-2011 Free Software Foundation, Inc."
 
-#: ../src/goo-application-actions-callbacks.c:67 ../src/goo-application.c:274
+#: ../src/goo-application-actions-callbacks.c:66 ../src/goo-application.c:159
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "Odtwarzanie płyt CD i zapisywanie ścieżek jako pliki na dysku"
 
-#: ../src/goo-application.c:55
+#: ../src/goo-application.c:52
 msgid "CD device to be used"
 msgstr "Używane urządzenie CD"
 
-#: ../src/goo-application.c:56
+#: ../src/goo-application.c:53
 msgid "DEVICE_PATH"
 msgstr "ŚCIEŻKA_DO_URZĄDZENIA"
 
-#: ../src/goo-application.c:58
+#: ../src/goo-application.c:55
 msgid "Play the CD on startup"
 msgstr "Odtwarza płytę CD po uruchomieniu"
 
-#: ../src/goo-application.c:61
+#: ../src/goo-application.c:58
 msgid "Toggle play"
 msgstr "Przełącza odtwarzanie"
 
-#: ../src/goo-application.c:64
+#: ../src/goo-application.c:61
 msgid "Stop playing"
 msgstr "Zatrzymuje odtwarzanie"
 
-#: ../src/goo-application.c:67
+#: ../src/goo-application.c:64
 msgid "Play the next track"
 msgstr "Odtwarza następną ścieżkę"
 
-#: ../src/goo-application.c:70
+#: ../src/goo-application.c:67
 msgid "Play the previous track"
 msgstr "Odtwarza poprzednią ścieżkę"
 
-#: ../src/goo-application.c:73
+#: ../src/goo-application.c:70
 msgid "Eject the CD"
 msgstr "Wysuwa płytę CD"
 
-#: ../src/goo-application.c:76
+#: ../src/goo-application.c:73
 msgid "Toggle the main window visibility"
 msgstr "Przełącza widoczność głównego okna"
 
-#: ../src/goo-application.c:79
+#: ../src/goo-application.c:76
 msgid "Quit the application"
 msgstr "Kończy działanie programu"
 
-#: ../src/goo-application.c:82
+#: ../src/goo-application.c:79
 msgid "Show version"
 msgstr "Wyświetla wersję"
 
-#: ../src/goo-application.c:320
+#: ../src/goo-application.c:202
 msgid "Cannot start the CD player"
 msgstr "Nie można uruchomić odtwarzacza płyt CD"
 
-#: ../src/goo-application.c:321
+#: ../src/goo-application.c:203
 msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgstr ""
 "Należy zainstalować podstawowe wtyczki biblioteki GStreamer, aby odczytywać "
@@ -458,132 +395,133 @@ msgstr ""
 msgid "Playing CD"
 msgstr "Odtwarzanie płyty CD"
 
-#: ../src/goo-player-info.c:254
+#: ../src/goo-player-info.c:253
 msgid "Click here to choose a cover for this CD"
 msgstr "Kliknięcie tutaj umożliwi wybranie okładki dla tej płyty CD"
 
-#: ../src/goo-player-info.c:396 ../src/goo-window.c:1209
+#: ../src/goo-player-info.c:395 ../src/goo-window.c:1156
 msgid "No disc"
 msgstr "Brak płyty"
 
-#: ../src/goo-player-info.c:399 ../src/goo-window.c:1214
+#: ../src/goo-player-info.c:398 ../src/goo-window.c:1161
 msgid "Data disc"
 msgstr "Płyta z danymi"
 
-#: ../src/goo-player-info.c:403
+#: ../src/goo-player-info.c:402
 msgid "Ejecting CD"
 msgstr "Wysuwanie płyty CD"
 
-#: ../src/goo-player-info.c:406
+#: ../src/goo-player-info.c:405
 msgid "Checking CD drive"
 msgstr "Sprawdzanie napędu CD"
 
-#: ../src/goo-player-info.c:409 ../src/goo-player-info.c:412
+#: ../src/goo-player-info.c:408 ../src/goo-player-info.c:411
 msgid "Reading CD"
 msgstr "Odczytywanie płyty CD"
 
-#: ../src/goo-player-info.c:415 ../src/goo-window.c:1227
-#: ../src/goo-window.c:1400
+#: ../src/goo-player-info.c:414 ../src/goo-window.c:1174
+#: ../src/goo-window.c:1347
 msgid "Audio CD"
 msgstr "Płyta CD-Audio"
 
-#: ../src/goo-window-actions-callbacks.c:233
-#: ../src/goo-window-actions-callbacks.c:269
-#: ../src/goo-window-actions-callbacks.c:303
+#: ../src/goo-window-actions-callbacks.c:232
+#: ../src/goo-window-actions-callbacks.c:268
+#: ../src/goo-window-actions-callbacks.c:302
 msgid "Could not execute command"
 msgstr "Nie można wykonać polecenia"
 
-#: ../src/goo-window.c:48
+#: ../src/goo-window.c:47
 msgid "Hide _tracks"
 msgstr "_Ukryj ścieżki"
 
-#: ../src/goo-window.c:49
+#: ../src/goo-window.c:48
 msgid "Show _tracks"
 msgstr "_Wyświetl ścieżki"
 
-#: ../src/goo-window.c:1607
+#: ../src/goo-window.c:1558
 msgid "No information found for this disc"
 msgstr "Nie odnaleziono informacji o tej płycie"
 
-#: ../src/goo-window.c:2231 ../src/ui/gears-menu.ui.h:3 ../src/ui/menus.ui.h:3
+#: ../src/goo-window.c:2222 ../src/ui/gears-menu.ui.h:3 ../src/ui/menus.ui.h:3
 msgid "_Properties"
 msgstr "_Właściwości"
 
-#: ../src/goo-window.c:2614
+#: ../src/goo-window.c:2604
 msgid "Could not save cover image"
 msgstr "Nie można zapisać obrazu okładki"
 
-#: ../src/goo-window.c:2638 ../src/goo-window.c:2669
+#: ../src/goo-window.c:2628 ../src/goo-window.c:2659
 msgid "Could not load image"
 msgstr "Nie można wczytać obrazu"
 
-#: ../src/goo-window.c:2740
+#: ../src/goo-window.c:2730
 msgid "Choose Disc Cover Image"
 msgstr "Wybór obrazu okładki płyty"
 
-#: ../src/goo-window.c:2759
+#: ../src/goo-window.c:2749
 msgid "Images"
 msgstr "Obrazy"
 
-#: ../src/goo-window.c:2767
+#: ../src/goo-window.c:2757
 msgid "All files"
 msgstr "Wszystkie pliki"
 
-#: ../src/goo-window.c:2803
+#: ../src/goo-window.c:2793
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 msgstr "Należy podać wykonawcę i nazwę albumu, aby odnaleźć jego okładkę."
 
-#: ../src/gtk-file-chooser-preview.c:166
+#: ../src/gtk-file-chooser-preview.c:165
 msgid "Preview"
 msgstr "Podgląd"
 
-#: ../src/gtk-file-chooser-preview.c:267
+#: ../src/gtk-file-chooser-preview.c:266
 msgid "pixels"
 msgstr "pikseli"
 
-#: ../src/gtk-utils.c:501
+#: ../src/gtk-utils.c:500
 msgid "Could not display help"
 msgstr "Nie można wyświetlić pomocy"
 
-#: ../src/gtk-utils.c:787 ../src/gtk-utils.c:793
+#: ../src/gtk-utils.c:786 ../src/gtk-utils.c:792
 msgid "Could not launch the application"
 msgstr "Nie można uruchomić programu"
 
-#: ../src/gtk-utils.h:37
+#: ../src/gtk-utils.h:36
 msgid "_Cancel"
 msgstr "_Anuluj"
 
-#: ../src/gtk-utils.h:38 ../src/ui/gears-menu.ui.h:4
+#: ../src/gtk-utils.h:37 ../src/ui/gears-menu.ui.h:4
 msgid "_Close"
 msgstr "Za_mknij"
 
-#: ../src/gtk-utils.h:39
+#: ../src/gtk-utils.h:38
 msgid "_Ok"
 msgstr "_OK"
 
-#: ../src/gtk-utils.h:40
+#: ../src/gtk-utils.h:39
 msgid "_Open"
 msgstr "_Otwórz"
 
-#: ../src/gtk-utils.h:41
+#: ../src/gtk-utils.h:40 ../src/ui/cover-chooser.ui.h:2
+#: ../src/ui/properties.ui.h:4
 msgid "_Reset"
 msgstr "_Przywróć"
 
-#: ../src/main.c:269
+#: ../src/main.c:272
 msgid "Pause"
 msgstr "Wstrzymuje"
 
-#: ../src/main.c:276
+#: ../src/main.c:279
 msgid "Play"
 msgstr "Odtwarza"
 
-#: ../src/main.c:283
+#: ../src/main.c:286
 msgid "Next"
 msgstr "Następna"
 
-#: ../src/track-info.c:124
+#: ../src/track-info.c:123
 #, c-format
 msgid "Track %u"
 msgstr "Ścieżka %u"
@@ -620,7 +558,7 @@ msgstr "Za_kończ"
 msgid "Choose a CD Cover"
 msgstr "Wybór okładki płyty CD"
 
-#: ../src/ui/cover-chooser.ui.h:2
+#: ../src/ui/cover-chooser.ui.h:3
 msgid "Found images:"
 msgstr "Odnalezione obrazy:"
 
@@ -720,23 +658,23 @@ msgstr "Różni wykonawcy"
 msgid "Properties"
 msgstr "Właściwości"
 
-#: ../src/ui/properties.ui.h:4
+#: ../src/ui/properties.ui.h:5
 msgid "_Title:"
 msgstr "_Tytuł:"
 
-#: ../src/ui/properties.ui.h:5
+#: ../src/ui/properties.ui.h:6
 msgid "T_racks:"
 msgstr "Ś_cieżki:"
 
-#: ../src/ui/properties.ui.h:6
+#: ../src/ui/properties.ui.h:7
 msgid "_Artist:"
 msgstr "Wykon_awca:"
 
-#: ../src/ui/properties.ui.h:7
+#: ../src/ui/properties.ui.h:8
 msgid "_Year:"
 msgstr "_Rok:"
 
-#: ../src/ui/properties.ui.h:8
+#: ../src/ui/properties.ui.h:9
 msgid "Search for the remaining data"
 msgstr "Wyszukiwanie pozostałych danych"
 
@@ -747,23 +685,3 @@ msgstr "Zgrywanie ścieżek"
 #: ../src/ui/ripper.ui.h:2
 msgid "Extracting tracks"
 msgstr "Zgrywanie ścieżek"
-
-#~ msgid ""
-#~ "Vorbis is an open source, lossy audio codec with high quality output at a "
-#~ "lower file size than MP3."
-#~ msgstr ""
-#~ "Vorbis jest stratnym kodekiem dźwięku open source o wyższej jakości i "
-#~ "mniejszym rozmiarze plików niż MP3."
-
-#~ msgid ""
-#~ "Free Lossless Audio Codec (FLAC) is an open source codec that compresses "
-#~ "but does not degrade audio quality."
-#~ msgstr ""
-#~ "FLAC jest bezstratnym kodekiem open source, który kompresuje, ale nie "
-#~ "zmniejsza jakości dźwięku."
-
-#~ msgid ""
-#~ "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
-#~ "modulated (PCM) audio."
-#~ msgstr ""
-#~ "WAV+PCM jest bezstratnym formatem przechowującym nieskompresowany dźwięk."
