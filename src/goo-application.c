@@ -424,6 +424,6 @@ goo_application_new (void)
 {
 	return g_object_new (GOO_TYPE_APPLICATION,
 	                     "application-id", "org.gnome.Goobox",
-	                     "flags", 0,
+	                     "flags", G_APPLICATION_HANDLES_COMMAND_LINE,
 	                     NULL);
 }
