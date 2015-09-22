@@ -122,9 +122,9 @@ LIBCOVERART_CFLAGS=""
 if test x"$enable_libcoverart" = xyes; then
    AC_MSG_CHECKING(for libcoverart support)
 
-   if pkg-config --atleast-version=$LIBCOVERART_REQUIRED libcoverart; then
-      LIBCOVERART_LIBS=`pkg-config --libs libcoverart`
-      LIBCOVERART_CFLAGS=`pkg-config --cflags libcoverart`
+   if ${PKG_CONFIG} --atleast-version=$LIBCOVERART_REQUIRED libcoverart; then
+      LIBCOVERART_LIBS=`${PKG_CONFIG} --libs libcoverart`
+      LIBCOVERART_CFLAGS=`${PKG_CONFIG} --cflags libcoverart`
       AC_DEFINE(HAVE_LIBCOVERART, 1, [Have libcoverart])
    else
       enable_libcoverart=no
@@ -146,9 +146,9 @@ LIBNOTIFY_CFLAGS=""
 if test x"$enable_notification" = xyes; then
    AC_MSG_CHECKING(for notification support)
 
-   if pkg-config --atleast-version=$LIBNOTIFY_REQUIRED libnotify; then
-      LIBNOTIFY_LIBS=`pkg-config --libs libnotify`
-      LIBNOTIFY_CFLAGS=`pkg-config --cflags libnotify`
+   if ${PKG_CONFIG} --atleast-version=$LIBNOTIFY_REQUIRED libnotify; then
+      LIBNOTIFY_LIBS=`${PKG_CONFIG} --libs libnotify`
+      LIBNOTIFY_CFLAGS=`${PKG_CONFIG} --cflags libnotify`
       AC_DEFINE(ENABLE_NOTIFICATION, 1, [Have libnotify])
    else
       enable_notification=no
