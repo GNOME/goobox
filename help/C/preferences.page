@@ -56,7 +56,7 @@
           format properties.</p></item>
       <item><p>Whether to save a playlist file in PLS format that contains
           the list of the extracted files.  The playlist is saved in the same
-          folder of the audio files.</p></item>
+          folder as the audio files.</p></item>
     </list>
   </section>
 
