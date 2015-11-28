@@ -1,257 +1,517 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox doc\n"
-"POT-Creation-Date: 2007-05-06 03:32+0100\n"
-"PO-Revision-Date: 2007-05-14 21:06+0100\n"
-"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"POT-Creation-Date: 2013-12-19 13:18+0000\n"
+"PO-Revision-Date: 2015-11-07 14:49+0100\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.6\n"
 
-#: C/goobox.xml:18(title)
-msgid "<application>CD Player</application> Manual V1.0"
-msgstr "Handbok för <application>Cd-spelare</application> v1.0"
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
+msgstr ""
+"Daniel Nylander <po@danielnylander.se>, 2006\n"
+"Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015"
 
-#: C/goobox.xml:20(para)
-msgid "User manual for Goobox the CD player."
-msgstr "Användarhandbok för cd-spelaren Goobox."
-
-#: C/goobox.xml:24(year)
-msgid "2005"
-msgstr "2005"
-
-#: C/goobox.xml:25(holder)
+#: C/index.page:4(credit/name)
 msgid "Paolo Bacchilega"
 msgstr "Paolo Bacchilega"
 
-#: C/goobox.xml:41(publishername)
-msgid "GNOME Documentation Project"
-msgstr "Dokumentationsprojekt för GNOME"
+#: C/index.page:6(credit/years)
+#| msgid "2005-01-20"
+msgid "2005-2011"
+msgstr "2005-2011"
 
-#: C/goobox.xml:2(para)
-msgid "Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License (GFDL), Version 1.1 or any later version published by the Free Software Foundation with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. You can find a copy of the GFDL at this <ulink type=\"help\" url=\"ghelp:fdl\">link</ulink> or in the file COPYING-DOCS distributed with this manual."
-msgstr "Tillstånd att kopiera, distribuera och/eller modifiera detta dokument ges under villkoren i GNU Free Documentation License (GFDL), version 1.1 eller senare, utgivet av Free Software Foundation utan standardavsnitt och omslagstexter.  En kopia av GFDL finns att hämta på denna <ulink type=\"help\" url=\"ghelp:fdl\">länk</ulink> eller i filen COPYING-DOCS som medföljer denna handbok."
+#: C/index.page:15(page/title)
+msgid "<app>CD Player</app> Help"
+msgstr "Hjälp för <application>Cd-spelare</application>"
 
-#: C/goobox.xml:12(para)
-msgid "This manual is part of a collection of GNOME manuals distributed under the GFDL. If you want to distribute this manual separately from the collection, you can do so by adding a copy of the license to the manual, as described in section 6 of the license."
-msgstr "Denna handbok utgör en av flera GNOME-handböcker som distribueras under villkoren i GFDL.  Om du vill distribuera denna handbok separat från övriga handböcker kan du göra detta genom att lägga till en kopia av licensavtalet i handboken enligt instruktionerna i avsnitt 6 i licensavtalet."
+#: C/index.page:16(page/p)
+msgid ""
+"With <app>CD Player</app> you can play audio Compact Discs (CDs) and save "
+"the CD tracks as audio files."
+msgstr ""
+"Med <application>Cd-spelare</application> kan du spela upp cd-skivor (ljud) "
+"och spara cd-spåren som ljudfiler."
 
-#: C/goobox.xml:19(para)
-msgid "Many of the names used by companies to distinguish their products and services are claimed as trademarks. Where those names appear in any GNOME documentation, and the members of the GNOME Documentation Project are made aware of those trademarks, then the names are in capital letters or initial capital letters."
-msgstr "Flera namn på produkter och tjänster är registrerade varumärken. I de fall dessa namn förekommer i GNOME-dokumentation - och medlemmarna i GNOME-dokumentationsprojektet är medvetna om dessa varumärken - är de skrivna med versaler eller med inledande versal."
+#: C/legal.xml:4(p/link)
+msgid "Creative Commons Attribution-Share Alike 3.0 Unported License"
+msgstr "Creative Commons Attribution-Share Alike 3.0 Unported License"
 
-#: C/goobox.xml:35(para)
-msgid "DOCUMENT IS PROVIDED ON AN \"AS IS\" BASIS, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES THAT THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS FREE OF DEFECTS MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE RISK AS TO THE QUALITY, ACCURACY, AND PERFORMANCE OF THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS WITH YOU. SHOULD ANY DOCUMENT OR MODIFIED VERSION PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT THE INITIAL WRITER, AUTHOR OR ANY CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY SERVICING, REPAIR OR CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF THIS LICENSE. NO USE OF ANY DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER; AND"
-msgstr "DOKUMENTET TILLHANDAHÅLLS I \"BEFINTLIGT SKICK\" UTAN NÅGRA SOM HELST GARANTIER, VARE SIG UTTRYCKLIGA ELLER UNDERFÖRSTÅDDA, INKLUSIVE, MEN INTE BEGRÄNSAT TILL, GARANTIER ATT DOKUMENTET ELLER EN MODIFIERAD VERSION AV DOKUMENTET INTE INNEHÅLLER NÅGRA FELAKTIGHETER, ÄR LÄMPLIGT FÖR ETT VISST ÄNDAMÅL ELLER INTE STRIDER MOT LAG. HELA RISKEN VAD GÄLLER KVALITET, EXAKTHET OCH UTFÖRANDE AV DOKUMENTET OCH MODIFIERADE VERSIONER AV DOKUMENTET LIGGER HELT OCH HÅLLET PÅ ANVÄNDAREN. OM ETT DOKUMENT ELLER EN MODIFIERAD VERSION AV ETT DOKUMENT SKULLE VISA SIG INNEHÅLLA FELAKTIGHETER I NÅGOT HÄNSEENDE ÄR DET DU (INTE DEN URSPRUNGLIGA SKRIBENTEN, FÖRFATTAREN ELLER NÅGON ANNAN MEDARBETARE) SOM FÅR STÅ FÖR ALLA EVENTUELLA KOSTNADER FÖR SERVICE, REPARATIONER ELLER KORRIGERINGAR. DENNA GARANTIFRISKRIVNING UTGÖR EN VÄSENTLIG DEL AV DETTA LICENSAVTAL. DETTA INNEBÄR ATT ALL ANVÄNDNING AV ETT DOKUMENT ELLER EN MODIFIERAD VERSION AV ETT DOKUMENT BEVILJAS ENDAST UNDER DENNA ANSVARSFRISKRIVNING;"
+#: C/legal.xml:3(license/p)
+msgid "This work is licensed under a <_:link-1/>."
+msgstr "Detta verk är licensierat under <_:link-1/>."
 
-#: C/goobox.xml:55(para)
-msgid "UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE AUTHOR, INITIAL WRITER, ANY CONTRIBUTOR, OR ANY DISTRIBUTOR OF THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT, OR ANY SUPPLIER OF ANY OF SUCH PARTIES, BE LIABLE TO ANY PERSON FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER DAMAGES OR LOSSES ARISING OUT OF OR RELATING TO USE OF THE DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT, EVEN IF SUCH PARTY SHALL HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGES."
-msgstr "UNDER INGA OMSTÄNDIGHETER ELLER INOM RAMEN FÖR NÅGON LAGSTIFTNING, OAVSETT OM DET GÄLLER KRÄNKNING (INKLUSIVE VÅRDSLÖSHET), KONTRAKT ELLER DYLIKT, SKA FÖRFATTAREN, DEN URSPRUNGLIGA SKRIBENTEN ELLER ANNAN MEDARBETARE ELLER ÅTERFÖRSÄLJARE AV DOKUMENTET ELLER AV EN MODIFIERAD VERSION AV DOKUMENTET ELLER NÅGON LEVERANTÖR TILL NÅGON AV NÄMNDA PARTER STÄLLAS ANSVARIG GENTEMOT NÅGON FÖR NÅGRA DIREKTA, INDIREKTA, SÄRSKILDA ELLER OFÖRUTSEDDA SKADOR ELLER FÖLJDSKADOR AV NÅGOT SLAG, INKLUSIVE, MEN INTE BEGRÄNSAT TILL, SKADOR BETRÄFFANDE FÖRLORAD GOODWILL, HINDER I ARBETET, DATORHAVERI ELLER NÅGRA ANDRA TÄNKBARA SKADOR ELLER FÖRLUSTER SOM KAN UPPKOMMA PÅ GRUND AV ELLER RELATERAT TILL ANVÄNDNINGEN AV DOKUMENTET ELLER MODIFIERADE VERSIONER AV DOKUMENTET, ÄVEN OM PART SKA HA BLIVIT INFORMERAD OM MÖJLIGHETEN TILL SÅDANA SKADOR."
+#: C/legal.xml:6(license/p)
+msgid ""
+"As a special exception, the copyright holders give you permission to copy, "
+"modify, and distribute the example code contained in this document under the "
+"terms of your choosing, without restriction."
+msgstr ""
+"Som ett speciellt undantag, ger upphovsrättsinnehavarna dig tillåtelse att "
+"kopiera, modifiera och distribuera exempelkoden som finns i detta dokument "
+"under de villkor som du väljer, utan restriktioner."
 
-#: C/goobox.xml:28(para)
-msgid "DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE TERMS OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER UNDERSTANDING THAT: <placeholder-1/>"
-msgstr "DOKUMENTET OCH MODIFIERADE VERSIONER AV DOKUMENTET TILLHANDAHÅLLS UNDER VILLKOREN I GNU FREE DOCUMENTATION LICENSE ENDAST UNDER FÖLJANDE FÖRUTSÄTTNINGAR: <placeholder-1/>"
-
-#: C/goobox.xml:48(firstname)
-msgid "Paolo"
-msgstr "Paolo"
-
-#: C/goobox.xml:49(surname)
-msgid "Bacchilega"
-msgstr "Bacchilega"
-
-#: C/goobox.xml:51(email)
-msgid "paolo.bacchilega@libero.it"
-msgstr "paolo.bacchilega@libero.it"
-
-#: C/goobox.xml:61(revnumber)
-msgid "1.0"
-msgstr "1.0"
-
-#: C/goobox.xml:62(date)
-msgid "2005-01-20"
-msgstr "2005-01-20"
-
-#: C/goobox.xml:64(para)
-msgid "First version, program version 0.7.1"
-msgstr "Första versionen, programversion 0.7.1"
-
-#. this is version of manual, not application
-#: C/goobox.xml:69(releaseinfo)
-msgid "This is manual describes version 0.7.1 of Goobox"
-msgstr "Den här handboken beskriver version 0.7.1 av Goobox"
-
-#: C/goobox.xml:75(primary)
-msgid "goobox"
-msgstr "goobox"
-
-#: C/goobox.xml:78(primary)
-msgid "CD Player"
-msgstr "Cd-spelare"
-
-#: C/goobox.xml:81(secondary)
-msgid "CD Ripper"
-msgstr "Cd-rippare"
-
-#: C/goobox.xml:89(title)
-msgid "Introduction"
-msgstr "Introduktion"
-
-#: C/goobox.xml:90(para)
-msgid "With <application>CD Player</application> you can play audio Compact Discs (CDs) and save the CD tracks as audio files."
-msgstr "<application>Cd-spelare</application> kan spela upp cd-skivor (ljud) och spara cd-spåren som ljudfiler."
-
-#: C/goobox.xml:97(title)
-msgid "Quick Reference: Keyboard Shortcuts"
-msgstr "Snabbreferens: Tangentbordsgenvägar"
-
-#: C/goobox.xml:98(para)
-msgid "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> provide a quick reference for all of the <application>CD Player</application> keyword shortcuts. Look in the menus for other shortcuts."
-msgstr "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> tillhandahåller en snabbreferens för alla tangentbordsgenvägar i <application>Cd-spelare</application>. Se i menyerna efter andra genvägar."
-
-#: C/goobox.xml:103(title)
-msgid "Keyboard shortcuts"
-msgstr "Tangentbordsgenvägar"
-
-#: C/goobox.xml:111(para)
-msgid "Keyboard Shortcut"
-msgstr "Tangentbordsgenväg"
-
-#: C/goobox.xml:113(para)
-msgid "Description"
-msgstr "Beskrivning"
-
-#: C/goobox.xml:120(keycap)
-msgid "1"
-msgstr "1"
-
-#: C/goobox.xml:124(para)
-msgid "Play the 1st track"
-msgstr "Spela upp det första spåret"
-
-#: C/goobox.xml:130(keycap)
-msgid "2"
-msgstr "2"
-
-#: C/goobox.xml:134(para)
-msgid "Play the 2nd track"
-msgstr "Spela upp det andra spåret"
-
-#: C/goobox.xml:140(keycap)
-msgid "3"
-msgstr "3"
-
-#: C/goobox.xml:144(para)
-msgid "Play the 3rd track"
-msgstr "Spela upp det tredje spåret"
-
-#: C/goobox.xml:150(keycap)
-msgid "4"
-msgstr "4"
-
-#: C/goobox.xml:154(para)
-msgid "Play the 4th track"
-msgstr "Spela upp det fjärde spåret"
-
-#: C/goobox.xml:160(keycap)
-msgid "5"
-msgstr "5"
-
-#: C/goobox.xml:164(para)
-msgid "Play the 5th track"
-msgstr "Spela upp det femte spåret"
-
-#: C/goobox.xml:170(keycap)
-msgid "6"
-msgstr "6"
-
-#: C/goobox.xml:174(para)
-msgid "Play the 6th track"
-msgstr "Spela upp det sjätte spåret"
-
-#: C/goobox.xml:180(keycap)
-msgid "7"
-msgstr "7"
-
-#: C/goobox.xml:184(para)
-msgid "Play the 7th track"
-msgstr "Spela upp det sjunde spåret"
-
-#: C/goobox.xml:190(keycap)
-msgid "8"
-msgstr "8"
-
-#: C/goobox.xml:194(para)
-msgid "Play the 8th track"
-msgstr "Spela upp det åttonde spåret"
-
-#: C/goobox.xml:200(keycap)
-msgid "9"
-msgstr "9"
-
-#: C/goobox.xml:204(para)
-msgid "Play the 9th track"
-msgstr "Spela upp det nionde spåret"
-
-#: C/goobox.xml:210(keycap)
+#: C/preferences.page:6(info/title)
+msgctxt "sort"
 msgid "0"
 msgstr "0"
 
-#: C/goobox.xml:214(para)
-msgid "Play the 10th track"
-msgstr "Spela upp det tionde spåret"
+#: C/preferences.page:8(page/title)
+msgid "Preferences"
+msgstr "Inställningar"
 
-#: C/goobox.xml:220(keycap)
-msgid "Space"
-msgstr "Blanksteg"
+#: C/preferences.page:9(page/p)
+msgid ""
+"To configure <app>CD Player</app> open the <app>Preferences</app> dialog by "
+"choosing <guiseq><gui style=\"menu\">Edit</gui><gui style=\"menuitem"
+"\">Preferences</gui></guiseq>."
+msgstr ""
+"Öppna dialogen <app>Inställningar</app> genom att välja <guiseq><gui style="
+"\"menu\">Redigera</gui><gui style=\"menuitem\">Inställningar</gui></guiseq> "
+"för att konfigurera <app>Cd-spelare</app>."
 
-#: C/goobox.xml:224(para)
+#: C/preferences.page:13(page/p)
+msgid ""
+"This dialog contains two tabs described in detail below. At the bottom of "
+"the dialog window, you'll find the following buttons:"
+msgstr ""
+"Denna dialog innehåller två flikar som beskrivs närmare nedan. Längst ner på "
+"dialogfönstret finns följande knappar:"
+
+#: C/preferences.page:19(item/title)
+msgid "<gui style=\"button\">Help</gui>"
+msgstr "<gui style=\"button\">Hjälp</gui>"
+
+#: C/preferences.page:20(item/p)
+msgid "Shows this page."
+msgstr "Visar denna sida."
+
+#: C/preferences.page:23(item/title)
+msgid "<gui style=\"button\">Close</gui>"
+msgstr "<gui style=\"button\">Stäng</gui>"
+
+#: C/preferences.page:24(item/p)
+msgid "Closes the dialog."
+msgstr "Stänger dialogen."
+
+#: C/preferences.page:27(page/p)
+msgid ""
+"Keep in mind that when you change an option it will automatically applied. "
+"This is why there is no <gui style=\"button\">Ok</gui> or <gui style=\"button"
+"\">Apply</gui> button."
+msgstr ""
+"Tänk på att då du ändrar ett alternativ så verkställs det automatiskt. Detta "
+"är anledningen att det inte finns någon <gui style=\"button\">OK</gui>- "
+"eller <gui style=\"button\">Verkställ</gui>-knapp."
+
+#: C/preferences.page:34(section/title)
+msgid "General Tab"
+msgstr "Fliken Allmänt"
+
+#: C/preferences.page:35(section/p)
+msgid "This tab allows you to set the following options:"
+msgstr "Denna flik låter dig ställa in följande alternativ:"
+
+#: C/preferences.page:38(item/p)
+msgid "Select the device to use."
+msgstr "Välj den enhet som ska användas."
+
+#: C/preferences.page:40(item/p)
+msgid "Whether to automatically play a newly inserted disk."
+msgstr "Huruvida en inmatad skiva ska spelas upp automatiskt."
+
+#: C/preferences.page:46(section/title)
+msgid "Extraction Tab"
+msgstr "Fliken Extrahering"
+
+#: C/preferences.page:47(section/p)
+msgid "This tab allows you to set the extraction options:"
+msgstr "Denna flik låter dig ställa in alternativen för extrahering:"
+
+#: C/preferences.page:49(item/p)
+msgid ""
+"The destination folder. Files are saved in a subfolder of the destination "
+"folder, following the scheme Artist/Album/track."
+msgstr ""
+"Målmappen. Filer sparas i en undermapp till målmappen enligt mönstret artist/"
+"album/spår."
+
+#: C/preferences.page:51(item/p)
+msgid ""
+"The audio files format to use. Some formats allow you to set the quality of "
+"the file, this can be useful because usually there is a trade-off between "
+"audio quality and file size. Use the <gui style=\"button\">Properties</gui> "
+"button to set the file format properties."
+msgstr ""
+"Ljudfilsformatet som ska användas. Vissa format låter dig ställa in "
+"kvaliteten på filen, detta kan vara användbart eftersom det vanligen är en "
+"avvägning mellan ljudkvalitet och filstorlek. Använd knappen <gui style="
+"\"button\">Egenskaper</gui> för att ställa in egenskaperna för filformat."
+
+# https://bugzilla.gnome.org/show_bug.cgi?id=757730
+#: C/preferences.page:57(item/p)
+msgid ""
+"Whether to save a playlist file in PLS format that contains the list of the "
+"extracted files. The playlist is saved in the same folder of the audio files."
+msgstr ""
+"Huruvida en spellistefil som innehåller listan över extraherade filer ska "
+"sparas i PLS-format. Spellistan sparas i samma mapp som ljudfilerna."
+
+#: C/shortcuts.page:6(info/title)
+msgctxt "sort"
+msgid "1"
+msgstr "1"
+
+#: C/shortcuts.page:8(page/title)
+msgid "Keyboard Shortcuts"
+msgstr "Tangentbordsgenvägar"
+
+# https://bugzilla.gnome.org/show_bug.cgi?id=757730
+#: C/shortcuts.page:9(page/p)
+msgid ""
+"Quick reference for some useful keyword shortcuts. Look in the menus for "
+"other available shortcuts."
+msgstr ""
+"Snabbreferens för några användbara tangentbordsgenvägar. Titta i menyerna "
+"för andra tillgängliga genvägar."
+
+#: C/shortcuts.page:14(td/p)
+msgid "Keyboard Shortcut"
+msgstr "Tangentbordsgenväg"
+
+#: C/shortcuts.page:15(td/p)
+msgid "Description"
+msgstr "Beskrivning"
+
+#: C/shortcuts.page:20(td/p)
+msgid "<key>Space</key>"
+msgstr "<key>Blanksteg</key>"
+
+#: C/shortcuts.page:21(td/p)
 msgid "Play/Pause the current track"
 msgstr "Spela upp/pausa det nuvarande spåret"
 
-#: C/goobox.xml:230(keycap)
-msgid "Escape"
-msgstr "Escape"
+#: C/shortcuts.page:24(td/p)
+msgid "<key>Escape</key>"
+msgstr "<key>Escape</key>"
 
-#: C/goobox.xml:234(para)
+#: C/shortcuts.page:25(td/p)
 msgid "Stop playing the current track"
 msgstr "Stoppa uppspelning av det nuvarande spåret"
 
-#: C/goobox.xml:240(keycap)
-msgid "N"
-msgstr "N"
+#: C/shortcuts.page:28(td/p)
+msgid "<key>N</key>"
+msgstr "<key>N</key>"
 
-#: C/goobox.xml:244(para)
+#: C/shortcuts.page:29(td/p)
 msgid "Play the next track"
 msgstr "Spela upp nästa spår"
 
-#: C/goobox.xml:250(keycap)
-msgid "P"
-msgstr "P"
+#: C/shortcuts.page:32(td/p)
+msgid "<key>P</key>"
+msgstr "<key>P</key>"
 
-#: C/goobox.xml:254(para)
+#: C/shortcuts.page:33(td/p)
 msgid "Play the previous track"
 msgstr "Spela upp föregående spår"
 
-#: C/goobox.xml:260(keycap)
-msgid "J"
-msgstr "J"
+#: C/shortcuts.page:36(td/p)
+msgid "<key>J</key>"
+msgstr "<key>J</key>"
 
-#: C/goobox.xml:264(para)
+#: C/shortcuts.page:37(td/p)
 msgid "Eject the CD from the tray"
 msgstr "Mata ut skivan från enheten"
 
-#: C/goobox.xml:270(keycap)
-msgid "E"
-msgstr "E"
+#: C/shortcuts.page:40(td/p)
+msgid "<key>E</key>"
+msgstr "<key>E</key>"
 
-#: C/goobox.xml:274(para)
-msgid "Open the <interface>Extract</interface> dialog"
-msgstr "Öppna dialogrutan <interface>Extrahera</interface>"
+#: C/shortcuts.page:41(td/p)
+msgid "Open the <app>Extract</app> dialog"
+msgstr "Öppna dialogrutan <app>Extrahera</app>"
 
-#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2.
-#: C/goobox.xml:0(None)
-msgid "translator-credits"
-msgstr "Daniel Nylander <po@danielnylander.se>, 2006"
+#: C/shortcuts.page:44(td/p)
+msgid "<key>1</key>"
+msgstr "<key>1</key>"
 
+#: C/shortcuts.page:45(td/p)
+msgid "Play the 1st track"
+msgstr "Spela upp det första spåret"
+
+#: C/shortcuts.page:48(td/p)
+msgid "<key>2</key>"
+msgstr "<key>2</key>"
+
+#: C/shortcuts.page:49(td/p)
+msgid "Play the 2nd track"
+msgstr "Spela upp det andra spåret"
+
+#: C/shortcuts.page:52(td/p)
+msgid "<key>3</key>"
+msgstr "<key>3</key>"
+
+#: C/shortcuts.page:53(td/p)
+msgid "Play the 3rd track"
+msgstr "Spela upp det tredje spåret"
+
+#: C/shortcuts.page:56(td/p)
+msgid "<key>4</key>"
+msgstr "<key>4</key>"
+
+#: C/shortcuts.page:57(td/p)
+msgid "Play the 4th track"
+msgstr "Spela upp det fjärde spåret"
+
+#: C/shortcuts.page:60(td/p)
+msgid "<key>5</key>"
+msgstr "<key>5</key>"
+
+#: C/shortcuts.page:61(td/p)
+msgid "Play the 5th track"
+msgstr "Spela upp det femte spåret"
+
+#: C/shortcuts.page:64(td/p)
+msgid "<key>6</key>"
+msgstr "<key>6</key>"
+
+#: C/shortcuts.page:65(td/p)
+msgid "Play the 6th track"
+msgstr "Spela upp det sjätte spåret"
+
+#: C/shortcuts.page:68(td/p)
+msgid "<key>7</key>"
+msgstr "<key>7</key>"
+
+#: C/shortcuts.page:69(td/p)
+msgid "Play the 7th track"
+msgstr "Spela upp det sjunde spåret"
+
+#: C/shortcuts.page:72(td/p)
+msgid "<key>8</key>"
+msgstr "<key>8</key>"
+
+#: C/shortcuts.page:73(td/p)
+msgid "Play the 8th track"
+msgstr "Spela upp det åttonde spåret"
+
+#: C/shortcuts.page:76(td/p)
+msgid "<key>9</key>"
+msgstr "<key>9</key>"
+
+#: C/shortcuts.page:77(td/p)
+msgid "Play the 9th track"
+msgstr "Spela upp det nionde spåret"
+
+#: C/shortcuts.page:80(td/p)
+msgid "<key>0</key>"
+msgstr "<key>0</key>"
+
+#: C/shortcuts.page:81(td/p)
+msgid "Play the 10th track"
+msgstr "Spela upp det tionde spåret"
+
+#~ msgid "User manual for Goobox the CD player."
+#~ msgstr "Användarhandbok för cd-spelaren Goobox."
+
+#~ msgid "2005"
+#~ msgstr "2005"
+
+#~ msgid "GNOME Documentation Project"
+#~ msgstr "Dokumentationsprojekt för GNOME"
+
+#~ msgid ""
+#~ "Permission is granted to copy, distribute and/or modify this document "
+#~ "under the terms of the GNU Free Documentation License (GFDL), Version 1.1 "
+#~ "or any later version published by the Free Software Foundation with no "
+#~ "Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. You "
+#~ "can find a copy of the GFDL at this <ulink type=\"help\" url=\"ghelp:fdl"
+#~ "\">link</ulink> or in the file COPYING-DOCS distributed with this manual."
+#~ msgstr ""
+#~ "Tillstånd att kopiera, distribuera och/eller modifiera detta dokument ges "
+#~ "under villkoren i GNU Free Documentation License (GFDL), version 1.1 "
+#~ "eller senare, utgivet av Free Software Foundation utan standardavsnitt "
+#~ "och omslagstexter.  En kopia av GFDL finns att hämta på denna <ulink type="
+#~ "\"help\" url=\"ghelp:fdl\">länk</ulink> eller i filen COPYING-DOCS som "
+#~ "medföljer denna handbok."
+
+#~ msgid ""
+#~ "This manual is part of a collection of GNOME manuals distributed under "
+#~ "the GFDL. If you want to distribute this manual separately from the "
+#~ "collection, you can do so by adding a copy of the license to the manual, "
+#~ "as described in section 6 of the license."
+#~ msgstr ""
+#~ "Denna handbok utgör en av flera GNOME-handböcker som distribueras under "
+#~ "villkoren i GFDL.  Om du vill distribuera denna handbok separat från "
+#~ "övriga handböcker kan du göra detta genom att lägga till en kopia av "
+#~ "licensavtalet i handboken enligt instruktionerna i avsnitt 6 i "
+#~ "licensavtalet."
+
+#~ msgid ""
+#~ "Many of the names used by companies to distinguish their products and "
+#~ "services are claimed as trademarks. Where those names appear in any GNOME "
+#~ "documentation, and the members of the GNOME Documentation Project are "
+#~ "made aware of those trademarks, then the names are in capital letters or "
+#~ "initial capital letters."
+#~ msgstr ""
+#~ "Flera namn på produkter och tjänster är registrerade varumärken. I de "
+#~ "fall dessa namn förekommer i GNOME-dokumentation - och medlemmarna i "
+#~ "GNOME-dokumentationsprojektet är medvetna om dessa varumärken - är de "
+#~ "skrivna med versaler eller med inledande versal."
+
+#~ msgid ""
+#~ "DOCUMENT IS PROVIDED ON AN \"AS IS\" BASIS, WITHOUT WARRANTY OF ANY KIND, "
+#~ "EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES "
+#~ "THAT THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS FREE OF DEFECTS "
+#~ "MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE "
+#~ "RISK AS TO THE QUALITY, ACCURACY, AND PERFORMANCE OF THE DOCUMENT OR "
+#~ "MODIFIED VERSION OF THE DOCUMENT IS WITH YOU. SHOULD ANY DOCUMENT OR "
+#~ "MODIFIED VERSION PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT THE INITIAL "
+#~ "WRITER, AUTHOR OR ANY CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY "
+#~ "SERVICING, REPAIR OR CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES "
+#~ "AN ESSENTIAL PART OF THIS LICENSE. NO USE OF ANY DOCUMENT OR MODIFIED "
+#~ "VERSION OF THE DOCUMENT IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS "
+#~ "DISCLAIMER; AND"
+#~ msgstr ""
+#~ "DOKUMENTET TILLHANDAHÅLLS I \"BEFINTLIGT SKICK\" UTAN NÅGRA SOM HELST "
+#~ "GARANTIER, VARE SIG UTTRYCKLIGA ELLER UNDERFÖRSTÅDDA, INKLUSIVE, MEN INTE "
+#~ "BEGRÄNSAT TILL, GARANTIER ATT DOKUMENTET ELLER EN MODIFIERAD VERSION AV "
+#~ "DOKUMENTET INTE INNEHÅLLER NÅGRA FELAKTIGHETER, ÄR LÄMPLIGT FÖR ETT VISST "
+#~ "ÄNDAMÅL ELLER INTE STRIDER MOT LAG. HELA RISKEN VAD GÄLLER KVALITET, "
+#~ "EXAKTHET OCH UTFÖRANDE AV DOKUMENTET OCH MODIFIERADE VERSIONER AV "
+#~ "DOKUMENTET LIGGER HELT OCH HÅLLET PÅ ANVÄNDAREN. OM ETT DOKUMENT ELLER EN "
+#~ "MODIFIERAD VERSION AV ETT DOKUMENT SKULLE VISA SIG INNEHÅLLA "
+#~ "FELAKTIGHETER I NÅGOT HÄNSEENDE ÄR DET DU (INTE DEN URSPRUNGLIGA "
+#~ "SKRIBENTEN, FÖRFATTAREN ELLER NÅGON ANNAN MEDARBETARE) SOM FÅR STÅ FÖR "
+#~ "ALLA EVENTUELLA KOSTNADER FÖR SERVICE, REPARATIONER ELLER KORRIGERINGAR. "
+#~ "DENNA GARANTIFRISKRIVNING UTGÖR EN VÄSENTLIG DEL AV DETTA LICENSAVTAL. "
+#~ "DETTA INNEBÄR ATT ALL ANVÄNDNING AV ETT DOKUMENT ELLER EN MODIFIERAD "
+#~ "VERSION AV ETT DOKUMENT BEVILJAS ENDAST UNDER DENNA ANSVARSFRISKRIVNING;"
+
+#~ msgid ""
+#~ "UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT "
+#~ "(INCLUDING NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE AUTHOR, INITIAL "
+#~ "WRITER, ANY CONTRIBUTOR, OR ANY DISTRIBUTOR OF THE DOCUMENT OR MODIFIED "
+#~ "VERSION OF THE DOCUMENT, OR ANY SUPPLIER OF ANY OF SUCH PARTIES, BE "
+#~ "LIABLE TO ANY PERSON FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR "
+#~ "CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT LIMITATION, "
+#~ "DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR "
+#~ "MALFUNCTION, OR ANY AND ALL OTHER DAMAGES OR LOSSES ARISING OUT OF OR "
+#~ "RELATING TO USE OF THE DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT, "
+#~ "EVEN IF SUCH PARTY SHALL HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH "
+#~ "DAMAGES."
+#~ msgstr ""
+#~ "UNDER INGA OMSTÄNDIGHETER ELLER INOM RAMEN FÖR NÅGON LAGSTIFTNING, "
+#~ "OAVSETT OM DET GÄLLER KRÄNKNING (INKLUSIVE VÅRDSLÖSHET), KONTRAKT ELLER "
+#~ "DYLIKT, SKA FÖRFATTAREN, DEN URSPRUNGLIGA SKRIBENTEN ELLER ANNAN "
+#~ "MEDARBETARE ELLER ÅTERFÖRSÄLJARE AV DOKUMENTET ELLER AV EN MODIFIERAD "
+#~ "VERSION AV DOKUMENTET ELLER NÅGON LEVERANTÖR TILL NÅGON AV NÄMNDA PARTER "
+#~ "STÄLLAS ANSVARIG GENTEMOT NÅGON FÖR NÅGRA DIREKTA, INDIREKTA, SÄRSKILDA "
+#~ "ELLER OFÖRUTSEDDA SKADOR ELLER FÖLJDSKADOR AV NÅGOT SLAG, INKLUSIVE, MEN "
+#~ "INTE BEGRÄNSAT TILL, SKADOR BETRÄFFANDE FÖRLORAD GOODWILL, HINDER I "
+#~ "ARBETET, DATORHAVERI ELLER NÅGRA ANDRA TÄNKBARA SKADOR ELLER FÖRLUSTER "
+#~ "SOM KAN UPPKOMMA PÅ GRUND AV ELLER RELATERAT TILL ANVÄNDNINGEN AV "
+#~ "DOKUMENTET ELLER MODIFIERADE VERSIONER AV DOKUMENTET, ÄVEN OM PART SKA HA "
+#~ "BLIVIT INFORMERAD OM MÖJLIGHETEN TILL SÅDANA SKADOR."
+
+#~ msgid ""
+#~ "DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE "
+#~ "TERMS OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER "
+#~ "UNDERSTANDING THAT: <placeholder-1/>"
+#~ msgstr ""
+#~ "DOKUMENTET OCH MODIFIERADE VERSIONER AV DOKUMENTET TILLHANDAHÅLLS UNDER "
+#~ "VILLKOREN I GNU FREE DOCUMENTATION LICENSE ENDAST UNDER FÖLJANDE "
+#~ "FÖRUTSÄTTNINGAR: <placeholder-1/>"
+
+#~ msgid "Paolo"
+#~ msgstr "Paolo"
+
+#~ msgid "Bacchilega"
+#~ msgstr "Bacchilega"
+
+#~ msgid "paolo.bacchilega@libero.it"
+#~ msgstr "paolo.bacchilega@libero.it"
+
+#~ msgid "1.0"
+#~ msgstr "1.0"
+
+#~ msgid "First version, program version 0.7.1"
+#~ msgstr "Första versionen, programversion 0.7.1"
+
+#~ msgid "This is manual describes version 0.7.1 of Goobox"
+#~ msgstr "Den här handboken beskriver version 0.7.1 av Goobox"
+
+#~ msgid "goobox"
+#~ msgstr "goobox"
+
+#~ msgid "CD Player"
+#~ msgstr "Cd-spelare"
+
+#~ msgid "CD Ripper"
+#~ msgstr "Cd-rippare"
+
+#~ msgid "Introduction"
+#~ msgstr "Introduktion"
+
+#~ msgid "Quick Reference: Keyboard Shortcuts"
+#~ msgstr "Snabbreferens: Tangentbordsgenvägar"
+
+#~ msgid ""
+#~ "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> provide a quick "
+#~ "reference for all of the <application>CD Player</application> keyword "
+#~ "shortcuts. Look in the menus for other shortcuts."
+#~ msgstr ""
+#~ "<xref linkend=\"goobox-TBL-keyword-shortcuts\"/> tillhandahåller en "
+#~ "snabbreferens för alla tangentbordsgenvägar i <application>Cd-spelare</"
+#~ "application>. Se i menyerna efter andra genvägar."
+
+#~ msgid "Keyboard shortcuts"
+#~ msgstr "Tangentbordsgenvägar"
+
+#~ msgid "2"
+#~ msgstr "2"
+
+#~ msgid "3"
+#~ msgstr "3"
+
+#~ msgid "4"
+#~ msgstr "4"
+
+#~ msgid "5"
+#~ msgstr "5"
+
+#~ msgid "6"
+#~ msgstr "6"
+
+#~ msgid "7"
+#~ msgstr "7"
+
+#~ msgid "8"
+#~ msgstr "8"
+
+#~ msgid "9"
+#~ msgstr "9"
+
+#~ msgid "Space"
+#~ msgstr "Blanksteg"
+
+#~ msgid "Escape"
+#~ msgstr "Escape"
+
+#~ msgid "N"
+#~ msgstr "N"
+
+#~ msgid "P"
+#~ msgstr "P"
+
+#~ msgid "J"
+#~ msgstr "J"
+
+#~ msgid "E"
+#~ msgstr "E"
