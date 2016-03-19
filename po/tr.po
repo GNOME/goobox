@@ -1,0 +1,677 @@
+#
+# İşbaran Akçayır <isbaran@gmail.com>, 2015.
+# Gökhan Gurbetoğlu <ggurbet@gmail.com>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: goobox master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=goobox&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-08-22 05:26+0000\n"
+"PO-Revision-Date: 2016-03-19 15:07+0200\n"
+"Last-Translator: Gökhan Gurbetoğlu <ggurbet@gmail.com>\n"
+"Language-Team: Türkçe <gnome-turk@gnome.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Gtranslator 2.91.6\n"
+"X-POOTLE-MTIME: 1425300844.000000\n"
+
+#: ../data/appdata/goobox.appdata.xml.in.h:1
+msgid "Goobox CD Player"
+msgstr "Goobox CD Oynatıcı"
+
+#: ../data/appdata/goobox.appdata.xml.in.h:2
+msgid ""
+"Goobox allows you to play CDs and save the tracks to disk as mp3, ogg, flac "
+"or wav files."
+msgstr ""
+"Goobox CD'leri oynatmanıza ve kayıtları diske mp3, ogg, flac veya wav "
+"dosyaları olarak kaydetmenize yarar."
+
+#: ../data/appdata/goobox.appdata.xml.in.h:3
+msgid ""
+"Track titles and CD covers are set automatically using the MusicBrainz web "
+"service."
+msgstr ""
+"Kayıt başlıkları ve CD kapakları otomatik olarak MusicBrainz web servisi ile "
+"ayarlanır."
+
+#: ../data/goobox.desktop.in.in.h:1
+#: ../src/goo-application-actions-callbacks.c:63 ../src/goo-application.c:417
+#: ../src/goo-window.c:1327 ../src/goo-window.c:1340 ../src/goo-window.c:1945
+msgid "CD Player"
+msgstr "CD Oynatıcı"
+
+#: ../data/goobox.desktop.in.in.h:2
+msgid "Play and extract CDs"
+msgstr "CD oynat ve çıkart"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:1
+msgid "Device path"
+msgstr "Aygıt yolu"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:2
+msgid "Volume level"
+msgstr "Ses düzeyi"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:3
+msgid "'Choose cover' location"
+msgstr "'Kapak seç' konumu"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:4
+msgid "Default location for the 'Choose cover' dialog."
+msgstr "'Kapak seç' iletişim penceresinin öntanımlı konumu."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:5
+msgid "Use Sound Juicer to rip discs"
+msgstr "Disklerin içeriğini yürütmek için Sound Juicer kullan"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:6
+msgid "Autoplay"
+msgstr "Otomatik oynat"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:7
+msgid "Autoplay discs after insertion."
+msgstr "Eklendikten sonra diskleri otomatik oynat."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:8
+msgid "Window width"
+msgstr "Pencere genişliği"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:9
+msgid "Window height"
+msgstr "Pencere yüksekliği"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:10
+msgid "Play all tracks"
+msgstr "Tüm kayıtları çal"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:11
+msgid "Shuffle playlist"
+msgstr "Oynatma listesini karıştır"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:12
+msgid "Restart when finished"
+msgstr "Bitince tekrar başlat"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
+msgid "Playlist sort method"
+msgstr "Oynatma listesi sıralama metodu"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
+msgid "Playlist sort type"
+msgstr "Oynatma listesi sıralama türü"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
+msgid "Extraction folder"
+msgstr "Çıkarma dizini"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
+msgid "File type"
+msgstr "Dosya türü"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
+msgid "Possible values are: ogg, flac, mp3, wave."
+msgstr "Uygun değerler: ogg, flac, mp3, wave."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
+msgid "Save the playlist"
+msgstr "Oynatma listesini kaydet"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
+msgid "Save the playlist of the extracted tracks."
+msgstr "Çıkarılan kayıtların oynatma listesini kaydet."
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:20
+msgid "View the destination"
+msgstr "Hedefi görüntüle"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:21
+msgid "OGG files quality"
+msgstr "OGG dosya kalitesi"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
+msgid "FLAC files quality"
+msgstr "FLAC dosya kalitesi"
+
+#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
+msgid "MP3 files quality"
+msgstr "MP3 dosya kalitesi"
+
+#: ../src/album-info.c:176
+msgid "Various"
+msgstr "Çeşitli"
+
+#: ../src/dlg-cover-chooser.c:276
+#, c-format
+msgid "%u, loading image: %u"
+msgstr "%u, resim yükleniyor: %u"
+
+#: ../src/dlg-cover-chooser.c:341 ../src/goo-window.c:2792
+msgid "Could not search for a cover on Internet"
+msgstr "İnternette kapak araması yapılamadı"
+
+#: ../src/dlg-extract.c:108
+#, c-format
+msgid ""
+"You need at least one of the following GStreamer plugins in order to extract "
+"CD tracks:\n"
+"\n"
+"• %s → Ogg Vorbis\n"
+"• %s → FLAC\n"
+"• %s → Waveform PCM"
+msgstr ""
+"CD kayıtlarını çıkartmak için aşağıdaki GStreamer eklentilerinden en az "
+"birine ihtiyacınız var:\n"
+"\n"
+" • %s → Ogg Vorbis\n"
+" • %s → FLAC\n"
+" • %s → Waveform PCM"
+
+#: ../src/dlg-extract.c:119
+msgid "No encoder available."
+msgstr "Kullanılabilir kodlayıcı yok."
+
+#: ../src/dlg-preferences.c:243 ../src/dlg-preferences.c:504
+msgid "Ogg Vorbis"
+msgstr "Ogg Vorbis"
+
+#: ../src/dlg-preferences.c:257 ../src/dlg-preferences.c:507
+msgid "FLAC"
+msgstr "FLAC"
+
+#: ../src/dlg-preferences.c:271 ../src/dlg-preferences.c:510
+msgid "MP3"
+msgstr "MP3"
+
+#: ../src/dlg-preferences.c:285
+msgid "Waveform PCM"
+msgstr "Waveform PCM"
+
+#: ../src/dlg-preferences.c:479
+msgid "Faster compression"
+msgstr "Daha hızlı sıkıştırma"
+
+#: ../src/dlg-preferences.c:483
+msgid "Higher compression"
+msgstr "Yüksek sıkıştırma"
+
+#: ../src/dlg-preferences.c:490
+msgid "Smaller size"
+msgstr "Daha küçük boyut"
+
+#: ../src/dlg-preferences.c:494
+msgid "Higher quality"
+msgstr "Yüksek kalite"
+
+#: ../src/dlg-preferences.c:522
+msgid "Quality:"
+msgstr "Kalite:"
+
+#: ../src/dlg-preferences.c:525
+msgid "Compression level:"
+msgstr "Sıkıştırma seviyesi:"
+
+#: ../src/dlg-properties.c:214
+#, c-format
+msgid "Album %d of %d"
+msgstr "Albüm %d / %d"
+
+#: ../src/dlg-properties.c:271
+msgid "No album found"
+msgstr "Albüm bulunamadı"
+
+#: ../src/dlg-properties.c:290 ../src/goo-window.c:1262
+msgid "Searching disc information…"
+msgstr "Disk bilgisi aranıyor..."
+
+#: ../src/dlg-properties.c:351
+msgid "#"
+msgstr "#"
+
+#: ../src/dlg-properties.c:369
+msgid "Title"
+msgstr "Başlık"
+
+#: ../src/dlg-properties.c:402
+msgid "Artist"
+msgstr "Sanatçı"
+
+#: ../src/dlg-ripper.c:165
+#, c-format
+msgid "(%d:%02d:%02d Remaining)"
+msgstr "(%d:%02d:%02d Kaldı)"
+
+#: ../src/dlg-ripper.c:167
+#, c-format
+msgid "(%d:%02d Remaining)"
+msgstr "(%d:%02d Kaldı)"
+
+#: ../src/dlg-ripper.c:172
+#, c-format
+msgid "Extracting track: %d of %d %s"
+msgstr "Kayıt çıkarılıyor: %d / %d %s"
+
+#: ../src/dlg-ripper.c:209 ../src/dlg-ripper.c:318
+msgid "Could not extract the tracks"
+msgstr "Kayıtlar çıkarılamadı"
+
+#: ../src/dlg-ripper.c:436
+#, c-format
+msgid "Invalid destination folder: %s"
+msgstr "Geçersiz hedef dizini: %s"
+
+#: ../src/dlg-ripper.c:466 ../src/dlg-ripper.c:470
+msgid "Could not display the destination folder"
+msgstr "Hedef dizin görüntülenemedi"
+
+#: ../src/dlg-ripper.c:596
+msgid "Tracks extracted successfully"
+msgstr "Kayıtlar başarılı şekilde çıkarıldı"
+
+#: ../src/dlg-ripper.c:598
+msgid "_View destination folder"
+msgstr "_Hedef dizini görüntüle"
+
+#: ../src/dlg-ripper.c:612
+#, c-format
+msgid "Extracting \"%s\""
+msgstr "\"%s\" çıkarılıyor"
+
+#: ../src/dlg-ripper.c:623 ../src/dlg-ripper.c:632
+msgid "Could not extract tracks"
+msgstr "Kayıtlar çıkarılamadı"
+
+#: ../src/dlg-ripper.c:663
+msgid "Ripped with CD Player"
+msgstr "CD Oynatıcı ile yürütüldü"
+
+#: ../src/dlg-ripper.c:697
+msgid "Extracting disc tracks"
+msgstr "Disk kayıtları çıkarılıyor"
+
+#. hour:minutes:seconds
+#. Translators: This is a time format, like "9:05:02" for 9
+#. * hours, 5 minutes, and 2 seconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: ../src/glib-utils.c:2225
+#, c-format
+msgctxt "long time format"
+msgid "%d∶%02d∶%02d"
+msgstr "%d∶%02d∶%02d"
+
+#. minutes:seconds
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes and 2 seconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: ../src/glib-utils.c:2234
+#, c-format
+msgctxt "short time format"
+msgid "%d∶%02d"
+msgstr "%d∶%02d"
+
+#: ../src/goo-application-actions-callbacks.c:60
+msgid "translator_credits"
+msgstr "İşbaran Akçayır <isbaran@gmail.com>"
+
+#: ../src/goo-application-actions-callbacks.c:65
+msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
+msgstr "Telif Hakkı © 2004-2011 Özgür Yazılım Vakfı"
+
+#: ../src/goo-application-actions-callbacks.c:66 ../src/goo-application.c:159
+msgid "Play CDs and save the tracks to disk as files"
+msgstr "CD'leri oynat ve kayıtları diske dosya olarak kaydet"
+
+#: ../src/goo-application.c:52
+msgid "CD device to be used"
+msgstr "Kullanılacak CD aygıtı"
+
+#: ../src/goo-application.c:53
+msgid "DEVICE_PATH"
+msgstr "DEVICE_PATH"
+
+#: ../src/goo-application.c:55
+msgid "Play the CD on startup"
+msgstr "CD'yi başlangıçta oynat"
+
+#: ../src/goo-application.c:58
+msgid "Toggle play"
+msgstr "Oynatmayı tetikle"
+
+#: ../src/goo-application.c:61
+msgid "Stop playing"
+msgstr "Oynatmayı durdur"
+
+#: ../src/goo-application.c:64
+msgid "Play the next track"
+msgstr "Sonraki kaydı oynat"
+
+#: ../src/goo-application.c:67
+msgid "Play the previous track"
+msgstr "Önceki kaydı oynat"
+
+#: ../src/goo-application.c:70
+msgid "Eject the CD"
+msgstr "CD'yi çıkart"
+
+#: ../src/goo-application.c:73
+msgid "Toggle the main window visibility"
+msgstr "Ana pencere görünürlüğünü tetikle"
+
+#: ../src/goo-application.c:76
+msgid "Quit the application"
+msgstr "Uygulamadan çık"
+
+#: ../src/goo-application.c:79
+msgid "Show version"
+msgstr "Sürümü göster"
+
+#: ../src/goo-application.c:202
+msgid "Cannot start the CD player"
+msgstr "CD oynatıcı gösterilemiyor"
+
+#: ../src/goo-application.c:203
+msgid "In order to read CDs you have to install the gstreamer base plugins"
+msgstr "CD okuyabilmek için gstreamer temel eklentilerini yüklemelisiniz"
+
+#: ../src/goo-player.c:323
+msgid "Playing CD"
+msgstr "CD Oynatılıyor"
+
+#: ../src/goo-player-info.c:253
+msgid "Click here to choose a cover for this CD"
+msgstr "Bu CD için kapak seçmek için buraya tıklayın"
+
+#: ../src/goo-player-info.c:395 ../src/goo-window.c:1156
+msgid "No disc"
+msgstr "Disk yok"
+
+#: ../src/goo-player-info.c:398 ../src/goo-window.c:1161
+msgid "Data disc"
+msgstr "Veri diski"
+
+#: ../src/goo-player-info.c:402
+msgid "Ejecting CD"
+msgstr "CD Çıkarılıyor"
+
+#: ../src/goo-player-info.c:405
+msgid "Checking CD drive"
+msgstr "CD sürücü kontrol ediliyor"
+
+#: ../src/goo-player-info.c:408 ../src/goo-player-info.c:411
+msgid "Reading CD"
+msgstr "CD Okunuyor"
+
+#: ../src/goo-player-info.c:414 ../src/goo-window.c:1174
+#: ../src/goo-window.c:1347
+msgid "Audio CD"
+msgstr "Ses CD'si"
+
+#: ../src/goo-window-actions-callbacks.c:232
+#: ../src/goo-window-actions-callbacks.c:268
+#: ../src/goo-window-actions-callbacks.c:302
+msgid "Could not execute command"
+msgstr "Komut çalıştırılamadı"
+
+#: ../src/goo-window.c:47
+msgid "Hide _tracks"
+msgstr "Kayıtları _gizle"
+
+#: ../src/goo-window.c:48
+msgid "Show _tracks"
+msgstr "Kayıtları _göster"
+
+#: ../src/goo-window.c:1558
+msgid "No information found for this disc"
+msgstr "Bu disk için bilgi bulunamadı"
+
+#: ../src/goo-window.c:2222 ../src/ui/gears-menu.ui.h:3 ../src/ui/menus.ui.h:3
+msgid "_Properties"
+msgstr "_Özellikler"
+
+#: ../src/goo-window.c:2604
+msgid "Could not save cover image"
+msgstr "Kapak resmi kaydedilemedi"
+
+#: ../src/goo-window.c:2628 ../src/goo-window.c:2659
+msgid "Could not load image"
+msgstr "Resim yüklenemedi"
+
+#: ../src/goo-window.c:2730
+msgid "Choose Disc Cover Image"
+msgstr "Disk Kapak Resmi Seç"
+
+#: ../src/goo-window.c:2749
+msgid "Images"
+msgstr "Resimler"
+
+#: ../src/goo-window.c:2757
+msgid "All files"
+msgstr "Tüm dosyalar"
+
+#: ../src/goo-window.c:2793
+msgid ""
+"You have to enter the artist and album names in order to find the album "
+"cover."
+msgstr "Albüm kapağını bulmak için sanatçı ve albüm isimlerini girmelisiniz."
+
+#: ../src/gtk-file-chooser-preview.c:165
+msgid "Preview"
+msgstr "Önizleme"
+
+#: ../src/gtk-file-chooser-preview.c:266
+msgid "pixels"
+msgstr "piksel"
+
+#: ../src/gtk-utils.c:500
+msgid "Could not display help"
+msgstr "Yardım görüntülenemedi"
+
+#: ../src/gtk-utils.c:786 ../src/gtk-utils.c:792
+msgid "Could not launch the application"
+msgstr "Uygulama başlatılamadı"
+
+#: ../src/gtk-utils.h:36
+msgid "_Cancel"
+msgstr "_Vazgeç"
+
+#: ../src/gtk-utils.h:37 ../src/ui/gears-menu.ui.h:4
+msgid "_Close"
+msgstr "_Kapat"
+
+#: ../src/gtk-utils.h:38
+msgid "_Ok"
+msgstr "_Tamam"
+
+#: ../src/gtk-utils.h:39
+msgid "_Open"
+msgstr "_Aç"
+
+#: ../src/gtk-utils.h:40 ../src/ui/cover-chooser.ui.h:2
+#: ../src/ui/properties.ui.h:4
+msgid "_Reset"
+msgstr "_Sıfırla"
+
+#: ../src/main.c:272
+msgid "Pause"
+msgstr "Duraklat"
+
+#: ../src/main.c:279
+msgid "Play"
+msgstr "Oynat"
+
+#: ../src/main.c:286
+msgid "Next"
+msgstr "Sonraki"
+
+#: ../src/track-info.c:123
+#, c-format
+msgid "Track %u"
+msgstr "Kayıt %u"
+
+#: ../src/ui/app-menu.ui.h:1
+msgid "_Preferences"
+msgstr "_Tercihler"
+
+#: ../src/ui/app-menu.ui.h:2
+msgid "Play _All"
+msgstr "Tümünü _Oynat"
+
+#: ../src/ui/app-menu.ui.h:3
+msgid "_Repeat"
+msgstr "_Tekrarla"
+
+#: ../src/ui/app-menu.ui.h:4
+msgid "S_huffle"
+msgstr "_Karıştır"
+
+#: ../src/ui/app-menu.ui.h:5
+msgid "_Help"
+msgstr "_Yardım"
+
+#: ../src/ui/app-menu.ui.h:6
+msgid "_About"
+msgstr "_Hakkında"
+
+#: ../src/ui/app-menu.ui.h:7
+msgid "_Quit"
+msgstr "_Çık"
+
+#: ../src/ui/cover-chooser.ui.h:1
+msgid "Choose a CD Cover"
+msgstr "Bir CD Kapağı Seçin"
+
+#: ../src/ui/cover-chooser.ui.h:3
+msgid "Found images:"
+msgstr "Bulunan resimler:"
+
+#: ../src/ui/extract.ui.h:1
+msgid "Extract Tracks"
+msgstr "Kayıtları Çıkart"
+
+#: ../src/ui/extract.ui.h:2
+msgid "_Extract"
+msgstr "_Çıkart"
+
+#: ../src/ui/extract.ui.h:3
+msgid "_All tracks"
+msgstr "_Tüm kayıtlar"
+
+#: ../src/ui/extract.ui.h:4
+msgid "_Selected tracks"
+msgstr "_Seçili kayıtlar"
+
+#: ../src/ui/format-options.ui.h:1
+msgid "Format Properties"
+msgstr "Biçim Özellikleri"
+
+#: ../src/ui/gears-menu.ui.h:1
+msgid "Copy _Disk"
+msgstr "Diski _Kopyala"
+
+#: ../src/ui/gears-menu.ui.h:2
+msgid "_Eject"
+msgstr "_Çıkart"
+
+#: ../src/ui/menus.ui.h:1
+msgid "_Play"
+msgstr "_Oynat"
+
+#: ../src/ui/menus.ui.h:2
+msgid "E_xtract Tracks"
+msgstr "Kayıtları _Çıkart"
+
+#: ../src/ui/menus.ui.h:4
+msgid "_Choose File…"
+msgstr "_Dosya Seç..."
+
+#: ../src/ui/menus.ui.h:5
+msgid "_Search on Internet"
+msgstr "İnternette _Ara"
+
+#: ../src/ui/menus.ui.h:6
+msgid "_Remove"
+msgstr "_Sil"
+
+#: ../src/ui/preferences.ui.h:1
+msgid "CD Player Preferences"
+msgstr "CD Oynatıcı Tercihleri"
+
+#: ../src/ui/preferences.ui.h:2
+msgid "Playback"
+msgstr "Tekrar oynat"
+
+#: ../src/ui/preferences.ui.h:3
+msgid "Drive:"
+msgstr "Sürücü:"
+
+#: ../src/ui/preferences.ui.h:4
+msgid "Automatically play newly inserted discs"
+msgstr "Yeni eklenen diskleri otomatik oynat"
+
+#: ../src/ui/preferences.ui.h:5
+msgid "Extraction"
+msgstr "Çıkartma"
+
+#: ../src/ui/preferences.ui.h:6
+msgid "Destination:"
+msgstr "Hedef:"
+
+#: ../src/ui/preferences.ui.h:7
+msgid "Choose destination folder"
+msgstr "Hedef dizini seçin"
+
+#: ../src/ui/preferences.ui.h:8
+msgid "Format:"
+msgstr "Biçim:"
+
+#: ../src/ui/preferences.ui.h:9
+msgid "_Save playlist"
+msgstr "Oynatma listesini _kaydet"
+
+#: ../src/ui/properties.ui.h:1
+msgid "Single artist"
+msgstr "Tek sanatçı"
+
+#: ../src/ui/properties.ui.h:2
+msgid "Various artists"
+msgstr "Çeşitli sanatçılar"
+
+#: ../src/ui/properties.ui.h:3
+msgid "Properties"
+msgstr "Özellikler"
+
+#: ../src/ui/properties.ui.h:5
+msgid "_Title:"
+msgstr "_Başlık:"
+
+#: ../src/ui/properties.ui.h:6
+msgid "T_racks:"
+msgstr "K_ayıtlar:"
+
+#: ../src/ui/properties.ui.h:7
+msgid "_Artist:"
+msgstr "_Sanatçı:"
+
+#: ../src/ui/properties.ui.h:8
+msgid "_Year:"
+msgstr "_Yıl:"
+
+#: ../src/ui/properties.ui.h:9
+msgid "Search for the remaining data"
+msgstr "Kalan veri için arama yap"
+
+#: ../src/ui/ripper.ui.h:1
+msgid "Extracting Tracks"
+msgstr "Kayıtlar Çıkarılıyor"
+
+#: ../src/ui/ripper.ui.h:2
+msgid "Extracting tracks"
+msgstr "Kayıtlar çıkarılıyor"
