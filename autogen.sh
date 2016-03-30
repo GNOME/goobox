@@ -4,8 +4,6 @@
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
-PKG_NAME="Goobox"
-
 (test -f $srcdir/configure.ac && test -d $srcdir/src) || {
     echo -n "**Error**: Directory "\`$srcdir\'" does not look like the"
     echo " top-level $PKG_NAME directory"
@@ -19,4 +17,4 @@ which gnome-autogen.sh || {
 
 REQUIRED_AUTOMAKE_VERSION=1.7.2
 
-USE_GNOME2_MACROS=1 . gnome-autogen.sh
+. gnome-autogen.sh
