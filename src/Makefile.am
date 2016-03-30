@@ -9,10 +9,7 @@ uidir = $(datadir)/goobox/ui
 endif
 
 AM_CPPFLAGS =						\
-	-DGOO_PREFIX=\"$(prefix)\"           		\
-        -DGOO_SYSCONFDIR=\"$(sysconfdir)\"   		\
-        -DGOO_DATADIR=\"$(datadir)\"     	    	\
-        -DGOO_LIBDIR=\"$(libdir)\"  	         	\
+	-DGOO_LOCALEDIR=\""$(localedir)"\"     		\
 	-DGOO_UIDIR=\""$(uidir)"\"     			\
 	$(GOO_CFLAGS)					\
 	$(SMCLIENT_CFLAGS)				\
