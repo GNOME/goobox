@@ -6,7 +6,7 @@
 [encoding: UTF-8]
 data/appdata/goobox.appdata.xml.in
 data/goobox.desktop.in.in
-data/org.gnome.Goobox.gschema.xml.in
+[type: gettext/gsettings]data/org.gnome.Goobox.gschema.xml
 src/album-info.c
 src/album-info.h
 src/dlg-cover-chooser.c

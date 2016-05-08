@@ -45,98 +45,98 @@
     <child name="encoder" schema="org.gnome.Goobox.Encoder"/>
   </schema>
 
-  <schema id="org.gnome.Goobox.General" path="/org/gnome/goobox/general/">
+  <schema id="org.gnome.Goobox.General" path="/org/gnome/goobox/general/" gettext-domain="goobox">
     <key name="device" type="s">
       <default>'/dev/cdrom'</default>
-      <_summary>Device path</_summary>
+      <summary>Device path</summary>
     </key>
     <key name="volume" type="i">
       <default>100</default>
-      <_summary>Volume level</_summary>
+      <summary>Volume level</summary>
     </key>
     <key name="cover-path" type="s">
       <default>'~'</default>
-      <_summary>'Choose cover' location</_summary>
-      <_description>Default location for the 'Choose cover' dialog.</_description>
+      <summary>'Choose cover' location</summary>
+      <description>Default location for the 'Choose cover' dialog.</description>
     </key>
     <key name="use-sound-juicer" type="b">
       <default>false</default>
-      <_summary>Use Sound Juicer to rip discs</_summary>
+      <summary>Use Sound Juicer to rip discs</summary>
     </key>
     <key name="autoplay" type="b">
       <default>true</default>
-      <_summary>Autoplay</_summary>
-      <_description>Autoplay discs after insertion.</_description>
+      <summary>Autoplay</summary>
+      <description>Autoplay discs after insertion.</description>
     </key>
   </schema>
 
-  <schema id="org.gnome.Goobox.UI" path="/org/gnome/goobox/ui/">
+  <schema id="org.gnome.Goobox.UI" path="/org/gnome/goobox/ui/" gettext-domain="goobox">
     <key name="window-width" type="i">
       <default>200</default>
-      <_summary>Window width</_summary>
+      <summary>Window width</summary>
     </key>
     <key name="window-height" type="i">
       <default>400</default>
-      <_summary>Window height</_summary>
+      <summary>Window height</summary>
     </key>
   </schema>
 
-  <schema id="org.gnome.Goobox.Playlist" path="/org/gnome/goobox/playlist/">
+  <schema id="org.gnome.Goobox.Playlist" path="/org/gnome/goobox/playlist/" gettext-domain="goobox">
     <key name="play-all" type="b">
       <default>true</default>
-      <_summary>Play all tracks</_summary>
+      <summary>Play all tracks</summary>
     </key>
     <key name="shuffle" type="b">
       <default>false</default>
-      <_summary>Shuffle playlist</_summary>
+      <summary>Shuffle playlist</summary>
     </key>
     <key name="repeat" type="b">
       <default>false</default>
-      <_summary>Restart when finished</_summary>
+      <summary>Restart when finished</summary>
     </key>
     <key name="sort-method" enum="org.gnome.Goobox.SortMethod">
       <default>'number'</default>
-      <_summary>Playlist sort method</_summary>
+      <summary>Playlist sort method</summary>
     </key>
     <key name="sort-type" enum="org.gnome.Goobox.SortType">
       <default>'ascending'</default>
-      <_summary>Playlist sort type</_summary>
+      <summary>Playlist sort type</summary>
     </key>
   </schema>
 
-  <schema id="org.gnome.Goobox.Ripper" path="/org/gnome/goobox/ripper/">
+  <schema id="org.gnome.Goobox.Ripper" path="/org/gnome/goobox/ripper/" gettext-domain="goobox">
     <key name="destination" type="s">
       <default>''</default>
-      <_summary>Extraction folder</_summary>
+      <summary>Extraction folder</summary>
     </key>
     <key name="file-type" enum="org.gnome.Goobox.FileFormat">
       <default>'ogg'</default>
-      <_summary>File type</_summary>
-      <_description>Possible values are: ogg, flac, mp3, wave.</_description>
+      <summary>File type</summary>
+      <description>Possible values are: ogg, flac, mp3, wave.</description>
     </key>
     <key name="save-playlist" type="b">
       <default>true</default>
-      <_summary>Save the playlist</_summary>
-      <_description>Save the playlist of the extracted tracks.</_description>
+      <summary>Save the playlist</summary>
+      <description>Save the playlist of the extracted tracks.</description>
     </key>
     <key name="view-destination" type="b">
       <default>false</default>
-      <_summary>View the destination</_summary>
+      <summary>View the destination</summary>
     </key>
   </schema>
 
-  <schema id="org.gnome.Goobox.Encoder" path="/org/gnome/goobox/encoder/">
+  <schema id="org.gnome.Goobox.Encoder" path="/org/gnome/goobox/encoder/" gettext-domain="goobox">
     <key name="ogg-quality" type="d">
       <default>0.5</default>
-      <_summary>OGG files quality</_summary>
+      <summary>OGG files quality</summary>
     </key>
     <key name="flac-compression" type="i">
       <default>5</default>
-      <_summary>FLAC files quality</_summary>
+      <summary>FLAC files quality</summary>
     </key>
     <key name="mp3-quality" type="i">
       <default>2</default>
-      <_summary>MP3 files quality</_summary>
+      <summary>MP3 files quality</summary>
     </key>
   </schema>
 
