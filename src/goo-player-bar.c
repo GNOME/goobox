@@ -219,9 +219,6 @@ goo_player_bar_construct (GooPlayerBar	*self,
 	GtkWidget *main_box;
 	GtkWidget *button_box;
 	GtkWidget *button;
-	gboolean   rtl;
-
-	rtl = gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL;
 
 	frame = gtk_event_box_new ();
 	gtk_style_context_add_class (gtk_widget_get_style_context (frame), GTK_STYLE_CLASS_BACKGROUND);
@@ -237,7 +234,7 @@ goo_player_bar_construct (GooPlayerBar	*self,
 
 	/* Play buttons */
 
-	self->priv->play_button_image = gtk_image_new_from_icon_name (rtl ? GOO_ICON_NAME_PLAY_RTL : GOO_ICON_NAME_PLAY, PLAY_BUTTON_SIZE);
+	self->priv->play_button_image = gtk_image_new_from_icon_name (GOO_ICON_NAME_PLAY, PLAY_BUTTON_SIZE);
 	button = gtk_button_new ();
 	gtk_container_add (GTK_CONTAINER (button), self->priv->play_button_image);
 	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.toggle-play");
@@ -247,11 +244,11 @@ goo_player_bar_construct (GooPlayerBar	*self,
 	gtk_style_context_add_class (gtk_widget_get_style_context (button_box), GTK_STYLE_CLASS_LINKED);
 	gtk_box_pack_start (GTK_BOX (main_box), button_box, FALSE, FALSE, 0);
 
-	button = gtk_button_new_from_icon_name (rtl ? GOO_ICON_NAME_PREV_RTL : GOO_ICON_NAME_PREV, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	button = gtk_button_new_from_icon_name (GOO_ICON_NAME_PREV, GTK_ICON_SIZE_SMALL_TOOLBAR);
 	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.previous-track");
 	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
 
-	button = gtk_button_new_from_icon_name (rtl ? GOO_ICON_NAME_NEXT_RTL : GOO_ICON_NAME_NEXT, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	button = gtk_button_new_from_icon_name (GOO_ICON_NAME_NEXT, GTK_ICON_SIZE_SMALL_TOOLBAR);
 	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.next-track");
 	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
 
@@ -452,7 +449,7 @@ _goo_player_bar_update_play_button_icon (GooPlayerBar *self,
 					 gboolean      playing)
 {
 	gtk_image_set_from_icon_name (GTK_IMAGE (self->priv->play_button_image),
-				      playing ? GOO_ICON_NAME_PAUSE : (gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL ? GOO_ICON_NAME_PLAY_RTL : GOO_ICON_NAME_PLAY),
+				      playing ? GOO_ICON_NAME_PAUSE : GOO_ICON_NAME_PLAY,
 				      PLAY_BUTTON_SIZE);
 }
 

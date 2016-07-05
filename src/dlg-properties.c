@@ -484,14 +484,11 @@ dlg_properties (GooWindow *window)
 {
 	DialogData *data;
 	GtkWidget *image;
-	gboolean rtl;
 
         if (window->properties_dialog != NULL) {
         	gtk_window_present (GTK_WINDOW (window->properties_dialog));
         	return;
         }
-
-        rtl = gtk_widget_get_direction (GTK_WIDGET (window)) == GTK_TEXT_DIR_RTL;
 
 	data = g_new0 (DialogData, 1);
 	data->window = window;
@@ -507,11 +504,11 @@ dlg_properties (GooWindow *window)
 
 	image = GET_WIDGET ("prev_album_image");
 	gtk_image_set_from_icon_name (GTK_IMAGE (image),
-				      rtl ? "go-previous-rtl-symbolic" : "go-previous-symbolic",
+				      "go-previous-symbolic",
 				      GTK_ICON_SIZE_MENU);
 	image = GET_WIDGET ("next_album_image");
 	gtk_image_set_from_icon_name (GTK_IMAGE (image),
-				      rtl ? "go-next-rtl-symbolic" : "go-next-symbolic",
+				      "go-next-symbolic",
 				      GTK_ICON_SIZE_MENU);
 
 	/* Set widgets data. */

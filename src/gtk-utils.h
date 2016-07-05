@@ -40,13 +40,10 @@ G_BEGIN_DECLS
 #define _GTK_LABEL_RESET _("_Reset")
 
 #define GOO_ICON_NAME_PLAY        "media-playback-start-symbolic"
-#define GOO_ICON_NAME_PLAY_RTL    "media-playback-start-rtl-symbolic"
 #define GOO_ICON_NAME_PAUSE       "media-playback-pause-symbolic"
 #define GOO_ICON_NAME_STOP        "media-playback-stop-symbolic"
 #define GOO_ICON_NAME_NEXT        "media-skip-forward-symbolic"
-#define GOO_ICON_NAME_NEXT_RTL    "media-skip-forward-rtl-symbolic"
 #define GOO_ICON_NAME_PREV        "media-skip-backward-symbolic"
-#define GOO_ICON_NAME_PREV_RTL    "media-skip-backward-rtl-symbolic"
 #define GOO_ICON_NAME_EJECT       "media-eject-symbolic"
 #define GOO_ICON_NAME_EXTRACT     "document-save-symbolic"
 #define GOO_ICON_NAME_RESET       "goo-reset"

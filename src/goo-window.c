@@ -1530,11 +1530,7 @@ player_done_cb (GooPlayer       *player,
 		GError          *error,
 		GooWindow       *window)
 {
-	gboolean rtl;
-
 	debug (DEBUG_INFO, "DONE [%s]\n", get_action_name (action));
-
-	rtl = gtk_widget_get_direction (GTK_WIDGET (window)) == GTK_TEXT_DIR_RTL;
 
 	switch (action) {
 	case GOO_PLAYER_ACTION_LIST:
@@ -1565,14 +1561,14 @@ player_done_cb (GooPlayer       *player,
 	case GOO_PLAYER_ACTION_SEEK_SONG:
 		goo_window_set_current_track (window, goo_player_get_current_track (window->priv->player));
 		goo_window_select_current_track (window);
-		set_current_track_icon (window, rtl ? GOO_ICON_NAME_PLAY_RTL : GOO_ICON_NAME_PLAY);
+		set_current_track_icon (window, GOO_ICON_NAME_PLAY);
 		break;
 
 	case GOO_PLAYER_ACTION_PLAY:
 	case GOO_PLAYER_ACTION_STOP:
 	case GOO_PLAYER_ACTION_MEDIUM_REMOVED:
 		if (action == GOO_PLAYER_ACTION_PLAY) {
-			set_current_track_icon (window, rtl ? GOO_ICON_NAME_PLAY_RTL : GOO_ICON_NAME_PLAY);
+			set_current_track_icon (window, GOO_ICON_NAME_PLAY);
 			window->priv->next_timeout_handle = g_idle_add (next_time_idle, window);
 		}
 		else if (action == GOO_PLAYER_ACTION_STOP)
