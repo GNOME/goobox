@@ -1,28 +1,24 @@
-# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# Aviary.pl
-# Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
-# pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
-# gnomepl@aviary.pl
-# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Polish translation for goobox.
+# Copyright © 2005-2016 the goobox authors.
+# This file is distributed under the same license as the goobox package.
 # Artur Flinta <aflinta@at.kernel.pl>, 2005-2007.
-# Piotr Drąg <piotrdrag@gmail.com>, 2012-2015.
-# Aviary.pl <gnomepl@aviary.pl>, 2012-2015.
+# Piotr Drąg <piotrdrag@gmail.com>, 2012-2016.
+# Aviary.pl <community-poland@mozilla.org>, 2012-2016.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-02 21:07+0200\n"
-"PO-Revision-Date: 2015-09-02 21:08+0200\n"
+"POT-Creation-Date: 2016-08-21 10:55+0200\n"
+"PO-Revision-Date: 2016-08-21 10:57+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <gnomepl@aviary.pl>\n"
+"Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Poedit-Language: Polish\n"
-"X-Poedit-Country: Poland\n"
 
 #: ../data/appdata/goobox.appdata.xml.in.h:1
 msgid "Goobox CD Player"
@@ -33,7 +29,7 @@ msgid ""
 "Goobox allows you to play CDs and save the tracks to disk as mp3, ogg, flac "
 "or wav files."
 msgstr ""
-"Goobox umożliwia odtwarzanie płyt CD i zapisywanie ścieżek jako pliki MP3, "
+"Goobox umożliwia odtwarzanie płyt CD i zapisywanie ścieżek jako pliki MP3, "
 "Ogg, FLAC lub WAV."
 
 #: ../data/appdata/goobox.appdata.xml.in.h:3
@@ -41,7 +37,7 @@ msgid ""
 "Track titles and CD covers are set automatically using the MusicBrainz web "
 "service."
 msgstr ""
-"Nazwy ścieżek i okładki płyt CD są ustawiane automatycznie używając serwisu "
+"Nazwy ścieżek i okładki płyt CD są ustawiane automatycznie używając serwisu "
 "WWW MusicBrainz."
 
 #: ../data/goobox.desktop.in.in.h:1
@@ -52,97 +48,97 @@ msgstr "Odtwarzacz płyt CD"
 
 #: ../data/goobox.desktop.in.in.h:2
 msgid "Play and extract CDs"
-msgstr "Odtwarzanie i zgrywanie płyt CD"
+msgstr "Odtwarzanie i zgrywanie płyt CD"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:1
+#: ../data/org.gnome.Goobox.gschema.xml.h:1
 msgid "Device path"
 msgstr "Ścieżka do urządzenia"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:2
+#: ../data/org.gnome.Goobox.gschema.xml.h:2
 msgid "Volume level"
 msgstr "Poziom głośności"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:3
+#: ../data/org.gnome.Goobox.gschema.xml.h:3
 msgid "'Choose cover' location"
 msgstr "Położenie „Wyboru okładki”"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:4
+#: ../data/org.gnome.Goobox.gschema.xml.h:4
 msgid "Default location for the 'Choose cover' dialog."
 msgstr "Domyślne położenie dla okna dialogowego „Wybór okładki”."
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:5
+#: ../data/org.gnome.Goobox.gschema.xml.h:5
 msgid "Use Sound Juicer to rip discs"
 msgstr "Użycie programu Sound Juicer do zgrywania płyt"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:6
+#: ../data/org.gnome.Goobox.gschema.xml.h:6
 msgid "Autoplay"
 msgstr "Automatyczne odtwarzanie"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:7
+#: ../data/org.gnome.Goobox.gschema.xml.h:7
 msgid "Autoplay discs after insertion."
 msgstr "Automatyczne odtwarzanie płyt po włożeniu."
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:8
+#: ../data/org.gnome.Goobox.gschema.xml.h:8
 msgid "Window width"
 msgstr "Szerokość okna"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:9
+#: ../data/org.gnome.Goobox.gschema.xml.h:9
 msgid "Window height"
 msgstr "Wysokość okna"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:10
+#: ../data/org.gnome.Goobox.gschema.xml.h:10
 msgid "Play all tracks"
 msgstr "Odtwarza wszystkie ścieżki"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:11
+#: ../data/org.gnome.Goobox.gschema.xml.h:11
 msgid "Shuffle playlist"
 msgstr "Mieszanie listy odtwarzania"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:12
+#: ../data/org.gnome.Goobox.gschema.xml.h:12
 msgid "Restart when finished"
 msgstr "Ponowne odtworzenie po ukończeniu"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
+#: ../data/org.gnome.Goobox.gschema.xml.h:13
 msgid "Playlist sort method"
 msgstr "Metoda porządkowania listy odtwarzania"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
+#: ../data/org.gnome.Goobox.gschema.xml.h:14
 msgid "Playlist sort type"
 msgstr "Typ porządkowania listy odtwarzania"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
+#: ../data/org.gnome.Goobox.gschema.xml.h:15
 msgid "Extraction folder"
 msgstr "Katalog zgrywania"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
+#: ../data/org.gnome.Goobox.gschema.xml.h:16
 msgid "File type"
 msgstr "Typ pliku"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
+#: ../data/org.gnome.Goobox.gschema.xml.h:17
 msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr "Możliwe wartości: ogg, flac, mp3, wave."
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
+#: ../data/org.gnome.Goobox.gschema.xml.h:18
 msgid "Save the playlist"
 msgstr "Zapis listy odtwarzania"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
+#: ../data/org.gnome.Goobox.gschema.xml.h:19
 msgid "Save the playlist of the extracted tracks."
 msgstr "Zapis listy odtwarzania zgranych ścieżek."
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:20
+#: ../data/org.gnome.Goobox.gschema.xml.h:20
 msgid "View the destination"
 msgstr "Wyświetlenie katalogu docelowego"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:21
+#: ../data/org.gnome.Goobox.gschema.xml.h:21
 msgid "OGG files quality"
 msgstr "Jakość plików Ogg"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
+#: ../data/org.gnome.Goobox.gschema.xml.h:22
 msgid "FLAC files quality"
 msgstr "Jakość plików FLAC"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
+#: ../data/org.gnome.Goobox.gschema.xml.h:23
 msgid "MP3 files quality"
 msgstr "Jakość plików MP3"
 
@@ -157,7 +153,7 @@ msgstr "%u, wczytywanie obrazu: %u"
 
 #: ../src/dlg-cover-chooser.c:341 ../src/goo-window.c:2792
 msgid "Could not search for a cover on Internet"
-msgstr "Nie można wyszukać okładki w Internecie"
+msgstr "Nie można wyszukać okładki w Internecie"
 
 #: ../src/dlg-extract.c:108
 #, c-format
@@ -169,7 +165,7 @@ msgid ""
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 msgstr ""
-"Do zgrywania płyt CD wymagana jest przynajmniej jedna z następujących "
+"Do zgrywania płyt CD wymagana jest przynajmniej jedna z następujących "
 "wtyczek biblioteki GStreamer:\n"
 "\n"
 "• %s → Ogg Vorbis\n"
@@ -223,7 +219,7 @@ msgstr "Poziom kompresji:"
 #: ../src/dlg-properties.c:214
 #, c-format
 msgid "Album %d of %d"
-msgstr "Album %d z %d"
+msgstr "Album %d z %d"
 
 #: ../src/dlg-properties.c:271
 msgid "No album found"
@@ -231,7 +227,7 @@ msgstr "Nie odnaleziono albumu"
 
 #: ../src/dlg-properties.c:290 ../src/goo-window.c:1262
 msgid "Searching disc information…"
-msgstr "Wyszukiwanie informacji o płycie…"
+msgstr "Wyszukiwanie informacji o płycie…"
 
 #: ../src/dlg-properties.c:351
 msgid "#"
@@ -258,7 +254,7 @@ msgstr "(pozostało: %d∶%02d)"
 #: ../src/dlg-ripper.c:172
 #, c-format
 msgid "Extracting track: %d of %d %s"
-msgstr "Zgrywanie ścieżki: %d z %d %s"
+msgstr "Zgrywanie ścieżki: %d z %d %s"
 
 #: ../src/dlg-ripper.c:209 ../src/dlg-ripper.c:318
 msgid "Could not extract the tracks"
@@ -326,8 +322,8 @@ msgstr "%d∶%02d"
 msgid "translator_credits"
 msgstr ""
 "Artur Flinta <aflinta@at.kernel.pl>, 2005-2007\n"
-"Piotr Drąg <piotrdrag@gmail.com>, 2012-2015\n"
-"Aviary.pl <gnomepl@aviary.pl>, 2012-2015"
+"Piotr Drąg <piotrdrag@gmail.com>, 2012-2016\n"
+"Aviary.pl <community-poland@mozilla.org>, 2012-2016"
 
 #: ../src/goo-application-actions-callbacks.c:65
 msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
@@ -335,7 +331,7 @@ msgstr "Copyright © 2004-2011 Free Software Foundation, Inc."
 
 #: ../src/goo-application-actions-callbacks.c:66 ../src/goo-application.c:159
 msgid "Play CDs and save the tracks to disk as files"
-msgstr "Odtwarzanie płyt CD i zapisywanie ścieżek jako pliki na dysku"
+msgstr "Odtwarzanie płyt CD i zapisywanie ścieżek jako pliki na dysku"
 
 #: ../src/goo-application.c:52
 msgid "CD device to be used"
@@ -405,7 +401,7 @@ msgstr "Brak płyty"
 
 #: ../src/goo-player-info.c:398 ../src/goo-window.c:1161
 msgid "Data disc"
-msgstr "Płyta z danymi"
+msgstr "Płyta z danymi"
 
 #: ../src/goo-player-info.c:402
 msgid "Ejecting CD"
@@ -440,7 +436,7 @@ msgstr "_Wyświetl ścieżki"
 
 #: ../src/goo-window.c:1558
 msgid "No information found for this disc"
-msgstr "Nie odnaleziono informacji o tej płycie"
+msgstr "Nie odnaleziono informacji o tej płycie"
 
 #: ../src/goo-window.c:2222 ../src/ui/gears-menu.ui.h:3 ../src/ui/menus.ui.h:3
 msgid "_Properties"
@@ -470,7 +466,7 @@ msgstr "Wszystkie pliki"
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
-msgstr "Należy podać wykonawcę i nazwę albumu, aby odnaleźć jego okładkę."
+msgstr "Należy podać wykonawcę i nazwę albumu, aby odnaleźć jego okładkę."
 
 #: ../src/gtk-file-chooser-preview.c:165
 msgid "Preview"
@@ -548,7 +544,7 @@ msgstr "Pomo_c"
 
 #: ../src/ui/app-menu.ui.h:6
 msgid "_About"
-msgstr "_O programie"
+msgstr "_O programie"
 
 #: ../src/ui/app-menu.ui.h:7
 msgid "_Quit"
@@ -604,7 +600,7 @@ msgstr "Wy_bierz plik…"
 
 #: ../src/ui/menus.ui.h:5
 msgid "_Search on Internet"
-msgstr "Wy_szukaj w Internecie"
+msgstr "Wy_szukaj w Internecie"
 
 #: ../src/ui/menus.ui.h:6
 msgid "_Remove"
