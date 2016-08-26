@@ -6,12 +6,11 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_MACRO_DIR([m4])
+AC_SUBST([ACLOCAL_AMFLAGS], ["-I $ac_macro_dir \${ACLOCAL_FLAGS}"])
 
-GNOME_COMMON_INIT
 AC_PROG_CXX
 AM_PROG_LIBTOOL
 YELP_HELP_INIT
-GNOME_COMPILE_WARNINGS([maximum])
 GNOME_MAINTAINER_MODE_DEFINES
 GLIB_GSETTINGS
 
@@ -59,6 +58,8 @@ AC_ARG_ENABLE(debug,
 if test x$ENABLE_DEBUG = xyes; then
 	AC_DEFINE(DEBUG, 1, [enable compilation of debugging messages])
 	CFLAGS="$CFLAGS -g -O0 -DDEBUG"
+else
+	CFLAGS="$CFLAGS -Wno-deprecated-declarations"
 fi
 
 dnl ===========================================================================
