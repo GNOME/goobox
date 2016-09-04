@@ -10,47 +10,49 @@
 # track title = raidan nimi
 # ripper = kopioitsin (?)
 # encoder = kooderi
-# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2013.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2013, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=goobox&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-11-07 09:19+0000\n"
-"PO-Revision-Date: 2013-09-15 18:51+0300\n"
+"product=goobox&keywords=I18N+L10N&component=player\n"
+"POT-Creation-Date: 2016-08-21 08:58+0000\n"
+"PO-Revision-Date: 2016-09-04 17:14+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
-"Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
+"Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: ../data/appdata/goobox.appdata.xml.in.h:1
-#, fuzzy
 #| msgid "_About CD Player"
 msgid "Goobox CD Player"
-msgstr "_Tietoja - CD-soitin"
+msgstr "Goobox-CD-soitin"
 
 #: ../data/appdata/goobox.appdata.xml.in.h:2
-#, fuzzy
 #| msgid "Play CDs and save the tracks to disk as files"
 msgid ""
 "Goobox allows you to play CDs and save the tracks to disk as mp3, ogg, flac "
 "or wav files."
-msgstr "Soita CD-levyjä ja kopioi raitoja tiedostoiksi"
+msgstr ""
+"Toista CD-levyjä ja tallenna kappaleet tietokoneen levylle mp3-, ogg-, flac- "
+"tai wav-tiedostoina."
 
 #: ../data/appdata/goobox.appdata.xml.in.h:3
 msgid ""
 "Track titles and CD covers are set automatically using the MusicBrainz web "
 "service."
 msgstr ""
+"Kappaleiden nimet ja CD:n kansikuvitus asetetaan automaattisesti MusicBrainz-"
+"palvelusta."
 
 #: ../data/goobox.desktop.in.in.h:1
 #: ../src/goo-application-actions-callbacks.c:63 ../src/goo-application.c:417
-#: ../src/goo-window.c:1379 ../src/goo-window.c:1392 ../src/goo-window.c:1962
+#: ../src/goo-window.c:1327 ../src/goo-window.c:1340 ../src/goo-window.c:1945
 msgid "CD Player"
 msgstr "CD-soitin"
 
@@ -58,95 +60,95 @@ msgstr "CD-soitin"
 msgid "Play and extract CDs"
 msgstr "Soita ja kopioi ääni-CD:itä"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:1
+#: ../data/org.gnome.Goobox.gschema.xml.h:1
 msgid "Device path"
 msgstr "Laitteen polku"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:2
+#: ../data/org.gnome.Goobox.gschema.xml.h:2
 msgid "Volume level"
 msgstr "Äänenvoimakkuus"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:3
+#: ../data/org.gnome.Goobox.gschema.xml.h:3
 msgid "'Choose cover' location"
 msgstr "\"Valitse kansikuva\"-sijainti"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:4
+#: ../data/org.gnome.Goobox.gschema.xml.h:4
 msgid "Default location for the 'Choose cover' dialog."
 msgstr "Oletussijainti \"Valitse kansikuva\"-ikkunassa."
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:5
+#: ../data/org.gnome.Goobox.gschema.xml.h:5
 msgid "Use Sound Juicer to rip discs"
 msgstr "Käytä Musiikkimaijaa levyjen kopiointiin"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:6
+#: ../data/org.gnome.Goobox.gschema.xml.h:6
 msgid "Autoplay"
 msgstr "Automaattinen soitto"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:7
+#: ../data/org.gnome.Goobox.gschema.xml.h:7
 msgid "Autoplay discs after insertion."
 msgstr "Soita levy automaattisesti, kun se on syötetty asemaan."
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:8
+#: ../data/org.gnome.Goobox.gschema.xml.h:8
 msgid "Window width"
 msgstr "Ikkunan leveys"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:9
+#: ../data/org.gnome.Goobox.gschema.xml.h:9
 msgid "Window height"
 msgstr "Ikkunan korkeus"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:10
+#: ../data/org.gnome.Goobox.gschema.xml.h:10
 msgid "Play all tracks"
-msgstr "Soita kaikki raidat"
+msgstr "Toista kaikki kappaleet"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:11
+#: ../data/org.gnome.Goobox.gschema.xml.h:11
 msgid "Shuffle playlist"
 msgstr "Sekoita soittolista"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:12
+#: ../data/org.gnome.Goobox.gschema.xml.h:12
 msgid "Restart when finished"
 msgstr "Aloita soitto alusta kun on päästy loppuun"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:13
+#: ../data/org.gnome.Goobox.gschema.xml.h:13
 msgid "Playlist sort method"
 msgstr "Soittolistan lajittelutapa"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:14
+#: ../data/org.gnome.Goobox.gschema.xml.h:14
 msgid "Playlist sort type"
 msgstr "Soittolistan lajittelutyyppi"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:15
+#: ../data/org.gnome.Goobox.gschema.xml.h:15
 msgid "Extraction folder"
 msgstr "Kopiointikansio"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:16
+#: ../data/org.gnome.Goobox.gschema.xml.h:16
 msgid "File type"
 msgstr "Tiedostotyyppi"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:17
+#: ../data/org.gnome.Goobox.gschema.xml.h:17
 msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr "Sallittuja arvoja ovat: ogg, flac, mp3, wave."
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:18
+#: ../data/org.gnome.Goobox.gschema.xml.h:18
 msgid "Save the playlist"
 msgstr "Tallenna soittolista"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:19
+#: ../data/org.gnome.Goobox.gschema.xml.h:19
 msgid "Save the playlist of the extracted tracks."
-msgstr "Tallenna soittolista kopioiduista raidoista."
+msgstr "Tallenna soittolista kopioiduista kappaleista."
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:20
+#: ../data/org.gnome.Goobox.gschema.xml.h:20
 msgid "View the destination"
 msgstr "Näytä kohdekansio"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:21
+#: ../data/org.gnome.Goobox.gschema.xml.h:21
 msgid "OGG files quality"
 msgstr "OGG-tiedostojen laatu"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:22
+#: ../data/org.gnome.Goobox.gschema.xml.h:22
 msgid "FLAC files quality"
 msgstr "FLAC-tiedostojen laatu"
 
-#: ../data/org.gnome.Goobox.gschema.xml.in.h:23
+#: ../data/org.gnome.Goobox.gschema.xml.h:23
 msgid "MP3 files quality"
 msgstr "MP3-tiedostojen laatu"
 
@@ -159,7 +161,7 @@ msgstr "Useita esittäjiä"
 msgid "%u, loading image: %u"
 msgstr "%u, ladataan kuvaa: %u"
 
-#: ../src/dlg-cover-chooser.c:341 ../src/goo-window.c:2805
+#: ../src/dlg-cover-chooser.c:341 ../src/goo-window.c:2792
 msgid "Could not search for a cover on Internet"
 msgstr "Kanstta ei voitu etsiä Internetistä"
 
@@ -174,7 +176,7 @@ msgid ""
 "• %s → Waveform PCM"
 msgstr ""
 "Tarvitset vähintään yhden seuraavista GStreamer-liitännäisistä kopioidaksesi "
-"CD-raitoja:\n"
+"CD-kappaleita:\n"
 "\n"
 "• %s → Ogg Vorbis\n"
 "• %s → FLAC\n"
@@ -194,7 +196,7 @@ msgstr "FLAC"
 
 #: ../src/dlg-preferences.c:271 ../src/dlg-preferences.c:510
 msgid "MP3"
-msgstr ""
+msgstr "MP3"
 
 #: ../src/dlg-preferences.c:285
 msgid "Waveform PCM"
@@ -233,11 +235,10 @@ msgstr "Levy %d/%d"
 msgid "No album found"
 msgstr "Levyä ei löytynyt"
 
-#: ../src/dlg-properties.c:290 ../src/goo-window.c:1314
-#, fuzzy
+#: ../src/dlg-properties.c:290 ../src/goo-window.c:1262
 #| msgid "Searching disc info..."
 msgid "Searching disc information…"
-msgstr "Etsitään levyn tietoja..."
+msgstr "Etsitään levyn tietoja…"
 
 #: ../src/dlg-properties.c:351
 msgid "#"
@@ -264,11 +265,11 @@ msgstr "(%d:%02d jäljellä)"
 #: ../src/dlg-ripper.c:172
 #, c-format
 msgid "Extracting track: %d of %d %s"
-msgstr "Kopioidaan raitaa %d/%d: %s"
+msgstr "Kopioidaan kappaletta %d/%d: %s"
 
 #: ../src/dlg-ripper.c:209 ../src/dlg-ripper.c:318
 msgid "Could not extract the tracks"
-msgstr "Raitoja ei voitu kopioida"
+msgstr "Kappaleita ei voitu kopioida"
 
 #: ../src/dlg-ripper.c:436
 #, c-format
@@ -281,7 +282,7 @@ msgstr "Kohdekansiota ei voitu näyttää"
 
 #: ../src/dlg-ripper.c:596
 msgid "Tracks extracted successfully"
-msgstr "Raitojen kopiointi onnistui"
+msgstr "Kappaleiden kopiointi onnistui"
 
 #: ../src/dlg-ripper.c:598
 msgid "_View destination folder"
@@ -294,7 +295,7 @@ msgstr "Puretaan \"%s\""
 
 #: ../src/dlg-ripper.c:623 ../src/dlg-ripper.c:632
 msgid "Could not extract tracks"
-msgstr "Raitoja ei voitu kopioida"
+msgstr "Kappaleita ei voitu kopioida"
 
 #: ../src/dlg-ripper.c:663
 msgid "Ripped with CD Player"
@@ -302,7 +303,7 @@ msgstr "Kopioitu CD-soittimella"
 
 #: ../src/dlg-ripper.c:697
 msgid "Extracting disc tracks"
-msgstr "Kopioidaan levyn raitoja"
+msgstr "Kopioidaan levyn kappaleita"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -331,6 +332,7 @@ msgstr "%d∶%02d"
 #: ../src/goo-application-actions-callbacks.c:60
 msgid "translator_credits"
 msgstr ""
+"Jiri Grönroos, 2016\n"
 "Ilkka Tuohela, 2006-2008\n"
 "Tommi Vainikainen, 2004-2005\n"
 "\n"
@@ -342,7 +344,7 @@ msgstr "Tekijänoikeus © 2004-2011 Free Software Foundation, Inc."
 
 #: ../src/goo-application-actions-callbacks.c:66 ../src/goo-application.c:159
 msgid "Play CDs and save the tracks to disk as files"
-msgstr "Soita CD-levyjä ja kopioi raitoja tiedostoiksi"
+msgstr "Soita CD-levyjä ja kopioi kappaleita tiedostoiksi"
 
 #: ../src/goo-application.c:52
 msgid "CD device to be used"
@@ -358,7 +360,7 @@ msgstr "Aloita CD:n soittaminen käynnistettäessä"
 
 #: ../src/goo-application.c:58
 msgid "Toggle play"
-msgstr ""
+msgstr "Jatka/pysäytä toisto"
 
 #: ../src/goo-application.c:61
 msgid "Stop playing"
@@ -396,7 +398,7 @@ msgstr "CD-soitinta ei voitu käynnistää"
 msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgstr "Jotta CD:itä voi lukea, täytyy gstreamer-base-liitännäiset asentaa."
 
-#: ../src/goo-player.c:322
+#: ../src/goo-player.c:323
 msgid "Playing CD"
 msgstr "Soitetaan CD:tä"
 
@@ -404,11 +406,11 @@ msgstr "Soitetaan CD:tä"
 msgid "Click here to choose a cover for this CD"
 msgstr "Napsauta tästä valitaksesi kannen tälle levylle"
 
-#: ../src/goo-player-info.c:395 ../src/goo-window.c:1208
+#: ../src/goo-player-info.c:395 ../src/goo-window.c:1156
 msgid "No disc"
 msgstr "Ei levyä"
 
-#: ../src/goo-player-info.c:398 ../src/goo-window.c:1213
+#: ../src/goo-player-info.c:398 ../src/goo-window.c:1161
 msgid "Data disc"
 msgstr "Datalevy"
 
@@ -424,8 +426,8 @@ msgstr "Tarkistetaan CD-asemaa"
 msgid "Reading CD"
 msgstr "Luetaan CD:tä"
 
-#: ../src/goo-player-info.c:414 ../src/goo-window.c:1226
-#: ../src/goo-window.c:1399
+#: ../src/goo-player-info.c:414 ../src/goo-window.c:1174
+#: ../src/goo-window.c:1347
 msgid "Audio CD"
 msgstr "Ääni-CD"
 
@@ -437,43 +439,42 @@ msgstr "Ei voitu suorittaa komentoa"
 
 #: ../src/goo-window.c:47
 msgid "Hide _tracks"
-msgstr "Piilota _raidat"
+msgstr "Piilota k_appaleet"
 
 #: ../src/goo-window.c:48
 msgid "Show _tracks"
-msgstr "Näytä _raidat"
+msgstr "Näytä _kappaleet"
 
-#: ../src/goo-window.c:1610
+#: ../src/goo-window.c:1558
 msgid "No information found for this disc"
-msgstr ""
+msgstr "Tästä levystä ei löytynyt tietoja"
 
-#: ../src/goo-window.c:2234 ../src/ui/gears-menu.ui.h:3 ../src/ui/menus.ui.h:3
-#, fuzzy
+#: ../src/goo-window.c:2222 ../src/ui/gears-menu.ui.h:3 ../src/ui/menus.ui.h:3
 #| msgid "Properties"
 msgid "_Properties"
-msgstr "Ominaisuudet"
+msgstr "_Ominaisuudet"
 
-#: ../src/goo-window.c:2617
+#: ../src/goo-window.c:2604
 msgid "Could not save cover image"
 msgstr "Kansikuvaa ei voitu tallentaa"
 
-#: ../src/goo-window.c:2641 ../src/goo-window.c:2672
+#: ../src/goo-window.c:2628 ../src/goo-window.c:2659
 msgid "Could not load image"
 msgstr "Kuvaa ei voitu ladata"
 
-#: ../src/goo-window.c:2743
+#: ../src/goo-window.c:2730
 msgid "Choose Disc Cover Image"
 msgstr "Valitse CD-kansikuva"
 
-#: ../src/goo-window.c:2762
+#: ../src/goo-window.c:2749
 msgid "Images"
 msgstr "Kuvat"
 
-#: ../src/goo-window.c:2770
+#: ../src/goo-window.c:2757
 msgid "All files"
 msgstr "Kaikki tiedostot"
 
-#: ../src/goo-window.c:2806
+#: ../src/goo-window.c:2793
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -498,19 +499,19 @@ msgstr "Sovelluksen käynnistys ei onnistunut"
 
 #: ../src/gtk-utils.h:36
 msgid "_Cancel"
-msgstr ""
+msgstr "_Peru"
 
 #: ../src/gtk-utils.h:37 ../src/ui/gears-menu.ui.h:4
 msgid "_Close"
-msgstr ""
+msgstr "_Sulje"
 
 #: ../src/gtk-utils.h:38
 msgid "_Ok"
-msgstr ""
+msgstr "_OK"
 
 #: ../src/gtk-utils.h:39
 msgid "_Open"
-msgstr ""
+msgstr "__Avaa"
 
 #: ../src/gtk-utils.h:40 ../src/ui/cover-chooser.ui.h:2
 #: ../src/ui/properties.ui.h:4
@@ -532,7 +533,7 @@ msgstr "Seuraava"
 #: ../src/track-info.c:123
 #, c-format
 msgid "Track %u"
-msgstr "Raita %u"
+msgstr "Kappale %u"
 
 #: ../src/ui/app-menu.ui.h:1
 msgid "_Preferences"
@@ -556,7 +557,7 @@ msgstr "O_hje"
 
 #: ../src/ui/app-menu.ui.h:6
 msgid "_About"
-msgstr ""
+msgstr "_Tietoja"
 
 #: ../src/ui/app-menu.ui.h:7
 msgid "_Quit"
@@ -572,7 +573,7 @@ msgstr "Löydettiin kuvia:"
 
 #: ../src/ui/extract.ui.h:1
 msgid "Extract Tracks"
-msgstr "Kopioi raidat"
+msgstr "Kopioi kappaleet"
 
 #: ../src/ui/extract.ui.h:2
 msgid "_Extract"
@@ -580,21 +581,20 @@ msgstr "_Kopioi"
 
 #: ../src/ui/extract.ui.h:3
 msgid "_All tracks"
-msgstr "_Kaikki raidat"
+msgstr "_Kaikki kappaleet"
 
 #: ../src/ui/extract.ui.h:4
 msgid "_Selected tracks"
-msgstr "_Valitut raidat"
+msgstr "_Valitut kappaleet"
 
 #: ../src/ui/format-options.ui.h:1
 msgid "Format Properties"
 msgstr "Muodon ominaisuudet"
 
 #: ../src/ui/gears-menu.ui.h:1
-#, fuzzy
 #| msgid "_Copy Disc"
 msgid "Copy _Disk"
-msgstr "_Kopioi levyä"
+msgstr "_Kopioi levy"
 
 #: ../src/ui/gears-menu.ui.h:2
 msgid "_Eject"
@@ -606,13 +606,12 @@ msgstr "_Soita"
 
 #: ../src/ui/menus.ui.h:2
 msgid "E_xtract Tracks"
-msgstr "_Kopioi raidat"
+msgstr "_Kopioi kappaleet"
 
 #: ../src/ui/menus.ui.h:4
-#, fuzzy
 #| msgid "_Choose File..."
 msgid "_Choose File…"
-msgstr "_Valitse tiedosto..."
+msgstr "_Valitse tiedosto…"
 
 #: ../src/ui/menus.ui.h:5
 msgid "_Search on Internet"
@@ -620,23 +619,21 @@ msgstr "_Etsi Internetistä"
 
 #: ../src/ui/menus.ui.h:6
 msgid "_Remove"
-msgstr ""
+msgstr "_Poista"
 
 #: ../src/ui/preferences.ui.h:1
 msgid "CD Player Preferences"
 msgstr "CD-soittimen asetukset"
 
 #: ../src/ui/preferences.ui.h:2
-#, fuzzy
 #| msgid "Play"
 msgid "Playback"
-msgstr "Soita"
+msgstr "Toisto"
 
 #: ../src/ui/preferences.ui.h:3
-#, fuzzy
 #| msgid "CD Drive"
 msgid "Drive:"
-msgstr "CD-asema"
+msgstr "Asema:"
 
 #: ../src/ui/preferences.ui.h:4
 msgid "Automatically play newly inserted discs"
@@ -647,10 +644,9 @@ msgid "Extraction"
 msgstr "Kopiointi"
 
 #: ../src/ui/preferences.ui.h:6
-#, fuzzy
 #| msgid "Destination folder"
 msgid "Destination:"
-msgstr "Kohdekansio"
+msgstr "Kohde:"
 
 #: ../src/ui/preferences.ui.h:7
 msgid "Choose destination folder"
@@ -658,7 +654,7 @@ msgstr "Valitse kohdekansio"
 
 #: ../src/ui/preferences.ui.h:8
 msgid "Format:"
-msgstr ""
+msgstr "Muoto:"
 
 #: ../src/ui/preferences.ui.h:9
 msgid "_Save playlist"
@@ -682,7 +678,7 @@ msgstr "_Nimi:"
 
 #: ../src/ui/properties.ui.h:6
 msgid "T_racks:"
-msgstr "_Raidat:"
+msgstr "_Kappaleet:"
 
 #: ../src/ui/properties.ui.h:7
 msgid "_Artist:"
@@ -698,11 +694,11 @@ msgstr "Etsi puuttuvia tietoja"
 
 #: ../src/ui/ripper.ui.h:1
 msgid "Extracting Tracks"
-msgstr "Kopioidaan raitoja"
+msgstr "Kopioidaan kappaleita"
 
 #: ../src/ui/ripper.ui.h:2
 msgid "Extracting tracks"
-msgstr "Kopioidaan raitoja"
+msgstr "Kopioidaan kappaleita"
 
 #~ msgid "File is not a valid .desktop file"
 #~ msgstr "Tiedosto ei ole kelvollinen .desktop-tiedosto"
