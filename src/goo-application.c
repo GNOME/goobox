@@ -386,6 +386,10 @@ static void
 goo_application_startup (GApplication *application)
 {
 	G_APPLICATION_CLASS (goo_application_parent_class)->startup (application);
+
+	g_set_application_name (_("CD Player"));
+	gtk_window_set_default_icon_name ("goobox");
+
 	initialize_app_menu (application);
 }
 
@@ -413,9 +417,6 @@ goo_application_init (GooApplication *self)
 {
 	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, GOO_TYPE_APPLICATION, GooApplicationPrivate);
 	self->priv->settings = g_settings_new (GOOBOX_SCHEMA_PLAYLIST);
-
-	g_set_application_name (_("CD Player"));
-	gtk_window_set_default_icon_name ("goobox");
 }
 
 
