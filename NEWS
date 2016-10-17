@@ -1,3 +1,23 @@
+version 3.4.2
+-------------
+
+ Bugs fixed:
+
+  * Application name not translated in about dialog
+  * Fixed make distcheck
+
+ New or updated application translations:
+
+  * Polish (Piotr Drąg)
+  * Português (Pedro Albuquerque)
+  * Lietuvių (Aurimas Černius)
+  * Türkçe (Gökhan Gurbetoğlu)
+  * suomi (Jiri Grönroos)
+
+ New or updated manual translations:
+
+  * Swedish (Anders Jonsson)
+
 version 3.4.1
 -------------
 
