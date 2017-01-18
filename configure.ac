@@ -47,6 +47,20 @@ AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources, glib-compile-resour
 
 dnl ===========================================================================
 
+CFLAGS=${CFLAGS-:""}
+CFLAGS="$CFLAGS -fPIC -DPIC -Wl,--as-needed"
+
+AC_ARG_ENABLE(deprecated,
+              AS_HELP_STRING([--disable-deprecated], [do not use deprecated API]),
+              disable_deprecated=yes,
+              disable_deprecated=no)
+if test x$disable_deprecated = xyes; then
+        CFLAGS="$CFLAGS -DG_DISABLE_SINGLE_INCLUDES -DGDK_PIXBUF_DISABLE_SINGLE_INCLUDES -DGTK_DISABLE_SINGLE_INCLUDES"
+        CFLAGS="$CFLAGS -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGST_DISABLE_DEPRECATED"
+fi
+
+dnl ===========================================================================
+
 AC_ARG_ENABLE(debug,
 	      AS_HELP_STRING([--enable-debug], [enable compilation of debugging messages]),
               [case "${enableval}" in
