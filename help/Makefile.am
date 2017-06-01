@@ -6,6 +6,6 @@ HELP_FILES = 			\
 	legal.xml		\
 	preferences.page	\
 	shortcuts.page
-HELP_LINGUAS = ca cs de el es fr oc sl sv
+HELP_LINGUAS = ca cs de el es fr oc pl sl sv
 
 -include $(top_srcdir)/git.mk
