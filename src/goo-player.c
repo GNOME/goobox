@@ -271,7 +271,7 @@ create_pipeline (GooPlayer *self)
 	if (self->priv->pipeline == NULL)
 		return FALSE;
 
-	audio_sink = gst_element_factory_make ("gsettingsaudiosink", "audiosink");
+	audio_sink = gst_element_factory_make ("autoaudiosink", "audiosink");
 	vis_plugin = NULL; /*gst_element_factory_make ("monoscope", "visplugin");*/
 
 	flags = _GST_PLAY_FLAG_AUDIO;
