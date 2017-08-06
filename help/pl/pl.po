@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox-help\n"
-"POT-Creation-Date: 2017-04-15 08:27+0000\n"
-"PO-Revision-Date: 2017-06-01 03:27+0200\n"
+"POT-Creation-Date: 2017-08-01 11:47+0000\n"
+"PO-Revision-Date: 2017-08-06 15:54+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -57,7 +57,7 @@ msgstr "Creative Commons Attribution-Share Alike 3.0 Unported"
 #. (itstool) path: license/p
 #: C/legal.xml:3
 msgid "This work is licensed under a <_:link-1/>."
-msgstr "Na warunkach licencji: <_:link-1/>."
+msgstr "Na warunkach licencji <_:link-1/>."
 
 #. (itstool) path: license/p
 #: C/legal.xml:6
@@ -187,7 +187,7 @@ msgstr ""
 #: C/preferences.page:57
 msgid ""
 "Whether to save a playlist file in PLS format that contains the list of the "
-"extracted files. The playlist is saved in the same folder of the audio files."
+"extracted files. The playlist is saved in the same folder as the audio files."
 msgstr ""
 "Czy zapisywać plik listy odtwarzania w formacie PLS, zawierający listę "
 "zgranych plików. Lista odtwarzania jest zapisywana w tym samym katalogu, co "
@@ -207,7 +207,7 @@ msgstr "Skróty klawiszowe"
 #. (itstool) path: page/p
 #: C/shortcuts.page:9
 msgid ""
-"Quick reference for some useful keyword shortcuts. Look in the menus for "
+"Quick reference for some useful keyboard shortcuts. Look in the menus for "
 "other available shortcuts."
 msgstr ""
 "Krótki podręcznik przydatnych skrótów klawiszowych. Menu zawierają inne "
