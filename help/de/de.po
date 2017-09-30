@@ -1,20 +1,20 @@
 # German translation of the goobox manual.
-# Helge Kreutzmann <debian@helgefjell.de>, 2008, 2009.
-# Mario Blättermann <mariobl@freenet.de>, 2009, 2011, 2013.
+# Helge Kreutzmann <debian@helgefjell.de>, 2008, 2009, 2017.
+# Mario Blättermann <mariobl@freenet.de>, 2009, 2011, 2013, 2017.
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-28 06:01+0000\n"
-"PO-Revision-Date: 2013-11-02 13:41+0100\n"
+"POT-Creation-Date: 2017-08-01 11:47+0000\n"
+"PO-Revision-Date: 2017-09-30 21:49+0200\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.3\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -24,19 +24,23 @@ msgstr ""
 "Mario Blättermann <mariobl@freenet.de>, 2009, 2011, 2013\n"
 "Christian Kirbach <Christian.Kirbach@googlemail.com>, 2009"
 
-#: C/index.page:4(credit/name)
+#. (itstool) path: credit/name
+#: C/index.page:4
 msgid "Paolo Bacchilega"
 msgstr "Paolo Bacchilega"
 
-#: C/index.page:6(credit/years)
+#. (itstool) path: credit/years
+#: C/index.page:6
 msgid "2005-2011"
 msgstr "2005-2011"
 
-#: C/index.page:15(page/title)
+#. (itstool) path: page/title
+#: C/index.page:15
 msgid "<app>CD Player</app> Help"
 msgstr "<app>CD-Spieler</app>-Hilfe"
 
-#: C/index.page:16(page/p)
+#. (itstool) path: page/p
+#: C/index.page:16
 msgid ""
 "With <app>CD Player</app> you can play audio Compact Discs (CDs) and save "
 "the CD tracks as audio files."
@@ -44,15 +48,18 @@ msgstr ""
 "Mit dem <app>CD-Spieler</app> können Sie Compact Discs (CDs) abspielen und "
 "die CD-Stücke als Audiodateien abspeichern."
 
-#: C/legal.xml:4(p/link)
+#. (itstool) path: p/link
+#: C/legal.xml:4
 msgid "Creative Commons Attribution-Share Alike 3.0 Unported License"
 msgstr "Creative Commons Attribution-Share Alike 3.0 Unported License"
 
-#: C/legal.xml:3(license/p)
+#. (itstool) path: license/p
+#: C/legal.xml:3
 msgid "This work is licensed under a <_:link-1/>."
 msgstr "Dieses Werk wird unter einer <_:link-1/> verbreitet."
 
-#: C/legal.xml:6(license/p)
+#. (itstool) path: license/p
+#: C/legal.xml:6
 msgid ""
 "As a special exception, the copyright holders give you permission to copy, "
 "modify, and distribute the example code contained in this document under the "
@@ -62,16 +69,19 @@ msgstr ""
 "enthaltenen Code-Beispiele ohne Einschränkungen unter den Bedingungen Ihrer "
 "Wahl zu kopieren, verändern und weiter zu verbreiten."
 
-#: C/preferences.page:6(info/title)
+#. (itstool) path: info/title
+#: C/preferences.page:6
 msgctxt "sort"
 msgid "0"
 msgstr "0"
 
-#: C/preferences.page:8(page/title)
+#. (itstool) path: page/title
+#: C/preferences.page:8
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: C/preferences.page:9(page/p)
+#. (itstool) path: page/p
+#: C/preferences.page:9
 msgid ""
 "To configure <app>CD Player</app> open the <app>Preferences</app> dialog by "
 "choosing <guiseq><gui style=\"menu\">Edit</gui><gui style=\"menuitem"
@@ -81,7 +91,8 @@ msgstr ""
 "<gui>Einstellungen</gui> durch Auswahl von <guiseq><gui style=\"menu"
 "\">Bearbeiten</gui><gui style=\"menuitem\">Einstellungen</gui></guiseq>."
 
-#: C/preferences.page:13(page/p)
+#. (itstool) path: page/p
+#: C/preferences.page:13
 msgid ""
 "This dialog contains two tabs described in detail below. At the bottom of "
 "the dialog window, you'll find the following buttons:"
@@ -89,23 +100,28 @@ msgstr ""
 "Dieser Dialog enthält zwei Reiter, die weiter unten im Detail beschrieben "
 "werden. Unten finden Sie im Dialog die folgenden zwei Knöpfe:"
 
-#: C/preferences.page:19(item/title)
+#. (itstool) path: item/title
+#: C/preferences.page:19
 msgid "<gui style=\"button\">Help</gui>"
 msgstr "<gui style=\"button\">Hilfe</gui>"
 
-#: C/preferences.page:20(item/p)
+#. (itstool) path: item/p
+#: C/preferences.page:20
 msgid "Shows this page."
 msgstr "Zeigt diese Seite an."
 
-#: C/preferences.page:23(item/title)
+#. (itstool) path: item/title
+#: C/preferences.page:23
 msgid "<gui style=\"button\">Close</gui>"
 msgstr "<gui style=\"button\">Schließen</gui>"
 
-#: C/preferences.page:24(item/p)
+#. (itstool) path: item/p
+#: C/preferences.page:24
 msgid "Closes the dialog."
 msgstr "Schließt den Dialog."
 
-#: C/preferences.page:27(page/p)
+#. (itstool) path: page/p
+#: C/preferences.page:27
 msgid ""
 "Keep in mind that when you change an option it will automatically applied. "
 "This is why there is no <gui style=\"button\">Ok</gui> or <gui style=\"button"
@@ -115,32 +131,39 @@ msgstr ""
 "Daher gibt es auch keinen Knopf <gui style=\"button\">OK</gui> oder <gui "
 "style=\"button\">Anwenden</gui> button."
 
-#: C/preferences.page:34(section/title)
+#. (itstool) path: section/title
+#: C/preferences.page:34
 msgid "General Tab"
 msgstr "Reiter »Allgemein«"
 
-#: C/preferences.page:35(section/p)
+#. (itstool) path: section/p
+#: C/preferences.page:35
 msgid "This tab allows you to set the following options:"
 msgstr "Dieser Reiter erlaubt es Ihnen, die folgenden Optionen zu setzen:"
 
-#: C/preferences.page:38(item/p)
+#. (itstool) path: item/p
+#: C/preferences.page:38
 msgid "Select the device to use."
 msgstr "Wählt das zu verwendende Gerät aus."
 
-#: C/preferences.page:40(item/p)
+#. (itstool) path: item/p
+#: C/preferences.page:40
 msgid "Whether to automatically play a newly inserted disk."
 msgstr ""
 "Legt fest, ob neu eingelegte Medien automatisch abgespielt werden sollen."
 
-#: C/preferences.page:46(section/title)
+#. (itstool) path: section/title
+#: C/preferences.page:46
 msgid "Extraction Tab"
 msgstr "Reiter »Auslesen«"
 
-#: C/preferences.page:47(section/p)
+#. (itstool) path: section/p
+#: C/preferences.page:47
 msgid "This tab allows you to set the extraction options:"
 msgstr "Dieser Reiter erlaubt es Ihnen, die Auslese-Optionen zu setzen:"
 
-#: C/preferences.page:49(item/p)
+#. (itstool) path: item/p
+#: C/preferences.page:49
 msgid ""
 "The destination folder. Files are saved in a subfolder of the destination "
 "folder, following the scheme Artist/Album/track."
@@ -148,7 +171,8 @@ msgstr ""
 "Der Zielordner. Dateien werden im Unterordner des Zielordners gespeichert "
 "und folgen dem Muster Künstler/Album/Stück."
 
-#: C/preferences.page:51(item/p)
+#. (itstool) path: item/p
+#: C/preferences.page:51
 msgid ""
 "The audio files format to use. Some formats allow you to set the quality of "
 "the file, this can be useful because usually there is a trade-off between "
@@ -160,215 +184,202 @@ msgstr ""
 "Audioqualität und Dateigröße gibt. Verwenden Sie den Knopf <gui style="
 "\"button\">Eigenschaften</gui>, um die Dateiformateigenschaften zu setzen."
 
-#: C/preferences.page:57(item/p)
+#. (itstool) path: item/p
+#: C/preferences.page:57
 msgid ""
 "Whether to save a playlist file in PLS format that contains the list of the "
-"extracted files. The playlist is saved in the same folder of the audio files."
+"extracted files. The playlist is saved in the same folder as the audio files."
 msgstr ""
 "Legt fest, ob Abspiellisten im Format PLS gespeichert werden sollen, welches "
 "eine Liste der ausgelesenen Dateien enthält. Die Abspielliste wird im "
 "gleichen Ordner wie die Audiodateien gespeichert."
 
-#: C/shortcuts.page:6(info/title)
+#. (itstool) path: info/title
+#: C/shortcuts.page:6
 msgctxt "sort"
 msgid "1"
 msgstr "1"
 
-#: C/shortcuts.page:8(page/title)
+#. (itstool) path: page/title
+#: C/shortcuts.page:8
 msgid "Keyboard Shortcuts"
 msgstr "Tastenkombinationen"
 
-#: C/shortcuts.page:9(page/p)
+#. (itstool) path: page/p
+#: C/shortcuts.page:9
 msgid ""
-"Quick reference for some useful keyword shortcuts. Look in the menus for "
+"Quick reference for some useful keyboard shortcuts. Look in the menus for "
 "other available shortcuts."
 msgstr ""
 "Schnellreferenz für einige nützliche Tastenkombinationen. Schauen Sie in den "
 "Menüs nach weiteren verfügbaren Tastenkombinationen."
 
-#: C/shortcuts.page:14(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:14
 msgid "Keyboard Shortcut"
 msgstr "Tastenkombination"
 
-#: C/shortcuts.page:15(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:15
 msgid "Description"
 msgstr "Beschreibung"
 
-#: C/shortcuts.page:20(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:20
 msgid "<key>Space</key>"
 msgstr "<key>Leertaste</key>"
 
-#: C/shortcuts.page:21(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:21
 msgid "Play/Pause the current track"
 msgstr "Das aktuelle Stück abspielen oder pausieren"
 
-#: C/shortcuts.page:24(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:24
 msgid "<key>Escape</key>"
 msgstr "<key>Esc</key>"
 
-#: C/shortcuts.page:25(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:25
 msgid "Stop playing the current track"
 msgstr "Abspielen des aktuellen Stücks abbrechen"
 
-#: C/shortcuts.page:28(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:28
 msgid "<key>N</key>"
 msgstr "<key>N</key>"
 
-#: C/shortcuts.page:29(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:29
 msgid "Play the next track"
 msgstr "Das nächste Stück abspielen"
 
-#: C/shortcuts.page:32(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:32
 msgid "<key>P</key>"
 msgstr "<key>P</key>"
 
-#: C/shortcuts.page:33(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:33
 msgid "Play the previous track"
 msgstr "Das vorherige Stück abspielen"
 
-#: C/shortcuts.page:36(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:36
 msgid "<key>J</key>"
 msgstr "<key>J</key>"
 
-#: C/shortcuts.page:37(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:37
 msgid "Eject the CD from the tray"
 msgstr "CD auswerfen"
 
-#: C/shortcuts.page:40(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:40
 msgid "<key>E</key>"
 msgstr "<key>E</key>"
 
-#: C/shortcuts.page:41(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:41
 msgid "Open the <app>Extract</app> dialog"
 msgstr "Den Dialog <gui>Auslesen</gui> öffnen"
 
-#: C/shortcuts.page:44(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:44
 msgid "<key>1</key>"
 msgstr "<key>1</key>"
 
-#: C/shortcuts.page:45(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:45
 msgid "Play the 1st track"
 msgstr "Das erste Stück abspielen"
 
-#: C/shortcuts.page:48(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:48
 msgid "<key>2</key>"
 msgstr "<key>2</key>"
 
-#: C/shortcuts.page:49(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:49
 msgid "Play the 2nd track"
 msgstr "Das zweite Stück abspielen"
 
-#: C/shortcuts.page:52(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:52
 msgid "<key>3</key>"
 msgstr "<key>3</key>"
 
-#: C/shortcuts.page:53(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:53
 msgid "Play the 3rd track"
 msgstr "Das dritte Stück abspielen"
 
-#: C/shortcuts.page:56(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:56
 msgid "<key>4</key>"
 msgstr "<key>4</key>"
 
-#: C/shortcuts.page:57(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:57
 msgid "Play the 4th track"
 msgstr "Das vierte Stück abspielen"
 
-#: C/shortcuts.page:60(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:60
 msgid "<key>5</key>"
 msgstr "<key>5</key>"
 
-#: C/shortcuts.page:61(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:61
 msgid "Play the 5th track"
 msgstr "Das fünfte Stück abspielen"
 
-#: C/shortcuts.page:64(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:64
 msgid "<key>6</key>"
 msgstr "<key>6</key>"
 
-#: C/shortcuts.page:65(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:65
 msgid "Play the 6th track"
 msgstr "Das sechste Stück abspielen"
 
-#: C/shortcuts.page:68(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:68
 msgid "<key>7</key>"
 msgstr "<key>7</key>"
 
-#: C/shortcuts.page:69(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:69
 msgid "Play the 7th track"
 msgstr "Das siebte Stück abspielen"
 
-#: C/shortcuts.page:72(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:72
 msgid "<key>8</key>"
 msgstr "<key>8</key>"
 
-#: C/shortcuts.page:73(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:73
 msgid "Play the 8th track"
 msgstr "Das achte Stück abspielen"
 
-#: C/shortcuts.page:76(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:76
 msgid "<key>9</key>"
 msgstr "<key>9</key>"
 
-#: C/shortcuts.page:77(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:77
 msgid "Play the 9th track"
 msgstr "Das neunte Stück abspielen"
 
-#: C/shortcuts.page:80(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:80
 msgid "<key>0</key>"
 msgstr "<key>0</key>"
 
-#: C/shortcuts.page:81(td/p)
+#. (itstool) path: td/p
+#: C/shortcuts.page:81
 msgid "Play the 10th track"
 msgstr "Das zehnte Stück abspielen"
-
-#~ msgid "Space"
-#~ msgstr "Leertaste"
-
-#~ msgid "Escape"
-#~ msgstr "Escape"
-
-#~ msgid "N"
-#~ msgstr "N"
-
-#~ msgid "P"
-#~ msgstr "P"
-
-#~ msgid "J"
-#~ msgstr "J"
-
-#~ msgid "E"
-#~ msgstr "E"
-
-#~ msgid "2"
-#~ msgstr "2"
-
-#~ msgid "3"
-#~ msgstr "3"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "5"
-#~ msgstr "5"
-
-#~ msgid "6"
-#~ msgstr "6"
-
-#~ msgid "7"
-#~ msgstr "7"
-
-#~ msgid "8"
-#~ msgstr "8"
-
-#~ msgid "9"
-#~ msgstr "9"
-
-#~ msgid "Help"
-#~ msgstr "Hilfe"
-
-#~ msgid "Close"
-#~ msgstr "Schließen"
-
-#~ msgid "paobac@src.gnome.org"
-#~ msgstr "paobac@src.gnome.org"
