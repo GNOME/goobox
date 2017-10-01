@@ -4,8 +4,8 @@
 # update the content run the following command:
 # sh update-potfiles.sh > POTFILES.in
 [encoding: UTF-8]
-data/appdata/goobox.appdata.xml.in
-data/goobox.desktop.in.in
+data/appdata/org.gnome.Goobox.appdata.xml.in
+data/org.gnome.Goobox.desktop.in.in
 [type: gettext/gsettings]data/org.gnome.Goobox.gschema.xml
 src/album-info.c
 src/album-info.h

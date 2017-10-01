@@ -1,7 +1,7 @@
 @INTLTOOL_XML_RULE@
-appdatadir = $(datadir)/appdata
+appdatadir = $(datadir)/metainfo
 appdata_DATA = $(appdata_in_files:.xml.in=.xml)
-appdata_in_files = goobox.appdata.xml.in
+appdata_in_files = org.gnome.Goobox.appdata.xml.in
 EXTRA_DIST = $(appdata_in_files)
 CLEANFILES = $(appdata_DATA)
 

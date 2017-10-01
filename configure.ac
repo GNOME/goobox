@@ -237,7 +237,7 @@ dnl ===========================================================================
 AC_CONFIG_FILES([
 Makefile
 data/Makefile
-data/goobox.desktop.in
+data/org.gnome.Goobox.desktop.in
 data/appdata/Makefile
 data/icons/Makefile
 data/icons/256x256/Makefile

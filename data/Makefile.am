@@ -1,6 +1,6 @@
 SUBDIRS = appdata icons
 
-desktop_in_in_files = goobox.desktop.in.in
+desktop_in_in_files = org.gnome.Goobox.desktop.in.in
 desktop_in_files = $(desktop_in_in_files:.desktop.in.in=.desktop.in) 
 desktopdir = $(datadir)/applications
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop) 
