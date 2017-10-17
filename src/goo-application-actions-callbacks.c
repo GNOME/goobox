@@ -61,7 +61,7 @@ goo_application_activate_about (GSimpleAction *action,
 
         gtk_show_about_dialog (GTK_WINDOW (_gtk_application_get_current_window (GTK_APPLICATION (user_data))),
                                "name", _("CD Player"),
-                               "version", VERSION,
+                               "version", PACKAGE_VERSION,
                                "copyright", _("Copyright \xc2\xa9 2004-2011 Free Software Foundation, Inc."),
                                "comments", _("Play CDs and save the tracks to disk as files"),
                                "authors", authors,

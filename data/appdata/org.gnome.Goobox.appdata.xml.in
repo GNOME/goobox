@@ -5,17 +5,17 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
 
-  <_name>Goobox CD Player</_name>
-  <_summary>Play and extract CDs</_summary>
+  <name>Goobox CD Player</name>
+  <summary>Play and extract CDs</summary>
   <description>
-    <_p>
+    <p>
       Goobox allows you to play CDs and save the tracks to disk as mp3, ogg,
       flac or wav files.
-    </_p>
-    <_p>
+    </p>
+    <p>
       Track titles and CD covers are set automatically using the
       MusicBrainz web service.
-    </_p>
+    </p>
   </description>
 
   <launchable type="desktop-id">org.gnome.Goobox.desktop</launchable>

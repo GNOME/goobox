@@ -41,7 +41,6 @@
 #include "main.h"
 #include "preferences.h"
 #include "typedefs.h"
-#include "icons/pixbufs.h"
 
 #define FILES_TO_PROCESS_AT_ONCE 500
 #define HIDE_TRACK_LIST N_("Hide _tracks")

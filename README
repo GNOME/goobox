@@ -24,10 +24,12 @@
 
 * How to install
 
-  ./configure
-  make
-  make install
-
+  mkdir build
+  cd build
+  meson ..
+  ninja
+  ninja install
+  
 * Licensing
 
   Goobox is released under the terms of the GNU General Public
