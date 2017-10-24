@@ -85,8 +85,8 @@ executable('goobox',
     brasero_dep, 
     musicbrainz_dep, 
     libdiscid_dep, 
-    libcoverart_dep, 
-    libnotify_dep 
+    use_libcoverart ? libcoverart_dep : [], 
+    use_libnotify ? libnotify_dep : [] 
   ],
   include_directories : config_inc,
   c_args : c_args,
