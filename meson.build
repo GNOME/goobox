@@ -17,6 +17,8 @@ gettext_package = meson.project_name()
 prefix = get_option('prefix')
 datadir = join_paths(prefix, get_option('datadir'))
 
+meson.add_install_script('postinstall.py')
+
 # Optional dependencies
 
 if get_option('disable-libcoverart')
