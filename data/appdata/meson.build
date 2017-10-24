@@ -4,5 +4,5 @@ i18n.merge_file(
   type : 'xml',
   po_dir : po_dir,
   install : true,
-  install_dir : join_paths(datadir, 'appdata')
+  install_dir : join_paths(datadir, 'metainfo')
 )
