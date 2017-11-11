@@ -15,9 +15,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=goobox&keywords=I18N+L10N&component=player\n"
-"POT-Creation-Date: 2016-10-17 10:07+0000\n"
+"POT-Creation-Date: 2017-06-28 17:54+0000\n"
 "PO-Revision-Date: 2016-11-25 20:25+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -36,7 +36,9 @@ msgstr "Goobox cd-afspiller"
 msgid ""
 "Goobox allows you to play CDs and save the tracks to disk as mp3, ogg, flac "
 "or wav files."
-msgstr "Goobox lader dig afspille cd'er og gemme sporene på disken som mp3- ogg-, flac- og wav-filer."
+msgstr ""
+"Goobox lader dig afspille cd'er og gemme sporene på disken som mp3- ogg-, "
+"flac- og wav-filer."
 
 #: ../data/appdata/goobox.appdata.xml.in.h:3
 msgid ""
@@ -66,11 +68,11 @@ msgstr "Lydstyrkeniveau"
 
 #: ../data/org.gnome.Goobox.gschema.xml.h:3
 msgid "'Choose cover' location"
-msgstr "Placering af \"Vælg omslag\""
+msgstr "Placering af “Vælg omslag”"
 
 #: ../data/org.gnome.Goobox.gschema.xml.h:4
 msgid "Default location for the 'Choose cover' dialog."
-msgstr "Standardplacering for \"Vælg omslag\"-dialogen."
+msgstr "Standardplacering for “Vælg omslag”-dialogen."
 
 #: ../data/org.gnome.Goobox.gschema.xml.h:5
 msgid "Use Sound Juicer to rip discs"
@@ -233,7 +235,7 @@ msgstr "Intet album fundet"
 
 #: ../src/dlg-properties.c:290 ../src/goo-window.c:1262
 msgid "Searching disc information…"
-msgstr "Søger efter information om disken…"
+msgstr "Søger efter information om disken …"
 
 #: ../src/dlg-properties.c:351
 msgid "#"
@@ -286,7 +288,7 @@ msgstr "_Vis målmappen"
 #: ../src/dlg-ripper.c:612
 #, c-format
 msgid "Extracting \"%s\""
-msgstr "Udtrækker \"%s\""
+msgstr "Udtrækker “%s”"
 
 #: ../src/dlg-ripper.c:623 ../src/dlg-ripper.c:632
 msgid "Could not extract tracks"
@@ -607,7 +609,7 @@ msgstr "U_dtræk spor"
 
 #: ../src/ui/menus.ui.h:4
 msgid "_Choose File…"
-msgstr "_Vælg fil…"
+msgstr "_Vælg fil …"
 
 #: ../src/ui/menus.ui.h:5
 msgid "_Search on Internet"
