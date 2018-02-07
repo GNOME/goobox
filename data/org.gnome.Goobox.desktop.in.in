@@ -4,6 +4,7 @@ Comment=Play and extract CDs
 Categories=GNOME;GTK;AudioVideo;Audio;
 Encoding=UTF-8
 Exec=goobox
+# Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 Icon=goobox
 MimeType=x-content/audio-cdda;
 StartupNotify=true
