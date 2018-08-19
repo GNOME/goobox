@@ -200,7 +200,7 @@ goo_application_command_line (GApplication            *application,
 					     0,
 					     _GTK_ICON_NAME_DIALOG_ERROR,
 					     _("Cannot start the CD player"),
-					     _("In order to read CDs you have to install the gstreamer base plugins"),
+					     _("In order to read CDs you have to install the GStreamer base plugins"),
 					     _GTK_LABEL_OK, GTK_RESPONSE_OK,
 					     NULL);
 		g_signal_connect_swapped (G_OBJECT (d), "response",
