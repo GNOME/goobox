@@ -162,9 +162,9 @@ update_ui (gpointer callback_data)
 		    && ( fabs (data->prev_remaining_time - remaining_time) > 20.0))
 			time_left = NULL;
 		else if (minutes > 59)
-			time_left = g_strdup_printf (_("(%d:%02d:%02d Remaining)"), minutes / 60, minutes % 60, seconds);
+			time_left = g_strdup_printf (_("(%d∶%02d∶%02d Remaining)"), minutes / 60, minutes % 60, seconds);
 		else
-			time_left = g_strdup_printf (_("(%d:%02d Remaining)"), minutes, seconds);
+			time_left = g_strdup_printf (_("(%d∶%02d Remaining)"), minutes, seconds);
 
 		data->prev_remaining_time = remaining_time;
 	}
@@ -609,7 +609,7 @@ rip_current_track (DialogData *data)
 
 	track = data->current_track->data;
 
-	msg = g_strdup_printf (_("Extracting \"%s\""), track->title);
+	msg = g_strdup_printf (_("Extracting “%s”"), track->title);
 	escaped = g_markup_printf_escaped ("<i>%s</i>", msg);
 	gtk_label_set_markup (GTK_LABEL (GET_WIDGET ("track_label")), escaped);
 	g_free (escaped);

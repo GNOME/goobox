@@ -56,8 +56,8 @@
     </key>
     <key name="cover-path" type="s">
       <default>'~'</default>
-      <summary>'Choose cover' location</summary>
-      <description>Default location for the 'Choose cover' dialog.</description>
+      <summary>“Choose cover” location</summary>
+      <description>Default location for the “Choose cover” dialog.</description>
     </key>
     <key name="use-sound-juicer" type="b">
       <default>false</default>
