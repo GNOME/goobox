@@ -3,5 +3,6 @@
 .project
 .pydevproject
 .settings/
+.vscode/
 build/
 po/goobox.pot
