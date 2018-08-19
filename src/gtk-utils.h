@@ -35,7 +35,7 @@ G_BEGIN_DECLS
 
 #define _GTK_LABEL_CANCEL _("_Cancel")
 #define _GTK_LABEL_CLOSE _("_Close")
-#define _GTK_LABEL_OK _("_Ok")
+#define _GTK_LABEL_OK _("_OK")
 #define _GTK_LABEL_OPEN _("_Open")
 #define _GTK_LABEL_RESET _("_Reset")
 
