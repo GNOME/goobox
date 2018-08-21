@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/goobox/issues\n"
-"POT-Creation-Date: 2018-08-19 12:55+0000\n"
-"PO-Revision-Date: 2018-08-21 11:46+0200\n"
+"POT-Creation-Date: 2018-08-21 09:49+0000\n"
+"PO-Revision-Date: 2018-08-21 11:51+0200\n"
 "Last-Translator: Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>\n"
 "Language-Team: Gnome Romanian Translation Team\n"
 "Language: ro\n"
@@ -21,16 +21,16 @@ msgstr ""
 "X-Generator: Poedit 2.1.1\n"
 "X-Project-Style: gnome\n"
 
-#: ../data/appdata/org.gnome.Goobox.appdata.xml.in.h:1
+#: data/appdata/org.gnome.Goobox.appdata.xml.in:8
 msgid "Goobox CD Player"
 msgstr "Player de CD-uri Goobox"
 
-#: ../data/appdata/org.gnome.Goobox.appdata.xml.in.h:2
-#: ../data/org.gnome.Goobox.desktop.in.in.h:2
+#: data/appdata/org.gnome.Goobox.appdata.xml.in:9
+#: data/org.gnome.Goobox.desktop.in.in:4
 msgid "Play and extract CDs"
 msgstr "Redare și extragere CD-uri"
 
-#: ../data/appdata/org.gnome.Goobox.appdata.xml.in.h:3
+#: data/appdata/org.gnome.Goobox.appdata.xml.in:11
 msgid ""
 "Goobox allows you to play CDs and save the tracks to disk as mp3, ogg, flac "
 "or wav files."
@@ -38,7 +38,7 @@ msgstr ""
 "Goobox permite redarea de CD-uri și salvarea pieselor pe disc ca fișiere "
 "mp3, ogg, flac și wav."
 
-#: ../data/appdata/org.gnome.Goobox.appdata.xml.in.h:4
+#: data/appdata/org.gnome.Goobox.appdata.xml.in:15
 msgid ""
 "Track titles and CD covers are set automatically using the MusicBrainz web "
 "service."
@@ -46,118 +46,123 @@ msgstr ""
 "Titlurile pieselor și coperțile de CD sunt stabilite automat folosind "
 "serviciul web MusicBrainz."
 
-#: ../data/org.gnome.Goobox.desktop.in.in.h:1
-#: ../src/goo-application-actions-callbacks.c:63 ../src/goo-application.c:390
-#: ../src/goo-window.c:1327 ../src/goo-window.c:1340 ../src/goo-window.c:1945
+#: data/org.gnome.Goobox.desktop.in.in:3
+#: src/goo-application-actions-callbacks.c:63 src/goo-application.c:390
+#: src/goo-window.c:1326 src/goo-window.c:1339 src/goo-window.c:1944
 msgid "CD Player"
 msgstr "Player pentru CD-uri"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:1
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: data/org.gnome.Goobox.desktop.in.in:9
+msgid "goobox"
+msgstr "goobox"
+
+#: data/org.gnome.Goobox.gschema.xml:51
 msgid "Device path"
 msgstr "Cale dispozitiv"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:2
+#: data/org.gnome.Goobox.gschema.xml:55
 msgid "Volume level"
 msgstr "Nivelul volumulu"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:3
+#: data/org.gnome.Goobox.gschema.xml:59
 msgid "'Choose cover' location"
 msgstr "Locația „Alege coperta”"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:4
+#: data/org.gnome.Goobox.gschema.xml:60
 msgid "Default location for the 'Choose cover' dialog."
 msgstr "Locația implicită pentru dialogul „Alege coperta”"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:5
+#: data/org.gnome.Goobox.gschema.xml:64
 msgid "Use Sound Juicer to rip discs"
 msgstr "Utilizează Sound Juicer pentru a extrage discuri"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:6
+#: data/org.gnome.Goobox.gschema.xml:68
 msgid "Autoplay"
 msgstr "Redare automată"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:7
+#: data/org.gnome.Goobox.gschema.xml:69
 msgid "Autoplay discs after insertion."
 msgstr "Redă discurile automat după introducere."
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:8
+#: data/org.gnome.Goobox.gschema.xml:76
 msgid "Window width"
 msgstr "Lățimea ferestrei"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:9
+#: data/org.gnome.Goobox.gschema.xml:80
 msgid "Window height"
 msgstr "Înălțimea ferestrei"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:10
+#: data/org.gnome.Goobox.gschema.xml:87
 msgid "Play all tracks"
 msgstr "Redă toate piesele"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:11
+#: data/org.gnome.Goobox.gschema.xml:91
 msgid "Shuffle playlist"
 msgstr "Amestecă lista de redare"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:12
+#: data/org.gnome.Goobox.gschema.xml:95
 msgid "Restart when finished"
 msgstr "Repornește când se ajunge la final"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:13
+#: data/org.gnome.Goobox.gschema.xml:99
 msgid "Playlist sort method"
 msgstr "Metoda de sortare a listei de redare"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:14
+#: data/org.gnome.Goobox.gschema.xml:103
 msgid "Playlist sort type"
 msgstr "Tipul de sortare a listei de redare"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:15
+#: data/org.gnome.Goobox.gschema.xml:110
 msgid "Extraction folder"
 msgstr "Dosarul de extragere"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:16
+#: data/org.gnome.Goobox.gschema.xml:114
 msgid "File type"
 msgstr "Tip fișier"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:17
+#: data/org.gnome.Goobox.gschema.xml:115
 msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr "Valorile posibile sunt: ogg, flac, mp3, wave."
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:18
+#: data/org.gnome.Goobox.gschema.xml:119
 msgid "Save the playlist"
 msgstr "Salvează lista de redare"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:19
+#: data/org.gnome.Goobox.gschema.xml:120
 msgid "Save the playlist of the extracted tracks."
 msgstr "Salvează lista de redare a pieselor extrase."
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:20
+#: data/org.gnome.Goobox.gschema.xml:124
 msgid "View the destination"
 msgstr "Vizualizează destinația"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:21
+#: data/org.gnome.Goobox.gschema.xml:131
 msgid "OGG files quality"
 msgstr "Calitatea fișierelor OGG"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:22
+#: data/org.gnome.Goobox.gschema.xml:135
 msgid "FLAC files quality"
 msgstr "Calitatea fișierelor FLAC"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:23
+#: data/org.gnome.Goobox.gschema.xml:139
 msgid "MP3 files quality"
 msgstr "Calitatea fișierelor MP3"
 
-#: ../src/album-info.c:176
+#: src/album-info.c:176
 msgid "Various"
 msgstr "Diverse"
 
-#: ../src/dlg-cover-chooser.c:276
+#: src/dlg-cover-chooser.c:276
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, se încarcă imaginea: %u"
 
-#: ../src/dlg-cover-chooser.c:341 ../src/goo-window.c:2792
+#: src/dlg-cover-chooser.c:341 src/goo-window.c:2791
 msgid "Could not search for a cover on Internet"
 msgstr "Nu s-a putut căuta o copertă pe Internet"
 
-#: ../src/dlg-extract.c:108
+#: src/dlg-extract.c:108
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -174,125 +179,125 @@ msgstr ""
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 
-#: ../src/dlg-extract.c:119
+#: src/dlg-extract.c:119
 msgid "No encoder available."
 msgstr "Niciun codor nu este disponibil."
 
-#: ../src/dlg-preferences.c:243 ../src/dlg-preferences.c:504
+#: src/dlg-preferences.c:243 src/dlg-preferences.c:504
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:257 ../src/dlg-preferences.c:507
+#: src/dlg-preferences.c:257 src/dlg-preferences.c:507
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:271 ../src/dlg-preferences.c:510
+#: src/dlg-preferences.c:271 src/dlg-preferences.c:510
 msgid "MP3"
 msgstr "MP3"
 
-#: ../src/dlg-preferences.c:285
+#: src/dlg-preferences.c:285
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
-#: ../src/dlg-preferences.c:479
+#: src/dlg-preferences.c:479
 msgid "Faster compression"
 msgstr "Compresie mai rapidă"
 
-#: ../src/dlg-preferences.c:483
+#: src/dlg-preferences.c:483
 msgid "Higher compression"
 msgstr "Compresie mai bună"
 
-#: ../src/dlg-preferences.c:490
+#: src/dlg-preferences.c:490
 msgid "Smaller size"
 msgstr "Mărime mai mică"
 
-#: ../src/dlg-preferences.c:494
+#: src/dlg-preferences.c:494
 msgid "Higher quality"
 msgstr "Calitate mai bună"
 
-#: ../src/dlg-preferences.c:522
+#: src/dlg-preferences.c:522
 msgid "Quality:"
 msgstr "Calitate:"
 
-#: ../src/dlg-preferences.c:525
+#: src/dlg-preferences.c:525
 msgid "Compression level:"
 msgstr "Nivel de comprimare:"
 
-#: ../src/dlg-properties.c:214
+#: src/dlg-properties.c:214
 #, c-format
 msgid "Album %d of %d"
 msgstr "Albumul %d din %d"
 
-#: ../src/dlg-properties.c:271
+#: src/dlg-properties.c:271
 msgid "No album found"
 msgstr "Nu a fost găsit niciun album"
 
-#: ../src/dlg-properties.c:290 ../src/goo-window.c:1262
+#: src/dlg-properties.c:290 src/goo-window.c:1261
 msgid "Searching disc information…"
 msgstr "Se caută informațiile despre disc..."
 
-#: ../src/dlg-properties.c:351
+#: src/dlg-properties.c:351
 msgid "#"
 msgstr "Nr."
 
-#: ../src/dlg-properties.c:369
+#: src/dlg-properties.c:369
 msgid "Title"
 msgstr "Titlu"
 
-#: ../src/dlg-properties.c:402
+#: src/dlg-properties.c:402
 msgid "Artist"
 msgstr "Artist"
 
-#: ../src/dlg-ripper.c:165
+#: src/dlg-ripper.c:165
 #, c-format
 msgid "(%d:%02d:%02d Remaining)"
 msgstr "(%d:%02d:%02d rămase)"
 
-#: ../src/dlg-ripper.c:167
+#: src/dlg-ripper.c:167
 #, c-format
 msgid "(%d:%02d Remaining)"
 msgstr "(%d:%02d rămase)"
 
-#: ../src/dlg-ripper.c:172
+#: src/dlg-ripper.c:172
 #, c-format
 msgid "Extracting track: %d of %d %s"
 msgstr "Se extrage piesa: %d din %d %s"
 
-#: ../src/dlg-ripper.c:209 ../src/dlg-ripper.c:318
+#: src/dlg-ripper.c:209 src/dlg-ripper.c:318
 msgid "Could not extract the tracks"
 msgstr "Nu s-au putut extrage piesele"
 
-#: ../src/dlg-ripper.c:436
+#: src/dlg-ripper.c:436
 #, c-format
 msgid "Invalid destination folder: %s"
 msgstr "Dosarul destinație este nevalid: %s"
 
-#: ../src/dlg-ripper.c:466 ../src/dlg-ripper.c:470
+#: src/dlg-ripper.c:466 src/dlg-ripper.c:470
 msgid "Could not display the destination folder"
 msgstr "Nu s-a putut afișa dosarul de destinație"
 
-#: ../src/dlg-ripper.c:596
+#: src/dlg-ripper.c:596
 msgid "Tracks extracted successfully"
 msgstr "Piesele au fost extrase cu succes"
 
-#: ../src/dlg-ripper.c:598
+#: src/dlg-ripper.c:598
 msgid "_View destination folder"
 msgstr "_Vizualizează dosarul destinației"
 
-#: ../src/dlg-ripper.c:612
+#: src/dlg-ripper.c:612
 #, c-format
 msgid "Extracting \"%s\""
 msgstr "Se extrage „%s”"
 
-#: ../src/dlg-ripper.c:623 ../src/dlg-ripper.c:632
+#: src/dlg-ripper.c:623 src/dlg-ripper.c:632
 msgid "Could not extract tracks"
 msgstr "Nu s-au putut extrage piesele"
 
-#: ../src/dlg-ripper.c:663
+#: src/dlg-ripper.c:663
 msgid "Ripped with CD Player"
 msgstr "Extras cu Player-ul de CD-uri"
 
-#: ../src/dlg-ripper.c:697
+#: src/dlg-ripper.c:697
 msgid "Extracting disc tracks"
 msgstr "Se extrag piesele de pe disc"
 
@@ -302,7 +307,7 @@ msgstr "Se extrag piesele de pe disc"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: ../src/glib-utils.c:2225
+#: src/glib-utils.c:2225
 #, c-format
 msgctxt "long time format"
 msgid "%d∶%02d∶%02d"
@@ -314,155 +319,154 @@ msgstr "%d∶%02d∶%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: ../src/glib-utils.c:2234
+#: src/glib-utils.c:2234
 #, c-format
 msgctxt "short time format"
 msgid "%d∶%02d"
 msgstr "%d∶%02d"
 
-#: ../src/goo-application-actions-callbacks.c:60
+#: src/goo-application-actions-callbacks.c:60
 msgid "translator_credits"
 msgstr ""
 "Szabo Roland\n"
 "Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2018"
 
-#: ../src/goo-application-actions-callbacks.c:65
+#: src/goo-application-actions-callbacks.c:65
 msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
 msgstr ""
 "Drepturi de autor © 2004-2011 Fundația pentru Programe Libere (FSF), Inc."
 
-#: ../src/goo-application-actions-callbacks.c:66 ../src/goo-application.c:159
+#: src/goo-application-actions-callbacks.c:66 src/goo-application.c:159
 msgid "Play CDs and save the tracks to disk as files"
 msgstr "Redă CD-uri și salvează piesele pe disc ca fișiere"
 
-#: ../src/goo-application.c:52
+#: src/goo-application.c:52
 msgid "CD device to be used"
 msgstr "Dispozitivul CD ce urmează să fie folosit"
 
-#: ../src/goo-application.c:53
+#: src/goo-application.c:53
 msgid "DEVICE_PATH"
 msgstr "CALEA_DISPOZITIVULUI"
 
-#: ../src/goo-application.c:55
+#: src/goo-application.c:55
 msgid "Play the CD on startup"
 msgstr "Redă CD-ul la pornire"
 
-#: ../src/goo-application.c:58
+#: src/goo-application.c:58
 msgid "Toggle play"
 msgstr "Comută redarea"
 
-#: ../src/goo-application.c:61
+#: src/goo-application.c:61
 msgid "Stop playing"
 msgstr "Oprește redarea"
 
-#: ../src/goo-application.c:64
+#: src/goo-application.c:64
 msgid "Play the next track"
 msgstr "Redă piesa următoarea"
 
-#: ../src/goo-application.c:67
+#: src/goo-application.c:67
 msgid "Play the previous track"
 msgstr "Redă piesa anterioară"
 
-#: ../src/goo-application.c:70
+#: src/goo-application.c:70
 msgid "Eject the CD"
 msgstr "Scoate CD-ul"
 
-#: ../src/goo-application.c:73
+#: src/goo-application.c:73
 msgid "Toggle the main window visibility"
 msgstr "Comută vizibilitatea ferestrei principale"
 
-#: ../src/goo-application.c:76
+#: src/goo-application.c:76
 msgid "Quit the application"
 msgstr "Ieși din aplicație"
 
-#: ../src/goo-application.c:79
+#: src/goo-application.c:79
 msgid "Show version"
 msgstr "Arată versiunea"
 
-#: ../src/goo-application.c:202
+#: src/goo-application.c:202
 msgid "Cannot start the CD player"
 msgstr "Nu se poate porni playerul de CD-uri"
 
-#: ../src/goo-application.c:203
+#: src/goo-application.c:203
 msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgstr "Pentru a citi CD-uri trebuie să instalați modulele gstreamer de bază "
 
-#: ../src/goo-player.c:323
-msgid "Playing CD"
-msgstr "Se redă CD-ul"
-
-#: ../src/goo-player-info.c:253
+#: src/goo-player-info.c:253
 msgid "Click here to choose a cover for this CD"
 msgstr "Apăsați aici pentru a alege o copertă nouă pentru acest CD"
 
-#: ../src/goo-player-info.c:395 ../src/goo-window.c:1156
+#: src/goo-player-info.c:395 src/goo-window.c:1155
 msgid "No disc"
 msgstr "Niciun disc"
 
-#: ../src/goo-player-info.c:398 ../src/goo-window.c:1161
+#: src/goo-player-info.c:398 src/goo-window.c:1160
 msgid "Data disc"
 msgstr "Disc de date"
 
-#: ../src/goo-player-info.c:402
+#: src/goo-player-info.c:402
 msgid "Ejecting CD"
 msgstr "Se scoate CD-ul"
 
-#: ../src/goo-player-info.c:405
+#: src/goo-player-info.c:405
 msgid "Checking CD drive"
 msgstr "Se verifică unitatea de CD-uri"
 
-#: ../src/goo-player-info.c:408 ../src/goo-player-info.c:411
+#: src/goo-player-info.c:408 src/goo-player-info.c:411
 msgid "Reading CD"
 msgstr "Se citește CD-ul"
 
-#: ../src/goo-player-info.c:414 ../src/goo-window.c:1174
-#: ../src/goo-window.c:1347
+#: src/goo-player-info.c:414 src/goo-window.c:1173 src/goo-window.c:1346
 msgid "Audio CD"
 msgstr "CD audio"
 
-#: ../src/goo-window-actions-callbacks.c:232
-#: ../src/goo-window-actions-callbacks.c:268
-#: ../src/goo-window-actions-callbacks.c:302
+#: src/goo-player.c:323
+msgid "Playing CD"
+msgstr "Se redă CD-ul"
+
+#: src/goo-window-actions-callbacks.c:232
+#: src/goo-window-actions-callbacks.c:268
+#: src/goo-window-actions-callbacks.c:302
 msgid "Could not execute command"
 msgstr "Comanda nu s-a putut executa"
 
-#: ../src/goo-window.c:47
+#: src/goo-window.c:46
 msgid "Hide _tracks"
 msgstr "Ascunde pie_sele"
 
-#: ../src/goo-window.c:48
+#: src/goo-window.c:47
 msgid "Show _tracks"
 msgstr "Arată pie_sele"
 
-#: ../src/goo-window.c:1558
+#: src/goo-window.c:1557
 msgid "No information found for this disc"
 msgstr "Nu s-a găsit nicio informație pentru acest disc"
 
-#: ../src/goo-window.c:2222 ../src/ui/gears-menu.ui.h:3 ../src/ui/menus.ui.h:3
+#: src/goo-window.c:2221 src/ui/gears-menu.ui:18 src/ui/menus.ui:17
 msgid "_Properties"
 msgstr "_Proprietăți"
 
-#: ../src/goo-window.c:2604
+#: src/goo-window.c:2603
 msgid "Could not save cover image"
 msgstr "Nu s-a putut salva imaginea coperții"
 
-#: ../src/goo-window.c:2628 ../src/goo-window.c:2659
+#: src/goo-window.c:2627 src/goo-window.c:2658
 msgid "Could not load image"
 msgstr "Nu s-a putut încărca imaginea"
 
-#: ../src/goo-window.c:2730
+#: src/goo-window.c:2729
 msgid "Choose Disc Cover Image"
 msgstr "Alegeți imaginea de copertă a discului"
 
-#: ../src/goo-window.c:2749
+#: src/goo-window.c:2748
 msgid "Images"
 msgstr "Imagini"
 
-#: ../src/goo-window.c:2757
+#: src/goo-window.c:2756
 msgid "All files"
 msgstr "Toate fișierele"
 
-#: ../src/goo-window.c:2793
+#: src/goo-window.c:2792
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -470,217 +474,216 @@ msgstr ""
 "Trebuie să introduceți numele artistului și al albumului pentru a găsi "
 "coperta albumului."
 
-#: ../src/gtk-file-chooser-preview.c:165
+#: src/gtk-file-chooser-preview.c:165
 msgid "Preview"
 msgstr "Previzualizare"
 
-#: ../src/gtk-file-chooser-preview.c:266
+#: src/gtk-file-chooser-preview.c:266
 msgid "pixels"
 msgstr "pixeli"
 
-#: ../src/gtk-utils.c:500
+#: src/gtk-utils.c:500
 msgid "Could not display help"
 msgstr "Nu s-a putut afișa fereastra de ajutor"
 
-#: ../src/gtk-utils.c:786 ../src/gtk-utils.c:792
+#: src/gtk-utils.c:786 src/gtk-utils.c:792
 msgid "Could not launch the application"
 msgstr "Nu s-a putut lansa aplicația"
 
-#: ../src/gtk-utils.h:36
+#: src/gtk-utils.h:36
 msgid "_Cancel"
 msgstr "_Anulează"
 
-#: ../src/gtk-utils.h:37 ../src/ui/gears-menu.ui.h:4
+#: src/gtk-utils.h:37 src/ui/gears-menu.ui:25
 msgid "_Close"
 msgstr "În_chide"
 
-#: ../src/gtk-utils.h:38
+#: src/gtk-utils.h:38
 msgid "_Ok"
 msgstr "_Ok"
 
-#: ../src/gtk-utils.h:39
+#: src/gtk-utils.h:39
 msgid "_Open"
 msgstr "_Deschide"
 
-#: ../src/gtk-utils.h:40 ../src/ui/cover-chooser.ui.h:2
-#: ../src/ui/properties.ui.h:4
+#: src/gtk-utils.h:40 src/ui/cover-chooser.ui:25 src/ui/properties.ui:45
 msgid "_Reset"
 msgstr "_Restabilește"
 
-#: ../src/main.c:272
+#: src/main.c:272
 msgid "Pause"
 msgstr "Pauză"
 
-#: ../src/main.c:279
+#: src/main.c:279
 msgid "Play"
 msgstr "Redare"
 
-#: ../src/main.c:286
+#: src/main.c:286
 msgid "Next"
 msgstr "Următoarea"
 
-#: ../src/track-info.c:123
+#: src/track-info.c:123
 #, c-format
 msgid "Track %u"
 msgstr "Piesa %u"
 
-#: ../src/ui/app-menu.ui.h:1
+#: src/ui/app-menu.ui:6
 msgid "_Preferences"
 msgstr "_Preferințe"
 
-#: ../src/ui/app-menu.ui.h:2
+#: src/ui/app-menu.ui:12
 msgid "Play _All"
 msgstr "Redă to_ate"
 
-#: ../src/ui/app-menu.ui.h:3
+#: src/ui/app-menu.ui:16
 msgid "_Repeat"
 msgstr "_Repetă"
 
-#: ../src/ui/app-menu.ui.h:4
+#: src/ui/app-menu.ui:20
 msgid "S_huffle"
 msgstr "A_mestecă"
 
-#: ../src/ui/app-menu.ui.h:5
+#: src/ui/app-menu.ui:26
 msgid "_Help"
 msgstr "_Ajutor"
 
-#: ../src/ui/app-menu.ui.h:6
+#: src/ui/app-menu.ui:31
 msgid "_About"
 msgstr "_Despre"
 
-#: ../src/ui/app-menu.ui.h:7
+#: src/ui/app-menu.ui:35
 msgid "_Quit"
 msgstr "_Ieșire"
 
-#: ../src/ui/cover-chooser.ui.h:1
+#: src/ui/cover-chooser.ui:9
 msgid "Choose a CD Cover"
 msgstr "Alegeți o copertă pentru CD"
 
-#: ../src/ui/cover-chooser.ui.h:3
+#: src/ui/cover-chooser.ui:97
 msgid "Found images:"
 msgstr "Imagini găsite:"
 
-#: ../src/ui/extract.ui.h:1
+#: src/ui/extract.ui:9
 msgid "Extract Tracks"
 msgstr "Extragere piese"
 
-#: ../src/ui/extract.ui.h:2
+#: src/ui/extract.ui:49
 msgid "_Extract"
 msgstr "_Extrage"
 
-#: ../src/ui/extract.ui.h:3
+#: src/ui/extract.ui:81
 msgid "_All tracks"
 msgstr "To_ate piesele"
 
-#: ../src/ui/extract.ui.h:4
+#: src/ui/extract.ui:98
 msgid "_Selected tracks"
 msgstr "Piese _selectate"
 
-#: ../src/ui/format-options.ui.h:1
+#: src/ui/format-options.ui:7
 msgid "Format Properties"
 msgstr "Proprietățile formatului"
 
-#: ../src/ui/gears-menu.ui.h:1
+#: src/ui/gears-menu.ui:7
 msgid "Copy _Disk"
 msgstr "Copiază _discul"
 
-#: ../src/ui/gears-menu.ui.h:2
+#: src/ui/gears-menu.ui:11
 msgid "_Eject"
 msgstr "Scoat_e"
 
-#: ../src/ui/menus.ui.h:1
+#: src/ui/menus.ui:7
 msgid "_Play"
 msgstr "_Redare"
 
-#: ../src/ui/menus.ui.h:2
+#: src/ui/menus.ui:11
 msgid "E_xtract Tracks"
 msgstr "E_xtrage piese"
 
-#: ../src/ui/menus.ui.h:4
+#: src/ui/menus.ui:25
 msgid "_Choose File…"
 msgstr "_Alege fișier..."
 
-#: ../src/ui/menus.ui.h:5
+#: src/ui/menus.ui:29
 msgid "_Search on Internet"
 msgstr "_Caută pe Internet"
 
-#: ../src/ui/menus.ui.h:6
+#: src/ui/menus.ui:35
 msgid "_Remove"
 msgstr "_Elimină"
 
-#: ../src/ui/preferences.ui.h:1
+#: src/ui/preferences.ui:8
 msgid "CD Player Preferences"
 msgstr "Preferințele playerului pentru CD-uri"
 
-#: ../src/ui/preferences.ui.h:2
+#: src/ui/preferences.ui:62
 msgid "Playback"
 msgstr "Redare"
 
-#: ../src/ui/preferences.ui.h:3
+#: src/ui/preferences.ui:94
 msgid "Drive:"
 msgstr "Unitate:"
 
-#: ../src/ui/preferences.ui.h:4
+#: src/ui/preferences.ui:121
 msgid "Automatically play newly inserted discs"
 msgstr "Redă automat discuri nou introduse"
 
-#: ../src/ui/preferences.ui.h:5
+#: src/ui/preferences.ui:174
 msgid "Extraction"
 msgstr "Extragere"
 
-#: ../src/ui/preferences.ui.h:6
+#: src/ui/preferences.ui:206
 msgid "Destination:"
 msgstr "Destinație:"
 
-#: ../src/ui/preferences.ui.h:7
+#: src/ui/preferences.ui:222
 msgid "Choose destination folder"
 msgstr "Alegeți dosarul destinație"
 
-#: ../src/ui/preferences.ui.h:8
+#: src/ui/preferences.ui:236
 msgid "Format:"
 msgstr "Format:"
 
-#: ../src/ui/preferences.ui.h:9
+#: src/ui/preferences.ui:439
 msgid "_Save playlist"
 msgstr "_Salvează lista de redare"
 
-#: ../src/ui/properties.ui.h:1
+#: src/ui/properties.ui:18
 msgid "Single artist"
 msgstr "Un singur artist"
 
-#: ../src/ui/properties.ui.h:2
+#: src/ui/properties.ui:21
 msgid "Various artists"
 msgstr "Diverși artiști"
 
-#: ../src/ui/properties.ui.h:3
+#: src/ui/properties.ui:29
 msgid "Properties"
 msgstr "Proprietăți"
 
-#: ../src/ui/properties.ui.h:5
+#: src/ui/properties.ui:120
 msgid "_Title:"
 msgstr "_Titlu:"
 
-#: ../src/ui/properties.ui.h:6
+#: src/ui/properties.ui:135
 msgid "T_racks:"
 msgstr "P_iese:"
 
-#: ../src/ui/properties.ui.h:7
+#: src/ui/properties.ui:151
 msgid "_Artist:"
 msgstr "_Artist:"
 
-#: ../src/ui/properties.ui.h:8
+#: src/ui/properties.ui:211
 msgid "_Year:"
 msgstr "A_n:"
 
-#: ../src/ui/properties.ui.h:9
+#: src/ui/properties.ui:288
 msgid "Search for the remaining data"
 msgstr "Caută datele rămase"
 
-#: ../src/ui/ripper.ui.h:1
+#: src/ui/ripper.ui:7
 msgid "Extracting Tracks"
 msgstr "Extragerea pieselor"
 
-#: ../src/ui/ripper.ui.h:2
+#: src/ui/ripper.ui:85
 msgid "Extracting tracks"
 msgstr "Se extrag piesele"
 
