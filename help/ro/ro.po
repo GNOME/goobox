@@ -1,0 +1,386 @@
+# Romanian translation for goobox.
+# Copyright (C) 2018 goobox's COPYRIGHT HOLDER
+# This file is distributed under the same license as the goobox package.
+# Daniel Șerbănescu <daniel@serbanescu.dk>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: goobox goobox-3-4\n"
+"POT-Creation-Date: 2018-08-19 12:55+0000\n"
+"PO-Revision-Date: 2018-08-21 13:48+0200\n"
+"Last-Translator: Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>\n"
+"Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);;\n"
+"X-Generator: Poedit 2.1.1\n"
+
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
+msgstr "Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2018"
+
+#. (itstool) path: credit/name
+#: C/index.page:4
+msgid "Paolo Bacchilega"
+msgstr "Paolo Bacchilega"
+
+#. (itstool) path: credit/years
+#: C/index.page:6
+msgid "2005-2011"
+msgstr "2005-2011"
+
+#. (itstool) path: page/title
+#: C/index.page:15
+msgid "<app>CD Player</app> Help"
+msgstr "Ajutor pentru <app>Player pentru CD-uri</app>"
+
+#. (itstool) path: page/p
+#: C/index.page:16
+msgid ""
+"With <app>CD Player</app> you can play audio Compact Discs (CDs) and save "
+"the CD tracks as audio files."
+msgstr ""
+"Cu <app>Player pentru CD-uri</app> puteți reda discuri compacte (CD-uri) "
+"audio și salva piesele CD-ului ca fișiere audio."
+
+#. (itstool) path: p/link
+#: C/legal.xml:4
+msgid "Creative Commons Attribution-Share Alike 3.0 Unported License"
+msgstr ""
+"Licență neportată Creative Commons Atribuire-Partajare în condiții identice "
+"3.0"
+
+#. (itstool) path: license/p
+#: C/legal.xml:3
+msgid "This work is licensed under a <_:link-1/>."
+msgstr "Această lucrare este licențiată sub o <_:link-1/>."
+
+#. (itstool) path: license/p
+#: C/legal.xml:6
+msgid ""
+"As a special exception, the copyright holders give you permission to copy, "
+"modify, and distribute the example code contained in this document under the "
+"terms of your choosing, without restriction."
+msgstr ""
+"Ca o excepție specială, deținătorii drepturilor de autor vă oferă "
+"permisiunea de a copia, modifica, și distribui codul exemplu conținut în "
+"acest document în termenii aleși de dumneavoastră, fără restricție."
+
+#. (itstool) path: info/title
+#: C/preferences.page:6
+msgctxt "sort"
+msgid "0"
+msgstr "0"
+
+#. (itstool) path: page/title
+#: C/preferences.page:8
+msgid "Preferences"
+msgstr "Preferințe"
+
+#. (itstool) path: page/p
+#: C/preferences.page:9
+msgid ""
+"To configure <app>CD Player</app> open the <app>Preferences</app> dialog by "
+"choosing <guiseq><gui style=\"menu\">Edit</gui><gui style=\"menuitem"
+"\">Preferences</gui></guiseq>."
+msgstr ""
+"Pentru a configura <app>Player pentru CD-uri</app> deschideți dialogul "
+"<app>Preferințe</app> selectând <guiseq><gui style=\"menu\">Editare</"
+"gui><gui style=\"menuitem\">Preferințe</gui></guiseq>."
+
+#. (itstool) path: page/p
+#: C/preferences.page:13
+msgid ""
+"This dialog contains two tabs described in detail below. At the bottom of "
+"the dialog window, you'll find the following buttons:"
+msgstr ""
+"Dialogul conține două taburi descrise în detaliu mai jos. La baza ferestrei "
+"dialog, veți găsi următoarele butoane:"
+
+#. (itstool) path: item/title
+#: C/preferences.page:19
+msgid "<gui style=\"button\">Help</gui>"
+msgstr "<gui style=\"button\">Ajutor</gui>"
+
+#. (itstool) path: item/p
+#: C/preferences.page:20
+msgid "Shows this page."
+msgstr "Arată această pagină."
+
+#. (itstool) path: item/title
+#: C/preferences.page:23
+msgid "<gui style=\"button\">Close</gui>"
+msgstr "<gui style=\"button\">Închide</gui>"
+
+#. (itstool) path: item/p
+#: C/preferences.page:24
+msgid "Closes the dialog."
+msgstr "Închide dialogul."
+
+#. (itstool) path: page/p
+#: C/preferences.page:27
+msgid ""
+"Keep in mind that when you change an option it will automatically applied. "
+"This is why there is no <gui style=\"button\">Ok</gui> or <gui style=\"button"
+"\">Apply</gui> button."
+msgstr ""
+"Luați aminte că atunci când modificați o opțiune va fi aplicată automat. Din "
+"cauza aceasta nu există niciun buton <gui style=\"button\">Ok</gui> sau <gui "
+"style=\"button\">Aplică</gui>."
+
+#. (itstool) path: section/title
+#: C/preferences.page:34
+msgid "General Tab"
+msgstr "Tabul Generale"
+
+#. (itstool) path: section/p
+#: C/preferences.page:35
+msgid "This tab allows you to set the following options:"
+msgstr "Acest tab vă permite să stabiliți următoarele opțiuni:"
+
+#. (itstool) path: item/p
+#: C/preferences.page:38
+msgid "Select the device to use."
+msgstr "Selectați dispozitivul de folosit."
+
+#. (itstool) path: item/p
+#: C/preferences.page:40
+msgid "Whether to automatically play a newly inserted disk."
+msgstr "Dacă să se redea automat un disc introdus recent."
+
+#. (itstool) path: section/title
+#: C/preferences.page:46
+msgid "Extraction Tab"
+msgstr "Tabul Extragere"
+
+#. (itstool) path: section/p
+#: C/preferences.page:47
+msgid "This tab allows you to set the extraction options:"
+msgstr "Acest tab vă permite să stabiliți opțiuni de extragere:"
+
+#. (itstool) path: item/p
+#: C/preferences.page:49
+msgid ""
+"The destination folder. Files are saved in a subfolder of the destination "
+"folder, following the scheme Artist/Album/track."
+msgstr ""
+"Dosarul destinație. Fișierele sunt salvate într-un subdosar al dosarului "
+"destinație, urmând schema Artist/Album/piesă."
+
+#. (itstool) path: item/p
+#: C/preferences.page:51
+msgid ""
+"The audio files format to use. Some formats allow you to set the quality of "
+"the file, this can be useful because usually there is a trade-off between "
+"audio quality and file size. Use the <gui style=\"button\">Properties</gui> "
+"button to set the file format properties."
+msgstr ""
+"Formatul de fișiere audio de folosit. Unele formate vă permit să stabiliți "
+"calitatea fișierului, aceasta este folositoare deoarece de obicei există un "
+"compromis între calitate și dimensiunea fișierului. Utilizați butonul <gui "
+"style=\"button\">Proprietăți</gui> pentru a stabil proprietățile formatului "
+"de fișiere."
+
+#. (itstool) path: item/p
+#: C/preferences.page:57
+msgid ""
+"Whether to save a playlist file in PLS format that contains the list of the "
+"extracted files. The playlist is saved in the same folder as the audio files."
+msgstr ""
+"Dacă să se salveze fișierul listei de redare în format PLS ce conține lista "
+"fișierelor extrase. Lista de redare este salvată în același dosar ca "
+"fișierele audio."
+
+#. (itstool) path: info/title
+#: C/shortcuts.page:6
+msgctxt "sort"
+msgid "1"
+msgstr "1"
+
+#. (itstool) path: page/title
+#: C/shortcuts.page:8
+msgid "Keyboard Shortcuts"
+msgstr "Scurtături de tastatură"
+
+#. (itstool) path: page/p
+#: C/shortcuts.page:9
+msgid ""
+"Quick reference for some useful keyboard shortcuts. Look in the menus for "
+"other available shortcuts."
+msgstr ""
+"Referință rapidă pentru unele scurtături de tastatură folositoare. "
+"Consultați meniurile pentru alte scurtături existente."
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:14
+msgid "Keyboard Shortcut"
+msgstr "Scurtătură de tastatură"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:15
+msgid "Description"
+msgstr "Descriere"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:20
+msgid "<key>Space</key>"
+msgstr "<key>Spațiu</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:21
+msgid "Play/Pause the current track"
+msgstr "Redă/Pauză pentru piesa curentă"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:24
+msgid "<key>Escape</key>"
+msgstr "<key>Escape</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:25
+msgid "Stop playing the current track"
+msgstr "Oprește redarea piesei curente"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:28
+msgid "<key>N</key>"
+msgstr "<key>N</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:29
+msgid "Play the next track"
+msgstr "Redă următoarea piesă"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:32
+msgid "<key>P</key>"
+msgstr "<key>P</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:33
+msgid "Play the previous track"
+msgstr "Redă piesa anterioară"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:36
+msgid "<key>J</key>"
+msgstr "<key>J</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:37
+msgid "Eject the CD from the tray"
+msgstr "Scoate CD-ul din tavă"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:40
+msgid "<key>E</key>"
+msgstr "<key>E</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:41
+msgid "Open the <app>Extract</app> dialog"
+msgstr "Deschide dialogul <app>Extragere</app>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:44
+msgid "<key>1</key>"
+msgstr "<key>1</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:45
+msgid "Play the 1st track"
+msgstr "Redă prima piesă"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:48
+msgid "<key>2</key>"
+msgstr "<key>2</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:49
+msgid "Play the 2nd track"
+msgstr "Redă a doua piesă"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:52
+msgid "<key>3</key>"
+msgstr "<key>3</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:53
+msgid "Play the 3rd track"
+msgstr "Redă a treia piesă"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:56
+msgid "<key>4</key>"
+msgstr "<key>4</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:57
+msgid "Play the 4th track"
+msgstr "Redă a patra piesă"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:60
+msgid "<key>5</key>"
+msgstr "<key>5</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:61
+msgid "Play the 5th track"
+msgstr "Redă a cincea piesă"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:64
+msgid "<key>6</key>"
+msgstr "<key>6</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:65
+msgid "Play the 6th track"
+msgstr "Redă a șasea piesă"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:68
+msgid "<key>7</key>"
+msgstr "<key>7</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:69
+msgid "Play the 7th track"
+msgstr "Redă a șaptea piesă"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:72
+msgid "<key>8</key>"
+msgstr "<key>8</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:73
+msgid "Play the 8th track"
+msgstr "Redă a opta piesă"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:76
+msgid "<key>9</key>"
+msgstr "<key>9</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:77
+msgid "Play the 9th track"
+msgstr "Redă a noua piesă"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:80
+msgid "<key>0</key>"
+msgstr "<key>0</key>"
+
+#. (itstool) path: td/p
+#: C/shortcuts.page:81
+msgid "Play the 10th track"
+msgstr "Redă a zecea piesă"
