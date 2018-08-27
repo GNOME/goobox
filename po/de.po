@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/goobox/issues\n"
-"POT-Creation-Date: 2018-08-19 18:46+0000\n"
-"PO-Revision-Date: 2018-08-25 23:23+0200\n"
-"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
+"POT-Creation-Date: 2018-08-27 07:45+0000\n"
+"PO-Revision-Date: 2018-08-27 17:34+0200\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -32,11 +32,11 @@ msgstr "CDs abspielen und auslesen"
 
 #: data/appdata/org.gnome.Goobox.appdata.xml.in:11
 msgid ""
-"Goobox allows you to play CDs and save the tracks to disk as mp3, ogg, flac "
-"or wav files."
+"Goobox allows you to play CDs and save the tracks to disk as MP3, Ogg, FLAC "
+"or WAV files."
 msgstr ""
 "Goobox ermöglicht Ihnen das Abspielen von CDs und das Speichern der Stücke "
-"auf der Festplatte als mp3-, ogg-, flac- oder wav-Dateien."
+"auf der Festplatte als MP3-, Ogg-, FLAC- oder WAV-Dateien."
 
 #: data/appdata/org.gnome.Goobox.appdata.xml.in:15
 msgid ""
@@ -54,7 +54,6 @@ msgstr "CD-Spieler"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 #: data/org.gnome.Goobox.desktop.in.in:9
-#| msgid "Goobox"
 msgid "goobox"
 msgstr "goobox"
 
@@ -67,11 +66,11 @@ msgid "Volume level"
 msgstr "Lautstärkepegel"
 
 #: data/org.gnome.Goobox.gschema.xml:59
-msgid "'Choose cover' location"
+msgid "“Choose cover” location"
 msgstr "Ort für »Hülle wählen«"
 
 #: data/org.gnome.Goobox.gschema.xml:60
-msgid "Default location for the 'Choose cover' dialog."
+msgid "Default location for the “Choose cover” dialog."
 msgstr "Vorgegebener Speicherort im Dialog »Hülle wählen«."
 
 #: data/org.gnome.Goobox.gschema.xml:64
@@ -251,13 +250,13 @@ msgstr "Künstler"
 
 #: src/dlg-ripper.c:165
 #, c-format
-msgid "(%d:%02d:%02d Remaining)"
-msgstr "(%d:%02d:%02d verbleibend)"
+msgid "(%d∶%02d∶%02d Remaining)"
+msgstr "(%d∶%02d∶%02d verbleibend)"
 
 #: src/dlg-ripper.c:167
 #, c-format
-msgid "(%d:%02d Remaining)"
-msgstr "(%d:%02d verbleibend)"
+msgid "(%d∶%02d Remaining)"
+msgstr "(%d∶%02d verbleibend)"
 
 #: src/dlg-ripper.c:172
 #, c-format
@@ -287,7 +286,7 @@ msgstr "_Zielordner anzeigen"
 
 #: src/dlg-ripper.c:612
 #, c-format
-msgid "Extracting \"%s\""
+msgid "Extracting “%s”"
 msgstr "Auslesen von »%s«"
 
 #: src/dlg-ripper.c:623 src/dlg-ripper.c:632
@@ -390,7 +389,7 @@ msgid "Cannot start the CD player"
 msgstr "CD-Spieler konnte nicht gestartet werden"
 
 #: src/goo-application.c:203
-msgid "In order to read CDs you have to install the gstreamer base plugins"
+msgid "In order to read CDs you have to install the GStreamer base plugins"
 msgstr ""
 "Um CDs auszulesen, müssen Sie die base-Erweiterungen von GStreamer "
 "installieren"
@@ -502,7 +501,7 @@ msgid "_Close"
 msgstr "S_chließen"
 
 #: src/gtk-utils.h:38
-msgid "_Ok"
+msgid "_OK"
 msgstr "_OK"
 
 #: src/gtk-utils.h:39
