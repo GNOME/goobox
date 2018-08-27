@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/goobox/issues\n"
-"POT-Creation-Date: 2018-08-19 18:46+0000\n"
-"PO-Revision-Date: 2018-08-27 14:26+0700\n"
+"POT-Creation-Date: 2018-08-27 07:45+0000\n"
+"PO-Revision-Date: 2018-08-27 15:07+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesia <gnome@i15n.org>\n"
 "Language: id\n"
@@ -31,11 +31,11 @@ msgstr "Putar dan ekstrak CD"
 
 #: data/appdata/org.gnome.Goobox.appdata.xml.in:11
 msgid ""
-"Goobox allows you to play CDs and save the tracks to disk as mp3, ogg, flac "
-"or wav files."
+"Goobox allows you to play CDs and save the tracks to disk as MP3, Ogg, FLAC "
+"or WAV files."
 msgstr ""
-"Goobox memungkinkan Anda memutar CD dan menyimpan trek ke disk sebagai "
-"berkas mp3, ogg, flac, atau wav."
+"Goobox memungkinkan Anda memutar CD dan menyimpan trek ke diska sebagai "
+"berkas MP3, Ogg, FLAC, atau WAV."
 
 #: data/appdata/org.gnome.Goobox.appdata.xml.in:15
 msgid ""
@@ -65,12 +65,12 @@ msgid "Volume level"
 msgstr "Tingkat volume"
 
 #: data/org.gnome.Goobox.gschema.xml:59
-msgid "'Choose cover' location"
-msgstr "Lokasi 'Pilih sampul'"
+msgid "“Choose cover” location"
+msgstr "Lokasi \"Pilih sampul\""
 
 #: data/org.gnome.Goobox.gschema.xml:60
-msgid "Default location for the 'Choose cover' dialog."
-msgstr "Lokasi bawaan bagi dialog 'Pilih sampul'."
+msgid "Default location for the “Choose cover” dialog."
+msgstr "Lokasi bawaan bagi dialog \"Pilih sampul\"."
 
 #: data/org.gnome.Goobox.gschema.xml:64
 msgid "Use Sound Juicer to rip discs"
@@ -171,7 +171,7 @@ msgid ""
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 msgstr ""
-"Anda memerlukan sedikitnya salah satu plugin GStreamer berikut untuk "
+"Anda memerlukan sedikitnya salah satu pengaya GStreamer berikut untuk "
 "mengekstrak trek CD:\n"
 "\n"
 "• %s → Ogg Vorbis\n"
@@ -249,12 +249,12 @@ msgstr "Artis"
 
 #: src/dlg-ripper.c:165
 #, c-format
-msgid "(%d:%02d:%02d Remaining)"
+msgid "(%d∶%02d∶%02d Remaining)"
 msgstr "(%d:%02d:%02d Tersisa)"
 
 #: src/dlg-ripper.c:167
 #, c-format
-msgid "(%d:%02d Remaining)"
+msgid "(%d∶%02d Remaining)"
 msgstr "(%d:%02d Tersisa)"
 
 #: src/dlg-ripper.c:172
@@ -285,7 +285,7 @@ msgstr "_Lihat folder tujuan"
 
 #: src/dlg-ripper.c:612
 #, c-format
-msgid "Extracting \"%s\""
+msgid "Extracting “%s”"
 msgstr "Mengekstrak \"%s\""
 
 #: src/dlg-ripper.c:623 src/dlg-ripper.c:632
@@ -328,7 +328,7 @@ msgstr "%d∶%02d"
 msgid "translator_credits"
 msgstr ""
 "Imam Musthaqim <userindesign@gmail.com>\n"
-"Kukuh Syafaat <kukuhsyafaat@gnome.org>. 2018."
+"Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2018."
 
 #: src/goo-application-actions-callbacks.c:65
 msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
@@ -387,8 +387,8 @@ msgid "Cannot start the CD player"
 msgstr "Tidak dapat memulai pemutar CD"
 
 #: src/goo-application.c:203
-msgid "In order to read CDs you have to install the gstreamer base plugins"
-msgstr "Untuk membaca CD, Anda harus menginstal plugin basis gstreamer"
+msgid "In order to read CDs you have to install the GStreamer base plugins"
+msgstr "Untuk membaca CD, Anda harus memasang pengaya basis gstreamer"
 
 #: src/goo-player-info.c:253
 msgid "Click here to choose a cover for this CD"
@@ -496,8 +496,8 @@ msgid "_Close"
 msgstr "_Tutup"
 
 #: src/gtk-utils.h:38
-msgid "_Ok"
-msgstr "_Ok"
+msgid "_OK"
+msgstr "_OK"
 
 #: src/gtk-utils.h:39
 msgid "_Open"
