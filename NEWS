@@ -1,3 +1,25 @@
+version 3.4.3
+-------------
+
+ Bugs fixed:
+
+  * Help: change wording in two sentences (Anders Jonsson) (#757730)
+  * added -fPIC -DPIC to CFLAGS (#777448)
+
+ New or updated application translations:
+
+  * Danish (Alan Mortensen)
+  * Friulian (Fabio Tomat)
+  * Romanian (Daniel Șerbănescu)
+
+ New or updated manual translations:
+
+  * German (Mario Blättermann)
+  * Polish (Piotr Drąg)
+  * Romanian (Daniel Șerbănescu)
+  * Swedish (Anders Jonsson)
+  * čeština (Marek Černocký)
+
 version 3.4.2
 -------------
 
