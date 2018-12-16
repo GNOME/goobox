@@ -12,7 +12,7 @@
   <mailing-list rdf:resource="http://mail.gnome.org/mailman/listinfo/goobox-list" />
   -->
   <download-page rdf:resource="http://download.gnome.org/sources/goobox/" />
-  <bug-database rdf:resource="https://bugzilla.gnome.org/browse.cgi?product=goobox" />
+  <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/goobox/issues/" />
   <programming-language>C</programming-language>
 
   <maintainer>
