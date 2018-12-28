@@ -123,10 +123,6 @@ void        _gtk_combo_box_append_texts    (GtkComboBox      *combo_box,
 					    const char       *first_text,
 					    ...);
 GtkWidget * _gtk_image_new_from_xpm_data   (char             *xpm_data[]);
-GtkWidget * _gtk_image_new_from_inline     (const guint8     *data);
-void        _gtk_widget_get_screen_size    (GtkWidget        *widget,
-					    int              *width,
-					    int              *height);
 void        _gtk_tree_path_list_free       (GList            *list);
 int         _gtk_paned_get_position2       (GtkPaned         *paned);
 void        _gtk_paned_set_position2       (GtkPaned         *paned,
@@ -153,6 +149,12 @@ void		_g_action_map_change_action_state	(GActionMap		*action_map,
 							 const char		*action_name,
 							 gboolean		 value);
 GtkWidget *	_gtk_application_get_current_window	(GtkApplication		*application);
+gboolean	_gtk_window_get_monitor_info		(GtkWindow		*window,
+							 GdkRectangle		*geometry,
+							 int			*number,
+							 char			**name);
+gboolean	_gtk_widget_get_monitor_geometry	(GtkWidget		*widget,
+							 GdkRectangle		*geometry);
 
 G_END_DECLS
 

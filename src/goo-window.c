@@ -1887,13 +1887,17 @@ window_size_allocate_cb (GtkWidget    *widget,
 	                 GdkRectangle *allocation,
 	                 gpointer      user_data)
 {
-	GooWindow *window = user_data;
-	int        max_window_height;
+	GooWindow    *window = user_data;
+	GdkRectangle  geometry;
+	int           max_window_height;
 
 	if (window->priv->resizable_playlist)
 		return;
 
-	max_window_height = gdk_screen_get_height (gtk_widget_get_screen (GTK_WIDGET (window))) * MAX_WINDOW_HEIGHT_PERCENTAGE;
+	if (!_gtk_widget_get_monitor_geometry (GTK_WIDGET (window), &geometry))
+		return;
+
+	max_window_height = (float) geometry.height * MAX_WINDOW_HEIGHT_PERCENTAGE;
 	if (allocation->height > max_window_height) {
 		GdkGeometry hints;
 

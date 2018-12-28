@@ -685,40 +685,6 @@ _gtk_image_new_from_xpm_data (char * xpm_data[])
 }
 
 
-GtkWidget *
-_gtk_image_new_from_inline (const guint8 *data)
-{
-	GdkPixbuf *pixbuf;
-	GtkWidget *image;
-
-	pixbuf = gdk_pixbuf_new_from_inline (-1, data, FALSE, NULL);
-	image = gtk_image_new_from_pixbuf (pixbuf);
-	gtk_widget_show (image);
-
-	g_object_unref (G_OBJECT (pixbuf));
-
-	return image;
-}
-
-
-void
-_gtk_widget_get_screen_size (GtkWidget *widget,
-			     int       *width,
-			     int       *height)
-{
-	GdkScreen    *screen;
-	GdkRectangle  screen_geom;
-
-	screen = gtk_widget_get_screen (widget);
-	gdk_screen_get_monitor_geometry (screen,
-					 gdk_screen_get_monitor_at_window (screen, gtk_widget_get_window (widget)),
-					 &screen_geom);
-
-	*width = screen_geom.width;
-	*height = screen_geom.height;
-}
-
-
 void
 _gtk_tree_path_list_free (GList *list)
 {
@@ -1038,4 +1004,95 @@ _gtk_application_get_current_window (GtkApplication *application)
 		return NULL;
 
 	return GTK_WIDGET (windows->data);
+}
+
+
+gboolean
+_gtk_window_get_monitor_info (GtkWindow	    *window,
+			      GdkRectangle  *geometry,
+			      int           *number,
+			      char         **name)
+{
+#if GTK_CHECK_VERSION(3, 22, 0)
+
+	GdkWindow  *win;
+	GdkMonitor *monitor;
+
+	win = gtk_widget_get_window (GTK_WIDGET (window));
+	if (win == NULL)
+		return FALSE;
+
+	monitor = gdk_display_get_monitor_at_window (gdk_window_get_display (win), win);
+	if (monitor == NULL)
+		return FALSE;
+
+	if (geometry != NULL)
+		gdk_monitor_get_geometry (monitor, geometry);
+
+	if ((number != NULL) || (name != NULL)) {
+		GdkDisplay *display;
+		int         monitor_num;
+		const char *monitor_name;
+		int         i;
+
+		display = gdk_monitor_get_display (monitor);
+		monitor_num = 0;
+		for (i = 0; /* void */; i++) {
+			GdkMonitor *m = gdk_display_get_monitor (display, i);
+			if (m == monitor) {
+				monitor_num = i;
+				monitor_name = gdk_monitor_get_model (monitor);
+				break;
+			}
+			if (m == NULL)
+				break;
+		}
+
+		if (number != NULL) *number = monitor_num;
+		if (name != NULL) *name = g_strdup (monitor_name);
+	}
+
+#else
+
+	GdkWindow *win;
+	GdkScreen *screen;
+	int        monitor_num;
+
+	win = gtk_widget_get_window (GTK_WIDGET (window));
+	if (win == NULL)
+		return FALSE;
+
+	screen = gdk_window_get_screen (win);
+	if (screen == NULL)
+		return FALSE;
+
+	monitor_num = gdk_screen_get_monitor_at_window (screen, win);
+	if (number != NULL)
+		*number = monitor_num;
+	if (geometry != NULL)
+		gdk_screen_get_monitor_geometry (screen, monitor_num, geometry);
+	if (name != NULL)
+		*name = gdk_screen_get_monitor_plug_name (screen, monitor_num);
+
+#endif
+
+	return TRUE;
+}
+
+
+gboolean
+_gtk_widget_get_monitor_geometry (GtkWidget    *widget,
+				  GdkRectangle *geometry)
+{
+	gboolean   result = FALSE;
+	GtkWidget *window;
+
+	window = gtk_widget_get_toplevel (widget);
+	if (GTK_IS_WINDOW (window)) {
+		if (_gtk_window_get_monitor_info (GTK_WINDOW (window), geometry, NULL, NULL)) {
+			result = TRUE;
+		}
+	}
+
+	return result;
 }
