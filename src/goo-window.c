@@ -872,11 +872,11 @@ pref_playlist_shuffle_changed (GSettings  *settings,
 static void
 save_window_size (GooWindow *window)
 {
-	GdkWindow *w;
+	int width, height;
 
-	w = gtk_widget_get_window (GTK_WIDGET (window));
-	g_settings_set_int (window->priv->settings_ui, PREF_UI_WINDOW_WIDTH, gdk_window_get_width (w));
-	g_settings_set_int (window->priv->settings_ui, PREF_UI_WINDOW_HEIGHT, gdk_window_get_height (w));
+	gtk_window_get_size (GTK_WINDOW (window), &width, &height);
+	g_settings_set_int (window->priv->settings_ui, PREF_UI_WINDOW_WIDTH, width);
+	g_settings_set_int (window->priv->settings_ui, PREF_UI_WINDOW_HEIGHT, height);
 }
 
 
