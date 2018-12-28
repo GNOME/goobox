@@ -32,6 +32,9 @@ endif
 config_data = configuration_data()
 config_data.set_quoted('GETTEXT_PACKAGE', gettext_package)
 config_data.set_quoted('GOO_LOCALEDIR', join_paths(prefix, get_option('localedir')))
+if get_option('buildtype').contains('debug')
+  config_data.set('DEBUG', 1)
+endif
 if get_option('run-in-place')
   config_data.set_quoted('GOO_UIDIR', join_paths(meson.source_root(), 'src', 'ui'))
 else
