@@ -27,6 +27,7 @@
 #include "goo-application-actions-callbacks.h"
 #include "goo-window.h"
 #include "preferences.h"
+#include "main.h"
 
 
 void
@@ -161,4 +162,49 @@ goo_application_activate_shuffle (GSimpleAction *action,
 	update_actions_sensitivity (application);
 
 	g_object_unref (settings);
+}
+
+
+void
+goo_application_activate_pause (GSimpleAction *action,
+				GVariant      *parameter,
+				gpointer       user_data)
+{
+	const char *device_id;
+	GtkWidget  *window;
+
+	device_id = g_variant_get_string (parameter, NULL);
+	window = main_get_window_from_device (device_id);
+	if (window != NULL)
+		goo_window_pause (GOO_WINDOW (window));
+}
+
+
+void
+goo_application_activate_play (GSimpleAction *action,
+			       GVariant      *parameter,
+			       gpointer       user_data)
+{
+	const char *device_id;
+	GtkWidget  *window;
+
+	device_id = g_variant_get_string (parameter, NULL);
+	window = main_get_window_from_device (device_id);
+	if (window != NULL)
+		goo_window_play (GOO_WINDOW (window));
+}
+
+
+void
+goo_application_activate_play_next (GSimpleAction *action,
+				    GVariant      *parameter,
+				    gpointer       user_data)
+{
+	const char *device_id;
+	GtkWidget  *window;
+
+	device_id = g_variant_get_string (parameter, NULL);
+	window = main_get_window_from_device (device_id);
+	if (window != NULL)
+		goo_window_next (GOO_WINDOW (window));
 }

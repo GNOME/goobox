@@ -34,15 +34,6 @@
 #include "main.h"
 #include "preferences.h"
 #include "typedefs.h"
-#ifdef ENABLE_NOTIFICATION
-#include <libnotify/notify.h>
-#ifndef NOTIFY_CHECK_VERSION
-#define NOTIFY_CHECK_VERSION(x,y,z) 0
-#endif
-static NotifyNotification *notification = NULL;
-static gboolean            notification_supports_persistence = FALSE;
-static gboolean            notification_supports_actions = FALSE;
-#endif /* ENABLE_NOTIFICATION */
 
 
 GtkApplication *Main_Application = NULL;
@@ -64,12 +55,6 @@ main (int argc, char *argv[])
 	/* run the main application */
 
 	Main_Application = goo_application_new ();
-
-#ifdef ENABLE_NOTIFICATION
-	if (! notify_init (g_get_application_name ()))
-                g_warning ("Cannot initialize notification system.");
-#endif /* ENABLE_NOTIFICATION */
-
 	status = g_application_run (G_APPLICATION (Main_Application), argc, argv);
 
 	g_object_unref (Main_Application);
@@ -136,166 +121,41 @@ main_get_drive_for_device (const char *device)
 }
 
 
-#ifdef ENABLE_NOTIFICATION
-
-
-static gboolean
-play_next (gpointer user_data)
-{
-	GooWindow *window = user_data;
-
-	goo_window_next (window);
-
-	return FALSE;
-}
-
-
-static void
-notify_action_next_cb (NotifyNotification *notification,
-                       char               *action,
-                       gpointer            user_data)
-{
-	GooWindow *window = user_data;
-
-	if (! notification_supports_persistence)
-		notify_notification_close (notification, NULL);
-
-	g_idle_add (play_next, window);
-}
-
-
-static gboolean
-toggle_play (gpointer user_data)
-{
-	GooWindow *window = user_data;
-
-	goo_window_toggle_play (window);
-
-	return FALSE;
-}
-
-
-static void
-notify_action_toggle_play_cb (NotifyNotification *notification,
-			      char               *action,
-			      gpointer            user_data)
-{
-	GooWindow *window = user_data;
-
-	if (! notification_supports_persistence)
-		notify_notification_close (notification, NULL);
-
-	g_idle_add (toggle_play, window);
-}
-
-
-#endif /* ENABLE_NOTIFICATION */
-
-
-gboolean
-notification_has_persistence (void)
-{
-#ifdef ENABLE_NOTIFICATION
-
-	gboolean  supports_persistence = FALSE;
-	GList    *caps;
-
-	caps = notify_get_server_caps ();
-	if (caps != NULL) {
-		supports_persistence = g_list_find_custom (caps, "persistence", (GCompareFunc) strcmp) != NULL;
-
-		g_list_foreach (caps, (GFunc)g_free, NULL);
-		g_list_free (caps);
-	}
-
-	return supports_persistence;
-
-#else
-
-	return FALSE;
-
-#endif /* ENABLE_NOTIFICATION */
-}
-
-
 void
 system_notify (GooWindow       *window,
+	       const char      *id,
 	       const char      *summary,
 	       const char      *body)
 {
-#ifdef ENABLE_NOTIFICATION
+	GNotification *notification;
+	GFile         *cover_file;
+	GIcon         *cover_icon;
+	const char    *device_id;
 
-	GdkPixbuf *cover;
+	notification = g_notification_new (summary);
+	if (body != NULL)
+		g_notification_set_body (G_NOTIFICATION (notification), body);
 
-	if (! notify_is_initted ())
-		return;
+	/* cover */
 
-	if (notification == NULL) {
-		GList *caps;
+	cover_file = g_file_new_for_path (goo_player_info_get_cover_file (GOO_PLAYER_INFO (goo_window_get_player_info (window))));
+	cover_icon = g_file_icon_new (cover_file);
+	g_notification_set_icon (G_NOTIFICATION (notification), cover_icon);
 
-		notification_supports_actions = FALSE;
-		notification_supports_persistence = FALSE;
+	/* actions */
 
-		caps = notify_get_server_caps ();
-		if (caps != NULL) {
-			notification_supports_actions = g_list_find_custom (caps, "actions", (GCompareFunc) strcmp) != NULL;
-			notification_supports_persistence = g_list_find_custom (caps, "persistence", (GCompareFunc) strcmp) != NULL;
-
-			g_list_foreach (caps, (GFunc)g_free, NULL);
-			g_list_free (caps);
-		}
-
-#if NOTIFY_CHECK_VERSION (0, 7, 0)
-		notification = notify_notification_new (summary, body, "goobox");
-#else
-		notification = notify_notification_new_with_status_icon (summary, body, "goobox", status_icon);
-#endif
-		notify_notification_set_hint_string (notification, "desktop-entry", "goobox");
-		notify_notification_set_urgency (notification, NOTIFY_URGENCY_LOW);
-	}
+	device_id = goo_player_get_device (goo_window_get_player (window));
+	if (goo_player_get_state (goo_window_get_player (window)) == GOO_PLAYER_STATE_PLAYING)
+		g_notification_add_button_with_target (G_NOTIFICATION (notification), _("Pause"), "app.pause", "s", device_id);
 	else
-		notify_notification_update (notification, summary, body, "goobox");
+		g_notification_add_button_with_target (G_NOTIFICATION (notification), _("Play"), "app.play", "s", device_id);
+	g_notification_add_button_with_target (G_NOTIFICATION (notification), _("Next"), "app.play-next", "s", device_id);
 
-	cover = goo_player_info_get_cover (GOO_PLAYER_INFO (goo_window_get_player_info (window)));
-	notify_notification_set_image_from_pixbuf (notification, cover);
+	/* send */
 
-	if (notification_supports_actions) {
+	g_application_send_notification (G_APPLICATION (gtk_window_get_application (GTK_WINDOW (window))), id, notification);
 
-		notify_notification_clear_actions (notification);
-
-		if (goo_player_get_state (goo_window_get_player (window)) == GOO_PLAYER_STATE_PLAYING)
-			notify_notification_add_action (notification,
-							GOO_ICON_NAME_PAUSE,
-							_("Pause"),
-							notify_action_toggle_play_cb,
-							window,
-							NULL);
-		else
-			notify_notification_add_action (notification,
-							GOO_ICON_NAME_PLAY,
-							_("Play"),
-							notify_action_toggle_play_cb,
-							window,
-							NULL);
-
-		notify_notification_add_action (notification,
-						GOO_ICON_NAME_NEXT,
-						_("Next"),
-						notify_action_next_cb,
-						window,
-						NULL);
-
-		notify_notification_set_hint (notification,
-					      "action-icons",
-					      g_variant_new_boolean (TRUE));
-	}
-
-	if (notification_supports_persistence)
-		notify_notification_set_hint (notification,
-					      "resident" /* "transient" */,
-					      g_variant_new_boolean (TRUE));
-
-	notify_notification_show (notification, NULL);
-
-#endif /* ENABLE_NOTIFICATION */
+	g_object_unref (cover_icon);
+	g_object_unref (cover_file);
+	g_object_unref (notification);
 }

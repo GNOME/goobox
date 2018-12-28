@@ -396,6 +396,17 @@ goo_application_startup (GApplication *application)
 
 
 static void
+goo_application_activate (GApplication *application)
+{
+	GtkWidget *window;
+
+	window = _gtk_application_get_current_window (GTK_APPLICATION (application));
+	if (window != NULL)
+		gtk_window_present (GTK_WINDOW (window));
+}
+
+
+static void
 goo_application_class_init (GooApplicationClass *klass)
 {
 	GObjectClass      *object_class;
@@ -408,6 +419,7 @@ goo_application_class_init (GooApplicationClass *klass)
 	application_class->command_line = goo_application_command_line;
 	application_class->local_command_line = goo_application_local_command_line;
 	application_class->startup = goo_application_startup;
+	application_class->activate = goo_application_activate;
 }
 
 

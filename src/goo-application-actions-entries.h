@@ -35,7 +35,10 @@ static const GActionEntry goo_application_actions[] = {
 	{ PREF_PLAYLIST_SHUFFLE, _g_toggle_action_activated, NULL, "true", goo_application_activate_shuffle },
 	{ "help",  goo_application_activate_help },
 	{ "about", goo_application_activate_about },
-	{ "quit",  goo_application_activate_quit }
+	{ "quit",  goo_application_activate_quit },
+	{ "pause",  goo_application_activate_pause, "s", NULL, NULL },
+	{ "play",  goo_application_activate_play, "s", NULL, NULL },
+	{ "play-next",  goo_application_activate_play_next, "s", NULL, NULL },
 };
 
 

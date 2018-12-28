@@ -34,5 +34,8 @@ DEF_ACTION_CALLBACK (goo_application_activate_preferences)
 DEF_ACTION_CALLBACK (goo_application_activate_quit)
 DEF_ACTION_CALLBACK (goo_application_activate_repeat)
 DEF_ACTION_CALLBACK (goo_application_activate_shuffle)
+DEF_ACTION_CALLBACK (goo_application_activate_pause)
+DEF_ACTION_CALLBACK (goo_application_activate_play)
+DEF_ACTION_CALLBACK (goo_application_activate_play_next)
 
 #endif /* GOO_APPLICATION_ACTIONS_CALLBACKS_H */

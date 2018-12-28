@@ -61,6 +61,7 @@ struct _GooPlayerInfoPrivate {
 	double       fraction;
 	guint        update_progress_timeout;
 	GdkPixbuf   *original_cover;
+	char        *cover_file;
 };
 
 
@@ -327,6 +328,7 @@ goo_player_info_finalize (GObject *object)
 	info = GOO_PLAYER_INFO (object);
 	g_free (info->priv->total_time);
 	if (info->priv->update_id != 0) {
+		g_free (info->priv->cover_file);
 		g_object_unref (info->priv->original_cover);
 		g_source_remove (info->priv->update_id);
 		info->priv->update_id = 0;
@@ -513,6 +515,8 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 		return;
 
 	g_clear_object (&info->priv->original_cover);
+	if (info->priv->cover_file != NULL)
+		g_free (info->priv->cover_file);
 
 	if (strcmp (cover, "no-disc") == 0) {
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 0);
@@ -533,6 +537,7 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 					      GTK_ICON_SIZE_DIALOG);
 	}
 	else {
+		info->priv->cover_file = g_strdup (cover);
 		info->priv->original_cover = gdk_pixbuf_new_from_file (cover, NULL);
 		if (info->priv->original_cover != NULL) {
 			GdkPixbuf *image;
@@ -652,4 +657,11 @@ GdkPixbuf *
 goo_player_info_get_cover (GooPlayerInfo *info)
 {
 	return info->priv->original_cover;
+}
+
+
+const char *
+goo_player_info_get_cover_file (GooPlayerInfo *info)
+{
+	return info->priv->cover_file;
 }

@@ -1,15 +1,14 @@
-project('goobox', 'c', 
+project('goobox', 'c',
   license : 'GPL2+',
   version : '3.5.0',
   meson_version : '>=0.43'
 )
 
-glib_version = '>=2.38'
+glib_version = '>=2.40'
 gtk_version = '>=3.13.2'
 gstreamer_version = '>=1.0.0'
 musicbrainz_version = '>=5.0.0'
 libcoverart_version = '>=1.0.0'
-libnotify_version = '>=0.4.3'
 
 gnome = import('gnome')
 i18n = import('i18n')
@@ -28,13 +27,6 @@ else
   use_libcoverart = libcoverart_dep.found()
 endif
 
-if get_option('disable-libnotify')
-  use_libnotify = false  
-else
-  libnotify_dep = dependency('libnotify', version : libnotify_version, required : false)
-  use_libnotify = libnotify_dep.found()
-endif
-
 # config.h
 
 config_data = configuration_data()
@@ -49,9 +41,6 @@ config_data.set_quoted('PACKAGE_NAME', meson.project_name())
 config_data.set_quoted('PACKAGE_VERSION', meson.project_version())
 if use_libcoverart
   config_data.set('HAVE_LIBCOVERART', 1)
-endif
-if use_libnotify
-  config_data.set('ENABLE_NOTIFICATION', 1)
 endif
 config_file = configure_file(output : 'config.h', configuration : config_data)
 config_inc = include_directories('.')
@@ -71,7 +60,6 @@ summary = [
   '           project: @0@ @1@'.format(meson.project_name(), meson.project_version()),
   '            prefix: @0@'.format(prefix),
   '       libcoverart: @0@'.format(use_libcoverart),
-  '         libnotify: @0@'.format(use_libnotify),  
   ''
 ]
 message('\n'.join(summary))

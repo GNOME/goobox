@@ -1136,40 +1136,37 @@ get_action_name (GooPlayerAction action)
 static gboolean
 notify_current_state_cb (gpointer user_data)
 {
-	GooWindow *window = user_data;
+	GooWindow      *window = user_data;
+	GString        *info = g_string_new ("");
+	GooPlayerState  state;
 
 	if (window->priv->notify_event != 0) {
 		g_source_remove (window->priv->notify_event);
 		window->priv->notify_event = 0;
 	}
 
-#ifdef ENABLE_NOTIFICATION
-
-	GString        *info = g_string_new ("");
-	GooPlayerState  state;
-
 	state = goo_player_get_state (window->priv->player);
 
 	if ((state == GOO_PLAYER_STATE_ERROR) || (state == GOO_PLAYER_STATE_NO_DISC)) {
-		system_notify (window, _("No disc"), "");
+		system_notify (window, "no-disc", _("No disc"), NULL);
 		return FALSE;
 	}
 
 	if (state == GOO_PLAYER_STATE_DATA_DISC) {
-		system_notify (window, _("Data disc"), "");
+		system_notify (window, "data-disc", _("Data disc"), NULL);
 		return FALSE;
 	}
 
 	if (window->priv->album == NULL) {
-		system_notify (window, "", "");
+		system_notify (window, "no-album", "", NULL);
 		return FALSE;
 	}
 
 	if (window->priv->current_track == NULL) {
 		if ((window->priv->album != NULL) && (window->priv->album->title != NULL))
-			system_notify (window, window->priv->album->title , "");
+			system_notify (window, "new-album", window->priv->album->title , NULL);
 		else
-			system_notify (window, _("Audio CD"), "");
+			system_notify (window, "audio-cd", _("Audio CD"), NULL);
 		return FALSE;
 	}
 
@@ -1183,21 +1180,19 @@ notify_current_state_cb (gpointer user_data)
 	if (window->priv->album->title != NULL) {
 		char *e_album = g_markup_escape_text (window->priv->album->title, -1);
 
-		g_string_append (info, "\n");
+		g_string_append (info, " - ");
+		g_string_append_printf (info, "%s", e_album);
 
-		g_string_append_printf (info, "<i>%s</i>", e_album);
 		g_free (e_album);
 	}
 
-	g_string_append (info, " ");
-
-	system_notify (window,
-		       window->priv->current_track->title,
-		       info->str);
+	if (goo_player_get_state (goo_window_get_player (window)) == GOO_PLAYER_STATE_PLAYING)
+		system_notify (window,
+			       "new-track",
+			       window->priv->current_track->title,
+			       (strlen (info->str) > 0) ? info->str : NULL);
 
 	g_string_free (info, TRUE);
-
-#endif /* ENABLE_NOTIFICATION */
 
 	return FALSE;
 }

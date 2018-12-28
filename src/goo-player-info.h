@@ -51,8 +51,9 @@ struct _GooPlayerInfoClass
         void (*cover_clicked) (GooPlayerInfo *info);
 };
 
-GType       goo_player_info_get_type      (void);
-GtkWidget * goo_player_info_new           (GooWindow     *window);
-GdkPixbuf * goo_player_info_get_cover     (GooPlayerInfo *info);
+GType		goo_player_info_get_type	(void);
+GtkWidget *	goo_player_info_new		(GooWindow	*window);
+GdkPixbuf *	goo_player_info_get_cover	(GooPlayerInfo	*info);
+const char *	goo_player_info_get_cover_file	(GooPlayerInfo	*info);
 
 #endif /* GOO_PLAYER_INFO_H */

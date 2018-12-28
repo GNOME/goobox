@@ -16,17 +16,17 @@ libdiscid_dep = dependency('libdiscid')
 c_args = [ '-fPIC', '-DPIC', '-Wl,--as-needed' ]
 if get_option('buildtype').contains('debug')
   c_args += [ '-DDEBUG' ]
-  test_args = [ 
-    '-Wall', 
-    '-Wcast-align', 
-    '-Wtype-limits', 
-    '-Wclobbered', 
-    '-Wempty-body', 
-    '-Wignored-qualifiers', 
+  test_args = [
+    '-Wall',
+    '-Wcast-align',
+    '-Wtype-limits',
+    '-Wclobbered',
+    '-Wempty-body',
+    '-Wignored-qualifiers',
     '-Wmissing-prototypes',
-    '-Wnested-externs', 
-    '-Wpointer-arith', 
-    '-Wno-sign-compare', 
+    '-Wnested-externs',
+    '-Wpointer-arith',
+    '-Wno-sign-compare',
     '-Wformat-security'
   ]
 else
@@ -49,11 +49,11 @@ source_files = files(
   'gnome-desktop-thumbnail.c',
   'gnome-thumbnail-pixbuf-utils.c',
   'goo-application.c',
-  'goo-application-actions-callbacks.c',    
+  'goo-application-actions-callbacks.c',
   'goo-error.c',
   'goo-player.c',
   'goo-player-bar.c',
-  'goo-player-info.c',      
+  'goo-player-info.c',
   'goo-window.c',
   'goo-window-actions-callbacks.c',
   'gth-user-dir.c',
@@ -68,25 +68,24 @@ marshal_files = gnome.genmarshal('goo-marshal', prefix : 'goo_marshal', sources 
 
 # Build targets
 
-executable('goobox', 
-  sources : [ 
-    config_file, 
-    source_files, 
-    gresource_files, 
-    marshal_files 
-  ],     
-  dependencies : [ 
-    libm_dep, 
+executable('goobox',
+  sources : [
+    config_file,
+    source_files,
+    gresource_files,
+    marshal_files
+  ],
+  dependencies : [
+    libm_dep,
     thread_dep,
-    glib_dep, 
-    gthread_dep, 
-    gtk_dep, 
+    glib_dep,
+    gthread_dep,
+    gtk_dep,
     gstreamer_dep,
-    brasero_dep, 
-    musicbrainz_dep, 
-    libdiscid_dep, 
-    use_libcoverart ? libcoverart_dep : [], 
-    use_libnotify ? libnotify_dep : [] 
+    brasero_dep,
+    musicbrainz_dep,
+    libdiscid_dep,
+    use_libcoverart ? libcoverart_dep : []
   ],
   include_directories : config_inc,
   c_args : c_args,
