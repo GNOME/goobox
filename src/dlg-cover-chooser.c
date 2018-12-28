@@ -718,15 +718,14 @@ get_cover_art_data_free (GetCoverArtData *data)
 
 
 static void
-metadata_get_coverart_thread (GSimpleAsyncResult *result,
-			      GObject            *object,
-			      GCancellable       *cancellable)
+metadata_get_coverart_thread (GTask        *task,
+			      gpointer      source_object,
+			      gpointer      task_data,
+			      GCancellable *cancellable)
 {
-	GetCoverArtData *data;
+	GetCoverArtData *data = task_data;
 	CaaCoverArt      cover_art;
 	CaaImageData     image_data;
-
-	data = g_simple_async_result_get_op_res_gpointer (result);
 
 	cover_art = caa_coverart_new (PACKAGE_NAME "-" PACKAGE_VERSION);
 	image_data = caa_coverart_fetch_front (cover_art, data->album->id);
@@ -747,30 +746,21 @@ metadata_get_coverart (GooWindow           *window,
 		       GAsyncReadyCallback  callback,
 		       gpointer             user_data)
 {
-	GSimpleAsyncResult *result;
-	GetCoverArtData    *data;
+	GTask           *task;
+	GetCoverArtData *data;
 
-	result = g_simple_async_result_new (NULL,
-	                                    callback,
-	                                    user_data,
-	                                    metadata_get_coverart);
+	task = g_task_new (NULL, cancellable, callback, user_data);
 
 	data = g_new0 (GetCoverArtData, 1);
 	data->window = g_object_ref (window);
 	data->album = album_info_ref (album);
 	data->buffer = NULL;
 	data->size = 0;
+	g_task_set_task_data (task, data, (GDestroyNotify) get_cover_art_data_free);
 
-	g_simple_async_result_set_op_res_gpointer (result,
-						   data,
-                                                   (GDestroyNotify) get_cover_art_data_free);
+	g_task_run_in_thread (task, metadata_get_coverart_thread);
 
-	g_simple_async_result_run_in_thread (result,
-					     metadata_get_coverart_thread,
-					     G_PRIORITY_DEFAULT,
-					     cancellable);
-
-	g_object_unref (result);
+	g_object_unref (task);
 }
 
 
@@ -781,9 +771,9 @@ metadata_get_coverart_finish (GAsyncResult  *result,
 {
 	GetCoverArtData *data;
 
-	g_return_val_if_fail (g_simple_async_result_is_valid (result, NULL, metadata_get_coverart), FALSE);
+	g_return_val_if_fail (g_task_is_valid (result, NULL), FALSE);
 
-        data = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (result));
+        data = g_task_get_task_data (G_TASK (result));
         if (data->size == 0)
         	return FALSE;
 

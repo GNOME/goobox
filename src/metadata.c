@@ -321,15 +321,14 @@ get_cd_info_data_free (GetCDInfoData *data)
 
 
 static void
-get_cd_info_from_device_thread (GSimpleAsyncResult *result,
-				GObject            *object,
-				GCancellable       *cancellable)
+get_cd_info_from_device_thread (GTask        *task,
+				gpointer      source_object,
+				gpointer      task_data,
+				GCancellable *cancellable)
 {
-	GetCDInfoData *data;
+	GetCDInfoData *data = task_data;
 	GList         *tracks;
 	DiscId        *disc;
-
-	data = g_simple_async_result_get_op_res_gpointer (result);
 
 	data->album_info = album_info_new ();
 	tracks = NULL;
@@ -374,26 +373,18 @@ metadata_get_cd_info_from_device (const char          *device,
 				  GAsyncReadyCallback  callback,
 				  gpointer             user_data)
 {
-	GetCDInfoData      *data;
-	GSimpleAsyncResult *result;
+	GTask          *task;
+	GetCDInfoData  *data;
 
-	result = g_simple_async_result_new (NULL,
-	                                    callback,
-	                                    user_data,
-	                                    metadata_get_cd_info_from_device);
+	task = g_task_new (NULL, cancellable, callback, user_data);
 
 	data = g_new0 (GetCDInfoData, 1);
 	data->device = g_strdup (device);
-	g_simple_async_result_set_op_res_gpointer (result,
-                                                   data,
-                                                   (GDestroyNotify) get_cd_info_data_free);
+	g_task_set_task_data (task, data, (GDestroyNotify) get_cd_info_data_free);
 
-	g_simple_async_result_run_in_thread (result,
-					     get_cd_info_from_device_thread,
-					     G_PRIORITY_DEFAULT,
-					     cancellable);
+	g_task_run_in_thread (task, get_cd_info_from_device_thread);
 
-	g_object_unref (result);
+	g_object_unref (task);
 }
 
 
@@ -403,17 +394,11 @@ metadata_get_cd_info_from_device_finish (GAsyncResult  *result,
 					 AlbumInfo    **album_info,
 					 GError       **error)
 {
-	GSimpleAsyncResult *simple;
-	GetCDInfoData      *data;
+	GetCDInfoData *data;
 
-	g_return_val_if_fail (g_simple_async_result_is_valid (result, NULL, metadata_get_cd_info_from_device), FALSE);
+	g_return_val_if_fail (g_task_is_valid (result, NULL), FALSE);
 
-        simple = G_SIMPLE_ASYNC_RESULT (result);
-
-        if (g_simple_async_result_propagate_error (simple, error))
-                return FALSE;
-
-        data = g_simple_async_result_get_op_res_gpointer (simple);
+        data = g_task_get_task_data (G_TASK (result));
         if (disc_id != NULL)
         	*disc_id = g_strdup (data->disc_id);
         if (album_info != NULL)
@@ -428,7 +413,6 @@ metadata_get_cd_info_from_device_finish (GAsyncResult  *result,
 
 typedef struct {
 	char  *disc_id;
-	GList *albums;
 } AlbumFromIDData;
 
 
@@ -436,36 +420,35 @@ static void
 album_from_id_data_free (AlbumFromIDData *data)
 {
 	g_free (data->disc_id);
-	album_list_free (data->albums);
 	g_free (data);
 }
 
 
 static void
-get_album_info_from_disc_id_thread (GSimpleAsyncResult *result,
-				    GObject            *object,
-				    GCancellable       *cancellable)
+get_album_info_from_disc_id_thread (GTask        *task,
+				    gpointer      source_object,
+				    gpointer      task_data,
+				    GCancellable *cancellable)
 {
-	AlbumFromIDData *data;
+	AlbumFromIDData *data = task_data;
 	Mb5Query         query;
 	Mb5Metadata      metadata;
-
-	data = g_simple_async_result_get_op_res_gpointer (result);
 
 	query = mb5_query_new (QUERY_AGENT, NULL, 0);
 	metadata = mb5_query_query (query, "discid", data->disc_id, "", 0, NULL, NULL);
 	if (metadata != NULL) {
 		Mb5Disc         disc;
 		Mb5ReleaseList  release_list;
+		GList          *albums;
 		GError         *error = NULL;
 
 		disc = mb5_metadata_get_disc (metadata);
 		release_list = mb5_disc_get_releaselist (disc);
-		data->albums = get_album_list (release_list, data->disc_id, query, &error);
-		if (error != NULL) {
-			g_simple_async_result_set_from_error (result, error);
-			g_clear_error (&error);
-		}
+		albums = get_album_list (release_list, data->disc_id, query, &error);
+		if (error != NULL)
+			g_task_return_error (task, error);
+		else
+			g_task_return_pointer (task, albums, (GDestroyNotify) album_list_free);
 
 		mb5_metadata_delete (metadata);
 	}
@@ -476,7 +459,7 @@ get_album_info_from_disc_id_thread (GSimpleAsyncResult *result,
 		requested_size = mb5_query_get_lasterrormessage (query, error_message, 0);
 		error_message = g_new (char, requested_size + 1);
 		mb5_query_get_lasterrormessage (query, error_message, requested_size + 1);
-		g_simple_async_result_set_error (result, GOO_ERROR, GOO_ERROR_METADATA, "%s", error_message);
+		g_task_return_new_error (task, GOO_ERROR, GOO_ERROR_METADATA, "%s", error_message);
 
 		g_free (error_message);
 	}
@@ -491,26 +474,19 @@ metadata_get_album_info_from_disc_id (const char          *disc_id,
 				      GAsyncReadyCallback  callback,
 				      gpointer             user_data)
 {
-	AlbumFromIDData    *data;
-	GSimpleAsyncResult *result;
+	GTask           *task;
+	AlbumFromIDData *data;
 
-	result = g_simple_async_result_new (NULL,
-	                                    callback,
-	                                    user_data,
-	                                    metadata_get_album_info_from_disc_id);
+
+	task = g_task_new (NULL, cancellable, callback, user_data);
 
 	data = g_new0 (AlbumFromIDData, 1);
 	data->disc_id = g_strdup (disc_id);
-	g_simple_async_result_set_op_res_gpointer (result,
-                                                   data,
-                                                   (GDestroyNotify) album_from_id_data_free);
+	g_task_set_task_data (task, data, (GDestroyNotify) album_from_id_data_free);
 
-	g_simple_async_result_run_in_thread (result,
-					     get_album_info_from_disc_id_thread,
-					     G_PRIORITY_DEFAULT,
-					     cancellable);
+	g_task_run_in_thread (task, get_album_info_from_disc_id_thread);
 
-	g_object_unref (result);
+	g_object_unref (task);
 }
 
 
@@ -518,19 +494,8 @@ GList *
 metadata_get_album_info_from_disc_id_finish (GAsyncResult  *result,
 					     GError       **error)
 {
-	GSimpleAsyncResult *simple;
-	AlbumFromIDData    *data;
-
-	g_return_val_if_fail (g_simple_async_result_is_valid (result, NULL, metadata_get_album_info_from_disc_id), NULL);
-
-        simple = G_SIMPLE_ASYNC_RESULT (result);
-
-        if (g_simple_async_result_propagate_error (simple, error))
-                return NULL;
-
-        data = g_simple_async_result_get_op_res_gpointer (simple);
-
-        return album_list_dup (data->albums);
+	g_return_val_if_fail (g_task_is_valid (result, NULL), NULL);
+	return g_task_propagate_pointer (G_TASK (result), error);
 }
 
 
@@ -539,7 +504,6 @@ metadata_get_album_info_from_disc_id_finish (GAsyncResult  *result,
 
 typedef struct {
 	char  *title;
-	GList *albums;
 } SearchByTitleData;
 
 
@@ -547,24 +511,23 @@ static void
 search_by_tile_data_free (SearchByTitleData *data)
 {
 	g_free (data->title);
-	album_list_free (data->albums);
 	g_free (data);
 }
 
 
 static void
-search_album_by_title_thread (GSimpleAsyncResult *result,
-			      GObject            *object,
-			      GCancellable       *cancellable)
+search_album_by_title_thread (GTask        *task,
+			      gpointer      source_object,
+			      gpointer      task_data,
+			      GCancellable *cancellable)
 {
-	SearchByTitleData  *data;
+	SearchByTitleData  *data = task_data;
 	Mb5Query            query;
 	char              **param_names;
 	char              **param_values;
 	Mb5Metadata         metadata;
 	Mb5ReleaseList 	    release_list;
 
-	data = g_simple_async_result_get_op_res_gpointer (result);
 	query = mb5_query_new (PACKAGE_NAME, NULL, 0);
 
 	param_names = g_new (char *, 3);
@@ -579,14 +542,15 @@ search_album_by_title_thread (GSimpleAsyncResult *result,
 
 	metadata = mb5_query_query (query, "release", "", "", 2, param_names, param_values);
 	if (metadata != NULL) {
+		GList  *albums;
 		GError *error = NULL;
 
 		release_list = mb5_metadata_get_releaselist (metadata);
-		data->albums = get_album_list (release_list, NULL, query, &error);
-		if (error != NULL) {
-			g_simple_async_result_set_from_error (result, error);
-			g_clear_error (&error);
-		}
+		albums = get_album_list (release_list, NULL, query, &error);
+		if (error != NULL)
+			g_task_return_error (task, error);
+		else
+			g_task_return_pointer (task, albums, (GDestroyNotify) album_list_free);
 
 		mb5_metadata_delete (metadata);
 	}
@@ -597,7 +561,7 @@ search_album_by_title_thread (GSimpleAsyncResult *result,
 		requested_size = mb5_query_get_lasterrormessage (query, error_message, 0);
 		error_message = g_new (char, requested_size + 1);
 		mb5_query_get_lasterrormessage (query, error_message, requested_size + 1);
-		g_simple_async_result_set_error (result, GOO_ERROR, GOO_ERROR_METADATA, "%s", error_message);
+		g_task_return_new_error (task, GOO_ERROR, GOO_ERROR_METADATA, "%s", error_message);
 
 		g_free (error_message);
 	}
@@ -614,26 +578,18 @@ metadata_search_album_by_title (const char          *title,
 				GAsyncReadyCallback  callback,
 				gpointer             user_data)
 {
+	GTask              *task;
 	SearchByTitleData  *data;
-	GSimpleAsyncResult *result;
 
-	result = g_simple_async_result_new (NULL,
-	                                    callback,
-	                                    user_data,
-	                                    metadata_search_album_by_title);
+	task = g_task_new (NULL, cancellable, callback, user_data);
 
 	data = g_new0 (SearchByTitleData, 1);
 	data->title = g_strdup (title);
-	g_simple_async_result_set_op_res_gpointer (result,
-                                                   data,
-                                                   (GDestroyNotify) search_by_tile_data_free);
+	g_task_set_task_data (task, data, (GDestroyNotify) search_by_tile_data_free);
 
-	g_simple_async_result_run_in_thread (result,
-					     search_album_by_title_thread,
-					     G_PRIORITY_DEFAULT,
-					     cancellable);
+	g_task_run_in_thread (task, search_album_by_title_thread);
 
-	g_object_unref (result);
+	g_object_unref (task);
 }
 
 
@@ -641,17 +597,6 @@ GList *
 metadata_search_album_by_title_finish (GAsyncResult  *result,
 				       GError       **error)
 {
-	GSimpleAsyncResult *simple;
-	AlbumFromIDData    *data;
-
-	g_return_val_if_fail (g_simple_async_result_is_valid (result, NULL, metadata_search_album_by_title), NULL);
-
-        simple = G_SIMPLE_ASYNC_RESULT (result);
-
-        if (g_simple_async_result_propagate_error (simple, error))
-                return NULL;
-
-        data = g_simple_async_result_get_op_res_gpointer (simple);
-
-        return album_list_dup (data->albums);
+	g_return_val_if_fail (g_task_is_valid (result, NULL), NULL);
+	return g_task_propagate_pointer (G_TASK (result), error);
 }
