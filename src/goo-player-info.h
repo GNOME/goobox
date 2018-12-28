@@ -32,14 +32,14 @@
 #define GOO_IS_PLAYER_INFO_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), GOO_TYPE_PLAYER_INFO))
 #define GOO_PLAYER_INFO_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS((obj), GOO_TYPE_PLAYER_INFO, GooPlayerInfoClass))
 
-typedef struct _GooPlayerInfo            GooPlayerInfo;
-typedef struct _GooPlayerInfoClass       GooPlayerInfoClass;
-typedef struct _GooPlayerInfoPrivateData GooPlayerInfoPrivateData;
+typedef struct _GooPlayerInfo        GooPlayerInfo;
+typedef struct _GooPlayerInfoClass   GooPlayerInfoClass;
+typedef struct _GooPlayerInfoPrivate GooPlayerInfoPrivate;
 
 struct _GooPlayerInfo
 {
 	GtkBox __parent;
-	GooPlayerInfoPrivateData *priv;
+	GooPlayerInfoPrivate *priv;
 };
 
 struct _GooPlayerInfoClass

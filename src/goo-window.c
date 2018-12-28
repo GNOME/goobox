@@ -126,7 +126,8 @@ enum {
 };
 
 
-G_DEFINE_TYPE (GooWindow, goo_window, GTK_TYPE_APPLICATION_WINDOW)
+G_DEFINE_TYPE_WITH_CODE (GooWindow, goo_window, GTK_TYPE_APPLICATION_WINDOW,
+			 G_ADD_PRIVATE (GooWindow))
 
 
 static void
@@ -930,8 +931,6 @@ goo_window_class_init (GooWindowClass *class)
 {
 	GObjectClass   *gobject_class;
 	GtkWidgetClass *widget_class;
-
-	g_type_class_add_private (class, sizeof (GooWindowPrivate));
 
 	gobject_class = (GObjectClass*) class;
 	gobject_class->finalize = goo_window_finalize;
@@ -1926,7 +1925,7 @@ window_size_allocate_cb (GtkWidget    *widget,
 static void
 goo_window_init (GooWindow *window)
 {
-	window->priv = G_TYPE_INSTANCE_GET_PRIVATE (window, GOO_TYPE_WINDOW, GooWindowPrivate);
+	window->priv = goo_window_get_instance_private (window);
 	window->priv->exiting = FALSE;
 	window->priv->check_id = 0;
 	window->priv->url_list = NULL;

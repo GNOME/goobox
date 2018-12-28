@@ -4,7 +4,7 @@ project('goobox', 'c',
   meson_version : '>=0.43'
 )
 
-glib_version = '>=2.36'
+glib_version = '>=2.38'
 gtk_version = '>=3.13.2'
 gstreamer_version = '>=1.0.0'
 musicbrainz_version = '>=5.0.0'

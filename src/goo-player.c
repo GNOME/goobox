@@ -80,10 +80,9 @@ static guint goo_player_signals[LAST_SIGNAL] = { 0 };
 
 static void goo_player_finalize    (GObject *object);
 
-#define GOO_PLAYER_GET_PRIVATE_DATA(object) \
-	(G_TYPE_INSTANCE_GET_PRIVATE ((object), GOO_TYPE_PLAYER, GooPlayerPrivate))
 
-G_DEFINE_TYPE (GooPlayer, goo_player, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (GooPlayer, goo_player, G_TYPE_OBJECT,
+			 G_ADD_PRIVATE (GooPlayer))
 
 
 static void
@@ -342,8 +341,6 @@ goo_player_class_init (GooPlayerClass *class)
 	gobject_class = G_OBJECT_CLASS (class);
 	gobject_class->finalize = goo_player_finalize;
 
-	g_type_class_add_private (class, sizeof (GooPlayerPrivate));
-
 	goo_player_signals[START] =
                 g_signal_new ("start",
 			      G_TYPE_FROM_CLASS (class),
@@ -396,7 +393,7 @@ goo_player_class_init (GooPlayerClass *class)
 static void
 goo_player_init (GooPlayer *self)
 {
-	self->priv = GOO_PLAYER_GET_PRIVATE_DATA (self);
+	self->priv = goo_player_get_instance_private (self);
 	self->priv->state = GOO_PLAYER_STATE_NO_DISC;
 	self->priv->action = GOO_PLAYER_ACTION_NONE;
 	self->priv->is_busy = FALSE;

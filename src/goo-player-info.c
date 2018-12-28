@@ -42,10 +42,7 @@
 #define UPDATE_TIMEOUT 50
 
 
-G_DEFINE_TYPE (GooPlayerInfo, goo_player_info, GTK_TYPE_BOX)
-
-
-struct _GooPlayerInfoPrivateData {
+struct _GooPlayerInfoPrivate {
 	GooWindow   *window;
 	GtkWidget   *cover_frame;
 	GtkWidget   *title1_label;
@@ -65,6 +62,10 @@ struct _GooPlayerInfoPrivateData {
 	guint        update_progress_timeout;
 	GdkPixbuf   *original_cover;
 };
+
+
+G_DEFINE_TYPE_WITH_CODE (GooPlayerInfo, goo_player_info, GTK_TYPE_BOX,
+			 G_ADD_PRIVATE (GooPlayerInfo))
 
 
 enum {
@@ -195,8 +196,8 @@ cover_button_drag_data_received  (GtkWidget          *widget,
 static void
 goo_player_info_construct (GooPlayerInfo *info)
 {
-	GooPlayerInfoPrivateData *priv;
-	GtkWidget *vbox;
+	GooPlayerInfoPrivate *priv;
+	GtkWidget            *vbox;
 
 	priv = info->priv;
 
@@ -369,10 +370,10 @@ show_all_labels (GooPlayerInfo *info)
 static void
 goo_player_info_update_state (GooPlayerInfo *info)
 {
-	GooPlayerInfoPrivateData *priv = info->priv;
-	GooPlayerState  state;
-	AlbumInfo      *album;
-	GooPlayer      *player;
+	GooPlayerInfoPrivate *priv = info->priv;
+	GooPlayerState        state;
+	AlbumInfo            *album;
+	GooPlayer            *player;
 
 	if (info->priv->window == NULL)
 		return;
@@ -470,10 +471,8 @@ static void
 goo_player_info_set_total_time (GooPlayerInfo  *info,
 				gint64          total_time)
 {
-	GooPlayerInfoPrivateData *priv = info->priv;
-
-	g_free (priv->total_time);
-	priv->total_time = (total_time > 0) ? _g_format_duration_for_display (total_time * 1000) : NULL;
+	g_free (info->priv->total_time);
+	info->priv->total_time = (total_time > 0) ? _g_format_duration_for_display (total_time * 1000) : NULL;
 	goo_player_info_update_state (info);
 }
 
@@ -582,8 +581,6 @@ goo_player_info_class_init (GooPlayerInfoClass *class)
         GObjectClass   *gobject_class;
 	GtkWidgetClass *widget_class;
 
-	g_type_class_add_private (class, sizeof (GooPlayerInfoPrivateData));
-
 	gobject_class = G_OBJECT_CLASS (class);
         gobject_class->finalize = goo_player_info_finalize;
 
@@ -606,7 +603,7 @@ static void
 goo_player_info_init (GooPlayerInfo *info)
 {
 	gtk_orientable_set_orientation (GTK_ORIENTABLE (info), GTK_ORIENTATION_HORIZONTAL);
-	info->priv = G_TYPE_INSTANCE_GET_PRIVATE (info, GOO_TYPE_PLAYER_INFO, GooPlayerInfoPrivateData);
+	info->priv = goo_player_info_get_instance_private (info);
 }
 
 

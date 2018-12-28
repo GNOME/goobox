@@ -34,12 +34,12 @@
 
 typedef struct _GooPlayerBar            GooPlayerBar;
 typedef struct _GooPlayerBarClass       GooPlayerBarClass;
-typedef struct _GooPlayerBarPrivateData GooPlayerBarPrivateData;
+typedef struct _GooPlayerBarPrivate     GooPlayerBarPrivate;
 
 struct _GooPlayerBar
 {
 	GtkBox __parent;
-	GooPlayerBarPrivateData *priv;
+	GooPlayerBarPrivate *priv;
 };
 
 struct _GooPlayerBarClass

@@ -35,10 +35,7 @@
 #define UPDATE_TIMEOUT 50
 
 
-G_DEFINE_TYPE (GooPlayerBar, goo_player_bar, GTK_TYPE_BOX)
-
-
-struct _GooPlayerBarPrivateData {
+struct _GooPlayerBarPrivate {
 	GooPlayer *player;
 	GtkWidget *current_time_label;
 	GtkWidget *remaining_time_label;
@@ -52,6 +49,10 @@ struct _GooPlayerBarPrivateData {
 	double     fraction;
 	guint      update_progress_timeout;
 };
+
+
+G_DEFINE_TYPE_WITH_CODE (GooPlayerBar, goo_player_bar, GTK_TYPE_BOX,
+			 G_ADD_PRIVATE (GooPlayerBar))
 
 
 enum {
@@ -184,7 +185,7 @@ time_scale_button_release_cb (GtkRange         *range,
 static void
 goo_player_bar_init (GooPlayerBar *self)
 {
-	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, GOO_TYPE_PLAYER_BAR, GooPlayerBarPrivateData);
+	self->priv = goo_player_bar_get_instance_private (self);
 	self->priv->dragging = FALSE;
 	self->priv->track_length = 0;
 	self->priv->current_time = 0;
@@ -343,8 +344,6 @@ goo_player_bar_class_init (GooPlayerBarClass *class)
 {
         GObjectClass   *gobject_class;
 	GtkWidgetClass *widget_class;
-
-	g_type_class_add_private (class, sizeof (GooPlayerBarPrivateData));
 
 	gobject_class = G_OBJECT_CLASS (class);
         gobject_class->finalize = goo_player_bar_finalize;

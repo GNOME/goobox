@@ -85,12 +85,13 @@ static const GOptionEntry options[] = {
 /* -- GooApplication --  */
 
 
-G_DEFINE_TYPE (GooApplication, goo_application, GTK_TYPE_APPLICATION)
-
-
 struct _GooApplicationPrivate {
-        GSettings *settings;
+	GSettings *settings;
 };
+
+
+G_DEFINE_TYPE_WITH_CODE (GooApplication, goo_application, GTK_TYPE_APPLICATION,
+			 G_ADD_PRIVATE (GooApplication))
 
 
 static void
@@ -400,8 +401,6 @@ goo_application_class_init (GooApplicationClass *klass)
 	GObjectClass      *object_class;
 	GApplicationClass *application_class;
 
-	g_type_class_add_private (klass, sizeof (GooApplicationPrivate));
-
 	object_class = G_OBJECT_CLASS (klass);
 	object_class->finalize = goo_application_finalize;
 
@@ -415,7 +414,7 @@ goo_application_class_init (GooApplicationClass *klass)
 static void
 goo_application_init (GooApplication *self)
 {
-	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, GOO_TYPE_APPLICATION, GooApplicationPrivate);
+	self->priv = goo_application_get_instance_private (self);
 	self->priv->settings = g_settings_new (GOOBOX_SCHEMA_PLAYLIST);
 }
 
