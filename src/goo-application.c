@@ -347,17 +347,18 @@ pref_playlist_shuffle_changed (GSettings  *settings,
 static void
 initialize_app_menu (GApplication *application)
 {
+	const _GtkAccelerator app_accelerators[] = {
+		{ "app.help", "F1" },
+		{ "app.quit", "<Control>q" }
+	};
 	GooApplication *self = (GooApplication *) application;
-	GtkBuilder     *builder;
 
 	g_action_map_add_action_entries (G_ACTION_MAP (application),
 					 goo_application_actions,
 					 G_N_ELEMENTS (goo_application_actions),
 					 application);
 
-	builder = _gtk_builder_new_from_resource ("app-menu.ui");
-	gtk_application_set_app_menu (GTK_APPLICATION (application),
-				      G_MENU_MODEL (gtk_builder_get_object (builder, "app-menu")));
+	_gtk_application_add_accelerators (GTK_APPLICATION (application), app_accelerators, G_N_ELEMENTS (app_accelerators));
 
 	g_simple_action_set_state (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (application), PREF_PLAYLIST_PLAYALL)),
 				   g_variant_new_boolean (g_settings_get_boolean (self->priv->settings, PREF_PLAYLIST_PLAYALL)));
@@ -378,8 +379,6 @@ initialize_app_menu (GApplication *application)
 			  "changed::" PREF_PLAYLIST_REPEAT,
 			  G_CALLBACK (pref_playlist_repeat_changed),
 			  self);
-
-	g_object_unref (builder);
 }
 
 

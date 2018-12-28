@@ -149,6 +149,14 @@ void		_g_action_map_change_action_state	(GActionMap		*action_map,
 							 const char		*action_name,
 							 gboolean		 value);
 GtkWidget *	_gtk_application_get_current_window	(GtkApplication		*application);
+void		_gtk_application_add_accelerator_for_action
+							(GtkApplication		*app,
+							 const char		*action_name,
+							 const char		*accel);
+void		_gtk_application_add_accelerators	(GtkApplication		*app,
+							 const _GtkAccelerator	*accelerators,
+							 int			 n_accelerators);
+
 gboolean	_gtk_window_get_monitor_info		(GtkWindow		*window,
 							 GdkRectangle		*geometry,
 							 int			*number,

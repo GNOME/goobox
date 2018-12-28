@@ -1007,6 +1007,35 @@ _gtk_application_get_current_window (GtkApplication *application)
 }
 
 
+void
+_gtk_application_add_accelerator_for_action (GtkApplication   *app,
+					     const char       *action_name,
+					     const char       *accel)
+{
+	const char *accels[2];
+
+	accels[0] = accel;
+	accels[1] = NULL;
+	gtk_application_set_accels_for_action (app, action_name, accels);
+}
+
+
+void
+_gtk_application_add_accelerators (GtkApplication        *app,
+				   const _GtkAccelerator *accelerators,
+				   int                    n_accelerators)
+{
+	int i;
+
+	for (i = 0; i < n_accelerators; i++) {
+		const _GtkAccelerator *acc = accelerators + i;
+		_gtk_application_add_accelerator_for_action (GTK_APPLICATION (app),
+							     acc->action_name,
+							     acc->accelerator);
+	}
+}
+
+
 gboolean
 _gtk_window_get_monitor_info (GtkWindow	    *window,
 			      GdkRectangle  *geometry,

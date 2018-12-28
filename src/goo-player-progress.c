@@ -3,7 +3,7 @@
 /*
  *  Goo
  *
- *  Copyright (C) 2012 Free Software Foundation, Inc.
+ *  Copyright (C) 2018 Free Software Foundation, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #include <config.h>
 #include <string.h>
 #include <glib/gi18n.h>
-#include "goo-player-bar.h"
+#include "goo-player-progress.h"
 #include "goo-marshal.h"
 #include "glib-utils.h"
 #include "gtk-utils.h"
@@ -30,18 +30,18 @@
 
 #define SCALE_WIDTH 150
 #define TIME_LABEL_WIDTH_IN_CHARS 8
-#define PLAY_BUTTON_SIZE GTK_ICON_SIZE_SMALL_TOOLBAR
+#define PLAY_BUTTON_SIZE GTK_ICON_SIZE_SMALL_TOOLPROGRESS
 #define MIN_WIDTH 500
 #define UPDATE_TIMEOUT 50
 
 
-struct _GooPlayerBarPrivate {
+struct _GooPlayerProgressPrivate {
 	GooPlayer *player;
 	GtkWidget *current_time_label;
 	GtkWidget *remaining_time_label;
 	GtkWidget *time_scale;
 	GtkWidget *time_box;
-	GtkWidget *play_button_image;
+	GtkWidget *title;
 	gint64     track_length;
 	gint64     current_time;
 	gboolean   dragging;
@@ -51,21 +51,21 @@ struct _GooPlayerBarPrivate {
 };
 
 
-G_DEFINE_TYPE_WITH_CODE (GooPlayerBar, goo_player_bar, GTK_TYPE_BOX,
-			 G_ADD_PRIVATE (GooPlayerBar))
+G_DEFINE_TYPE_WITH_CODE (GooPlayerProgress, goo_player_progress, GTK_TYPE_BOX,
+			 G_ADD_PRIVATE (GooPlayerProgress))
 
 
 enum {
 	SKIP_TO,
-        LAST_SIGNAL
+	LAST_SIGNAL
 };
-static guint goo_player_bar_signals[LAST_SIGNAL] = { 0 };
+static guint goo_player_progress_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-goo_player_bar_get_preferred_width (GtkWidget *widget,
-				    int       *minimum_width,
-				    int       *natural_width)
+goo_player_progress_get_preferred_width (GtkWidget *widget,
+					 int       *minimum_width,
+					 int       *natural_width)
 {
 	*minimum_width = *natural_width = MIN_WIDTH;
 }
@@ -97,7 +97,7 @@ set_label (GtkWidget  *label,
 
 
 static void
-_goo_player_bar_update_current_time (GooPlayerBar *self)
+_goo_player_progress_update_current_time (GooPlayerProgress *self)
 {
 	char *s;
 
@@ -116,16 +116,16 @@ _goo_player_bar_update_current_time (GooPlayerBar *self)
 
 static void
 time_scale_value_changed_cb (GtkRange     *range,
-			     GooPlayerBar *self)
+			     GooPlayerProgress *self)
 {
 	self->priv->current_time = self->priv->track_length * gtk_range_get_value (range);
-	_goo_player_bar_update_current_time (self);
+	_goo_player_progress_update_current_time (self);
 
 	if (! self->priv->dragging) {
 		int seconds;
 
 		seconds = (int) (gtk_range_get_value (range) * self->priv->track_length);
-		g_signal_emit (self, goo_player_bar_signals[SKIP_TO], 0, seconds);
+		g_signal_emit (self, goo_player_progress_signals[SKIP_TO], 0, seconds);
 	}
 }
 
@@ -133,7 +133,7 @@ time_scale_value_changed_cb (GtkRange     *range,
 static gboolean
 update_time_label_cb (gpointer data)
 {
-	GooPlayerBar *self = data;
+	GooPlayerProgress *self = data;
 
 	if (self->priv->update_id != 0) {
 		g_source_remove (self->priv->update_id);
@@ -141,7 +141,7 @@ update_time_label_cb (gpointer data)
 	}
 
 	self->priv->current_time = self->priv->track_length * gtk_range_get_value (GTK_RANGE (self->priv->time_scale));
-	_goo_player_bar_update_current_time (self);
+	_goo_player_progress_update_current_time (self);
 
 	self->priv->update_id = g_timeout_add (UPDATE_TIMEOUT,
 					       update_time_label_cb,
@@ -152,9 +152,9 @@ update_time_label_cb (gpointer data)
 
 
 static gboolean
-time_scale_button_press_cb (GtkRange         *range,
-			    GdkEventButton   *event,
-			    GooPlayerBar    *self)
+time_scale_button_press_cb (GtkRange          *range,
+			    GdkEventButton    *event,
+			    GooPlayerProgress *self)
 {
 	self->priv->dragging = TRUE;
 	if (self->priv->update_id == 0)
@@ -166,9 +166,9 @@ time_scale_button_press_cb (GtkRange         *range,
 
 
 static gboolean
-time_scale_button_release_cb (GtkRange         *range,
-			      GdkEventButton   *event,
-			      GooPlayerBar    *self)
+time_scale_button_release_cb (GtkRange          *range,
+			      GdkEventButton    *event,
+			      GooPlayerProgress *self)
 {
 	if (self->priv->update_id != 0) {
 		g_source_remove (self->priv->update_id);
@@ -183,9 +183,9 @@ time_scale_button_release_cb (GtkRange         *range,
 
 
 static void
-goo_player_bar_init (GooPlayerBar *self)
+goo_player_progress_init (GooPlayerProgress *self)
 {
-	self->priv = goo_player_bar_get_instance_private (self);
+	self->priv = goo_player_progress_get_instance_private (self);
 	self->priv->dragging = FALSE;
 	self->priv->track_length = 0;
 	self->priv->current_time = 0;
@@ -197,32 +197,13 @@ goo_player_bar_init (GooPlayerBar *self)
 }
 
 
-static GtkWidget *
-_gtk_menu_button_new_from_icon_name (const char *icon_name)
-{
-	GtkWidget *button;
-	GtkWidget *image;
-
-	button = gtk_menu_button_new ();
-	image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_SMALL_TOOLBAR);
-	gtk_widget_show (image);
-	gtk_container_add (GTK_CONTAINER (button), image);
-
-	return button;
-}
-
-
 static void
-goo_player_bar_construct (GooPlayerBar	*self,
-			  GActionMap	*action_map)
+goo_player_progress_construct (GooPlayerProgress *self)
 {
 	GtkWidget *frame;
 	GtkWidget *main_box;
-	GtkWidget *button_box;
-	GtkWidget *button;
 
 	frame = gtk_event_box_new ();
-	gtk_style_context_add_class (gtk_widget_get_style_context (frame), GTK_STYLE_CLASS_BACKGROUND);
 	gtk_widget_show (frame);
 	gtk_box_pack_start (GTK_BOX (self), frame, TRUE, TRUE, 0);
 
@@ -232,28 +213,6 @@ goo_player_bar_construct (GooPlayerBar	*self,
 	gtk_box_set_homogeneous (GTK_BOX (main_box), FALSE);
 	gtk_widget_show (main_box);
 	gtk_container_add (GTK_CONTAINER (frame), main_box);
-
-	/* Play buttons */
-
-	self->priv->play_button_image = gtk_image_new_from_icon_name (GOO_ICON_NAME_PLAY, PLAY_BUTTON_SIZE);
-	button = gtk_button_new ();
-	gtk_container_add (GTK_CONTAINER (button), self->priv->play_button_image);
-	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.toggle-play");
-	gtk_box_pack_start (GTK_BOX (main_box), button, FALSE, FALSE, 0);
-
-	button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	gtk_style_context_add_class (gtk_widget_get_style_context (button_box), GTK_STYLE_CLASS_LINKED);
-	gtk_box_pack_start (GTK_BOX (main_box), button_box, FALSE, FALSE, 0);
-
-	button = gtk_button_new_from_icon_name (GOO_ICON_NAME_PREV, GTK_ICON_SIZE_SMALL_TOOLBAR);
-	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.previous-track");
-	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
-
-	button = gtk_button_new_from_icon_name (GOO_ICON_NAME_NEXT, GTK_ICON_SIZE_SMALL_TOOLBAR);
-	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.next-track");
-	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
-
-	/* Time */
 
 	self->priv->time_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_widget_set_no_show_all (self->priv->time_box, TRUE);
@@ -279,26 +238,12 @@ goo_player_bar_construct (GooPlayerBar	*self,
 	gtk_box_pack_start (GTK_BOX (self->priv->time_box), self->priv->time_scale, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (self->priv->time_box), self->priv->remaining_time_label, FALSE, FALSE, 0);
 
-	/* Other actions */
-
-	button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	gtk_box_set_spacing (GTK_BOX (button_box), 6);
-	gtk_box_pack_end (GTK_BOX (main_box), button_box, FALSE, FALSE, 0);
-
-	button = gtk_button_new_from_icon_name (GOO_ICON_NAME_EXTRACT, GTK_ICON_SIZE_SMALL_TOOLBAR);
-	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.extract");
-	gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
-
-	{
-		GtkBuilder *builder;
-
-		builder = _gtk_builder_new_from_resource ("gears-menu.ui");
-		button = _gtk_menu_button_new_from_icon_name ("emblem-system-symbolic");
-		gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (button), G_MENU_MODEL (gtk_builder_get_object (builder, "gears-menu")));
-		gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
-
-		g_object_unref (builder);
-	}
+	self->priv->title = gtk_label_new ("");
+	gtk_label_set_line_wrap (GTK_LABEL (self->priv->title), FALSE);
+	gtk_label_set_single_line_mode (GTK_LABEL (self->priv->title), TRUE);
+	gtk_label_set_ellipsize (GTK_LABEL (self->priv->title), PANGO_ELLIPSIZE_END);
+	gtk_style_context_add_class (gtk_widget_get_style_context (self->priv->title), "title");
+	gtk_box_pack_start (GTK_BOX (main_box), self->priv->title, TRUE, FALSE, 0);
 
 	/* signals */
 
@@ -318,14 +263,14 @@ goo_player_bar_construct (GooPlayerBar	*self,
 
 
 static void
-goo_player_bar_finalize (GObject *object)
+goo_player_progress_finalize (GObject *object)
 {
-        GooPlayerBar *self;
+	GooPlayerProgress *self;
 
-        g_return_if_fail (object != NULL);
-        g_return_if_fail (GOO_IS_PLAYER_BAR (object));
+	g_return_if_fail (object != NULL);
+	g_return_if_fail (GOO_IS_PLAYER_PROGRESS (object));
 
-	self = GOO_PLAYER_BAR (object);
+	self = GOO_PLAYER_PROGRESS (object);
 
 	if (self->priv->update_progress_timeout != 0) {
 		g_source_remove (self->priv->update_progress_timeout);
@@ -337,27 +282,27 @@ goo_player_bar_finalize (GObject *object)
 		self->priv->update_id = 0;
 	}
 
-	G_OBJECT_CLASS (goo_player_bar_parent_class)->finalize (object);
+	G_OBJECT_CLASS (goo_player_progress_parent_class)->finalize (object);
 }
 
 
 static void
-goo_player_bar_class_init (GooPlayerBarClass *class)
+goo_player_progress_class_init (GooPlayerProgressClass *class)
 {
-        GObjectClass   *gobject_class;
+	GObjectClass   *gobject_class;
 	GtkWidgetClass *widget_class;
 
 	gobject_class = G_OBJECT_CLASS (class);
-        gobject_class->finalize = goo_player_bar_finalize;
+	gobject_class->finalize = goo_player_progress_finalize;
 
 	widget_class = GTK_WIDGET_CLASS (class);
-	widget_class->get_preferred_width = goo_player_bar_get_preferred_width;
+	widget_class->get_preferred_width = goo_player_progress_get_preferred_width;
 
-	goo_player_bar_signals[SKIP_TO] =
-                g_signal_new ("skip-to",
+	goo_player_progress_signals[SKIP_TO] =
+		g_signal_new ("skip-to",
 			      G_TYPE_FROM_CLASS (class),
 			      G_SIGNAL_RUN_LAST,
-			      G_STRUCT_OFFSET (GooPlayerBarClass, skip_to),
+			      G_STRUCT_OFFSET (GooPlayerProgressClass, skip_to),
 			      NULL, NULL,
 			      goo_marshal_VOID__INT,
 			      G_TYPE_NONE,
@@ -367,14 +312,14 @@ goo_player_bar_class_init (GooPlayerBarClass *class)
 
 
 static void
-_goo_player_bar_set_time (GooPlayerBar *self,
-			  gint64        current_time)
+_goo_player_progress_set_time (GooPlayerProgress *self,
+			       gint64             current_time)
 {
 	if (self->priv->dragging)
 		return;
 
 	self->priv->current_time = current_time;
-	_goo_player_bar_update_current_time (self);
+	_goo_player_progress_update_current_time (self);
 
 	g_signal_handlers_block_by_data (self->priv->time_scale, self);
 	gtk_range_set_value (GTK_RANGE (self->priv->time_scale), (double) current_time / self->priv->track_length);
@@ -385,21 +330,21 @@ _goo_player_bar_set_time (GooPlayerBar *self,
 static gboolean
 update_progress_cb (gpointer data)
 {
-	GooPlayerBar *self = data;
+	GooPlayerProgress *self = data;
 
 	self->priv->update_progress_timeout = 0;
 
 	if ((self->priv->fraction >= 0.0) && (self->priv->fraction <= 1.0))
-		_goo_player_bar_set_time (self, self->priv->fraction * self->priv->track_length);
+		_goo_player_progress_set_time (self, self->priv->fraction * self->priv->track_length);
 
 	return FALSE;
 }
 
 
 static void
-player_progress_cb (GooPlayer     *player,
-		    double         fraction,
-		    GooPlayerBar *self)
+player_progress_cb (GooPlayer         *player,
+		    double             fraction,
+		    GooPlayerProgress *self)
 {
 	self->priv->fraction = fraction;
 	if (self->priv->update_progress_timeout == 0)
@@ -408,15 +353,15 @@ player_progress_cb (GooPlayer     *player,
 
 
 static void
-goo_player_bar_set_sensitive (GooPlayerBar *self,
-			      gboolean      value)
+goo_player_progress_set_sensitive (GooPlayerProgress *self,
+				   gboolean           value)
 {
 	/* FIXME */
 }
 
 
 static void
-goo_player_bar_update_state (GooPlayerBar *self)
+goo_player_progress_update_state (GooPlayerProgress *self)
 {
 	GooPlayerState state;
 
@@ -429,39 +374,30 @@ goo_player_bar_update_state (GooPlayerBar *self)
 	    || (state == GOO_PLAYER_STATE_PAUSED))
 	{
 		gtk_widget_show (self->priv->time_box);
+		gtk_widget_hide (self->priv->title);
 	}
 	else {
 		gtk_widget_hide (self->priv->time_box);
+		gtk_widget_show (self->priv->title);
 	}
 }
 
 
 static void
 player_state_changed_cb (GooPlayer     *player,
-			 GooPlayerBar *self)
+			 GooPlayerProgress *self)
 {
-	goo_player_bar_update_state (self);
-	goo_player_bar_set_sensitive (self, (goo_player_get_state (player) != GOO_PLAYER_STATE_ERROR) && (goo_player_get_discid (player) != NULL));
-}
-
-
-static void
-_goo_player_bar_update_play_button_icon (GooPlayerBar *self,
-					 gboolean      playing)
-{
-	gtk_image_set_from_icon_name (GTK_IMAGE (self->priv->play_button_image),
-				      playing ? GOO_ICON_NAME_PAUSE : GOO_ICON_NAME_PLAY,
-				      PLAY_BUTTON_SIZE);
+	goo_player_progress_update_state (self);
+	goo_player_progress_set_sensitive (self, (goo_player_get_state (player) != GOO_PLAYER_STATE_ERROR) && (goo_player_get_discid (player) != NULL));
 }
 
 
 static void
 player_start_cb (GooPlayer       *player,
 		 GooPlayerAction  action,
-		 GooPlayerBar    *self)
+		 GooPlayerProgress    *self)
 {
-	_goo_player_bar_update_play_button_icon (self, action == GOO_PLAYER_ACTION_PLAY);
-	goo_player_bar_update_state (self);
+	goo_player_progress_update_state (self);
 }
 
 
@@ -469,32 +405,30 @@ static void
 player_done_cb (GooPlayer       *player,
 		GooPlayerAction  action,
 		GError          *error,
-		GooPlayerBar    *self)
+		GooPlayerProgress    *self)
 {
 	AlbumInfo *album;
 
 	switch (action) {
 	case GOO_PLAYER_ACTION_LIST:
-		goo_player_bar_update_state (self);
-		_goo_player_bar_set_time (self, 0);
+		goo_player_progress_update_state (self);
+		_goo_player_progress_set_time (self, 0);
 		break;
 	case GOO_PLAYER_ACTION_METADATA:
-		goo_player_bar_update_state (self);
+		goo_player_progress_update_state (self);
 		break;
 	case GOO_PLAYER_ACTION_SEEK_SONG:
 		album = goo_player_get_album (player);
 		self->priv->track_length = album_info_get_track (album, goo_player_get_current_track (player))->length;
-		goo_player_bar_update_state (self);
-		_goo_player_bar_set_time (self, 0);
+		goo_player_progress_update_state (self);
+		_goo_player_progress_set_time (self, 0);
 		break;
 	case GOO_PLAYER_ACTION_PLAY:
 	case GOO_PLAYER_ACTION_STOP:
 	case GOO_PLAYER_ACTION_MEDIUM_REMOVED:
-		_goo_player_bar_update_play_button_icon (self, FALSE);
-		_goo_player_bar_set_time (self, 0);
+		_goo_player_progress_set_time (self, 0);
 		break;
 	case GOO_PLAYER_ACTION_PAUSE:
-		_goo_player_bar_update_play_button_icon (self, FALSE);
 		break;
 	default:
 		break;
@@ -503,16 +437,15 @@ player_done_cb (GooPlayer       *player,
 
 
 GtkWidget *
-goo_player_bar_new (GooPlayer	*player,
-		    GActionMap	*action_map)
+goo_player_progress_new (GooPlayer	*player)
 {
-	GooPlayerBar *self;
+	GooPlayerProgress *self;
 
 	g_return_val_if_fail (player != NULL, NULL);
 
-	self = GOO_PLAYER_BAR (g_object_new (GOO_TYPE_PLAYER_BAR, NULL));
+	self = GOO_PLAYER_PROGRESS (g_object_new (GOO_TYPE_PLAYER_PROGRESS, NULL));
 	self->priv->player = g_object_ref (player);
-	goo_player_bar_construct (self, action_map);
+	goo_player_progress_construct (self);
 
 	g_signal_connect (player,
 			  "start",
@@ -535,8 +468,16 @@ goo_player_bar_new (GooPlayer	*player,
 }
 
 
+void
+goo_player_progress_set_title (GooPlayerProgress	*progress,
+			       const char 		*title)
+{
+	gtk_label_set_text (GTK_LABEL (progress->priv->title), title);
+}
+
+
 double
-goo_player_bar_get_progress (GooPlayerBar *self)
+goo_player_progress_get_progress (GooPlayerProgress *self)
 {
 	return self->priv->fraction;
 }

@@ -30,8 +30,8 @@
 #include "dlg-cover-chooser.h"
 #include "goo-marshal.h"
 #include "goo-player.h"
-#include "goo-player-bar.h"
 #include "goo-player-info.h"
+#include "goo-player-progress.h"
 #include "goo-window.h"
 #include "goo-window-actions-entries.h"
 #include "gth-user-dir.h"
@@ -72,7 +72,8 @@ struct _GooWindowPrivate {
 	GtkWidget         *message_label;
 	GtkWidget         *message_bar_properties_button;
 	GtkWidget         *info;
-	GtkWidget         *player_bar;
+	GtkWidget         *play_button;
+	GtkWidget         *progress;
 
 	guint              first_time_event;
 	guint              next_timeout_handle;
@@ -1317,7 +1318,7 @@ goo_window_set_current_track (GooWindow *window,
 static void
 window_update_title (GooWindow *window)
 {
-	gtk_window_set_title (GTK_WINDOW (window), _("CD Player"));
+	goo_player_progress_set_title (GOO_PLAYER_PROGRESS (window->priv->progress), _("CD Player"));
 
 #if 0
 	GooPlayerState  state;
@@ -1341,7 +1342,7 @@ window_update_title (GooWindow *window)
 		break;
 	}
 
-	gtk_window_set_title (GTK_WINDOW (window), title->str);
+	goo_player_progress_set_title (GOO_PLAYER_PROGRESS (window->priv->progress), title->str);
 
 	g_string_free (title, TRUE);
 #endif
@@ -1519,6 +1520,15 @@ goo_window_update_album (GooWindow *window)
 
 
 static void
+window_update_play_button_state (GooWindow *window)
+{
+	gboolean playing = (goo_player_get_state (window->priv->player) == GOO_PLAYER_STATE_PLAYING);
+	gtk_button_set_image (GTK_BUTTON (window->priv->play_button),
+			      gtk_image_new_from_icon_name (playing ? GOO_ICON_NAME_PAUSE : GOO_ICON_NAME_PLAY, GTK_ICON_SIZE_MENU));
+}
+
+
+static void
 player_done_cb (GooPlayer       *player,
 		GooPlayerAction  action,
 		GError          *error,
@@ -1568,11 +1578,13 @@ player_done_cb (GooPlayer       *player,
 		else if (action == GOO_PLAYER_ACTION_STOP)
 			set_current_track_icon (window, GOO_ICON_NAME_STOP);
 		notify_current_state (window, action);
+		window_update_play_button_state (window);
 		break;
 
 	case GOO_PLAYER_ACTION_PAUSE:
 		set_current_track_icon (window, GOO_ICON_NAME_PAUSE);
 		notify_current_state (window, action);
+		window_update_play_button_state (window);
 		break;
 
 	case GOO_PLAYER_ACTION_STARTED_NEXT:
@@ -1593,6 +1605,7 @@ player_state_changed_cb (GooPlayer *player,
 {
 	window_update_sensitivity (window);
 	window_update_title (window);
+	window_update_play_button_state (window);
 }
 
 
@@ -1768,16 +1781,6 @@ update_ui_from_expander_state (GooWindow *window)
 
 
 static void
-player_bar_skip_to_cb (GooPlayerBar *info,
-		       int           seconds,
-		       GooWindow    *window)
-{
-	debug (DEBUG_INFO, "[Window] skip to %d\n", seconds);
-	goo_player_skip_to (window->priv->player, (guint) seconds);
-}
-
-
-static void
 player_info_cover_clicked_cb (GooPlayerInfo *info,
 			      GooWindow     *window)
 {
@@ -1916,6 +1919,30 @@ window_size_allocate_cb (GtkWidget    *widget,
 
 
 static void
+_gtk_menu_button_set_style_for_header_bar (GtkWidget *button)
+{
+	GtkStyleContext *context;
+
+	gtk_widget_set_valign (button, GTK_ALIGN_CENTER);
+	context = gtk_widget_get_style_context (button);
+	gtk_style_context_add_class (context, "image-button");
+	gtk_style_context_remove_class (context, "text-button");
+}
+
+
+static GtkWidget *
+_gtk_image_button_new_for_header_bar (const char *icon_name)
+	{
+	GtkWidget *button;
+
+	button = gtk_button_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
+	_gtk_menu_button_set_style_for_header_bar (button);
+
+	return button;
+}
+
+
+static void
 goo_window_init (GooWindow *window)
 {
 	window->priv = goo_window_get_instance_private (window);
@@ -1929,12 +1956,11 @@ goo_window_init (GooWindow *window)
 
 	gtk_window_add_accel_group (GTK_WINDOW (window), window->priv->accel_group);
 
-	gtk_window_set_title (GTK_WINDOW (window), _("CD Player"));
 
 	g_action_map_add_action_entries (G_ACTION_MAP (window),
 					 goo_window_actions,
 					 G_N_ELEMENTS (goo_window_actions),
-                                       	 window);
+					 window);
 	goo_window_add_accelerators (window,
 				     goo_window_accelerators,
 				     G_N_ELEMENTS (goo_window_accelerators));
@@ -2069,6 +2095,16 @@ message_bar_response_cb (GtkInfoBar *info_bar,
 
 
 static void
+progress_skip_to_cb (GooPlayerProgress *progress,
+		     int                seconds,
+		     GooWindow         *window)
+{
+	debug (DEBUG_INFO, "[Window] skip to %d\n", seconds);
+	goo_player_skip_to (window->priv->player, (guint) seconds);
+}
+
+
+static void
 goo_window_construct (GooWindow    *window,
 		      BraseroDrive *drive)
 {
@@ -2077,6 +2113,7 @@ goo_window_construct (GooWindow    *window,
 	GtkWidget        *vbox;
 	GtkWidget        *hbox;
 	GtkTreeSelection *selection;
+	GtkWidget        *headerbar;
 
 	gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (window)), "goobox-main-window");
 	gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (window)), GTK_STYLE_CLASS_VIEW);
@@ -2234,14 +2271,6 @@ goo_window_construct (GooWindow    *window,
 
 	gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
 
-	window->priv->player_bar = goo_player_bar_new (window->priv->player, G_ACTION_MAP (window));
-	g_signal_connect (window->priv->player_bar,
-			  "skip-to",
-			  G_CALLBACK (player_bar_skip_to_cb),
-			  window);
-	gtk_widget_show (window->priv->player_bar);
-	gtk_box_pack_start (GTK_BOX (vbox), window->priv->player_bar, FALSE, FALSE, 0);
-
 	/**/
 
 	gtk_widget_show_all (vbox);
@@ -2256,6 +2285,84 @@ goo_window_construct (GooWindow    *window,
 	gtk_window_set_default_size (GTK_WINDOW (window),
 				     g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_WIDTH),
 				     g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_HEIGHT));
+
+	headerbar = gtk_header_bar_new ();
+	gtk_widget_show (headerbar);
+	gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (headerbar), TRUE);
+
+	/* play buttons */
+
+	{
+		GtkWidget *button;
+		GtkWidget *button_box;
+
+		window->priv->play_button = button = _gtk_image_button_new_for_header_bar (GOO_ICON_NAME_PLAY);
+		gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.toggle-play");
+		gtk_widget_show_all (button);
+		gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), button);
+
+		button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+		gtk_style_context_add_class (gtk_widget_get_style_context (button_box), GTK_STYLE_CLASS_LINKED);
+		gtk_widget_show (button_box);
+		gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), button_box);
+
+		button = _gtk_image_button_new_for_header_bar (GOO_ICON_NAME_PREV);
+		gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.previous-track");
+		gtk_widget_show_all (button);
+		gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
+
+		button = _gtk_image_button_new_for_header_bar (GOO_ICON_NAME_NEXT);
+		gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.next-track");
+		gtk_widget_show_all (button);
+		gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
+	}
+
+	/* gears menu button */
+
+	{
+		GtkBuilder *builder;
+		GMenuModel *menu;
+		GtkWidget  *button;
+
+		builder = _gtk_builder_new_from_resource ("gears-menu.ui");
+		menu = G_MENU_MODEL (gtk_builder_get_object (builder, "gears-menu"));
+		button = gtk_menu_button_new ();
+		_gtk_menu_button_set_style_for_header_bar (button);
+		gtk_menu_button_set_direction (GTK_MENU_BUTTON (button), GTK_ARROW_NONE);
+		gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (button), menu);
+		gtk_widget_show_all (button);
+		gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), button);
+
+		_gtk_window_add_accelerators_from_menu ((GTK_WINDOW (window)), menu);
+
+		g_object_unref (builder);
+	}
+
+	/* extract button */
+
+	{
+		GtkWidget *button;
+
+		button = _gtk_image_button_new_for_header_bar (GOO_ICON_NAME_EXTRACT);
+		gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.extract");
+		gtk_widget_show_all (button);
+		gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), button);
+	}
+
+	/* custom title */
+
+	window->priv->progress = goo_player_progress_new (window->priv->player);
+	gtk_widget_show (window->priv->progress);
+	gtk_header_bar_set_custom_title (GTK_HEADER_BAR (headerbar), window->priv->progress);
+
+	g_signal_connect (window->priv->progress,
+			  "skip-to",
+			  G_CALLBACK (progress_skip_to_cb),
+			  window);
+
+	gtk_window_set_titlebar (GTK_WINDOW (window), headerbar);
+
+	goo_player_progress_set_title (GOO_PLAYER_PROGRESS (window->priv->progress), _("CD Player"));
 
 	/* Add notification callbacks. */
 
