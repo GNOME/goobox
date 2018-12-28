@@ -462,7 +462,7 @@ done_dialog_response_cb (GtkDialog  *dialog,
 			char *uri;
 
 			uri = g_file_get_uri (folder);
-			if (! gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (dialog)), uri, GDK_CURRENT_TIME, &error))
+			if (! gtk_show_uri_on_window (GTK_WINDOW (dialog), uri, GDK_CURRENT_TIME, &error))
 				_gtk_error_dialog_from_gerror_run (GTK_WINDOW (data->window), _("Could not display the destination folder"), &error);
 
 			g_free (uri);

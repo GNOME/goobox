@@ -437,7 +437,6 @@ artist_combobox_changed_cb (GtkComboBox *widget,
 {
 	gboolean single_artist = gtk_combo_box_get_active (widget) == 0;
 	gtk_tree_view_column_set_visible (data->author_column, ! single_artist);
-	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (GET_WIDGET ("track_treeview")), ! single_artist);
 	if (single_artist)
 		gtk_widget_show (GET_WIDGET ("artist_entry"));
 	else

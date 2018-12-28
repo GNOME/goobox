@@ -260,7 +260,8 @@ goo_player_bar_construct (GooPlayerBar	*self,
 	gtk_box_pack_start (GTK_BOX (main_box), self->priv->time_box, TRUE, FALSE, 0);
 
 	self->priv->current_time_label = gtk_label_new (NULL);
-	gtk_misc_set_alignment (GTK_MISC (self->priv->current_time_label), 1.0, 0.5);
+	gtk_label_set_xalign (GTK_LABEL (self->priv->current_time_label), 1.0);
+	gtk_label_set_yalign (GTK_LABEL (self->priv->current_time_label), 0.5);
 	gtk_label_set_width_chars (GTK_LABEL (self->priv->current_time_label), TIME_LABEL_WIDTH_IN_CHARS);
 
 	self->priv->time_scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL, 0.0, 1.0, 0.01);
@@ -270,7 +271,8 @@ goo_player_bar_construct (GooPlayerBar	*self,
 	gtk_widget_show (self->priv->time_scale);
 
 	self->priv->remaining_time_label = gtk_label_new (NULL);
-	gtk_misc_set_alignment (GTK_MISC (self->priv->remaining_time_label), 0.0, 0.5);
+	gtk_label_set_xalign (GTK_LABEL (self->priv->remaining_time_label), 0.0);
+	gtk_label_set_yalign (GTK_LABEL (self->priv->remaining_time_label), 0.5);
 	gtk_label_set_width_chars (GTK_LABEL (self->priv->remaining_time_label), TIME_LABEL_WIDTH_IN_CHARS);
 
 	gtk_box_pack_start (GTK_BOX (self->priv->time_box), self->priv->current_time_label, FALSE, FALSE, 0);

@@ -1676,11 +1676,7 @@ file_button_press_cb (GtkWidget      *widget,
 		else
 			gtk_tree_selection_unselect_all (selection);
 
-		gtk_menu_popup (GTK_MENU (window->priv->file_popup_menu),
-				NULL, NULL, NULL,
-				window,
-				event->button,
-				event->time);
+		gtk_menu_popup_at_pointer (GTK_MENU (window->priv->file_popup_menu), (GdkEvent *) event);
 		return TRUE;
 	}
 	else if ((event->type == GDK_BUTTON_PRESS) && (event->button == 1)) {
@@ -1766,7 +1762,6 @@ update_ui_from_expander_state (GooWindow *window)
 		gtk_window_resize (GTK_WINDOW (window),
 				   g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_WIDTH),
 				   g_settings_get_int (window->priv->settings_ui, PREF_UI_WINDOW_HEIGHT));
-	gtk_window_set_has_resize_grip (GTK_WINDOW (window), TRUE);
 
 	hints.max_height = window->priv->resizable_playlist ? G_MAXINT : -1;
 	hints.max_width = G_MAXINT;
@@ -1792,12 +1787,11 @@ player_info_cover_clicked_cb (GooPlayerInfo *info,
 			      GooWindow     *window)
 {
 	debug (DEBUG_INFO, "[Window] cover clicked\n");
-
-	gtk_menu_popup (GTK_MENU (window->priv->cover_popup_menu),
-			NULL, NULL, NULL,
-			window,
-			3,
-			GDK_CURRENT_TIME);
+	gtk_menu_popup_at_widget (GTK_MENU (window->priv->cover_popup_menu),
+				  GTK_WIDGET (info),
+				  GDK_GRAVITY_SOUTH_WEST,
+				  GDK_GRAVITY_NORTH_WEST,
+				  NULL);
 }
 
 
@@ -2139,7 +2133,6 @@ goo_window_construct (GooWindow    *window,
 						       G_TYPE_STRING);
 	window->priv->list_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (window->priv->list_store));
 
-	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (window->priv->list_view), TRUE);
 	add_columns (window, GTK_TREE_VIEW (window->priv->list_view));
 	gtk_tree_view_set_enable_search (GTK_TREE_VIEW (window->priv->list_view), TRUE);
 	gtk_tree_view_set_search_column (GTK_TREE_VIEW (window->priv->list_view), COLUMN_TITLE);

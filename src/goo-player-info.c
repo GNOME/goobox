@@ -206,9 +206,9 @@ goo_player_info_construct (GooPlayerInfo *info)
 	priv->update_id = 0;
 
 	gtk_widget_set_margin_top (GTK_WIDGET (info), 10);
-	gtk_widget_set_margin_right (GTK_WIDGET (info), 10);
+	gtk_widget_set_margin_end (GTK_WIDGET (info), 10);
 	gtk_widget_set_margin_bottom (GTK_WIDGET (info), 10);
-	gtk_widget_set_margin_left (GTK_WIDGET (info), 10);
+	gtk_widget_set_margin_start (GTK_WIDGET (info), 10);
 
 	gtk_widget_set_can_focus (GTK_WIDGET (info), FALSE);
 	gtk_box_set_spacing (GTK_BOX (info), 12);
@@ -218,21 +218,25 @@ goo_player_info_construct (GooPlayerInfo *info)
 
 	priv->title1_label = gtk_label_new (NULL);
 	gtk_style_context_add_class (gtk_widget_get_style_context (priv->title1_label), "goobox-info-album");
-	gtk_misc_set_alignment (GTK_MISC (priv->title1_label), 0.0, 0.5);
+	gtk_label_set_xalign (GTK_LABEL (priv->title1_label), 0.0);
+	gtk_label_set_yalign (GTK_LABEL (priv->title1_label), 0.5);
 
 	priv->title2_label = gtk_label_new (NULL);
 	gtk_style_context_add_class (gtk_widget_get_style_context (priv->title2_label), "goobox-info-artist");
-	gtk_misc_set_alignment (GTK_MISC (priv->title2_label), 0.0, 0.5);
+	gtk_label_set_xalign (GTK_LABEL (priv->title2_label), 0.0);
+	gtk_label_set_yalign (GTK_LABEL (priv->title2_label), 0.5);
 	gtk_label_set_selectable (GTK_LABEL (priv->title2_label), TRUE);
 
 	priv->title3_label = gtk_label_new (NULL);
 	gtk_style_context_add_class (gtk_widget_get_style_context (priv->title3_label), "goobox-info-track");
-	gtk_misc_set_alignment (GTK_MISC (priv->title3_label), 0.0, 0.5);
+	gtk_label_set_xalign (GTK_LABEL (priv->title3_label), 0.0);
+	gtk_label_set_yalign (GTK_LABEL (priv->title3_label), 0.5);
 	gtk_label_set_selectable (GTK_LABEL (priv->title3_label), TRUE);
 
 	priv->time_label = gtk_label_new (NULL);
 	gtk_style_context_add_class (gtk_widget_get_style_context (priv->time_label), "goobox-info-time");
-	gtk_misc_set_alignment (GTK_MISC (priv->time_label), 0.0, 0.5);
+	gtk_label_set_xalign (GTK_LABEL (priv->time_label), 0.0);
+	gtk_label_set_yalign (GTK_LABEL (priv->time_label), 0.5);
 	gtk_label_set_selectable (GTK_LABEL (priv->time_label), TRUE);
 
 	gtk_label_set_ellipsize (GTK_LABEL (priv->title1_label), PANGO_ELLIPSIZE_END);

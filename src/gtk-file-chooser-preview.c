@@ -164,7 +164,8 @@ gtk_file_chooser_preview_construct (GtkFileChooserPreview  *preview)
 
 	label = gtk_label_new_with_mnemonic (_("Preview"));
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+	gtk_label_set_yalign (GTK_LABEL (label), 0.5);
 	gtk_container_add (GTK_CONTAINER (button), label);
 	gtk_widget_show (label);
 
@@ -191,7 +192,8 @@ gtk_file_chooser_preview_construct (GtkFileChooserPreview  *preview)
 
 	preview->priv->image_info = gtk_label_new (NULL);
 	gtk_label_set_justify (GTK_LABEL (preview->priv->image_info), GTK_JUSTIFY_CENTER);
-	gtk_misc_set_alignment (GTK_MISC (preview->priv->image_info), 0.5, 0.5);
+	gtk_label_set_xalign (GTK_LABEL (preview->priv->image_info), 0.5);
+	gtk_label_set_yalign (GTK_LABEL (preview->priv->image_info), 0.5);
 	gtk_widget_hide (preview->priv->image_info);
 	gtk_box_pack_start (GTK_BOX (vbox2), preview->priv->image_info, FALSE, FALSE, 0);
 
