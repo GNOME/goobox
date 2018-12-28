@@ -32,10 +32,10 @@ src/goo-application.c
 src/goo-application.h
 src/goo-error.c
 src/goo-error.h
-src/goo-player-bar.c
-src/goo-player-bar.h
 src/goo-player-info.c
 src/goo-player-info.h
+src/goo-player-progress.c
+src/goo-player-progress.h
 src/goo-player.c
 src/goo-player.h
 src/goo-window-actions-callbacks.c
@@ -57,7 +57,6 @@ src/preferences.h
 src/track-info.c
 src/track-info.h
 src/typedefs.h
-src/ui/app-menu.ui
 src/ui/cover-chooser.ui
 src/ui/extract.ui
 src/ui/format-options.ui
