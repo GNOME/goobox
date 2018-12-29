@@ -37,6 +37,7 @@
 #define COVER_BACKUP_FILENAME "original_cover.png"
 #define MAX_IMAGES 20
 #define GET_WIDGET(x) _gtk_builder_get_widget (data->builder, (x))
+#define _GTK_RESPONSE_RESET 10
 
 
 enum {
@@ -373,16 +374,7 @@ start_searching (DialogData *data)
 
 
 static void
-revert_button_clicked_cb (GtkWidget  *widget,
-			  DialogData *data)
-{
-	goo_window_set_cover_image_from_pixbuf (data->window, data->cover_backup);
-}
-
-
-static void
-ok_button_clicked_cb (GtkWidget  *widget,
-		      DialogData *data)
+ok_button_clicked (DialogData *data)
 {
 	GList *list;
 
@@ -416,7 +408,7 @@ icon_view_selection_changed_cb (GtkIconView *icon_view,
 	GList *list;
 
 	list = gtk_icon_view_get_selected_items (GTK_ICON_VIEW (data->icon_view));
-	gtk_widget_set_sensitive (GET_WIDGET ("ok_button"), list != NULL);
+	gtk_widget_set_sensitive (gtk_dialog_get_widget_for_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK), list != NULL);
 
 	g_list_foreach (list, (GFunc) gtk_tree_path_free, NULL);
 	g_list_free (list);
@@ -428,7 +420,7 @@ icon_view_item_activated_cb (GtkIconView *icon_view,
 			     GtkTreePath *path,
 			     DialogData  *data)
 {
-	ok_button_clicked_cb (NULL, data);
+	ok_button_clicked (data);
 }
 
 
@@ -446,11 +438,33 @@ backup_cover_image (DialogData *data)
 	char *cover_filename;
 
 	cover_filename = goo_window_get_cover_filename (data->window);
-	gtk_widget_set_sensitive (GET_WIDGET ("revert_button"), cover_filename != NULL);
+	gtk_widget_set_sensitive (gtk_dialog_get_widget_for_response (GTK_DIALOG (data->dialog), _GTK_RESPONSE_RESET), cover_filename != NULL);
 	if (cover_filename != NULL)
 		data->cover_backup = gdk_pixbuf_new_from_file (cover_filename, NULL);
 
 	g_free (cover_filename);
+}
+
+
+static void
+dialog_response_cb (GtkWidget  *dialog,
+		    int         response_id,
+		    DialogData *data)
+{
+	switch (response_id) {
+	case GTK_RESPONSE_OK:
+		ok_button_clicked (data);
+		gtk_widget_destroy (dialog);
+		break;
+
+	case _GTK_RESPONSE_RESET:
+		goo_window_set_cover_image_from_pixbuf (data->window, data->cover_backup);
+		break;
+
+	default:
+		gtk_widget_destroy (dialog);
+		break;
+	}
 }
 
 
@@ -472,7 +486,29 @@ dlg_cover_chooser (GooWindow  *window,
 
 	/* Get the widgets. */
 
-	data->dialog = GET_WIDGET ("cover_chooser_dialog");
+	data->dialog = g_object_new (GTK_TYPE_DIALOG,
+				     "title", _("Choose a CD Cover"),
+				     "transient-for", GTK_WINDOW (window),
+				     "modal", TRUE,
+				     "use-header-bar", _gtk_settings_get_dialogs_use_header (),
+				     NULL);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (data->dialog))),
+			   GET_WIDGET ("cover_chooser_dialog"));
+	gtk_dialog_add_buttons (GTK_DIALOG (data->dialog),
+				_GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,
+				_GTK_LABEL_OK, GTK_RESPONSE_OK,
+				NULL);
+
+	{
+		GtkWidget *button;
+
+		button = gtk_button_new_from_icon_name ("edit-undo-symbolic", GTK_ICON_SIZE_SMALL_TOOLBAR);
+		gtk_widget_show (button);
+		gtk_dialog_add_action_widget (GTK_DIALOG (data->dialog), button, _GTK_RESPONSE_RESET);
+	}
+
+	gtk_style_context_add_class (gtk_widget_get_style_context (gtk_dialog_get_widget_for_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK)),
+				     GTK_STYLE_CLASS_SUGGESTED_ACTION);
 
 	model = gtk_list_store_new (N_COLUMNS,
 				    G_TYPE_STRING,
@@ -497,7 +533,7 @@ dlg_cover_chooser (GooWindow  *window,
 
 	backup_cover_image (data);
 
-	gtk_widget_set_sensitive (GET_WIDGET ("ok_button"), FALSE);
+	gtk_widget_set_sensitive (gtk_dialog_get_widget_for_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK), FALSE);
 
 	/* Set the signals handlers. */
 
@@ -505,17 +541,9 @@ dlg_cover_chooser (GooWindow  *window,
 			  "destroy",
 			  G_CALLBACK (destroy_cb),
 			  data);
-	g_signal_connect_swapped (GET_WIDGET ("cancel_button"),
-				  "clicked",
-				  G_CALLBACK (gtk_widget_destroy),
-				  G_OBJECT (data->dialog));
-	g_signal_connect (GET_WIDGET ("ok_button"),
-			  "clicked",
-			  G_CALLBACK (ok_button_clicked_cb),
-			  data);
-	g_signal_connect (GET_WIDGET ("revert_button"),
-			  "clicked",
-			  G_CALLBACK (revert_button_clicked_cb),
+	g_signal_connect (G_OBJECT (data->dialog),
+			  "response",
+			  G_CALLBACK (dialog_response_cb),
 			  data);
 	g_signal_connect (G_OBJECT (data->icon_view),
 			  "selection-changed",
