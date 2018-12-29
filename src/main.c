@@ -128,9 +128,7 @@ system_notify (GooWindow       *window,
 	       const char      *body)
 {
 	GNotification *notification;
-	GFile         *cover_file;
-	GIcon         *cover_icon;
-	const char    *device_id;
+	const char    *cover_path;
 
 	notification = g_notification_new (summary);
 	if (body != NULL)
@@ -138,24 +136,41 @@ system_notify (GooWindow       *window,
 
 	/* cover */
 
-	cover_file = g_file_new_for_path (goo_player_info_get_cover_file (GOO_PLAYER_INFO (goo_window_get_player_info (window))));
-	cover_icon = g_file_icon_new (cover_file);
-	g_notification_set_icon (G_NOTIFICATION (notification), cover_icon);
+	cover_path = goo_player_info_get_cover_file (GOO_PLAYER_INFO (goo_window_get_player_info (window)));
+	if (cover_path != NULL) {
+		GFile *cover_file;
+		GIcon *cover_icon;
+
+		cover_file = g_file_new_for_path (cover_path);
+		cover_icon = g_file_icon_new (cover_file);
+		g_notification_set_icon (G_NOTIFICATION (notification), cover_icon);
+
+		g_object_unref (cover_icon);
+		g_object_unref (cover_file);
+	}
 
 	/* actions */
 
-	device_id = goo_player_get_device (goo_window_get_player (window));
-	if (goo_player_get_state (goo_window_get_player (window)) == GOO_PLAYER_STATE_PLAYING)
-		g_notification_add_button_with_target (G_NOTIFICATION (notification), _("Pause"), "app.pause", "s", device_id);
-	else
-		g_notification_add_button_with_target (G_NOTIFICATION (notification), _("Play"), "app.play", "s", device_id);
-	g_notification_add_button_with_target (G_NOTIFICATION (notification), _("Next"), "app.play-next", "s", device_id);
+	if (g_strcmp0 (id, "new-track") == 0) {
+		const char *device_id;
+
+		device_id = goo_player_get_device (goo_window_get_player (window));
+		if (goo_player_get_state (goo_window_get_player (window)) == GOO_PLAYER_STATE_PLAYING)
+			g_notification_add_button_with_target (G_NOTIFICATION (notification), _("Pause"), "app.pause", "s", device_id);
+		else
+			g_notification_add_button_with_target (G_NOTIFICATION (notification), _("Play"), "app.play", "s", device_id);
+		g_notification_add_button_with_target (G_NOTIFICATION (notification), _("Next"), "app.play-next", "s", device_id);
+	}
+	else if (g_strcmp0 (id, "new-album") == 0) {
+		const char *device_id;
+
+		device_id = goo_player_get_device (goo_window_get_player (window));
+		g_notification_add_button_with_target (G_NOTIFICATION (notification), _("Play"), "app.play-next", "s", device_id);
+	}
 
 	/* send */
 
 	g_application_send_notification (G_APPLICATION (gtk_window_get_application (GTK_WINDOW (window))), id, notification);
 
-	g_object_unref (cover_icon);
-	g_object_unref (cover_file);
 	g_object_unref (notification);
 }
