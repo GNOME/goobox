@@ -1179,12 +1179,8 @@ notify_current_state_cb (gpointer user_data)
 	}
 
 	if (window->priv->album->title != NULL) {
-		char *e_album = g_markup_escape_text (window->priv->album->title, -1);
-
 		g_string_append (info, " - ");
-		g_string_append_printf (info, "%s", e_album);
-
-		g_free (e_album);
+		g_string_append_printf (info, "%s", window->priv->album->title);
 	}
 
 	if (goo_player_get_state (goo_window_get_player (window)) == GOO_PLAYER_STATE_PLAYING)
