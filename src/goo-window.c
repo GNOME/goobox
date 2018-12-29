@@ -1252,7 +1252,6 @@ player_start_cb (GooPlayer       *player,
 		break;
 
 	case GOO_PLAYER_ACTION_METADATA:
-		notify_current_state (window, action);
 		goo_window_show_message_bar_action (window, _("Searching disc information…"));
 		break;
 
@@ -1559,6 +1558,7 @@ player_done_cb (GooPlayer       *player,
 		}
 		else
 			goo_window_hide_message_bar (window);
+		notify_current_state (window, action);
 		auto_fetch_cover_image (window);
 		break;
 
