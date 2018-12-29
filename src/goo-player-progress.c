@@ -33,6 +33,8 @@
 #define PLAY_BUTTON_SIZE GTK_ICON_SIZE_SMALL_TOOLPROGRESS
 #define MIN_WIDTH 500
 #define UPDATE_TIMEOUT 50
+#define CHILD_NAME_TIME_SCALE "child-name"
+#define CHILD_NAME_TITLE "title"
 
 
 struct _GooPlayerProgressPrivate {
@@ -42,6 +44,7 @@ struct _GooPlayerProgressPrivate {
 	GtkWidget *time_scale;
 	GtkWidget *time_box;
 	GtkWidget *title;
+	GtkWidget *stack;
 	gint64     track_length;
 	gint64     current_time;
 	gboolean   dragging;
@@ -198,25 +201,43 @@ goo_player_progress_init (GooPlayerProgress *self)
 
 
 static void
+goo_player_progress_update_state (GooPlayerProgress *self)
+{
+	GooPlayerState state;
+
+	if (self->priv->player == NULL)
+		return;
+
+	state = goo_player_get_state (self->priv->player);
+
+	if ((state == GOO_PLAYER_STATE_PLAYING)
+	    || (state == GOO_PLAYER_STATE_PAUSED))
+	{
+		gtk_stack_set_visible_child_name (GTK_STACK (self->priv->stack), CHILD_NAME_TIME_SCALE);
+	}
+	else {
+		gtk_stack_set_visible_child_name (GTK_STACK (self->priv->stack), CHILD_NAME_TITLE);
+	}
+}
+
+
+static void
 goo_player_progress_construct (GooPlayerProgress *self)
 {
-	GtkWidget *frame;
 	GtkWidget *main_box;
 
-	frame = gtk_event_box_new ();
-	gtk_widget_show (frame);
-	gtk_box_pack_start (GTK_BOX (self), frame, TRUE, TRUE, 0);
-
-	main_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	self->priv->stack = main_box = gtk_stack_new ();
+	gtk_stack_set_vhomogeneous (GTK_STACK (main_box), TRUE);
+	gtk_stack_set_transition_type (GTK_STACK (main_box), GTK_STACK_TRANSITION_TYPE_SLIDE_UP_DOWN);
 	gtk_container_set_border_width (GTK_CONTAINER (main_box), 10);
 	gtk_box_set_spacing (GTK_BOX (main_box), 6);
-	gtk_box_set_homogeneous (GTK_BOX (main_box), FALSE);
 	gtk_widget_show (main_box);
-	gtk_container_add (GTK_CONTAINER (frame), main_box);
+	gtk_box_pack_start (GTK_BOX (self), main_box, TRUE, TRUE, 0);
 
 	self->priv->time_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-	gtk_widget_set_no_show_all (self->priv->time_box, TRUE);
-	gtk_box_pack_start (GTK_BOX (main_box), self->priv->time_box, TRUE, FALSE, 0);
+	gtk_widget_set_halign (self->priv->time_box, GTK_ALIGN_CENTER);
+	gtk_widget_show (self->priv->time_box);
+	gtk_stack_add_named (GTK_STACK (main_box), self->priv->time_box, CHILD_NAME_TIME_SCALE);
 
 	self->priv->current_time_label = gtk_label_new (NULL);
 	gtk_label_set_xalign (GTK_LABEL (self->priv->current_time_label), 1.0);
@@ -243,7 +264,8 @@ goo_player_progress_construct (GooPlayerProgress *self)
 	gtk_label_set_single_line_mode (GTK_LABEL (self->priv->title), TRUE);
 	gtk_label_set_ellipsize (GTK_LABEL (self->priv->title), PANGO_ELLIPSIZE_END);
 	gtk_style_context_add_class (gtk_widget_get_style_context (self->priv->title), "title");
-	gtk_box_pack_start (GTK_BOX (main_box), self->priv->title, TRUE, FALSE, 0);
+	gtk_widget_show (self->priv->title);
+	gtk_stack_add_named (GTK_STACK (main_box), self->priv->title, CHILD_NAME_TITLE);
 
 	/* signals */
 
@@ -259,6 +281,8 @@ goo_player_progress_construct (GooPlayerProgress *self)
 			  "button_release_event",
 			  G_CALLBACK (time_scale_button_release_cb),
 			  self);
+
+	goo_player_progress_update_state (self);
 }
 
 
@@ -357,29 +381,6 @@ goo_player_progress_set_sensitive (GooPlayerProgress *self,
 				   gboolean           value)
 {
 	/* FIXME */
-}
-
-
-static void
-goo_player_progress_update_state (GooPlayerProgress *self)
-{
-	GooPlayerState state;
-
-	if (self->priv->player == NULL)
-		return;
-
-	state = goo_player_get_state (self->priv->player);
-
-	if ((state == GOO_PLAYER_STATE_PLAYING)
-	    || (state == GOO_PLAYER_STATE_PAUSED))
-	{
-		gtk_widget_show (self->priv->time_box);
-		gtk_widget_hide (self->priv->title);
-	}
-	else {
-		gtk_widget_hide (self->priv->time_box);
-		gtk_widget_show (self->priv->title);
-	}
 }
 
 
