@@ -2345,6 +2345,7 @@ goo_window_construct (GooWindow    *window,
 		GtkWidget *button;
 
 		button = _gtk_image_button_new_for_header_bar (GOO_ICON_NAME_EXTRACT);
+		gtk_widget_set_tooltip_text (button, _("Extract Tracks"));
 		gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.extract");
 		gtk_widget_show_all (button);
 		gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), button);
