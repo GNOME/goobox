@@ -462,7 +462,7 @@ done_dialog_response_cb (GtkDialog  *dialog,
 			char *uri;
 
 			uri = g_file_get_uri (folder);
-			if (! gtk_show_uri_on_window (GTK_WINDOW (dialog), uri, GDK_CURRENT_TIME, &error))
+			if (! gtk_show_uri_on_window (GTK_WINDOW (data->dialog), uri, GDK_CURRENT_TIME, &error))
 				_gtk_error_dialog_from_gerror_run (GTK_WINDOW (data->window), _("Could not display the destination folder"), &error);
 
 			g_free (uri);
@@ -576,7 +576,6 @@ static void
 rip_current_track (DialogData *data)
 {
 	TrackInfo *track;
-	char      *msg;
 	char      *escaped;
 	GFile     *folder;
 	GError    *error = NULL;
@@ -609,11 +608,9 @@ rip_current_track (DialogData *data)
 
 	track = data->current_track->data;
 
-	msg = g_strdup_printf (_("Extracting “%s”"), track->title);
-	escaped = g_markup_printf_escaped ("<i>%s</i>", msg);
+	escaped = g_markup_printf_escaped ("<i>%s</i>", track->title);
 	gtk_label_set_markup (GTK_LABEL (GET_WIDGET ("track_label")), escaped);
 	g_free (escaped);
-	g_free (msg);
 
 	/* Set the destination file */
 
@@ -710,6 +707,15 @@ start_ripper (DialogData *data)
 }
 
 
+static void
+dialog_response_cb (GtkWidget  *dialog,
+		    int         response_id,
+		    DialogData *data)
+{
+	gtk_widget_destroy (dialog);
+}
+
+
 void
 dlg_ripper (GooWindow *window,
 	    GList     *tracks)
@@ -725,7 +731,20 @@ dlg_ripper (GooWindow *window,
 	data->settings_ripper = g_settings_new (GOOBOX_SCHEMA_RIPPER);
 	data->settings_encoder = g_settings_new (GOOBOX_SCHEMA_ENCODER);
 	data->builder = _gtk_builder_new_from_resource ("ripper.ui");
-	data->dialog = GET_WIDGET ("ripper_dialog");
+
+	data->dialog = g_object_new (GTK_TYPE_DIALOG,
+				     "title", _("Extracting Tracks"),
+				     "transient-for", GTK_WINDOW (window),
+				     "modal", TRUE,
+				     "use-header-bar", _gtk_settings_get_dialogs_use_header (),
+				     "resizable", TRUE,
+				     NULL);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (data->dialog))),
+			   GET_WIDGET ("ripper_dialog"));
+	gtk_dialog_add_buttons (GTK_DIALOG (data->dialog),
+				_GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,
+				NULL);
+
 	data->destination = g_settings_get_string (data->settings_ripper, PREF_RIPPER_DESTINATION);
 	if ((data->destination == NULL) || (strcmp (data->destination, "") == 0))
 		data->destination = g_filename_to_uri (g_get_user_special_dir (G_USER_DIRECTORY_MUSIC), NULL, NULL);
@@ -752,10 +771,10 @@ dlg_ripper (GooWindow *window,
 			  "destroy",
 			  G_CALLBACK (dialog_destroy_cb),
 			  data);
-	g_signal_connect_swapped (GET_WIDGET ("cancel_button"),
-				  "clicked",
-				  G_CALLBACK (gtk_widget_destroy),
-				  data->dialog);
+	g_signal_connect (G_OBJECT (data->dialog),
+			  "response",
+			  G_CALLBACK (dialog_response_cb),
+			  data);
 
 	/* run dialog. */
 
