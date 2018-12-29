@@ -62,7 +62,6 @@ src/ui/extract.ui
 src/ui/format-options.ui
 src/ui/gears-menu.ui
 src/ui/menus.ui
-src/ui/message-dialog.ui
 src/ui/preferences.ui
 src/ui/properties.ui
 src/ui/ripper.ui
