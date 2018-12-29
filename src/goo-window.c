@@ -2599,6 +2599,14 @@ void
 goo_window_set_drive (GooWindow    *window,
 		      BraseroDrive *drive)
 {
+	BraseroDrive *current_drive;
+
+	current_drive = goo_player_get_drive (window->priv->player);
+	if ((drive == NULL) && (current_drive == NULL))
+		return;
+	if ((drive != NULL) && (current_drive != NULL) && (g_strcmp0 (brasero_drive_get_device (drive), brasero_drive_get_device (current_drive)) == 0))
+		return;
+
 	goo_player_set_drive (window->priv->player, drive);
 	goo_player_update (window->priv->player);
 }
