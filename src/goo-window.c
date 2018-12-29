@@ -2330,6 +2330,7 @@ goo_window_construct (GooWindow    *window,
 		_gtk_menu_button_set_style_for_header_bar (button);
 		gtk_menu_button_set_direction (GTK_MENU_BUTTON (button), GTK_ARROW_NONE);
 		gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (button), menu);
+		gtk_menu_button_set_use_popover (GTK_MENU_BUTTON (button), FALSE);
 		gtk_widget_show_all (button);
 		gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), button);
 
