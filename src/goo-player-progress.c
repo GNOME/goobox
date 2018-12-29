@@ -230,7 +230,6 @@ goo_player_progress_construct (GooPlayerProgress *self)
 	gtk_stack_set_vhomogeneous (GTK_STACK (main_box), TRUE);
 	gtk_stack_set_transition_type (GTK_STACK (main_box), GTK_STACK_TRANSITION_TYPE_SLIDE_UP_DOWN);
 	gtk_container_set_border_width (GTK_CONTAINER (main_box), 10);
-	gtk_box_set_spacing (GTK_BOX (main_box), 6);
 	gtk_widget_show (main_box);
 	gtk_box_pack_start (GTK_BOX (self), main_box, TRUE, TRUE, 0);
 
