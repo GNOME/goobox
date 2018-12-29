@@ -163,6 +163,7 @@ gboolean	_gtk_window_get_monitor_info		(GtkWindow		*window,
 							 char			**name);
 gboolean	_gtk_widget_get_monitor_geometry	(GtkWidget		*widget,
 							 GdkRectangle		*geometry);
+gboolean	_gtk_settings_get_dialogs_use_header	(void);
 
 G_END_DECLS
 

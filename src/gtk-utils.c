@@ -1125,3 +1125,16 @@ _gtk_widget_get_monitor_geometry (GtkWidget    *widget,
 
 	return result;
 }
+
+
+gboolean
+_gtk_settings_get_dialogs_use_header (void)
+{
+	gboolean use_header;
+
+	g_object_get (gtk_settings_get_default (),
+		      "gtk-dialogs-use-header", &use_header,
+		      NULL);
+
+	return use_header;
+}
