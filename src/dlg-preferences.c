@@ -62,8 +62,7 @@ typedef struct {
 
 
 static void
-apply_button_clicked_cb (GtkWidget  *widget,
-			 DialogData *data)
+apply_button_clicked (DialogData *data)
 {
 	const char   *destination;
 	BraseroDrive *drive;
@@ -92,22 +91,13 @@ static void
 dialog_destroy_cb (GtkWidget  *widget,
 		   DialogData *data)
 {
-	apply_button_clicked_cb (widget, data);
+	apply_button_clicked (data);
 	data->window->preferences_dialog = NULL;
 
 	_g_object_unref (data->settings_general);
 	_g_object_unref (data->settings_ripper);
 	g_object_unref (data->builder);
 	g_free (data);
-}
-
-
-static void
-close_button_clicked_cb (GtkWidget  *widget,
-			 DialogData *data)
-{
-	apply_button_clicked_cb (widget, data);
-	gtk_widget_destroy (data->dialog);
 }
 
 
@@ -127,7 +117,7 @@ drive_selector_device_changed_cb (GtkWidget   *drive_selector,
 				  const char  *device_path,
 				  DialogData  *data)
 {
-	apply_button_clicked_cb (NULL, data);
+	apply_button_clicked (data);
 	return FALSE;
 }
 
@@ -158,6 +148,16 @@ set_description_label (DialogData *data,
 }
 
 
+static void
+dialog_response_cb (GtkWidget  *dialog,
+		    int         response_id,
+		    DialogData *data)
+{
+	apply_button_clicked (data);
+	gtk_widget_destroy (dialog);
+}
+
+
 void
 dlg_preferences (GooWindow *window)
 {
@@ -184,8 +184,17 @@ dlg_preferences (GooWindow *window)
 
 	/* Get the widgets. */
 
-	data->dialog = GET_WIDGET ("preferences_dialog");
+	data->dialog = g_object_new (GTK_TYPE_DIALOG,
+				     "title", _("CD Player Preferences"),
+				     "transient-for", GTK_WINDOW (window),
+				     "modal", FALSE,
+				     "use-header-bar", _gtk_settings_get_dialogs_use_header (),
+				     "resizable", FALSE,
+				     NULL);
 	window->preferences_dialog = data->dialog;
+
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (data->dialog))),
+			   GET_WIDGET ("preferences_dialog"));
 
 	/* Set widgets data. */
 
@@ -334,9 +343,9 @@ dlg_preferences (GooWindow *window)
 			  "destroy",
 			  G_CALLBACK (dialog_destroy_cb),
 			  data);
-	g_signal_connect (GET_WIDGET ("close_button"),
-			  "clicked",
-			  G_CALLBACK (close_button_clicked_cb),
+	g_signal_connect (G_OBJECT (data->dialog),
+			  "response",
+			  G_CALLBACK (dialog_response_cb),
 			  data);
 	g_signal_connect (GET_WIDGET ("filetype_properties_button"),
 			  "clicked",
@@ -384,8 +393,7 @@ format_dialog_destroy_cb (GtkWidget        *widget,
 
 
 static void
-format_dialog_ok_button_clicked_cb (GtkWidget        *widget,
-	 			    FormatDialogData *data)
+format_dialog_ok_button_clicked (FormatDialogData *data)
 {
 	switch (data->format) {
 	case GOO_FILE_FORMAT_OGG:
@@ -457,6 +465,14 @@ scale_value (double v)
 	return v * 1.0 + 0.0;
 }
 
+static void
+format_dialog_response_cb (GtkWidget        *dialog,
+			   int               response_id,
+			   FormatDialogData *data)
+{
+	format_dialog_ok_button_clicked (data);
+}
+
 
 void
 dlg_format (DialogData    *preferences_data,
@@ -469,7 +485,16 @@ dlg_format (DialogData    *preferences_data,
 	data->format = format;
 	data->settings_encoder = g_settings_new (GOOBOX_SCHEMA_ENCODER);
 	data->builder = _gtk_builder_new_from_resource ("format-options.ui");
-	data->dialog = GET_WIDGET ("format_dialog");
+
+	data->dialog = g_object_new (GTK_TYPE_DIALOG,
+				     "title", _("Format Properties"),
+				     "transient-for", GTK_WINDOW (preferences_data->dialog),
+				     "modal", FALSE,
+				     "use-header-bar", _gtk_settings_get_dialogs_use_header (),
+				     "resizable", FALSE,
+				     NULL);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (data->dialog))),
+			   GET_WIDGET ("format_dialog"));
 
 	/* Set widgets data. */
 
@@ -555,10 +580,9 @@ dlg_format (DialogData    *preferences_data,
 			  "destroy",
 			  G_CALLBACK (format_dialog_destroy_cb),
 			  data);
-
-	g_signal_connect (GET_WIDGET ("ok_button"),
-			  "clicked",
-			  G_CALLBACK (format_dialog_ok_button_clicked_cb),
+	g_signal_connect (G_OBJECT (data->dialog),
+			  "response",
+			  G_CALLBACK (format_dialog_response_cb),
 			  data);
 	g_signal_connect (GET_WIDGET ("quality_scale"),
 			  "value_changed",
