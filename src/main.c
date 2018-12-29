@@ -170,7 +170,7 @@ system_notify (GooWindow       *window,
 
 	/* send */
 
-	g_application_send_notification (G_APPLICATION (gtk_window_get_application (GTK_WINDOW (window))), id, notification);
+	g_application_send_notification (G_APPLICATION (gtk_window_get_application (GTK_WINDOW (window))), "cd-info", notification);
 
 	g_object_unref (notification);
 }
