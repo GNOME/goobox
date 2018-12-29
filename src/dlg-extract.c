@@ -56,8 +56,7 @@ dialog_destroy_cb (GtkWidget  *widget,
 
 
 static void
-ok_button_clicked_cb (GtkWidget  *widget,
-		      DialogData *data)
+ok_button_clicked (DialogData *data)
 {
 	GList *tracks_to_rip;
 
@@ -72,7 +71,24 @@ ok_button_clicked_cb (GtkWidget  *widget,
 	dlg_ripper (data->window, tracks_to_rip);
 
 	track_list_free (tracks_to_rip);
-	gtk_widget_destroy (data->dialog);
+}
+
+
+static void
+dialog_response_cb (GtkWidget  *dialog,
+		    int         response_id,
+		    DialogData *data)
+{
+	switch (response_id) {
+	case GTK_RESPONSE_OK:
+		ok_button_clicked (data);
+		gtk_widget_destroy (dialog);
+		break;
+
+	default:
+		gtk_widget_destroy (dialog);
+		break;
+	}
 }
 
 
@@ -141,7 +157,23 @@ dlg_extract_ask (GooWindow *window)
 
 	/* Get the widgets. */
 
-	data->dialog = GET_WIDGET ("extract_dialog");
+	data->dialog = g_object_new (GTK_TYPE_DIALOG,
+				     "title", _("Extract Tracks"),
+				     "transient-for", GTK_WINDOW (window),
+				     "modal", TRUE,
+				     "use-header-bar", _gtk_settings_get_dialogs_use_header (),
+				     "resizable", FALSE,
+				     NULL);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (data->dialog))),
+			   GET_WIDGET ("extract_dialog"));
+	gtk_dialog_add_buttons (GTK_DIALOG (data->dialog),
+				_GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,
+				_("_Extract"), GTK_RESPONSE_OK,
+				NULL);
+
+	gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
+	gtk_style_context_add_class (gtk_widget_get_style_context (gtk_dialog_get_widget_for_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK)),
+				     GTK_STYLE_CLASS_SUGGESTED_ACTION);
 
 	/* Set widgets data. */
 
@@ -158,13 +190,9 @@ dlg_extract_ask (GooWindow *window)
 			  "destroy",
 			  G_CALLBACK (dialog_destroy_cb),
 			  data);
-	g_signal_connect_swapped (GET_WIDGET ("cancel_button"),
-				  "clicked",
-				  G_CALLBACK (gtk_widget_destroy),
-				  G_OBJECT (data->dialog));
-	g_signal_connect (GET_WIDGET ("ok_button"),
-			  "clicked",
-			  G_CALLBACK (ok_button_clicked_cb),
+	g_signal_connect (G_OBJECT (data->dialog),
+			  "response",
+			  G_CALLBACK (dialog_response_cb),
 			  data);
 
 	/* run dialog. */
