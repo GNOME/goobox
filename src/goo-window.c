@@ -2879,13 +2879,18 @@ goo_window_search_cover_on_internet (GooWindow *window)
 	debug (DEBUG_INFO, "SEARCH ON INTERNET\n");
 
 	if ((window->priv->album->title == NULL) || (window->priv->album->artist == NULL)) {
-		_gtk_message_dialog_new (GTK_WINDOW (window),
-					 GTK_DIALOG_MODAL,
-					 _GTK_ICON_NAME_DIALOG_ERROR,
-				         _("Could not search for a cover on Internet"),
-				         _("You have to enter the artist and album names in order to find the album cover."),
-				         _GTK_LABEL_CLOSE, GTK_RESPONSE_CLOSE,
-				         NULL);
+		GtkWidget *d;
+
+		d = _gtk_error_dialog_new (GTK_WINDOW (window),
+					   GTK_DIALOG_MODAL,
+					   NULL,
+					   _("Could not search for a cover on Internet"),
+					   "%s",
+					   _("You have to enter the artist and album names in order to find the album cover."));
+		g_signal_connect (G_OBJECT (d), "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  NULL);
+		gtk_widget_show (d);
 		return;
 	}
 

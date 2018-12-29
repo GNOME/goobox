@@ -119,10 +119,6 @@
       <summary>Save the playlist</summary>
       <description>Save the playlist of the extracted tracks.</description>
     </key>
-    <key name="view-destination" type="b">
-      <default>false</default>
-      <summary>View the destination</summary>
-    </key>
   </schema>
 
   <schema id="org.gnome.Goobox.Encoder" path="/org/gnome/goobox/encoder/" gettext-domain="goobox">

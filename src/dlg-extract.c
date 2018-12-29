@@ -129,13 +129,12 @@ dlg_extract_ask (GooWindow *window)
 				       FLAC_ENCODER,
 				       WAVE_ENCODER);
 
-		d = _gtk_message_dialog_new (GTK_WINDOW (window),
-					     GTK_DIALOG_MODAL,
-					     _GTK_ICON_NAME_DIALOG_ERROR,
-					     _("No encoder available."),
-					     msg,
-					     _GTK_LABEL_OK, GTK_RESPONSE_OK,
-					     NULL);
+		d = _gtk_error_dialog_new (GTK_WINDOW (window),
+					   GTK_DIALOG_MODAL,
+					   NULL,
+					   _("No encoder available."),
+					   "%s",
+					   msg);
 		g_free (msg);
 
 		g_signal_connect (G_OBJECT (d), "response",

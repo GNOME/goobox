@@ -62,71 +62,56 @@ typedef struct {
 } _GtkAccelerator;
 
 
-GtkWidget*  _gtk_message_dialog_new        (GtkWindow        *parent,
-					    GtkDialogFlags    flags,
-					    const char       *stock_id,
-					    const char       *message,
-					    const char       *secondary_message,
-					    const char       *first_button_text,
-					    ...);
-GtkWidget*
-_gtk_ok_dialog_with_checkbutton_new        (GtkWindow        *parent,
-					    GtkDialogFlags    flags,
-					    const char       *message,
-					    const char       *ok_button_text,
-					    const char       *check_button_label,
-					    GSettings        *settings,
-					    const char       *key);
-void
-_gtk_error_dialog_from_gerror_run          (GtkWindow        *parent,
-					    const char       *title,
-					    GError          **gerror);
-void
-_gtk_error_dialog_from_gerror_show         (GtkWindow        *parent,
-					    const char       *title,
-					    GError          **gerror);
-void        _gtk_error_dialog_run          (GtkWindow        *parent,
-					    const gchar      *format,
-					    ...) G_GNUC_PRINTF (2, 3);
-void        _gtk_info_dialog_run           (GtkWindow        *parent,
-					    const gchar      *format,
-					    ...) G_GNUC_PRINTF (2, 3);
-void        _gtk_dialog_add_to_window_group (GtkDialog       *dialog);
+GtkWidget *	_gtk_message_dialog_new			(GtkWindow        *parent,
+							 GtkDialogFlags    flags,
+							 const char       *message,
+							 const char       *secondary_message,
+							 const char       *first_button_text,
+							 ...);
+GtkWidget *	_gtk_error_dialog_new			(GtkWindow        *parent,
+							 GtkDialogFlags    flags,
+							 GList            *row_output,
+							 const char       *primary_text,
+							 const char       *secondary_text_format,
+							 ...) G_GNUC_PRINTF (5, 6);
+void		_gtk_error_dialog_from_gerror_run	(GtkWindow        *parent,
+							 const char       *title,
+							 GError          **gerror);
+void		_gtk_error_dialog_from_gerror_show	(GtkWindow        *parent,
+							 const char       *title,
+							 GError          **gerror);
+void		_gtk_dialog_add_to_window_group		(GtkDialog       *dialog);
 
-GdkPixbuf * _g_icon_get_pixbuf             (GIcon            *icon,
-		 			    int               size,
-		 			    GtkIconTheme     *icon_theme);
-GdkPixbuf * get_mime_type_pixbuf           (const char       *mime_type,
-					    int               icon_size,
-					    GtkIconTheme     *icon_theme);
-int         _gtk_icon_get_pixel_size       (GtkWidget        *widget,
-					    GtkIconSize       size);
-void        show_help_dialog               (GtkWindow        *parent,
-					    const char       *section);
-void        _gtk_container_remove_children
-					   (GtkContainer     *container,
-					    gpointer          start_after_this,
-			   		    gpointer          stop_before_this);
-int         _gtk_container_get_pos         (GtkContainer     *container,
-					    GtkWidget        *child);
-guint       _gtk_container_get_n_children  (GtkContainer     *container);
-GtkBuilder *
-	    _gtk_builder_new_from_file     (const char       *filename);
-GtkBuilder *
-	    _gtk_builder_new_from_resource (const char       *resource_path);
-GtkWidget *
-	    _gtk_builder_get_widget        (GtkBuilder       *builder,
-			 		    const char       *name);
-GtkWidget * _gtk_combo_box_new_with_texts  (const char       *first_text,
-					    ...);
-void        _gtk_combo_box_append_texts    (GtkComboBox      *combo_box,
-					    const char       *first_text,
-					    ...);
-GtkWidget * _gtk_image_new_from_xpm_data   (char             *xpm_data[]);
-void        _gtk_tree_path_list_free       (GList            *list);
-int         _gtk_paned_get_position2       (GtkPaned         *paned);
-void        _gtk_paned_set_position2       (GtkPaned         *paned,
-					    int               pos);
+GdkPixbuf *	_g_icon_get_pixbuf			(GIcon            *icon,
+							 int               size,
+							 GtkIconTheme     *icon_theme);
+GdkPixbuf *	get_mime_type_pixbuf			(const char       *mime_type,
+							 int               icon_size,
+							 GtkIconTheme     *icon_theme);
+int		_gtk_icon_get_pixel_size		(GtkWidget        *widget,
+							 GtkIconSize       size);
+void		show_help_dialog			(GtkWindow        *parent,
+							 const char       *section);
+void		_gtk_container_remove_children		(GtkContainer     *container,
+							 gpointer          start_after_this,
+							 gpointer          stop_before_this);
+int		_gtk_container_get_pos			(GtkContainer     *container,
+							 GtkWidget        *child);
+guint		_gtk_container_get_n_children		(GtkContainer     *container);
+GtkBuilder *	_gtk_builder_new_from_file		(const char       *filename);
+GtkBuilder *	_gtk_builder_new_from_resource		(const char       *resource_path);
+GtkWidget *	_gtk_builder_get_widget			(GtkBuilder       *builder,
+							 const char       *name);
+GtkWidget *	 _gtk_combo_box_new_with_texts		(const char       *first_text,
+							 ...);
+void		_gtk_combo_box_append_texts		(GtkComboBox      *combo_box,
+							 const char       *first_text,
+							 ...);
+GtkWidget *	_gtk_image_new_from_xpm_data		(char             *xpm_data[]);
+void		_gtk_tree_path_list_free		(GList            *list);
+int		_gtk_paned_get_position2		(GtkPaned         *paned);
+void		_gtk_paned_set_position2		(GtkPaned         *paned,
+							 int               pos);
 void		_g_launch_command			(GtkWidget		*parent,
 							 const char		*command,
 							 const char		*name,

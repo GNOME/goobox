@@ -38,6 +38,7 @@
 #define UPDATE_DELAY 400
 #define BUFFER_SIZE 1024
 #define GET_WIDGET(x) _gtk_builder_get_widget (data->builder, (x))
+#define _GTK_RESPONSE_VIEW 10
 
 
 typedef struct {
@@ -446,14 +447,14 @@ get_destination_folder (DialogData  *data,
 
 static void
 done_dialog_response_cb (GtkDialog  *dialog,
-			 int         button_number,
+			 int         response,
 			 gpointer    userdata)
 {
 	DialogData *data = (DialogData*) userdata;
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 
-	if ((button_number == GTK_RESPONSE_OK) && g_settings_get_boolean (data->settings_ripper, PREF_RIPPER_VIEW_DISTINATION)) {
+	if (response == _GTK_RESPONSE_VIEW) {
 		GFile  *folder;
 		GError *error = NULL;
 
@@ -467,6 +468,7 @@ done_dialog_response_cb (GtkDialog  *dialog,
 
 			g_free (uri);
 		}
+		else
 			_gtk_error_dialog_from_gerror_run (GTK_WINDOW (data->window), _("Could not display the destination folder"), &error);
 
 		g_object_unref (folder);
@@ -590,13 +592,13 @@ rip_current_track (DialogData *data)
 		data->ripping = FALSE;
 		gtk_widget_hide (data->dialog);
 
-		d = _gtk_ok_dialog_with_checkbutton_new (GTK_WINDOW (data->window),
-							 GTK_DIALOG_MODAL,
-							 _("Tracks extracted successfully"),
-							 _GTK_LABEL_OK,
-							 _("_View destination folder"),
-							 data->settings_ripper,
-							 PREF_RIPPER_VIEW_DISTINATION);
+		d = _gtk_message_dialog_new (GTK_WINDOW (data->window),
+					     GTK_DIALOG_MODAL,
+					     _("Tracks extracted successfully"),
+					     NULL,
+					     _GTK_LABEL_CLOSE, GTK_RESPONSE_CLOSE,
+					     _("_View"), _GTK_RESPONSE_VIEW,
+					     NULL);
 
 		g_signal_connect (G_OBJECT (d), "response",
 				  G_CALLBACK (done_dialog_response_cb),

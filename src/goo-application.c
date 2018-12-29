@@ -197,13 +197,12 @@ goo_application_command_line (GApplication            *application,
 
 	if (! required_gstreamer_plugins_available ()) {
 		GtkWidget *d;
-		d = _gtk_message_dialog_new (NULL,
-					     0,
-					     _GTK_ICON_NAME_DIALOG_ERROR,
-					     _("Cannot start the CD player"),
-					     _("In order to read CDs you have to install the GStreamer base plugins"),
-					     _GTK_LABEL_OK, GTK_RESPONSE_OK,
-					     NULL);
+		d = _gtk_error_dialog_new (NULL,
+					   0,
+					   NULL,
+					   _("Cannot start the CD player"),
+					   "%s",
+					   _("In order to read CDs you have to install the GStreamer base plugins"));
 		g_signal_connect_swapped (G_OBJECT (d), "response",
 					  G_CALLBACK (gtk_widget_destroy),
 					  d);

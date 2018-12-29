@@ -49,7 +49,6 @@
 #define PREF_RIPPER_DESTINATION       "destination"
 #define PREF_RIPPER_FILETYPE          "file-type"
 #define PREF_RIPPER_SAVE_PLAYLIST     "save-playlist"
-#define PREF_RIPPER_VIEW_DISTINATION  "view-destination"
 
 #define PREF_ENCODER_OGG_QUALITY      "ogg-quality"
 #define PREF_ENCODER_FLAC_COMPRESSION "flac-compression"
