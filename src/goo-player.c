@@ -321,13 +321,6 @@ goo_player_set_state (GooPlayer       *self,
 		      GooPlayerState   state,
 		      gboolean         notify)
 {
-	if (self->priv->drive != NULL) {
-		if (state == GOO_PLAYER_STATE_PLAYING)
-			brasero_drive_lock (self->priv->drive, _("Playing CD"), NULL);
-		else
-			brasero_drive_unlock (self->priv->drive);
-	}
-
 	self->priv->state = state;
 	if (notify)
 		g_signal_emit (G_OBJECT (self),
@@ -429,7 +422,6 @@ goo_player_finalize (GObject *object)
 	self->priv->exiting = TRUE;
         g_mutex_unlock (&self->priv->data_mutex);
 
-        brasero_drive_unlock (self->priv->drive);
         if (self->priv->medium_added_event != 0)
 		g_signal_handler_disconnect (self->priv->drive, self->priv->medium_added_event);
 	if (self->priv->medium_removed_event != 0)
