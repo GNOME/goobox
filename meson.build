@@ -5,7 +5,7 @@ project('goobox', 'c',
 )
 
 glib_version = '>=2.40'
-gtk_version = '>=3.13.2'
+gtk_version = '>=3.22.0'
 gstreamer_version = '>=1.0.0'
 musicbrainz_version = '>=5.0.0'
 libcoverart_version = '>=1.0.0'
