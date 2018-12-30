@@ -598,7 +598,7 @@ get_cd_info_from_device_ready_cb (GObject      *source_object,
 				  gpointer      user_data)
 {
 	GooPlayer *player = user_data;
-	AlbumInfo *album;
+	AlbumInfo *album = NULL;
 	GError    *error = NULL;
 
 	if (metadata_get_cd_info_from_device_finish (result,
