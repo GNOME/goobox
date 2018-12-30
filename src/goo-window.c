@@ -1138,7 +1138,7 @@ static gboolean
 notify_current_state_cb (gpointer user_data)
 {
 	GooWindow      *window = user_data;
-	GString        *info = g_string_new ("");
+	GString        *info;
 	GooPlayerState  state;
 
 	if (window->priv->notify_event != 0) {
@@ -1170,6 +1170,8 @@ notify_current_state_cb (gpointer user_data)
 			system_notify (window, "audio-cd", _("Audio CD"), NULL);
 		return FALSE;
 	}
+
+	info = g_string_new ("");
 
 	if (window->priv->album->artist != NULL) {
 		char *e_artist = g_markup_escape_text (window->priv->album->artist, -1);
