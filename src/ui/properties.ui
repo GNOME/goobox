@@ -166,7 +166,6 @@
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
-                    <property name="text" translatable="yes">2000</property>
                     <property name="climb_rate">1</property>
                     <property name="value">2000</property>
                   </object>
