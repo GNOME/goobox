@@ -171,15 +171,9 @@ track_info_copy_metadata (TrackInfo  *to_track,
 GList *
 track_list_dup (GList *track_list)
 {
-	GList *new_list;
-
 	if (track_list == NULL)
 		return NULL;
-
-	new_list = g_list_copy (track_list);
-	g_list_foreach (new_list, (GFunc) track_info_ref, NULL);
-
-	return new_list;
+	return g_list_copy_deep (track_list, (GCopyFunc) track_info_copy, NULL);
 }
 
 
