@@ -533,8 +533,10 @@ goo_player_info_set_cover (GooPlayerInfo *info,
 		return;
 
 	g_clear_object (&info->priv->original_cover);
-	if (info->priv->cover_file != NULL)
+	if (info->priv->cover_file != NULL) {
 		g_free (info->priv->cover_file);
+		info->priv->cover_file = NULL;
+	}
 
 	if (strcmp (cover, "no-disc") == 0) {
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (info->priv->notebook), 0);
