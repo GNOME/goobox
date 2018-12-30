@@ -51,6 +51,7 @@ struct _GooPlayerInfoPrivate {
 	GtkWidget   *time_label;
 	GtkWidget   *cover_image;
 	GtkWidget   *cover_button;
+	GtkWidget   *status_button;
 	GtkWidget   *status_image;
 	GtkWidget   *notebook;
 	char        *total_time;
@@ -71,7 +72,8 @@ G_DEFINE_TYPE_WITH_CODE (GooPlayerInfo, goo_player_info, GTK_TYPE_BOX,
 
 enum {
 	COVER_CLICKED,
-        LAST_SIGNAL
+	UPDATE_STATUS,
+	LAST_SIGNAL
 };
 
 enum {
@@ -156,6 +158,14 @@ cover_button_clicked_cb (GtkWidget     *button,
 			 GooPlayerInfo *info)
 {
 	g_signal_emit (info, goo_player_info_signals[COVER_CLICKED], 0);
+}
+
+
+static void
+status_button_clicked_cb (GtkWidget     *button,
+			  GooPlayerInfo *info)
+{
+	g_signal_emit (info, goo_player_info_signals[UPDATE_STATUS], 0);
 }
 
 
@@ -279,9 +289,17 @@ goo_player_info_construct (GooPlayerInfo *info)
 
 	/* Status image */
 
+	priv->status_button = gtk_button_new ();
+	gtk_button_set_relief (GTK_BUTTON (priv->status_button), GTK_RELIEF_NONE);
+	g_signal_connect (G_OBJECT (priv->status_button),
+			  "clicked",
+			  G_CALLBACK (status_button_clicked_cb),
+			  info);
+
 	priv->status_image = gtk_image_new_from_icon_name (GOO_ICON_NAME_NO_DISC, GTK_ICON_SIZE_DIALOG);
 	gtk_widget_set_size_request (priv->status_image, COVER_SIZE, COVER_SIZE);
 	gtk_widget_show (priv->cover_image);
+	gtk_container_add (GTK_CONTAINER (priv->status_button), priv->status_image);
 	/*gtk_container_set_border_width (GTK_CONTAINER (priv->status_image), 6);*/
 
 	/* Frame */
@@ -292,7 +310,7 @@ goo_player_info_construct (GooPlayerInfo *info)
 	gtk_notebook_set_show_border (GTK_NOTEBOOK (priv->notebook), FALSE);
 	gtk_widget_show (priv->notebook);
 
-	gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook), priv->status_image, NULL);
+	gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook), priv->status_button, NULL);
 	gtk_notebook_append_page (GTK_NOTEBOOK (priv->notebook), priv->cover_button, NULL);
 
 	priv->cover_frame = gtk_frame_new (NULL);
@@ -597,10 +615,19 @@ goo_player_info_class_init (GooPlayerInfoClass *class)
 	widget_class->get_preferred_width = goo_player_info_get_preferred_width;
 
 	goo_player_info_signals[COVER_CLICKED] =
-                g_signal_new ("cover_clicked",
+		g_signal_new ("cover_clicked",
 			      G_TYPE_FROM_CLASS (class),
 			      G_SIGNAL_RUN_LAST,
 			      G_STRUCT_OFFSET (GooPlayerInfoClass, cover_clicked),
+			      NULL, NULL,
+			      goo_marshal_VOID__VOID,
+			      G_TYPE_NONE,
+			      0);
+	goo_player_info_signals[UPDATE_STATUS] =
+		g_signal_new ("update-status",
+			      G_TYPE_FROM_CLASS (class),
+			      G_SIGNAL_RUN_LAST,
+			      G_STRUCT_OFFSET (GooPlayerInfoClass, update_status),
 			      NULL, NULL,
 			      goo_marshal_VOID__VOID,
 			      G_TYPE_NONE,

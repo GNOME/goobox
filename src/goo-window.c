@@ -1790,6 +1790,20 @@ player_info_cover_clicked_cb (GooPlayerInfo *info,
 
 
 static void
+player_info_update_status_cb (GooPlayerInfo *info,
+			      GooWindow     *window)
+{
+	BraseroDrive *drive;
+
+	debug (DEBUG_INFO, "[Window] update status\n");
+
+	drive = goo_player_get_drive (window->priv->player);
+	if (drive != NULL)
+		brasero_drive_reprobe (drive);
+}
+
+
+static void
 window_sync_ui_with_preferences (GooWindow *window)
 {
 	update_ui_from_expander_state (window);
@@ -2271,6 +2285,10 @@ goo_window_construct (GooWindow    *window,
 	g_signal_connect (window->priv->info,
 			  "cover_clicked",
 			  G_CALLBACK (player_info_cover_clicked_cb),
+			  window);
+	g_signal_connect (window->priv->info,
+			  "update-status",
+			  G_CALLBACK (player_info_update_status_cb),
 			  window);
 	gtk_box_pack_start (GTK_BOX (hbox), window->priv->info, TRUE, TRUE, 0);
 

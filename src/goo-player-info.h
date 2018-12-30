@@ -48,7 +48,8 @@ struct _GooPlayerInfoClass
 
 	/*<signals>*/
 
-        void (*cover_clicked) (GooPlayerInfo *info);
+	void (*cover_clicked) (GooPlayerInfo *info);
+	void (*update_status) (GooPlayerInfo *info);
 };
 
 GType		goo_player_info_get_type	(void);
