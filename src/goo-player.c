@@ -38,6 +38,8 @@
 #define REFRESH_RATE 5
 #define PROGRESS_DELAY 400
 #define QUEUE_SIZE 16384U /*131072U*/
+#define PIPELINE_VOLUME(x) ((x) / 100.0)
+
 
 struct _GooPlayerPrivate {
 	BraseroDrive    *drive;
@@ -282,6 +284,8 @@ create_pipeline (GooPlayer *self)
 		      "vis-plugin", vis_plugin,
 		      "flags", flags,
 		      "uri", "cdda://",
+		      "volume", PIPELINE_VOLUME (self->priv->volume_value),
+		      "buffer-duration", (guint64) 10 * GST_SECOND,
 		      NULL);
 
 	g_signal_connect (self->priv->pipeline,
@@ -961,10 +965,8 @@ goo_player_set_audio_volume (GooPlayer *player,
 		return;
 
 	player->priv->volume_value = vol;
-	/*
 	if (player->priv->pipeline != NULL)
-		g_object_set (G_OBJECT (player->priv->pipeline), "volume", vol, NULL);
-	*/
+		g_object_set (G_OBJECT (player->priv->pipeline), "volume", PIPELINE_VOLUME (player->priv->volume_value), NULL);
 }
 
 

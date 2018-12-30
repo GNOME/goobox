@@ -401,7 +401,7 @@ goo_window_finalize (GObject *object)
 
 		/* Save preferences */
 
-		g_settings_set_int (window->priv->settings_general, PREF_GENERAL_VOLUME, (int) (goo_player_get_audio_volume (window->priv->player) * 100.0));
+		g_settings_set_int (window->priv->settings_general, PREF_GENERAL_VOLUME, goo_player_get_audio_volume (window->priv->player));
 
 		/**/
 
@@ -2101,6 +2101,16 @@ progress_skip_to_cb (GooPlayerProgress *progress,
 
 
 static void
+volume_button_value_changed_cb (GtkScaleButton *button,
+				gdouble         value,
+				gpointer        user_data)
+{
+	GooWindow *window = user_data;
+	goo_player_set_audio_volume (window->priv->player, value);
+}
+
+
+static void
 goo_window_construct (GooWindow    *window,
 		      BraseroDrive *drive)
 {
@@ -2126,9 +2136,17 @@ goo_window_construct (GooWindow    *window,
 	if (icon_size == 0)
 		icon_size = get_icon_size_from_settings (GTK_ICON_SIZE_LARGE_TOOLBAR);
 
+	/* Create the settings objects */
+
+	window->priv->settings_general = g_settings_new (GOOBOX_SCHEMA_GENERAL);
+	window->priv->settings_ui = g_settings_new (GOOBOX_SCHEMA_UI);
+	window->priv->settings_playlist = g_settings_new (GOOBOX_SCHEMA_PLAYLIST);
+	window->priv->settings_encoder = g_settings_new (GOOBOX_SCHEMA_ENCODER);
+
 	/* Create the data */
 
 	window->priv->player = goo_player_new (drive);
+	goo_player_set_audio_volume (window->priv->player, g_settings_get_int (window->priv->settings_general, PREF_GENERAL_VOLUME));
 
 	g_signal_connect (window->priv->player,
 			  "start",
@@ -2144,13 +2162,6 @@ goo_window_construct (GooWindow    *window,
 			  window);
 
 	window->priv->playlist = NULL;
-
-	/* Create the settings objects */
-
-	window->priv->settings_general = g_settings_new (GOOBOX_SCHEMA_GENERAL);
-	window->priv->settings_ui = g_settings_new (GOOBOX_SCHEMA_UI);
-	window->priv->settings_playlist = g_settings_new (GOOBOX_SCHEMA_PLAYLIST);
-	window->priv->settings_encoder = g_settings_new (GOOBOX_SCHEMA_ENCODER);
 
 	/* Create the widgets. */
 
@@ -2311,6 +2322,25 @@ goo_window_construct (GooWindow    *window,
 		gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.next-track");
 		gtk_widget_show_all (button);
 		gtk_box_pack_start (GTK_BOX (button_box), button, FALSE, FALSE, 0);
+
+		button = gtk_volume_button_new ();
+		gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NORMAL);
+		gtk_widget_set_valign (button, GTK_ALIGN_CENTER);
+		gtk_scale_button_set_adjustment (GTK_SCALE_BUTTON (button),
+						 gtk_adjustment_new (0.0,
+								     0.0,
+								     100.0,
+								     1.0,
+								     10.0,
+								     0.0));
+		gtk_scale_button_set_value (GTK_SCALE_BUTTON (button), goo_player_get_audio_volume (window->priv->player));
+		gtk_widget_show (button);
+		gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), button);
+
+		g_signal_connect (button,
+				  "value-changed",
+				  G_CALLBACK (volume_button_value_changed_cb),
+				  window);
 	}
 
 	/* gears menu button */
