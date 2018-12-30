@@ -33,7 +33,6 @@ extern int	       arg_toggle_visibility;
 GtkWidget *	main_get_window_from_device	(const char	*device);
 BraseroDrive *	main_get_most_likely_drive	(void);
 BraseroDrive *	main_get_drive_for_device	(const char	*device);
-gboolean	notification_has_persistence	(void);
 void		system_notify			(GooWindow	*window,
 						const char	*id,
 						const char	*title,
