@@ -12,10 +12,10 @@
 
 * Dependencies
 
-  gtk+ 3.8.0 or greater
-  gstreamer 1.0 or greater
-  libmusicbrainz 5.0.0 or greater
-  libnotify 0.4.3 (optional)
+  gtk+ >= 3.22.0
+  gstreamer >= 1.0
+  libmusicbrainz >= 5.0.0
+  libcoverart >= 1.0 (optional)
 
   required gstreamer plugins:
     cdparanoia: used to play CDs
@@ -24,12 +24,10 @@
 
 * How to install
 
-  mkdir build
-  cd build
-  meson ..
-  ninja
-  ninja install
-  
+  meson build
+  ninja -C build
+  sudo ninja -C build install
+
 * Licensing
 
   Goobox is released under the terms of the GNU General Public
