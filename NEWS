@@ -5,6 +5,7 @@ version 3.5.1
 
   * Added a volume button.
   * Moved the toolbar on top.
+  * Removed application menu.
   * All dialogs use the headerbar.
   * Removed deprecated functions:
     * GTask instead of GSimpleAsyncResult.
