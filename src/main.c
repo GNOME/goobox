@@ -131,6 +131,7 @@ system_notify (GooWindow       *window,
 	const char    *cover_path;
 
 	notification = g_notification_new (summary);
+	g_notification_set_priority (notification, G_NOTIFICATION_PRIORITY_LOW);
 	if (body != NULL)
 		g_notification_set_body (G_NOTIFICATION (notification), body);
 
