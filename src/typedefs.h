@@ -30,10 +30,10 @@
 #define MP3_ENCODER "lamemp3enc"
 #define WAVE_ENCODER "wavenc"
 
-#define OGG_DESCRIPTION "Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3."
-#define FLAC_DESCRIPTION "FLAC is an open source codec that compresses but does not degrade audio quality."
-#define MP3_DESCRIPTION "MP3 is a patented lossy audio codec, supported by most digital audio players."
-#define WAVE_DESCRIPTION "WAV+PCM is a lossless format that holds uncompressed audio."
+#define OGG_DESCRIPTION N_("Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3.")
+#define FLAC_DESCRIPTION N_("FLAC is an open source codec that compresses but does not degrade audio quality.")
+#define MP3_DESCRIPTION N_("MP3 is a patented lossy audio codec, supported by most digital audio players.")
+#define WAVE_DESCRIPTION N_("WAV+PCM is a lossless format that holds uncompressed audio.")
 
 /* same order shown in the preferences dialog */
 
