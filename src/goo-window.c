@@ -43,8 +43,6 @@
 #include "typedefs.h"
 
 #define FILES_TO_PROCESS_AT_ONCE 500
-#define HIDE_TRACK_LIST N_("Hide _tracks")
-#define SHOW_TRACK_LIST N_("Show _tracks")
 #define PLAYER_CHECK_RATE 100
 #define COVER_SIZE 80
 #define IDLE_TIMEOUT 200
