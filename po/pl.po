@@ -1,16 +1,16 @@
 # Polish translation for goobox.
-# Copyright © 2005-2018 the goobox authors.
+# Copyright © 2005-2019 the goobox authors.
 # This file is distributed under the same license as the goobox package.
 # Artur Flinta <aflinta@at.kernel.pl>, 2005-2007.
-# Piotr Drąg <piotrdrag@gmail.com>, 2012-2018.
-# Aviary.pl <community-poland@mozilla.org>, 2012-2018.
+# Piotr Drąg <piotrdrag@gmail.com>, 2012-2019.
+# Aviary.pl <community-poland@mozilla.org>, 2012-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/goobox/issues\n"
-"POT-Creation-Date: 2018-12-30 21:15+0000\n"
-"PO-Revision-Date: 2018-12-30 22:30+0100\n"
+"POT-Creation-Date: 2019-01-12 12:50+0000\n"
+"PO-Revision-Date: 2019-01-12 14:22+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -47,7 +47,7 @@ msgstr ""
 
 #: data/org.gnome.Goobox.desktop.in.in:3
 #: src/goo-application-actions-callbacks.c:64 src/goo-application.c:389
-#: src/goo-window.c:1318 src/goo-window.c:1331 src/goo-window.c:2413
+#: src/goo-window.c:1316 src/goo-window.c:1329 src/goo-window.c:2411
 msgid "CD Player"
 msgstr "Odtwarzacz płyt CD"
 
@@ -153,7 +153,7 @@ msgstr "Różne"
 msgid "%u, loading image: %u"
 msgstr "%u, wczytywanie obrazu: %u"
 
-#: src/dlg-cover-chooser.c:342 src/goo-window.c:2943
+#: src/dlg-cover-chooser.c:342 src/goo-window.c:2941
 msgid "Could not search for a cover on Internet"
 msgstr "Nie można wyszukać okładki w Internecie"
 
@@ -182,7 +182,7 @@ msgstr ""
 msgid "No encoder available."
 msgstr "Brak kodera."
 
-#: src/dlg-extract.c:160 src/goo-window.c:2394
+#: src/dlg-extract.c:160 src/goo-window.c:2392
 msgid "Extract Tracks"
 msgstr "Zgrywanie ścieżek"
 
@@ -247,7 +247,7 @@ msgstr "%d. album z %d"
 msgid "No album found"
 msgstr "Nie odnaleziono albumu"
 
-#: src/dlg-properties.c:264 src/goo-window.c:1253
+#: src/dlg-properties.c:264 src/goo-window.c:1251
 msgid "Searching disc information…"
 msgstr "Wyszukiwanie informacji o płycie…"
 
@@ -347,8 +347,8 @@ msgstr "%d∶%02d"
 msgid "translator_credits"
 msgstr ""
 "Artur Flinta <aflinta@at.kernel.pl>, 2005-2007\n"
-"Piotr Drąg <piotrdrag@gmail.com>, 2012-2018\n"
-"Aviary.pl <community-poland@mozilla.org>, 2012-2018"
+"Piotr Drąg <piotrdrag@gmail.com>, 2012-2019\n"
+"Aviary.pl <community-poland@mozilla.org>, 2012-2019"
 
 #: src/goo-application-actions-callbacks.c:66
 msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
@@ -416,11 +416,11 @@ msgstr ""
 msgid "Click here to choose a cover for this CD"
 msgstr "Kliknięcie tutaj umożliwi wybranie okładki dla tej płyty CD"
 
-#: src/goo-player-info.c:420 src/goo-window.c:1152
+#: src/goo-player-info.c:420 src/goo-window.c:1150
 msgid "No disc"
 msgstr "Brak płyty"
 
-#: src/goo-player-info.c:423 src/goo-window.c:1157
+#: src/goo-player-info.c:423 src/goo-window.c:1155
 msgid "Data disc"
 msgstr "Płyta z danymi"
 
@@ -436,7 +436,7 @@ msgstr "Sprawdzanie napędu CD"
 msgid "Reading CD"
 msgstr "Odczytywanie płyty CD"
 
-#: src/goo-player-info.c:439 src/goo-window.c:1170 src/goo-window.c:1338
+#: src/goo-player-info.c:439 src/goo-window.c:1168 src/goo-window.c:1336
 msgid "Audio CD"
 msgstr "Płyta CD-Audio"
 
@@ -446,43 +446,35 @@ msgstr "Płyta CD-Audio"
 msgid "Could not execute command"
 msgstr "Nie można wykonać polecenia"
 
-#: src/goo-window.c:46
-msgid "Hide _tracks"
-msgstr "_Ukryj ścieżki"
-
-#: src/goo-window.c:47
-msgid "Show _tracks"
-msgstr "_Wyświetl ścieżki"
-
-#: src/goo-window.c:1554
+#: src/goo-window.c:1552
 msgid "No information found for this disc"
 msgstr "Nie odnaleziono informacji o tej płycie"
 
-#: src/goo-window.c:2268 src/ui/gears-menu.ui:17 src/ui/menus.ui:17
+#: src/goo-window.c:2266 src/ui/gears-menu.ui:17 src/ui/menus.ui:17
 msgid "_Properties"
 msgstr "_Właściwości"
 
-#: src/goo-window.c:2753
+#: src/goo-window.c:2751
 msgid "Could not save cover image"
 msgstr "Nie można zapisać obrazu okładki"
 
-#: src/goo-window.c:2777 src/goo-window.c:2808
+#: src/goo-window.c:2775 src/goo-window.c:2806
 msgid "Could not load image"
 msgstr "Nie można wczytać obrazu"
 
-#: src/goo-window.c:2879
+#: src/goo-window.c:2877
 msgid "Choose Disc Cover Image"
 msgstr "Wybór obrazu okładki płyty"
 
-#: src/goo-window.c:2898
+#: src/goo-window.c:2896
 msgid "Images"
 msgstr "Obrazy"
 
-#: src/goo-window.c:2906
+#: src/goo-window.c:2904
 msgid "All files"
 msgstr "Wszystkie pliki"
 
-#: src/goo-window.c:2945
+#: src/goo-window.c:2943
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -528,15 +520,15 @@ msgstr "_Otwórz"
 msgid "_Reset"
 msgstr "_Przywróć"
 
-#: src/main.c:159
+#: src/main.c:160
 msgid "Pause"
 msgstr "Wstrzymuje"
 
-#: src/main.c:161 src/main.c:168
+#: src/main.c:162 src/main.c:169
 msgid "Play"
 msgstr "Odtwarza"
 
-#: src/main.c:162
+#: src/main.c:163
 msgid "Next"
 msgstr "Następna"
 
@@ -544,6 +536,33 @@ msgstr "Następna"
 #, c-format
 msgid "Track %u"
 msgstr "Ścieżka %u"
+
+#: src/typedefs.h:33
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
+msgstr ""
+"Vorbis to stratny kodek dźwięku open source o wysokiej jakości i mniejszym "
+"rozmiarze plików niż MP3."
+
+#: src/typedefs.h:34
+msgid ""
+"FLAC is an open source codec that compresses but does not degrade audio "
+"quality."
+msgstr ""
+"FLAC to kodek open source, który kompresuje, ale nie zmniejsza jakości "
+"dźwięku."
+
+#: src/typedefs.h:35
+msgid ""
+"MP3 is a patented lossy audio codec, supported by most digital audio players."
+msgstr ""
+"MP3 to opatentowany stratny kodek dźwięku, obsługiwany przez większość "
+"odtwarzaczy cyfrowych."
+
+#: src/typedefs.h:36
+msgid "WAV+PCM is a lossless format that holds uncompressed audio."
+msgstr "WAV+PCM to bezstratny format przechowujący nieskompresowany dźwięk."
 
 #: src/ui/cover-chooser.ui:24
 msgid "Found images:"
