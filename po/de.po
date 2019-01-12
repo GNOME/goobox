@@ -5,16 +5,16 @@
 # Helge Kreutzmann <debian@helgefjell.de>, 2008, 2009.
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2011.
 # Tim Sabsch <tim@sabsch.com>, 2018.
-# Mario Blättermann <mario.blaettermann@gmail.com>, 2009-2019.
+# Mario Blättermann <mario.blaettermann@gmail.com>, 2009-2011, 2014-2015, 2018-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/goobox/issues\n"
-"POT-Creation-Date: 2018-12-30 21:15+0000\n"
-"PO-Revision-Date: 2019-01-10 17:03+0100\n"
+"POT-Creation-Date: 2019-01-12 12:50+0000\n"
+"PO-Revision-Date: 2019-01-12 18:37+0100\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
-"Language-Team: Deutsch <debian-l10n@debian.org>\n"
+"Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,7 +49,7 @@ msgstr ""
 
 #: data/org.gnome.Goobox.desktop.in.in:3
 #: src/goo-application-actions-callbacks.c:64 src/goo-application.c:389
-#: src/goo-window.c:1318 src/goo-window.c:1331 src/goo-window.c:2413
+#: src/goo-window.c:1316 src/goo-window.c:1329 src/goo-window.c:2411
 msgid "CD Player"
 msgstr "CD-Spieler"
 
@@ -155,7 +155,7 @@ msgstr "Verschiedene"
 msgid "%u, loading image: %u"
 msgstr "%u, Bild wird geladen: %u"
 
-#: src/dlg-cover-chooser.c:342 src/goo-window.c:2943
+#: src/dlg-cover-chooser.c:342 src/goo-window.c:2941
 msgid "Could not search for a cover on Internet"
 msgstr "Es konnte nicht nach einem Hüllen-Bild im Internet gesucht werden"
 
@@ -184,7 +184,7 @@ msgstr ""
 msgid "No encoder available."
 msgstr "Es sind keine Kodierer vorhanden."
 
-#: src/dlg-extract.c:160 src/goo-window.c:2394
+#: src/dlg-extract.c:160 src/goo-window.c:2392
 msgid "Extract Tracks"
 msgstr "Stücke auslesen"
 
@@ -249,7 +249,7 @@ msgstr "Album %d von %d"
 msgid "No album found"
 msgstr "Kein Album gefunden"
 
-#: src/dlg-properties.c:264 src/goo-window.c:1253
+#: src/dlg-properties.c:264 src/goo-window.c:1251
 msgid "Searching disc information…"
 msgstr "Nach Medieninformationen wird gesucht …"
 
@@ -350,7 +350,8 @@ msgid "translator_credits"
 msgstr ""
 "Hendrik Brandt <heb@gnome-de.org>\n"
 "Helge Kreutzmann <debian@helgefjell.de>\n"
-"Mario Blättermann <mario.blaettermann@gmail.com>"
+"Mario Blättermann <mario.blaettermann@gmail.com>\n"
+"Tim Sabsch <tim@sabsch.com>"
 
 #: src/goo-application-actions-callbacks.c:66
 msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
@@ -366,7 +367,7 @@ msgstr "Zu verwendendes CD-Laufwerk"
 
 #: src/goo-application.c:53
 msgid "DEVICE_PATH"
-msgstr "DEVICE_PATH"
+msgstr "GERÄTEPFAD"
 
 #: src/goo-application.c:55
 msgid "Play the CD on startup"
@@ -418,11 +419,11 @@ msgstr ""
 msgid "Click here to choose a cover for this CD"
 msgstr "Klicken Sie hier, um ein Hüllen-Bild für diese CD auszuwählen"
 
-#: src/goo-player-info.c:420 src/goo-window.c:1152
+#: src/goo-player-info.c:420 src/goo-window.c:1150
 msgid "No disc"
 msgstr "Kein Medium"
 
-#: src/goo-player-info.c:423 src/goo-window.c:1157
+#: src/goo-player-info.c:423 src/goo-window.c:1155
 msgid "Data disc"
 msgstr "Daten-Medium"
 
@@ -438,7 +439,7 @@ msgstr "CD-Laufwerk wird überprüft"
 msgid "Reading CD"
 msgstr "CD wird gelesen"
 
-#: src/goo-player-info.c:439 src/goo-window.c:1170 src/goo-window.c:1338
+#: src/goo-player-info.c:439 src/goo-window.c:1168 src/goo-window.c:1336
 msgid "Audio CD"
 msgstr "Audio-CD"
 
@@ -448,43 +449,35 @@ msgstr "Audio-CD"
 msgid "Could not execute command"
 msgstr "Befehl konnte nicht ausgeführt werden"
 
-#: src/goo-window.c:46
-msgid "Hide _tracks"
-msgstr "Stücke _ausblenden"
-
-#: src/goo-window.c:47
-msgid "Show _tracks"
-msgstr "Stücke a_nzeigen"
-
-#: src/goo-window.c:1554
+#: src/goo-window.c:1552
 msgid "No information found for this disc"
 msgstr "Keine Information für diese CD gefunden"
 
-#: src/goo-window.c:2268 src/ui/gears-menu.ui:17 src/ui/menus.ui:17
+#: src/goo-window.c:2266 src/ui/gears-menu.ui:17 src/ui/menus.ui:17
 msgid "_Properties"
 msgstr "_Eigenschaften"
 
-#: src/goo-window.c:2753
+#: src/goo-window.c:2751
 msgid "Could not save cover image"
 msgstr "Hüllen-Bild konnte nicht gespeichert werden"
 
-#: src/goo-window.c:2777 src/goo-window.c:2808
+#: src/goo-window.c:2775 src/goo-window.c:2806
 msgid "Could not load image"
 msgstr "Bild konnte nicht geladen werden"
 
-#: src/goo-window.c:2879
+#: src/goo-window.c:2877
 msgid "Choose Disc Cover Image"
 msgstr "Bild für CD-Hülle auswählen"
 
-#: src/goo-window.c:2898
+#: src/goo-window.c:2896
 msgid "Images"
 msgstr "Bilder"
 
-#: src/goo-window.c:2906
+#: src/goo-window.c:2904
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: src/goo-window.c:2945
+#: src/goo-window.c:2943
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -532,15 +525,15 @@ msgstr "Ö_ffnen"
 msgid "_Reset"
 msgstr "Zu_rücksetzen"
 
-#: src/main.c:159
+#: src/main.c:160
 msgid "Pause"
 msgstr "Pause"
 
-#: src/main.c:161 src/main.c:168
+#: src/main.c:162 src/main.c:169
 msgid "Play"
 msgstr "Wiedergabe"
 
-#: src/main.c:162
+#: src/main.c:163
 msgid "Next"
 msgstr "Nächster"
 
@@ -548,6 +541,34 @@ msgstr "Nächster"
 #, c-format
 msgid "Track %u"
 msgstr "Stück %u"
+
+#: src/typedefs.h:33
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
+msgstr ""
+"Vorbis ist ein quelloffener, verlustbehafteter Audio-Codec mit einer "
+"qualitativ hochwertigen Ausgabe und einer kleineren Dateigröße als bei MP3."
+
+#: src/typedefs.h:34
+msgid ""
+"FLAC is an open source codec that compresses but does not degrade audio "
+"quality."
+msgstr ""
+"FLAC ist ein quelloffener Audio-Codec, der zwar komprimiert, aber die "
+"Klangqualität nicht vermindert."
+
+#: src/typedefs.h:35
+msgid ""
+"MP3 is a patented lossy audio codec, supported by most digital audio players."
+msgstr ""
+"MP3 ist ein patentierter verlustbehafteter Audio-Codec, der von den meisten "
+"digitalen Wiedergabegeräten unterstützt wird."
+
+#: src/typedefs.h:36
+msgid "WAV+PCM is a lossless format that holds uncompressed audio."
+msgstr ""
+"WAV+PCM ist ein verlustloses Format, das die Audio-Daten nicht komprimiert."
 
 #: src/ui/cover-chooser.ui:24
 msgid "Found images:"
@@ -672,6 +693,12 @@ msgstr "_Jahr:"
 #: src/ui/properties.ui:217
 msgid "Search for the remaining data"
 msgstr "Suche nach den verbliebenen Daten"
+
+#~ msgid "Hide _tracks"
+#~ msgstr "Stücke _ausblenden"
+
+#~ msgid "Show _tracks"
+#~ msgstr "Stücke a_nzeigen"
 
 #~ msgid "View the destination"
 #~ msgstr "Ziel öffnen"
