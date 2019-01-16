@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/goobox/issues\n"
-"POT-Creation-Date: 2018-12-30 21:15+0000\n"
-"PO-Revision-Date: 2019-01-07 22:52+0100\n"
+"POT-Creation-Date: 2019-01-12 12:50+0000\n"
+"PO-Revision-Date: 2019-01-16 19:22+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -46,7 +46,7 @@ msgstr ""
 
 #: data/org.gnome.Goobox.desktop.in.in:3
 #: src/goo-application-actions-callbacks.c:64 src/goo-application.c:389
-#: src/goo-window.c:1318 src/goo-window.c:1331 src/goo-window.c:2413
+#: src/goo-window.c:1316 src/goo-window.c:1329 src/goo-window.c:2411
 msgid "CD Player"
 msgstr "Cd-spelare"
 
@@ -152,7 +152,7 @@ msgstr "Diverse"
 msgid "%u, loading image: %u"
 msgstr "%u, läser in bild: %u"
 
-#: src/dlg-cover-chooser.c:342 src/goo-window.c:2943
+#: src/dlg-cover-chooser.c:342 src/goo-window.c:2941
 msgid "Could not search for a cover on Internet"
 msgstr "Kunde inte söka efter ett omslag på internet"
 
@@ -181,7 +181,7 @@ msgstr ""
 msgid "No encoder available."
 msgstr "Ingen kodare tillgänglig."
 
-#: src/dlg-extract.c:160 src/goo-window.c:2394
+#: src/dlg-extract.c:160 src/goo-window.c:2392
 msgid "Extract Tracks"
 msgstr "Extrahera spår"
 
@@ -246,7 +246,7 @@ msgstr "Album %d av %d"
 msgid "No album found"
 msgstr "Inget album hittades"
 
-#: src/dlg-properties.c:264 src/goo-window.c:1253
+#: src/dlg-properties.c:264 src/goo-window.c:1251
 msgid "Searching disc information…"
 msgstr "Söker efter skivinformation…"
 
@@ -418,11 +418,11 @@ msgstr ""
 msgid "Click here to choose a cover for this CD"
 msgstr "Klicka här för att välja ett omslag för denna cd"
 
-#: src/goo-player-info.c:420 src/goo-window.c:1152
+#: src/goo-player-info.c:420 src/goo-window.c:1150
 msgid "No disc"
 msgstr "Ingen skiva"
 
-#: src/goo-player-info.c:423 src/goo-window.c:1157
+#: src/goo-player-info.c:423 src/goo-window.c:1155
 msgid "Data disc"
 msgstr "Dataskiva"
 
@@ -438,7 +438,7 @@ msgstr "Kontrollerar cd-enhet"
 msgid "Reading CD"
 msgstr "Läser cd"
 
-#: src/goo-player-info.c:439 src/goo-window.c:1170 src/goo-window.c:1338
+#: src/goo-player-info.c:439 src/goo-window.c:1168 src/goo-window.c:1336
 msgid "Audio CD"
 msgstr "Ljud-cd"
 
@@ -448,43 +448,35 @@ msgstr "Ljud-cd"
 msgid "Could not execute command"
 msgstr "Kunde inte köra kommando"
 
-#: src/goo-window.c:46
-msgid "Hide _tracks"
-msgstr "Dölj _spår"
-
-#: src/goo-window.c:47
-msgid "Show _tracks"
-msgstr "Visa _spår"
-
-#: src/goo-window.c:1554
+#: src/goo-window.c:1552
 msgid "No information found for this disc"
 msgstr "Ingen information hittades för denna skiva"
 
-#: src/goo-window.c:2268 src/ui/gears-menu.ui:17 src/ui/menus.ui:17
+#: src/goo-window.c:2266 src/ui/gears-menu.ui:17 src/ui/menus.ui:17
 msgid "_Properties"
 msgstr "_Egenskaper"
 
-#: src/goo-window.c:2753
+#: src/goo-window.c:2751
 msgid "Could not save cover image"
 msgstr "Kunde inte spara omslagsbild"
 
-#: src/goo-window.c:2777 src/goo-window.c:2808
+#: src/goo-window.c:2775 src/goo-window.c:2806
 msgid "Could not load image"
 msgstr "Kunde inte läsa in bild"
 
-#: src/goo-window.c:2879
+#: src/goo-window.c:2877
 msgid "Choose Disc Cover Image"
 msgstr "Välj en skivomslagsbild"
 
-#: src/goo-window.c:2898
+#: src/goo-window.c:2896
 msgid "Images"
 msgstr "Bilder"
 
-#: src/goo-window.c:2906
+#: src/goo-window.c:2904
 msgid "All files"
 msgstr "Alla filer"
 
-#: src/goo-window.c:2945
+#: src/goo-window.c:2943
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
@@ -532,15 +524,15 @@ msgstr "Ö_ppna"
 msgid "_Reset"
 msgstr "_Återställ"
 
-#: src/main.c:159
+#: src/main.c:160
 msgid "Pause"
 msgstr "Paus"
 
-#: src/main.c:161 src/main.c:168
+#: src/main.c:162 src/main.c:169
 msgid "Play"
 msgstr "Spela"
 
-#: src/main.c:162
+#: src/main.c:163
 msgid "Next"
 msgstr "Nästa"
 
@@ -548,6 +540,33 @@ msgstr "Nästa"
 #, c-format
 msgid "Track %u"
 msgstr "Spår %u"
+
+#: src/typedefs.h:33
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
+msgstr ""
+"Vorbis är en destruktiv ljudkodek som är öppen källkod och har högkvalitativ "
+"utdata med en mindre filstorlek än MP3."
+
+#: src/typedefs.h:34
+msgid ""
+"FLAC is an open source codec that compresses but does not degrade audio "
+"quality."
+msgstr ""
+"FLAC är en öppen källkods-kodek som komprimerar men inte försämrar "
+"ljudkvalitet."
+
+#: src/typedefs.h:35
+msgid ""
+"MP3 is a patented lossy audio codec, supported by most digital audio players."
+msgstr ""
+"MP3 är en patenterad destruktiv ljudkodek som stöds av de flesta digitala "
+"ljudspelare."
+
+#: src/typedefs.h:36
+msgid "WAV+PCM is a lossless format that holds uncompressed audio."
+msgstr "WAV+PCM är ett förlustfritt format som innehåller okomprimerat ljud."
 
 #: src/ui/cover-chooser.ui:24
 msgid "Found images:"
@@ -672,6 +691,12 @@ msgstr "_År:"
 #: src/ui/properties.ui:217
 msgid "Search for the remaining data"
 msgstr "Sök efter återstående data"
+
+#~ msgid "Hide _tracks"
+#~ msgstr "Dölj _spår"
+
+#~ msgid "Show _tracks"
+#~ msgstr "Visa _spår"
 
 #~ msgid "View the destination"
 #~ msgstr "Visa målet"
