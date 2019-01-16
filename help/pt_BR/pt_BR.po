@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: goobox master\n"
-"POT-Creation-Date: 2019-01-16 18:24+0000\n"
+"POT-Creation-Date: 2019-01-16 17:43+0000\n"
 "PO-Revision-Date: 2019-01-16 16:42-0200\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
@@ -85,8 +85,8 @@ msgid ""
 "\">Preferences</gui></guiseq>."
 msgstr ""
 "Para configurar o <app>Reprodutor de CDs</app>, abra o diálogo de "
-"<app>Preferências</app> escolhendo <guiseq><gui style=\"menu\">Editar</"
-"gui><gui style=\"menuitem\">Preferências</gui></guiseq>."
+"<app>Preferências</app> escolhendo <guiseq><gui style=\"menu\">Editar</gui><"
+"gui style=\"menuitem\">Preferências</gui></guiseq>."
 
 #. (itstool) path: page/p
 #: C/preferences.page:13
@@ -125,8 +125,8 @@ msgid ""
 "\">Apply</gui> button."
 msgstr ""
 "Tenha em mente que, quando você altera uma opção, ela é aplicada "
-"automaticamente. É por isso que não há um botão <gui style=\"button\">Ok</"
-"gui> ou <gui style=\"button\">Aplicar</gui>."
+"automaticamente. É por isso que não há um botão <gui style=\"button\""
+">Ok</gui> ou <gui style=\"button\">Aplicar</gui>."
 
 #. (itstool) path: section/title
 #: C/preferences.page:34
