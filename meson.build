@@ -1,6 +1,6 @@
 project('goobox', 'c',
   license : 'GPL2+',
-  version : '3.5.2',
+  version : '3.6.0',
   meson_version : '>=0.43'
 )
 
