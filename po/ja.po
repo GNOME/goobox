@@ -1,7 +1,9 @@
 # goobox ja.po.
-# Copyright (C) 2004,2005,2007,2009-2011 Free Software Foundation, Inc.
+# Copyright (C) 2004-2012, 2020 Free Software Foundation, Inc.
 # This file is distributed under the same license as the 'goobox' package.
-# Takeshi AIHANA <takeshi.aihana@gmail.com>, 2004,2005,2007,2009-2011.
+# Takeshi AIHANA <takeshi.aihana@gmail.com>, 2004-2005, 2007, 2009-2011.
+# Jiro Matsuzawa <jmatsuzawa@src.gnome.org>, 2012.
+# sicklylife <translation@sicklylife.jp>, 2020.
 #
 # *訳語の凡例*
 # (since 2006-06-24):
@@ -13,8 +15,8 @@ msgstr ""
 "Project-Id-Version: goobox master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/goobox/issues\n"
 "POT-Creation-Date: 2019-04-09 17:34+0000\n"
-"PO-Revision-Date: 2012-01-01 19:55+0900\n"
-"Last-Translator: Jiro Matsuzawa <jmatsuzawa@src.gnome.org>\n"
+"PO-Revision-Date: 2020-01-10 00:00+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -23,29 +25,29 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/appdata/org.gnome.Goobox.appdata.xml.in:8
-#, fuzzy
-#| msgid "CD Player"
 msgid "Goobox CD Player"
-msgstr "CD プレイヤー"
+msgstr "Goobox CD プレイヤー"
 
 #: data/appdata/org.gnome.Goobox.appdata.xml.in:9
 #: data/org.gnome.Goobox.desktop.in.in:4
 msgid "Play and extract CDs"
-msgstr "CD を演奏したり楽曲データを取り込みみます"
+msgstr "CD を演奏したり楽曲データを取り込みます"
 
 #: data/appdata/org.gnome.Goobox.appdata.xml.in:11
-#, fuzzy
-#| msgid "Play CDs and save the tracks to disk as files"
 msgid ""
 "Goobox allows you to play CDs and save the tracks to disk as MP3, Ogg, FLAC "
 "or WAV files."
-msgstr "CD を演奏しトラックを取り込んでファイルに保存します"
+msgstr ""
+"Goobox は CD を再生したり、トラックを MP3、Ogg、FLAC、WAV 形式で保存したり"
+"できます。"
 
 #: data/appdata/org.gnome.Goobox.appdata.xml.in:15
 msgid ""
 "Track titles and CD covers are set automatically using the MusicBrainz web "
 "service."
 msgstr ""
+"MusicBrainz ウェブサービスを使ってトラックのタイトルや CD カバーを自動的に"
+"セットします。"
 
 #: data/org.gnome.Goobox.desktop.in.in:3
 #: src/goo-application-actions-callbacks.c:64 src/goo-application.c:389
@@ -62,14 +64,10 @@ msgid "Volume level"
 msgstr "音量レベル"
 
 #: data/org.gnome.Goobox.gschema.xml:59
-#, fuzzy
-#| msgid "'Choose cover' location"
 msgid "“Choose cover” location"
 msgstr "CD ジャケットの選択ダイアログで開く場所"
 
 #: data/org.gnome.Goobox.gschema.xml:60
-#, fuzzy
-#| msgid "Default location for the 'Choose cover' dialog."
 msgid "Default location for the “Choose cover” dialog."
 msgstr "CD ジャケットの選択ダイアログで表示するデフォルトの場所です。"
 
@@ -95,7 +93,7 @@ msgstr "ウィンドウの高さ"
 
 #: data/org.gnome.Goobox.gschema.xml:87
 msgid "Play all tracks"
-msgstr "全てのトラックを演奏します"
+msgstr "すべてのトラックを演奏します"
 
 #: data/org.gnome.Goobox.gschema.xml:91
 msgid "Shuffle playlist"
@@ -173,7 +171,7 @@ msgid ""
 "• %s → Waveform PCM"
 msgstr ""
 "CD のトラックを取り込むには、次に示す GStreamer プラグインを少なくとも一つイ"
-"ンストールして下さい:\n"
+"ンストールしてください:\n"
 "\n"
 "• %s → Ogg Vorbis\n"
 "• %s → FLAC\n"
@@ -205,7 +203,7 @@ msgstr "FLAC"
 
 #: src/dlg-preferences.c:280 src/dlg-preferences.c:535
 msgid "MP3"
-msgstr ""
+msgstr "MP3"
 
 #: src/dlg-preferences.c:294
 msgid "Waveform PCM"
@@ -249,10 +247,8 @@ msgid "No album found"
 msgstr "アルバムが見つかりませんでした"
 
 #: src/dlg-properties.c:264 src/goo-window.c:1251
-#, fuzzy
-#| msgid "Searching disc info..."
 msgid "Searching disc information…"
-msgstr "ディスク情報の検索中..."
+msgstr "ディスク情報の検索中…"
 
 #: src/dlg-properties.c:325
 msgid "#"
@@ -271,14 +267,12 @@ msgid "Properties"
 msgstr "プロパティ"
 
 #: src/dlg-ripper.c:166
-#, fuzzy, c-format
-#| msgid "(%d:%02d:%02d Remaining)"
+#, c-format
 msgid "(%d∶%02d∶%02d Remaining)"
 msgstr "(残り %d:%02d:%02d)"
 
 #: src/dlg-ripper.c:168
-#, fuzzy, c-format
-#| msgid "(%d:%02d Remaining)"
+#, c-format
 msgid "(%d∶%02d Remaining)"
 msgstr "(残り %d:%02d)"
 
@@ -331,9 +325,7 @@ msgstr "CD トラックの取り込み中"
 #. * of "%d" if your locale uses localized digits.
 #.
 #: src/glib-utils.c:2225
-#, fuzzy, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
+#, c-format
 msgctxt "long time format"
 msgid "%d∶%02d∶%02d"
 msgstr "%d:%02d:%02d"
@@ -345,9 +337,7 @@ msgstr "%d:%02d:%02d"
 #. * "%d" if your locale uses localized digits.
 #.
 #: src/glib-utils.c:2234
-#, fuzzy, c-format
-#| msgctxt "short time format"
-#| msgid "%d:%02d"
+#, c-format
 msgctxt "short time format"
 msgid "%d∶%02d"
 msgstr "%d:%02d"
@@ -356,7 +346,9 @@ msgstr "%d:%02d"
 msgid "translator_credits"
 msgstr ""
 "相花 毅 <takeshi.aihana@gmail.com>\n"
-"日本GNOMEユーザー会 <http://www.gnome.gr.jp>"
+"日本 GNOME ユーザー会 <http://www.gnome.gr.jp>\n"
+"Jiro Matsuzawa <jmatsuzawa@src.gnome.org>\n"
+"sicklylife <translation@sicklylife.jp>"
 
 #: src/goo-application-actions-callbacks.c:66
 msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
@@ -400,7 +392,7 @@ msgstr "CD を取り出す"
 
 #: src/goo-application.c:73
 msgid "Toggle the main window visibility"
-msgstr "メイン・ウィンドウの表示を切り替える"
+msgstr "メインウィンドウの表示を切り替える"
 
 #: src/goo-application.c:76
 msgid "Quit the application"
@@ -415,11 +407,9 @@ msgid "Cannot start the CD player"
 msgstr "CD プレイヤーを起動できません"
 
 #: src/goo-application.c:205
-#, fuzzy
-#| msgid "In order to read CDs you have to install the gstreamer base plugins"
 msgid "In order to read CDs you have to install the GStreamer base plugins"
 msgstr ""
-"CD を読み込むには Gstreamer のベース・プラグインをインストールして下さい"
+"CD を読み込むには GStreamer のベースプラグインをインストールしてください"
 
 #: src/goo-player-info.c:269
 msgid "Click here to choose a cover for this CD"
@@ -431,7 +421,7 @@ msgstr "ディスクなし"
 
 #: src/goo-player-info.c:423 src/goo-window.c:1155
 msgid "Data disc"
-msgstr "データ・ディスク"
+msgstr "データディスク"
 
 #: src/goo-player-info.c:427
 msgid "Ejecting CD"
@@ -457,13 +447,11 @@ msgstr "コマンドを実行できませんでした"
 
 #: src/goo-window.c:1552
 msgid "No information found for this disc"
-msgstr ""
+msgstr "このディスクの情報が見つかりませんでした"
 
 #: src/goo-window.c:2266 src/ui/gears-menu.ui:17 src/ui/menus.ui:17
-#, fuzzy
-#| msgid "Properties"
 msgid "_Properties"
-msgstr "プロパティ"
+msgstr "プロパティ(_P)"
 
 #: src/goo-window.c:2751
 msgid "Could not save cover image"
@@ -483,14 +471,14 @@ msgstr "画像"
 
 #: src/goo-window.c:2904
 msgid "All files"
-msgstr "全てのファイル"
+msgstr "すべてのファイル"
 
 #: src/goo-window.c:2943
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 msgstr ""
-"アルバムのジャケットを検索するにはアーティストとアルバム名を入力して下さい。"
+"アルバムのジャケットを検索するにはアーティストとアルバム名を入力してください。"
 
 #: src/gtk-file-chooser-preview.c:165
 msgid "Preview"
@@ -502,7 +490,7 @@ msgstr "ピクセル"
 
 #: src/gtk-utils.c:133
 msgid "C_ommand Line Output:"
-msgstr ""
+msgstr "コマンドライン出力(_O):"
 
 #: src/gtk-utils.c:421
 msgid "Could not display help"
@@ -514,19 +502,19 @@ msgstr "アプリケーションを起動できませんでした"
 
 #: src/gtk-utils.h:36
 msgid "_Cancel"
-msgstr ""
+msgstr "キャンセル(_C)"
 
 #: src/gtk-utils.h:37
 msgid "_Close"
-msgstr ""
+msgstr "閉じる(_C)"
 
 #: src/gtk-utils.h:38
 msgid "_OK"
-msgstr ""
+msgstr "OK(_O)"
 
 #: src/gtk-utils.h:39
 msgid "_Open"
-msgstr ""
+msgstr "開く(_O)"
 
 #: src/gtk-utils.h:40
 msgid "_Reset"
@@ -554,35 +542,27 @@ msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
 msgstr ""
-"Vorbis は高音質で MP3 よりもファイル・サイズを低く抑えることが可能ですが、劣"
-"化のあるオープン・ソースな音声コーディックです。"
+"Vorbis は高音質で MP3 よりもファイルサイズを低く抑えることが可能ですが、劣"
+"化のあるオープンソースな音声コーデックです。"
 
 #: src/typedefs.h:34
-#, fuzzy
-#| msgid ""
-#| "Free Lossless Audio Codec (FLAC) is an open source codec that compresses "
-#| "but does not degrade audio quality."
 msgid ""
 "FLAC is an open source codec that compresses but does not degrade audio "
 "quality."
 msgstr ""
-"Free Lossless Audio Codec (FLAC) は圧縮されているものの、元の音声データからの"
-"音質の劣化が無いオープン・ソースなコーデックです。"
+"FLAC は圧縮されているものの、元の音声データからの音質の劣化が無いオープン"
+"ソースなコーデックです。"
 
 #: src/typedefs.h:35
 msgid ""
 "MP3 is a patented lossy audio codec, supported by most digital audio players."
 msgstr ""
+"MP3 は劣化があるものの、多くのデジタルオーディオプレイヤーがサポートしている"
+"音声コーデックです。"
 
 #: src/typedefs.h:36
-#, fuzzy
-#| msgid ""
-#| "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
-#| "modulated (PCM) audio."
 msgid "WAV+PCM is a lossless format that holds uncompressed audio."
-msgstr ""
-"WAV+PCM は非圧縮のパルス符号変調 (PCM: Pulse-Code Modulation) 化された劣化の"
-"無い音声フォーマットです。"
+msgstr "WAV+PCM は非圧縮で劣化の無い音声フォーマットです。"
 
 #: src/ui/cover-chooser.ui:24
 msgid "Found images:"
@@ -590,17 +570,15 @@ msgstr "見つかった画像:"
 
 #: src/ui/extract.ui:17
 msgid "_All tracks"
-msgstr "全てのトラック(_A)"
+msgstr "すべてのトラック(_A)"
 
 #: src/ui/extract.ui:34
 msgid "_Selected tracks"
 msgstr "指定したトラック(_S)"
 
 #: src/ui/gears-menu.ui:6
-#, fuzzy
-#| msgid "_Copy Disc"
 msgid "Copy _Disk"
-msgstr "ディスクのコピー(_C)"
+msgstr "ディスクのコピー(_D)"
 
 #: src/ui/gears-menu.ui:10
 msgid "_Eject"
@@ -608,7 +586,7 @@ msgstr "取り出す(_E)"
 
 #: src/ui/gears-menu.ui:25
 msgid "Play _All"
-msgstr "全て演奏(_A)"
+msgstr "すべて演奏(_A)"
 
 #: src/ui/gears-menu.ui:29
 msgid "_Repeat"
@@ -619,10 +597,8 @@ msgid "S_huffle"
 msgstr "シャッフル(_H)"
 
 #: src/ui/gears-menu.ui:39
-#, fuzzy
-#| msgid "CD Player Preferences"
 msgid "_Preferences"
-msgstr "CD プレイヤーの設定"
+msgstr "設定(_P)"
 
 #: src/ui/gears-menu.ui:43
 msgid "_Help"
@@ -630,7 +606,7 @@ msgstr "ヘルプ(_H)"
 
 #: src/ui/gears-menu.ui:48
 msgid "_About"
-msgstr ""
+msgstr "このアプリケーションについて(_A)"
 
 #: src/ui/menus.ui:7
 msgid "_Play"
@@ -641,10 +617,8 @@ msgid "E_xtract Tracks"
 msgstr "取り込む(_X)"
 
 #: src/ui/menus.ui:25
-#, fuzzy
-#| msgid "_Choose File..."
 msgid "_Choose File…"
-msgstr "ファイルの選択(_C)..."
+msgstr "ファイルの選択(_C)…"
 
 #: src/ui/menus.ui:29
 msgid "_Search on Internet"
@@ -652,17 +626,15 @@ msgstr "インターネットで検索(_S)"
 
 #: src/ui/menus.ui:35
 msgid "_Remove"
-msgstr ""
+msgstr "削除(_R)"
 
 #: src/ui/preferences.ui:19
-#, fuzzy
-#| msgid "Play"
 msgid "Playback"
-msgstr "演奏します"
+msgstr "演奏"
 
 #: src/ui/preferences.ui:51
 msgid "Drive:"
-msgstr ""
+msgstr "ドライブ:"
 
 #: src/ui/preferences.ui:75
 msgid "Automatically play newly inserted discs"
@@ -673,10 +645,8 @@ msgid "Extraction"
 msgstr "取り込み"
 
 #: src/ui/preferences.ui:158
-#, fuzzy
-#| msgid "View the destination"
 msgid "Destination:"
-msgstr "取り込み先を表示するかどうか"
+msgstr "取り込み先:"
 
 #: src/ui/preferences.ui:173
 msgid "Choose destination folder"
@@ -684,7 +654,7 @@ msgstr "ファイルを格納するフォルダーの選択"
 
 #: src/ui/preferences.ui:184
 msgid "Format:"
-msgstr ""
+msgstr "フォーマット:"
 
 #: src/ui/preferences.ui:366
 msgid "_Save playlist"
@@ -692,7 +662,7 @@ msgstr "演奏一覧も保存する(_S)"
 
 #: src/ui/properties.ui:12
 msgid "Single artist"
-msgstr "ソロ・アーティスト"
+msgstr "ソロアーティスト"
 
 #: src/ui/properties.ui:15
 msgid "Various artists"
