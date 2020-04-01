@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: goobox goobox-3-4\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/goobox/issues\n"
-"POT-Creation-Date: 2018-11-30 09:26+0000\n"
-"PO-Revision-Date: 2020-04-01 13:10+0300\n"
+"POT-Creation-Date: 2020-04-01 10:12+0000\n"
+"PO-Revision-Date: 2020-04-01 13:18+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -19,143 +19,148 @@ msgstr ""
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.07.70\n"
 
-#: ../data/appdata/org.gnome.Goobox.appdata.xml.in.h:1
+#: data/appdata/org.gnome.Goobox.appdata.xml.in:8
 msgid "Goobox CD Player"
 msgstr "Програвач компакт-дисків Goobox"
 
-#: ../data/appdata/org.gnome.Goobox.appdata.xml.in.h:2
-#: ../data/org.gnome.Goobox.desktop.in.in.h:2
+#: data/appdata/org.gnome.Goobox.appdata.xml.in:9
+#: data/org.gnome.Goobox.desktop.in.in:4
 msgid "Play and extract CDs"
 msgstr "Відтворення компакт-дисків та видобування даних з них"
 
-#: ../data/appdata/org.gnome.Goobox.appdata.xml.in.h:3
+#: data/appdata/org.gnome.Goobox.appdata.xml.in:11
+#| msgid ""
+#| "Goobox allows you to play CDs and save the tracks to disk as mp3, ogg, "
+#| "flac or wav files."
 msgid ""
-"Goobox allows you to play CDs and save the tracks to disk as mp3, ogg, flac "
-"or wav files."
+"Goobox allows you to play CDs and save the tracks to disk as MP3, Ogg, FLAC "
+"or WAV files."
 msgstr ""
 "За допомогою Goobox ви можете відтворювати компакт-диски і зберігати"
-" композиції з диска у форматах mp3, ogg, flac та wav."
+" композиції з диска у форматах MP3, OGG, FLAC та WAV."
 
-#: ../data/appdata/org.gnome.Goobox.appdata.xml.in.h:4
+#: data/appdata/org.gnome.Goobox.appdata.xml.in:15
 msgid ""
 "Track titles and CD covers are set automatically using the MusicBrainz web "
 "service."
 msgstr ""
-"Назви композицій і зображення обкладинок компакт-дисків буде автоматично"
-" отримано зі служби MusicBrainz."
+"Назви композицій і зображення обкладинок компакт-дисків буде автоматично "
+"отримано зі служби MusicBrainz."
 
-#: ../data/org.gnome.Goobox.desktop.in.in.h:1
-#: ../src/goo-application-actions-callbacks.c:63 ../src/goo-application.c:390
-#: ../src/goo-window.c:1327 ../src/goo-window.c:1340 ../src/goo-window.c:1945
+#: data/org.gnome.Goobox.desktop.in.in:3
+#: src/goo-application-actions-callbacks.c:64 src/goo-application.c:389
+#: src/goo-window.c:1316 src/goo-window.c:1329 src/goo-window.c:2411
 msgid "CD Player"
 msgstr "Програвач компакт-дисків"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:1
+#: data/org.gnome.Goobox.gschema.xml:51
 msgid "Device path"
 msgstr "Шлях до пристрою"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:2
+#: data/org.gnome.Goobox.gschema.xml:55
 msgid "Volume level"
 msgstr "Рівень гучності"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:3
-msgid "'Choose cover' location"
+#: data/org.gnome.Goobox.gschema.xml:59
+#| msgid "'Choose cover' location"
+msgid "“Choose cover” location"
 msgstr "Розташування «Виберіть обкладинку»"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:4
-msgid "Default location for the 'Choose cover' dialog."
+#: data/org.gnome.Goobox.gschema.xml:60
+#| msgid "Default location for the 'Choose cover' dialog."
+msgid "Default location for the “Choose cover” dialog."
 msgstr "Типове розташування вікна «Виберіть обкладинку»."
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:5
+#: data/org.gnome.Goobox.gschema.xml:64
 msgid "Use Sound Juicer to rip discs"
 msgstr "Скористатися «Sound Juicer» для видобування даних з дисків"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:6
+#: data/org.gnome.Goobox.gschema.xml:68
 msgid "Autoplay"
 msgstr "Автовідтворення"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:7
+#: data/org.gnome.Goobox.gschema.xml:69
 msgid "Autoplay discs after insertion."
 msgstr "Автоматично відтворювати диски після вставлення."
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:8
+#: data/org.gnome.Goobox.gschema.xml:76
 msgid "Window width"
 msgstr "Ширина вікна"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:9
+#: data/org.gnome.Goobox.gschema.xml:80
 msgid "Window height"
 msgstr "Висота вікна"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:10
+#: data/org.gnome.Goobox.gschema.xml:87
 msgid "Play all tracks"
 msgstr "Відтворити усі композиції"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:11
+#: data/org.gnome.Goobox.gschema.xml:91
 msgid "Shuffle playlist"
 msgstr "Перемішати список"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:12
+#: data/org.gnome.Goobox.gschema.xml:95
 msgid "Restart when finished"
 msgstr "Перезапускати після завершення"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:13
+#: data/org.gnome.Goobox.gschema.xml:99
 msgid "Playlist sort method"
 msgstr "Спосіб упорядковування списку композицій"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:14
+#: data/org.gnome.Goobox.gschema.xml:103
 msgid "Playlist sort type"
 msgstr "Тип упорядкування списку композицій"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:15
+#: data/org.gnome.Goobox.gschema.xml:110
 msgid "Extraction folder"
 msgstr "Тека для видобування"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:16
+#: data/org.gnome.Goobox.gschema.xml:114
 msgid "File type"
 msgstr "Тип файлів"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:17
+#: data/org.gnome.Goobox.gschema.xml:115
 msgid "Possible values are: ogg, flac, mp3, wave."
 msgstr "Можливі значення: ogg, flac, mp3, wave."
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:18
+#: data/org.gnome.Goobox.gschema.xml:119
 msgid "Save the playlist"
 msgstr "Зберегти список відтворення"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:19
+#: data/org.gnome.Goobox.gschema.xml:120
 msgid "Save the playlist of the extracted tracks."
 msgstr "Зберегти список відтворення видобутих композицій."
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:20
-msgid "View the destination"
-msgstr "Переглянути теку призначення"
-
-#: ../data/org.gnome.Goobox.gschema.xml.h:21
+#: data/org.gnome.Goobox.gschema.xml:127
 msgid "OGG files quality"
 msgstr "Якість файлів OGG"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:22
+#: data/org.gnome.Goobox.gschema.xml:131
 msgid "FLAC files quality"
 msgstr "Якість файлів FLAC"
 
-#: ../data/org.gnome.Goobox.gschema.xml.h:23
+#: data/org.gnome.Goobox.gschema.xml:135
 msgid "MP3 files quality"
 msgstr "Якість файлів MP3"
 
-#: ../src/album-info.c:176
+#: src/album-info.c:176
 msgid "Various"
 msgstr "Різні"
 
-#: ../src/dlg-cover-chooser.c:276
+#: src/dlg-cover-chooser.c:277
 #, c-format
 msgid "%u, loading image: %u"
 msgstr "%u, завантажуємо зображення: %u"
 
-#: ../src/dlg-cover-chooser.c:341 ../src/goo-window.c:2792
+#: src/dlg-cover-chooser.c:342 src/goo-window.c:2941
 msgid "Could not search for a cover on Internet"
 msgstr "Не вдалося знайти зображення обкладинки у інтернеті"
 
-#: ../src/dlg-extract.c:108
+#: src/dlg-cover-chooser.c:490
+msgid "Choose a CD Cover"
+msgstr "Вибрати обкладинку компакт диска"
+
+#: src/dlg-extract.c:124
 #, c-format
 msgid ""
 "You need at least one of the following GStreamer plugins in order to extract "
@@ -165,134 +170,155 @@ msgid ""
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 msgstr ""
-"Вам слід встановити принаймні один з таких додатків GStreamer, щоб мати змогу"
-" видобути композиції з компакт-диска:\n"
+"Вам слід встановити принаймні один з таких додатків GStreamer, щоб мати "
+"змогу видобути композиції з компакт-диска:\n"
 "\n"
 "• %s → Ogg Vorbis\n"
 "• %s → FLAC\n"
 "• %s → Waveform PCM"
 
-#: ../src/dlg-extract.c:119
+#: src/dlg-extract.c:135
 msgid "No encoder available."
 msgstr "Немає доступних засобів кодування."
 
-#: ../src/dlg-preferences.c:243 ../src/dlg-preferences.c:504
+#: src/dlg-extract.c:160 src/goo-window.c:2392
+msgid "Extract Tracks"
+msgstr "Видобути композиції"
+
+#: src/dlg-extract.c:170
+msgid "_Extract"
+msgstr "_Розпакувати"
+
+#: src/dlg-preferences.c:188
+msgid "CD Player Preferences"
+msgstr "Налаштування програвача компакт-дисків"
+
+#: src/dlg-preferences.c:252 src/dlg-preferences.c:529
 msgid "Ogg Vorbis"
 msgstr "Ogg Vorbis"
 
-#: ../src/dlg-preferences.c:257 ../src/dlg-preferences.c:507
+#: src/dlg-preferences.c:266 src/dlg-preferences.c:532
 msgid "FLAC"
 msgstr "FLAC"
 
-#: ../src/dlg-preferences.c:271 ../src/dlg-preferences.c:510
+#: src/dlg-preferences.c:280 src/dlg-preferences.c:535
 msgid "MP3"
 msgstr "MP3"
 
-#: ../src/dlg-preferences.c:285
+#: src/dlg-preferences.c:294
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
 
-#: ../src/dlg-preferences.c:479
+#: src/dlg-preferences.c:490
+msgid "Format Properties"
+msgstr "Властивості формату"
+
+#: src/dlg-preferences.c:504
 msgid "Faster compression"
 msgstr "Швидше стискання"
 
-#: ../src/dlg-preferences.c:483
+#: src/dlg-preferences.c:508
 msgid "Higher compression"
 msgstr "Вище стискання"
 
-#: ../src/dlg-preferences.c:490
+#: src/dlg-preferences.c:515
 msgid "Smaller size"
 msgstr "Менший розмір"
 
-#: ../src/dlg-preferences.c:494
+#: src/dlg-preferences.c:519
 msgid "Higher quality"
 msgstr "Вища якість"
 
-#: ../src/dlg-preferences.c:522
+#: src/dlg-preferences.c:547
 msgid "Quality:"
 msgstr "Якість:"
 
-#: ../src/dlg-preferences.c:525
+#: src/dlg-preferences.c:550
 msgid "Compression level:"
 msgstr "Рівень стискання:"
 
-#: ../src/dlg-properties.c:214
+#: src/dlg-properties.c:188
 #, c-format
 msgid "Album %d of %d"
 msgstr "Альбом %d з %d"
 
-#: ../src/dlg-properties.c:271
+#: src/dlg-properties.c:245
 msgid "No album found"
 msgstr "Альбому не знайдено"
 
-#: ../src/dlg-properties.c:290 ../src/goo-window.c:1262
+#: src/dlg-properties.c:264 src/goo-window.c:1251
 msgid "Searching disc information…"
 msgstr "Шукаємо дані щодо диска."
 
-#: ../src/dlg-properties.c:351
+#: src/dlg-properties.c:325
 msgid "#"
 msgstr "№"
 
-#: ../src/dlg-properties.c:369
+#: src/dlg-properties.c:343
 msgid "Title"
 msgstr "Назва"
 
-#: ../src/dlg-properties.c:402
+#: src/dlg-properties.c:376
 msgid "Artist"
 msgstr "Виконавець"
 
-#: ../src/dlg-ripper.c:165
-#, c-format
-msgid "(%d:%02d:%02d Remaining)"
-msgstr "(лишилося %d:%02d:%02d)"
+#: src/dlg-properties.c:490
+msgid "Properties"
+msgstr "Властивості"
 
-#: ../src/dlg-ripper.c:167
+#: src/dlg-ripper.c:166
 #, c-format
-msgid "(%d:%02d Remaining)"
+#| msgid "(%d:%02d:%02d Remaining)"
+msgid "(%d∶%02d∶%02d Remaining)"
+msgstr "(лишилося %d∶%02d∶%02d)"
+
+#: src/dlg-ripper.c:168
+#, c-format
+#| msgid "(%d:%02d Remaining)"
+msgid "(%d∶%02d Remaining)"
 msgstr "(лишилося %d:%02d)"
 
-#: ../src/dlg-ripper.c:172
+#: src/dlg-ripper.c:173
 #, c-format
 msgid "Extracting track: %d of %d %s"
 msgstr "Видобуваємо композицію: %d з %d %s"
 
-#: ../src/dlg-ripper.c:209 ../src/dlg-ripper.c:318
+#: src/dlg-ripper.c:210 src/dlg-ripper.c:319
 msgid "Could not extract the tracks"
 msgstr "Не вдалося видобути композиції"
 
-#: ../src/dlg-ripper.c:436
+#: src/dlg-ripper.c:437
 #, c-format
 msgid "Invalid destination folder: %s"
 msgstr "Некоректна тека призначення: %s"
 
-#: ../src/dlg-ripper.c:466 ../src/dlg-ripper.c:470
+#: src/dlg-ripper.c:467 src/dlg-ripper.c:472
 msgid "Could not display the destination folder"
 msgstr "Не вдалося показати теку призначення"
 
-#: ../src/dlg-ripper.c:596
+#: src/dlg-ripper.c:597
 msgid "Tracks extracted successfully"
 msgstr "Композиції успішно видобуто"
 
-#: ../src/dlg-ripper.c:598
-msgid "_View destination folder"
-msgstr "П_ереглянути теку призначення"
+#: src/dlg-ripper.c:600
+msgid "_View"
+msgstr "П_ерегляд"
 
-#: ../src/dlg-ripper.c:612
-#, c-format
-msgid "Extracting \"%s\""
-msgstr "Видобуваємо «%s»"
-
-#: ../src/dlg-ripper.c:623 ../src/dlg-ripper.c:632
+#: src/dlg-ripper.c:622 src/dlg-ripper.c:631
 msgid "Could not extract tracks"
 msgstr "Не вдалося видобути композиції"
 
-#: ../src/dlg-ripper.c:663
+#: src/dlg-ripper.c:662
 msgid "Ripped with CD Player"
 msgstr "Видобуто за допомогою «Програвача компакт-дисків»"
 
-#: ../src/dlg-ripper.c:697
+#: src/dlg-ripper.c:696
 msgid "Extracting disc tracks"
 msgstr "Видобуваємо композиції з диска"
+
+#: src/dlg-ripper.c:738
+msgid "Extracting Tracks"
+msgstr "Видобуваємо композиції"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -300,7 +326,7 @@ msgstr "Видобуваємо композиції з диска"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: ../src/glib-utils.c:2225
+#: src/glib-utils.c:2225
 #, c-format
 msgctxt "long time format"
 msgid "%d∶%02d∶%02d"
@@ -312,371 +338,380 @@ msgstr "%d∶%02d∶%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: ../src/glib-utils.c:2234
+#: src/glib-utils.c:2234
 #, c-format
 msgctxt "short time format"
 msgid "%d∶%02d"
 msgstr "%d∶%02d"
 
-#: ../src/goo-application-actions-callbacks.c:60
+#: src/goo-application-actions-callbacks.c:61
 msgid "translator_credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>"
 
-#: ../src/goo-application-actions-callbacks.c:65
+#: src/goo-application-actions-callbacks.c:66
 msgid "Copyright © 2004-2011 Free Software Foundation, Inc."
 msgstr "© 2004-2011 Free Software Foundation, Inc."
 
-#: ../src/goo-application-actions-callbacks.c:66 ../src/goo-application.c:159
+#: src/goo-application-actions-callbacks.c:67 src/goo-application.c:160
 msgid "Play CDs and save the tracks to disk as files"
 msgstr ""
 "Відтворення компакт-дисків і збереження композицій на диск у форматі файлів"
 
-#: ../src/goo-application.c:52
+#: src/goo-application.c:52
 msgid "CD device to be used"
 msgstr "Пристрій для читання компакт-дисків, яким слід скористатися"
 
-#: ../src/goo-application.c:53
+#: src/goo-application.c:53
 msgid "DEVICE_PATH"
 msgstr "ШЛЯХ_ДО_ПРИСТРОЮ"
 
-#: ../src/goo-application.c:55
+#: src/goo-application.c:55
 msgid "Play the CD on startup"
 msgstr "Відтворювати компакт-диск при запуску"
 
-#: ../src/goo-application.c:58
+#: src/goo-application.c:58
 msgid "Toggle play"
 msgstr "Увімкнути або вимкнути відтворення"
 
-#: ../src/goo-application.c:61
+#: src/goo-application.c:61
 msgid "Stop playing"
 msgstr "Припинити відтворення"
 
-#: ../src/goo-application.c:64
+#: src/goo-application.c:64
 msgid "Play the next track"
 msgstr "Відтворити наступну композицію"
 
-#: ../src/goo-application.c:67
+#: src/goo-application.c:67
 msgid "Play the previous track"
 msgstr "Відтворити попередню композицію"
 
-#: ../src/goo-application.c:70
+#: src/goo-application.c:70
 msgid "Eject the CD"
 msgstr "Виштовхнути диск"
 
-#: ../src/goo-application.c:73
+#: src/goo-application.c:73
 msgid "Toggle the main window visibility"
 msgstr "Показати або сховати головне вікно програми"
 
-#: ../src/goo-application.c:76
+#: src/goo-application.c:76
 msgid "Quit the application"
 msgstr "Вийти з програми"
 
-#: ../src/goo-application.c:79
+#: src/goo-application.c:79
 msgid "Show version"
 msgstr "Показати версію"
 
-#: ../src/goo-application.c:202
+#: src/goo-application.c:203
 msgid "Cannot start the CD player"
 msgstr "Не вдалося запустити програвач компакт-дисків"
 
-#: ../src/goo-application.c:203
-msgid "In order to read CDs you have to install the gstreamer base plugins"
+#: src/goo-application.c:205
+#| msgid "In order to read CDs you have to install the gstreamer base plugins"
+msgid "In order to read CDs you have to install the GStreamer base plugins"
 msgstr ""
-"Для читання компакт-дисків вам слід встановити базові додатки gstreamer"
+"Для читання компакт-дисків вам слід встановити базові додатки GStreamer"
 
-#: ../src/goo-player.c:323
-msgid "Playing CD"
-msgstr "Відтворюємо компакт-диск"
-
-#: ../src/goo-player-info.c:253
+#: src/goo-player-info.c:269
 msgid "Click here to choose a cover for this CD"
 msgstr "Натисніть тут, щоб вибрати обкладинку для цього компакт-диска"
 
-#: ../src/goo-player-info.c:395 ../src/goo-window.c:1156
+#: src/goo-player-info.c:420 src/goo-window.c:1150
 msgid "No disc"
 msgstr "Немає диска"
 
-#: ../src/goo-player-info.c:398 ../src/goo-window.c:1161
+#: src/goo-player-info.c:423 src/goo-window.c:1155
 msgid "Data disc"
 msgstr "Диск із даними"
 
-#: ../src/goo-player-info.c:402
+#: src/goo-player-info.c:427
 msgid "Ejecting CD"
 msgstr "Виштовхуємо компакт-диск"
 
-#: ../src/goo-player-info.c:405
+#: src/goo-player-info.c:430
 msgid "Checking CD drive"
 msgstr "Перевіряємо компакт-диск"
 
-#: ../src/goo-player-info.c:408 ../src/goo-player-info.c:411
+#: src/goo-player-info.c:433 src/goo-player-info.c:436
 msgid "Reading CD"
 msgstr "Читаємо компакт-диск"
 
-#: ../src/goo-player-info.c:414 ../src/goo-window.c:1174
-#: ../src/goo-window.c:1347
+#: src/goo-player-info.c:439 src/goo-window.c:1168 src/goo-window.c:1336
 msgid "Audio CD"
 msgstr "Аудіо-КД"
 
-#: ../src/goo-window-actions-callbacks.c:232
-#: ../src/goo-window-actions-callbacks.c:268
-#: ../src/goo-window-actions-callbacks.c:302
+#: src/goo-window-actions-callbacks.c:232
+#: src/goo-window-actions-callbacks.c:268
+#: src/goo-window-actions-callbacks.c:302
 msgid "Could not execute command"
 msgstr "Не вдалося виконати команду"
 
-#: ../src/goo-window.c:47
-msgid "Hide _tracks"
-msgstr "Приховати _композиції"
-
-#: ../src/goo-window.c:48
-msgid "Show _tracks"
-msgstr "Показати _композиції"
-
-#: ../src/goo-window.c:1558
+#: src/goo-window.c:1552
 msgid "No information found for this disc"
 msgstr "Для цього диска ніяких відомостей не знайдено"
 
-#: ../src/goo-window.c:2222 ../src/ui/gears-menu.ui.h:3 ../src/ui/menus.ui.h:3
+#: src/goo-window.c:2266 src/ui/gears-menu.ui:17 src/ui/menus.ui:17
 msgid "_Properties"
 msgstr "В_ластивості"
 
-#: ../src/goo-window.c:2604
+#: src/goo-window.c:2751
 msgid "Could not save cover image"
 msgstr "Не вдалося зберегти зображення обкладинки"
 
-#: ../src/goo-window.c:2628 ../src/goo-window.c:2659
+#: src/goo-window.c:2775 src/goo-window.c:2806
 msgid "Could not load image"
 msgstr "Не вдалося завантажити зображення"
 
-#: ../src/goo-window.c:2730
+#: src/goo-window.c:2877
 msgid "Choose Disc Cover Image"
 msgstr "Виберіть зображення обкладинки диска"
 
-#: ../src/goo-window.c:2749
+#: src/goo-window.c:2896
 msgid "Images"
 msgstr "Зображення"
 
-#: ../src/goo-window.c:2757
+#: src/goo-window.c:2904
 msgid "All files"
 msgstr "усі файли"
 
-#: ../src/goo-window.c:2793
+#: src/goo-window.c:2943
 msgid ""
 "You have to enter the artist and album names in order to find the album "
 "cover."
 msgstr ""
-"Вам слід вказати виконавця і назву альбому, щоб програма змогла знайти"
-" зображення обкладинки альбому."
+"Вам слід вказати виконавця і назву альбому, щоб програма змогла знайти "
+"зображення обкладинки альбому."
 
-#: ../src/gtk-file-chooser-preview.c:165
+#: src/gtk-file-chooser-preview.c:165
 msgid "Preview"
 msgstr "Перегляд"
 
-#: ../src/gtk-file-chooser-preview.c:266
+#: src/gtk-file-chooser-preview.c:268
 msgid "pixels"
 msgstr "пікселів"
 
-#: ../src/gtk-utils.c:500
+#: src/gtk-utils.c:133
+msgid "C_ommand Line Output:"
+msgstr "Вивід _командного рядка:"
+
+#: src/gtk-utils.c:421
 msgid "Could not display help"
 msgstr "Не вдалось показати довідку"
 
-#: ../src/gtk-utils.c:786 ../src/gtk-utils.c:792
+#: src/gtk-utils.c:669 src/gtk-utils.c:675
 msgid "Could not launch the application"
 msgstr "Не вдалося запустити програму"
 
-#: ../src/gtk-utils.h:36
+#: src/gtk-utils.h:36
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: ../src/gtk-utils.h:37 ../src/ui/gears-menu.ui.h:4
+#: src/gtk-utils.h:37
 msgid "_Close"
 msgstr "_Закрити"
 
-#: ../src/gtk-utils.h:38
-msgid "_Ok"
+#: src/gtk-utils.h:38
+#| msgid "_Ok"
+msgid "_OK"
 msgstr "_Гаразд"
 
-#: ../src/gtk-utils.h:39
+#: src/gtk-utils.h:39
 msgid "_Open"
 msgstr "_Відкрити"
 
-#: ../src/gtk-utils.h:40 ../src/ui/cover-chooser.ui.h:2
-#: ../src/ui/properties.ui.h:4
+#: src/gtk-utils.h:40
 msgid "_Reset"
 msgstr "С_кинути"
 
-#: ../src/main.c:272
+#: src/main.c:160
 msgid "Pause"
 msgstr "Пауза"
 
-#: ../src/main.c:279
+#: src/main.c:162 src/main.c:169
 msgid "Play"
 msgstr "Відтворити"
 
-#: ../src/main.c:286
+#: src/main.c:163
 msgid "Next"
 msgstr "Далі"
 
-#: ../src/track-info.c:123
+#: src/track-info.c:123
 #, c-format
 msgid "Track %u"
 msgstr "Доріжка %u"
 
-#: ../src/ui/app-menu.ui.h:1
-msgid "_Preferences"
-msgstr "_Налаштування"
+#: src/typedefs.h:33
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
+msgstr ""
+"Vorbis є кодеком із відкритим кодом. Його використання призводить до втрати"
+" якості даних, але закодовані дані є високоякісними, а їхній розмір є меншим"
+" за розмір даних MP3."
 
-#: ../src/ui/app-menu.ui.h:2
-msgid "Play _All"
-msgstr "Відтворити _усе"
+#: src/typedefs.h:34
+msgid ""
+"FLAC is an open source codec that compresses but does not degrade audio "
+"quality."
+msgstr ""
+"FLAC — кодек із відкритим кодом, використання якого призводить до зменшення"
+" об'єму даних без втрати якості звуку."
 
-#: ../src/ui/app-menu.ui.h:3
-msgid "_Repeat"
-msgstr "Пов_торювати"
+#: src/typedefs.h:35
+msgid ""
+"MP3 is a patented lossy audio codec, supported by most digital audio players."
+msgstr ""
+"MP3 — патентований кодек для зберігання звукових даних із втратою якості."
+" Його підтримку передбачено у більшості цифрових аудіопрогравачів."
 
-#: ../src/ui/app-menu.ui.h:4
-msgid "S_huffle"
-msgstr "П_еремішати"
+#: src/typedefs.h:36
+msgid "WAV+PCM is a lossless format that holds uncompressed audio."
+msgstr ""
+"WAV+PCM — формат зберігання звукових даних без втрат, але і без стискання."
 
-#: ../src/ui/app-menu.ui.h:5
-msgid "_Help"
-msgstr "_Довідка"
-
-#: ../src/ui/app-menu.ui.h:6
-msgid "_About"
-msgstr "_Про програму"
-
-#: ../src/ui/app-menu.ui.h:7
-msgid "_Quit"
-msgstr "Ви_йти"
-
-#: ../src/ui/cover-chooser.ui.h:1
-msgid "Choose a CD Cover"
-msgstr "Вибрати обкладинку компакт диска"
-
-#: ../src/ui/cover-chooser.ui.h:3
+#: src/ui/cover-chooser.ui:24
 msgid "Found images:"
 msgstr "Знайдені зображення:"
 
-#: ../src/ui/extract.ui.h:1
-msgid "Extract Tracks"
-msgstr "Видобути композиції"
-
-#: ../src/ui/extract.ui.h:2
-msgid "_Extract"
-msgstr "_Розпакувати"
-
-#: ../src/ui/extract.ui.h:3
+#: src/ui/extract.ui:17
 msgid "_All tracks"
 msgstr "_Усі композиції"
 
-#: ../src/ui/extract.ui.h:4
+#: src/ui/extract.ui:34
 msgid "_Selected tracks"
 msgstr "_Позначені композиції"
 
-#: ../src/ui/format-options.ui.h:1
-msgid "Format Properties"
-msgstr "Властивості формату"
-
-#: ../src/ui/gears-menu.ui.h:1
+#: src/ui/gears-menu.ui:6
 msgid "Copy _Disk"
 msgstr "Копіювати _диск"
 
-#: ../src/ui/gears-menu.ui.h:2
+#: src/ui/gears-menu.ui:10
 msgid "_Eject"
 msgstr "Ви_штовхнути"
 
-#: ../src/ui/menus.ui.h:1
+#: src/ui/gears-menu.ui:25
+msgid "Play _All"
+msgstr "Відтворити _усе"
+
+#: src/ui/gears-menu.ui:29
+msgid "_Repeat"
+msgstr "Пов_торювати"
+
+#: src/ui/gears-menu.ui:33
+msgid "S_huffle"
+msgstr "П_еремішати"
+
+#: src/ui/gears-menu.ui:39
+msgid "_Preferences"
+msgstr "_Налаштування"
+
+#: src/ui/gears-menu.ui:43
+msgid "_Help"
+msgstr "_Довідка"
+
+#: src/ui/gears-menu.ui:48
+msgid "_About"
+msgstr "_Про програму"
+
+#: src/ui/menus.ui:7
 msgid "_Play"
 msgstr "_Відтворити"
 
-#: ../src/ui/menus.ui.h:2
+#: src/ui/menus.ui:11
 msgid "E_xtract Tracks"
 msgstr "В_идобути композиції"
 
-#: ../src/ui/menus.ui.h:4
+#: src/ui/menus.ui:25
 msgid "_Choose File…"
 msgstr "_Вибрати файл…"
 
-#: ../src/ui/menus.ui.h:5
+#: src/ui/menus.ui:29
 msgid "_Search on Internet"
 msgstr "_Шукати в інтернеті"
 
-#: ../src/ui/menus.ui.h:6
+#: src/ui/menus.ui:35
 msgid "_Remove"
 msgstr "В_илучити"
 
-#: ../src/ui/preferences.ui.h:1
-msgid "CD Player Preferences"
-msgstr "Налаштування програвача компакт-дисків"
-
-#: ../src/ui/preferences.ui.h:2
+#: src/ui/preferences.ui:19
 msgid "Playback"
 msgstr "Відтворення"
 
-#: ../src/ui/preferences.ui.h:3
+#: src/ui/preferences.ui:51
 msgid "Drive:"
 msgstr "Пристрій:"
 
-#: ../src/ui/preferences.ui.h:4
+#: src/ui/preferences.ui:75
 msgid "Automatically play newly inserted discs"
 msgstr "Автоматично відтворювати вставлені диски"
 
-#: ../src/ui/preferences.ui.h:5
+#: src/ui/preferences.ui:126
 msgid "Extraction"
 msgstr "Видобування"
 
-#: ../src/ui/preferences.ui.h:6
+#: src/ui/preferences.ui:158
 msgid "Destination:"
 msgstr "Призначення:"
 
-#: ../src/ui/preferences.ui.h:7
+#: src/ui/preferences.ui:173
 msgid "Choose destination folder"
 msgstr "Виберіть теку призначення"
 
-#: ../src/ui/preferences.ui.h:8
+#: src/ui/preferences.ui:184
 msgid "Format:"
 msgstr "Формат:"
 
-#: ../src/ui/preferences.ui.h:9
+#: src/ui/preferences.ui:366
 msgid "_Save playlist"
 msgstr "З_берегти список відтворення"
 
-#: ../src/ui/properties.ui.h:1
+#: src/ui/properties.ui:12
 msgid "Single artist"
 msgstr "Один виконавець"
 
-#: ../src/ui/properties.ui.h:2
+#: src/ui/properties.ui:15
 msgid "Various artists"
 msgstr "Різні виконавці"
 
-#: ../src/ui/properties.ui.h:3
-msgid "Properties"
-msgstr "Властивості"
-
-#: ../src/ui/properties.ui.h:5
+#: src/ui/properties.ui:47
 msgid "_Title:"
 msgstr "За_головок:"
 
-#: ../src/ui/properties.ui.h:6
+#: src/ui/properties.ui:61
 msgid "T_racks:"
 msgstr "К_омпозиції:"
 
-#: ../src/ui/properties.ui.h:7
+#: src/ui/properties.ui:78
 msgid "_Artist:"
 msgstr "_Виконавець:"
 
-#: ../src/ui/properties.ui.h:8
+#: src/ui/properties.ui:138
 msgid "_Year:"
 msgstr "_Рік:"
 
-#: ../src/ui/properties.ui.h:9
+#: src/ui/properties.ui:217
 msgid "Search for the remaining data"
 msgstr "Шукати решту даних"
 
-#: ../src/ui/ripper.ui.h:1
-msgid "Extracting Tracks"
-msgstr "Видобуваємо композиції"
+#~ msgid "View the destination"
+#~ msgstr "Переглянути теку призначення"
 
-#: ../src/ui/ripper.ui.h:2
-msgid "Extracting tracks"
-msgstr "Видобуваємо композиції"
+#~ msgid "_View destination folder"
+#~ msgstr "П_ереглянути теку призначення"
+
+#~ msgid "Extracting \"%s\""
+#~ msgstr "Видобуваємо «%s»"
+
+#~ msgid "Playing CD"
+#~ msgstr "Відтворюємо компакт-диск"
+
+#~ msgid "Hide _tracks"
+#~ msgstr "Приховати _композиції"
+
+#~ msgid "Show _tracks"
+#~ msgstr "Показати _композиції"
+
+#~ msgid "_Quit"
+#~ msgstr "Ви_йти"
+
+#~ msgid "Extracting tracks"
+#~ msgstr "Видобуваємо композиції"
