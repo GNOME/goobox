@@ -30,7 +30,7 @@
     <gui style="button">Apply</gui> button.
   </p>
 
-  <section>
+  <section id="general">
     <title>General Tab</title>
     <p>This tab allows you to set the following options:</p>
     <list>
@@ -42,7 +42,7 @@
   </section>
 
 
-  <section>
+  <section id="extraction">
     <title>Extraction Tab</title>
     <p>This tab allows you to set the extraction options:</p>
     <list>
